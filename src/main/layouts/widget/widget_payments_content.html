@@ -1,0 +1,8 @@
+<div class="widget-content">
+	<span class="widget-name">{{item.name}}</span>
+	<div>
+		<eb-item-property label="accounts.label.available_funds" class="widget-summary value-left">
+			<eb-amount amount="item.availableFunds.amount" currency="{{item.availableFunds.currencySymbol}}" highlight-negative></eb-amount>
+		</eb-item-property>
+	</div>
+</div>

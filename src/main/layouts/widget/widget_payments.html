@@ -1,0 +1,9 @@
+<div ng-controller="CardsWidgetController">
+	<eb-slide-widget content="{{widgetContent}}" items="cardList" max-indicators="10"  eb-items-promise="cardsPromise" eb-callback="updateLastTransacion(items)" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
+	<div ng-if="cardsPromise.$$state.status === 1 && cardList.content.length == 0" class="widget-content">
+        <div class="widget-content-inner info-text">
+			{{::'account.widget.empty_list.marketing_info'|translate}}<br/>
+          	<a href="{{::'account.widget.empty_list.link_url'|translate}}" target="_blank" ng-click="$event.stopPropagation()">{{::'account.widget.empty_list.link_name'|translate}}</a>
+        </div>
+    </div>
+</div>

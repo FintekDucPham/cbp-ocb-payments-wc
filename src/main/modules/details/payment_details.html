@@ -1,0 +1,92 @@
+<div eb-themable >
+
+    
+    <eb-section-header eb-header="accounts.details.label.header"
+                           eb-description="{{details.customerProductData.customName || details.accountName}}"
+                           back-state="accounts.content">
+    </eb-section-header>
+    
+
+    <div class="details-body" ng-if="details != null">
+        <eb-responsive-row label="accounts.details.label.account_number">{{details.accountNo | nrbIbanFilter}}</eb-responsive-row>
+        <eb-responsive-row label="accounts.details.label.currency">{{details.currency}}</eb-responsive-row>
+        <eb-responsive-row label="accounts.details.label.accountType">{{details.accountName}}</eb-responsive-row>
+
+
+        <eb-responsive-row class="form-main-select" key label="accounts.details.label.custom_name">
+            <div id="editableDiv"
+                 class="accountName"
+                 eb-editable-name
+                 customer-product-data = "details.customerProductData"
+                 eb-editable-model = "details"
+                 placeholder-text = "{{ details.accountName }}"
+                 ng-click="setCaretPosition(details.visible)"></div>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.currentBalance">N
+            <eb-amount amount="details.currentBalance" currency="{{ details.currency }}" highlight-negative></eb-amount>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.accessibleAssets">
+            <eb-amount amount="details.accessibleAssets" currency="{{ details.currency }}"></eb-amount>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.blockades">
+            <eb-amount amount="details.blockAssets" currency="{{ details.currency }}"></eb-amount>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.allowedLimit">
+            <eb-amount amount="details.allowedLimit" currency="{{ details.currency }}"></eb-amount>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.interest">
+            <eb-percentage value="details.accountInterest"></eb-percentage>
+        </eb-responsive-row>
+        <eb-responsive-row label="accounts.details.label.credit_interest">
+            <eb-percentage value="details.creditInterest"></eb-percentage>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.capitalization_period">
+            <span eb-msg="account.details.settlement_period_type"></span> {{details.settlementPeriodCt}}
+            <span eb-variety-msg key="'account.details.settlement_period_type.' + details.settlementPeriodCtType" count="details.settlementPeriodCt"></span>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.nextCapitalizationDate">{{details.nextCapitalizationCtDate | dateFilter}}</eb-responsive-row>
+        <eb-responsive-row label="accounts.details.label.openDate">{{details.openDate | dateFilter}}</eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.owner_status">
+            <span eb-msg-var key="account.role.type" variable="details.customerProductData.relationType"></span>,&nbsp;
+            <span eb-msg-var key="account.access.type" variable="details.customerProductData.relationStatus"></span>
+        </eb-responsive-row>
+        
+        <eb-responsive-row top key label="accounts.details.label.owner_name">
+            <div ng-repeat="owner in ownerList = (details.ownersList | filter: { relationType: 'OWNER' })">
+                <span>{{owner.name}}</span>
+            </div>
+        </eb-responsive-row>
+
+        <eb-responsive-row top key label="accounts.details.label.authorization">
+            <div ng-repeat="proxy in proxyList = (details.ownersList | filter: { relationType: 'PROXY' })">
+                <span>{{proxy.name}}</span>
+            </div>
+            <span ng-show="proxyList.length == 0">-</span>
+        </eb-responsive-row>
+
+        <eb-responsive-row top key label="accounts.details.label.distribiutionMethod">
+            <span eb-msg-var key="account.details.statement_period_type" variable="details.accountStatementDetails.statementPeriodType"></span>
+            <span ng-repeat="statementDistributionType in details.accountStatementDetails.statementDistributionList">
+                <span eb-msg-var key="account.details.statement_distribution_type" variable="statementDistributionType"></span>&nbsp;
+                <span ng-show="($index + 1) < details.accountStatementDetails.statementDistributionList.length" eb-msg="account.details.statement.and"></span>&nbsp;
+            </span>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.transactionLimitDayli">
+            <eb-amount amount="details.customerProductData.dayLimit" currency="{{ details.currency }}"></eb-amount>
+        </eb-responsive-row>
+
+        <eb-responsive-row label="accounts.details.label.transactionLimitSingle">
+            <eb-amount amount="details.customerProductData.oneTimeLimit" currency="{{ details.currency }}"></eb-amount>
+        </eb-responsive-row>
+
+    </div>
+</div>

@@ -1,0 +1,12 @@
+{
+  "name": "raiffeisen-payments",
+  "version": "0.0.6",
+  "description": "DB NEXT Payments miniapp",
+  "keywords": [
+    "raiffeisen",
+    "payments"
+  ],
+  "main": [
+    "Gruntfile.js"
+  ]
+}
