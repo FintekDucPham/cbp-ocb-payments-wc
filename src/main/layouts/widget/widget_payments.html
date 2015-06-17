@@ -1,4 +1,4 @@
-<div ng-controller="CardsWidgetController">
+<div ng-controller="PaymentsWidgetController">
 	<eb-slide-widget content="{{widgetContent}}" items="cardList" max-indicators="10"  eb-items-promise="cardsPromise" eb-callback="updateLastTransacion(items)" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
 	<div ng-if="cardsPromise.$$state.status === 1 && cardList.content.length == 0" class="widget-content">
         <div class="widget-content-inner info-text">
