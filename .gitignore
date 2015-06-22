@@ -18,3 +18,4 @@ bin
 *.iml
 .tmp
 *.log
+npm-debug.log
