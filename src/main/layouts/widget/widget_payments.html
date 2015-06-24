@@ -1,9 +1,9 @@
 <div ng-controller="PaymentsWidgetController">
-	<eb-slide-widget content="{{widgetContent}}" items="cardList" max-indicators="10"  eb-items-promise="cardsPromise" eb-callback="updateLastTransacion(items)" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
-	<div ng-if="cardsPromise.$$state.status === 1 && cardList.content.length == 0" class="widget-content">
-        <div class="widget-content-inner info-text">
-			{{::'account.widget.empty_list.marketing_info'|translate}}<br/>
-          	<a href="{{::'account.widget.empty_list.link_url'|translate}}" target="_blank" ng-click="$event.stopPropagation()">{{::'account.widget.empty_list.link_name'|translate}}</a>
-        </div>
-    </div>
+	<div class="box-action-panel" ng-click="$event.stopPropagation()">
+		<div class="action-button">
+			<eb-button ui-sref="payments.new" class="primary icon-right eb-icon eb-ico-plus">
+				<i eb-themable class="eb-icon eb-ico-widget-payments widget-action-icon"></i>{{::'raiff.payments.widget.view.new_payment'|translate}}
+			</eb-button>
+		</div>
+	</div>
 </div>

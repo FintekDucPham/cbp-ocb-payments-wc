@@ -8,16 +8,4 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsListController', function ($scope, $rootScope, paymentsService, $filter, transactionService, transactionFilterCriteria, gate, $timeout, customerProductService, blockadesService, $state, $stateParams, searchWrapperService, domService, viewStateService) {
 
-        $scope.$parent.selected = {};
-        $scope.cardList = null;
-        $scope.filterOptions = {};
-
-
-
-        $scope.cardListPromise = paymentsService.search({pageSize: 10000}).then(function (cardList) {
-            $scope.cardList = cardList;
-        });
-
-        $scope.setCaretPosition = domService.setCaretPosition;
-
     });
