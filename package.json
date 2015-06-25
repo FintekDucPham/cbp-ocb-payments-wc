@@ -4,8 +4,7 @@
   "private": true,
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "npm link ../cbp-raiffeisen-build-tools"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,6 +17,7 @@
   "author": "Grzegorz Gurgul <grzegorz.gurgul@asseco.pl>",
   "license": "ISC",
   "devDependencies": {
-    "cbp-raiffeisen-build-tools": "git+https://repopbk.poland.asseco.corp/cbp-raiffeisen/cbp-raiffeisen-build-tools.git"
+    "cbp-raiffeisen-build-tools": "git+https://repopbk.poland.asseco.corp/cbp-raiffeisen/cbp-raiffeisen-build-tools.git",
+    "grunt": "^0.4.5"
   }
 }
