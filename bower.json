@@ -5,8 +5,5 @@
   "keywords": [
     "raiffeisen",
     "payments"
-  ],
-  "main": [
-    "Gruntfile.js"
   ]
 }
