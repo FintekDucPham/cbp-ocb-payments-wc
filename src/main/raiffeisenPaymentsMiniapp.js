@@ -1,6 +1,6 @@
 angular.module('raiffeisen-payments', [
 
-	'ebanking-shared'
+	'raiffeisen-shared'
 
 ]).config(function(translationsLoaderProvider, $urlRouterProvider, miniappServiceProvider, pathServiceProvider, stateServiceProvider) {
     'use strict';
