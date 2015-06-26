@@ -1,6 +1,6 @@
 {
   "name": "cbp-raiffeisen-payments-wc",
-  "version": "1.0.0",
+  "version": "0.0.17",
   "private": true,
   "main": "Gruntfile.js",
   "scripts": {
