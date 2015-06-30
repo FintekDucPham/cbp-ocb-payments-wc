@@ -6,7 +6,7 @@
   "description": "Raiffeisen Payments miniapplication",
   "dependencies": [
     {
-      "name": "ebanking-shared",
+      "name": "raiffeisen-shared",
       "version": "0.0.6"
     }
   ],

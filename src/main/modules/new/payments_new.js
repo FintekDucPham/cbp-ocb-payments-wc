@@ -29,9 +29,8 @@ angular.module('raiffeisen-payments')
                 if(!error) {
                     $scope.formData.formModel.remitterId = 1008020;
                     $scope.formData.formModel.transferFromTemplate = false;
-                    $scope.formData.formModel.remitterAccountId = 0;
+                   // $scope.formData.formModel.remitterAccountId = 0;
                     $scope.formData.formModel.recipientAccountNo = $scope.formData.formModel.recipientAccountNo.split(" ").join("");
-                    console.debug($scope.formData.formModel);
                     paymentsService.action($scope.formData.formModel, 'create_domestic_transfer').then(function(data) {
                      $state.go('payments.accept', {
                      dispositionId: data.content
