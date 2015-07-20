@@ -1,6 +1,11 @@
 {
 	"payments.title": "Płatności",
 
+    "payments.submenu.close_text": "Zwiń",
+    "payments.submenu.open_text": "Rozwiń",
+    "payments.submenu.options.list.header": "Lista płatności",
+    "payments.submenu.options.new.header": "Nowa płatność",
+
     "raiff.payments.widget.view.new_payment": "Nowa płatność",
     "raiff.payments.widget.content.total_payments": "Suma płatności",
     "raiff.payments.widget.content.next_payment": "Następna płatność",

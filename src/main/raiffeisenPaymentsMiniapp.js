@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments', [
 
 	'raiffeisen-shared'
 
-]).config(function(translationsLoaderProvider, $urlRouterProvider, miniappServiceProvider, pathServiceProvider, stateServiceProvider) {
+]).config(function(menuServiceProvider, translationsLoaderProvider, $urlRouterProvider, miniappServiceProvider, pathServiceProvider, stateServiceProvider) {
     'use strict';
 
     function registerModule() {
@@ -26,9 +26,32 @@ angular.module('raiffeisen-payments', [
             });
     }
 
+    function registerNavigation() {
+        menuServiceProvider.registerMenu({
+            id: 'raiffeisen-payments',
+            priority: 8000,
+            baseItem: 'payments.list',
+            title: 'payments.title',
+            items:[{
+                id: "payments.list",
+                label: 'payments.submenu.options.list.header',
+                icon: "help",
+                action: "payments.content"
+            },
+            {
+                id: "payments.new",
+                label: 'payments.submenu.options.new.header',
+                icon: "help",
+                action: "payments.new"
+            }
+            ]
+        });
+    }
+
     registerModule();
     registerComponents();
     registerBaseState();
+    registerNavigation();
 
 }).run(function() {
 
