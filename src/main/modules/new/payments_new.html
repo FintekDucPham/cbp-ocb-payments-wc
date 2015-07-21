@@ -1,77 +1,157 @@
-<div class="form-body">
-    <form name="paymentAddForm" novalidate>
-        <div ui-view autoscroll="true">
-            <div eb-responsive-row label="raiff.payments.new.step1.row.sender_account">
-                <div eb-account-select name="remitterAccountId" ng-model="formData.formModel.remitterAccountId" account="formData.remitterAccount" ng-required="true" placeholder="{{::'raiff.payments.new.step1.row.account_select.placeholder'|translate}}"></div>
-                <div eb-validation-messages eb-name="remitterAccountId">
-                    <div eb-message-key="required" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.account_select.validate"></span></div>
-                </div>
-            </div>
+<div class="payments-new">
+    <rb-content-view class="form">
+        <bd-header>{{::"raiff.payments.new.label.header"|translate}}</bd-header>
+        <bd-form-panel>
 
-            <div eb-responsive-row label="raiff.payments.new.step1.row.amount" label-for="amount">
-                <div eb-input-amount eb-name="amount" eb-currency-model="{{formData.remitterAccount.currency}}" ng-model="formData.formModel.amount" eb-form="paymentAddForm" account-id="{{formData.remitterAccount.accountId}}" eb-required="true"></div>
-                <div eb-validation-messages eb-name="amount">
-                    <div eb-message-key="transfer.amount.error.exceeds.available.funds.for.agreement" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_available_funds"></span>
-                    </div>
-                    <div eb-message-key="transfer.amount.error.exceeds.daily.limit.for.user" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_daily_limit_for_user"></span>
-                    </div>
-                    <div eb-message-key="transfer.amount.error.exceeds.single.limit.for.user" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_single_limit_for_user"></span>
-                    </div>
-                    <div eb-message-key="transfer.amount.error.exceeds.daily.limit.for.agreement" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_daily_limit_for_agreement"></span>
-                    </div>
-                    <div eb-message-key="transfer.amount.error.exceeds.single.limit.for.agreement" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_single_limit_for_agreement"></span>
-                    </div>
-                    <div eb-message-key="transfer.amount.error_amount_exceeds_max_amount_for_elixir" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_max_amount_for_elixir"></span>
-                    </div>
-                    <div eb-message-key="transfer_order.amount.DecimalMin" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.decimal_min"></span>
-                    </div>
-                    <div eb-message-key="transfer_order.amount.DecimalMax" class="validation-message animate-on">
-                        <span eb-msg="raiff.payments.new.step1.row.amount.validate.decimal_max"></span>
-                    </div>
-                </div>
-            </div>
+            <bd-item-property label="{{::'raiff.payments.new.payment_type'|translate}}">
 
-            <div eb-responsive-row label="raiff.payments.new.step1.row.beneficiary_account_no" label-for="recipientAccountNo">
-                <input type="text" ng-pattern="/^[\d ]+$/" class="form-group" style="width: 100%; text-align: left; padding-left: 10px;" placeholder="{{::'raiff.payments.new.step1.row.beneficiary_account_no.placeholder'|translate}}" ng-model="formData.formModel.recipientAccountNo" name="recipientAccountNo" ng-form="paymentAddForm" required/>
-                <div  class="messages eb-validation-messages" ng-messages="paymentAddForm.recipientAccountNo.$error" ng-show="paymentAddForm.recipientAccountNo.$dirty || paymentAddForm.recipientAccountNo.$touched">
-                    <div ng-message="required" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.beneficiary_account.validate.required"></span></div>
-                    <div ng-message="invalid" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.beneficiary_account.validate.invalid"></span></div>
-                    <div ng-message="pattern" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.beneficiary_account.validate.invalid"></span></div>
-                </div>
-            </div>
+                <ui-select ng-model="payment.type"
+                           theme="bootstrap"
+                           on-select="changePaymentType($item)"
+                           ng-disabled="activeStep.id !== 'fill' || payment.fixedAccountSelection"
+                           reset-search-input="false"
+                           required>
+                    <ui-select-match placeholder="{{ ::'raiff.payments.new.payment_type.select'|translate }}">
+                        {{'raiff.payments.new.types.' + $select.selected.code | translate}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="paymentType in payment.meta.paymentTypes">
+                        <div ng-bind-html="::'raiff.payments.new.types.' + paymentType.code | translate | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
 
-            <div eb-responsive-row top label="raiff.payments.new.step1.row.beneficiary" label-for="recipientName">
-                <div eb-one-line-textarea placeholder="{{::'raiff.payments.new.step1.row.beneficiary.placeholder'|translate}}" ng-model="formData.formModel.recipientName" eb-name="recipientName" eb-form="paymentAddForm"></div>
-            </div>
-            <div eb-responsive-row top label="raiff.payments.new.step1.row.title" label-for="oneLineTextArea">
-                <div eb-one-line-textarea placeholder="{{::'raiff.payments.new.step1.row.one_line_text_area.placeholder'|translate}}" ng-model="formData.formModel.description" eb-name="description" eb-form="paymentAddForm"></div>
+            </bd-item-property>
 
-                <div eb-validation-messages eb-name="description">
-                    <div eb-message-key="transfer_order.description.ELIXIRCharactersOnly" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.description.invalid_elixir_characters"></span></div>
-                </div>
+            <bd-step-panel bd-step-switch-states
+                           bd-active-step="activeStep"
+                           bd-step-remote="bdStepRemote">
+                <bd-step bd-step-id="fill">Wprowadzanie danych</bd-step>
+                <bd-step bd-step-id="verify">Weryfikacja danych</bd-step>
+                <bd-step bd-step-id="status">Status operacji</bd-step>
+            </bd-step-panel>
 
-            </div>
+            <bd-form-content>
+                <div ui-view></div>
+            </bd-form-content>
 
+            <bd-form-footer>
+                <bd-button class="bd-form-footer__button--negative"
+                           ng-show="activeStep.id === 'verify'"
+                           ng-click="moveBackwards()">{{ ::'raiff.payments.new.btn.change' | translate }}
+                </bd-button>
+                <bd-button class="bd-form-footer__button--negative"
+                           ng-show="activeStep.id === 'fill'"
+                           ng-click="clearForm()">{{ ::'raiff.payments.new.btn.clear' | translate }}
+                </bd-button>
+                <bd-button class="bd-form-footer__button--positive bd-button__primary"
+                           ng-show="activeStep.id === 'fill'"
+                           ng-click="moveForward()">{{ ::'raiff.payments.new.btn.next' | translate }}
+                </bd-button>
+                <bd-button class="bd-form-footer__button--positive bd-button__primary"
+                           ng-show="activeStep.id === 'verify'"
+                           ng-click="moveForward()">{{ ::'raiff.payments.new.btn.cancel' | translate }}
+                </bd-button>
+                <bd-button class="bd-form-footer__button--positive bd-button__primary"
+                           ng-show="activeStep.id === 'verify'"
+                           ng-click="moveForward()">{{ ::'raiff.payments.new.btn.accept' | translate }}
+                </bd-button>
+                <bd-button class="bd-form-footer__button--positive bd-button__primary"
+                           ng-show="activeStep.id === 'status'" ui-sref="cards.content">{{ ::'raiff.payments.new.btn.finalize' | translate }}
+                </bd-button>
+            </bd-form-footer>
 
-            <div eb-responsive-row label="raiff.payments.new.step1.row.realisation_date">
-                <div eb-date-input ng-model="formData.formModel.realizationDate" eb-title="{{::'raiff.payments.new.step1.row.date_input.placeholder'|translate}}" date-format="dd.MM.yyyy" name="paymentDate" eb-disable-weekend="false" eb-disable-past-dates="true" ng-required="true" date-input-validation-past>
-                </div>
-                <div eb-validation-messages eb-name="paymentDate">
-                    <div eb-message-key="past" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.realization_date.validate.past"></span></div>
-                    <div eb-message-key="required" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.realization_date.validate.required"></span></div>
-                    <div eb-message-key="format" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.realization_date.validate.format"></span></div>
-                </div>
-            </div>
-        </div>
-        <eb-action-footer submit-label="raiff.payments.new.step1.action_footer.submit_label"
-                          submit-icon="eb-ico-widget-payments"
-                          submit-action="submit(paymentAddForm)"></eb-action-footer>
-    </form>
+        </bd-form-panel>
+
+    </rb-content-view>
 </div>
+
+
+<pre>
+                {{ payment | json }}
+            </pre>
+
+
+
+
+
+
+
+
+
+
+<!--<div class="form-body">-->
+    <!--<form name="paymentAddForm" novalidate>-->
+        <!--<div ui-view autoscroll="true">-->
+            <!--<div eb-responsive-row label="raiff.payments.new.step1.row.sender_account">-->
+                <!--<div eb-account-select name="remitterAccountId" ng-model="formData.formModel.remitterAccountId" account="formData.remitterAccount" ng-required="true" placeholder="{{::'raiff.payments.new.step1.row.account_select.placeholder'|translate}}"></div>-->
+                <!--<div eb-validation-messages eb-name="remitterAccountId">-->
+                    <!--<div eb-message-key="required" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.account_select.validate"></span></div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div eb-responsive-row label="raiff.payments.new.step1.row.amount" label-for="amount">-->
+                <!--<div eb-input-amount eb-name="amount" eb-currency-model="{{formData.remitterAccount.currency}}" ng-model="formData.formModel.amount" eb-form="paymentAddForm" account-id="{{formData.remitterAccount.accountId}}" eb-required="true"></div>-->
+                <!--<div eb-validation-messages eb-name="amount">-->
+                    <!--<div eb-message-key="transfer.amount.error.exceeds.available.funds.for.agreement" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_available_funds"></span>-->
+                    <!--</div>-->
+                    <!--<div eb-message-key="transfer.amount.error.exceeds.daily.limit.for.user" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_daily_limit_for_user"></span>-->
+                    <!--</div>-->
+                    <!--<div eb-message-key="transfer.amount.error.exceeds.single.limit.for.user" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_single_limit_for_user"></span>-->
+                    <!--</div>-->
+                    <!--<div eb-message-key="transfer.amount.error.exceeds.daily.limit.for.agreement" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_daily_limit_for_agreement"></span>-->
+                    <!--</div>-->
+                    <!--<div eb-message-key="transfer.amount.error.exceeds.single.limit.for.agreement" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_single_limit_for_agreement"></span>-->
+                    <!--</div>-->
+                    <!--<div eb-message-key="transfer.amount.error_amount_exceeds_max_amount_for_elixir" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.exceeds_max_amount_for_elixir"></span>-->
+                    <!--</div>-->
+                    <!--<div eb-message-key="transfer_order.amount.DecimalMin" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.decimal_min"></span>-->
+                    <!--</div>-->
+                    <!--<div eb-message-key="transfer_order.amount.DecimalMax" class="validation-message animate-on">-->
+                        <!--<span eb-msg="raiff.payments.new.step1.row.amount.validate.decimal_max"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div eb-responsive-row label="raiff.payments.new.step1.row.beneficiary_account_no" label-for="recipientAccountNo">-->
+                <!--<input type="text" ng-pattern="/^[\d ]+$/" class="form-group" style="width: 100%; text-align: left; padding-left: 10px;" placeholder="{{::'raiff.payments.new.step1.row.beneficiary_account_no.placeholder'|translate}}" ng-model="formData.formModel.recipientAccountNo" name="recipientAccountNo" ng-form="paymentAddForm" required/>-->
+                <!--<div  class="messages eb-validation-messages" ng-messages="paymentAddForm.recipientAccountNo.$error" ng-show="paymentAddForm.recipientAccountNo.$dirty || paymentAddForm.recipientAccountNo.$touched">-->
+                    <!--<div ng-message="required" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.beneficiary_account.validate.required"></span></div>-->
+                    <!--<div ng-message="invalid" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.beneficiary_account.validate.invalid"></span></div>-->
+                    <!--<div ng-message="pattern" class="validation-message animate-on" ><span eb-msg="raiff.payments.new.step1.row.beneficiary_account.validate.invalid"></span></div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div eb-responsive-row top label="raiff.payments.new.step1.row.beneficiary" label-for="recipientName">-->
+                <!--<div eb-one-line-textarea placeholder="{{::'raiff.payments.new.step1.row.beneficiary.placeholder'|translate}}" ng-model="formData.formModel.recipientName" eb-name="recipientName" eb-form="paymentAddForm"></div>-->
+            <!--</div>-->
+            <!--<div eb-responsive-row top label="raiff.payments.new.step1.row.title" label-for="oneLineTextArea">-->
+                <!--<div eb-one-line-textarea placeholder="{{::'raiff.payments.new.step1.row.one_line_text_area.placeholder'|translate}}" ng-model="formData.formModel.description" eb-name="description" eb-form="paymentAddForm"></div>-->
+
+                <!--<div eb-validation-messages eb-name="description">-->
+                    <!--<div eb-message-key="transfer_order.description.ELIXIRCharactersOnly" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.description.invalid_elixir_characters"></span></div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+
+
+            <!--<div eb-responsive-row label="raiff.payments.new.step1.row.realisation_date">-->
+                <!--<div eb-date-input ng-model="formData.formModel.realizationDate" eb-title="{{::'raiff.payments.new.step1.row.date_input.placeholder'|translate}}" date-format="dd.MM.yyyy" name="paymentDate" eb-disable-weekend="false" eb-disable-past-dates="true" ng-required="true" date-input-validation-past>-->
+                <!--</div>-->
+                <!--<div eb-validation-messages eb-name="paymentDate">-->
+                    <!--<div eb-message-key="past" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.realization_date.validate.past"></span></div>-->
+                    <!--<div eb-message-key="required" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.realization_date.validate.required"></span></div>-->
+                    <!--<div eb-message-key="format" class="validation-message animate-on"><span eb-msg="raiff.payments.new.step1.row.realization_date.validate.format"></span></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<eb-action-footer submit-label="raiff.payments.new.step1.action_footer.submit_label"-->
+                          <!--submit-icon="eb-ico-widget-payments"-->
+                          <!--submit-action="submit(paymentAddForm)"></eb-action-footer>-->
+    <!--</form>-->
+<!--</div>-->

@@ -42,7 +42,7 @@ angular.module('raiffeisen-payments', [
                 id: "payments.new",
                 label: 'payments.submenu.options.new.header',
                 icon: "help",
-                action: "payments.new"
+                action: "payments.new.fill({ paymentType: 'domestic' })"
             }
             ]
         });
