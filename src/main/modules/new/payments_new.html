@@ -36,6 +36,10 @@
             <bd-form-footer>
                 <bd-button class="bd-form-footer__button--negative"
                            ng-show="activeStep.id === 'verify'"
+                           ui-sref="payments.content">{{ ::'raiff.payments.new.btn.cancel' | translate }}
+                </bd-button>
+                <bd-button class="bd-form-footer__button--negative"
+                           ng-show="activeStep.id === 'verify'"
                            ng-click="moveBackwards()">{{ ::'raiff.payments.new.btn.change' | translate }}
                 </bd-button>
                 <bd-button class="bd-form-footer__button--negative"
@@ -48,14 +52,10 @@
                 </bd-button>
                 <bd-button class="bd-form-footer__button--positive bd-button__primary"
                            ng-show="activeStep.id === 'verify'"
-                           ng-click="moveForward()">{{ ::'raiff.payments.new.btn.cancel' | translate }}
-                </bd-button>
-                <bd-button class="bd-form-footer__button--positive bd-button__primary"
-                           ng-show="activeStep.id === 'verify'"
                            ng-click="moveForward()">{{ ::'raiff.payments.new.btn.accept' | translate }}
                 </bd-button>
                 <bd-button class="bd-form-footer__button--positive bd-button__primary"
-                           ng-show="activeStep.id === 'status'" ui-sref="cards.content">{{ ::'raiff.payments.new.btn.finalize' | translate }}
+                           ng-show="activeStep.id === 'status'" ui-sref="payments.content">{{ ::'raiff.payments.new.btn.finalize' | translate }}
                 </bd-button>
             </bd-form-footer>
 
@@ -63,12 +63,6 @@
 
     </rb-content-view>
 </div>
-
-
-<pre>
-                {{ payment | json }}
-            </pre>
-
 
 
 

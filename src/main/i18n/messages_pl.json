@@ -77,6 +77,14 @@
     "raiff.payments.new.domestic.fill.amount": "Kwota",
     "raiff.payments.new.domestic.fill.amount_placeholder": "Wpisz kwotę przelewu",
     "raiff.payments.new.domestic.fill.execution_date": "Data realizacji",
-    "raiff.payments.new.domestic.fill.execution_date.placeholder": "Wybierz datę realizacji"
+    "raiff.payments.new.domestic.fill.execution_date.placeholder": "Wybierz datę realizacji",
+
+    "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
+    "raiff.payments.new.domestic.verify.sender_data": "Właściciel",
+    "raiff.payments.new.domestic.verify.recipient_account_no": "Na rachunek",
+    "raiff.payments.new.domestic.verify.recipient_data": "Nazwa odbiorcy",
+    "raiff.payments.new.domestic.verify.amount": "Kwota",
+    "raiff.payments.new.domestic.verify.title": "Tytułem",
+    "raiff.payments.new.domestic.verify.execution_date": "Data realizacji"
 
 }

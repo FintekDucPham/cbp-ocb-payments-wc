@@ -8,13 +8,17 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentFillController', function ($scope, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents) {
 
+        angular.extend($scope.payment.formData, {
+            realizationDate: Date.now()
+        });
+
         $scope.$on('clearForm', function() {
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
         $scope.$on(cardRestrictEvents.FORWARD_MOVE, function () {
-            var form = $scope.cardRestrictForm;
-            if ($scope.cardRestrictForm.$invalid) {
+            var form = $scope.paymentForm;
+            if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
                 $scope.bdStepRemote.next();

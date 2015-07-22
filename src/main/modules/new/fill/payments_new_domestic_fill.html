@@ -1,18 +1,19 @@
 <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.sender_account' | translate }}">
+    <input name="senderAccountId" hidden ng-model="payment.formData.senderAccountId" required/>
     <rb-account-select rb-account-id="payment.formData.senderAccountId"
                        rb-account="payment.items.senderAccount"></rb-account-select>
 </bd-item-property>
 
-<bd-item-property ng-if="payment.formData.senderAccountId" label="{{ ::'raiff.payments.new.domestic.fill.accessible_assets' | translate }}">
+<bd-item-property ng-if="payment.formData.senderAccountId"
+                  label="{{ ::'raiff.payments.new.domestic.fill.accessible_assets' | translate }}">
     <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
 </bd-item-property>
 
-<!-- add recipient selection options -- in the second package! -->
-
 <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.recipient' | translate }}">
     <rb-recipient-select rb-recipient="payment.items.recipient"
                          rb-recipient-clear-text="{{ ::'raiff.payments.new.domestic.fill.recipient.clear' | translate }}"
+                         rb-recipient-placeholder-text="{{ ::'raiff.payments.new.domestic.fill.recipient.placeholder' | translate }}"
                          rb-on-recipient-clear="clearRecipient()"
                          rb-on-recipient-select="selectRecipient($recipient)"></rb-recipient-select>
 </bd-item-property>
@@ -27,7 +28,8 @@
            placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.domestic.fill.recipient_data' | translate }}">
+<bd-item-property class="bd-item-property--multirow"
+                  label="{{ ::'raiff.payments.new.domestic.fill.recipient_data' | translate }}">
     <textarea name="recipientData"
               ng-model="payment.formData.recipientData"
               required
@@ -35,7 +37,8 @@
               placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.domestic.fill.title' | translate }}">
+<bd-item-property class="bd-item-property--multirow"
+                  label="{{ ::'raiff.payments.new.domestic.fill.title' | translate }}">
     <textarea name="title"
               ng-model="payment.formData.title"
               required
@@ -44,14 +47,27 @@
 </bd-item-property>
 
 <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.amount' | translate }}">
-    <input class="input-field"
-           type="text"
-           ng-model="payment.formData.amount"
-           placeholder="{{ ::'raiff.payments.new.domestic.fill.amount_placeholder' | translate }}"
-           required/>
+
+    <bd-amount-input>
+        <input bd-amount-input-value
+               class="input-field"
+               ng-model="payment.formData.amount"
+               required
+               placeholder="{{ ::'raiff.payments.new.domestic.fill.amount_placeholder' | translate }}"/>
+        <input bd-amount-input-currency
+               class="input-field"
+               value="PLN"
+               disabled
+               placeholder="{{ ::'raiff.payments.new.domestic.fill.amount_placeholder' | translate }}"/>
+    </bd-amount-input>
+
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
-    <input required class="input-field" type="text" ng-model="payment.formData.realizationDate"
-           placeholder="{{ ::'raiff.payments.new.domestic.fill.execution_date.placeholder' | translate }}"/>
+<bd-item-property class="bd-item-property--multirow"
+                  label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
+    <bd-date-input name="realizationDate"
+                   ng-model="payment.formData.realizationDate"
+                   bd-attr-class="input-field"
+                   bd-attr-placeholder="{{ ::'raiff.payments.new.domestic.fill.execution_date.placeholder' | translate }}"
+                   required></bd-date-input>
 </bd-item-property>
