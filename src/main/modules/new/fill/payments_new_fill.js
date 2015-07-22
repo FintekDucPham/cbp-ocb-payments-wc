@@ -6,7 +6,10 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentFillController"
         });
     })
-    .controller('NewPaymentFillController', function ($scope, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents) {
+    .controller('NewPaymentFillController', function ($scope, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents, NRB_REGEX, RECIPIENT_DATA_REGEX) {
+
+        $scope.NRB_REGEX = new RegExp(NRB_REGEX);
+        $scope.RECIPIENT_DATA_REGEX = new RegExp(RECIPIENT_DATA_REGEX);
 
         angular.extend($scope.payment.formData, {
             realizationDate: Date.now()
