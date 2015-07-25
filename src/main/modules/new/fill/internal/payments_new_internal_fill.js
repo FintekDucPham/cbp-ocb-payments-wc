@@ -1,15 +1,16 @@
 angular.module('raiffeisen-payments')
-    .controller('NewInternalPaymentFillController', function ($scope, lodash, rbAccountSelectParams) {
+    .controller('NewInternalPaymentFillController', function ($scope, lodash, rbAccountSelectParams, translate) {
+
+        angular.extend($scope.payment.formData, {
+           title: translate.property('raiff.payments.new.internal.fill.default_title')
+        });
 
         function updatePaymentCurrencies() {
-            $scope.currencyList = lodash.union([
-                lodash.get($scope.payment.items.recipientAccount, 'currency'),
-                lodash.get($scope.payment.items.senderAccount, 'currency')
-            ]);
-            var currencyLocked = $scope.payment.options.currencyLocked = $scope.currencyList.length < 2;
-            if (currencyLocked) {
-                $scope.payment.formData.currency = $scope.currencyList[0];
-            }
+            var recipientAccountCurrency = lodash.get($scope.payment.items.recipientAccount, 'currency');
+            var senderAccountCurrency =  lodash.get($scope.payment.items.senderAccount, 'currency');
+            $scope.currencyList = lodash.union([recipientAccountCurrency, senderAccountCurrency]);
+            $scope.payment.options.currencyLocked = $scope.currencyList.length < 2;
+            $scope.payment.formData.currency = senderAccountCurrency;
         }
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', function () {
@@ -18,6 +19,7 @@ angular.module('raiffeisen-payments')
 
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.recipientSelectParams = new rbAccountSelectParams({
+            useFirstByDefault: false,
             accountFilter: function (accounts, $accountId) {
                 if (!!$accountId) {
                     return lodash.reject(accounts, {

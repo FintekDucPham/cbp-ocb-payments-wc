@@ -12,7 +12,7 @@ angular.module('raiffeisen-payments')
         $scope.RECIPIENT_DATA_REGEX = new RegExp(RECIPIENT_DATA_REGEX);
 
         angular.extend($scope.payment.formData, {
-            realizationDate: Date.now()
+            executionDate: Date.now()
         });
 
         $scope.$on('clearForm', function() {

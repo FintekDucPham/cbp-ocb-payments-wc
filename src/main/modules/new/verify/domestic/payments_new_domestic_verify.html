@@ -2,7 +2,7 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
         {{payment.formData.senderAccountId}} <!-- | nazwa -->
-       <br>
+       |
         {{payment.formData.senderAccountId}} <!-- | numer -->
     </bd-item-property>
 
@@ -12,7 +12,7 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
         {{payment.formData.recipientAccountNo}} <!-- | nrb -->
-        <br>
+        |
         {{payment.formData.recipientAccountNo}} <!-- | bank -->
     </bd-item-property>
 
@@ -31,7 +31,4 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
         {{payment.formData.executionDate}}
     </bd-item-property>
-
-    <!-- SMS TOKEN -->
-
 </div>

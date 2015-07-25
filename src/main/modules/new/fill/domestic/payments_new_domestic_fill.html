@@ -69,23 +69,34 @@
               placeholder="{{ ::'raiff.payments.new.domestic.fill.title.placeholder' | translate }}"></textarea>
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.amount' | translate }}">
-
-        <bd-amount-input>
-            <input bd-amount-input-value
-                   name="amount"
-                   class="input-field"
-                   bd-only-numbers
-                   ng-model="payment.formData.amount"
-                   ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
-                   required
-                   placeholder="{{ ::'raiff.payments.new.domestic.fill.amount_placeholder' | translate }}"/>
-            <input bd-amount-input-currency
-                   class="input-field"
-                   value="PLN"
-                   disabled
-                   placeholder="{{ ::'raiff.payments.new.domestic.fill.amount_placeholder' | translate }}"/>
-        </bd-amount-input>
+    <bd-item-property class="bd-item-property--multi"
+                      label="{{ ::'raiff.payments.new.domestic.fill.amount' | translate }}">
+        <div class="bd-item-property--multi__values">
+            <div class="bd-item-property__value--primary">
+                <input type="number"
+                       name="amount"
+                       class="input-field"
+                       bd-only-numbers
+                       ng-model="payment.formData.amount"
+                       ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
+                       required
+                       placeholder="{{ ::'raiff.payments.new.domestic.fill.amount_placeholder' | translate }}"/>
+            </div>
+            <div class="bd-item-property__value--secondary">
+                <ui-select ng-model="payment.formData.currency"
+                           theme="bootstrap"
+                           ng-disabled="true"
+                           ng-init="payment.formData.currency = 'PLN'"
+                           required>
+                    <ui-select-match placeholder="Waluta">
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="currency in ['PLN'] track by $index">
+                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
 
         <eb-validation-messages eb-name="amount">
             <div eb-message-key="required" class="validation-message animate-on">
@@ -100,8 +111,8 @@
 
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
-        <bd-date-input name="realizationDate"
-                       ng-model="payment.formData.realizationDate"
+        <bd-date-input name="executionDate"
+                       ng-model="payment.formData.executionDate"
                        ng-disabled="payment.items.senderAccount.productType === 'CREDIT'"
                        bd-attr-class="input-field"
                        bd-attr-placeholder="{{ ::'raiff.payments.new.domestic.fill.execution_date.placeholder' | translate }}"

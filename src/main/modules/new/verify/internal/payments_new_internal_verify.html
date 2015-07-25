@@ -1,0 +1,31 @@
+<div class="form-body">
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
+        {{payment.formData.senderAccountId}} <!-- | nazwa -->
+        |
+        {{payment.formData.senderAccountId}} <!-- | numer -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_data'|translate}}">
+        {{payment.formData.senderAccountId}} <!-- | w³aœciciel -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.recipient_account_name'|translate}}">
+        {{payment.formData.recipientAccountId}} <!-- | nazwa -->
+        |
+        {{payment.formData.recipientAccountId}} <!-- | numer -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.amount'|translate}}">
+        {{payment.formData.amount}}&nbsp;{{payment.formData.currency}} <!-- | nrb -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.title'|translate}}">
+        {{payment.formData.title}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">
+        {{payment.formData.executionDate | date : 'shortDate' }}
+    </bd-item-property>
+
+</div>

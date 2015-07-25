@@ -9,8 +9,8 @@ angular.module('raiffeisen-payments')
     .controller('NewPaymentVerifyController', function ($scope, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents) {
 
         $scope.$on(cardRestrictEvents.FORWARD_MOVE, function () {
-            var form = $scope.cardRestrictForm;
-            if ($scope.cardRestrictForm.$invalid) {
+            var form = $scope.paymentAuthForm;
+            if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
                 $scope.bdStepRemote.next();

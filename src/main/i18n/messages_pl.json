@@ -56,13 +56,14 @@
     "raiff.payments.new.label.header": "Przelew",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
-    "raiff.payments.new.types.INTERNAL": "Przelew wewnętrzny",
+    "raiff.payments.new.types.INTERNAL": "Przelew na rachunek własny",
     "raiff.payments.new.types.DOMESTIC": "Przelew krajowy",
     "raiff.payments.new.btn.change": "Popraw",
     "raiff.payments.new.btn.cancel": "Anuluj",
     "raiff.payments.new.btn.accept": "Zatwierdź",
     "raiff.payments.new.btn.clear": "Wyczyść",
     "raiff.payments.new.btn.next": "Dalej",
+    "raiff.payments.new.btn.finalize": "Wróć do listy",
     "raiff.payments.new.domestic.fill.sender_account": "Rachunek obciążany",
     "raiff.payments.new.domestic.fill.accessible_assets": "Dostepne środki",
     "raiff.payments.new.domestic.fill.recipient": "Odbiorca",
@@ -93,9 +94,11 @@
     "raiff.payments.new.domestic.verify.title": "Tytułem",
     "raiff.payments.new.domestic.verify.execution_date": "Data realizacji",
 
+    "raiff.payments.new.internal.fill.default_title": "Przelew środków",
     "raiff.payments.new.internal.fill.sender_account": "Rachunek obciążany",
-    "raiff.payments.new.internal.fill.accessible_assets": "Dostepne środki",
+    "raiff.payments.new.internal.fill.sender_account.accessible_assets": "Dostepne środki",
     "raiff.payments.new.internal.fill.recipient_account": "Rachunek odbiorcy",
+    "raiff.payments.new.internal.fill.recipient_account.accessible_assets": "Dostępne środki",
     "raiff.payments.new.internal.fill.title": "Tytułem",
     "raiff.payments.new.internal.fill.title.placeholder": "Wpisz tytuł przelewu",
     "raiff.payments.new.internal.fill.amount": "Kwota",
@@ -106,11 +109,12 @@
     "raiff.payments.new.internal.fill.execution_date.placeholder": "Wybierz datę realizacji",
 
     "raiff.payments.new.internal.verify.sender_account_name": "Z rachunku",
-    "raiff.payments.new.internal.verify.sender_data": "Właściciel",
-    "raiff.payments.new.internal.verify.recipient_account_no": "Na rachunek",
-    "raiff.payments.new.internal.verify.recipient_data": "Nazwa odbiorcy",
+    "raiff.payments.new.internal.verify.sender_data": "Dane odbiorcy",
+    "raiff.payments.new.internal.verify.recipient_account_name": "Na rachunek",
     "raiff.payments.new.internal.verify.amount": "Kwota",
     "raiff.payments.new.internal.verify.title": "Tytułem",
-    "raiff.payments.new.internal.verify.execution_date": "Data realizacji"
+    "raiff.payments.new.internal.verify.execution_date": "Data realizacji",
+
+    "raiff.payments.new.status.ok": "Przelew został przekazany do realizacji"
 
 }

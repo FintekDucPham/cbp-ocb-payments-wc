@@ -9,7 +9,7 @@
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.senderAccountId"
-                      label="{{ ::'raiff.payments.new.internal.fill.accessible_assets' | translate }}">
+                      label="{{ ::'raiff.payments.new.internal.fill.sender_account.accessible_assets' | translate }}">
         <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
@@ -19,6 +19,12 @@
         <rb-account-select rb-account-id="payment.formData.recipientAccountId"
                            rb-account-select-params="recipientSelectParams"
                            rb-account="payment.items.recipientAccount"></rb-account-select>
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.recipientAccountId"
+                      label="{{ ::'raiff.payments.new.internal.fill.recipient_account.accessible_assets' | translate }}">
+        <bd-amount amount="payment.items.recipientAccount.accessibleAssets"
+                   currency="{{ payment.items.recipientAccount.currency }}"></bd-amount>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multi"
@@ -71,7 +77,7 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.execution_date' | translate }}">
         <bd-date-input name="executionDate"
-                       ng-model="payment.formData.realizationDate"
+                       ng-model="payment.formData.executionDate"
                        ng-disabled="payment.items.senderAccount.productType === 'CREDIT'"
                        bd-attr-class="input-field"
                        bd-attr-placeholder="{{ ::'raiff.payments.new.domestic.fill.execution_date.placeholder' | translate }}"
@@ -79,15 +85,3 @@
     </bd-item-property>
 
 </div>
-
-<pre>
-
-    {{ payment.formData | json }}
-
-</pre>
-
-<pre>
-
-    {{ payment.items | json }}
-
-</pre>
