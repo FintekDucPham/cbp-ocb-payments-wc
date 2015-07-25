@@ -58,6 +58,8 @@
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
     "raiff.payments.new.types.INTERNAL": "Przelew na rachunek własny",
     "raiff.payments.new.types.DOMESTIC": "Przelew krajowy",
+    "raiff.payments.new.types.US": "Przelew do Urzędu Skarbowego",
+    "raiff.payments.new.types.ZUS": "Przelew do ZUS",
     "raiff.payments.new.btn.change": "Popraw",
     "raiff.payments.new.btn.cancel": "Anuluj",
     "raiff.payments.new.btn.accept": "Zatwierdź",
@@ -114,6 +116,24 @@
     "raiff.payments.new.internal.verify.amount": "Kwota",
     "raiff.payments.new.internal.verify.title": "Tytułem",
     "raiff.payments.new.internal.verify.execution_date": "Data realizacji",
+
+    "raiff.payments.new.zus.fill.sender_account": "Z rachunku",
+    "raiff.payments.new.zus.fill.accessible_assets": "Dostępne środki",
+    "raiff.payments.new.zus.fill.taxpayer": "Wybierz płatnika",
+    "raiff.payments.new.zus.fill.recipient_data": "Płatnik",
+    "raiff.payments.new.zus.fill.recipient_data.placeholder": "Wpisz dane płatnika",
+    "raiff.payments.new.zus.fill.taxpayer_nip": "NIP płatnika",
+    "raiff.payments.new.zus.fill.taxpayer_nip.placeholder": "Wpisz NIP płatnika",
+    "raiff.payments.new.zus.fill.taxpayer_supplementary_id_type": "Typ drugiego identyfikatora",
+    "raiff.payments.new.zus.fill.taxpayer_supplementary_id": "Numer drugiego identyfikatora",
+    "raiff.payments.new.zus.fill.taxpayer_nip.placeholder": "Wpisz numer drugiego identyfikatora",
+    "raiff.payments.new.zus.fill.payment_type": "Typ wpłaty",
+    "raiff.payments.new.zus.fill.declaration_date": "Deklaracja",
+    "raiff.payments.new.zus.fill.declaraton_no": "Numer deklaracji",
+    "raiff.payments.new.zus.fill.declaraton_no.placeholder": "Wpisz numer deklaracji",
+    "raiff.payments.new.zus.fill.additional_info": "Informacje dodatkowe",
+    "raiff.payments.new.zus.fill.additional_info.placeholder": "Wpisz informacje dodatkowe",
+    "raiff.payments.new.zus.fill.execution_date": "Data realizacji",
 
     "raiff.payments.new.status.ok": "Przelew został przekazany do realizacji"
 

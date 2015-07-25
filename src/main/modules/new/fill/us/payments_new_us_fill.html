@@ -1,0 +1,39 @@
+<div ng-controller="NewUsPaymentFillController">
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.sender_account' | translate }}">
+        <input name="senderAccountId" hidden ng-model="payment.formData.senderAccountId" required/>
+        <rb-account-select rb-account-id="payment.formData.senderAccountId"
+                           rb-account="payment.items.senderAccount"></rb-account-select>
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.senderAccountId"
+                      label="{{ ::'raiff.payments.new.us.fill.accessible_assets' | translate }}">
+        <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                   currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}">
+        <input name="recipientAccountNo"
+               ng-model="payment.formData.recipientAccountNo"
+               required
+               ng-pattern="NRB_REGEX"
+               class="input-field"
+               type="text"
+               placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}">
+
+        <div>
+            {{ payment.formData.recipientAccountNo <!-- | filter:nazwaus --> }}Urzad Skarbowy Krakow Podgorze
+        </div>
+
+        <eb-validation-messages eb-name="recipientAccountNo">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.us.fill.recipientAccountNo.required'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.us.fill.recipientAccountNo.pattern'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+</div>

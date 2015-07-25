@@ -1,0 +1,102 @@
+<div ng-controller="NewZusPaymentFillController">
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.sender_account' | translate }}">
+        <input name="senderAccountId" hidden ng-model="payment.formData.senderAccountId" required/>
+        <rb-account-select rb-account-id="payment.formData.senderAccountId"
+                           rb-account="payment.items.senderAccount"></rb-account-select>
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.senderAccountId"
+                      label="{{ ::'raiff.payments.new.zus.fill.accessible_assets' | translate }}">
+        <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                   currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer' | translate }}">
+        <rb-zus-taxpayer-select rb-zus-taxpayer="payment.items.taxpayer"></rb-zus-taxpayer-select>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.new.zus.fill.recipient_data' | translate }}">
+        <textarea name="taxpayerData"
+                  ng-model="payment.formData.taxpayerData"
+                  required
+                  class="input-field"
+                  placeholder="{{ ::'raiff.payments.new.zus.fill.recipient_data.placeholder' | translate }}"></textarea>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip' | translate }}">
+        <textarea name="taxpayerNip"
+                  ng-model="payment.formData.taxpayerNip"
+                  required
+                  class="input-field"
+                  placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip.placeholder' | translate }}"></textarea>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type' | translate }}">
+        <ui-select ng-model="payment.formData.taxpayerSupplementaryIdType"
+                   theme="bootstrap"
+                   required>
+            <ui-select-match>
+                {{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="supplementaryId in ['PESEL','REGON'] track by $index">
+                <div ng-bind-html="supplementaryId | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id' | translate }}">
+        <input name="taxpayerNip"
+               ng-model="payment.formData.taxpayerSupplementaryId"
+               required
+               class="input-field"
+               placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip.placeholder' | translate }}"/>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.payment_type' | translate }}">
+        <ui-select ng-model="payment.formData.paymentType"
+                   theme="bootstrap"
+                   required>
+            <ui-select-match>
+                {{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="paymentType in ['M','K'] track by $index">
+                <div ng-bind-html="paymentType | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.declaration_date' | translate }}">
+        <input name="declarationDate"
+               ng-model="payment.formData.declarationDate"
+               class="input-field"
+               placeholder="{{ ::'raiff.payments.new.zus.fill.declaration_date.placeholder' | translate }}"/>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.declaraton_no' | translate }}">
+        <input name="declarationNo"
+               ng-model="payment.formData.declarationNumber"
+               class="input-field"
+               placeholder="{{ ::'raiff.payments.new.zus.fill.declaraton_no.placeholder' | translate }}"/>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.additional_info' | translate }}">
+        <input name="declarationNo"
+               ng-model="payment.formData.declarationNumber"
+               class="input-field"
+               placeholder="{{ ::'raiff.payments.new.zus.fill.additional_info.placeholder' | translate }}"/>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.execution_date' | translate }}">
+        <bd-date-input name="executionDate"
+                       ng-model="payment.formData.executionDate"
+                       ng-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                       bd-attr-class="input-field"
+                       bd-attr-placeholder="{{ ::'raiff.payments.new.zus.fill.execution_date.placeholder' | translate }}"
+                       required></bd-date-input>
+    </bd-item-property>
+
+</div>

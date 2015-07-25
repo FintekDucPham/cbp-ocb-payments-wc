@@ -1,0 +1,15 @@
+<div class="rb-zus-taxpayer-select">
+    <ui-select ng-model="selection.taxpayer"
+               theme="bootstrap"
+               on-select="selectTaxpayer($item)"
+               required>
+        <ui-select-match placeholder="{{ placeholderText }}">
+            {{$select.selected.name}}
+        </ui-select-match>
+        <ui-select-choices repeat="taxpayerItem in taxpayerList track by $index">
+            <div ng-bind-html="taxpayerItem.name | highlight: $select.search"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>
+
+

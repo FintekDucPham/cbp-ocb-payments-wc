@@ -2,10 +2,10 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.sender_account' | translate }}">
         <input name="senderAccountId" hidden ng-model="payment.formData.senderAccountId" required/>
-        <rb-account-select rb-account-id="payment.formData.senderAccountId"
+        <rb-account-select rb-account="payment.items.senderAccount"
+                           rb-account-id="payment.formData.senderAccountId"
                            rb-account-select-params="senderSelectParams"
-                           rb-on-account-select="recipientSelectParams.update($accountId)"
-                           rb-account="payment.items.senderAccount"></rb-account-select>
+                           rb-on-account-select="recipientSelectParams.update($accountId)"></rb-account-select>
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.senderAccountId"
@@ -15,10 +15,12 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}">
-        <input name="senderAccountId" hidden ng-model="payment.formData.recipientAccountId" required/>
-        <rb-account-select rb-account-id="payment.formData.recipientAccountId"
-                           rb-account-select-params="recipientSelectParams"
-                           rb-account="payment.items.recipientAccount"></rb-account-select>
+        <input name="recipientAccountId" hidden ng-model="payment.formData.recipientAccountId" required/>
+        <rb-account-select
+                rb-account="payment.items.recipientAccount"
+                rb-account-id="payment.formData.recipientAccountId"
+                rb-account-select-params="recipientSelectParams"
+                required></rb-account-select>
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.recipientAccountId"

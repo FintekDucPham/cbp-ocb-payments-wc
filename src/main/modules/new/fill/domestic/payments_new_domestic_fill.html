@@ -109,8 +109,7 @@
 
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--multirow"
-                      label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
+    <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
         <bd-date-input name="executionDate"
                        ng-model="payment.formData.executionDate"
                        ng-disabled="payment.items.senderAccount.productType === 'CREDIT'"
