@@ -1,0 +1,93 @@
+<div ng-controller="NewInternalPaymentFillController">
+
+    <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.sender_account' | translate }}">
+        <input name="senderAccountId" hidden ng-model="payment.formData.senderAccountId" required/>
+        <rb-account-select rb-account-id="payment.formData.senderAccountId"
+                           rb-account-select-params="senderSelectParams"
+                           rb-on-account-select="recipientSelectParams.update($accountId)"
+                           rb-account="payment.items.senderAccount"></rb-account-select>
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.senderAccountId"
+                      label="{{ ::'raiff.payments.new.internal.fill.accessible_assets' | translate }}">
+        <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                   currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}">
+        <input name="senderAccountId" hidden ng-model="payment.formData.recipientAccountId" required/>
+        <rb-account-select rb-account-id="payment.formData.recipientAccountId"
+                           rb-account-select-params="recipientSelectParams"
+                           rb-account="payment.items.recipientAccount"></rb-account-select>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multi"
+                      label="{{ ::'raiff.payments.new.internal.fill.amount' | translate }}">
+
+        <div class="bd-item-property--multi__values">
+            <div class="bd-item-property__value--primary">
+                <input type="number"
+                       name="amount"
+                       class="input-field"
+                       bd-only-numbers
+                       ng-model="payment.formData.amount"
+                       ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
+                       required
+                       placeholder="{{ ::'raiff.payments.new.internal.fill.amount_placeholder' | translate }}"/>
+            </div>
+            <div class="bd-item-property__value--secondary">
+                <ui-select ng-model="payment.formData.currency"
+                           theme="bootstrap"
+                           ng-disabled="payment.options.currencyLocked"
+                           required>
+                    <ui-select-match placeholder="Waluta">
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="currency in currencyList track by $index">
+                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+
+        <eb-validation-messages eb-name="amount">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.amount.required'|translate}}
+            </div>
+            <div eb-message-key="ngMax" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.amount.max'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.new.internal.fill.title' | translate }}">
+    <textarea name="title"
+              ng-model="payment.formData.title"
+              class="input-area"
+              placeholder="{{ ::'raiff.payments.new.internal.fill.title.placeholder' | translate }}"></textarea>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.execution_date' | translate }}">
+        <bd-date-input name="executionDate"
+                       ng-model="payment.formData.realizationDate"
+                       ng-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                       bd-attr-class="input-field"
+                       bd-attr-placeholder="{{ ::'raiff.payments.new.domestic.fill.execution_date.placeholder' | translate }}"
+                       required></bd-date-input>
+    </bd-item-property>
+
+</div>
+
+<pre>
+
+    {{ payment.formData | json }}
+
+</pre>
+
+<pre>
+
+    {{ payment.items | json }}
+
+</pre>

@@ -91,6 +91,26 @@
     "raiff.payments.new.domestic.verify.recipient_data": "Nazwa odbiorcy",
     "raiff.payments.new.domestic.verify.amount": "Kwota",
     "raiff.payments.new.domestic.verify.title": "Tytułem",
-    "raiff.payments.new.domestic.verify.execution_date": "Data realizacji"
+    "raiff.payments.new.domestic.verify.execution_date": "Data realizacji",
+
+    "raiff.payments.new.internal.fill.sender_account": "Rachunek obciążany",
+    "raiff.payments.new.internal.fill.accessible_assets": "Dostepne środki",
+    "raiff.payments.new.internal.fill.recipient_account": "Rachunek odbiorcy",
+    "raiff.payments.new.internal.fill.title": "Tytułem",
+    "raiff.payments.new.internal.fill.title.placeholder": "Wpisz tytuł przelewu",
+    "raiff.payments.new.internal.fill.amount": "Kwota",
+    "raiff.payments.new.internal.fill.amount_placeholder": "Wpisz kwotę przelewu",
+    "raiff.payments.new.internal.fill.amount.required": "Kwota jest wymagana",
+    "raiff.payments.new.internal.fill.amount.max": "Kwota przekracza dostępne środki",
+    "raiff.payments.new.internal.fill.execution_date": "Data realizacji",
+    "raiff.payments.new.internal.fill.execution_date.placeholder": "Wybierz datę realizacji",
+
+    "raiff.payments.new.internal.verify.sender_account_name": "Z rachunku",
+    "raiff.payments.new.internal.verify.sender_data": "Właściciel",
+    "raiff.payments.new.internal.verify.recipient_account_no": "Na rachunek",
+    "raiff.payments.new.internal.verify.recipient_data": "Nazwa odbiorcy",
+    "raiff.payments.new.internal.verify.amount": "Kwota",
+    "raiff.payments.new.internal.verify.title": "Tytułem",
+    "raiff.payments.new.internal.verify.execution_date": "Data realizacji"
 
 }

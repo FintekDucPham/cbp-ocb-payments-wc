@@ -25,14 +25,7 @@ angular.module('raiffeisen-payments')
                 fixedAccountSelection: false,
                 fixedRecipientSelection: false
             },
-            formData: {
-                senderAccountId: null,
-                recipientAccountNo: null,
-                recipientData: null,
-                title: null,
-                amount: null,
-                executionDate: null
-            },
+            formData: {},
             items: {
 
             },
@@ -76,7 +69,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.getTemplateName = function (stepName) {
-            return pathService.generateTemplatePath("raiffeisen-payments") + '/modules/new/' + stepName + '/payments_new_' + $stateParams.paymentType + '_' + stepName + '.html';
+            return "{0}/modules/new/{1}/{2}/payments_new_{2}_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName, $stateParams.paymentType);
         };
 
         $scope.changePaymentType = function(type) {
