@@ -1,19 +1,19 @@
 <div class="form-body">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
-        {{payment.formData.remitterAccountId}} <!-- | nazwa -->
+        {{payment.items.senderAccount.accountName}} <!-- | nazwa -->
         |
-        {{payment.formData.remitterAccountId}} <!-- | numer -->
+        {{payment.items.senderAccount.accountNo}} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_data'|translate}}">
-        {{payment.formData.remitterAccountId}} <!-- | w³aœciciel -->
+        {{payment.items.senderAccount.ownerName}} <!-- | w³aœciciel -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.recipient_account_name'|translate}}">
-        {{payment.formData.recipientAccountId}} <!-- | nazwa -->
+        {{payment.items.recipientAccount.accountName}} <!-- | nazwa -->
         |
-        {{payment.formData.recipientAccountId}} <!-- | numer -->
+        {{payment.items.recipientAccount.accountNo}} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.amount'|translate}}">
