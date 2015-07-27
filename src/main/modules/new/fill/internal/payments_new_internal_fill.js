@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .controller('NewInternalPaymentFillController', function ($scope, lodash, rbAccountSelectParams, translate) {
 
         angular.extend($scope.payment.formData, {
-           title: translate.property('raiff.payments.new.internal.fill.default_title')
+           description: translate.property('raiff.payments.new.internal.fill.default_description')
         });
 
         function updatePaymentCurrencies() {

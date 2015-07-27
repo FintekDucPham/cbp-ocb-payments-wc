@@ -6,14 +6,16 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents) {
+    .controller('NewPaymentVerifyController', function ($scope, paymentsService, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents) {
 
         $scope.$on(cardRestrictEvents.FORWARD_MOVE, function () {
             var form = $scope.paymentAuthForm;
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                $scope.bdStepRemote.next();
+                paymentsService.action($scope.payment.formData, 'create_{0}_transfer'.format($scope.payment.type.service)).then(function() {
+                    $scope.bdStepRemote.next();
+                });
             }
         });
 

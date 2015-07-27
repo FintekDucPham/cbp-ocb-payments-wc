@@ -1,12 +1,12 @@
 <div ng-controller="NewUsPaymentFillController">
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.sender_account' | translate }}">
-        <input name="senderAccountId" hidden ng-model="payment.formData.senderAccountId" required/>
-        <rb-account-select rb-account-id="payment.formData.senderAccountId"
+        <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
+        <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
-    <bd-item-property ng-if="payment.formData.senderAccountId"
+    <bd-item-property ng-if="payment.formData.remitterAccountId"
                       label="{{ ::'raiff.payments.new.us.fill.accessible_assets' | translate }}">
         <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>

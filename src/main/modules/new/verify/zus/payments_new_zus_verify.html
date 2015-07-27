@@ -1,13 +1,13 @@
 <div class="form-body" ng-controller="NewZusPaymentVerifyController">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_account_name'|translate}}">
-        {{payment.formData.senderAccountId}} <!-- | nazwa -->
+        {{payment.formData.remitterAccountId}} <!-- | nazwa -->
         |
-        {{payment.formData.senderAccountId}} <!-- | numer -->
+        {{payment.formData.remitterAccountId}} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_data'|translate}}">
-        {{payment.formData.senderAccountId}} <!-- | w³aœciciel -->
+        {{payment.formData.remitterAccountId}} <!-- | w³aœciciel -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
@@ -45,7 +45,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.execution_date'|translate}}">
-        {{payment.formData.executionDate|date:'mediumDate'}}
+        {{payment.formData.realizationDate|date:'mediumDate'}}
     </bd-item-property>
 
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.verify.payment_data' | translate }}">

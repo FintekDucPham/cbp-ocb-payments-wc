@@ -46,6 +46,7 @@
                        ng-click="clearForm()">{{ ::'raiff.payments.new.btn.clear' | translate }}
             </bd-button>
             <bd-button class="bd-form-footer__button--positive bd-button__primary"
+                       type="submit"
                        ng-show="activeStep.id === 'fill'"
                        ng-click="moveForward()">{{ ::'raiff.payments.new.btn.next' | translate }}
             </bd-button>
