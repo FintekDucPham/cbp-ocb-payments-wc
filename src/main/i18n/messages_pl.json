@@ -129,11 +129,19 @@
     "raiff.payments.new.zus.fill.taxpayer_nip.placeholder": "Wpisz numer drugiego identyfikatora",
     "raiff.payments.new.zus.fill.payment_type": "Typ wpłaty",
     "raiff.payments.new.zus.fill.declaration_date": "Deklaracja",
+    "raiff.payments.new.zus.fill.declaration_date.placeholder": "Deklaracja rrrrdd",
     "raiff.payments.new.zus.fill.declaraton_no": "Numer deklaracji",
     "raiff.payments.new.zus.fill.declaraton_no.placeholder": "Wpisz numer deklaracji",
     "raiff.payments.new.zus.fill.additional_info": "Informacje dodatkowe",
     "raiff.payments.new.zus.fill.additional_info.placeholder": "Wpisz informacje dodatkowe",
     "raiff.payments.new.zus.fill.execution_date": "Data realizacji",
+    "raiff.payments.new.zus.fill.payment_options": "Dane ubezpieczeń",
+    "raiff.payments.new.zus.fill.payment_option.sp": "Ubezpieczenie społeczne",
+    "raiff.payments.new.zus.fill.payment_option.zd": "Ubezpieczenie zdrowotne",
+    "raiff.payments.new.zus.fill.payment_option.fp_fgsp": "Ubezpieczenie FP i FGSP",
+    "raiff.payments.new.zus.fill.payment_option.fep": "Fundusz Emerytur Pomostowych",
+    "raiff.payments.new.zus.fill.payment_options.amount": "Ubezpieczenie zdrowotne",
+    "raiff.payments.new.zus.fill.total_payment": "Kwota całkowita",
 
     "raiff.payments.new.status.ok": "Przelew został przekazany do realizacji"
 

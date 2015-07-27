@@ -99,4 +99,54 @@
                        required></bd-date-input>
     </bd-item-property>
 
+    <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.fill.payment_options' | translate }}">
+
+        <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurances">
+            <bd-checkbox-select-option ng-repeat="insuranceType in zusInsuranceTypes"
+                                       bd-checkbox-key="{{ insuranceType }}">
+
+
+                <bd-item-property
+                        label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insuranceType | translate }}">
+
+                    <div class="bd-pair">
+                        <div class="bd-pair__value">
+                            <input ng-model="payment.formData.insurances[insuranceType].amount"
+                                   type="number"
+                                   class="input-field"
+                                   ng-disabled="!payment.formData.insurances[insuranceType].active"
+                                   name="amount"/>
+                        </div>
+                        <div class="bd-pair__value">
+                            <ui-select ng-model="payment.formData.insurances[insuranceType].currency"
+                                       theme="bootstrap"
+                                       ng-disabled="!payment.formData.insurances[insuranceType].active"
+                                       ng-init="payment.formData.currency = 'PLN'">
+                                <ui-select-match placeholder="Waluta">
+                                    {{$select.selected}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="currency in ['PLN', 'EUR', 'USD'] track by $index">
+                                    <div ng-bind-html="currency | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+
+                </bd-item-property>
+            </bd-checkbox-select-option>
+        </bd-checkbox-select>
+
+        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-if="totalPaymentAmount.length > 0">
+            <div class="rb-payments-new-zus-fill__summary">
+                <div ng-repeat="summary in totalPaymentAmount" class="rb-payments-new-zus-fill__summary-entry">
+                    <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
+                </div>
+            </div>
+        </bd-item-property>
+
+
+
+
+    </bd-panel>
+
 </div>
