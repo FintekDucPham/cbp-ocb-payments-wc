@@ -16,6 +16,10 @@ angular.module('raiffeisen-payments')
             service: 'zus'
         }
     })
+    .constant('paymentEvents', {
+        FORWARD_MOVE: 'forward-move',
+        BACKWARD_MOVE: 'backward-move'
+    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new', {
             url: "/new/:paymentType",
@@ -24,7 +28,7 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsNewController"
         });
     })
-    .controller('PaymentsNewController', function (rbPaymentTypes, pathService, $scope, translate, $stateParams, $state, viewStateService, formService, cardsService, cardRestrictEvents, lodash) {
+    .controller('PaymentsNewController', function (rbPaymentTypes, pathService, $scope, translate, $stateParams, $state, viewStateService, formService, paymentEvents, lodash) {
 
         $scope.payment = angular.extend({
             type: lodash.find(rbPaymentTypes, {state: $stateParams.paymentType || 'domestic'}),
@@ -63,12 +67,12 @@ angular.module('raiffeisen-payments')
 
         $scope.moveForward = function () {
             commitState();
-            $scope.$broadcast(cardRestrictEvents.FORWARD_MOVE);
+            $scope.$broadcast(paymentEvents.FORWARD_MOVE);
         };
 
         $scope.moveBackwards = function () {
             commitState();
-            $scope.$broadcast(cardRestrictEvents.BACKWARD_MOVE);
+            $scope.$broadcast(paymentEvents.BACKWARD_MOVE);
         };
 
         $scope.getTemplateName = function (stepName) {

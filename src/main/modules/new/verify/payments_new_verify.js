@@ -6,9 +6,9 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, paymentsService, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents) {
+    .controller('NewPaymentVerifyController', function ($scope, paymentsService, translate, $stateParams, $state, initialState, viewStateService, domService, formService, paymentEvents) {
 
-        $scope.$on(cardRestrictEvents.FORWARD_MOVE, function () {
+        $scope.$on(paymentEvents.FORWARD_MOVE, function () {
             var form = $scope.paymentAuthForm;
             if (form.$invalid) {
                 formService.dirtyFields(form);
@@ -19,7 +19,7 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        $scope.$on(cardRestrictEvents.BACKWARD_MOVE, function () {
+        $scope.$on(paymentEvents.BACKWARD_MOVE, function () {
             $scope.bdStepRemote.prev();
         });
 

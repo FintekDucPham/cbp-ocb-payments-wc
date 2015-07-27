@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentFillController"
         });
     })
-    .controller('NewPaymentFillController', function ($scope, lodash, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents, NRB_REGEX, RECIPIENT_DATA_REGEX) {
+    .controller('NewPaymentFillController', function ($scope, lodash, translate, $stateParams, $state, initialState, viewStateService, domService, formService, paymentEvents, NRB_REGEX, RECIPIENT_DATA_REGEX) {
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.RECIPIENT_DATA_REGEX = new RegExp(RECIPIENT_DATA_REGEX);
@@ -19,7 +19,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
-        $scope.$on(cardRestrictEvents.FORWARD_MOVE, function () {
+        $scope.$on(paymentEvents.FORWARD_MOVE, function () {
             var form = $scope.paymentForm;
             if (form.$invalid) {
                 formService.dirtyFields(form);
