@@ -1,0 +1,63 @@
+<div class="form-body" ng-controller="NewZusPaymentVerifyController">
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_account_name'|translate}}">
+        {{payment.formData.senderAccountId}} <!-- | nazwa -->
+        |
+        {{payment.formData.senderAccountId}} <!-- | numer -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_data'|translate}}">
+        {{payment.formData.senderAccountId}} <!-- | w³aœciciel -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
+        {{payment.formData.taxpayerData}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">
+        {{payment.formData.taxpayerNip}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_supplementary_id_type'|translate}}">
+        {{::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.taxpayerSupplementaryIdType | translate }}
+        <!-- desc? -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_supplementary_id'|translate}}">
+        {{payment.formData.taxpayerSupplementaryId}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment_type'|translate}}">
+        {{::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.paymentType | translate }}
+        <!-- desc? -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.declaration_date'|translate}}">
+        {{payment.formData.declarationDate}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.declaraton_no'|translate}}">
+        {{payment.formData.declarationNumber}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.additional_info'|translate}}">
+        {{payment.formData.additionalInfo}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.execution_date'|translate}}">
+        {{payment.formData.executionDate|date:'mediumDate'}}
+    </bd-item-property>
+
+    <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.verify.payment_data' | translate }}">
+
+        <div ng-repeat="(key, value) in payment.formData.insurances">
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + key |translate}}">
+                {{value.socialAccountNumber}} <!-- nazwa --> |
+                {{value.socialAccountNumber}} <!-- | numer -->
+                <bd-amount amount="value.amount" currency="{{ value.currency }}"></bd-amount>
+            </bd-item-property>
+        </div>
+
+    </bd-panel>
+
+</div>

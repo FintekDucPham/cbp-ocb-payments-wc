@@ -157,6 +157,23 @@
     "raiff.payments.new.zus.fill.payment_options.amount": "Ubezpieczenie zdrowotne",
     "raiff.payments.new.zus.fill.total_payment": "Kwota całkowita",
 
+    "raiff.payments.new.zus.verify.sender_account_name": "Z rachunku",
+    "raiff.payments.new.zus.verify.sender_data": "Właściciel",
+    "raiff.payments.new.zus.verify.taxpayer_data": "Nazwa płatnika",
+    "raiff.payments.new.zus.verify.taxpayer_nip": "NIP płatnika",
+    "raiff.payments.new.zus.verify.taxpayer_supplementary_id_type": "Typ drugiego identyfikatora",
+    "raiff.payments.new.zus.verify.taxpayer_supplementary_id": "Drugi identyfikator",
+    "raiff.payments.new.zus.verify.payment_type": "Typ wpłaty",
+    "raiff.payments.new.zus.verify.declaration_date": "Deklaracja",
+    "raiff.payments.new.zus.verify.declaraton_no": "Numer deklaracji",
+    "raiff.payments.new.zus.verify.additional_info": "Informacje dodatkowe",
+    "raiff.payments.new.zus.verify.execution_date": "Data realizacji",
+    "raiff.payments.new.zus.verify.payment_data": "Dane przelewu",
+    "raiff.payments.new.zus.verify.payment.sp": "Na ubezpieczenie społeczne",
+    "raiff.payments.new.zus.verify.payment.zd": "Na ubezpieczenie zdrowotne",
+    "raiff.payments.new.zus.verify.payment.fp_fgsp": "Na ubezpieczenie FP i FGSP",
+    "raiff.payments.new.zus.verify.payment.fep": "Na Fundusz Emerytur Pomostowych",
+
     "raiff.payments.new.status.ok": "Przelew został przekazany do realizacji"
 
 }

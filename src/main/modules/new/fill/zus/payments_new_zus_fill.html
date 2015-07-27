@@ -89,7 +89,7 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.additional_info' | translate }}">
         <input name="declarationNo"
-               ng-model="payment.formData.declarationNumber"
+               ng-model="payment.formData.additionalInfo"
                class="input-field"
                placeholder="{{ ::'raiff.payments.new.zus.fill.additional_info.placeholder' | translate }}"/>
     </bd-item-property>
@@ -119,12 +119,15 @@
                             <input ng-model="payment.formData.insurances[insuranceType].amount"
                                    type="number"
                                    class="input-field"
+                                   required
                                    ng-disabled="!payment.formData.insurances[insuranceType].active"
-                                   name="amount"/>
+                                   name="{{ insuranceType }}Amount"/>
                         </div>
                         <div class="bd-pair__value">
                             <ui-select ng-model="payment.formData.insurances[insuranceType].currency"
                                        theme="bootstrap"
+                                       required
+                                       name="{{ insuranceType }}Currency"
                                        ng-init="payment.formData.insurances[insuranceType].currency = 'PLN'"
                                        ng-disabled="!payment.formData.insurances[insuranceType].active">
                                 <ui-select-match placeholder="Waluta">
@@ -141,17 +144,16 @@
             </bd-checkbox-select-option>
         </bd-checkbox-select>
 
-        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-if="totalPaymentAmount.length > 0">
+        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-if="paymentForm.$valid && totalPaymentAmount.length > 0">
             <div class="rb-payments-new-zus-fill__summary">
                 <div ng-repeat="summary in totalPaymentAmount" class="rb-payments-new-zus-fill__summary-entry">
                     <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
                 </div>
             </div>
         </bd-item-property>
-
-
-
-
     </bd-panel>
 
+    <pre>
+        {{ paymentForm | json }}
+    </pre>
 </div>
