@@ -6,7 +6,8 @@ angular.module('raiffeisen-payments')
             scope: {
                 taxpayerId: '=rbZusTaxpayerId',
                 taxpayer: '=rbZusTaxpayer',
-                taxpayerList: '=?rbZusTaxpayer'
+                taxpayerList: '=?rbZusTaxpayer',
+                placeholderText: '@rbPlaceholderText'
             },
             controller: function ($scope) {
                 $scope.taxpayerList = lodash.times(3, function (i) {

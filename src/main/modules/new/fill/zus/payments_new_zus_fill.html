@@ -13,7 +13,9 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer' | translate }}">
-        <rb-zus-taxpayer-select rb-zus-taxpayer="payment.items.taxpayer"></rb-zus-taxpayer-select>
+        <rb-zus-taxpayer-select
+                rb-zus-taxpayer="payment.items.taxpayer"
+                rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.taxpayer.placeholder' | translate }}"></rb-zus-taxpayer-select>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow"
@@ -38,12 +40,13 @@
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type' | translate }}">
         <ui-select ng-model="payment.formData.taxpayerSupplementaryIdType"
                    theme="bootstrap"
+                   ng-init="payment.formData.taxpayerSupplementaryIdType = payment.meta.zusSuplementaryIds[0]"
                    required>
             <ui-select-match>
-                {{$select.selected}}
+                {{ 'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + $select.selected | translate }}
             </ui-select-match>
-            <ui-select-choices repeat="supplementaryId in ['PESEL','REGON'] track by $index">
-                <div ng-bind-html="supplementaryId | highlight: $select.search"></div>
+            <ui-select-choices repeat="supplementaryId in payment.meta.zusSuplementaryIds track by $index">
+                <div ng-bind-html="::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
     </bd-item-property>
@@ -59,12 +62,13 @@
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.payment_type' | translate }}">
         <ui-select ng-model="payment.formData.paymentType"
                    theme="bootstrap"
+                   ng-init="payment.formData.paymentType = payment.meta.zusPaymentTypes[0]"
                    required>
             <ui-select-match>
-                {{$select.selected}}
+                {{ 'raiff.payments.new.zus.fill.payment_type.' + $select.selected | translate}}
             </ui-select-match>
-            <ui-select-choices repeat="paymentType in ['M','K'] track by $index">
-                <div ng-bind-html="paymentType | highlight: $select.search"></div>
+            <ui-select-choices repeat="paymentType in payment.meta.zusPaymentTypes track by $index">
+                <div ng-bind-html="::'raiff.payments.new.zus.fill.payment_type.' + paymentType | translate  | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
     </bd-item-property>
@@ -102,7 +106,8 @@
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.fill.payment_options' | translate }}">
 
         <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurances">
-            <bd-checkbox-select-option ng-repeat="insuranceType in zusInsuranceTypes"
+            <bd-checkbox-select-option ng-repeat="insuranceType in payment.meta.zusInsuranceTypes"
+                                       bd-on-uncheck="payment.formData.insurances[insuranceType].amount = undefined"
                                        bd-checkbox-key="{{ insuranceType }}">
 
 
@@ -120,8 +125,8 @@
                         <div class="bd-pair__value">
                             <ui-select ng-model="payment.formData.insurances[insuranceType].currency"
                                        theme="bootstrap"
-                                       ng-disabled="!payment.formData.insurances[insuranceType].active"
-                                       ng-init="payment.formData.currency = 'PLN'">
+                                       ng-init="payment.formData.insurances[insuranceType].currency = 'PLN'"
+                                       ng-disabled="!payment.formData.insurances[insuranceType].active">
                                 <ui-select-match placeholder="Waluta">
                                     {{$select.selected}}
                                 </ui-select-match>

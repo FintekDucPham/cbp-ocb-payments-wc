@@ -1,8 +1,14 @@
 angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['sp', 'zd', 'fp_fgsp', 'fep'])
-    .controller('NewZusPaymentFillController', function ($scope, lodash, zusPaymentInsurances) {
+    .constant('zusSuplementaryIds', ['P', 'R', '1', '2'])
+    .constant('zusPaymentTypes', "S M U T E A B D".split(' '))
+    .controller('NewZusPaymentFillController', function ($scope, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes) {
 
-        $scope.zusInsuranceTypes = zusPaymentInsurances;
+        angular.extend($scope.payment.meta, {
+            zusInsuranceTypes: zusPaymentInsurances,
+            zusSuplementaryIds: zusSuplementaryIds,
+            zusPaymentTypes: zusPaymentTypes
+        });
 
         function calculateInsurancesAmount() {
             return lodash.map(lodash.groupBy(lodash.filter($scope.payment.formData.insurances, function (element) {
