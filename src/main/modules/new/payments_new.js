@@ -8,7 +8,7 @@ angular.module('raiffeisen-payments')
         "INTERNAL": {
             code: 'INTERNAL',
             state: 'internal',
-            service: 'own'
+            service: 'between_own_accounts'
         },
         "ZUS": {
             code: 'ZUS',

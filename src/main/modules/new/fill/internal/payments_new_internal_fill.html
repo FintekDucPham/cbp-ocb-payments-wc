@@ -15,12 +15,19 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}">
-        <input name="recipientAccountId" hidden ng-model="payment.formData.recipientAccountId" required/>
         <rb-account-select
                 rb-account="payment.items.recipientAccount"
                 rb-account-id="payment.formData.recipientAccountId"
                 rb-account-select-params="recipientSelectParams"
-                required></rb-account-select>
+                bd-attr-name="recipientAccountId"
+                bd-attr-required></rb-account-select>
+
+        <eb-validation-messages eb-name="recipientAccountId">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.recipient_account.required'|translate}}
+            </div>
+        </eb-validation-messages>
+
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.recipientAccountId"

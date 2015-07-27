@@ -13,7 +13,10 @@ angular.module('raiffeisen-payments')
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                paymentsService.action($scope.payment.formData, 'create_{0}_transfer'.format($scope.payment.type.service)).then(function() {
+                paymentsService.action(angular.extend($scope.payment.formData, {
+                    remitterId: $scope.payment.items.senderAccount.ownersList[0].customerId,
+                    transferFromTemplate: false
+                }), 'create_{0}_transfer'.format($scope.payment.type.service)).then(function() {
                     $scope.bdStepRemote.next();
                 });
             }
