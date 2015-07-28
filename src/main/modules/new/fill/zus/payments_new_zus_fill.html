@@ -12,34 +12,47 @@
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer' | translate }}">
-        <rb-zus-taxpayer-select
-                rb-zus-taxpayer="payment.items.taxpayer"
-                rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.taxpayer.placeholder' | translate }}"></rb-zus-taxpayer-select>
-    </bd-item-property>
-
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.zus.fill.recipient_data' | translate }}">
         <textarea name="taxpayerData"
                   ng-model="payment.formData.taxpayerData"
                   required
-                  class="input-field"
+                  class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.zus.fill.recipient_data.placeholder' | translate }}"></textarea>
 
     </bd-item-property>
 
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_select' | translate }}">
+        <rb-zus-taxpayer-select
+                rb-zus-taxpayer="payment.items.taxpayer"
+                rb-on-clear-taxpayer="clearTaxpayer()"
+                rb-on-select-taxpayer="selectTaxpayer($taxpayer)"
+                rb-taxpayer-clear-text="{{ ::'raiff.payments.new.zus.fill.taxpayer_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.taxpayer_select.placeholder' | translate }}"></rb-zus-taxpayer-select>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer' | translate }}">
+        <input name="taxpayer"
+               ng-model="payment.formData.taxpayer"
+               required
+               class="input-field"
+               placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer.placeholder' | translate }}" />
+
+    </bd-item-property>
+
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip' | translate }}">
-        <textarea name="taxpayerNip"
+        <input name="taxpayerNip"
                   ng-model="payment.formData.taxpayerNip"
                   required
                   class="input-field"
-                  placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip.placeholder' | translate }}"></textarea>
+                  placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip.placeholder' | translate }}" />
 
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type' | translate }}">
         <ui-select ng-model="payment.formData.taxpayerSupplementaryIdType"
                    theme="bootstrap"
+                   placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    ng-init="payment.formData.taxpayerSupplementaryIdType = payment.meta.zusSuplementaryIds[0]"
                    required>
             <ui-select-match>
@@ -62,6 +75,7 @@
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.payment_type' | translate }}">
         <ui-select ng-model="payment.formData.paymentType"
                    theme="bootstrap"
+                   placeholder="{{ ::'raiff.payments.new.zus.fill.payment_type.placeholder' | translate }}"
                    ng-init="payment.formData.paymentType = payment.meta.zusPaymentTypes[0]"
                    required>
             <ui-select-match>
@@ -119,14 +133,14 @@
                             <input ng-model="payment.formData.insurances[insuranceType].amount"
                                    type="number"
                                    class="input-field"
-                                   required
+                                   ng-required="payment.formData.insurances[insuranceType].active"
                                    ng-disabled="!payment.formData.insurances[insuranceType].active"
                                    name="{{ insuranceType }}Amount"/>
                         </div>
                         <div class="bd-pair__value">
                             <ui-select ng-model="payment.formData.insurances[insuranceType].currency"
                                        theme="bootstrap"
-                                       required
+                                       ng-required="payment.formData.insurances[insuranceType].active"
                                        name="{{ insuranceType }}Currency"
                                        ng-init="payment.formData.insurances[insuranceType].currency = 'PLN'"
                                        ng-disabled="!payment.formData.insurances[insuranceType].active">
@@ -144,7 +158,7 @@
             </bd-checkbox-select-option>
         </bd-checkbox-select>
 
-        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-if="paymentForm.$valid && totalPaymentAmount.length > 0">
+        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-if="totalPaymentAmount.length > 0">
             <div class="rb-payments-new-zus-fill__summary">
                 <div ng-repeat="summary in totalPaymentAmount" class="rb-payments-new-zus-fill__summary-entry">
                     <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>

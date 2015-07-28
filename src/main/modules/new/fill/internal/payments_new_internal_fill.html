@@ -67,10 +67,10 @@
 
         <eb-validation-messages eb-name="amount">
             <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.internal.fill.amount.required'|translate}}
+                {{::'raiff.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
             <div eb-message-key="ngMax" class="validation-message animate-on">
-                {{::'raiff.payments.new.internal.fill.amount.max'|translate}}
+                {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
         </eb-validation-messages>
 
@@ -80,8 +80,19 @@
                       label="{{ ::'raiff.payments.new.internal.fill.description' | translate }}">
     <textarea name="description"
               ng-model="payment.formData.description"
-              class="input-area"
+              ng-pattern="PAYMENT_DESCRIPTION_REGEX"
+              class="input-area input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
+
+        <eb-validation-messages eb-name="description">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.description.EMPTY_TITLE'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
+            </div>
+        </eb-validation-messages>
+
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.execution_date' | translate }}">
@@ -91,6 +102,19 @@
                        bd-attr-class="input-field"
                        bd-attr-placeholder="{{ ::'raiff.payments.new.domestic.fill.execution_date.placeholder' | translate }}"
                        required></bd-date-input>
+
+        <eb-validation-messages eb-name="realizationDate">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="ngMin" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="ngMax" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.execution_date.LATER_EXECUTED_DATE'|translate}}
+            </div>
+        </eb-validation-messages>
+
     </bd-item-property>
 
 </div>

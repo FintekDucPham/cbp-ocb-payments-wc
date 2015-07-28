@@ -1,14 +1,17 @@
 angular.module('raiffeisen-payments')
     .controller('NewZusPaymentVerifyController', function ($scope, lodash) {
-        $scope.payment.formData.insurances = lodash.filter($scope.payment.formData.insurances, {active: true});
-        angular.forEach($scope.payment.formData.insurances, function (value, key) {
+        $scope.payment.formData.insurances = lodash.indexBy(lodash.filter(lodash.mapValues($scope.payment.formData.insurances, function(obj, key) {
             switch (key) {
                 case 'us':
-                    value.socialAccountNumber = "22 1111 2222 3333 4444 5555 6666";
+                    obj.socialAccountNumber = "22 1111 2222 3333 4444 5555 6666";
                     break;
                 default:
-                    value.socialAccountNumber = "22 1111 2222 3333 4444 5555 6666";
+                    obj.socialAccountNumber = "22 5555 2222 3333 4444 5555 4444";
                     break;
             }
-        });
+            obj.key = key;
+            return obj;
+        }), {
+            active: true
+        }), 'key');
     });

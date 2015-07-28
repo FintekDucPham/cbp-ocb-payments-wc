@@ -1,13 +1,13 @@
 <div class="form-body" ng-controller="NewZusPaymentVerifyController">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_account_name'|translate}}">
-        {{payment.formData.remitterAccountId}} <!-- | nazwa -->
+        {{payment.items.senderAccount.accountName}} <!-- | nazwa -->
         |
-        {{payment.formData.remitterAccountId}} <!-- | numer -->
+        {{payment.items.senderAccount.accountNo}} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_data'|translate}}">
-        {{payment.formData.remitterAccountId}} <!-- | w³aœciciel -->
+        {{payment.items.senderAccount.ownerName}} <!-- | w³aœciciel -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
@@ -19,7 +19,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_supplementary_id_type'|translate}}">
-        {{::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.taxpayerSupplementaryIdType | translate }}
+        {{::('raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.taxpayerSupplementaryIdType) | translate }}
         <!-- desc? -->
     </bd-item-property>
 
@@ -28,7 +28,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment_type'|translate}}">
-        {{::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.paymentType | translate }}
+        {{::'raiff.payments.new.zus.fill.payment_type.' + payment.formData.paymentType | translate }}
         <!-- desc? -->
     </bd-item-property>
 
@@ -52,9 +52,9 @@
 
         <div ng-repeat="(key, value) in payment.formData.insurances">
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + key |translate}}">
-                {{value.socialAccountNumber}} <!-- nazwa --> |
-                {{value.socialAccountNumber}} <!-- | numer -->
-                <bd-amount amount="value.amount" currency="{{ value.currency }}"></bd-amount>
+                {{ ::'raiff.payments.new.zus.verify.tmp.zus_name' | translate }}<br>
+                {{value.socialAccountNumber}}<br>
+                {{value.amount}} {{ value.currency }}
             </bd-item-property>
         </div>
 
