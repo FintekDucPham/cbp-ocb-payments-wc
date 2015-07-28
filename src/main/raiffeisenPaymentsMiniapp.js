@@ -35,7 +35,7 @@ angular.module('raiffeisen-payments', [
             items:[
                 {
                     id: "payments.content",
-                    label: 'payments.submenu.options.new.header',
+                    label: 'payments.submenu.options.list.header',
                     icon: "help",
                     action: "payments.content"
                 },
