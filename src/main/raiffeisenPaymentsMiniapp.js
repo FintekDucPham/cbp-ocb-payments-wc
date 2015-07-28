@@ -36,13 +36,13 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.content",
                     label: 'payments.submenu.options.list.header',
-                    icon: "help",
+                    icon: "raiff-icons raiff_platnosci",
                     action: "payments.content"
                 },
             {
                 id: "payments.new.fill",
                 label: 'payments.submenu.options.new.header',
-                icon: "help",
+                icon: "raiff-icons raiff_przelew",
                 action: "payments.new.fill({ paymentType: 'domestic' })"
             }
             ]
