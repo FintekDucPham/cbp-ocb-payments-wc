@@ -30,15 +30,9 @@ angular.module('raiffeisen-payments', [
         menuServiceProvider.registerMenu({
             id: 'raiffeisen-payments',
             priority: 8000,
-            baseItem: 'payments.content',
+            baseItem: 'payments.new.fill',
             title: 'payments.title',
             items:[
-                {
-                    id: "payments.content",
-                    label: 'payments.submenu.options.list.header',
-                    icon: "raiff-icons raiff_lista_rachunkow",
-                    action: "payments.content"
-                },
             {
                 id: "payments.new.fill",
                 label: 'payments.submenu.options.new.header',

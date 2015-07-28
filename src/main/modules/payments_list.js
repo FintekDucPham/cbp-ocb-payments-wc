@@ -7,5 +7,5 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsListController', function ($scope, $rootScope, paymentsService, $filter, transactionService, transactionFilterCriteria, gate, $timeout, customerProductService, blockadesService, $state, $stateParams, searchWrapperService, domService, viewStateService) {
-
+        $state.go('payments.new.fill', { paymentType: 'domestic' });
     });
