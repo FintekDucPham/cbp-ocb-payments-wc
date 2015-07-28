@@ -30,16 +30,17 @@ angular.module('raiffeisen-payments', [
         menuServiceProvider.registerMenu({
             id: 'raiffeisen-payments',
             priority: 8000,
-            baseItem: 'payments.list',
+            baseItem: 'payments.content',
             title: 'payments.title',
-            items:[{
-                id: "payments.list",
-                label: 'payments.submenu.options.list.header',
-                icon: "help",
-                action: "payments.content"
-            },
+            items:[
+                {
+                    id: "payments.content",
+                    label: 'payments.submenu.options.new.header',
+                    icon: "help",
+                    action: "payments.content"
+                },
             {
-                id: "payments.new",
+                id: "payments.new.fill",
                 label: 'payments.submenu.options.new.header',
                 icon: "help",
                 action: "payments.new.fill({ paymentType: 'domestic' })"
