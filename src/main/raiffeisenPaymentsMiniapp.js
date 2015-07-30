@@ -37,7 +37,7 @@ angular.module('raiffeisen-payments', [
                 id: "payments.new.fill",
                 label: 'payments.submenu.options.new.header',
                 icon: "raiff-icons raiff_platnosci",
-                action: "payments.new.fill({ paymentType: 'domestic' })"
+                action: "payments.new.fill({ paymentType: 'internal' })"
             }
             ]
         });
