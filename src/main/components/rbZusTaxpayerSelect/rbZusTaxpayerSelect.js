@@ -20,8 +20,11 @@ angular.module('raiffeisen-payments')
 
                 $scope.selectTaxpayer = function($item) {
                     $scope.selection.isSelected = true;
+                    var oldTaxpayer = $scope.taxpayer;
+                    $scope.taxpayer = $item;
                     $scope.onSelectTaxpayer({
-                        $taxpayer: $item
+                        $taxpayer: $item,
+                        $oldTaxpayer: oldTaxpayer
                     });
                 };
 
@@ -33,7 +36,7 @@ angular.module('raiffeisen-payments')
                 $scope.taxpayerList = lodash.times(3, function (i) {
                     return {
                         name: "Platnik ZUS " + i,
-                        nip: "6392312211" + (i * 125252) % 1E10,
+                        nip: Math.floor(Math.random() * 1E10),
                         data: 'Platnik ZUS ul. Smolarzy 91A'
                     };
                 });
