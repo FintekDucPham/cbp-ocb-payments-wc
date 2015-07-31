@@ -40,6 +40,7 @@ angular.module('raiffeisen-payments', [
                 action: "payments.new.fill({ paymentType: 'internal' })"
             },
             {
+
                     id: "payments.recipients",
                     label: 'raiff.payments.recipients.label',
                     icon: "raiff-icons raiff_odbiorcy",
