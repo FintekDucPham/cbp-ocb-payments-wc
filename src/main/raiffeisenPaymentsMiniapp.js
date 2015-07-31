@@ -33,12 +33,17 @@ angular.module('raiffeisen-payments', [
             baseItem: 'payments.new.fill',
             title: 'payments.title',
             items:[
-            {
-                id: "payments.new.fill",
-                label: 'payments.submenu.options.new.header',
-                icon: "raiff-icons raiff_platnosci",
-                action: "payments.new.fill({ paymentType: 'domestic' })"
-            }
+                {
+                    id: "payments.new.fill",
+                    label: 'payments.submenu.options.new.header',
+                    icon: "raiff-icons raiff_platnosci",
+                    action: "payments.new.fill({ paymentType: 'domestic' })"
+                },{
+                    id: "payments.recipients",
+                    label: 'raiff.payments.recipients.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.recipients"
+                }
             ]
         });
     }

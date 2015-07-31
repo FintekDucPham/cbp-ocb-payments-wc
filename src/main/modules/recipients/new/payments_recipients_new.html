@@ -1,0 +1,30 @@
+<rb-content-view class="rb-content-view--framed form">
+    <bd-header>Nowy odbiorca</bd-header>
+    <bd-form-panel>
+
+        <bd-step-panel bd-step-switch-states
+                       bd-active-step="activeStep"
+                       bd-step-remote="bdStepRemote">
+            <bd-step bd-step-id="fill">Wprowadzanie danych</bd-step>
+            <bd-step bd-step-id="verify">Weryfikacja danych</bd-step>
+            <bd-step bd-step-id="status">Status</bd-step>
+        </bd-step-panel>
+
+        <bd-form-content>
+            <div ui-view></div>
+        </bd-form-content>
+
+        <bd-form-footer class="bd-form-footer--stackable">
+            <bd-button class="bd-form-footer__button bd-form-footer__button--negative"
+                       ng-show="activeStep.id === 'fill'"
+                       ng-click="clearForm()">WYCZYSC
+            </bd-button>
+            <bd-button class="bd-form-footer__button bd-form-footer__button--positive bd-button__primary"
+                       ng-show="activeStep.id === 'verify'"
+                       ng-click="moveForward()">WYCZYŚĆ
+            </bd-button>
+        </bd-form-footer>
+
+    </bd-form-panel>
+
+</rb-content-view>

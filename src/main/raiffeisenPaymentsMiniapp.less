@@ -1,0 +1,31 @@
+@screenMediumMin: 768px;
+
+.recipients-view{
+
+  .section-wrapper {
+    padding-top:20px;
+  }
+
+  .row-line {
+    display:table;
+    width:100%;
+
+    &__cell {
+      display:table-cell;
+      vertical-align: bottom;
+
+      @media only screen and (max-width: @screenSmallMax) {
+        display:table-row;
+      }
+
+      &--right-button{
+        width:144px;
+        text-align:right;
+        padding:10px 0px;
+      }
+    }
+
+  }
+
+}
+
