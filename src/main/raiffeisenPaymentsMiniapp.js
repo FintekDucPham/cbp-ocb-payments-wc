@@ -38,8 +38,16 @@ angular.module('raiffeisen-payments', [
                 label: 'payments.submenu.options.new.header',
                 icon: "raiff-icons raiff_przelew",
                 action: "payments.new.fill({ paymentType: 'internal' })",
-                priority: 1
-            }
+				priority: 1
+            },
+            {
+
+                    id: "payments.recipients",
+                    label: 'raiff.payments.recipients.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.recipients",
+					priority: 2
+             }
             ]
         });
     }

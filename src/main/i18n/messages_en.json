@@ -262,6 +262,24 @@
     "raiff.payments.widget.empty_list.link_url":"https://www.deutschebank.pl/klienci-indywidualni/konta/godziny-realizacji-przelewow.html?pm=submenu&pc=klienci-indywidualni-godziny-realizacji-przelewow",
 
     "raiff.payments.new.step2.row.info.costs_not_available": "Information about foreseen order costs is currently unavailable. This does not affect the possibility to forward the instruction to execution.",
-    "raiff.payments.new.step2.row.charges": "Opłaty_en"
+    "raiff.payments.new.step2.row.charges": "Opłaty_en",
+
+    "raiff.payments.recipients.label": "Recipients",
+    "raiff.payments.recipients.type.label": "Typ odbiorcy _en",
+    "raiff.payments.recipients.search.label": "Szukaj odbiorcy _en",
+    "raiff.payments.recipients.new.button": "Nowy odbiorca _en",
+    "raiff.payments.recipients.select.filter.button.action": "szukaj _en",
+    "raiff.payments.recipients.select.filter.text.label": "Szukaj odbiorcy _en",
+    "raiff.payments.recipients.list.header.customName.label": "Twoja nazwa odbiorcy _en",
+    "raiff.payments.recipients.list.header.recipient.label": "Odbiorca _en",
+    "raiff.payments.recipients.list.header.nrb.label": "Nr rachunku _en",
+    "raiff.payments.recipients.list.details.edit": "Edytuj _en",
+    "raiff.payments.recipients.list.details.remove": "Usuń _en",
+    "raiff.payments.recipients.list.details.transfer": "Przelew _en",
+    "raiff.payments.recipients.select.type.placeholder": "Wybierz typ... _en",
+    "raiff.payments.recipients.select.type.all": "Wszyscy _en",
+    "raiff.payments.recipients.select.type.defined": "Zdefiniowani _en",
+    "raiff.payments.recipients.select.type.undefined": "Niezdefiniowani _en"
+
 
 }

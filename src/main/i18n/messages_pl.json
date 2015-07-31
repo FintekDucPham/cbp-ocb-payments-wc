@@ -215,6 +215,23 @@
 
     "raiff.payments.new.status.ok": "Przelew został przekazany do realizacji",
 
-    "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych"
+    "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
+
+    "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
+    "raiff.payments.recipients.type.label": "Typ odbiorcy",
+    "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
+    "raiff.payments.recipients.new.button": "Nowy odbiorca",
+    "raiff.payments.recipients.select.filter.button.action": "szukaj",
+    "raiff.payments.recipients.select.filter.text.label": "Szukaj odbiorcy",
+    "raiff.payments.recipients.list.header.customName.label": "Twoja nazwa odbiorcy",
+    "raiff.payments.recipients.list.header.recipient.label": "Odbiorca",
+    "raiff.payments.recipients.list.header.nrb.label": "Nr rachunku",
+    "raiff.payments.recipients.list.details.edit": "Edytuj",
+    "raiff.payments.recipients.list.details.remove": "Usuń",
+    "raiff.payments.recipients.list.details.transfer": "Przelew",
+    "raiff.payments.recipients.select.type.placeholder": "Wybierz typ...",
+    "raiff.payments.recipients.select.type.all": "Wszyscy",
+    "raiff.payments.recipients.select.type.defined": "Zdefiniowani",
+    "raiff.payments.recipients.select.type.undefined": "Niezdefiniowani"
 
 }
