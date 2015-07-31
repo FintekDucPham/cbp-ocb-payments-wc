@@ -36,8 +36,9 @@ angular.module('raiffeisen-payments', [
             {
                 id: "payments.new.fill",
                 label: 'payments.submenu.options.new.header',
-                icon: "raiff-icons raiff_platnosci",
-                action: "payments.new.fill({ paymentType: 'internal' })"
+                icon: "raiff-icons raiff_przelew",
+                action: "payments.new.fill({ paymentType: 'internal' })",
+                priority: 1
             }
             ]
         });
