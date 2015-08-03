@@ -28,7 +28,7 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsNewController"
         });
     })
-    .controller('PaymentsNewController', function (rbPaymentTypes, pathService, $scope, translate, $stateParams, $state, viewStateService, formService, paymentEvents, lodash) {
+    .controller('PaymentsNewController', function ($timeout, rbPaymentTypes, pathService, $scope, translate, $stateParams, $state, viewStateService, formService, paymentEvents, lodash) {
 
         $scope.payment = angular.extend({
             type: lodash.find(rbPaymentTypes, {state: $stateParams.paymentType || 'domestic'}),
@@ -36,14 +36,14 @@ angular.module('raiffeisen-payments')
                 fixedAccountSelection: false,
                 fixedRecipientSelection: false
             },
-            formData: {},
+            formData: viewStateService.getFormData('paymentForm') || {},
             items: {},
             meta: {
                 paymentTypes: lodash.map(rbPaymentTypes, function (value) {
                     return value;
                 })
             }
-        }, viewStateService.getFormData('newPaymentForm'));
+        });
 
         function findStepFromState(name) {
             return name.substr(name.lastIndexOf('.') + 1);
@@ -61,9 +61,11 @@ angular.module('raiffeisen-payments')
         };
 
         function commitState() {
-            //viewStateService.setInitialState($state.current.name, {});
-            //viewStateService.appendFormData('cardRestrictForm', $scope.restrict.formData);
-            //viewStateService.setInitialState('cards.restrict.verify', $scope.restrict.formData);
+            viewStateService.addFormData($state.current.name, 'paymentForm', $scope.payment.formData);
+        }
+
+        function revertState() {
+            $scope.payment.formData = viewStateService.getFormData('paymentForm');
         }
 
         $scope.moveForward = function () {
@@ -72,8 +74,8 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.moveBackwards = function () {
-            commitState();
             $scope.$broadcast(paymentEvents.BACKWARD_MOVE);
+            $timeout(revertState);
         };
 
         $scope.getTemplateName = function (stepName) {
