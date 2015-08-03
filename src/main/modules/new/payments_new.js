@@ -16,10 +16,6 @@ angular.module('raiffeisen-payments')
             service: 'zus'
         }
     })
-    .constant('paymentEvents', {
-        FORWARD_MOVE: 'forward-move',
-        BACKWARD_MOVE: 'backward-move'
-    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new', {
             url: "/new/:paymentType",
@@ -28,16 +24,18 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsNewController"
         });
     })
-    .controller('PaymentsNewController', function ($timeout, rbPaymentTypes, pathService, $scope, translate, $stateParams, $state, viewStateService, formService, paymentEvents, lodash) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash) {
 
-        $scope.payment = angular.extend({
-            type: lodash.find(rbPaymentTypes, {state: $stateParams.paymentType || 'domestic'}),
+        bdMainStepInitializer($scope, 'payment', {
+            formName: 'paymentForm',
+            type: lodash.find(rbPaymentTypes, {
+                state: $stateParams.paymentType || 'domestic'
+            }),
+            formData: {},
             options: {
                 fixedAccountSelection: false,
                 fixedRecipientSelection: false
             },
-            formData: viewStateService.getFormData('paymentForm') || {},
-            items: {},
             meta: {
                 paymentTypes: lodash.map(rbPaymentTypes, function (value) {
                     return value;
@@ -45,37 +43,11 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        function findStepFromState(name) {
-            return name.substr(name.lastIndexOf('.') + 1);
-        }
-
         $scope.clearForm = function () {
             //todo ask to clear but do not clear all!
             $scope.payment.formData = {};
             $scope.payment.items = {};
             $scope.$broadcast('clearForm');
-        };
-
-        $scope.activeStep = {
-            id: findStepFromState($state.current.name)
-        };
-
-        function commitState() {
-            viewStateService.addFormData($state.current.name, 'paymentForm', $scope.payment.formData);
-        }
-
-        function revertState() {
-            $scope.payment.formData = viewStateService.getFormData('paymentForm');
-        }
-
-        $scope.moveForward = function () {
-            commitState();
-            $scope.$broadcast(paymentEvents.FORWARD_MOVE);
-        };
-
-        $scope.moveBackwards = function () {
-            $scope.$broadcast(paymentEvents.BACKWARD_MOVE);
-            $timeout(revertState);
         };
 
         $scope.getTemplateName = function (stepName) {

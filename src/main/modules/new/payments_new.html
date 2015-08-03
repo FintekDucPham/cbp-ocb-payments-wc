@@ -20,45 +20,9 @@
 
         </bd-item-property>
 
-        <bd-step-panel bd-step-switch-states
-                       bd-active-step="activeStep"
-                       bd-step-remote="bdStepRemote">
-            <bd-step bd-step-id="fill">Wprowadzanie danych</bd-step>
-            <bd-step bd-step-id="verify">Weryfikacja danych</bd-step>
-            <bd-step bd-step-id="status">Status operacji</bd-step>
-        </bd-step-panel>
-
-        <bd-form-content>
+        <rb-multistep-form bd-active-step="activeStep">
             <div ui-view></div>
-        </bd-form-content>
-
-        <bd-form-footer class="bd-form-footer--stackable">
-            <bd-button class="bd-form-footer__button bd-form-footer__button--negative"
-                       ng-show="activeStep.id === 'verify'"
-                       ui-sref="payments.content">{{ ::'raiff.payments.new.btn.cancel' | translate }}
-            </bd-button>
-            <bd-button class="bd-form-footer__button bd-form-footer__button--negative"
-                       ng-show="activeStep.id === 'verify'"
-                       ng-click="moveBackwards()">{{ ::'raiff.payments.new.btn.change' | translate }}
-            </bd-button>
-            <bd-button class="bd-form-footer__button bd-form-footer__button--negative"
-                       ng-show="activeStep.id === 'fill'"
-                       ng-click="clearForm()">{{ ::'raiff.payments.new.btn.clear' | translate }}
-            </bd-button>
-            <bd-button class="bd-form-footer__button bd-form-footer__button--positive bd-button__primary"
-                       type="submit"
-                       ng-show="activeStep.id === 'fill'"
-                       ng-click="moveForward()">{{ ::'raiff.payments.new.btn.next' | translate }}
-            </bd-button>
-            <bd-button class="bd-form-footer__button bd-form-footer__button--positive bd-button__primary"
-                       ng-show="activeStep.id === 'verify'"
-                       ng-click="moveForward()">{{ ::'raiff.payments.new.btn.accept' | translate }}
-            </bd-button>
-            <bd-button class="bd-form-footer__button bd-form-footer__button--positive bd-button__primary"
-                       ng-show="activeStep.id === 'status'" ui-sref="payments.content">{{
-                ::'raiff.payments.new.btn.finalize' | translate }}
-            </bd-button>
-        </bd-form-footer>
+        </rb-multistep-form>
 
     </bd-form-panel>
 

@@ -6,9 +6,14 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, paymentsService, translate, $stateParams, $state, initialState, viewStateService, domService, formService, paymentEvents) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, paymentsService, formService) {
 
-        $scope.$on(paymentEvents.FORWARD_MOVE, function () {
+        bdVerifyStepInitializer($scope, {
+            formName: 'paymentForm',
+            dataObject: $scope.payment
+        });
+
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.paymentAuthForm;
             if (form.$invalid) {
                 formService.dirtyFields(form);
@@ -17,13 +22,14 @@ angular.module('raiffeisen-payments')
                     remitterId: $scope.payment.items.senderAccount.ownersList[0].customerId,
                     transferFromTemplate: false
                 }), 'create_{0}_transfer'.format($scope.payment.type.service)).then(function() {
-                    $scope.bdStepRemote.next();
+                    actions.proceed();
                 });
             }
         });
 
-        $scope.$on(paymentEvents.BACKWARD_MOVE, function () {
-            $scope.bdStepRemote.prev();
+        $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
+            actions.proceed();
         });
+
 
     });

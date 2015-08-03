@@ -6,6 +6,11 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('NewPaymentStatusController', function ($scope, translate, $stateParams, $state, initialState, viewStateService, domService, formService, cardRestrictEvents) {
+    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer) {
+
+        bdStatusStepInitializer($scope, {
+            formName: 'paymentForm',
+            dataObject: $scope.payment
+        });
 
     });
