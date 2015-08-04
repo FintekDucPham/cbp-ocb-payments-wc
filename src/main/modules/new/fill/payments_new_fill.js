@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentFillController"
         });
     })
-    .controller('NewPaymentFillController', function ($scope, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
+    .controller('NewPaymentFillController', function ($scope, transferService, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -30,7 +30,10 @@ angular.module('raiffeisen-payments')
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                actions.proceed();
+                transferService.create($scope.payment.type.code, $scope.payment.formData).then(function(transfer) {
+                    $scope.payment.transferId = transfer;
+                    actions.proceed();
+                });
             }
         });
 

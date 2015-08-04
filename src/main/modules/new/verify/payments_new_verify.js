@@ -6,24 +6,39 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, paymentsService, formService) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService) {
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
 
-        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var form = $scope.paymentAuthForm;
-            if (form.$invalid) {
-                formService.dirtyFields(form);
-            } else {
-                paymentsService.action(angular.extend($scope.payment.formData, {
-                    remitterId: $scope.payment.items.senderAccount.ownersList[0].customerId,
-                    transferFromTemplate: false
-                }), 'create_{0}_transfer'.format($scope.payment.type.service)).then(function() {
-                    actions.proceed();
+        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
+            $scope.payment.promises.authorizationPromise = authorizationService.create({
+                resourceId: $scope.payment.transferId,
+                resourceType: 'TRANSFER'
+            }).then(function (authorization) {
+                return authorizationService.get(authorization.authorizationRequestId).then(function (data) {
+                    var content = data.content;
+                    $scope.payment.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
                 });
+            });
+        });
+
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            if ($scope.payment.promises.authorizationPromise.$$state.status !== 1) {
+
+            } else {
+                var form = $scope.paymentAuthForm;
+                if (form && form.$invalid) {
+                    formService.dirtyFields(form);
+                } else {
+                    transferService.realize($scope.payment.transferId, {
+
+                    }).then(function () {
+                        actions.proceed();
+                    });
+                }
             }
         });
 

@@ -1,5 +1,7 @@
 <div ng-include="getTemplateName('verify')"></div>
 
-<form name="paymentAuthForm" novalidate>
+<form name="paymentAuthForm" novalidate ng-if="payment.options.twoStepAuthorization">
+
+    two step auth
 
 </form>

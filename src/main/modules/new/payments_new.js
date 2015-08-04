@@ -2,18 +2,15 @@ angular.module('raiffeisen-payments')
     .constant('rbPaymentTypes', {
         "DOMESTIC": {
             code: 'DOMESTIC',
-            state: 'domestic',
-            service: 'domestic'
+            state: 'domestic'
         },
         "INTERNAL": {
             code: 'INTERNAL',
-            state: 'internal',
-            service: 'between_own_accounts'
+            state: 'internal'
         },
         "ZUS": {
             code: 'ZUS',
-            state: 'zus',
-            service: 'zus'
+            state: 'zus'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
