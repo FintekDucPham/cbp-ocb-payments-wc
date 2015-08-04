@@ -20,7 +20,7 @@
 
         </bd-item-property>
 
-        <rb-multistep-form bd-active-step="activeStep">
+        <rb-multistep-form bd-active-step="activeStep" rb-cancel-state="payments.content" rb-complete-state="payments.content" rb-on-clear="clearForm()">
             <div ui-view></div>
         </rb-multistep-form>
 
