@@ -11,6 +11,10 @@ angular.module('raiffeisen-payments')
         "ZUS": {
             code: 'ZUS',
             state: 'zus'
+        },
+        "US": {
+            code: 'US',
+            state: 'us'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {

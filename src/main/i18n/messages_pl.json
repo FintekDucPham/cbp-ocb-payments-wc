@@ -232,6 +232,21 @@
     "raiff.payments.recipients.select.type.placeholder": "Wybierz typ...",
     "raiff.payments.recipients.select.type.all": "Wszyscy",
     "raiff.payments.recipients.select.type.defined": "Zdefiniowani",
-    "raiff.payments.recipients.select.type.undefined": "Niezdefiniowani"
+    "raiff.payments.recipients.select.type.undefined": "Niezdefiniowani",
 
+    "raiff.payments.new.us.fill.sender_account":"Z rachunku",
+    "raiff.payments.new.us.fill.accessible_assets":"Dostępne środki",
+    "raiff.payments.new.us.fill.recipient_account.placeholder":"Wybierz z listy lub wpisz nr rachunku US",
+    "raiff.payments.new.us.fill.recipient_account":"Rachunek Urzędu Skarbowego",
+    "raiff.payments.us.fill.recipientAccountNo.pattern":"Nieprawidłowy numer rachunku",
+    "raiff.payments.us.fill.recipientAccountNo.required":"Pole rachunek US nie może być puste",
+    "raiff.payments.new.us.fill.recipient_data": "Nazwa płatnika",
+    "raiff.payments.new.us.fill.recipient_data.EMPTY_PAYER": "Nazwa płatnika nie może być pusta",
+    "raiff.payments.new.us.fill.recipient_data.TOO_LONG_PAYER_US": "Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie",
+    "raiff.payments.new.us.fill.recipient_data.placeholder": "Wpisz dane płatnika",
+    "raiff.payments.new.us.fill.taxpayer": "Płatnik",
+    "raiff.payments.new.us.fill.taxpayer.placeholder": "Wpisz nazwę płatnika",
+    "raiff.payments.new.us.fill.taxpayer_select": "Wybierz płatnika",
+    "raiff.payments.new.us.fill.taxpayer_select.placeholder": "Wybierz płatnika",
+    "raiff.payments.new.us.fill.taxpayer_select.clear": "Wyczyść"
 }

@@ -35,5 +35,45 @@
         </eb-validation-messages>
 
     </bd-item-property>
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.new.us.fill.recipient_data' | translate }}">
+        <textarea name="taxpayerData"
+                  ng-model="payment.formData.taxpayerData"
+                  required
+                  ng-pattern="taxpayerRegexp"
+                  class="input-field input-area--party-data"
+                  placeholder="{{ ::'raiff.payments.new.us.fill.recipient_data.placeholder' | translate }}"></textarea>
 
+        <eb-validation-messages eb-name="taxpayerData">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{ ::'raiff.payments.new.us.fill.recipient_data.EMPTY_PAYER' | translate }}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{ ::'raiff.payments.new.us.fill.recipient_data.TOO_LONG_PAYER_US' | translate }}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
+        <rb-us-taxpayer-select
+                rb-us-taxpayer="payment.items.taxpayer"
+                rb-on-clear-taxpayer="clearTaxpayer()"
+                rb-on-select-taxpayer="selectTaxpayer($taxpayer)"
+                rb-taxpayer-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-us-taxpayer-select>
+    </bd-item-property>
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type' | translate }}">
+        <ui-select ng-model="payment.formData.taxpayerSupplementaryIdType"
+                   theme="bootstrap"
+                   placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
+                   ng-init="payment.formData.taxpayerSupplementaryIdType = 'P'"
+                   required>
+            <ui-select-match>
+                {{ 'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + $select.selected | translate }}
+            </ui-select-match>
+            <ui-select-choices repeat="supplementaryId in payment.meta.zusSuplementaryIds track by $index">
+                <div ng-bind-html="::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </bd-item-property>
 </div>
