@@ -31,7 +31,8 @@ angular.module('raiffeisen-payments')
                 formService.dirtyFields(form);
             } else {
                 transferService.create($scope.payment.type.code, angular.extend({
-                    "remitterId" : $scope.payment.items.senderAccount.ownersList[0].customerId
+                    "remitterId" : $scope.payment.items.senderAccount.ownersList[0].customerId,
+                    "transferFromTemplate": false // todo change this
                 }, $scope.payment.formData)).then(function(transfer) {
                     $scope.payment.transferId = transfer;
                     actions.proceed();
