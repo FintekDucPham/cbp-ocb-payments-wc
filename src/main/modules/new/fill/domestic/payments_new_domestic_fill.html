@@ -1,10 +1,10 @@
 <div ng-controller="NewDomesticPaymentFillController">
 
     <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.sender_account' | translate }}">
-        <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-account="payment.items.senderAccount"
-                           rb-account-list="payment.items.accountList"
+                           bd-attr-required="true"
+                           rb-account-list="payment.meta.accountList"
                            rb-on-account-select="onSenderAccountSelect()"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
@@ -69,15 +69,17 @@
                       label="{{ ::'raiff.payments.new.domestic.fill.description' | translate }}">
 
         <textarea name="description"
-              ng-model="payment.formData.description"
-              class="input-field input-area--payment-description"
-              placeholder="{{ ::'raiff.payments.new.domestic.fill.description.placeholder' | translate }}"></textarea>
+                  ng-model="payment.formData.description"
+                  class="input-field input-area--payment-description"
+                  required
+                  ng-maxlength="132"
+                  placeholder="{{ ::'raiff.payments.new.domestic.fill.description.placeholder' | translate }}"></textarea>
 
         <eb-validation-messages eb-name="description">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.description.EMPTY_TITLE'|translate}}
             </div>
-            <div eb-message-key="pattern" class="validation-message animate-on">
+            <div eb-message-key="maxlength" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.description.TOO_LONG_TITLE'|translate}}
             </div>
         </eb-validation-messages>
@@ -93,6 +95,7 @@
                        class="input-field"
                        bd-only-numbers
                        ng-model="payment.formData.amount"
+                       ng-min="0.01"
                        ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
                        required
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
@@ -115,6 +118,9 @@
         <eb-validation-messages eb-name="amount">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="ngMin" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
             <div eb-message-key="ngMax" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS'|translate}}

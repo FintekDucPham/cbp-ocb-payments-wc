@@ -44,6 +44,7 @@
                 <input type="number"
                        name="amount"
                        class="input-field"
+                       ng-min="0.01"
                        bd-only-numbers
                        ng-model="payment.formData.amount"
                        ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
@@ -68,6 +69,9 @@
         <eb-validation-messages eb-name="amount">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="ngMin" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
             <div eb-message-key="ngMax" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
