@@ -96,12 +96,14 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.execution_date' | translate }}">
-        <bd-date-input name="realizationDate"
-                       ng-model="payment.formData.realizationDate"
-                       ng-disabled="payment.items.senderAccount.productType === 'CREDIT'"
-                       bd-attr-class="input-field"
-                       bd-attr-placeholder="{{ ::'raiff.payments.new.domestic.fill.execution_date.placeholder' | translate }}"
-                       required></bd-date-input>
+
+        <rb-datepicker rb-form="paymentForm"
+                       rb-name="realizationDate"
+                       rb-date="payment.formData.realizationDate"
+                       rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                       rb-required="true">
+
+        </rb-datepicker>
 
         <eb-validation-messages eb-name="realizationDate">
             <div eb-message-key="required" class="validation-message animate-on">
