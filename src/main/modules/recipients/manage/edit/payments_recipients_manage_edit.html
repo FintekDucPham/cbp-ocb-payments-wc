@@ -1,9 +1,9 @@
 <rb-content-view class="rb-content-view--framed form">
-    <bd-header>Edit odbiorca</bd-header>
+    <bd-header>Edycja odbiorcy</bd-header>
 
     <bd-form-panel>
 
-        <rb-multistep-form bd-active-step="activeStep" rb-cancel-state="payments.recipients.list" rb-complete-state="payments.recipients.list" rb-on-clear="clearForm()">
+        <rb-multistep-form bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.recipients.list', onClear: clearForm }">
             <div ui-view></div>
         </rb-multistep-form>
 

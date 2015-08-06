@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsListController"
         });
     })
-    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService) {
+    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, recipient_edit) {
 
         var TYPES = {
             ALL: 'ALL',
@@ -20,7 +20,14 @@ angular.module('raiffeisen-payments')
 
         $scope.onRecipientEdit = function(data){
             var dataObject = angular.copy(data);
-            $state.go("payments.recipients.manage.edit.fill", dataObject);
+            var transferObject = {
+                recipientType: data.recipientType,
+                recipientId: data.recipientId,
+                templateId: data.templateId
+            };
+
+            recipient_edit.data = dataObject;
+            $state.go("payments.recipients.manage.edit.fill", transferObject, dataObject);
         };
 
         $scope.onRecipientRemove = function(){
@@ -51,10 +58,10 @@ angular.module('raiffeisen-payments')
                                         recipientId: recipient.recipientId,
                                         templateId: recipient.templateId,
                                         customerName: template.templateName,
-                                        recipient: recipient.recipientName.join("\n"),
-                                        address: recipient.recipientAddress.join("\n"),
+                                        recipient: recipient.recipientName.join(" "),
+                                        address: recipient.recipientAddress.join(" "),
                                         nrb: template.beneficiaryAccountNo,
-                                        transferTitle: template.title.join("\n"),
+                                        transferTitle: template.title.join(" "),
                                         recipientType: template.templateType
                                     }
                                 );
