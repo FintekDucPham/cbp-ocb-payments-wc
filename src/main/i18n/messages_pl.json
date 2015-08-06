@@ -230,8 +230,33 @@
     "raiff.payments.recipients.list.details.remove": "Usuń",
     "raiff.payments.recipients.list.details.transfer": "Przelew",
     "raiff.payments.recipients.select.type.placeholder": "Wybierz typ...",
-    "raiff.payments.recipients.select.type.all": "Wszyscy",
-    "raiff.payments.recipients.select.type.defined": "Zdefiniowani",
-    "raiff.payments.recipients.select.type.undefined": "Niezdefiniowani"
+    "raiff.payments.recipients.select.type.ALL": "Wszyscy",
+    "raiff.payments.recipients.select.type.DOMESTIC": "Krajowy",
+
+    "raiff.payments.recipients.new.domestic.fill.account_related": "Z rachunku",
+    "raiff.payments.recipients.new.domestic.fill.custom_name.placeholder": "Wpisz nazwę skróconą odbiorcy",
+    "raiff.payments.recipients.new.domestic.fill.custom_name.label": "Twoja nazwa odbiorcy",
+    "raiff.payments.recipients.new.domestic.fill.customName.EMPTY": "Nazwa odbiorcy nie może być pusta",
+    "raiff.payments.recipients.new.domestic.fill.customName.INCORRECT": "Nazwa odbiorcy zawiera niedozwolone znaki",
+    "raiff.payments.recipients.new.domestic.fill.customName.MAXLENGTH": "Nazwa odbiorcy może składać się maksymalnie z 35 znaków",
+    "raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
+    "raiff.payments.recipients.new.domestic.fill.recipient_account.label": "Numer rachunku",
+    "raiff.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
+    "raiff.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC": "Rachunek odbiorcy musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
+
+    "raiff.payments.recipients.new.domestic.fill.recipient_data.label": "Dane odbiorcy",
+    "raiff.payments.recipients.new.domestic.fill.recipient_data.placeholder": "Wpisz dane odbiorcy",
+    "raiff.payments.recipients.new.domestic.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",
+    "raiff.payments.recipients.new.domestic.fill.recipient_data.INCORRECT": "Niepoprawnie wprowadzone dane",
+    "raiff.payments.recipients.new.domestic.fill.recipient_data.MAXLENGTH": "Dane odbiorcy mogą składać się maskymalnie ze 140 znaków",
+
+    "raiff.payments.recipients.new.domestic.fill.description.label": "Tytułem",
+    "raiff.payments.recipients.new.domestic.fill.description.placeholder": "Wpisz tytuł",
+    "raiff.payments.recipients.new.domestic.fill.description.EMPTY":"Tytuł nie może być pusty",
+    "raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Dane odbiorcy mogą składać się maskymalnie ze 140 znaków",
+    "raiff.payments.recipients.manage.new.status.ok": "Odbiorca zdefiniowany został utworzony",
+
+    "EOF" : ""
+
 
 }
