@@ -200,7 +200,7 @@
                             <input ng-model="payment.formData.insurances[insuranceType].amount"
                                    type="number"
                                    class="input-field"
-                                   ng-min="'0.01'"
+                                   ng-min="0.01"
                                    step="0.01"
                                    ng-required="payment.formData.insurances[insuranceType].active"
                                    ng-disabled="!payment.formData.insurances[insuranceType].active"
@@ -222,6 +222,15 @@
                             </ui-select>
                         </div>
                     </div>
+
+                    <eb-validation-messages eb-name="{{ insuranceType }}Amount">
+                        <div eb-message-key="ngMin" class="validation-message animate-on">
+                            {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
+                        </div>
+                        <div eb-message-key="ngMax" class="validation-message animate-on">
+                            {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
+                        </div>
+                    </eb-validation-messages>
 
                 </bd-item-property>
             </bd-checkbox-select-option>

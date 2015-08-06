@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, bdFocus) {
+    .controller('NewDomesticPaymentFillController', function ($scope, bdFocus, $timeout) {
 
         $scope.currencyList = [];
 
@@ -34,11 +34,21 @@ angular.module('raiffeisen-payments')
            }
         });
 
-        $scope.onSenderAccountSelect = function() {
+        function updateCurrencies() {
             $scope.currencyList.length = 0;
             var currency = $scope.payment.items.senderAccount.currency;
             $scope.payment.formData.currency = currency;
             $scope.currencyList.push(currency);
+        }
+
+        $scope.onSenderAccountSelect = function() {
+            updateCurrencies();
         };
+
+
+        $scope.$on('clearForm', function() {
+            //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
+            $timeout(updateCurrencies);
+        });
 
     });

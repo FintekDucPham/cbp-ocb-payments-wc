@@ -45,7 +45,6 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.clearForm = function () {
-            //todo ask to clear but do not clear all!
             $scope.payment.formData = {};
             $scope.payment.items = {};
             $scope.$broadcast('clearForm');
