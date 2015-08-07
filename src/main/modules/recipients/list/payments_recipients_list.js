@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsListController"
         });
     })
-    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, recipient_edit) {
+    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, viewStateService) {
 
         var TYPES = {
             ALL: 'ALL',
@@ -20,18 +20,34 @@ angular.module('raiffeisen-payments')
 
         $scope.onRecipientEdit = function(data){
             var dataObject = angular.copy(data);
-            var transferObject = {
-                recipientType: data.recipientType,
-                recipientId: data.recipientId,
-                templateId: data.templateId
+            var routeObject = {
+                recipientType: dataObject.recipientType,
+                recipientId: dataObject.recipientId,
+                templateId: dataObject.templateId
             };
-
-            recipient_edit.data = dataObject;
-            $state.go("payments.recipients.manage.edit.fill", transferObject, dataObject);
+            viewStateService.setInitialState('payments.recipients.manage.edit', dataObject);
+            $state.go("payments.recipients.manage.edit.fill", routeObject);
         };
 
-        $scope.onRecipientRemove = function(){
-            console.log(this);
+        $scope.onRecipientRemove = function(data){
+            var dataObject = angular.copy(data);
+            var routeObject = {
+                recipientId: dataObject.recipientId,
+                templateId: dataObject.templateId
+            };
+            viewStateService.setInitialState('payments.recipients.manage.remove', dataObject);
+            $state.go("payments.recipients.manage.remove", routeObject);
+        };
+
+        $scope.onRecipientTransfer = function(data){
+            var dataObject = angular.copy(data);
+            var routeObject = {
+                recipientId: dataObject.recipientId,
+                templateId: dataObject.templateId,
+                paymentType: dataObject.recipientType
+            };
+            viewStateService.setInitialState('payments.new', dataObject);
+            $state.go("payments.new.fill", routeObject);
         };
 
         $scope.table = {

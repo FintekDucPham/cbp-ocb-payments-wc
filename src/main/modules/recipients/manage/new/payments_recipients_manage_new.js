@@ -1,7 +1,4 @@
 angular.module('raiffeisen-payments')
-    .constant('NEW_RECIPIENT_STEPS', {
-        FILL: 'fill'
-    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage.new', {
             url: "/new/:recipientType",
@@ -27,7 +24,5 @@ angular.module('raiffeisen-payments')
                 controller: "RecipientsManageNewStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageNewController', function ($scope) {
-
-    }
+    .controller('PaymentsRecipientsManageNewController', function ($scope) {}
 );

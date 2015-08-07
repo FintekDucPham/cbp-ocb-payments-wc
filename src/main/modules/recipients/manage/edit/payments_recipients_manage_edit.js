@@ -1,8 +1,4 @@
 angular.module('raiffeisen-payments')
-    .constant('NEW_RECIPIENT_STEPS', {
-        FILL: 'fill'
-    })
-    .value('recipient_edit', {data : {}})
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage.edit', {
             url: "/edit/:recipientType/:recipientId/:templateId",
@@ -28,10 +24,10 @@ angular.module('raiffeisen-payments')
             controller: "RecipientsManageEditStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageEditController', function ($scope, $state, $stateParams, NEW_RECIPIENT_STEPS, recipient_edit) {
-        $scope.recipient.formData.customName = recipient_edit.data.customerName;
-        $scope.recipient.formData.recipientData = recipient_edit.data.address;
-        $scope.recipient.formData.recipientAccountNo = recipient_edit.data.nrb;
-        $scope.recipient.formData.description = recipient_edit.data.transferTitle;
+    .controller('PaymentsRecipientsManageEditController', function ($scope, initialState) {
+        $scope.recipient.formData.customName = initialState.customerName;
+        $scope.recipient.formData.recipientData = initialState.address;
+        $scope.recipient.formData.recipientAccountNo = initialState.nrb;
+        $scope.recipient.formData.description = initialState.transferTitle;
     }
 );
