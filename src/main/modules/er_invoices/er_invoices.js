@@ -1,3 +1,4 @@
+/*
 angular.module('raiffeisen-cards')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoices', {
@@ -43,4 +44,4 @@ angular.module('raiffeisen-cards')
             }
         };
 
-    });
+    });*/
