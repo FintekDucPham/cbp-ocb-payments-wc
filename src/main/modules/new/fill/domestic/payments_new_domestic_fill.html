@@ -141,6 +141,7 @@
                        rb-name="realizationDate"
                        rb-date="payment.formData.realizationDate"
                        rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                       bd-attr-bd-min-date="'2015-08-06'"
                        rb-required="true">
 
         </rb-datepicker>
@@ -149,10 +150,10 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
             </div>
-            <div eb-message-key="ngMin" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+            <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
             </div>
-            <div eb-message-key="ngMax" class="validation-message animate-on">
+            <div eb-message-key="bdMaxDate" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE'|translate}}
             </div>
         </eb-validation-messages>

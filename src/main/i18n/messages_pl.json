@@ -96,7 +96,7 @@
     "raiff.payments.new.domestic.fill.execution_date.EMPTY_EXECUTED_DATE": "Data realizacji przelewu nie może być pusta",
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_EXECUTED_DATE": "Niepoprawna data realizacji przelewu",
     "raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE": "Data realizacji przelewu nie może być późniejsza niż ##date##",
-    "raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE": "ata realizacji przelewu nie może być wcześniejsza niż data bieżąca",
+    "raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE": "Data realizacji przelewu nie może być wcześniejsza niż data bieżąca",
 
     "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.domestic.verify.sender_data": "Właściciel",
