@@ -1,0 +1,28 @@
+<div ng-controller="RecipientsManageVerifyDomesticController">
+
+    <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
+        {{ recipient.items.senderAccount.accountName }}
+        |
+        {{ recipient.items.senderAccount.accountNo }}
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
+        {{ recipient.formData.customName }}
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
+        {{ recipient.formData.recipientAccountNo }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
+        {{ recipient.formData.recipientData }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
+        {{ recipient.formData.description }}
+    </bd-item-property>
+
+
+</div>
