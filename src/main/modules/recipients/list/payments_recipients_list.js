@@ -78,6 +78,7 @@ angular.module('raiffeisen-payments')
                                         recipient: recipient.recipientName.join(" "),
                                         address: recipient.recipientAddress.join(" "),
                                         nrb: template.beneficiaryAccountNo,
+                                        debitNrb: template.debitAccount,
                                         transferTitle: template.title.join(" "),
                                         recipientType: template.templateType
                                     }
