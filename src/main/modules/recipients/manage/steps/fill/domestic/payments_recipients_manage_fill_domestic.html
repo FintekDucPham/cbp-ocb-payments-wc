@@ -1,0 +1,100 @@
+<div ng-controller="RecipientsManageFillDomesticController">
+    <form name="recipientForm">
+        <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
+            <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
+            <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
+                               rb-account="recipient.items.senderAccount"
+                               rb-account-list="recipient.items.accountList"
+                               rb-on-account-select="onSenderAccountSelect()"></rb-account-select>
+        </bd-item-property>
+
+        <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
+            <input name="customName"
+                   ng-model="recipient.formData.customName"
+                   required
+                   ng-maxlength="35"
+                   ng-pattern="CUSTOM_NAME_REGEX"
+                   class="input-field"
+                   placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.placeholder' | translate }}" />
+
+            <eb-validation-messages eb-name="customName"><!--max 35-->
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.customName.EMPTY'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.customName.INCORRECT'|translate}}
+                </div>
+                <div eb-message-key="maxlength" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.customName.MAXLENGTH'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+        <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
+            <input id="recipientAccountNo"
+                   name="recipientAccountNo"
+                   ng-model="recipient.formData.recipientAccountNo"
+                   required
+                   ng-pattern="NRB_REGEX"
+                   class="input-field"
+                   type="text"
+                   placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder' | translate }}">
+
+            <eb-validation-messages eb-name="recipientAccountNo">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--multirow"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
+            <textarea name="recipientData"
+                      ng-model="recipient.formData.recipientData"
+                      ng-maxlength="140"
+                      ng-pattern="RECIPIENT_DATA_REGEX"
+                      required
+                      class="input-field input-area--party-data"
+                      placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
+
+            <eb-validation-messages eb-name="recipientData">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.EMPTY'|translate}}
+                </div>
+                <div eb-message-key="maxlength" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.MAXLENGTH'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.INCORRECT'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--multirow"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
+
+            <textarea name="description"
+                      ng-model="recipient.formData.description"
+                      ng-maxlength="140"
+                      class="input-field input-area--payment-description"
+                      placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.description.placeholder' | translate }}"></textarea>
+
+            <eb-validation-messages eb-name="description">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.description.EMPTY'|translate}}
+                </div>
+                <div eb-message-key="maxlength" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+    </form>
+</div>

@@ -278,6 +278,5 @@
     "raiff.payments.recipients.list.details.transfer": "Przelew _de",
     "raiff.payments.recipients.select.type.placeholder": "Wybierz typ... _de",
     "raiff.payments.recipients.select.type.all": "Wszyscy _de",
-    "raiff.payments.recipients.select.type.defined": "Zdefiniowani _de",
-    "raiff.payments.recipients.select.type.undefined": "Niezdefiniowani _de"
+    "raiff.payments.recipients.select.type.domestic": "Krajowy _de"
 }
