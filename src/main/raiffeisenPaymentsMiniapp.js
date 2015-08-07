@@ -42,10 +42,10 @@ angular.module('raiffeisen-payments', [
             },
             {
 
-                    id: "payments.recipients",
+                    id: "payments.recipients.list",
                     label: 'raiff.payments.recipients.label',
                     icon: "raiff-icons raiff_odbiorcy",
-                    action: "payments.recipients",
+                    action: "payments.recipients.list",
 					priority: 2
              }
             ]
