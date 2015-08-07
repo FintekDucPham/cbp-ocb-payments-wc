@@ -32,11 +32,12 @@ angular.module('raiffeisen-payments')
         $scope.onRecipientRemove = function(data){
             var dataObject = angular.copy(data);
             var routeObject = {
+                recipientType: dataObject.recipientType,
                 recipientId: dataObject.recipientId,
                 templateId: dataObject.templateId
             };
             viewStateService.setInitialState('payments.recipients.manage.remove', dataObject);
-            $state.go("payments.recipients.manage.remove", routeObject);
+            $state.go("payments.recipients.manage.remove.verify", routeObject);
         };
 
         $scope.onRecipientTransfer = function(data){
