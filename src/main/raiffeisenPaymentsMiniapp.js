@@ -30,7 +30,7 @@ angular.module('raiffeisen-payments', [
         menuServiceProvider.registerMenu({
             id: 'raiffeisen-payments',
             priority: 8000,
-            baseItem: 'payments.new.fill',
+            baseItem: "payments.new.fill",
             title: 'payments.title',
             items:[
             {
