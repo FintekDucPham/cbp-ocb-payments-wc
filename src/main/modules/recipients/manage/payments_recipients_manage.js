@@ -5,12 +5,12 @@ angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage', {
             url: "/manage",
-            abstract:true,
+            abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/payments_recipients_manage.html",
             controller: "PaymentsRecipientsManageController"
         });
     })
-    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdStepStateEvents) {
+    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdStepStateEvents) {
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
@@ -20,13 +20,25 @@ angular.module('raiffeisen-payments')
             id: $stateParams.step || NEW_RECIPIENT_STEPS.FILL
         };
 
+        $scope.EMPTY_ITEMS = {
+            senderAccount: null,
+            accountList: null
+        };
+
         $scope.recipient = {
             type: $stateParams.recipientType,
             formData: {},
-            items:{
-                senderAccount: null,
-                accountList: null
+            items: angular.copy($scope.EMPTY_ITEMS)
+        };
+
+        $scope.getAccountByNrb = function(accountList){
+            if(lodash.isString($scope.recipient.formData.debitAccountNo)){
+                var result = lodash.find(accountList, {'accountNo':$scope.recipient.formData.debitAccountNo});
+                if(lodash.isPlainObject(result)){
+                    return result;
+                }
             }
+            return accountList[0];
         };
 
         $scope.clearForm = function(){
@@ -39,8 +51,6 @@ angular.module('raiffeisen-payments')
             this.recipient.items = {};
             this.$broadcast('clearForm');
         };
-
-
 
     }
 );

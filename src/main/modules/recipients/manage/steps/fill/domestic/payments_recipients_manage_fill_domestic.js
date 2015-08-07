@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, bdStepStateEvents, formService) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService) {
         $scope.onSenderAccountSelect = function(){
 
         };

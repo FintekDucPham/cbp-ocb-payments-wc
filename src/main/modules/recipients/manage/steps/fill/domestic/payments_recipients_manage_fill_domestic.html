@@ -5,7 +5,8 @@
             <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
                                rb-account="recipient.items.senderAccount"
                                rb-account-list="recipient.items.accountList"
-                               rb-on-account-select="onSenderAccountSelect()"></rb-account-select>
+                               rb-on-account-select="onSenderAccountSelect()"
+                               rb-init-select-fn="getAccountByNrb"></rb-account-select>
         </bd-item-property>
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">

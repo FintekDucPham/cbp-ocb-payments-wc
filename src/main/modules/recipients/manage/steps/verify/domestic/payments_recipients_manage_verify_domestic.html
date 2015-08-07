@@ -1,9 +1,14 @@
 <div ng-controller="RecipientsManageVerifyDomesticController">
 
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
-        {{ recipient.items.senderAccount.accountName }}
-        |
-        {{ recipient.items.senderAccount.accountNo }}
+        <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+            {{ recipient.items.senderAccount.accountName }}
+            |
+            {{ recipient.items.senderAccount.accountNo }}
+        </section>
+        <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+            {{ recipient.formData.debitAccountNo | nrb }}
+        </section>
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
@@ -11,7 +16,7 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
-        {{ recipient.formData.recipientAccountNo }}
+        {{ recipient.formData.recipientAccountNo | nrb }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow"
