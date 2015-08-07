@@ -1,7 +1,21 @@
 <div ng-include="getTemplateName('verify')"></div>
 
 <form name="paymentAuthForm" novalidate ng-if="payment.options.twoStepAuthorization">
+    <div ng-init="setForm(paymentAuthForm);"></div>
 
-    two step auth
+    <bd-item-property label="{{ payment.items.smsText }}">
+
+        <input type="text"
+               name="authCode"
+               ng-model="payment.items.credentials"
+               required/>
+
+        <eb-validation-messages eb-name="authCode">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
 
 </form>

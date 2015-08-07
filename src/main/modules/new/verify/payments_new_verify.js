@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter) {
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
@@ -20,7 +20,12 @@ angular.module('raiffeisen-payments')
             }).then(function (authorization) {
                 return authorizationService.get(authorization.authorizationRequestId).then(function (data) {
                     var content = data.content;
-                    $scope.payment.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
+                    var twoStep = $scope.payment.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
+                    if(twoStep) {
+                        $scope.payment.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
+                            .replace("##number##", content.authenticationAttributes.operationId)
+                            .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'shortDate'));
+                    }
                 });
             });
         });
@@ -33,14 +38,16 @@ angular.module('raiffeisen-payments')
                 if (form && form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    transferService.realize($scope.payment.transferId, {
-
-                    }).then(function () {
+                    transferService.realize($scope.payment.transferId, $scope.payment.items.credentials).then(function () {
                         actions.proceed();
                     });
                 }
             }
         });
+
+        $scope.setForm = function (form) {
+            $scope.paymentAuthForm = form;
+        };
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();

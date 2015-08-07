@@ -67,6 +67,9 @@
     "raiff.payments.new.btn.next": "Dalej",
     "raiff.payments.new.btn.finalize": "Wróć do listy",
 
+    "raiff.payments.new.verify.smscode": "Podaj haslo SMS dla operacji",
+    "raiff.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",
+
     "raiff.payments.new.domestic.fill.sender_account": "Z rachunku",
     "raiff.payments.new.domestic.fill.accessible_assets": "Dostepne środki",
     "raiff.payments.new.domestic.fill.recipient": "Wybierz odbiorcę",
