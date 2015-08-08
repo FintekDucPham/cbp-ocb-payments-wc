@@ -36,8 +36,9 @@ angular.module('raiffeisen-payments')
                 $scope.taxpayerList = lodash.times(3, function (i) {
                     return {
                         name: "Platnik Us " + i,
-                        nip: Math.floor(Math.random() * 1E10),
-                        data: 'Platnik Us ul. Smolarzy 91A'
+                        identifier: 91215282121 + i % 10,
+                        identifierType: 'P',
+                        data: 'Platnik Us ul. Smolarzy {0}A'.format(i + 1)
                     };
                 });
 

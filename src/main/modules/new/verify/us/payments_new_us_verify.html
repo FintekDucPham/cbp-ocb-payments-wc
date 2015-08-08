@@ -1,0 +1,57 @@
+<div class="form-body" ng-controller="NewUsPaymentVerifyController">
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.sender_account_name'|translate}}">
+        {{ payment.items.senderAccount.accountName }} <!-- | nazwa -->
+        |
+        {{ payment.items.senderAccount.accountNo }} <!-- | numer -->
+        |
+        {{ payment.items.senderAccount.ownerName}} <!-- | w³aœciciel -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.recipient_account_no'|translate}}">
+        {{payment.formData.recipientAccountNo}} <!-- | nrb -->
+        |
+        Urz¹d Skarbowy Kraków - Podgórze <!-- | bank -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.taxpayer_data'|translate}}">
+        {{payment.formData.taxpayerData}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id_type'|translate}}">
+        {{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.' + payment.formData.taxpayerSupplementaryIdType | translate }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id'|translate}}">
+        {{payment.formData.supplementaryId}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.form_symbol'|translate}}">
+        {{ ::'raiff.payments.new.form_symbol.' + payment.formData.formSymbolId | translate }}
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.periodType" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.period_type'|translate}}">
+        {{ ::'raiff.payments.new.us.fill.period_type.' + payment.formData.periodType | translate }}
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.periodNo" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.period_no'|translate}}">
+        {{ payment.formData.periodNo }}
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.periodYear" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.period_year'|translate}}">
+        {{ payment.formData.periodYear }}
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.commitmentId" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.commitment_id'|translate}}">
+        {{ payment.formData.commitmentId }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.amount'|translate}}">
+        {{payment.formData.amount}}&nbsp;{{payment.formData.currency}} <!-- | nrb -->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.execution_date'|translate}}">
+        {{payment.formData.realizationDate | dateFilter:'mediumDate' }}
+    </bd-item-property>
+
+</div>
