@@ -18,8 +18,7 @@ angular.module('raiffeisen-payments')
                 resourceId: $scope.payment.transferId,
                 resourceType: 'TRANSFER'
             }).then(function (authorization) {
-                return authorizationService.get(authorization.authorizationRequestId).then(function (data) {
-                    var content = data.content;
+                return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
                     var twoStep = $scope.payment.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
                     if(twoStep) {
                         $scope.payment.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
