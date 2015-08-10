@@ -7,7 +7,7 @@
             {{ recipient.items.senderAccount.accountNo }}
         </section>
         <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-            {{ recipient.formData.debitAccountNo | nrb }}
+            {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
         </section>
     </bd-item-property>
 
@@ -16,7 +16,7 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
-        {{ recipient.formData.recipientAccountNo | nrb }}
+        {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow"
