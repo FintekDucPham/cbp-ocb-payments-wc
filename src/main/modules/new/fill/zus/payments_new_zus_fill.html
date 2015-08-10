@@ -156,13 +156,15 @@
         <input name="additionalInfo"
                ng-model="payment.formData.additionalInfo"
                class="input-field"
-               ng-required="{{ 'SM'.indexOf(payment.formData.paymentType) < 0 }}"
+               required
+               bd-novalidate-when="{{ 'SM'.indexOf(payment.formData.paymentType) >= 0 }}"
+               ng-disabled="'SM'.indexOf(payment.formData.paymentType) >= 0"
                ng-pattern="additionalInfoRegexp"
                placeholder="{{ ::'raiff.payments.new.zus.fill.additional_info.placeholder' | translate }}"/>
 
         <eb-validation-messages eb-name="additionalInfo">
             <div eb-message-key="required" class="validation-message animate-on">
-                {{ ::'raiff.payments.new.zus.fill.additional_info.ADDITIONAL_INF' | translate }}
+                {{ ::'raiff.payments.new.zus.fill.additional_info.EMPTY_ ADDITIONAL_INF' | translate }}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.zus.fill.additional_info.TOO_LONG_ADDITIONAL_INF' | translate }}

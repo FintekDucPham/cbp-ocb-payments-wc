@@ -141,7 +141,7 @@
     "raiff.payments.new.zus.fill.accessible_assets": "Dostępne środki",
     "raiff.payments.new.zus.fill.recipient_data": "Nazwa płatnika",
     "raiff.payments.new.zus.fill.recipient_data.EMPTY_PAYER": "Nazwa płatnika nie może być pusta",
-    "raiff.payments.new.zus.fill.recipient_data.TOO_LONG_PAYER_ZUS": "Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie",
+    "raiff.payments.new.zus.fill.recipient_data.TOO_LONG_PAYER_ZUS": "Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.new.zus.fill.recipient_data.placeholder": "Wpisz dane płatnika",
     "raiff.payments.new.zus.fill.taxpayer": "Płatnik",
     "raiff.payments.new.zus.fill.taxpayer.placeholder": "Wpisz nazwę płatnika",

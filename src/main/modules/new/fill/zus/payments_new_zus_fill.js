@@ -55,6 +55,12 @@ angular.module('raiffeisen-payments')
         $scope.selectedInsurancesCount = 0;
         $scope.enoughBalance = false;
 
+        $scope.$watch('payment.formData.paymentType', function(type) {
+            if("SM".indexOf(type) >= 0) {
+                delete $scope.payment.formData.additionalInfo;
+            }
+        });
+
         function getActiveInsurancesCount(insurances) {
             return lodash.countBy(insurances, 'active')['true'] || 0;
         }
