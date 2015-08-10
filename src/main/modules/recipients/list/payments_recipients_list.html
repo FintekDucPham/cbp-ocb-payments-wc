@@ -53,13 +53,13 @@
             <bd-details-section bd-table-row-details>
 
                 <bd-item-property class="eb-item-property--text"  label="Z rachunku">
-                    {{ $data.debitNrb | nrb }}
+                    {{ $data.debitNrb | nrbIbanFilter }}
                 </bd-item-property>
                 <bd-item-property class="eb-item-property--text"  label="Twoja nazwa odbiorcy">
                     {{ $data.customerName }}
                 </bd-item-property>
                 <bd-item-property class="eb-item-property--text"  label="Numer rachunku">
-                    {{ $data.nrb | nrb }}
+                    {{ $data.nrb | nrbIbanFilter }}
                 </bd-item-property>
                 <bd-item-property class="eb-item-property--text"  label="Nazwa i adres">
                     {{ $data.address }}
