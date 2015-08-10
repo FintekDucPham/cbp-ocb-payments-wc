@@ -137,13 +137,13 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
 
-        <rb-datepicker rb-form="paymentForm"
-                       rb-name="realizationDate"
-                       rb-date="payment.formData.realizationDate"
-                       rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
-                       rb-required="true">
-
-            <!--bd-attr-bd-min-date="minRealizationDate"-->
+        <rb-datepicker
+                ng-model="payment.formData.realizationDate"
+                rb-form="paymentForm"
+                rb-name="realizationDate"
+                rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                rb-datepicker-options="payment.meta.rbRealizationDateOptions"
+                rb-required="true">
 
         </rb-datepicker>
 

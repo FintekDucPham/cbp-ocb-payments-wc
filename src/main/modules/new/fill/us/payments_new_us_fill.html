@@ -290,7 +290,8 @@
 
         <rb-datepicker rb-form="paymentForm"
                        rb-name="realizationDate"
-                       rb-date="payment.formData.realizationDate"
+                       ng-model="payment.formData.realizationDate"
+                       rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                        rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
                        rb-required="true">
 

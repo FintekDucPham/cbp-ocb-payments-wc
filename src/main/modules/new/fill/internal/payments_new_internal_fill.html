@@ -24,7 +24,7 @@
 
         <eb-validation-messages eb-name="recipientAccountId">
             <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.recipient_account.required'|translate}}
+                {{::'raiff.payments.new.internal.fill.recipient_account.required'|translate}}
             </div>
         </eb-validation-messages>
 
@@ -103,7 +103,8 @@
 
         <rb-datepicker rb-form="paymentForm"
                        rb-name="realizationDate"
-                       rb-date="payment.formData.realizationDate"
+                       ng-model="payment.formData.realizationDate"
+                       rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                        rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
                        rb-required="true">
 
@@ -113,10 +114,10 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
             </div>
-            <div eb-message-key="ngMin" class="validation-message animate-on">
+            <div eb-message-key="bdMinDate" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
             </div>
-            <div eb-message-key="ngMax" class="validation-message animate-on">
+            <div eb-message-key="bdMaxDate" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.execution_date.LATER_EXECUTED_DATE'|translate}}
             </div>
         </eb-validation-messages>

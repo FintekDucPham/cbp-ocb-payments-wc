@@ -3,10 +3,6 @@ angular.module('raiffeisen-payments')
 
         $scope.currencyList = [];
 
-        $scope.realizationDate = {
-            min: new Date()
-        };
-
         $scope.selectRecipient = function(recipient) {
             $scope.payment.meta.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
