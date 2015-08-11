@@ -31,6 +31,8 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.patterns = {
+            period: validationRegexp('US_PERIOD_REGEX'),
+            periodYear: validationRegexp('US_PERIOD_YEAR_REGEX'),
             nrbPattern: validationRegexp('US_TAXPAYER_DATA_REGEX'),
             usCommitmentId: validationRegexp('US_COMMITMENT_ID_REGEX'),
             taxpayerData: validationRegexp('US_TAXPAYER_DATA_REGEX'),

@@ -157,25 +157,25 @@
 
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_no' | translate }}"
-                      ng-switch="payment.options.customPeriod">
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_no' | translate }}">
 
-        <div ng-switch-when="true">
+        <div ng-if="payment.options.customPeriod || !payment.items.formSymbol.periodRequired">
             <input name="periodNo"
                    ng-model="payment.formData.periodNo"
                    required
+                   ng-disabled="!payment.items.formSymbol.periodRequired"
+                   bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
+                   ng-pattern="patterns.period"
                    class="input-field"
                    type="text"
                    placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}">
         </div>
 
-        <div ng-switch-default>
+        <div ng-if="!payment.options.customPeriod && payment.items.formSymbol.periodRequired">
             <ui-select
                     name="periodNo"
                     ng-model="payment.formData.periodNo"
                     theme="bootstrap"
-                    ng-disabled="!payment.items.formSymbol.periodRequired"
-                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                     placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}"
                     ng-required="true">
                 <ui-select-match>
@@ -204,7 +204,7 @@
                ng-disabled="!payment.items.formSymbol.periodRequired"
                bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                required
-               ng-pattern="\\d{2}"
+               ng-pattern="patterns.periodYear"
                class="input-field"
                type="text"
                placeholder="{{ ::'raiff.payments.new.us.fill.period_year.placeholder' | translate }}">
