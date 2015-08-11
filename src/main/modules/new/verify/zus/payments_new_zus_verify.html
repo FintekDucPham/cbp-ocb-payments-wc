@@ -11,20 +11,20 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
-        {{payment.formData.taxpayerData}}
+        {{payment.formData.taxpayer}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">
-        {{payment.formData.taxpayerNip}}
+        {{payment.formData.nip}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_supplementary_id_type'|translate}}">
-        {{::('raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.taxpayerSupplementaryIdType) | translate }}
+        {{::('raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.secondaryIdType) | translate }}
         <!-- desc? -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_supplementary_id'|translate}}">
-        {{payment.formData.taxpayerSupplementaryId}}
+        {{payment.formData.secondaryIdNo}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment_type'|translate}}">
@@ -37,7 +37,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.declaraton_no'|translate}}">
-        {{payment.formData.declarationNumber}}
+        {{payment.formData.declarationNo}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.additional_info'|translate}}">
