@@ -1,6 +1,13 @@
 {
 	"payments.title": "Płatności",
 
+    "raiff.payments.widget.recipient_name": "Odbiorca",
+    "raiff.payments.widget.realization_date": "Data realizacji",
+    "raiff.payments.widget.amount": "Kwota",
+    "raiff.payments.widget.new": "Nowa płatność",
+    "raiff.payments.widget.details": "Szczegóły",
+    "raiff.payments.widget.cancel": "Anuluj",
+
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
     "payments.submenu.options.list.header": "Lista płatności",

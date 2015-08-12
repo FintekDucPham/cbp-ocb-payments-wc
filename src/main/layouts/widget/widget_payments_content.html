@@ -1,8 +1,12 @@
-<div class="widget-content">
-	<span class="widget-name">{{item.name}}</span>
-	<div>
-		<eb-item-property label="accounts.label.available_funds" class="widget-summary value-left">
-			<eb-amount amount="item.availableFunds.amount" currency="{{item.availableFunds.currencySymbol}}" highlight-negative></eb-amount>
-		</eb-item-property>
-	</div>
+<div style="padding-top: 5px;">
+	<div class="payment-widget__title">{{ item.description }}</div>
+	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.recipient_name' | translate }}">
+		{{ item.beneficiaryName }}
+	</bd-item-property>
+	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.realization_date' | translate }}">
+		{{ item.nextRealizationDate | date : 'dd.MM.yyyy' }}
+	</bd-item-property>
+	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.amount' | translate }}">
+		<bd-amount style="float: right;" amount="item.amount" currency="{{ item.currency }}"></bd-amount>
+	</bd-item-property>
 </div>

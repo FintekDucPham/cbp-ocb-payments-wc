@@ -1,9 +1,24 @@
 <div ng-controller="PaymentsWidgetController">
-	<div class="box-action-panel" ng-click="$event.stopPropagation()">
-		<div class="action-button">
-			<bd-button ui-sref="payments.new.fill({ paymentType: 'domestic' })" class="primary icon-right eb-icon eb-ico-plus">
-				<i eb-themable class="eb-icon eb-ico-widget-payments widget-action-icon"></i>{{::'raiff.payments.widget.view.new_payment'|translate}}
-			</bd-button>
+
+	<div style="position: absolute; width:100%; height: 100%" ng-mouseenter="options.detailsShown = true" ng-mouseleave="options.detailsShown = false"></div>
+	<eb-slide-widget eb-context="options" ng-show="!options.detailsShown" eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"  eb-items-promise="paymentsPromise" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
+	<div ng-if="options.detailsShown" class="payment-widget__payment">
+		<div class="payment-widget__details" ng-include="widgetContent"></div>
+		<bd-button-panel>
+			<div class="bd-button-panel__button">
+				<bd-button ui-sref="payments.new.fill" style="line-height: 14px;">{{::'raiff.payments.widget.new'|translate}}</bd-button>
+			</div>
+			<div class="bd-button-panel__button">
+				<bd-button style="line-height: 14px;">{{::'raiff.payments.widget.details'|translate}}</bd-button>
+			</div>
+			<div class="bd-button-panel__button">
+				<bd-button style="line-height: 14px;">{{::'raiff.payments.widget.cancel'|translate}}</bd-button>
+			</div>
+		</bd-button-panel>
+	</div>
+	<div ng-if="paymentsPromise.$$state.status === 1 && paymentList.content.length == 0 && isContextDetal == true" class="widget-content">
+		<div class="widget-content-inner info-text">
+			<a href="{{::'account.widget.empty_list.link_url'|translate}}" target="_blank" ng-click="$event.stopPropagation()">{{::'account.widget.empty_list.link_name'|translate}}</a>
 		</div>
 	</div>
 </div>
