@@ -19,15 +19,15 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id_type'|translate}}">
-        {{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.' + payment.formData.taxpayerSupplementaryIdType | translate }}
+        {{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.' + payment.formData.idType | translate }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id'|translate}}">
-        {{payment.formData.supplementaryId}}
+        {{payment.formData.idNumber}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.form_symbol'|translate}}">
-        {{ ::'raiff.payments.new.form_symbol.' + payment.formData.formSymbolId | translate }}
+        {{ ::'raiff.payments.new.form_symbol.' + payment.formData.formCode | translate }}
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.periodType" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.period_type'|translate}}">
@@ -42,8 +42,8 @@
         {{ payment.formData.periodYear }}
     </bd-item-property>
 
-    <bd-item-property ng-if="payment.formData.commitmentId" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.commitment_id'|translate}}">
-        {{ payment.formData.commitmentId }}
+    <bd-item-property ng-if="payment.formData.obligationId" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.commitment_id'|translate}}">
+        {{ payment.formData.obligationId }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.amount'|translate}}">

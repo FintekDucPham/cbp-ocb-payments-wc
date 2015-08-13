@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .constant('usSupplementaryIds', ['N', 'P', 'R', '1', '2', '3'])
+    .constant('usSupplementaryIds', ['NIP', 'PESEL', 'REGON', 'ID_CARD', 'PASSPORT', 'OTHER'])
     .constant('usPeriodTypes', {
         'J': {},
         'R': {},
@@ -19,7 +19,7 @@ angular.module('raiffeisen-payments')
     .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash) {
 
         angular.extend($scope.payment.formData, {
-            taxpayerSupplementaryIdType: "N"
+            idType: "NIP"
         }, lodash.omit($scope.payment.formData, lodash.isUndefined));
 
         angular.extend($scope.payment.meta, {
@@ -33,30 +33,30 @@ angular.module('raiffeisen-payments')
         $scope.patterns = {
             period: validationRegexp('US_PERIOD_REGEX'),
             periodYear: validationRegexp('US_PERIOD_YEAR_REGEX'),
-            nrbPattern: validationRegexp('US_TAXPAYER_DATA_REGEX'),
+            nrbPattern: validationRegexp('NRB_REGEX'),
             usCommitmentId: validationRegexp('US_COMMITMENT_ID_REGEX'),
             taxpayerData: validationRegexp('US_TAXPAYER_DATA_REGEX'),
             supplementaryIdRegexps: {
-                'N': validationRegexp('NIP_REGEX'),
-                'P': validationRegexp('PESEL'),
-                'R': validationRegexp('REGON'),
-                '1': validationRegexp('PERSONAL_ID'),
-                '2': validationRegexp('PASSPORT'),
-                '3': validationRegexp('OTHER_IDENTIFIER')
+                'NIP': validationRegexp('NIP_REGEX'),
+                'PESEL': validationRegexp('PESEL'),
+                'REGON': validationRegexp('REGON'),
+                'ID_CARD': validationRegexp('PERSONAL_ID'),
+                'PASSPORT': validationRegexp('PASSPORT'),
+                'OTHER': validationRegexp('OTHER_IDENTIFIER')
             }
         };
 
         $scope.clearTaxpayer = function () {
             $scope.payment.items.taxpayer = null;
-            $scope.payment.formData.taxpayerSupplementaryIdType = null;
-            $scope.payment.formData.supplementaryId = null;
+            $scope.payment.formData.idType = null;
+            $scope.payment.formData.idNumber = null;
             $scope.payment.formData.taxpayerData = null;
         };
 
         $scope.selectTaxpayer = function (taxpayer) {
             $scope.payment.formData.taxpayer = taxpayer.name;
-            $scope.payment.formData.taxpayerSupplementaryIdType = taxpayer.identifierType;
-            $scope.payment.formData.supplementaryId = taxpayer.identifier;
+            $scope.payment.formData.idType = taxpayer.identifierType;
+            $scope.payment.formData.idNumber = taxpayer.identifier;
             $scope.payment.formData.taxpayerData = taxpayer.data;
         };
 

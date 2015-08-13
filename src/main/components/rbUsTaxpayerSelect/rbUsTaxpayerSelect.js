@@ -37,7 +37,7 @@ angular.module('raiffeisen-payments')
                     return {
                         name: "Platnik Us " + i,
                         identifier: 91215282121 + i % 10,
-                        identifierType: 'P',
+                        identifierType: 'PESEL',
                         data: 'Platnik Us ul. Smolarzy {0}A'.format(i + 1)
                     };
                 });

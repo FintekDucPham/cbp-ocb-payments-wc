@@ -13,22 +13,32 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}">
-        <ui-select ng-model="payment.formData.recipientAccount"
-                   theme="bootstrap"
-                   name="recipientAccountNo"
-                   placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
-                   ng-pattern="patterns.nrbPattern"
-                   bd-novalidate-when="true"
-                   required>
-            <ui-select-match>
-                {{ 'raiff.payments.new.us.fill.recipient_account.' + $select.selected | translate }} |
-                <!--{{ payment.formData.recipientAccountNo | filter:nazwaus }}  -->
-                Urzad Skarbowy Krakow Podgorze
-            </ui-select-match>
-            <ui-select-choices repeat="recipientAccount in payment.meta.recipientAccounts track by $index">
-                <div ng-bind-html="::'raiff.payments.new.us.fill.recipient_account.' + recipientAccount | translate | highlight: $select.search"></div>
-            </ui-select-choices>
-        </ui-select>
+
+        <input name="recipientAccountNo"
+               ng-model="payment.formData.recipientAccount"
+               required
+               class="input-field"
+               type="text"
+               ng-pattern="patterns.nrbPattern"
+               placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}">
+
+
+        <!--<ui-select ng-model="payment.formData.recipientAccount"-->
+                   <!--theme="bootstrap"-->
+                   <!--name="recipientAccountNo"-->
+                   <!--placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"-->
+                   <!--ng-pattern="patterns.nrbPattern"-->
+                   <!--bd-novalidate-when="true"-->
+                   <!--required>-->
+            <!--<ui-select-match>-->
+                <!--{{ 'raiff.payments.new.us.fill.recipient_account.' + $select.selected | translate }} |-->
+                <!--&lt;!&ndash;{{ payment.formData.recipientAccountNo | filter:nazwaus }}  &ndash;&gt;-->
+                <!--Urzad Skarbowy Krakow Podgorze-->
+            <!--</ui-select-match>-->
+            <!--<ui-select-choices repeat="recipientAccount in payment.meta.recipientAccounts track by $index">-->
+                <!--<div ng-bind-html="::'raiff.payments.new.us.fill.recipient_account.' + recipientAccount | translate | highlight: $select.search"></div>-->
+            <!--</ui-select-choices>-->
+        <!--</ui-select>-->
 
         <!-- ikonka, po naciœniêciu szuka na podstawie inputu podpowiedzi, np podmienia nazwê na numer rachunku -->
 
@@ -78,7 +88,7 @@
 
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type' | translate }}">
-        <ui-select ng-model="payment.formData.taxpayerSupplementaryIdType"
+        <ui-select ng-model="payment.formData.idType"
                    theme="bootstrap"
                    placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>
@@ -94,11 +104,11 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.supplementary_id' | translate }}">
         <input name="supplementaryId"
-               ng-model="payment.formData.supplementaryId"
+               ng-model="payment.formData.idNumber"
                required
                class="input-field"
                type="text"
-               ng-pattern="patterns.supplementaryIdRegexps[payment.formData.taxpayerSupplementaryIdType]"
+               ng-pattern="patterns.supplementaryIdRegexps[payment.formData.idType]"
                placeholder="{{ ::'raiff.payments.new.us.fill.supplementary_id.placeholder' | translate }}">
 
         <eb-validation-messages eb-name="supplementaryId">
@@ -114,7 +124,7 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.form_symbol' | translate }}">
         <rb-us-form-symbol-select
-                rb-form-symbol-id="payment.formData.formSymbolId"
+                rb-form-symbol-id="payment.formData.formCode"
                 rb-form-symbol="payment.items.formSymbol"
                 rb-on-select="selectSymbol()"
                 bd-attr-name="formSymbol"
@@ -222,7 +232,7 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.commitment_id' | translate }}">
         <input name="commitmentId"
-               ng-model="payment.formData.commitmentId"
+               ng-model="payment.formData.obligationId"
                ng-pattern="patterns.usCommitmentId"
                class="input-field"
                type="text"
