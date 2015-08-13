@@ -1,10 +1,11 @@
-<div style="padding-top: 5px;">
-	<div class="payment-widget__title">{{ item.description }}</div>
+<div style="padding-top: 5px;" ng-mouseenter="options.detailsShown = true"
+	 ng-mouseleave="options.detailsShown = false">
+	<div class="payment-widget__title">{{ item.title[0] }}</div>
 	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.recipient_name' | translate }}">
-		{{ item.beneficiaryName }}
+		{{ item.recipientName[0] }}
 	</bd-item-property>
 	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.realization_date' | translate }}">
-		{{ item.nextRealizationDate | date : 'dd.MM.yyyy' }}
+		{{ item.realizationDate | date : 'dd.MM.yyyy' }}
 	</bd-item-property>
 	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.amount' | translate }}">
 		<bd-amount style="float: right;" amount="item.amount" currency="{{ item.currency }}"></bd-amount>
