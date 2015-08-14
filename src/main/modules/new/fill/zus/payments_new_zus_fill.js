@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .constant('zusPaymentInsurances', ['sp', 'zd', 'fp_fgsp', 'fep'])
+    .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
     .controller('NewZusPaymentFillController', function ($scope, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout) {
@@ -33,11 +33,11 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on('clearForm', function () {
-            $scope.payment.formData.insurances = null;
+            $scope.payment.formData.insurancePremiums = null;
         });
 
         function calculateInsurancesAmount() {
-            return lodash.map(lodash.groupBy(lodash.filter($scope.payment.formData.insurances, function (element) {
+            return lodash.map(lodash.groupBy(lodash.filter($scope.payment.formData.insurancePremiums, function (element) {
                 return element.active && !!element.currency;
             }), 'currency'), function (values) {
                 var totalAmount = 0;
@@ -65,7 +65,7 @@ angular.module('raiffeisen-payments')
             return lodash.size(lodash.keys(insurances));
         }
 
-        $scope.$watch('payment.formData.insurances', function (insurances) {
+        $scope.$watch('payment.formData.insurancePremiums', function (insurances) {
             $scope.totalPaymentAmount = calculateInsurancesAmount();
         }, true);
 
@@ -92,10 +92,6 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.check = function() {
-          console.log('x');
-        };
-
         $scope.insurancesValidators = {
             atLeastOne: function (insurances) {
                 return getActiveInsurancesCount(insurances) > 0;
@@ -109,9 +105,19 @@ angular.module('raiffeisen-payments')
         // todo quick fix for ngModel initializing variable
         $timeout(function () {
             // remove all empty
-            $scope.payment.formData.insurances = lodash.pick($scope.payment.formData.insurances, function (insurance) {
+            $scope.payment.formData.insurancePremiums = lodash.pick($scope.payment.formData.insurancePremiums, function (insurance) {
                 return !(!insurance || !insurance.amount || !insurance.currency);
             });
+        });
+
+        $scope.setRequestConverter(function(formData) {
+            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
+                return lodash.pick(angular.extend({}, element, {
+                    insuranceDestinationType: key
+                }), ['amount', 'currency', 'insuranceDestinationType']);
+            });
+            return copiedFormData;
         });
 
     });

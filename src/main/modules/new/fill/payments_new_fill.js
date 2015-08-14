@@ -29,6 +29,14 @@ angular.module('raiffeisen-payments')
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
+        var requestConverter = function(formData) {
+            return formData;
+        };
+
+        $scope.setRequestConverter = function(converterFn) {
+            requestConverter = converterFn;
+        };
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.paymentForm;
             if (form.$invalid) {
@@ -37,7 +45,7 @@ angular.module('raiffeisen-payments')
                 transferService.create($scope.payment.type.code, angular.extend({
                     "remitterId" : $scope.payment.items.senderAccount.ownersList[0].customerId,
                     "transferFromTemplate": false // todo change this
-                }, $scope.payment.formData)).then(function(transfer) {
+                }, requestConverter($scope.payment.formData))).then(function(transfer) {
                     $scope.payment.transferId = transfer;
                     actions.proceed();
                 });
