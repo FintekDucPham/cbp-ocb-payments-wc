@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
             values: '01 02'.split(' ')
         }
     })
-    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash) {
+    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices) {
 
         angular.extend($scope.payment.formData, {
             idType: "NIP"
@@ -73,5 +73,22 @@ angular.module('raiffeisen-payments')
                 $scope.payment.options.customPeriod = !periodType.values;
             }
         };
+
+        $scope.refreshTaxOffices = function(selectedInput) {
+            taxOffices.search({
+                accountNo: selectedInput
+            }).then(function(result) {
+                $scope.payment.meta.recipientAccounts = result;
+            });
+        };
+
+        $scope.setRequestConverter(function(formData) {
+            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            var recipient = $scope.payment.items.recipientAccount;
+            return angular.extend(copiedFormData, {
+                recipientName: recipient.officeName,
+                recipientAccountNo: recipient.accountNo
+            });
+        });
 
     });

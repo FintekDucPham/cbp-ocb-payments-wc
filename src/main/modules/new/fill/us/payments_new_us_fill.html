@@ -3,6 +3,7 @@
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.sender_account' | translate }}">
         <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -14,33 +15,25 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}">
 
-        <input name="recipientAccountNo"
-               ng-model="payment.formData.recipientAccountNo"
-               required
-               class="input-field"
-               type="text"
-               ng-pattern="patterns.nrbPattern"
-               placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}">
+        <ui-select ng-model="payment.items.recipientAccount"
+                   theme="bootstrap"
+                   name="recipientAccountNo"
+                   placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
+                   ng-pattern="patterns.nrbPattern"
+                   bd-novalidate-when="true"
+                   required>
+            <ui-select-match>
+                {{ $select.selected.accountNo }}
+            </ui-select-match>
+            <ui-select-choices repeat="recipientAccount in payment.meta.recipientAccounts track by $index"
+                               refresh="refreshTaxOffices($select.search)"
+                               refresh-delay="500">
+                <div ng-bind-html="recipientAccount.accountNo | highlight: $select.search"></div>
+                <div ng-bind-html="recipientAccount.officeName"></div>
+            </ui-select-choices>
+        </ui-select>
 
-
-        <!--<ui-select ng-model="payment.formData.recipientAccount"-->
-                   <!--theme="bootstrap"-->
-                   <!--name="recipientAccountNo"-->
-                   <!--placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"-->
-                   <!--ng-pattern="patterns.nrbPattern"-->
-                   <!--bd-novalidate-when="true"-->
-                   <!--required>-->
-            <!--<ui-select-match>-->
-                <!--{{ 'raiff.payments.new.us.fill.recipient_account.' + $select.selected | translate }} |-->
-                <!--&lt;!&ndash;{{ payment.formData.recipientAccountNo | filter:nazwaus }}  &ndash;&gt;-->
-                <!--Urzad Skarbowy Krakow Podgorze-->
-            <!--</ui-select-match>-->
-            <!--<ui-select-choices repeat="recipientAccount in payment.meta.recipientAccounts track by $index">-->
-                <!--<div ng-bind-html="::'raiff.payments.new.us.fill.recipient_account.' + recipientAccount | translate | highlight: $select.search"></div>-->
-            <!--</ui-select-choices>-->
-        <!--</ui-select>-->
-
-        <!-- ikonka, po naciœniêciu szuka na podstawie inputu podpowiedzi, np podmienia nazwê na numer rachunku -->
+        {{ payment.items.recipientAccount.officeName }}
 
         <eb-validation-messages eb-name="recipientAccountNo">
             <div eb-message-key="required" class="validation-message animate-on">
@@ -77,14 +70,15 @@
 
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
-        <rb-us-taxpayer-select
-                rb-us-taxpayer="payment.items.taxpayer"
-                rb-on-clear-taxpayer="clearTaxpayer()"
-                rb-on-select-taxpayer="selectTaxpayer($taxpayer)"
-                rb-taxpayer-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"
-                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-us-taxpayer-select>
-    </bd-item-property>
+    <!-- W PACZCE 2 -->
+    <!--<bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">-->
+        <!--<rb-us-taxpayer-select-->
+                <!--rb-us-taxpayer="payment.items.taxpayer"-->
+                <!--rb-on-clear-taxpayer="clearTaxpayer()"-->
+                <!--rb-on-select-taxpayer="selectTaxpayer($taxpayer)"-->
+                <!--rb-taxpayer-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"-->
+                <!--rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-us-taxpayer-select>-->
+    <!--</bd-item-property>-->
 
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type' | translate }}">

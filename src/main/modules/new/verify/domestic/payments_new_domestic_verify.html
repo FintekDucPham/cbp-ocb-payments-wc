@@ -3,7 +3,7 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
         {{ payment.items.senderAccount.accountName }} <!-- | nazwa -->
        |
-        {{ payment.items.senderAccount.accountNo }} <!-- | numer -->
+        {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_data'|translate}}">
@@ -12,20 +12,19 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
         {{payment.formData.recipientAccountNo}} <!-- | nrb -->
-        |
-        Raiffeisen Polbank <!-- | bank -->
+        | <span eb-domestic-bank-details nrb="{{payment.formData.recipientAccountNo}}"></span>
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
-        {{payment.formData.recipientName}} <!-- | nrb -->
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
+        <p style="white-space: pre;" ng-bind-html="payment.formData.recipientName.join('\n')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
         {{payment.formData.amount}}&nbsp;{{payment.formData.currency}} <!-- | nrb -->
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
-        {{payment.formData.description}}
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
+        <p style="white-space: pre;" ng-bind-html="payment.formData.description.join('\n')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">

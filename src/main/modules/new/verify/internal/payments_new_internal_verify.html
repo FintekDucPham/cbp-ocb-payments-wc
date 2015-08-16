@@ -3,7 +3,7 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
         {{payment.items.senderAccount.accountName}} <!-- | nazwa -->
         |
-        {{payment.items.senderAccount.accountNo}} <!-- | numer -->
+        {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_data'|translate}}">
@@ -20,8 +20,8 @@
         {{payment.formData.amount}}&nbsp;{{payment.formData.currency}} <!-- | nrb -->
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.description'|translate}}">
-        {{payment.formData.description}}
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.description'|translate}}">
+        <p style="white-space: pre;" ng-bind-html="payment.formData.description.join('\n')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">

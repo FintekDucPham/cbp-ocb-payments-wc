@@ -37,8 +37,18 @@ angular.module('raiffeisen-payments')
                 if (form && form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    transferService.realize($scope.payment.transferId, $scope.payment.items.credentials).then(function () {
+                    transferService.realize($scope.payment.transferId, $scope.payment.items.credentials).then(function (resultCode) {
+                        var parts = resultCode.split('|');
+                        $scope.payment.result = {
+                            code: parts[1],
+                            type: parts[0] === 'OK' ? "success" : "error"
+                        };
                         actions.proceed();
+                    }).catch(function(err) {
+                        $scope.payment.result = {
+                            code: "ERROR",
+                            type: "error"
+                        };
                     });
                 }
             }
