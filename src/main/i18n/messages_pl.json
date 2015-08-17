@@ -79,7 +79,7 @@
     "raiff.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",
 
     "raiff.payments.new.domestic.fill.sender_account": "Z rachunku",
-    "raiff.payments.new.domestic.fill.accessible_assets": "Dostepne środki",
+    "raiff.payments.new.domestic.fill.accessible_assets": "Dostępne środki",
     "raiff.payments.new.domestic.fill.recipient": "Wybierz odbiorcę",
     "raiff.payments.new.domestic.fill.recipient.placeholder": "Brak",
     "raiff.payments.new.domestic.fill.recipient.clear": "Wyczyść",
@@ -119,7 +119,7 @@
 
     "raiff.payments.new.internal.fill.default_description": [ "Przelew środków" ],
     "raiff.payments.new.internal.fill.sender_account": "Z rachunku",
-    "raiff.payments.new.internal.fill.sender_account.accessible_assets": "Dostepne środki",
+    "raiff.payments.new.internal.fill.sender_account.accessible_assets": "Dostępne środki",
     "raiff.payments.new.internal.fill.recipient_account": "Na rachunek",
     "raiff.payments.new.internal.fill.recipient_account.required": "Rachunek odbiorcy jest wymagany",
     "raiff.payments.new.internal.fill.recipient_account.accessible_assets": "Dostępne środki",
