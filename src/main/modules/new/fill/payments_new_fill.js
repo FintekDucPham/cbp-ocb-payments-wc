@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentFillController"
         });
     })
-    .controller('NewPaymentFillController', function ($scope, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
+    .controller('NewPaymentFillController', function ($scope, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -19,15 +19,12 @@ angular.module('raiffeisen-payments')
 
         paymentRules.search().then(function (result) {
             angular.extend($scope.payment.meta, result);
+            var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
+                minDate: new Date(),
+                maxDaysFromNow: result.maxDaysToDelayPayment
+            });
+            $scope.payment.meta.laterExecutedDateMsg = translate.property('raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('date')(options.maxDate, 'shortDate'));
         });
-
-        $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
-            minDate: new Date(),
-            maxDaysFromNow: result.maxDaysToDelayPayment
-        });
-
-        // productType
-
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.RECIPIENT_DATA_REGEX = new RegExp(RECIPIENT_DATA_REGEX);
@@ -57,6 +54,12 @@ angular.module('raiffeisen-payments')
                     $scope.payment.transferId = transfer;
                     actions.proceed();
                 });
+            }
+        });
+
+        $scope.$watch('payment.items.senderAccount', function(account) {
+            if(account) {
+                $scope.meta.isFuturePaymentAllowed = !(account.productType === 'CREDIT' && !$scope.payment.meta.futurePaymentFromCardAllowed);
             }
         });
 

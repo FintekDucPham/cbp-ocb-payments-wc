@@ -20,7 +20,6 @@
                    name="recipientAccountNo"
                    placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
                    ng-pattern="patterns.nrbPattern"
-                   bd-novalidate-when="true"
                    required>
             <ui-select-match>
                 {{ $select.selected.accountNo }}
@@ -247,10 +246,9 @@
                 <input type="number"
                        name="amount"
                        class="input-field"
-                       bd-only-numbers
                        ng-model="payment.formData.amount"
                        ng-min="0.01"
-                       ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
+                       ng-max="{{ maxAmountAllowed }}"
                        required
                        placeholder="{{ ::'raiff.payments.new.us.fill.amount.placeholder' | translate }}"/>
             </div>
@@ -296,7 +294,7 @@
                        rb-name="realizationDate"
                        ng-model="payment.formData.realizationDate"
                        rb-datepicker-options="payment.meta.rbRealizationDateOptions"
-                       rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed"
                        rb-required="true">
 
             <!--bd-attr-bd-min-date="minRealizationDate"-->
@@ -311,7 +309,7 @@
                 {{::'raiff.payments.new.us.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
             </div>
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.execution_date.LATER_EXECUTED_DATE'|translate}}
+                {{ payment.meta.laterExecutedDateMsg }}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}

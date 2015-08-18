@@ -181,7 +181,7 @@
                        rb-name="realizationDate"
                        rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                        ng-model="payment.formData.realizationDate"
-                       rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed"
                        rb-required="true">
 
         </rb-datepicker>
@@ -194,7 +194,7 @@
                 {{::'raiff.payments.new.us.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
             </div>
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.execution_date.LATER_EXECUTED_DATE'|translate}}
+                {{ payment.meta.laterExecutedDateMsg }}
             </div>
         </eb-validation-messages>
 

@@ -13,15 +13,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.currency = senderAccountCurrency;
         }
 
-        function updateFilter() {
-            $scope.recipientSelectParams.update();
-        }
-
-        $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', function () {
-            updatePaymentCurrencies();
-            updateFilter();
-        }, true);
-
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: false,
@@ -36,5 +27,14 @@ angular.module('raiffeisen-payments')
                 }
             }
         });
+
+        function updateFilter() {
+            $scope.recipientSelectParams.update();
+        }
+
+        $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', function () {
+            updatePaymentCurrencies();
+            updateFilter();
+        }, true);
 
     });

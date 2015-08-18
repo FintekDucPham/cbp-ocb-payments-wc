@@ -47,9 +47,8 @@
                        name="amount"
                        class="input-field"
                        ng-min="0.01"
-                       bd-only-numbers
                        ng-model="payment.formData.amount"
-                       ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
+                       ng-max="{{ maxAmountAllowed }}"
                        required
                        placeholder="{{ ::'raiff.payments.new.internal.fill.amount_placeholder' | translate }}"/>
             </div>
@@ -108,7 +107,7 @@
                        rb-name="realizationDate"
                        ng-model="payment.formData.realizationDate"
                        rb-datepicker-options="payment.meta.rbRealizationDateOptions"
-                       rb-date-disabled="payment.items.senderAccount.productType === 'CREDIT'"
+                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed"
                        rb-required="true">
 
         </rb-datepicker>
@@ -121,7 +120,7 @@
                 {{::'raiff.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
             </div>
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.internal.fill.execution_date.LATER_EXECUTED_DATE'|translate}}
+                {{ payment.meta.laterExecutedDateMsg }}
             </div>
         </eb-validation-messages>
 
