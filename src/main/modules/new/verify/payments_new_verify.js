@@ -43,6 +43,9 @@ angular.module('raiffeisen-payments')
                             code: parts[1],
                             type: parts[0] === 'OK' ? "success" : "error"
                         };
+                        if (parts[0] !== 'OK' && !parts[1]) {
+                            $scope.payment.result.code = 'ERROR';
+                        }
                         actions.proceed();
                     }).catch(function(err) {
                         $scope.payment.result = {
