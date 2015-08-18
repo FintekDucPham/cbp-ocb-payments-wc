@@ -99,7 +99,7 @@
                        bd-only-numbers
                        ng-model="payment.formData.amount"
                        ng-min="0.01"
-                       ng-max="{{ payment.items.senderAccount.accessibleAssets }}"
+                       ng-max="{{ maxAmountAllowed }}"
                        required
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
             </div>

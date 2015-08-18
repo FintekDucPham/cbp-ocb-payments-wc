@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentFillController"
         });
     })
-    .controller('NewPaymentFillController', function ($scope, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
+    .controller('NewPaymentFillController', function ($scope, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -14,26 +14,34 @@ angular.module('raiffeisen-payments')
         });
 
         angular.extend($scope.payment.formData, {
-            realizationDate:  new Date()
+            realizationDate: new Date()
         }, lodash.omit($scope.payment.formData, lodash.isUndefined));
 
-        $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
-            minDate: new Date()
+        paymentRules.search().then(function (result) {
+            angular.extend($scope.payment.meta, result);
         });
+
+        $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
+            minDate: new Date(),
+            maxDaysFromNow: result.maxDaysToDelayPayment
+        });
+
+        // productType
+
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.RECIPIENT_DATA_REGEX = new RegExp(RECIPIENT_DATA_REGEX);
         $scope.PAYMENT_DESCRIPTION_REGEX = new RegExp(PAYMENT_TITLE_REGEX);
 
-        $scope.$on('clearForm', function() {
+        $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
-        var requestConverter = function(formData) {
+        var requestConverter = function (formData) {
             return formData;
         };
 
-        $scope.setRequestConverter = function(converterFn) {
+        $scope.setRequestConverter = function (converterFn) {
             requestConverter = converterFn;
         };
 
@@ -43,13 +51,20 @@ angular.module('raiffeisen-payments')
                 formService.dirtyFields(form);
             } else {
                 transferService.create($scope.payment.type.code, angular.extend({
-                    "remitterId" : $scope.payment.items.senderAccount.ownersList[0].customerId,
+                    "remitterId": $scope.payment.items.senderAccount.ownersList[0].customerId,
                     "transferFromTemplate": false // todo change this
-                }, requestConverter($scope.payment.formData))).then(function(transfer) {
+                }, requestConverter($scope.payment.formData))).then(function (transfer) {
                     $scope.payment.transferId = transfer;
                     actions.proceed();
                 });
             }
+        });
+
+        $scope.$watchGroup([
+            'payment.items.senderAccount.accessibleAssets',
+            'payment.meta.maxElixirAmount'
+        ], function (newValues) {
+            $scope.maxAmountAllowed = Math.min.apply(this, newValues);
         });
 
     });
