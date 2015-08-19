@@ -1,5 +1,4 @@
 <div ng-controller="PaymentsWidgetController">
-
     <div style="position: absolute; width:100%; height: 100%"></div>
     <eb-slide-widget eb-context="options" ng-show="!options.detailsShown || paymentSummary.content.length === 0"
                      eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"
@@ -24,6 +23,12 @@
          class="payment-widget__no-content-placeholder">
         <div class="payment-widget__no-content">
             {{::'raiff.payments.widget.no_content'|translate}}
+        </div>
+    </div>
+    <div ng-if="paymentsPromise.$$state.status === 2"
+         class="payment-widget__no-content-placeholder">
+        <div class="payment-widget__no-content">
+            {{::'raiff.payments.widget.error'|translate}}
         </div>
     </div>
 </div>

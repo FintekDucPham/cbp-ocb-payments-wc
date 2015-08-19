@@ -8,6 +8,7 @@
     "raiff.payments.widget.details": "Szczegóły",
     "raiff.payments.widget.cancel": "Anuluj",
     "raiff.payments.widget.no_content": "Brak zaplanowanych płatności",
+    "raiff.payments.widget.error": "Wystapił nieoczekiwany błąd. Spróbuj ponownie później.",
 
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
