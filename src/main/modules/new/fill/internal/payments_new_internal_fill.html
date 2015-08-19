@@ -69,6 +69,9 @@
         </div>
 
         <eb-validation-messages eb-name="amount">
+            <div eb-message-key="number" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+            </div>
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
