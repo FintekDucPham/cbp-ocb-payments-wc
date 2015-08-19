@@ -28,13 +28,8 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        function updateFilter() {
-            $scope.recipientSelectParams.update();
-        }
-
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', function () {
             updatePaymentCurrencies();
-            updateFilter();
         }, true);
 
     });
