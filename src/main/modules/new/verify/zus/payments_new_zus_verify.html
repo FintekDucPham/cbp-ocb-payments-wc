@@ -47,6 +47,13 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate|date:'mediumDate'}}
     </bd-item-property>
+     <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
+         <span class="messages">
+             <span class="validation-message">
+                 {{::'raiff.payments.new.domestic.fill.execution_date.EOD_ERROR'|translate}}
+             </span>
+         </span>
+    </span>
 
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.verify.payment_data' | translate }}">
 

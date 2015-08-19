@@ -30,4 +30,11 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate | dateFilter:'mediumDate' }}
     </bd-item-property>
+     <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
+         <span class="messages">
+             <span class="validation-message">
+                 {{::'raiff.payments.new.domestic.fill.execution_date.EOD_ERROR'|translate}}
+             </span>
+         </span>
+    </span>
 </div>
