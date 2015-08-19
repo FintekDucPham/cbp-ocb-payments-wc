@@ -247,8 +247,8 @@
                        name="amount"
                        class="input-field"
                        ng-model="payment.formData.amount"
-                       ng-min="0.01"
-                       ng-max="{{ maxAmountAllowed }}"
+                       min="0.01"
+                       max="{{ maxAmountAllowed }}"
                        required
                        placeholder="{{ ::'raiff.payments.new.us.fill.amount.placeholder' | translate }}"/>
             </div>
@@ -272,10 +272,10 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="ngMin" class="validation-message animate-on">
+            <div eb-message-key="min" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="ngMax" class="validation-message animate-on">
+            <div eb-message-key="max" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS'|translate}}
             </div>
             <div eb-message-key="##todo##" class="validation-message animate-on">
