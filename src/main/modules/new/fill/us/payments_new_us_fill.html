@@ -101,14 +101,26 @@
                required
                class="input-field"
                type="text"
-               ng-pattern="patterns.supplementaryIdRegexps[payment.formData.idType]"
+               nip="payment.formData.idType === 'NIP'"
+               pesel="payment.formData.idType === 'PESEL'"
+               regon="payment.formData.idType === 'REGON'"
+               id-card="payment.formData.idType === 'ID_CARD'"
                placeholder="{{ ::'raiff.payments.new.us.fill.supplementary_id.placeholder' | translate }}">
 
         <eb-validation-messages eb-name="supplementaryId">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.supplementary_id.EMPTY_ADD_ID_NUMBER'|translate}}
             </div>
-            <div eb-message-key="pattern" class="validation-message animate-on">
+            <div eb-message-key="nip" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
+            </div>
+            <div eb-message-key="pesel" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
+            </div>
+            <div eb-message-key="regon" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
+            </div>
+            <div eb-message-key="idCard" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
             </div>
         </eb-validation-messages>
