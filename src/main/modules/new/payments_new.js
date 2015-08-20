@@ -41,7 +41,8 @@ angular.module('raiffeisen-payments')
                 paymentTypes: lodash.map(rbPaymentTypes, function (value) {
                     return value;
                 })
-            }
+            },
+            validation: {}
         });
 
         $scope.clearForm = function () {

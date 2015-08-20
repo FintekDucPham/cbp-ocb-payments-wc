@@ -218,7 +218,7 @@
                                    type="number"
                                    class="input-field"
                                    min="0.01"
-                                   max="{{ maxAmountAllowed }}"
+                                   bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                                    step="0.01"
                                    ng-required="payment.formData.insurancePremiums[insuranceType]"
                                    ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
@@ -247,8 +247,11 @@
                         <div eb-message-key="ngMin" class="validation-message animate-on">
                             {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
                         </div>
-                        <div eb-message-key="ngMax" class="validation-message animate-on">
-                            {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
+                        <div eb-message-key="balance" class="validation-message animate-on">
+                            {{ ::'raiff.payments.new.zus.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
+                        </div>
+                        <div eb-message-key="elixir" class="validation-message animate-on">
+                            {{ ::'raiff.payments.new.zus.fill.amount.NOT_ELIXIR_PMNT' | translate }}
                         </div>
                     </eb-validation-messages>
 
