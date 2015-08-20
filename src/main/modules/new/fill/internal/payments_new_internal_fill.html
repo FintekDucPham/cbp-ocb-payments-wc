@@ -48,7 +48,7 @@
                        class="input-field"
                        min="0.01"
                        step="0.01"
-                       max="{{ maxAmountAllowed }}"
+                       bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                        ng-model="payment.formData.amount"
                        required
                        placeholder="{{ ::'raiff.payments.new.internal.fill.amount_placeholder' | translate }}"/>
@@ -75,11 +75,11 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
-                {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+            <div eb-message-key="balance" class="validation-message animate-on">
+                {{ 'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
             </div>
-            <div eb-message-key="max" class="validation-message animate-on">
-                {{::'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS'|translate}}
+            <div eb-message-key="elixir" class="validation-message animate-on">
+                {{ 'raiff.payments.new.internal.fill.amount.NOT_ELIXIR_PMNT' | translate }}
             </div>
         </eb-validation-messages>
 

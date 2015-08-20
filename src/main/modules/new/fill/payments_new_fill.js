@@ -65,11 +65,11 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        $scope.$watchGroup([
-            'payment.items.senderAccount.accessibleAssets',
-            'payment.meta.maxElixirAmount'
-        ], function (newValues) {
-            $scope.maxAmountAllowed = Math.min.apply(this, newValues);
-        });
+        //$scope.$watchGroup([
+        //    'payment.items.senderAccount.accessibleAssets',
+        //    'payment.meta.maxElixirAmount'
+        //], function (newValues) {
+        //    $scope.maxAmountAllowed = Math.min.apply(this, newValues);
+        //});
 
     });
