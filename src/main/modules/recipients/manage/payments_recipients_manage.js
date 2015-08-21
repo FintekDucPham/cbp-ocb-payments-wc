@@ -10,11 +10,12 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsManageController"
         });
     })
-    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdStepStateEvents) {
+    .controller('PaymentsRecipientsManageController', function ($scope, validationRegexp, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdStepStateEvents) {
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
         $scope.RECIPIENT_DATA_REGEX = new RegExp(RECIPIENT_DATA_REGEX);
+        $scope.RECIPIENT_NAME_REGEX = validationRegexp('RECIPIENT_NAME');
 
         $scope.activeStep = {
             id: $stateParams.step || NEW_RECIPIENT_STEPS.FILL
