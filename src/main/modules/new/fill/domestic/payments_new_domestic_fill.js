@@ -34,21 +34,27 @@ angular.module('raiffeisen-payments')
            }
         });
 
-        function updateCurrencies() {
-            $scope.currencyList.length = 0;
-            var currency = $scope.payment.items.senderAccount.currency;
-            $scope.payment.formData.currency = currency;
-            $scope.currencyList.push(currency);
+        function recalculateCurrency() {
+            var senderAccount = $scope.payment.items.senderAccount;
+            var currency = senderAccount.currency;
+            if(currency == 'PLN') {
+                $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
+            } else {
+                var rate = $scope.payment.meta.currencies[currency].averageRate;
+                $scope.payment.formData.currency = 'PLN';
+                $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets * rate;
+            }
+            $scope.paymentForm.amount.$validate();
         }
 
         $scope.onSenderAccountSelect = function() {
-            updateCurrencies();
+            recalculateCurrency();
         };
 
 
         $scope.$on('clearForm', function() {
             //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
-            $timeout(updateCurrencies);
+            $timeout(recalculateCurrency);
         });
 
     });

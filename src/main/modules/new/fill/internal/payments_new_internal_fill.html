@@ -48,7 +48,7 @@
                        class="input-field"
                        min="0.01"
                        step="0.01"
-                       bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
+                       bd-no-more-than="{ 'balance' : payment.meta.convertedAssets }"
                        ng-model="payment.formData.amount"
                        required
                        placeholder="{{ ::'raiff.payments.new.internal.fill.amount_placeholder' | translate }}"/>
@@ -80,9 +80,6 @@
             </div>
             <div eb-message-key="balance" class="validation-message animate-on">
                 {{ 'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
-            </div>
-            <div eb-message-key="elixir" class="validation-message animate-on">
-                {{ 'raiff.payments.new.internal.fill.amount.NOT_ELIXIR_PMNT' | translate }}
             </div>
         </eb-validation-messages>
 

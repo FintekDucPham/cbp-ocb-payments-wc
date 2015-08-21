@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentFillController"
         });
     })
-    .controller('NewPaymentFillController', function ($scope, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
+    .controller('NewPaymentFillController', function ($scope, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -63,6 +63,10 @@ angular.module('raiffeisen-payments')
             if(account) {
                 $scope.payment.meta.isFuturePaymentAllowed = !(account.productType === 'CREDIT' && !$scope.payment.meta.futurePaymentFromCardAllowed);
             }
+        });
+
+        exchangeRates.search().then(function(currencies) {
+            $scope.payment.meta.currencies = lodash.indexBy(currencies.content, 'currencySymbol');
         });
 
         //$scope.$watchGroup([
