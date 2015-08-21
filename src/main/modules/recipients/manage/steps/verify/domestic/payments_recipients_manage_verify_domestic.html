@@ -30,4 +30,25 @@
     </bd-item-property>
 
 
+    <form name="recipientAuthForm" novalidate ng-if="recipient.options.twoStepAuthorization">
+        <div ng-init="setForm(paymentAuthForm);"></div>
+
+        <bd-item-property label="{{ payment.items.smsText }}">
+
+            <input type="text"
+                   name="authCode"
+                   ng-model="recipient.items.credentials"
+                   required/>
+
+            <eb-validation-messages eb-name="authCode">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+    </form>
+
+
 </div>

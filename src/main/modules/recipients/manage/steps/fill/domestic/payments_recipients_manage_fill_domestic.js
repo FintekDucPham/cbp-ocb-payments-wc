@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, recipientGeneralService, $stateParams, operation) {
         $scope.onSenderAccountSelect = function(){
 
         };
@@ -19,7 +19,14 @@ angular.module('raiffeisen-payments')
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    actions.proceed();
+                    var operationType = lodash.find(operation, {
+                        state: $stateParams.operation
+                    });
+                    recipientGeneralService.create(operationType.code, $scope.requestConverter($scope.recipient.formData)).then(function (recipient) {
+                        var responseObj = recipient;
+                        $scope.recipient.transferId = responseObj;
+                        actions.proceed();
+                    });
                 }
             }
 

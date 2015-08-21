@@ -18,6 +18,8 @@ angular.module('raiffeisen-payments')
             list: [TYPES.ALL, TYPES.DOMESTIC]
         };
 
+        $scope.recipientListPromise = null;
+
         $scope.onRecipientEdit = function(data){
             var dataObject = angular.copy(data);
             var routeObject = {
@@ -85,8 +87,8 @@ angular.module('raiffeisen-payments')
                                 );
                             });
                         });
-
-                        $promise.resolve(list);
+                        $scope.recipientListPromise = list;
+                        $promise.resolve($scope.recipientListPromise);
                     });
 
                 }
