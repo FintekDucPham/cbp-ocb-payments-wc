@@ -324,6 +324,7 @@
     "raiff.payments.new.form_symbol.type3": "Symbol 3",
 
 
+    "raiff.payments.new.status.0": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.20": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.40": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.60": "Przelew/transakcja przyjęta do realizacji",
