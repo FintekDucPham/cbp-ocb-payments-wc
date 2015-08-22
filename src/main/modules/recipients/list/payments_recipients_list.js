@@ -66,7 +66,7 @@ angular.module('raiffeisen-payments')
 
                     recipientsService.search(params).then(function(data) {
 
-                        var list = [];
+                        var list = $scope.recipientList = [];
 
                         angular.forEach(data.content, function(recipient){
                             angular.forEach(recipient.paymentTemplates, function(template){

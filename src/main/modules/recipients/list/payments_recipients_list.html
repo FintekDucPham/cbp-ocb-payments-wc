@@ -89,6 +89,9 @@
             </div>
 
         </bd-table>
+        <div class="miniapp-empty-list" ng-if="recipientList.content.length == 0 || recipientList.content.size == 0">
+            {{::"raiff.payments.recipients.label.empty_list"|translate}}
+        </div>
     </div>
 
 </rb-content-view>

@@ -9,6 +9,7 @@
     "raiff.payments.widget.cancel": "Anuluj",
     "raiff.payments.widget.no_content": "Brak zaplanowanych płatności",
     "raiff.payments.widget.error": "Wystapił nieoczekiwany błąd. Spróbuj ponownie później.",
+    "raiff.payments.recipients.label.empty_list": "Nie znaleziono odbiorców",
 
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
