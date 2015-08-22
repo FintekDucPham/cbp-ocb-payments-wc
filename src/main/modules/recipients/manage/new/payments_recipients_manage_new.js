@@ -24,9 +24,10 @@ angular.module('raiffeisen-payments')
                 controller: "RecipientsManageNewStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageNewController', function ($scope) {
+    .controller('PaymentsRecipientsManageNewController', function ($scope, initialState) {
         $scope.recipient.formData = {};
         $scope.recipient.items = angular.copy($scope.EMPTY_ITEMS);
+        $scope.recipient.operationType = initialState.operation;
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             return {

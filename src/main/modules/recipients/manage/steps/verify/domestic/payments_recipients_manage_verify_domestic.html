@@ -1,5 +1,6 @@
-<div ng-controller="RecipientsManageVerifyDomesticController">
-
+<div>
+    <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
+    <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
         <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
             {{ recipient.items.senderAccount.accountName }}
@@ -31,9 +32,9 @@
 
 
     <form name="recipientAuthForm" novalidate ng-if="recipient.options.twoStepAuthorization">
-        <div ng-init="setForm(paymentAuthForm);"></div>
+        <div ng-init="setForm(recipientAuthForm);"></div>
 
-        <bd-item-property label="{{ payment.items.smsText }}">
+        <bd-item-property label="{{ recipient.items.smsText }}">
 
             <input type="text"
                    name="authCode"
@@ -49,6 +50,7 @@
         </bd-item-property>
 
     </form>
+    </span>
 
 
 </div>

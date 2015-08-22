@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage.remove', {
-            url: "/remove/:recipientType",
+            url: "/:operation/:recipientType",
             abstract:true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/remove/payments_recipients_manage_remove.html",
             controller: "PaymentsRecipientsManageRemoveController"
@@ -17,12 +17,21 @@ angular.module('raiffeisen-payments')
             controller: "RecipientsManageRemoveStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageRemoveController', function ($scope, initialState) {
+    .controller('PaymentsRecipientsManageRemoveController', function ($scope, initialState, $stateParams, recipientGeneralService) {
         $scope.recipient.formData.customName = initialState.customerName;
         $scope.recipient.formData.recipientData = initialState.address;
         $scope.recipient.formData.recipientAccountNo = initialState.nrb;
         $scope.recipient.formData.debitAccountNo = initialState.debitNrb;
         $scope.recipient.formData.description = initialState.transferTitle;
+        $scope.recipient.id = initialState.recipientId;
+        $scope.recipient.operationType = initialState.operation;
+
+        $scope.setRequestConverter(function(formData) {
+            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            return {
+                recipientId: $scope.recipient.id
+            };
+        });
 
     }
 );

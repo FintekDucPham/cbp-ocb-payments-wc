@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage.edit', {
-            url: "/edit/:recipientType/:recipientId/:templateId",
+            url: "/edit/:recipientType",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/edit/payments_recipients_manage_edit.html",
             controller: "PaymentsRecipientsManageEditController"
@@ -24,11 +24,24 @@ angular.module('raiffeisen-payments')
             controller: "RecipientsManageEditStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageEditController', function ($scope, initialState) {
+    .controller('PaymentsRecipientsManageEditController', function ($scope, initialState, $stateParams) {
         $scope.recipient.formData.customName = initialState.customerName;
         $scope.recipient.formData.recipientData = initialState.address;
         $scope.recipient.formData.recipientAccountNo = initialState.nrb;
         $scope.recipient.formData.debitAccountNo = initialState.debitNrb;
         $scope.recipient.formData.description = initialState.transferTitle;
+        $scope.recipient.id = initialState.recipientId;
+        $scope.recipient.operationType = initialState.operation;
+        $scope.setRequestConverter(function(formData) {
+            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            return {
+                recipientId: $scope.recipient.id,
+                shortName: copiedFormData.customName,
+                debitAccount: copiedFormData.remitterAccountId,
+                creditAccount: copiedFormData.recipientAccountNo,
+                beneficiary: [copiedFormData.recipientData],
+                remarks: [copiedFormData.description]
+            };
+        });
     }
 );

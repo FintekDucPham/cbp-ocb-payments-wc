@@ -24,7 +24,7 @@
             </div>
 
             <div class="row-line__cell row-line__cell--right-button">
-                <bd-button class="bd-button__primary" ui-sref="payments.recipients.manage.new.fill({ recipientType : 'domestic', operation: 'new' })">
+                <bd-button class="bd-button__primary" ng-click="onRecipientCreate()">
                     {{::'raiff.payments.recipients.new.button'|translate}}
                 </bd-button>
             </div>

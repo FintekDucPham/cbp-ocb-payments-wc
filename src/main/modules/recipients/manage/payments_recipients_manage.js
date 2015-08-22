@@ -6,6 +6,14 @@ angular.module('raiffeisen-payments')
         "NEW": {
             code: 'NEW',
             state: 'new'
+        },
+        "EDIT": {
+            code: 'EDIT',
+            state: 'edit'
+        },
+        "REMOVE": {
+            code: 'REMOVE',
+            state: 'remove'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -16,7 +24,7 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsManageController"
         });
     })
-    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdMainStepInitializer) {
+    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdMainStepInitializer, operation) {
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
@@ -38,9 +46,15 @@ angular.module('raiffeisen-payments')
             operation: $stateParams.operation,
             formData: {},
             items: angular.copy($scope.EMPTY_ITEMS),
-            transferId: null,
+            transferId: {},
             options:{}
         });
+
+        $scope.getOpertaionType = function(operationType){
+            return lodash.find(operation, {
+                state: operationType
+            });
+        };
 
 
 
