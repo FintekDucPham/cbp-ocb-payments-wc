@@ -54,9 +54,8 @@ angular.module('raiffeisen-payments')
                     "remitterId": $scope.payment.items.senderAccount.ownersList[0].customerId,
                     "transferFromTemplate": false // todo change this
                 }, requestConverter($scope.payment.formData))).then(function (transfer) {
-                    var responseObj = angular.fromJson(transfer);
-                    $scope.payment.transferId = responseObj.referenceId;
-                    $scope.payment.endOfDayWarning = responseObj.endOfDayWarning;
+                    $scope.payment.transferId = transfer.referenceId;
+                    $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     actions.proceed();
                 });
             }

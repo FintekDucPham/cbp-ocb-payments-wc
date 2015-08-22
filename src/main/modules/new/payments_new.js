@@ -64,4 +64,13 @@ angular.module('raiffeisen-payments')
             });
         };
 
+
+        var alreadySet = false;
+        $scope.setDefaultValues = function (value) {
+            if (!alreadySet) {
+                angular.extend($scope.payment.formData, value, lodash.pick($scope.payment.formData, angular.isDefined));
+                alreadySet = true;
+            }
+        };
+
     });

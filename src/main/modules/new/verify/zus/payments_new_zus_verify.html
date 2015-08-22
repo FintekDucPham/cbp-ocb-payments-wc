@@ -11,7 +11,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
-        {{payment.formData.taxpayer}}
+        {{payment.formData.recipientName}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">
@@ -40,7 +40,7 @@
         {{payment.formData.declarationNo}}
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.additional_info'|translate}}">
+    <bd-item-property ng-if="payment.formData.additionalInfo" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.additional_info'|translate}}">
         {{payment.formData.additionalInfo}}
     </bd-item-property>
 

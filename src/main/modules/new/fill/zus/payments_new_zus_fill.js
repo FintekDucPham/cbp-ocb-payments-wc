@@ -129,4 +129,8 @@ angular.module('raiffeisen-payments')
             }
         });
 
+        $scope.setDefaultValues({
+            secondaryIdType: 'PESEL'
+        });
+
     });

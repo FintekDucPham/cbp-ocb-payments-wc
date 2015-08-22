@@ -76,7 +76,6 @@
         <ui-select ng-model="payment.formData.secondaryIdType"
                    theme="bootstrap"
                    placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
-                   ng-init="payment.formData.secondaryIdType = 'PESEL'"
                    required>
             <ui-select-match>
                 {{ 'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + $select.selected | translate }}
@@ -170,8 +169,8 @@
                ng-model="payment.formData.additionalInfo"
                class="input-field"
                required
-               bd-novalidate-when="{{ 'SM'.indexOf(payment.formData.paymentType) >= 0 }}"
-               ng-disabled="'SM'.indexOf(payment.formData.paymentType) >= 0"
+               bd-novalidate-when="{{ 'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) >= 0 }}"
+               ng-disabled="'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) >= 0"
                ng-pattern="additionalInfoRegexp"
                placeholder="{{ ::'raiff.payments.new.zus.fill.additional_info.placeholder' | translate }}"/>
 
@@ -229,13 +228,14 @@
                     <div class="bd-pair">
                         <div class="bd-pair__value">
                             <input ng-model="payment.formData.insurancePremiums[insuranceType].amount"
+                                   ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
                                    type="number"
                                    class="input-field"
                                    min="0.01"
+                                   bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceType] }}"
                                    bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                                    step="0.01"
-                                   ng-required="payment.formData.insurancePremiums[insuranceType]"
-                                   ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
+                                   required
                                    name="{{ insuranceType }}Amount"/>
                         </div>
                         <div class="bd-pair__value">
