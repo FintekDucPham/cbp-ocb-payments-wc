@@ -9,7 +9,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX) {
+    .controller('NewPaymentFillController', function ($scope, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, NRB_REGEX, PAYMENT_TITLE_REGEX, RECIPIENT_DATA_REGEX, validationRegexp) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -32,6 +32,7 @@ angular.module('raiffeisen-payments')
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.RECIPIENT_DATA_REGEX = new RegExp(RECIPIENT_DATA_REGEX);
         $scope.PAYMENT_DESCRIPTION_REGEX = new RegExp(PAYMENT_TITLE_REGEX);
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
