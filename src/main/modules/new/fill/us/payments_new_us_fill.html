@@ -323,17 +323,14 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
             </div>
+            <div eb-message-key="date" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+            </div>
             <div eb-message-key="bdMinDate" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
             </div>
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
                 {{ payment.meta.laterExecutedDateMsg }}
-            </div>
-            <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
-            </div>
-            <div eb-message-key="##TODO##" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.execution_date.EOD'|translate}}
             </div>
         </eb-validation-messages>
 
