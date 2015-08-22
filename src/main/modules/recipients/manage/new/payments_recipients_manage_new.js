@@ -27,5 +27,11 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsRecipientsManageNewController', function ($scope) {
         $scope.recipient.formData = {};
         $scope.recipient.items = angular.copy($scope.EMPTY_ITEMS);
+
+        $scope.clearForm = function () {
+            $scope.recipient.formData = {};
+            $scope.recipient.items = {};
+            $scope.$broadcast('clearForm');
+        };
     }
 );

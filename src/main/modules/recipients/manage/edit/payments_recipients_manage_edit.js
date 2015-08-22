@@ -30,5 +30,11 @@ angular.module('raiffeisen-payments')
         $scope.recipient.formData.recipientAccountNo = initialState.nrb;
         $scope.recipient.formData.debitAccountNo = initialState.debitNrb;
         $scope.recipient.formData.description = initialState.transferTitle;
+
+        $scope.clearForm = function () {
+            $scope.recipient.formData = {};
+            $scope.recipient.items = {};
+            $scope.$broadcast('clearForm');
+        };
     }
 );

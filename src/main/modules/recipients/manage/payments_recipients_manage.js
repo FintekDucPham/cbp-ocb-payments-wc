@@ -43,16 +43,5 @@ angular.module('raiffeisen-payments')
             return accountList[0];
         };
 
-        $scope.clearForm = function(){
-            this.recipient.formData.remitterAccountId = "";
-            this.recipient.formData.customName = "";
-            this.recipient.formData.recipientAccountNo = "";
-            this.recipient.formData.recipientData = "";
-            this.recipient.formData.description = "";
-
-            this.recipient.items = {};
-            this.$broadcast('clearForm');
-        };
-
     }
 );
