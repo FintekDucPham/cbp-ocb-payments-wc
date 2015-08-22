@@ -83,12 +83,16 @@
             <textarea name="description"
                       ng-model="recipient.formData.description"
                       ng-maxlength="140"
+                      ng-pattern="PAYMENT_TITLE_REGEX"
                       class="input-field input-area--payment-description"
                       placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.description.placeholder' | translate }}"></textarea>
 
             <eb-validation-messages eb-name="description">
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.description.EMPTY'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.description.PATTERN'|translate}}
                 </div>
                 <div eb-message-key="maxlength" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH'|translate}}
