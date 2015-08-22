@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout) {
+    .controller('NewZusPaymentFillController', function ($scope, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams) {
 
         angular.extend($scope.payment.meta, {
             zusInsuranceTypes: zusPaymentInsurances,
@@ -118,6 +118,15 @@ angular.module('raiffeisen-payments')
                 }), ['amount', 'currency', 'insuranceDestinationType']);
             });
             return copiedFormData;
+        });
+
+        $scope.remitterAccountSelectParams = new rbAccountSelectParams({
+            alwaysSelected: true,
+            accountFilter: function (accounts) {
+                return lodash.filter(accounts, {
+                   currency : 'PLN'
+                });
+            }
         });
 
     });

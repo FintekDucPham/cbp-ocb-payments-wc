@@ -5,6 +5,7 @@
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-on-account-select="onAccountSelected($account, $oldAccount)"
                            rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
+                           rb-account-select-params="remitterAccountSelectParams"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -240,13 +241,14 @@
                         <div class="bd-pair__value">
                             <ui-select ng-model="payment.formData.insurancePremiums[insuranceType].currency"
                                        theme="bootstrap"
+                                       ng-init="payment.formData.insurancePremiums[insuranceType].currency = 'PLN'"
                                        ng-required="payment.formData.insurancePremiums[insuranceType]"
                                        name="{{ insuranceType }}Currency"
-                                       ng-disabled="!payment.formData.insurancePremiums[insuranceType]">
+                                       ng-disabled="true">
                                 <ui-select-match placeholder="Waluta">
                                     {{$select.selected}}
                                 </ui-select-match>
-                                <ui-select-choices repeat="currency in ['PLN', 'EUR', 'USD'] track by $index">
+                                <ui-select-choices repeat="currency in ['PLN'] track by $index">
                                     <div ng-bind-html="currency | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
