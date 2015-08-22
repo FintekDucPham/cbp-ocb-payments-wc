@@ -22,7 +22,10 @@ angular.module('raiffeisen-payments')
             url: "/new/:paymentType",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/payments_new.html",
-            controller: "PaymentsNewController"
+            controller: "PaymentsNewController",
+            params: {
+                paymentType: 'domestic'
+            }
         });
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash) {
