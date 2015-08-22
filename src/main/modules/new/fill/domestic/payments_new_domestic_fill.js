@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, bdFocus, $timeout) {
+    .controller('NewDomesticPaymentFillController', function ($scope, bdFocus, $timeout, $stateParams) {
 
         $scope.currencyList = [];
 
@@ -56,5 +56,9 @@ angular.module('raiffeisen-payments')
             //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
             $timeout(recalculateCurrency);
         });
+
+        if($stateParams.accountId) {
+            $scope.payment.formData.remitterAccountId = $stateParams.accountId;
+        }
 
     });
