@@ -182,6 +182,7 @@
     "raiff.payments.new.zus.fill.taxpayer_supplementary_id.placeholder.REGON": "Wpisz numer REGON płatnika",
     "raiff.payments.new.zus.fill.taxpayer_supplementary_id.placeholder.ID_CARD": "Wpisz numer dowodu osobistego płatnika",
     "raiff.payments.new.zus.fill.taxpayer_supplementary_id.placeholder.PASSPORT": "Wpisz numer paszportu płatnika",
+    "raiff.payments.new.zus.fill.taxpayer_supplementary_id.placeholder.none": "Wybierz typ drugiego identyfikatora",
     "raiff.payments.new.zus.fill.payment_type": "Typ wpłaty",
     "raiff.payments.new.zus.fill.payment_type.placeholder": "Wybierz typ wpłaty",
     "raiff.payments.new.zus.fill.payment_type.TYPE_S": "S - Składka za jeden miesiąc",
