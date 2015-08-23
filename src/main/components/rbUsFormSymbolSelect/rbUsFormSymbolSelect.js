@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .directive('rbUsFormSymbolSelect', function (pathService, attrBinder, lodash) {
+    .directive('rbUsFormSymbolSelect', function (pathService, attrBinder, lodash, taxFormSymbols) {
         return {
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbUsFormSymbolSelect/rbUsFormSymbolSelect.html",
@@ -24,11 +24,13 @@ angular.module('raiffeisen-payments')
                     }), symbolId);
                 });
 
-                $scope.formSymbolList = lodash.times(3, function (i) {
-                    return {
-                        code: "type" + (i + 1),
-                        periodRequired: i % 2 === 0
-                    };
+                taxFormSymbols.search().then(function(formSymbols) {
+                    $scope.formSymbolList = lodash.map(formSymbols, function(symbol) {
+                        return {
+                            code: symbol.formCode,
+                            periodRequired: true
+                        };
+                    });
                 });
 
                 function update(item, model) {

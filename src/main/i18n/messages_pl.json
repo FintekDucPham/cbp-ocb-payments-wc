@@ -14,7 +14,7 @@
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
     "payments.submenu.options.list.header": "Lista płatności",
-    "payments.submenu.options.new.header": "Przelew",
+    "payments.submenu.options.new.header": "Przelew w PLN",
 
     "raiff.payments.widget.view.new_payment": "Nowa płatność",
     "raiff.payments.widget.content.total_payments": "Suma płatności",
@@ -336,7 +336,7 @@
 
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
-    "raiff.payments.recipients.label": "Odbiorcy",
+    "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
     "raiff.payments.recipients.type.label": "Typ odbiorcy",
     "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.new.button": "Nowy odbiorca",

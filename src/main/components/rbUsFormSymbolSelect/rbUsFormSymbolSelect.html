@@ -1,10 +1,10 @@
 <div class="rb-us-form-symbol-select">
     <ui-select ng-model="selection.model" theme="bootstrap" on-select="select($item, $model)">
         <ui-select-match placeholder="{{placeholder}}">
-            {{ 'raiff.payments.new.form_symbol.' + $select.selected.code | translate }}
+            {{ $select.selected.code }}
         </ui-select-match>
         <ui-select-choices repeat="formSymbol.code as formSymbol in formSymbolList track by $index">
-            <div ng-bind-html="::'raiff.payments.new.form_symbol.' + formSymbol.code | translate | highlight: $select.search"></div>
+            <div ng-bind-html="formSymbol.code | highlight: $select.search"></div>
         </ui-select-choices>
     </ui-select>
 </div>
