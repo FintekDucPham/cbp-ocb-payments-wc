@@ -25,12 +25,12 @@ angular.module('raiffeisen-payments')
                 });
 
                 taxFormSymbols.search().then(function(formSymbols) {
-                    $scope.formSymbolList = lodash.map(formSymbols, function(symbol) {
+                    $scope.formSymbolList = lodash.sortBy(lodash.map(formSymbols, function(symbol) {
                         return {
                             code: symbol.formCode,
                             periodRequired: true
                         };
-                    });
+                    }), 'code');
                 });
 
                 function update(item, model) {
