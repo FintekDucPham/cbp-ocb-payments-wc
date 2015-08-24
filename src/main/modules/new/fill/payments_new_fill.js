@@ -16,9 +16,19 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.payment
         });
 
+        $scope.$on('clearForm', function () {
+            if($scope.paymentForm) {
+                formService.clearForm($scope.paymentForm);
+            }
+        });
+
         angular.extend($scope.payment.formData, {
             realizationDate: new Date()
         }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+
+        angular.extend($scope.payment.meta, {
+            recipientForbiddenAccounts: []
+        });
 
         paymentRules.search().then(function (result) {
             angular.extend($scope.payment.meta, result);
@@ -46,19 +56,36 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var form = $scope.paymentForm;
-            if (form.$invalid) {
-                formService.dirtyFields(form);
-            } else {
-                transferService.create($scope.payment.type.code, angular.extend({
-                    "remitterId": $scope.payment.items.senderAccount.ownersList[0].customerId,
-                    "transferFromTemplate": false // todo change this
-                }, requestConverter($scope.payment.formData))).then(function (transfer) {
-                    $scope.payment.transferId = transfer.referenceId;
-                    $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                    actions.proceed();
-                });
+            var wait = false;
+
+            function done() {
+                var form = $scope.paymentForm;
+                if (form.$invalid) {
+                    formService.dirtyFields(form);
+                } else {
+                    transferService.create($scope.payment.type.code, angular.extend({
+                        "remitterId": $scope.payment.items.senderAccount.ownersList[0].customerId,
+                        "transferFromTemplate": false // todo change this
+                    }, requestConverter($scope.payment.formData))).then(function (transfer) {
+                        $scope.payment.transferId = transfer.referenceId;
+                        $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                        actions.proceed();
+                    });
+                }
             }
+
+            $scope.$broadcast(bdStepStateEvents.BEFORE_FORWARD_MOVE, {
+                holdOn: function() {
+                    wait = true;
+                },
+                done: done
+            });
+
+            if(!wait) {
+                done();
+            }
+
+            $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE);
         });
 
         $scope.$watch('payment.items.senderAccount', function(account) {

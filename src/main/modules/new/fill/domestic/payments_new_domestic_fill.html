@@ -7,6 +7,7 @@
                            rb-account-list="payment.meta.accountList"
                            rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                            rb-on-account-select="onSenderAccountSelect()"
+                           rb-account-select-params="remitterAccountSelectParams"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -31,6 +32,7 @@
                ng-disabled="payment.options.fixedRecipientSelection"
                required
                bban-nrb
+               bd-matches-none-of="recipientAccountValidators"
                class="input-field"
                type="text"
                placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
@@ -41,6 +43,12 @@
             </div>
             <div eb-message-key="bbanNrb" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC'|translate}}
+            </div>
+            <div eb-message-key="notUs" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_US'|translate}}
+            </div>
+            <div eb-message-key="notZus" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
             </div>
         </eb-validation-messages>
 

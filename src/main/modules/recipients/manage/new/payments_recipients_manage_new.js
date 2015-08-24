@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage.new', {
-            url: "/new/:recipientType",
+            url: "/:operation/:recipientType",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/new/payments_recipients_manage_new.html",
             controller: "PaymentsRecipientsManageNewController"
@@ -24,7 +24,7 @@ angular.module('raiffeisen-payments')
                 controller: "RecipientsManageNewStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageNewController', function ($scope) {
+    .controller('PaymentsRecipientsManageNewController', function ($scope, initialState) {
         $scope.recipient.formData = {};
         $scope.recipient.items = angular.copy($scope.EMPTY_ITEMS);
 
@@ -33,5 +33,17 @@ angular.module('raiffeisen-payments')
             $scope.recipient.items = {};
             $scope.$broadcast('clearForm');
         };
+
+        $scope.recipient.operationType = initialState.operation;
+        $scope.setRequestConverter(function(formData) {
+            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            return {
+                shortName: copiedFormData.customName,
+                debitAccount: copiedFormData.remitterAccountId,
+                creditAccount: copiedFormData.recipientAccountNo,
+                beneficiary: [copiedFormData.recipientData],
+                remarks: [copiedFormData.description]
+            };
+        });
     }
 );

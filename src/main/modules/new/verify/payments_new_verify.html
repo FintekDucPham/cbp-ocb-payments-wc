@@ -1,6 +1,6 @@
 <div ng-include="getTemplateName('verify')"></div>
 
-<form name="paymentAuthForm" novalidate ng-if="payment.options.twoStepAuthorization">
+<form class="form-body" name="paymentAuthForm" novalidate ng-if="payment.options.twoStepAuthorization">
     <div ng-init="setForm(paymentAuthForm);"></div>
 
     <bd-item-property label="{{ payment.items.smsText }}">

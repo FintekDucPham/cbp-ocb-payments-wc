@@ -18,14 +18,16 @@ angular.module('raiffeisen-payments')
             list: [TYPES.ALL, TYPES.DOMESTIC]
         };
 
+        $scope.recipientListPromise = {};
+
         $scope.onRecipientEdit = function(data){
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientType: dataObject.recipientType,
-                recipientId: dataObject.recipientId,
-                templateId: dataObject.templateId
+                operation: 'edit'
             };
-            viewStateService.setInitialState('payments.recipients.manage.edit', dataObject);
+            var initObject = angular.extend(angular.copy(data), routeObject);
+            viewStateService.setInitialState('payments.recipients.manage.edit', initObject);
             $state.go("payments.recipients.manage.edit.fill", routeObject);
         };
 
@@ -33,11 +35,22 @@ angular.module('raiffeisen-payments')
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientType: dataObject.recipientType,
-                recipientId: dataObject.recipientId,
-                templateId: dataObject.templateId
+                operation: 'remove'
             };
-            viewStateService.setInitialState('payments.recipients.manage.remove', dataObject);
+            var initObject = angular.extend(angular.copy(data), routeObject);
+            viewStateService.setInitialState('payments.recipients.manage.remove', initObject);
             $state.go("payments.recipients.manage.remove.verify", routeObject);
+
+        };
+
+        $scope.onRecipientCreate = function(){
+            var routeObject = {
+                recipientType: 'DOMESTIC',
+                operation: 'new'
+            };
+            viewStateService.setInitialState('payments.recipients.manage.new', routeObject);
+            $state.go("payments.recipients.manage.new.fill", routeObject);
+
         };
 
         $scope.onRecipientTransfer = function(data){
@@ -55,6 +68,8 @@ angular.module('raiffeisen-payments')
             tableConfig : new bdTableConfig({}),
             tableData : {
                 getData: function ($promise, $params) {
+
+                    $scope.recipientListPromise = $promise.promise;
 
                     var params = {
                         pageSize: 10
@@ -74,11 +89,11 @@ angular.module('raiffeisen-payments')
                                     {
                                         recipientId: recipient.recipientId,
                                         templateId: recipient.templateId,
-                                        customerName: template.templateName,
+                                        customerName: recipient.recipientName.join(" "),
                                         recipient: recipient.recipientName.join(" "),
                                         address: recipient.recipientAddress.join(" "),
                                         nrb: template.beneficiaryAccountNo,
-                                        debitNrb: template.debitAccount,
+                                        debitNrb: template.remitterAccountNo,
                                         transferTitle: template.title.join(" "),
                                         recipientType: template.templateType
                                     }
