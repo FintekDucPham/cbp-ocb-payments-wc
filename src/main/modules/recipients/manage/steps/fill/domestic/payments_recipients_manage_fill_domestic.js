@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams) {
         $scope.onSenderAccountSelect = function () {
 
         };
@@ -20,5 +20,20 @@ angular.module('raiffeisen-payments')
                 }
             }
 
+        });
+
+
+        $scope.recipientSelectParams = new rbAccountSelectParams({
+            useFirstByDefault: true,
+            alwaysSelected: false,
+            accountFilter: function (accounts, $accountId) {
+               return accounts;
+            },
+            decorateRequest: function(params){
+                return angular.extend(params, {
+                    currency: "PLN",
+                    productList: "BENEFICIARY_CREATE_FROM_LIST"
+                });
+            }
         });
     });
