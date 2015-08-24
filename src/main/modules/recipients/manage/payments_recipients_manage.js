@@ -2,6 +2,20 @@ angular.module('raiffeisen-payments')
     .constant('NEW_RECIPIENT_STEPS', {
         FILL: 'fill'
     })
+    .constant('operation', {
+        "NEW": {
+            code: 'NEW',
+            state: 'new'
+        },
+        "EDIT": {
+            code: 'EDIT',
+            state: 'edit'
+        },
+        "REMOVE": {
+            code: 'REMOVE',
+            state: 'remove'
+        }
+    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage', {
             url: "/manage",
@@ -10,7 +24,7 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsManageController"
         });
     })
-    .controller('PaymentsRecipientsManageController', function ($scope, validationRegexp, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdStepStateEvents) {
+    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, RECIPIENT_DATA_REGEX, NEW_RECIPIENT_STEPS, bdMainStepInitializer, operation, validationRegexp, bdStepStateEvents) {
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
@@ -27,11 +41,24 @@ angular.module('raiffeisen-payments')
             accountList: null
         };
 
-        $scope.recipient = {
+
+
+        bdMainStepInitializer($scope, 'recipient', {
             type: $stateParams.recipientType,
+            operation: $stateParams.operation,
             formData: {},
-            items: angular.copy($scope.EMPTY_ITEMS)
+            items: angular.copy($scope.EMPTY_ITEMS),
+            transferId: {},
+            options:{}
+        });
+
+        $scope.getOpertaionType = function(operationType){
+            return lodash.find(operation, {
+                state: operationType
+            });
         };
+
+
 
         $scope.getAccountByNrb = function(accountList){
             if(lodash.isString($scope.recipient.formData.debitAccountNo)){
@@ -41,6 +68,14 @@ angular.module('raiffeisen-payments')
                 }
             }
             return accountList[0];
+        };
+
+        $scope.requestConverter = function (formData) {
+            return formData;
+        };
+
+        $scope.setRequestConverter = function (converterFn) {
+            $scope.requestConverter = converterFn;
         };
 
     }

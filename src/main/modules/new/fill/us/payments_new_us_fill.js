@@ -2,7 +2,6 @@ angular.module('raiffeisen-payments')
     .constant('usSupplementaryIds', ['NIP', 'PESEL', 'REGON', 'ID_CARD', 'PASSPORT', 'OTHER'])
     .constant('usPeriodTypes', {
         'J': {},
-        'R': {},
         'D': {
             values: '0101 0201 0301 0102 0202 0302 0103 0203 0303 0104 0204 0304 0105 0205 0305 0106 0206 0306 0107 0207 0307 0108 0208 0308 0109 0209 0309 0110 0210 0310 0111 0211 0311 0112 0212 0312'.split(' ')
         },
@@ -14,9 +13,10 @@ angular.module('raiffeisen-payments')
         },
         'P': {
             values: '01 02'.split(' ')
-        }
+        },
+        'R': {}
     })
-    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices) {
+    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams) {
 
         angular.extend($scope.payment.formData, {
             idType: "NIP"
@@ -28,6 +28,15 @@ angular.module('raiffeisen-payments')
                 return name;
             }),
             usPeriodTypes: usPeriodTypes
+        });
+
+        $scope.remitterAccountSelectParams = new rbAccountSelectParams({
+            alwaysSelected: true,
+            accountFilter: function (accounts) {
+                return lodash.filter(accounts, {
+                    currency : 'PLN'
+                });
+            }
         });
 
         $scope.patterns = {
@@ -75,9 +84,18 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.refreshTaxOffices = function(selectedInput) {
-            taxOffices.search({
-                accountNo: selectedInput
-            }).then(function(result) {
+            taxOffices.search((function(selectedInput) {
+                var regexp = new RegExp('^[0-9 ]+$');
+                if(regexp.test(selectedInput)) {
+                    return {
+                        accountNo: selectedInput
+                    };
+                } else {
+                    return {
+                        officeName: selectedInput
+                    };
+                }
+            })(selectedInput)).then(function(result) {
                 $scope.payment.meta.recipientAccounts = result;
             });
         };
