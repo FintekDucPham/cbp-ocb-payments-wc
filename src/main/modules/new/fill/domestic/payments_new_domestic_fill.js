@@ -87,7 +87,8 @@ angular.module('raiffeisen-payments')
                 return lodash.filter(accounts, {
                     currency: 'PLN'
                 });
-            }
+            },
+            payments: true
         });
 
         $scope.recipientAccountValidators = {
