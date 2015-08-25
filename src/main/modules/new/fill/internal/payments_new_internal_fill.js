@@ -32,7 +32,7 @@ angular.module('raiffeisen-payments')
         function updatePaymentCurrencies() {
             var recipientAccountCurrency = lodash.get($scope.payment.items.recipientAccount, 'currency');
             var senderAccountCurrency =  lodash.get($scope.payment.items.senderAccount, 'currency');
-            $scope.currencyList = lodash.without(lodash.union([recipientAccountCurrency, senderAccountCurrency]), undefined);
+            $scope.currencyList = lodash.without(lodash.union([senderAccountCurrency, recipientAccountCurrency]), undefined);
             $scope.payment.options.currencyLocked = $scope.currencyList.length < 2;
             $scope.payment.formData.currency = senderAccountCurrency;
             recalculateCurrencies();
