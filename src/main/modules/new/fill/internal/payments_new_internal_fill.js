@@ -50,7 +50,8 @@ angular.module('raiffeisen-payments')
                 } else {
                     return accounts;
                 }
-            }
+            },
+            payments: true
         });
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', function () {
