@@ -1,0 +1,53 @@
+<div class="rb-tax-account-select">
+
+    <div class="rb-tax-account-select__select">
+        <div class="rb-tax-account-select__account" ng-switch="isFromList">
+
+            <div ng-switch-when="false">
+                <input id="recipientAccountNo"
+                       name="recipientAccountNo"
+                       ng-model-options="{ allowInvalid: true }"
+                       class="input-field"
+                       ng-model="model.searchQuery"
+                       required
+                       bban-nrb
+                       type="text"
+                       placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
+            </div>
+
+            <div ng-switch-when="true">
+                <ui-select ng-model="model.taxOffice"
+                           search-enabled="false"
+                           on-select="select($item)"
+                           theme="bootstrap"
+                           placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
+                           ng-pattern="patterns.nrbPattern"
+                           required>
+                    <ui-select-match>
+                        {{ $select.selected.accountNo }}
+                    </ui-select-match>
+                    <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts track by $index">
+                        <div ng-bind-html="taxOffice.accountNo | highlight: $select.search"></div>
+                        <div ng-bind-html="taxOffice.officeName"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+        </div>
+
+        <div class="rb-tax-account-select__control">
+            <bd-button ng-show="!isFromList" ng-click="searchForOffice(model.searchQuery)">{{ ::params.searchText |
+                translate }}
+            </bd-button>
+            <bd-button ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate
+                }}
+            </bd-button>
+        </div>
+    </div>
+
+    <div class="rb-tax-account-select__name">
+        {{ model.taxOffice.officeName }}
+    </div>
+
+
+</div>

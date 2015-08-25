@@ -84,22 +84,7 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.refreshTaxOffices = function(selectedInput) {
-            taxOffices.search((function(selectedInput) {
-                var regexp = new RegExp('^[0-9 ]+$');
-                if(regexp.test(selectedInput)) {
-                    return {
-                        accountNo: selectedInput
-                    };
-                } else {
-                    return {
-                        officeName: selectedInput
-                    };
-                }
-            })(selectedInput)).then(function(result) {
-                $scope.payment.meta.recipientAccounts = result;
-            });
-        };
+
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
