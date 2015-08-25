@@ -47,14 +47,8 @@ angular.module('raiffeisen-payments')
 
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
-            var currency = senderAccount.currency;
             $scope.payment.formData.currency = 'PLN';
-            if (currency == 'PLN') {
-                $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
-            } else {
-                var rate = $scope.payment.meta.currencies[currency].averageRate;
-                $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets * rate;
-            }
+            $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
             $scope.paymentForm.amount.$validate();
         }
 
