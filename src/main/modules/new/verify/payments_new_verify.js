@@ -29,6 +29,10 @@ angular.module('raiffeisen-payments')
             });
         });
 
+        $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+            delete $scope.payment.items.credentials;
+        });
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if ($scope.payment.promises.authorizationPromise.$$state.status !== 1) {
 
