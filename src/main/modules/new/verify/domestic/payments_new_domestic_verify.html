@@ -1,7 +1,7 @@
 <div class="form-body" ng-controller="NewDomesticPaymentVerifyController">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
-        {{ payment.items.senderAccount.accountName }} <!-- | nazwa -->
+        {{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }} <!-- | nazwa -->
        |
         {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>

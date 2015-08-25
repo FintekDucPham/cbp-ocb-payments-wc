@@ -84,8 +84,7 @@ angular.module('raiffeisen-payments')
                     });
                     $scope.paymentForm.recipientAccountNo.$validate();
                 }
-                control.done();
-            });
+            }).finally(control.done);
         });
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
