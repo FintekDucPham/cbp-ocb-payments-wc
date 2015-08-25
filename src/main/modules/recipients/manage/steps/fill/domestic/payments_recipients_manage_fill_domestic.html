@@ -14,7 +14,6 @@
             <input name="customName"
                    ng-model="recipient.formData.customName"
                    required
-                   ng-maxlength="35"
                    ng-pattern="RECIPIENT_NAME_REGEX"
                    class="input-field"
                    placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.placeholder' | translate }}" />
@@ -24,10 +23,7 @@
                     {{::'raiff.payments.recipients.new.domestic.fill.customName.EMPTY'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.domestic.fill.customName.INCORRECT'|translate}}
-                </div>
-                <div eb-message-key="maxlength" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.domestic.fill.customName.MAXLENGTH'|translate}}
+                    {{::'raiff.payments.recipients.new.domestic.fill.customName.ILLEGAL'|translate}}
                 </div>
             </eb-validation-messages>
 
