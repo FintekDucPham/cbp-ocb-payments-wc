@@ -16,30 +16,16 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}">
 
-        <ui-select ng-model="payment.items.recipientAccount"
-                   theme="bootstrap"
-                   name="recipientAccountNo"
-                   placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
-                   ng-pattern="patterns.nrbPattern"
-                   required>
-            <ui-select-match>
-                {{ $select.selected.accountNo }}
-            </ui-select-match>
-            <ui-select-choices repeat="recipientAccount in payment.meta.recipientAccounts track by $index"
-                               refresh="refreshTaxOffices($select.search)"
-                               refresh-delay="500">
-                <div ng-bind-html="recipientAccount.accountNo | highlight: $select.search"></div>
-                <div ng-bind-html="recipientAccount.officeName"></div>
-            </ui-select-choices>
-        </ui-select>
+        <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
+                rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
 
-        {{ payment.items.recipientAccount.officeName }}
+        </rb-tax-account-select>
 
         <eb-validation-messages eb-name="recipientAccountNo">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC'|translate}}
             </div>
-            <div eb-message-key="pattern" class="validation-message animate-on">
+            <div eb-message-key="bbanNrb" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US'|translate}}
             </div>
             <div eb-message-key="##not_found##" class="validation-message animate-on">
