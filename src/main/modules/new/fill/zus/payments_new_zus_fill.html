@@ -158,7 +158,7 @@
                 {{ ::'raiff.payments.new.zus.fill.declaraton_no.EMPTY_DECLARATION_NUMBER' | translate }}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{ 'raiff.payments.new.zus.fill.declaraton_no.INCORRECT_DECLARATION_NUMBER' + ('SM'.indexOf(payment.formData.paymentType) >= 0 ? '' : '_A') | translate }}
+                {{ 'raiff.payments.new.zus.fill.declaraton_no.INCORRECT_DECLARATION_NUMBER' + ('TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) >= 0 ? '' : '_A') | translate }}
             </div>
         </eb-validation-messages>
 

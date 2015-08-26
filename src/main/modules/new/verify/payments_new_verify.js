@@ -23,7 +23,7 @@ angular.module('raiffeisen-payments')
                     if(twoStep) {
                         $scope.payment.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
                             .replace("##number##", content.authenticationAttributes.operationId)
-                            .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'yyyy-MM-dd'));
+                            .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'dd.MM.yyyy'));
                     }
                 });
             });
