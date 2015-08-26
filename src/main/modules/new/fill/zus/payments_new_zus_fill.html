@@ -90,7 +90,6 @@
         <input name="taxpayerSupplementaryId"
                ng-model="payment.formData.secondaryIdNo"
                required
-               ng-pattern="supplementaryIdRegexps[payment.formData.secondaryIdType]"
                class="input-field"
                pesel="payment.formData.secondaryIdType === 'PESEL'"
                regon="payment.formData.secondaryIdType === 'REGON'"
