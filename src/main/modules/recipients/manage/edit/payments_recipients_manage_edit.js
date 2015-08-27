@@ -33,7 +33,6 @@ angular.module('raiffeisen-payments')
 
         $scope.clearForm = function () {
             $scope.recipient.formData = {};
-            $scope.recipient.items = {};
             $scope.$broadcast('clearForm');
         };
 
@@ -46,8 +45,8 @@ angular.module('raiffeisen-payments')
                 shortName: copiedFormData.customName,
                 debitAccount: copiedFormData.remitterAccountId,
                 creditAccount: copiedFormData.recipientAccountNo,
-                beneficiary: [copiedFormData.recipientData],
-                remarks: [copiedFormData.description]
+                beneficiary: copiedFormData.recipientData,
+                remarks: copiedFormData.description
             };
         });
     }
