@@ -1,7 +1,10 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyDomesticController', function ($scope, bdStepStateEvents, authorizationService, translate, dateFilter, recipientGeneralService, $stateParams) {
+    .controller('RecipientsManageVerifyDomesticController', function ($scope, bdStepStateEvents, authorizationService, translate, dateFilter, recipientGeneralService, $stateParams, bdVerifyStepInitializer) {
 
         $scope.recipientAuthForm = {};
+
+
+
         var operation =  $scope.getOpertaionType($scope.recipient.operationType);
         recipientGeneralService.create(operation.code, $scope.requestConverter($scope.recipient.formData)).then(function (recipient) {
             var responseObj = recipient;
@@ -48,6 +51,12 @@ angular.module('raiffeisen-payments')
         $scope.setForm = function (form) {
             $scope.recipientAuthForm = form;
         };
+
+        $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+            delete $scope.recipient.items.credentials;
+            delete $scope.recipient.promises.authorizationPromise;
+            delete $scope.recipient.transferId;
+        });
 
 
 

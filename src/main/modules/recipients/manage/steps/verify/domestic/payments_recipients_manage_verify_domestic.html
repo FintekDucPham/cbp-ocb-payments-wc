@@ -22,12 +22,16 @@
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                       label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
-        {{ recipient.formData.recipientData }}
+        <span ng-repeat="data in recipient.formData.recipientData">
+            {{data}}<br/>
+        </span>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                       label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
-        {{ recipient.formData.description }}
+          <span ng-repeat="data in recipient.formData.description">
+            {{data}}<br/>
+        </span>
     </bd-item-property>
 
 
