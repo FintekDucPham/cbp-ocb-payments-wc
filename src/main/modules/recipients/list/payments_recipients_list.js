@@ -60,7 +60,7 @@ angular.module('raiffeisen-payments')
                 templateId: dataObject.templateId,
                 paymentType: dataObject.recipientType
             };
-            viewStateService.setInitialState('payments.new', dataObject);
+            viewStateService.setInitialState('payments.recipient.tranfer.new', dataObject);
             $state.go("payments.new.fill", routeObject);
         };
 
@@ -95,7 +95,10 @@ angular.module('raiffeisen-payments')
                                         nrb: template.beneficiaryAccountNo,
                                         debitNrb: template.remitterAccountNo,
                                         transferTitle: template.title.join(" "),
-                                        recipientType: template.templateType
+                                        recipientType: template.templateType,
+                                        recipientAddress : recipient.recipientAddress,
+                                        recipientName : recipient.recipientName,
+                                        transferTitleTable : template.title
                                     }
                                 );
                             });
