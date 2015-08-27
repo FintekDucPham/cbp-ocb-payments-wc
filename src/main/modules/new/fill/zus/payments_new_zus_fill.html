@@ -4,7 +4,7 @@
         <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-on-account-select="onAccountSelected($account, $oldAccount)"
-                           rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_CREDIT"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_DEBIT"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
@@ -258,12 +258,6 @@
                             </ui-select>
                         </div>
                     </div>
-
-                    <eb-validation-messages eb-name="amount">
-                        <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
-                            {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
-                        </div>
-                    </eb-validation-messages>
 
                     <eb-validation-messages eb-name="{{ insuranceType }}Amount">
                         <div eb-message-key="pattern" class="validation-message animate-on">
