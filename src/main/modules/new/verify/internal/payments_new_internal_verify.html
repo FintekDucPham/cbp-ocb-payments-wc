@@ -25,7 +25,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">
-        {{payment.formData.realizationDate | dateFilter:'dd-MM-yyyy' }}
+        {{payment.formData.realizationDate | date:'dd-MM-yyyy' }}
     </bd-item-property>
 
 </div>
