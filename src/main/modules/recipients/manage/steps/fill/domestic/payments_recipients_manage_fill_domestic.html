@@ -7,6 +7,7 @@
                                rb-account-list="recipient.items.accountList"
                                rb-on-account-select="onSenderAccountSelect()"
                                rb-init-select-fn="getAccountByNrb"
+                               rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_CREDIT"
                                rb-account-select-params="recipientSelectParams"></rb-account-select>
         </bd-item-property>
 
@@ -35,6 +36,7 @@
                    ng-model="recipient.formData.recipientAccountNo"
                    required
                    bban-nrb
+                   bd-matches-none-of="recipientAccountValidators"
                    class="input-field"
                    type="text"
                    placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder' | translate }}">
@@ -45,6 +47,9 @@
                 </div>
                 <div eb-message-key="bbanNrb" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC'|translate}}
+                </div>
+                <div eb-message-key="sameAccount" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
                 </div>
             </eb-validation-messages>
 
