@@ -42,6 +42,7 @@
                   ng-model="payment.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData"
                   required
+                  bd-split-text
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
 
@@ -55,6 +56,10 @@
         </eb-validation-messages>
 
     </bd-item-property>
+
+    <pre>
+        {{ paymentForm.taxpayerData | json }}
+    </pre>
 
     <!-- W PACZCE 2 -->
     <!--<bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">-->
