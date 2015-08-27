@@ -75,6 +75,7 @@
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type' | translate }}">
         <ui-select ng-model="payment.formData.secondaryIdType"
                    theme="bootstrap"
+                   on-select="onSecondaryIdTypeChanged(payment.formData.secondaryIdType)"
                    placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>
             <ui-select-match>

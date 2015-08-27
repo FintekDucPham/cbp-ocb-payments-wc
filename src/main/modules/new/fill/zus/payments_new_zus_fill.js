@@ -134,4 +134,8 @@ angular.module('raiffeisen-payments')
             secondaryIdType: 'PESEL'
         });
 
+        $scope.onSecondaryIdTypeChanged = function() {
+            $scope.paymentForm.taxpayerSupplementaryId.$validate();
+        };
+
     });
