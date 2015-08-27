@@ -259,6 +259,12 @@
                         </div>
                     </div>
 
+                    <eb-validation-messages eb-name="amount">
+                        <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
+                            {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+                        </div>
+                    </eb-validation-messages>
+
                     <eb-validation-messages eb-name="{{ insuranceType }}Amount">
                         <div eb-message-key="pattern" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}

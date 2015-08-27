@@ -31,12 +31,11 @@ angular.module('raiffeisen-payments')
                     formService.dirtyFields(form);
                 } else {
                     recipientGeneralService.realize($scope.recipient.transferId, $scope.recipient.items.credentials).then(function (resultCode) {
+                        $scope.recipient.result.type = 'success';
                         actions.proceed();
-                    }).catch(function(err) {
-                        $scope.recipient.result = {
-                            code: "error",
-                            type: "error"
-                        };
+                    }).catch(function (e) {
+                        $scope.recipient.result.type = 'error';
+                        actions.proceed();
                     });
                 }
             }
