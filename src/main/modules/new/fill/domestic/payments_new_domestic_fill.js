@@ -34,7 +34,6 @@ angular.module('raiffeisen-payments')
             };
         }));
 
-       
         $scope.selectRecipient = function (recipient) {
             $scope.payment.meta.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
@@ -43,7 +42,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.description = recipient.title;
             $scope.payment.formData.transferFromTemplate = true;
         };
-
 
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
@@ -56,7 +54,7 @@ angular.module('raiffeisen-payments')
         };
 
         function updateRecipientsList() {
-
+            $scope.$broadcast("filterRecipientList", $scope.payment.items.senderAccount.accountNo);
         }
 
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
@@ -65,7 +63,6 @@ angular.module('raiffeisen-payments')
                 if (!!$scope.payment.items.recipient) {
                     $scope.clearRecipient();
                 }
-
             }
         });
 
@@ -78,8 +75,8 @@ angular.module('raiffeisen-payments')
 
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
+            updateRecipientsList();
         };
-
 
         $scope.$on('clearForm', function () {
             //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
