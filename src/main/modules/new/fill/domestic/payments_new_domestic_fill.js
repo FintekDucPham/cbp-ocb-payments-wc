@@ -21,7 +21,6 @@ angular.module('raiffeisen-payments')
         if(angular.isDefined(viewStateService.getInitialState('payments.recipient.tranfer.new'))){
            var recipient = viewStateService.getInitialState('payments.recipient.tranfer.new');
             $scope.selectRecipient($scope.parseRecipientData(recipient));
-            $scope.payment.items.recipient = recipient;
             viewStateService.resetInitialState('payments.recipient.tranfer.new');
         }
         $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
