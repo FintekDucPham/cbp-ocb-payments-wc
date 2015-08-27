@@ -11,7 +11,8 @@ angular.module('raiffeisen-payments').controller('PaymentsWidgetController', fun
 
 
     $scope.widgetContent = pathService.generateTemplatePath("raiffeisen-payments") + '/layouts/widget/widget_payments_content.html';
-    $scope.options = {
+    $scope.context = {};
+    $scope.context.options = {
         detailsShown: false
     };
 
