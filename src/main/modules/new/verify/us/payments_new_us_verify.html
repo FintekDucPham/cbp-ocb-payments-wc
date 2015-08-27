@@ -25,7 +25,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.form_symbol'|translate}}">
-        {{ ::'raiff.payments.new.form_symbol.' + payment.formData.formCode | translate }}
+        {{ ::payment.formData.formCode }}
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.periodType" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.period_type'|translate}}">
