@@ -1,7 +1,8 @@
 angular.module('raiffeisen-payments')
     .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, recipientGeneralService) {
-        $scope.onSenderAccountSelect = function () {
 
+        $scope.onSenderAccountSelect = function () {
+            $scope.recipientForm.recipientAccountNo.$validate();
         };
 
         $scope.$on('clearForm', function () {
@@ -22,6 +23,12 @@ angular.module('raiffeisen-payments')
 
         });
 
+        $scope.recipientAccountValidators = {
+            sameAccount: function (accountNo) {
+                var senderAccount = $scope.recipient.items.senderAccount;
+                return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(' ', '');
+            }
+        };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: true,

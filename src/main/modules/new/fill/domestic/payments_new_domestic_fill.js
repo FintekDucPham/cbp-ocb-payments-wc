@@ -1,8 +1,28 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, lodash, bdFocus, $timeout, $stateParams, taxOffices, bdStepStateEvents, rbAccountSelectParams) {
+    .controller('NewDomesticPaymentFillController', function ($scope, lodash, bdFocus, $timeout, $stateParams, taxOffices, bdStepStateEvents, rbAccountSelectParams, viewStateService) {
 
         $scope.currencyList = [];
 
+        $scope.selectRecipient = function (recipient) {
+            $scope.payment.meta.recipient = recipient;
+            $scope.payment.options.fixedRecipientSelection = true;
+            $scope.payment.formData.recipientAccountNo = recipient.accountNo;
+            $scope.payment.formData.recipientName = recipient.data;
+            $scope.payment.formData.description = recipient.title;
+        };
+        $scope.parseRecipientData = function(recipientFrom){
+            var recipient = {};
+            recipient.accountNo = recipientFrom.nrb;
+            recipient.title = recipientFrom.transferTitleTable;
+            recipient.data = recipientFrom.recipientAddress;
+            recipient.name = recipientFrom.recipient;
+            return recipient;
+        };
+        if(angular.isDefined(viewStateService.getInitialState('payments.recipient.tranfer.new'))){
+           var recipient = viewStateService.getInitialState('payments.recipient.tranfer.new');
+            $scope.selectRecipient($scope.parseRecipientData(recipient));
+            viewStateService.resetInitialState('payments.recipient.tranfer.new');
+        }
         $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
             "83101010230000261395100000",
             "78101010230000261395200000",
@@ -14,6 +34,7 @@ angular.module('raiffeisen-payments')
             };
         }));
 
+       
         $scope.selectRecipient = function (recipient) {
             $scope.payment.meta.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
@@ -22,6 +43,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.description = recipient.title;
             $scope.payment.formData.transferFromTemplate = true;
         };
+
 
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
@@ -115,5 +137,7 @@ angular.module('raiffeisen-payments')
                 }
             }
         };
+
+
 
     });

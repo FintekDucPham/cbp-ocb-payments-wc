@@ -4,7 +4,7 @@
         <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
         <rb-account-select rb-account="payment.items.senderAccount"
                            rb-account-id="payment.formData.remitterAccountId"
-                           rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_CREDIT"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_DEBIT"
                            rb-account-select-params="senderSelectParams"
                            rb-on-account-select="recipientSelectParams.update($accountId)"></rb-account-select>
     </bd-item-property>
@@ -20,7 +20,7 @@
                 rb-account="payment.items.recipientAccount"
                 rb-account-id="payment.formData.beneficiaryAccountId"
                 rb-account-select-params="recipientSelectParams"
-                rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_DEBIT"
+                rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_CREDIT"
                 bd-attr-name="recipientAccountId"
                 bd-attr-required></rb-account-select>
 
@@ -90,9 +90,6 @@
             </div>
             <div eb-message-key="balance" class="validation-message animate-on">
                 {{ 'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
-            </div>
-            <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
             </div>
         </eb-validation-messages>
 
