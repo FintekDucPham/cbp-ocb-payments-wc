@@ -1,8 +1,10 @@
 <div ng-controller="PaymentsWidgetController">
-    <eb-slide-widget eb-context="options" ng-show="!options.detailsShown || paymentSummary.content.length === 0"
+    <eb-slide-widget eb-context="context" ng-show="!context.options.detailsShown || paymentSummary.content.length === 0"
                      eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"
                      eb-items-promise="paymentsPromise" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
-    <div ng-if="options.detailsShown && paymentSummary.content.length  > 0" class="payment-widget__payment">
+
+    <div ng-if="context.options.detailsShown && paymentSummary.content.length  > 0" class="payment-widget__payment">
+        <div ng-mouseleave="context.options.detailsShown = false" class="payment-widget__hide-cover"></div>
         <div class="payment-widget__details" ng-include="widgetContent"></div>
         <bd-button-panel>
             <div class="bd-button-panel__button">
