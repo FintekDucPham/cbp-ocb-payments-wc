@@ -61,6 +61,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.idType = null;
             $scope.payment.formData.idNumber = null;
             $scope.payment.formData.taxpayerData = null;
+            $scope.payment.formData.transferFromTemplate = false;
         };
 
         $scope.selectTaxpayer = function (taxpayer) {
@@ -68,6 +69,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.idType = taxpayer.identifierType;
             $scope.payment.formData.idNumber = taxpayer.identifier;
             $scope.payment.formData.taxpayerData = taxpayer.data;
+            $scope.payment.formData.transferFromTemplate = true;
         };
 
         $scope.selectSymbol = function () {
