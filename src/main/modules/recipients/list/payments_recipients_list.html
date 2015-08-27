@@ -3,45 +3,47 @@
 
     <div class="section-wrapper">
 
-        <div class="row-line">
-
-            <div class="row-line__cell">
-                <bd-item-property label="{{::'raiff.payments.recipients.type.label'|translate}}">
-                    <ui-select ng-model="types.currentType"
-                               theme="bootstrap"
-                               reset-search-input="false"
-                               on-select="table.tableControl.invalidate()"
-                               required>
-                        <ui-select-match placeholder="{{:: 'raiff.payments.recipients.select.type.placeholder' | translate }}">
-                            {{ 'raiff.payments.recipients.select.type.' + $select.selected | translate }}
-                        </ui-select-match>
-                        <ui-select-choices repeat="type in types.list">
-                            {{ :: 'raiff.payments.recipients.select.type.' + type | translate }}
-                        </ui-select-choices>
-                    </ui-select>
-
-                </bd-item-property>
-            </div>
-
-            <div class="row-line__cell row-line__cell--right-button">
-                <bd-button class="bd-button__primary" ng-click="onRecipientCreate()">
-                    {{::'raiff.payments.recipients.new.button'|translate}}
-                </bd-button>
-            </div>
-        </div>
-
-        <div class="accounts-transaction-list-filter">
+        <form>
             <div class="row-line">
+
                 <div class="row-line__cell">
-                    <bd-item-property label="{{::'raiff.payments.recipients.select.filter.text.label' | translate}}">
-                        <input bd-type="text" ng-model="models.view.operationTitle" name="contentText" style="width: 100%; height: 34px;"/>
+                    <bd-item-property label="{{::'raiff.payments.recipients.type.label'|translate}}">
+                        <ui-select ng-model="types.currentType"
+                                   theme="bootstrap"
+                                   reset-search-input="false"
+                                   on-select="table.tableControl.invalidate()"
+                                   required>
+                            <ui-select-match placeholder="{{:: 'raiff.payments.recipients.select.type.placeholder' | translate }}">
+                                {{ 'raiff.payments.recipients.select.type.' + $select.selected | translate }}
+                            </ui-select-match>
+                            <ui-select-choices repeat="type in types.list">
+                                {{ :: 'raiff.payments.recipients.select.type.' + type | translate }}
+                            </ui-select-choices>
+                        </ui-select>
+
                     </bd-item-property>
                 </div>
+
                 <div class="row-line__cell row-line__cell--right-button">
-                    <bd-button class="bd-button" ng-click="table.tableControl.invalidate()">{{::'raiff.payments.recipients.select.filter.button.action'|translate}}</bd-button>
+                    <bd-button class="bd-button__primary" ng-click="onRecipientCreate()" type="button">
+                        {{::'raiff.payments.recipients.new.button'|translate}}
+                    </bd-button>
                 </div>
             </div>
-        </div>
+
+            <div class="accounts-transaction-list-filter">
+                <div class="row-line">
+                    <div class="row-line__cell">
+                        <bd-item-property label="{{::'raiff.payments.recipients.select.filter.text.label' | translate}}">
+                            <input bd-type="text" ng-model="table.operationTitle" name="contentText" style="width: 100%; height: 34px;"/>
+                        </bd-item-property>
+                    </div>
+                    <div class="row-line__cell row-line__cell--right-button">
+                        <bd-button class="bd-button" ng-click="table.tableControl.invalidate()" type="submit">{{::'raiff.payments.recipients.select.filter.button.action'|translate}}</bd-button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="section-wrapper">
         <bd-table bd-type="typeL"
