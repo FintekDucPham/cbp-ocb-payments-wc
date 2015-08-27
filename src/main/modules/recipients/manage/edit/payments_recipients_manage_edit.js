@@ -26,10 +26,10 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsRecipientsManageEditController', function ($scope, initialState, $stateParams) {
         $scope.recipient.formData.customName = initialState.customerName;
-        $scope.recipient.formData.recipientData = initialState.address;
+        $scope.recipient.formData.recipientData = [initialState.address];
         $scope.recipient.formData.recipientAccountNo = initialState.nrb;
         $scope.recipient.formData.debitAccountNo = initialState.debitNrb;
-        $scope.recipient.formData.description = initialState.transferTitle;
+        $scope.recipient.formData.description = [initialState.transferTitle];
 
         $scope.clearForm = function () {
             $scope.recipient.formData = {};
