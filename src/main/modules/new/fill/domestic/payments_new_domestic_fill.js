@@ -35,6 +35,15 @@ angular.module('raiffeisen-payments')
             };
         }));
 
+       
+        $scope.selectRecipient = function (recipient) {
+            $scope.payment.meta.recipient = recipient;
+            $scope.payment.options.fixedRecipientSelection = true;
+            $scope.payment.formData.recipientAccountNo = recipient.accountNo;
+            $scope.payment.formData.recipientName = recipient.data;
+            $scope.payment.formData.description = recipient.title;
+            $scope.payment.formData.transferFromTemplate = true;
+        };
 
 
         $scope.clearRecipient = function () {
@@ -43,6 +52,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientAccountNo = null;
             $scope.payment.formData.recipientName = null;
             $scope.payment.formData.description = null;
+            $scope.payment.formData.transferFromTemplate = false;
             bdFocus('recipientAccountNo');
         };
 

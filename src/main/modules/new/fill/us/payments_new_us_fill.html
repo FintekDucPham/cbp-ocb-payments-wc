@@ -3,7 +3,7 @@
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.sender_account' | translate }}">
         <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
-                           rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_CREDIT"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_ALL,ACCOUNT_RESTRICTION_DEBIT"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
@@ -42,6 +42,7 @@
                   ng-model="payment.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData"
                   required
+                  bd-split-text
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
 
