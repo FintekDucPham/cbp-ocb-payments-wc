@@ -168,7 +168,7 @@
                    required
                    ng-disabled="!payment.items.formSymbol.periodRequired"
                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
-                   ng-pattern="patterns.period"
+                   ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
                    class="input-field"
                    type="text"
                    placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}">
