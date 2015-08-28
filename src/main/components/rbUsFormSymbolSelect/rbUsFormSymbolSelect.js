@@ -25,12 +25,14 @@ angular.module('raiffeisen-payments')
                 });
 
                 taxFormSymbols.search().then(function(formSymbols) {
-                    $scope.formSymbolList = lodash.sortBy(lodash.map(formSymbols, function(symbol) {
+                    $scope.allFormSymbols = lodash.sortBy(lodash.map(formSymbols, function(symbol) {
                         return {
                             code: symbol.formCode,
-                            periodRequired: true
+                            periodRequired: symbol.periodRequired,
+                            accountType: symbol.taxAccountType
                         };
                     }), 'code');
+                    $scope.formSymbolList = $scope.allFormSymbols;
                 });
 
                 function update(item, model) {
@@ -46,6 +48,19 @@ angular.module('raiffeisen-payments')
                     });
                     update(item, model);
                 };
+
+                $scope.$on("filterFormSymbols", function(e, taxAccountType) {
+                    $scope.formSymbolList = lodash.filter($scope.allFormSymbols, function(formSymbol) {
+                       return formSymbol.accountType === taxAccountType;
+                    });
+                    if (!$scope.formSymbolId) {
+                        return;
+                    }
+                    var taxFormSymbol = lodash.find($scope.formSymbolList, function(taxForm) {
+                       return taxForm.code == $scope.formSymbolId;
+                    });
+                    update(taxFormSymbol, taxFormSymbol ? taxFormSymbol.code : undefined);
+                });
 
             }
         };

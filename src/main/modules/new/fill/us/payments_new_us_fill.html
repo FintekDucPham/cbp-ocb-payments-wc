@@ -28,7 +28,10 @@
             <div eb-message-key="bbanNrb" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US'|translate}}
             </div>
-            <div eb-message-key="##not_found##" class="validation-message animate-on">
+            <div eb-message-key="usNotFound" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+            </div>
+            <div eb-message-key="notFromList" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
             </div>
         </eb-validation-messages>
@@ -43,6 +46,7 @@
                   ng-pattern="patterns.taxpayerData"
                   required
                   bd-split-text
+                  bd-split-text-length="132"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
 
@@ -51,6 +55,9 @@
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.EMPTY_PAYER' | translate }}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
+                {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
+            </div>
+            <div eb-message-key="splitTextLength" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
         </eb-validation-messages>
@@ -165,8 +172,7 @@
         <div ng-if="payment.options.customPeriod || !payment.items.formSymbol.periodRequired">
             <input name="periodNo"
                    ng-model="payment.formData.periodNo"
-                   required
-                   ng-disabled="!payment.items.formSymbol.periodRequired"
+                   ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                    ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
                    class="input-field"

@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
         $scope.recipientAccountValidators = {
             sameAccount: function (accountNo) {
                 var senderAccount = $scope.recipient.items.senderAccount;
-                return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(' ', '');
+                return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(/ /g, '');
             }
         };
 

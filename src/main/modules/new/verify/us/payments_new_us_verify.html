@@ -13,7 +13,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.taxpayer_data'|translate}}">
-        {{payment.formData.taxpayerData}}
+        <p style="white-space: pre;" ng-bind-html="payment.formData.taxpayerData.join('\n')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id_type'|translate}}">
