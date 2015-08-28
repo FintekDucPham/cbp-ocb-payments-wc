@@ -6,7 +6,8 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsListController"
         });
     })
-    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, viewStateService) {
+    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
+                                                              viewStateService, translate) {
 
         var TYPES = {
             ALL: 'ALL',
@@ -65,7 +66,9 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.table = {
-            tableConfig : new bdTableConfig({}),
+            tableConfig : new bdTableConfig({
+                placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
+            }),
             tableData : {
                 getData: function ($promise, $params) {
                     $timeout(function() {
