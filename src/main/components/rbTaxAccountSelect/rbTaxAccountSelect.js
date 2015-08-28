@@ -67,6 +67,7 @@ angular.module('raiffeisen-payments')
                             $scope.isFromList = true;
                             var office = $scope.model.taxOffice = $scope.taxAccounts[0];
                             $scope.taxOffice = office;
+                            $scope.$emit("taxAccountChanged", $scope.model.taxOffice);
                         }
                     });
                 };
