@@ -61,6 +61,7 @@
               ng-pattern="RECIPIENT_DATA_REGEX"
               required
               bd-split-text
+              bd-split-text-length="132"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
 
@@ -69,6 +70,9 @@
                 {{::'raiff.payments.new.domestic.fill.recipient_data.EMPTY_BNF_DATA'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
+            </div>
+            <div eb-message-key="splitTextLength" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
             </div>
         </eb-validation-messages>

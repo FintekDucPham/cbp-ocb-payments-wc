@@ -101,6 +101,7 @@
               ng-model="payment.formData.description"
               ng-pattern="PAYMENT_DESCRIPTION_REGEX"
               bd-split-text
+              bd-split-text-length="132"
               required
               class="input-area input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
@@ -110,6 +111,9 @@
                 {{::'raiff.payments.new.internal.fill.description.EMPTY_TITLE'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
+            </div>
+            <div eb-message-key="splitTextLength" class="validation-message animate-on">
                 {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
             </div>
         </eb-validation-messages>

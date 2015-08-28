@@ -11,6 +11,7 @@
                        ng-model="model.searchQuery"
                        required
                        bban-nrb
+                       bd-matches-none-of="accountValidators"
                        type="text"
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
             </div>
@@ -36,10 +37,10 @@
         </div>
 
         <div class="rb-tax-account-select__control">
-            <bd-button ng-show="!isFromList" ng-click="searchForOffice(model.searchQuery)">{{ ::params.searchText |
+            <bd-button type="button" ng-show="!isFromList" ng-click="searchForOffice(model.searchQuery)">{{ ::params.searchText |
                 translate }}
             </bd-button>
-            <bd-button ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate
+            <bd-button type="button" ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate
                 }}
             </bd-button>
         </div>
