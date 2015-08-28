@@ -288,6 +288,7 @@
     "raiff.payments.new.us.fill.period_no.placeholder": "Wpisz numer okresu",
     "raiff.payments.new.us.fill.period_no.EMPTY_PERIOD_US": "Numer okresu nie może być pusty",
     "raiff.payments.new.us.fill.period_no.INCORRECT_PERIOD_US": "Jeżeli dla wybranego symbolu formularza konieczne jest wprowadzenie okresu i w polu Typ okresu, wybrana jest wartość J – dzień, to pole Numer okresu powinno zawierać wartość DDMM składającą się z samych cyfr, gdzie: 01 <= DD<=31 oraz 01 <= MM<=12",
+    "raiff.payments.new.us.fill.period_no.INCORRECT_PERIOD_US_R": "Nieprawidłowa wartość okresu",
     "raiff.payments.new.us.fill.period_year": "Rok okresu",
     "raiff.payments.new.us.fill.period_year.placeholder": "Wpisz rok okresu",
     "raiff.payments.new.us.fill.period_year.NOT_EMPTY_PERIOD_TYPE": "Dla wybranego symbolu formularza rok okresu nie może być pusty",

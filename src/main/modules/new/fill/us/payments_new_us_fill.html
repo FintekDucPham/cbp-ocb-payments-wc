@@ -172,10 +172,9 @@
         <div ng-if="payment.options.customPeriod || !payment.items.formSymbol.periodRequired">
             <input name="periodNo"
                    ng-model="payment.formData.periodNo"
-                   required
-                   ng-disabled="!payment.items.formSymbol.periodRequired"
+                   ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
-                   ng-pattern="patterns.period"
+                   ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
                    class="input-field"
                    type="text"
                    placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}">
@@ -196,16 +195,19 @@
                 </ui-select-choices>
             </ui-select>
         </div>
-
         <eb-validation-messages eb-name="periodNo">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.period_no.EMPTY_PERIOD_US'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.period_no.INCORRECT_PERIOD_US'|translate}}
+                <span ng-show="payment.formData.periodType == 'J' ">
+                    {{::'raiff.payments.new.us.fill.period_no.INCORRECT_PERIOD_US'|translate}}
+                </span>
+                 <span ng-show="payment.formData.periodType != 'J' ">
+                    {{::'raiff.payments.new.us.fill.period_no.INCORRECT_PERIOD_US_R'|translate}}
+                </span>
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_year' | translate }}">

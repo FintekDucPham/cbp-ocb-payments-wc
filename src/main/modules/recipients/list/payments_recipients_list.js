@@ -6,7 +6,8 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsListController"
         });
     })
-    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, viewStateService) {
+    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
+                                                              viewStateService, translate) {
 
         var TYPES = {
             ALL: 'ALL',
@@ -65,46 +66,52 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.table = {
-            tableConfig : new bdTableConfig({}),
+            tableConfig : new bdTableConfig({
+                placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
+            }),
             tableData : {
                 getData: function ($promise, $params) {
+                    $timeout(function() {
+                        var params = {
+                            queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
+                        };
 
-                    $scope.recipientListPromise = $promise.promise;
+                        params.pageSize = $params.pageSize;
+                        params.pageNumber = $params.currentPage;
 
-                    var params = {
-                        pageSize: 10
-                    };
+                        if($scope.types.currentType!==TYPES.ALL){
+                            params.filterTemplateType = $scope.types.currentType;
+                        }
 
-                    if($scope.types.currentType!==TYPES.ALL){
-                        params.filterTemplateType = $scope.types.currentType;
-                    }
+                        $scope.recipientListPromise = recipientsService.search(params).then(function(data) {
 
-                    recipientsService.search(params).then(function(data) {
+                            var list = $scope.recipientList = [];
 
-                        var list = $scope.recipientList = [];
-
-                        angular.forEach(data.content, function(recipient){
-                            angular.forEach(recipient.paymentTemplates, function(template){
-                                list.push(
-                                    {
-                                        recipientId: recipient.recipientId,
-                                        templateId: recipient.templateId,
-                                        customerName: recipient.recipientName.join(" "),
-                                        recipient: recipient.recipientName.join(" "),
-                                        address: recipient.recipientAddress.join(" "),
-                                        nrb: template.beneficiaryAccountNo,
-                                        debitNrb: template.remitterAccountNo,
-                                        transferTitle: template.title.join(" "),
-                                        recipientType: template.templateType,
-                                        recipientAddress : recipient.recipientAddress,
-                                        recipientName : recipient.recipientName,
-                                        transferTitleTable : template.title
-                                    }
-                                );
+                            angular.forEach(data.content, function(recipient){
+                                angular.forEach(recipient.paymentTemplates, function(template){
+                                    list.push(
+                                        {
+                                            recipientId: recipient.recipientId,
+                                            templateId: recipient.templateId,
+                                            customerName: recipient.recipientName.join(" "),
+                                            recipient: recipient.recipientName.join(" "),
+                                            address: recipient.recipientAddress.join(" "),
+                                            nrb: template.beneficiaryAccountNo,
+                                            debitNrb: template.remitterAccountNo,
+                                            transferTitle: template.title.join(" "),
+                                            recipientType: template.templateType,
+                                            recipientAddress : recipient.recipientAddress,
+                                            recipientName : recipient.recipientName,
+                                            transferTitleTable : template.title
+                                        }
+                                    );
+                                });
                             });
-                        });
+                            $params.pageCount = data.totalPages;
+                            return list;
 
-                        $promise.resolve(list);
+                        });
+                        $promise.resolve($scope.recipientListPromise);
                     });
 
                 }
