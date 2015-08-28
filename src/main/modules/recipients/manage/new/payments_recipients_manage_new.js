@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage.new', {
-            url: "/:operation/:recipientType",
+            url: "/new/:recipientType",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/new/payments_recipients_manage_new.html",
             controller: "PaymentsRecipientsManageNewController"
