@@ -74,6 +74,7 @@ angular.module('raiffeisen-payments')
                 $scope.useCustom = function() {
                     $scope.isFromList = false;
                     $scope.model.taxOffice = null;
+                    $scope.model.searchQuery = null;
                 };
 
                 $scope.accountValidators = {
