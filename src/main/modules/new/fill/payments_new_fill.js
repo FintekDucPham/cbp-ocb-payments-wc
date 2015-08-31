@@ -56,35 +56,18 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var wait = false;
-
-            function done() {
-                var form = $scope.paymentForm;
-                if (form.$invalid) {
-                    formService.dirtyFields(form);
-                } else {
-                    transferService.create($scope.payment.type.code, angular.extend({
-                        "remitterId": 0
-                    }, requestConverter($scope.payment.formData))).then(function (transfer) {
-                        $scope.payment.transferId = transfer.referenceId;
-                        $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                        actions.proceed();
-                    });
-                }
+            var form = $scope.paymentForm;
+            if (form.$invalid) {
+                formService.dirtyFields(form);
+            } else {
+                transferService.create($scope.payment.type.code, angular.extend({
+                    "remitterId": $scope.payment.items.senderAccount.ownersList[0].customerId
+                }, requestConverter($scope.payment.formData))).then(function (transfer) {
+                    $scope.payment.transferId = transfer.referenceId;
+                    $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                    actions.proceed();
+                });
             }
-
-            $scope.$broadcast(bdStepStateEvents.BEFORE_FORWARD_MOVE, {
-                holdOn: function() {
-                    wait = true;
-                },
-                done: done
-            });
-
-            if(!wait) {
-                done();
-            }
-
-            $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE);
         });
 
         $scope.$watch('payment.items.senderAccount', function(account) {
@@ -96,12 +79,5 @@ angular.module('raiffeisen-payments')
         exchangeRates.search().then(function(currencies) {
             $scope.payment.meta.currencies = lodash.indexBy(currencies.content, 'currencySymbol');
         });
-
-        //$scope.$watchGroup([
-        //    'payment.items.senderAccount.accessibleAssets',
-        //    'payment.meta.maxElixirAmount'
-        //], function (newValues) {
-        //    $scope.maxAmountAllowed = Math.min.apply(this, newValues);
-        //});
 
     });
