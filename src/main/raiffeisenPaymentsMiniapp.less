@@ -87,4 +87,37 @@
   font-size: 1.2em;
   padding: 30px;
 }
+.bd-pair {
+  &__value {
+    input {
+      text-align: right;
+    }
+  }
+}
+.accesibleAssetsBold{
+  .bd-item-property__value-placeholder{
+    .bd-item-property__value{
+      .bd-amount__value {
+        font-weight: 400 !important;
+      }
+    }
+  }
 
+}
+.accesibleAssetsInline{
+  @media (max-width: @screenSmallMax) {
+    .bd-item-property__label-placeholder{
+      display:table-cell !important;
+    }
+    .bd-item-property__value-placeholder{
+      display: table-cell !important;
+      .bd-item-property__value{
+        .bd-amount {
+          text-align: right !important;
+        }
+    }
+    }
+
+
+  }
+}
