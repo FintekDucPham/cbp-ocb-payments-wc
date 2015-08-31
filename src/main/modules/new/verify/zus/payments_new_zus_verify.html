@@ -45,7 +45,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.execution_date'|translate}}">
-        {{payment.formData.realizationDate|date:'dd-MM-yyyy'}}
+        {{payment.formData.realizationDate|date:'dd.MM.yyyy'}}
     </bd-item-property>
      <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
          <span class="messages">

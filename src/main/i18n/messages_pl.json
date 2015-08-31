@@ -371,6 +371,8 @@
     "raiff.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC": "Rachunek odbiorcy musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
     "raiff.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT": "Rachunek odbiorcy musi być różny od rachunku nadawcy",
+    "raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_ZUS": "Rachunek odbiorcy nie może być rachunkiem ZUS.",
+    "raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_US": "Rachunek odbiorcy nie może być rachunkiem Urzędu Skarbowego.",
     "raiff.payments.recipients.new.domestic.fill.recipient_name_address": "Nazwa i adres",
 
     "raiff.payments.recipients.new.domestic.fill.recipient_data.label": "Dane odbiorcy",

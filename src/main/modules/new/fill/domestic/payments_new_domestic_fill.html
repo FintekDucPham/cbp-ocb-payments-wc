@@ -12,13 +12,14 @@
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.remitterAccountId"
-                      label="{{ ::'raiff.payments.new.domestic.fill.accessible_assets' | translate }}">
+                      label="{{ ::'raiff.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
         <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.recipient' | translate }}">
         <rb-recipient-select rb-recipient="payment.items.recipient"
+                             rb-recipient-filter="recipientFilter"
                              rb-recipient-clear-text="{{ ::'raiff.payments.new.domestic.fill.recipient.clear' | translate }}"
                              rb-recipient-placeholder-text="{{ ::'raiff.payments.new.domestic.fill.recipient.placeholder' | translate }}"
                              rb-on-recipient-clear="clearRecipient()"
