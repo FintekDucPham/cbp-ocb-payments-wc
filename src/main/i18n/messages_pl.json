@@ -115,7 +115,7 @@
     "raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE": "Data realizacji przelewu nie może być wcześniejsza niż data bieżąca",
     "raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH":"Proszę podać kod autoryzacyjny",
     "raiff.payments.new.domestic.fill.execution_date.EOD_ERROR":"Operacje zlecone w tych godzinach mogą zostać zrealizowane w godzinach porannych.",
-    "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Błędny format kwoty",
+    "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
     "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.domestic.verify.sender_data": "Właściciel",
@@ -147,7 +147,7 @@
     "raiff.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE": "Niepoprawna data realizacji przelewu",
     "raiff.payments.new.internal.fill.execution_date.LATER_EXECUTED_DATE": "Data realizacji przelewu nie może być późniejsza niż ##date##",
     "raiff.payments.new.internal.fill.execution_date.EARLIER_EXECUTED_DATE": "ata realizacji przelewu nie może być wcześniejsza niż data bieżąca",
-    "raiff.payments.new.internal.fill.amount.INVALID_NUMBER_AMOUNT":"Błędny format kwoty",
+    "raiff.payments.new.internal.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
     "raiff.payments.new.internal.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.internal.verify.sender_data": "Dane odbiorcy",
@@ -224,7 +224,7 @@
     "raiff.payments.new.zus.fill.payment_option.PENSION": "Fundusz Emerytur Pomostowych",
     "raiff.payments.new.zus.fill.payment_options.amount": "Ubezpieczenie zdrowotne",
     "raiff.payments.new.zus.fill.total_payment": "Kwota całkowita",
-    "raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT":"Błędny format kwoty",
+    "raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
     "raiff.payments.new.zus.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.zus.verify.sender_data": "Właściciel",
@@ -310,7 +310,7 @@
     "raiff.payments.new.us.fill.execution_date.LATER_EXECUTED_DATE": "Data realizacji przelewu nie może być późniejsza niż D",
     "raiff.payments.new.us.fill.execution_date.EOD": "Operacje zlecone w tych godzinach mogą zostać zrealizowane w godzinach porannych.",
     "raiff.payments.new.us.fill.execution_date.INCORRECT_EXECUTED_DATE": "Niepoprawna data realizacji przelewu",
-    "raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT":"Błędny format kwoty",
+    "raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
     "raiff.payments.new.us.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.us.verify.recipient_account_no": "Na rachunek",
