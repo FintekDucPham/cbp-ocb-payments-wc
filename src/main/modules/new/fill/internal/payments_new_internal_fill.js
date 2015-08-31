@@ -39,6 +39,7 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.senderSelectParams = new rbAccountSelectParams({});
+        $scope.senderSelectParams.payments = true;
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: false,
             alwaysSelected: false,
