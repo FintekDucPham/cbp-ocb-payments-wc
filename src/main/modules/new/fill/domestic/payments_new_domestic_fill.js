@@ -10,7 +10,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientName = recipient.data;
             $scope.payment.formData.description = recipient.title;
         };
-        $scope.parseRecipientData = function(recipientFrom){
+        $scope.parseRecipientData = function (recipientFrom) {
             var recipient = {};
             recipient.accountNo = recipientFrom.nrb;
             recipient.title = recipientFrom.transferTitleTable;
@@ -18,8 +18,8 @@ angular.module('raiffeisen-payments')
             recipient.name = recipientFrom.recipient;
             return recipient;
         };
-        if(angular.isDefined(viewStateService.getInitialState('payments.recipient.tranfer.new'))){
-           var recipient = viewStateService.getInitialState('payments.recipient.tranfer.new');
+        if (angular.isDefined(viewStateService.getInitialState('payments.recipient.tranfer.new'))) {
+            var recipient = viewStateService.getInitialState('payments.recipient.tranfer.new');
             $scope.selectRecipient($scope.parseRecipientData(recipient));
             viewStateService.resetInitialState('payments.recipient.tranfer.new');
         }
@@ -76,6 +76,7 @@ angular.module('raiffeisen-payments')
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
             updateRecipientsList();
+            recipientFilter.filter();
         };
 
         $scope.$on('clearForm', function () {
@@ -135,6 +136,12 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        var recipientFilter = $scope.recipientFilter = {
+            doesMatch: function (recipient) {
+                var senderAccount = $scope.payment.items.senderAccount;
+                return senderAccount && recipient.srcAccountNo !== senderAccount.accountNo.replace(/ /g, '');
+            }
+        };
 
 
     });
