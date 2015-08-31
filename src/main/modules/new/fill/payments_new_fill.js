@@ -61,7 +61,7 @@ angular.module('raiffeisen-payments')
                 formService.dirtyFields(form);
             } else {
                 transferService.create($scope.payment.type.code, angular.extend({
-                    "remitterId": $scope.payment.items.senderAccount.ownersList[0].customerId
+                    "remitterId": 0
                 }, requestConverter($scope.payment.formData))).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
