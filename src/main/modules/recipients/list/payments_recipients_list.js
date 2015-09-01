@@ -58,10 +58,9 @@ angular.module('raiffeisen-payments')
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientId: dataObject.recipientId,
-                templateId: dataObject.templateId,
-                paymentType: dataObject.recipientType
+                templateId: dataObject.templateId, // todo not used right now - only one template for recipient supported
+                paymentType: angular.lowercase(dataObject.recipientType)
             };
-            viewStateService.setInitialState('payments.recipient.tranfer.new', dataObject);
             $state.go("payments.new.fill", routeObject);
         };
 

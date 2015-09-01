@@ -5,7 +5,8 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html",
             controller: "NewPaymentFillController",
             params: {
-                accountId: null
+                accountId: null,
+                recipientId: null
             }
         });
     })

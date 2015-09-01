@@ -60,14 +60,14 @@ angular.module('raiffeisen-payments')
 
 
 
-        $scope.getAccountByNrb = function(accountList){
+        $scope.getAccountByNrb = function(accountList, selectFn){
             if(lodash.isString($scope.recipient.formData.debitAccountNo)){
                 var result = lodash.find(accountList, {'accountNo':$scope.recipient.formData.debitAccountNo});
                 if(lodash.isPlainObject(result)){
-                    return result;
+                    selectFn(result);
                 }
             }
-            return accountList[0];
+            selectFn(accountList[0]);
         };
 
         $scope.requestConverter = function (formData) {
