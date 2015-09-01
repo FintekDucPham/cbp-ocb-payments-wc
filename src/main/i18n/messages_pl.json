@@ -115,6 +115,8 @@
     "raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE": "Data realizacji przelewu nie może być wcześniejsza niż data bieżąca",
     "raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH":"Proszę podać kod autoryzacyjny",
     "raiff.payments.new.domestic.fill.execution_date.EOD_ERROR":"Operacje zlecone w tych godzinach mogą zostać zrealizowane w godzinach porannych.",
+    "raiff.payments.new.domestic.fill.execution_date.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
+    "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
     "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
