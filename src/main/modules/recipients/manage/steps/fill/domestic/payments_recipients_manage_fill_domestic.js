@@ -1,6 +1,5 @@
 angular.module('raiffeisen-payments')
-    .value('szybkierozwiazanieData', {isSzybkie:false, isSzybsze:false})
-    .controller('RecipientsManageFillDomesticController', function ($scope, $stateParams, lodash, bdStepStateEvents, formService, rbAccountSelectParams, taxOffices, $timeout, szybkierozwiazanieData) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, taxOffices) {
 
         $scope.onSenderAccountSelect = function () {
             $scope.recipientForm.recipientAccountNo.$validate();
@@ -24,15 +23,7 @@ angular.module('raiffeisen-payments')
             }
         });
 
-
-        var ta = $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            if(szybkierozwiazanieData.isSzybkie) {
-                return;
-            }
-            szybkierozwiazanieData.isSzybkie = true;
-            $timeout(function(){
-                szybkierozwiazanieData.isSzybkie = false;
-            },500);
+        $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             if($scope.recipientForm.recipientAccountNo.$valid) {
                 control.holdOn();
                 taxOffices.search({
@@ -53,14 +44,7 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        var tb = $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if(szybkierozwiazanieData.isSzybsze) {
-                return;
-            }
-            szybkierozwiazanieData.isSzybsze = true;
-            $timeout(function(){
-                szybkierozwiazanieData.isSzybsze = false;
-            },500);
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.recipientForm;
             if (form) {
                 if (form.$invalid) {
@@ -110,11 +94,6 @@ angular.module('raiffeisen-payments')
                     productList: "BENEFICIARY_CREATE_FROM_LIST"
                 });
             }
-        });
-
-        $scope.$on('$destroy', function(){
-            ta();
-            tb();
         });
 
     });
