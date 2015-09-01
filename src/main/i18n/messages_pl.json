@@ -299,7 +299,7 @@
     "raiff.payments.new.us.fill.amount": "Kwota",
     "raiff.payments.new.us.fill.amount.placeholder": "Wpisz kwotę",
     "raiff.payments.new.us.fill.amount.EMPTY_AMOUNT": "Pole kwota jest wymagane",
-    "raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT": "Kwota jest nieprawidłowa",
+    "raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT": "Nieprawidłowa kwota przelewu",
     "raiff.payments.new.us.fill.amount.NOT_ELIXIR_PMNT": "Przelew nie może być wykonany jako płatność Elixir",
     "raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS": "Kwota przelewu przekracza środki dostępne na rachunku",
     "raiff.payments.new.us.fill.amount.DAILY_LIMIT_EXCEEDED": "Przekroczony dzienny limit operacji",
