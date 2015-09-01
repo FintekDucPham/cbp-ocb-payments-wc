@@ -17,5 +17,15 @@
         </eb-validation-messages>
 
     </bd-item-property>
+</form>
+
+<form name="paymentResponseForm">
+
+    <input ng-model="paymentResponseModel" type="hidden" name="payment" />
+    <eb-validation-messages eb-name="payment">
+        <div eb-message-key="payment.token.authorization_blocked" class="validation-message animate-on">
+            {{::'raiff.payments.new.domestic.fill.execution_date.BLOCKED_SMS'|translate}}
+        </div>
+    </eb-validation-messages>
 
 </form>
