@@ -50,13 +50,12 @@ angular.module('raiffeisen-payments')
                         if (parts[0] !== 'OK' && !parts[1]) {
                             $scope.payment.result.code = 'error';
                         }
-                        actions.proceed();
-                    }).catch(function(err) {
+                    }).catch(function() {
                         $scope.payment.result = {
                             code: "error",
                             type: "error"
                         };
-                    });
+                    }).finally(actions.proceed);
                 }
             }
         });
