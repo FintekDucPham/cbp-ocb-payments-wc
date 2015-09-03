@@ -3,17 +3,17 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.recipients.manage.remove', {
             url: "/:operation/:recipientType",
             abstract:true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/remove/payments_recipients_manage_remove.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/remove/payments_recipients_manage_remove.html",
             controller: "PaymentsRecipientsManageRemoveController"
         }).state('payments.recipients.manage.remove.verify', {
             url: "/verify",
             templateUrl: function($stateParams){
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/"+angular.lowercase($stateParams.recipientType)+"/payments_recipients_manage_verify_"+angular.lowercase($stateParams.recipientType)+".html";
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/steps/verify/"+angular.lowercase($stateParams.recipientType)+"/payments_recipients_manage_verify_"+angular.lowercase($stateParams.recipientType)+".html";
             },
             controller: "RecipientsManageVerifyDomesticController"
         }).state('payments.recipients.manage.remove.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/remove/status/payments_recipients_manage_remove_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/remove/status/payments_recipients_manage_remove_status.html",
             controller: "RecipientsManageRemoveStatusController"
         });
     })
