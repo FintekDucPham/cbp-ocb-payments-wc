@@ -1,7 +1,7 @@
 <div>
 
     <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-    <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
+
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
         <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
             {{ recipient.items.senderAccount.accountName }}
@@ -35,7 +35,7 @@
         </span>
     </bd-item-property>
 
-
+    <span ng-if="recipient.promises.authorizationPromise.$$state.status === 1">
     <form name="recipientAuthForm" novalidate ng-if="recipient.options.twoStepAuthorization">
         <div ng-init="setForm(recipientAuthForm);"></div>
 
@@ -57,10 +57,16 @@
     </form>
     </span>
 
-    <div class="authorization-blocked" ng-if="recipient.promises.authorizationPromise.$$state.status === 2">
-        <!--{{::"cards.label.empty_list"|translate}}-->
-        {{::'raiff.payments.recipients.authorization.fail'|translate}}
-    </div>
+    <form name="paymentResponseForm">
+
+        <input ng-model="paymentResponseModel" type="hidden" name="payment" />
+        <eb-validation-messages eb-name="payment">
+            <div eb-message-key="payment.token.authorization_blocked" class="validation-message animate-on">
+                {{::'raiff.payments.recipients.authorization.BLOCKED_SMS'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </form>
 
 
 </div>

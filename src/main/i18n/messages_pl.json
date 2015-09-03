@@ -395,7 +395,7 @@
     "raiff.payments.recipients.manage.remove.status.fail": "Odbiorca zdefiniowany nie został usunięty",
     "raiff.payments.recipients.manage.remove.title": "Usuń odbiorcę",
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
-
+    "raiff.payments.recipients.authorization.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
 
     "EOF" : ""
 
