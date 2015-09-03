@@ -7,16 +7,19 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash) {
 
-        var TYPES = {
-            ALL: 'ALL',
-            DOMESTIC: 'DOMESTIC'
-        };
+
+        var recipientFilterType = angular.extend({}, rbRecipientTypes, {
+            ALL : {
+                code: 'ALL'
+            }
+        });
 
         $scope.types = {
-            currentType:TYPES.ALL,
-            list: [TYPES.ALL, TYPES.DOMESTIC]
+            currentType: recipientFilterType.ALL,
+            availableTypes: recipientFilterType,
+            availableTypesList: lodash.map(recipientFilterType)
         };
 
         $scope.recipientListPromise = {};
@@ -46,8 +49,8 @@ angular.module('raiffeisen-payments')
 
         $scope.onRecipientCreate = function(){
             var routeObject = {
-                recipientType: 'DOMESTIC',
-                operation: 'new'
+                recipientType: rbRecipientTypes.DOMESTIC.code,
+                operation: rbRecipientOperationType.NEW.code
             };
             viewStateService.setInitialState('payments.recipients.manage.new', routeObject);
             $state.go("payments.recipients.manage.new.fill", routeObject);
@@ -78,7 +81,7 @@ angular.module('raiffeisen-payments')
                         params.pageSize = $params.pageSize;
                         params.pageNumber = $params.currentPage;
 
-                        if($scope.types.currentType!==TYPES.ALL){
+                        if($scope.types.currentType !== recipientFilterType.ALL){
                             params.filterTemplateType = $scope.types.currentType;
                         }
 

@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="RecipientsManageVerifyDomesticController">
 
     <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
     <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">

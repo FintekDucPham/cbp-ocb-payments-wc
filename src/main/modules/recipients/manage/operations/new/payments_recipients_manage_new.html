@@ -1,0 +1,30 @@
+<rb-content-view class="rb-content-view--framed form">
+    <bd-header>Nowy odbiorca</bd-header>
+
+    <bd-form-panel>
+
+        <bd-item-property ng-show="activeStep.id !== 'status'"
+                          label="{{::'raiff.payments.new.payment_type'|translate}}">
+
+            <ui-select ng-model="recipient.type"
+                       theme="bootstrap"
+                       on-select="changeRecipientType($item)"
+                       ng-disabled="activeStep.id !== 'fill'"
+                       reset-search-input="false"
+                       required>
+                <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.type.select.placeholder'|translate }}">
+                    {{'raiff.payments.recipients.select.type.' + $select.selected.code | translate}}
+                </ui-select-match>
+                <ui-select-choices repeat="recipientType in recipient.meta.recipientTypes">
+                    <div ng-bind-html="::'raiff.payments.recipients.select.type.' + recipientType.code | translate | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+
+        </bd-item-property>
+
+        <rb-multistep-form bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.recipients.list', onClear: clearForm, cancelState: 'payments.recipients.list' }">
+            <div ui-view></div>
+        </rb-multistep-form>
+
+    </bd-form-panel>
+</rb-content-view>

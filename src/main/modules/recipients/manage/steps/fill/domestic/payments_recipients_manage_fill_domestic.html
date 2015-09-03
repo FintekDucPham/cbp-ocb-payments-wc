@@ -1,5 +1,5 @@
-
-<form name="recipientForm" novalidate>
+<div ng-controller="RecipientsManageFillDomesticController">
+    <form name="recipientForm" novalidate>
 
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
@@ -19,7 +19,7 @@
                    required
                    ng-pattern="RECIPIENT_NAME_REGEX"
                    class="input-field"
-                   placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.placeholder' | translate }}" />
+                   placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.placeholder' | translate }}"/>
 
             <eb-validation-messages eb-name="customName"><!--max 35-->
                 <div eb-message-key="required" class="validation-message animate-on">
@@ -32,7 +32,8 @@
 
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
+        <bd-item-property
+                label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
             <input id="recipientAccountNo"
                    name="recipientAccountNo"
                    ng-model="recipient.formData.recipientAccountNo"
@@ -114,7 +115,5 @@
 
         </bd-item-property>
 
-
-
-
-</form>
+    </form>
+</div>
