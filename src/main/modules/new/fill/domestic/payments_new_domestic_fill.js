@@ -8,7 +8,7 @@ angular.module('raiffeisen-payments')
         }, lodash.omit($scope.payment.formData, lodash.isUndefined));
 
         $scope.selectRecipient = function (recipient) {
-            $scope.payment.meta.recipient = recipient;
+            $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
             $scope.payment.formData.recipientAccountNo = recipient.accountNo;
             $scope.payment.formData.recipientName = recipient.data;
