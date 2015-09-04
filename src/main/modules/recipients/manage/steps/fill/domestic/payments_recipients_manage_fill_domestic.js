@@ -1,22 +1,21 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, taxOffices) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, taxOffices, insuranceAccounts) {
+
+        $scope.recipient.meta.recipientForbiddenAccounts = [];
 
         $scope.onSenderAccountSelect = function () {
             $scope.recipientForm.recipientAccountNo.$validate();
         };
 
-
-        $scope.recipient.meta.recipientForbiddenAccounts = lodash.union($scope.recipient.meta.recipientForbiddenAccounts, lodash.map([
-            "83101010230000261395100000",
-            "78101010230000261395200000",
-            "73101010230000261395300000",
-            "68101010230000261395400000"
-        ], function (val) {
-            return {
-                code: 'notZus',
-                value: val
-            };
-        }));
+        insuranceAccounts.search().then(function(insuranceAccounts) {
+            $scope.recipient.meta.recipientForbiddenAccounts = lodash.union($scope.recipient.meta.recipientForbiddenAccounts,
+                lodash.map(insuranceAccounts.content, function (val) {
+                return {
+                    code: 'notZus',
+                    value: val
+                };
+            }));
+        });
 
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
@@ -51,22 +50,26 @@ angular.module('raiffeisen-payments')
                 return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(/ /g, '');
             },
             notUs: function (accountNo) {
-                return isAccountAllowed('notUs', accountNo, $scope.recipient.meta.recipientForbiddenAccounts);
+                if (accountNo) {
+                    return !lodash.some($scope.recipient.meta.recipientForbiddenAccounts, {
+                        code: 'notUs',
+                        value: accountNo.replace(" ", '')
+                    });
+                } else {
+                    return false;
+                }
             },
             notZus: function (accountNo) {
-                return isAccountAllowed('notZus', accountNo, $scope.recipient.meta.recipientForbiddenAccounts);
+                if (accountNo) {
+                    return !lodash.some($scope.recipient.meta.recipientForbiddenAccounts, {
+                        code: 'notZus',
+                        value: accountNo.replace(" ", '')
+                    });
+                } else {
+                    return false;
+                }
             }
         };
-
-        function isAccountAllowed(code, accountNo, accountList) {
-            if (accountNo) {
-                return !lodash.some(accountList, {
-                    code: code,
-                    value: accountNo.replace(/ /g, '')
-                });
-            }
-            return false;
-        }
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: true,
