@@ -1,7 +1,8 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyController', function ($scope, recipientGeneralService, authorizationService,
+    .controller('RecipientsManageVerifyController', function ($scope, pathService, recipientGeneralService, authorizationService,
                                                               formService, bdStepStateEvents) {
 
+        $scope.recipientAuthUrl = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
 
         $scope.recipientAuthForm = {};
 
@@ -45,6 +46,12 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
+        });
+
+        $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+            delete $scope.recipient.items.credentials;
+            delete $scope.recipient.promises.authorizationPromise;
+            delete $scope.recipient.transferId;
         });
 
         $scope.setForm = function (form) {

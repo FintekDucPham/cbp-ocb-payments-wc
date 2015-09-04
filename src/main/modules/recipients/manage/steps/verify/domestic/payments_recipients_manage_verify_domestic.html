@@ -1,66 +1,45 @@
-<div ng-controller="RecipientsManageVerifyDomesticController">
+<rb-payment-recipients-verify>
 
-    <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-    <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
-        <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-            {{ recipient.items.senderAccount.accountName }}
-            |
-            {{ recipient.items.senderAccount.accountNo }}
-        </section>
-        <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-            {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
-        </section>
-    </bd-item-property>
+    <div ng-controller="RecipientsManageVerifyDomesticController">
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
-        {{ recipient.formData.customName }}
-    </bd-item-property>
+        <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
+        <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
-        {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
-    </bd-item-property>
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
+                <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                    {{ recipient.items.senderAccount.accountName }}
+                    |
+                    {{ recipient.items.senderAccount.accountNo }}
+                </section>
+                <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                    {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
+                </section>
+            </bd-item-property>
 
-    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
-                      label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
-        <span ng-repeat="data in recipient.formData.recipientData">
-            {{data}}<br/>
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
+                {{ recipient.formData.customName }}
+            </bd-item-property>
+
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
+                {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
+            </bd-item-property>
+
+            <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
+                              label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
+                <span ng-repeat="data in recipient.formData.recipientData">
+                    {{data}}<br/>
+                </span>
+            </bd-item-property>
+
+            <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
+                              label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
+                  <span ng-repeat="data in recipient.formData.description">
+                    {{data}}<br/>
+                </span>
+            </bd-item-property>
+
         </span>
-    </bd-item-property>
 
-    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
-                      label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
-          <span ng-repeat="data in recipient.formData.description">
-            {{data}}<br/>
-        </span>
-    </bd-item-property>
-
-
-    <form name="recipientAuthForm" novalidate ng-if="recipient.options.twoStepAuthorization">
-        <div ng-init="setForm(recipientAuthForm);"></div>
-
-        <bd-item-property label="{{ recipient.items.smsText }}">
-
-            <input type="text"
-                   name="authCode"
-                   ng-model="recipient.items.credentials"
-                   required/>
-
-            <eb-validation-messages eb-name="authCode">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
-                </div>
-            </eb-validation-messages>
-
-        </bd-item-property>
-
-    </form>
-    </span>
-
-    <div class="authorization-blocked" ng-if="recipient.promises.authorizationPromise.$$state.status === 2">
-        <!--{{::"cards.label.empty_list"|translate}}-->
-        {{::'raiff.payments.recipients.authorization.fail'|translate}}
     </div>
 
-
-</div>
+</rb-payment-recipients-verify>

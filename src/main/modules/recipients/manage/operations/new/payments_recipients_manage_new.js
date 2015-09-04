@@ -7,30 +7,41 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsManageNewController"
         }).state('payments.recipients.manage.new.fill', {
             url: "/fill",
-            templateUrl: function($stateParams){
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/fill/"+angular.lowercase($stateParams.recipientType)+"/payments_recipients_manage_fill_"+angular.lowercase($stateParams.recipientType)+".html";
+            templateUrl: function ($stateParams) {
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/fill/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_fill_" + angular.lowercase($stateParams.recipientType) + ".html";
             },
             controller: "RecipientsManageFillController"
-         }).state('payments.recipients.manage.new.verify', {
+        }).state('payments.recipients.manage.new.verify', {
             url: "/verify",
-            templateUrl: function($stateParams){
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/"+angular.lowercase($stateParams.recipientType)+"/payments_recipients_manage_verify_"+angular.lowercase($stateParams.recipientType)+".html";
+            templateUrl: function ($stateParams) {
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_verify_" + angular.lowercase($stateParams.recipientType) + ".html";
             },
             controller: "RecipientsManageVerifyController"
         }).state('payments.recipients.manage.new.status', {
-                url: "/status",
-                templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/new/status/payments_recipients_manage_new_status.html",
-                controller: "RecipientsManageNewStatusController"
+            url: "/status",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/new/status/payments_recipients_manage_new_status.html",
+            controller: "RecipientsManageNewStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageNewController', function ($scope) {
+    .controller('PaymentsRecipientsManageNewController', function ($scope, $state, rbRecipientOperationType) {
 
         $scope.clearForm = function () {
             $scope.recipient.formData = {};
             $scope.$broadcast('clearForm');
         };
 
-        $scope.setRequestConverter(function(formData) {
+        $scope.changeRecipientType = function (type) {
+            $state.transitionTo($state.current, {
+                recipientType: type.state,
+                operation: rbRecipientOperationType.NEW.state
+            }, {
+                reload: true,
+                inherit: false,
+                notify: true
+            });
+        };
+
+        $scope.setRequestConverter(function (formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             return {
                 shortName: copiedFormData.customName,

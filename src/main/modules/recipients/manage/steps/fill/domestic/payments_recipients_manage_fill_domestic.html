@@ -1,7 +1,5 @@
-<div ng-controller="RecipientsManageFillDomesticController">
-    <form name="recipientForm" novalidate>
-
-
+<rb-payment-recipients-fill>
+    <div ng-controller="RecipientsManageFillDomesticController">
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
             <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
             <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
@@ -115,5 +113,5 @@
 
         </bd-item-property>
 
-    </form>
-</div>
+    </div>
+</rb-payment-recipients-fill>
