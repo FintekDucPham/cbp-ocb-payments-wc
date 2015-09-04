@@ -1,1 +1,4 @@
-{ "registry": "http://repopbk.poland.asseco.corp:5678" }
+{
+  "registry": "http://cijee.poland.asseco.corp:5678",
+  "timeout": 300000
+}
