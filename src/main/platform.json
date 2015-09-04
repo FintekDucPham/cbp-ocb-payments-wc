@@ -1,7 +1,7 @@
 {
   "author": "Asseco Poland SA",
   "name": "raiffeisen-payments",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "type": "miniapp",
   "description": "Raiffeisen Payments miniapplication",
   "dependencies": [
