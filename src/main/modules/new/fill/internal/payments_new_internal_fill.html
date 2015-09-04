@@ -5,6 +5,7 @@
         <rb-account-select rb-account="payment.items.senderAccount"
                            rb-account-id="payment.formData.remitterAccountId"
                            rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
+                           rb-product-list-name="TRANSFER_OWN_FROM_LIST"
                            rb-account-select-params="senderSelectParams"
                            rb-on-account-select="recipientSelectParams.update($accountId)"></rb-account-select>
     </bd-item-property>
@@ -21,6 +22,7 @@
                 rb-account-id="payment.formData.beneficiaryAccountId"
                 rb-account-select-params="recipientSelectParams"
                 rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                rb-product-list-name="TRANSFER_OWN_TO_LIST"
                 bd-attr-name="recipientAccountId"
                 bd-attr-required></rb-account-select>
 
