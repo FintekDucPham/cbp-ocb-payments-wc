@@ -45,17 +45,6 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var form = $scope.recipientForm;
-            if (form) {
-                if (form.$invalid) {
-                    formService.dirtyFields(form);
-                } else {
-                    actions.proceed();
-                }
-            }
-        });
-
         $scope.recipientAccountValidators = {
             sameAccount: function (accountNo) {
                 var senderAccount = $scope.recipient.items.senderAccount;

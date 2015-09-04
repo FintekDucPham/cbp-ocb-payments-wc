@@ -1,48 +1,20 @@
 angular.module('raiffeisen-payments')
-    .constant('NEW_RECIPIENT_STEPS', {
-        FILL: 'fill'
-    })
-    .constant('rbRecipientOperationType', {
-        "NEW": {
-            code: 'NEW',
-            state: 'new'
-        },
-        "EDIT": {
-            code: 'EDIT',
-            state: 'edit'
-        },
-        "REMOVE": {
-            code: 'REMOVE',
-            state: 'remove'
-        }
-    })
-    .constant('rbRecipientTypes', {
-        "DOMESTIC": {
-            code: 'DOMESTIC',
-            state: 'domestic'
-        },
-        "ZUS": {
-            code: 'ZUS',
-            state: 'zus'
-        },
-        "US": {
-            code: 'US',
-            state: 'us'
-        },
-        "CURRENCY": {
-            code: 'CURRENCY',
-            state: 'currency'
-        }
-    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage', {
             url: "/manage",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/payments_recipients_manage.html",
-            controller: "PaymentsRecipientsManageController"
+            controller: "PaymentsRecipientsManageController",
+            params: {
+                recipientType: 'domestic',
+                operation: 'new'
+            }
         });
     })
-    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams, pathService, NRB_REGEX, CUSTOM_NAME_REGEX, NEW_RECIPIENT_STEPS, bdMainStepInitializer, rbRecipientOperationType, validationRegexp, rbRecipientTypes) {
+    .controller('PaymentsRecipientsManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,
+                                                                pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
+                                                                bdMainStepInitializer, rbRecipientOperationType,
+                                                                validationRegexp, rbRecipientTypes) {
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
@@ -52,10 +24,10 @@ angular.module('raiffeisen-payments')
 
         bdMainStepInitializer($scope, 'recipient', {
             type: lodash.find(rbRecipientTypes, {
-                state: $stateParams.recipientType || 'domestic'
+                state: $stateParams.recipientType
             }),
             operation: lodash.find(rbRecipientOperationType, {
-                state: $stateParams.operation || 'new'
+                state: $stateParams.operation
             }),
             formData: {},
             transferId: {},

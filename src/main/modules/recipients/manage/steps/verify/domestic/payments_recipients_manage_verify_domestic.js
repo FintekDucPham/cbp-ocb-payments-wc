@@ -1,6 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyDomesticController', function ($scope, bdStepStateEvents, authorizationService,
-                                                                      translate, dateFilter, recipientGeneralService) {
+    .controller('RecipientsManageVerifyDomesticController', function () {
 
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
