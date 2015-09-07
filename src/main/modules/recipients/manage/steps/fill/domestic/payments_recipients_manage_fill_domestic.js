@@ -1,21 +1,21 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, taxOffices) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, taxOffices, insuranceAccounts) {
+
+        $scope.recipient.meta.recipientForbiddenAccounts = [];
 
         $scope.onSenderAccountSelect = function () {
             $scope.recipientForm.recipientAccountNo.$validate();
         };
 
-
-        $scope.recipient.meta.recipientForbiddenAccounts = lodash.union($scope.recipient.meta.recipientForbiddenAccounts, lodash.map([
-            "83101010230000261395100000",
-            "78101010230000261395200000",
-            "73101010230000261395300000"
-        ], function (val) {
-            return {
-                code: 'notZus',
-                value: val
-            };
-        }));
+        insuranceAccounts.search().then(function(insuranceAccounts) {
+            $scope.recipient.meta.recipientForbiddenAccounts = lodash.union($scope.recipient.meta.recipientForbiddenAccounts,
+                lodash.map(insuranceAccounts.content, function (val) {
+                return {
+                    code: 'notZus',
+                    value: val
+                };
+            }));
+        });
 
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
@@ -41,17 +41,6 @@ angular.module('raiffeisen-payments')
                         $scope.recipientForm.recipientAccountNo.$validate();
                     }
                 }).finally(control.done);
-            }
-        });
-
-        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var form = $scope.recipientForm;
-            if (form) {
-                if (form.$invalid) {
-                    formService.dirtyFields(form);
-                } else {
-                    actions.proceed();
-                }
             }
         });
 

@@ -14,10 +14,10 @@
                                    on-select="table.tableControl.invalidate()"
                                    required>
                             <ui-select-match placeholder="{{:: 'raiff.payments.recipients.select.type.placeholder' | translate }}">
-                                {{ 'raiff.payments.recipients.select.type.' + $select.selected | translate }}
+                                {{ 'raiff.payments.recipients.select.type.' + $select.selected.code | translate }}
                             </ui-select-match>
-                            <ui-select-choices repeat="type in types.list">
-                                {{ :: 'raiff.payments.recipients.select.type.' + type | translate }}
+                            <ui-select-choices repeat="type in types.availableTypesList">
+                                {{ :: 'raiff.payments.recipients.select.type.' + type.code | translate }}
                             </ui-select-choices>
                         </ui-select>
 
