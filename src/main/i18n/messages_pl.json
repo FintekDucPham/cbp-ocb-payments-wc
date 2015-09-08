@@ -389,6 +389,8 @@
     "raiff.payments.recipients.select.type.DOMESTIC": "Krajowy",
     "raiff.payments.recipients.select.type.ZUS": "ZUS",
     "raiff.payments.recipients.select.type.US": "US",
+    "raiff.payments.recipients.select.type.INSURANCE": "ZUS",
+    "raiff.payments.recipients.select.type.TAX": "US",
     "raiff.payments.recipients.select.type.CURRENCY": "Walutowy",
 
     "raiff.payments.recipients.new.type.select.placeholder": "Wybierz typ odbiorcy",

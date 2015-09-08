@@ -19,11 +19,11 @@ angular.module('raiffeisen-payments')
             state: 'domestic'
         },
         "ZUS": {
-            code: 'ZUS',
+            code: 'INSURANCE',
             state: 'zus'
         },
         "US": {
-            code: 'US',
+            code: 'TAX',
             state: 'us'
         },
         "CURRENCY": {
