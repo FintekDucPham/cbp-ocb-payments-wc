@@ -10,6 +10,18 @@
     "raiff.payments.zus.payment_type.TYPE_B": "B - Opłata dodatkowa Pośrednika",
     "raiff.payments.zus.payment_type.TYPE_D": "D - Opłata dodatkowa",
 
+    "raiff.payments.us.period_type.J": "J - dzień",
+    "raiff.payments.us.period_type.D": "D - dekada",
+    "raiff.payments.us.period_type.M": "M - miesiąc",
+    "raiff.payments.us.period_type.K": "K - kwartał",
+    "raiff.payments.us.period_type.P": "P - półrocze",
+    "raiff.payments.us.period_type.R": "R - rok",
+
+    "raiff.payments.id_type.PESEL": "PESEL",
+    "raiff.payments.id_type.REGON": "REGON",
+    "raiff.payments.id_type.ID_CARD": "dowód osobisty",
+    "raiff.payments.id_type.PASSPORT": "paszport",
+
     "raiff.payments.widget.recipient_name": "Odbiorca",
     "raiff.payments.widget.realization_date": "Data realizacji",
     "raiff.payments.widget.amount": "Kwota",
@@ -333,11 +345,6 @@
     "raiff.payments.new.us.verify.amount": "Kwota",
     "raiff.payments.new.us.verify.execution_date": "Data realizacji",
 
-    "raiff.payments.new.form_symbol.type1": "Symbol 1",
-    "raiff.payments.new.form_symbol.type2": "Symbol 2",
-    "raiff.payments.new.form_symbol.type3": "Symbol 3",
-
-
     "raiff.payments.new.status.0": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.00": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.000": "Przelew/transakcja przyjęta do realizacji",
@@ -447,6 +454,21 @@
 
     "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wybierz rachunek US",
 
+    "raiff.payments.recipients.details.zus.custom_name": "Twoja nazwa odbiorcy",
+    "raiff.payments.recipients.details.zus.account_no": "Numer rachunku",
+    "raiff.payments.recipients.details.zus.recipient_name": "Nazwa rachunku",
+    "raiff.payments.recipients.details.zus.nip": "NIP płatnika",
+    "raiff.payments.recipients.details.zus.secondary_id_type": "Typ drugiego identyfikatora",
+    "raiff.payments.recipients.details.zus.secondary_id": "Drugi identyfikator",
+    "raiff.payments.recipients.details.zus.payment_type": "Typ wpłaty",
+
+    "raiff.payments.recipients.details.us.custom_name": "Twoja nazwa odbiorcy",
+    "raiff.payments.recipients.details.us.account_no": "Numer rachunku",
+    "raiff.payments.recipients.details.us.recipient_name_address": "Nazwa i adres",
+    "raiff.payments.recipients.details.us.secondary_id_type": "Typ identyfikatora uzupełniającego",
+    "raiff.payments.recipients.details.us.secondary_id": "Numer identyfikatora uzupełniającego",
+    "raiff.payments.recipients.details.us.form_symbol": "Symbol formularza",
+    "raiff.payments.recipients.details.us.period_type": "Typ okresu",
 
     "EOF" : "",
 
