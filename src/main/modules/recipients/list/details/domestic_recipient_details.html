@@ -1,0 +1,25 @@
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.account_related'|translate}}">
+    {{ $data.debitNrb | nrbIbanFilter }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
+    {{ $data.customerName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
+    {{ $data.nrb | nrbIbanFilter }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
+    {{ $data.address }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
+    {{ $data.transferTitle }}
+</bd-item-property>
+
+<bd-item-property label="{{::'raiff.payments.recipients.edit.domestic.verify.company.name'|translate}}" ng-if="customerDetails.context == 'MICRO'">
+    <div ng-repeat="owner in ownerList = (getAccountByNrb($data.debitNrb).ownersList | filter: { relationType: 'OWNER' }:true)">
+        <span>{{owner.fullName}}</span>
+    </div>
+</bd-item-property>

@@ -7,7 +7,7 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, accountsService, customerService, rbRecipientOperationType, lodash) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, accountsService, customerService) {
 
 
         accountsService.search().then(function(accountList){
@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
         };
 
         var recipientFilterType = angular.extend({}, rbRecipientTypes, {
-            ALL : {
+            ALL: {
                 code: 'ALL'
             }
         });
@@ -39,7 +39,7 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientListPromise = {};
 
-        $scope.onRecipientEdit = function(data){
+        $scope.onRecipientEdit = function (data) {
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientType: dataObject.recipientType,
@@ -50,7 +50,7 @@ angular.module('raiffeisen-payments')
             $state.go("payments.recipients.manage.edit.fill", routeObject);
         };
 
-        $scope.onRecipientRemove = function(data){
+        $scope.onRecipientRemove = function (data) {
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientType: dataObject.recipientType,
@@ -62,7 +62,7 @@ angular.module('raiffeisen-payments')
 
         };
 
-        $scope.onRecipientCreate = function(){
+        $scope.onRecipientCreate = function () {
             var routeObject = {
                 recipientType: rbRecipientTypes.DOMESTIC.code,
                 operation: rbRecipientOperationType.NEW.code
@@ -72,7 +72,7 @@ angular.module('raiffeisen-payments')
 
         };
 
-        $scope.onRecipientTransfer = function(data){
+        $scope.onRecipientTransfer = function (data) {
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientId: dataObject.recipientId,
@@ -82,13 +82,17 @@ angular.module('raiffeisen-payments')
             $state.go("payments.new.fill", routeObject);
         };
 
+        $scope.resolveTemplateType = function (recipientType) {
+            return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType);
+        };
+
         $scope.table = {
-            tableConfig : new bdTableConfig({
+            tableConfig: new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
             }),
-            tableData : {
+            tableData: {
                 getData: function ($promise, $params) {
-                    $timeout(function() {
+                    $timeout(function () {
                         var params = {
                             queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
                         };
@@ -96,34 +100,49 @@ angular.module('raiffeisen-payments')
                         params.pageSize = $params.pageSize;
                         params.pageNumber = $params.currentPage;
 
-                        if($scope.types.currentType !== recipientFilterType.ALL){
-                            params.filterTemplateType = $scope.types.currentType;
+                        if ($scope.types.currentType !== recipientFilterType.ALL) {
+                            params.filterTemplateType = $scope.types.currentType.code;
                         }
 
-                        $scope.recipientListPromise = recipientsService.search(params).then(function(data) {
-
-                            var list = $scope.recipientList = [];
-
-                            angular.forEach(data.content, function(recipient){
-                                angular.forEach(recipient.paymentTemplates, function(template){
-                                    list.push(
-                                        {
-                                            recipientId: recipient.recipientId,
-                                            templateId: recipient.templateId,
-                                            customerName: recipient.recipientName.join(" "),
-                                            recipient: recipient.recipientName.join(" "),
-                                            address: recipient.recipientAddress.join(" "),
-                                            nrb: template.beneficiaryAccountNo,
-                                            debitNrb: template.remitterAccountNo,
-                                            transferTitle: template.title.join(" "),
-                                            recipientType: template.templateType,
-                                            recipientAddress : recipient.recipientAddress,
-                                            recipientName : recipient.recipientName,
-                                            transferTitleTable : template.title,
-                                            ownerList: $scope.getAccountByNrb(template.remitterAccountNo)
-                                        }
-                                    );
-                                });
+                        $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
+                            var list = $scope.recipientList = lodash.map(data.content, function (recipient) {
+                                var template = recipient.paymentTemplates[0];
+                                return lodash.extend({
+                                    recipientType: template.templateType,
+                                    customerName: recipient.recipientName.join(" "),
+                                    recipientId: recipient.recipientId,
+                                    templateId: recipient.templateId,
+                                    recipient: recipient.recipientName.join(" "),
+                                    recipientName: recipient.recipientName,
+                                    nrb: template.beneficiaryAccountNo
+                                }, (function () {
+                                    var paymentDetails = template.paymentDetails;
+                                    switch (template.templateType) {
+                                        case "DOMESTIC":
+                                            return {
+                                                address: recipient.recipientAddress.join(" "),
+                                                debitNrb: template.remitterAccountNo,
+                                                transferTitle: template.title.join(" "),
+                                                recipientAddress: recipient.recipientAddress,
+                                                transferTitleTable: template.title
+                                            };
+                                        case "INSURANCE":
+                                            return {
+                                                nip: paymentDetails.nip,
+                                                secondaryIdType: paymentDetails.secondIDType,
+                                                secondaryId: paymentDetails.secondIDNo,
+                                                paymentType: paymentDetails.paymentType
+                                            };
+                                        case "TAX":
+                                            return {
+                                                nip: paymentDetails.nip,
+                                                nameAndAddress: recipient.recipientName + '\n' + recipient.recipientAddress.join(" "),
+                                                secondaryIdType: paymentDetails.IDType,
+                                                secondaryId: paymentDetails.IDNumber,
+                                                formSymbol: paymentDetails.formCode
+                                            };
+                                    }
+                                })());
                             });
                             $params.pageCount = data.totalPages;
                             return list;
