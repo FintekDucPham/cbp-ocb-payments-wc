@@ -7,11 +7,11 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash) {
 
 
         var recipientFilterType = angular.extend({}, rbRecipientTypes, {
-            ALL: {
+            ALL : {
                 code: 'ALL'
             }
         });
@@ -24,7 +24,7 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientListPromise = {};
 
-        $scope.onRecipientEdit = function (data) {
+        $scope.onRecipientEdit = function(data){
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientType: dataObject.recipientType,
@@ -35,7 +35,7 @@ angular.module('raiffeisen-payments')
             $state.go("payments.recipients.manage.edit.fill", routeObject);
         };
 
-        $scope.onRecipientRemove = function (data) {
+        $scope.onRecipientRemove = function(data){
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientType: dataObject.recipientType,
@@ -47,7 +47,7 @@ angular.module('raiffeisen-payments')
 
         };
 
-        $scope.onRecipientCreate = function () {
+        $scope.onRecipientCreate = function(){
             var routeObject = {
                 recipientType: rbRecipientTypes.DOMESTIC.code,
                 operation: rbRecipientOperationType.NEW.code
@@ -57,7 +57,7 @@ angular.module('raiffeisen-payments')
 
         };
 
-        $scope.onRecipientTransfer = function (data) {
+        $scope.onRecipientTransfer = function(data){
             var dataObject = angular.copy(data);
             var routeObject = {
                 recipientId: dataObject.recipientId,
@@ -72,12 +72,12 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.table = {
-            tableConfig: new bdTableConfig({
+            tableConfig : new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
             }),
-            tableData: {
+            tableData : {
                 getData: function ($promise, $params) {
-                    $timeout(function () {
+                    $timeout(function() {
                         var params = {
                             queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
                         };
@@ -85,8 +85,8 @@ angular.module('raiffeisen-payments')
                         params.pageSize = $params.pageSize;
                         params.pageNumber = $params.currentPage;
 
-                        if ($scope.types.currentType !== recipientFilterType.ALL) {
-                            params.filterTemplateType = $scope.types.currentType;
+                        if($scope.types.currentType !== recipientFilterType.ALL){
+                            params.filerTemplateType = $scope.types.currentType.code;
                         }
 
                         $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
