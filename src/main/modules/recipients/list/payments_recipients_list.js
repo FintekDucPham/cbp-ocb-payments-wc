@@ -5,8 +5,7 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/list/payments_recipients_list.html",
             controller: "PaymentsRecipientsListController"
         });
-    })
-    .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService) {
+    }).controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService) {
 
 
         accountsService.search().then(function(accountList){
@@ -112,7 +111,7 @@ angular.module('raiffeisen-payments')
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
                                     recipient: recipient.recipientName.join(" "),
-                                    recipientName: recipient.recipientName,
+                                    recipientName: recipient.recipientName.join("\n"),
                                     nrb: template.beneficiaryAccountNo
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
@@ -135,10 +134,11 @@ angular.module('raiffeisen-payments')
                                         case "TAX":
                                             return {
                                                 nip: paymentDetails.nip,
-                                                nameAndAddress: recipient.recipientName + '\n' + recipient.recipientAddress.join(" "),
-                                                secondaryIdType: paymentDetails.IDType,
-                                                secondaryId: paymentDetails.IDNumber,
-                                                formSymbol: paymentDetails.formCode
+                                                nameAndAddress: recipient.recipientName.join(" "),
+                                                secondaryIdType: paymentDetails.idtype,
+                                                secondaryId: paymentDetails.idnumber,
+                                                formSymbol: paymentDetails.formCode,
+                                                periodType: paymentDetails.periodType
                                             };
                                     }
                                 })());
