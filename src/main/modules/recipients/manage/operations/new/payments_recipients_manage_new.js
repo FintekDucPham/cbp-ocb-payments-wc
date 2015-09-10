@@ -41,16 +41,5 @@ angular.module('raiffeisen-payments')
             });
         };
 
-        $scope.setRequestConverter(function (formData) {
-            var copiedFormData = JSON.parse(JSON.stringify(formData));
-            return {
-                shortName: copiedFormData.customName,
-                debitAccount: copiedFormData.remitterAccountId,
-                creditAccount: copiedFormData.recipientAccountNo,
-                beneficiary: copiedFormData.recipientData,
-                remarks: copiedFormData.description
-            };
-        });
-
     }
 );
