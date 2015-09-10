@@ -14,10 +14,10 @@
                                    on-select="table.tableControl.invalidate()"
                                    required>
                             <ui-select-match placeholder="{{:: 'raiff.payments.recipients.select.type.placeholder' | translate }}">
-                                {{ 'raiff.payments.recipients.select.type.' + $select.selected | translate }}
+                                {{ 'raiff.payments.recipients.select.type.' + $select.selected.code | translate }}
                             </ui-select-match>
-                            <ui-select-choices repeat="type in types.list">
-                                {{ :: 'raiff.payments.recipients.select.type.' + type | translate }}
+                            <ui-select-choices repeat="type in types.availableTypesList">
+                                {{ :: 'raiff.payments.recipients.select.type.' + type.code | translate }}
                             </ui-select-choices>
                         </ui-select>
 
@@ -55,22 +55,7 @@
 
             <bd-details-section bd-table-row-details>
 
-                <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.account_related'|translate}}">
-                    {{ $data.debitNrb | nrbIbanFilter }}
-                </bd-item-property>
-                <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
-                    {{ $data.customerName }}
-                </bd-item-property>
-                <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
-                    {{ $data.nrb | nrbIbanFilter }}
-                </bd-item-property>
-                <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
-                    {{ $data.address }}
-                </bd-item-property>
-                <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
-                    {{ $data.transferTitle }}
-                </bd-item-property>
-
+                <div ng-include="::resolveTemplateType($data.recipientType)"></div>
 
                 <bd-details-action-section>
                     <div class="row">

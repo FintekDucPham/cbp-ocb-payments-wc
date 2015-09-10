@@ -121,10 +121,10 @@
                    ng-init="payment.formData.paymentType = payment.meta.zusPaymentTypes[0]"
                    required>
             <ui-select-match>
-                {{ 'raiff.payments.new.zus.fill.payment_type.' + $select.selected | translate}}
+                {{ 'raiff.payments.zus.payment_type.' + $select.selected | translate}}
             </ui-select-match>
             <ui-select-choices repeat="paymentType in payment.meta.zusPaymentTypes track by $index">
-                <div ng-bind-html="::'raiff.payments.new.zus.fill.payment_type.' + paymentType | translate  | highlight: $select.search"></div>
+                <div ng-bind-html="::'raiff.payments.zus.payment_type.' + paymentType | translate  | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
     </bd-item-property>

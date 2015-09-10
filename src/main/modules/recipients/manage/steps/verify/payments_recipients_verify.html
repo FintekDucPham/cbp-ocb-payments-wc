@@ -1,0 +1,31 @@
+<div>
+
+    <div ng-transclude></div>
+
+    <form name="recipientAuthForm" novalidate ng-if="recipient.options.twoStepAuthorization">
+        <div ng-init="setForm(recipientAuthForm);"></div>
+
+        <bd-item-property label="{{ recipient.items.smsText }}">
+
+            <input type="text"
+                   name="authCode"
+                   ng-model="recipient.items.credentials"
+                   required/>
+
+            <eb-validation-messages eb-name="authCode">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+
+        <div class="authorization-blocked" ng-if="recipient.promises.authorizationPromise.$$state.status === 2">
+            <!--{{::"cards.label.empty_list"|translate}}-->
+            {{::'raiff.payments.recipients.authorization.fail'|translate}}
+        </div>
+
+    </form>
+
+</div>
