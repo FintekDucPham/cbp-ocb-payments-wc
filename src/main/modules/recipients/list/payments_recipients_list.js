@@ -107,18 +107,18 @@ angular.module('raiffeisen-payments')
                                 var template = recipient.paymentTemplates[0];
                                 return lodash.extend({
                                     recipientType: template.templateType,
+                                    recipientTypeMessage: translate.property('raiff.payments.recipients.new.type.{0}'.format(template.templateType)),
                                     customerName: recipient.recipientName.join(" "),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
                                     recipient: recipient.recipientName.join(" "),
-                                    recipientName: recipient.recipientName.join("\n"),
+                                    recipientName: recipient.recipientAddress.join(" "),
                                     nrb: template.beneficiaryAccountNo
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
                                         case "DOMESTIC":
                                             return {
-                                                address: recipient.recipientAddress.join(" "),
                                                 debitNrb: template.remitterAccountNo,
                                                 transferTitle: template.title.join(" "),
                                                 recipientAddress: recipient.recipientAddress,
