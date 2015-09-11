@@ -68,7 +68,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.resolveTemplateType = function (recipientType) {
-            return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType);
+            return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType.toLowerCase());
         };
 
         $scope.table = {
