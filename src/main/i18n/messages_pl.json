@@ -369,6 +369,7 @@
     "raiff.payments.recipients.list.header.customName.label": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.list.header.recipient.label": "Odbiorca",
     "raiff.payments.recipients.list.header.nrb.label": "Nr rachunku",
+    "raiff.payments.recipients.list.header.type.label": "Typ",
     "raiff.payments.recipients.list.details.edit": "Edytuj",
     "raiff.payments.recipients.list.details.remove": "Usuń",
     "raiff.payments.recipients.list.details.transfer": "Przelew",
@@ -382,10 +383,12 @@
     "raiff.payments.recipients.select.type.CURRENCY": "Walutowy",
 
     "raiff.payments.recipients.new.type.select.placeholder": "Wybierz typ odbiorcy",
-    "raiff.payments.recipients.new.type.DOMESTIC": "krajowy",
+    "raiff.payments.recipients.new.type.DOMESTIC": "Krajowy",
     "raiff.payments.recipients.new.type.ZUS": "ZUS",
     "raiff.payments.recipients.new.type.US": "US/IC",
-    "raiff.payments.recipients.new.type.CURRENCY": "walutowy",
+    "raiff.payments.recipients.new.type.CURRENCY": "Walutowy",
+    "raiff.payments.recipients.new.type.INSURANCE": "ZUS",
+    "raiff.payments.recipients.new.type.TAX": "US/IC",
 
     "raiff.payments.recipients.new.domestic.fill.account_related": "Z rachunku",
     "raiff.payments.recipients.new.domestic.fill.custom_name.placeholder": "Wpisz nazwę skróconą odbiorcy",
