@@ -18,7 +18,8 @@ angular.module('raiffeisen-payments')
         $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
             "83101010230000261395100000",
             "78101010230000261395200000",
-            "73101010230000261395300000"
+            "73101010230000261395300000",
+            "68101010230000261395400000"
         ], function (val) {
             return {
                 code: 'notZus',
@@ -122,7 +123,7 @@ angular.module('raiffeisen-payments')
                 if (accountNo) {
                     return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
                         code: 'notUs',
-                        value: accountNo.replace(" ", '')
+                        value: accountNo.replace(/ /g, '')
                     });
                 } else {
                     return false;
@@ -132,7 +133,7 @@ angular.module('raiffeisen-payments')
                 if (accountNo) {
                     return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
                         code: 'notZus',
-                        value: accountNo.replace(" ", '')
+                        value: accountNo.replace(/ /g, '')
                     });
                 } else {
                     return false;
