@@ -384,7 +384,7 @@
 
     "raiff.payments.recipients.new.domestic.fill.description.label": "Tytułem",
     "raiff.payments.recipients.new.domestic.fill.description.placeholder": "Wpisz tytuł",
-    "raiff.payments.recipients.new.domestic.fill.description.EMPTY":"Tytuł nie może być pusty",
+    "raiff.payments.recipients.new.domestic.fill.description.EMPTY":"Tytuł przelewu nie może być pusty",
     "raiff.payments.recipients.new.domestic.fill.description.PATTERN":"Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Dane odbiorcy mogą składać się maskymalnie ze 140 znaków",
     "raiff.payments.recipients.manage.new.status.ok": "Odbiorca zdefiniowany został utworzony",
