@@ -29,7 +29,8 @@ angular.module('raiffeisen-payments', [
     function registerNavigation() {
         menuServiceProvider.registerMenu({
             id: 'raiffeisen-payments',
-            priority: 8000,
+            priority: 300,
+            showMain: true,
             baseItem: "payments.recipients.list",
             title: 'payments.title',
             items:[
