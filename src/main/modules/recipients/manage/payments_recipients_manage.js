@@ -23,12 +23,8 @@ angular.module('raiffeisen-payments')
         $scope.PAYMENT_TITLE_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
 
         bdMainStepInitializer($scope, 'recipient', {
-            type: lodash.find(rbRecipientTypes, {
-                state: $stateParams.recipientType
-            }),
-            operation: lodash.find(rbRecipientOperationType, {
-                state: $stateParams.operation
-            }),
+            type: rbRecipientTypes[$stateParams.recipientType],
+            operation: rbRecipientOperationType[$stateParams.operation],
             formData: {},
             transferId: {},
             options: {},

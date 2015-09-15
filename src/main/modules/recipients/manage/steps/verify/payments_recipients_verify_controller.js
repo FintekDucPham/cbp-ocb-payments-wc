@@ -1,11 +1,16 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyController', function ($scope, pathService, recipientGeneralService, authorizationService,
-                                                              formService, bdStepStateEvents, translate, dateFilter) {
+    .controller('RecipientsManageVerifyController', function (bdVerifyStepInitializer, $scope, pathService, recipientGeneralService, authorizationService,
+                                                              formService, bdStepStateEvents) {
 
         $scope.recipientAuthUrl = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
 
         $scope.recipientAuthForm = {};
 
+
+        bdVerifyStepInitializer($scope, {
+            formName: 'recipient',
+            dataObject: $scope.recipient
+        });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if ($scope.recipient.promises.authorizationPromise.$$state.status !== 1) {
@@ -15,7 +20,11 @@ angular.module('raiffeisen-payments')
                 if (form && form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    recipientGeneralService.realize($scope.recipient.transferId, $scope.recipient.items.credentials).then(function (resultCode) {
+                    recipientGeneralService.realize(
+                        $scope.recipient.type.code.toLowerCase(),
+                        $scope.recipient.transferId,
+                        $scope.recipient.items.credentials
+                    ).then(function () {
                         $scope.recipient.result.type = 'success';
                         actions.proceed();
                     }).catch(function (e) {

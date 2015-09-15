@@ -40,8 +40,7 @@
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
     "payments.submenu.options.list.header": "Lista płatności",
-    "payments.submenu.options.new.header": "Przelew",
-
+    "payments.submenu.options.new.header": "Przelew w PLN",
     "raiff.payments.widget.view.new_payment": "Nowa płatność",
     "raiff.payments.widget.content.total_payments": "Suma płatności",
     "raiff.payments.widget.content.next_payment": "Następna płatność",
@@ -473,7 +472,7 @@
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
     "raiff.payments.recipients.authorization.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
 
-    "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wybierz rachunek US",
+    "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wybierz rachunek ZUS",
     "raiff.payments.recipients.new.status.20": "Zlecnie przyjęte do realizacji",
     "raiff.payments.recipients.new.status.40": "Zlecnie przyjęte do realizacji",
     "raiff.payments.recipients.new.status.60": "Zlecnie przyjęte do realizacji",
