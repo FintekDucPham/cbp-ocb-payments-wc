@@ -457,7 +457,7 @@
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
     "raiff.payments.recipients.authorization.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
 
-    "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wybierz rachunek US",
+    "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wybierz rachunek ZUS",
 
     "raiff.payments.recipients.details.zus.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.details.zus.account_no": "Numer rachunku",
