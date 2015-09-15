@@ -4,8 +4,8 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
         <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-            {{ recipient.items.senderAccount.accountName }}
-            |
+            {{ recipient.items.senderAccount.accountName }}&nbsp;
+
             {{ recipient.items.senderAccount.accountNo }}
         </section>
         <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">

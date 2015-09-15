@@ -1,8 +1,8 @@
 <div class="form-body">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
-        {{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }} <!-- | nazwa -->
-        |
+        {{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}&nbsp;<!-- | nazwa -->
+
         {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
 
@@ -11,8 +11,8 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.recipient_account_name'|translate}}">
-        {{payment.items.recipientAccount.accountName}} <!-- | nazwa -->
-        |
+        {{payment.items.recipientAccount.accountName}}&nbsp;<!-- | nazwa -->
+
         {{payment.items.recipientAccount.accountNo}} <!-- | numer -->
     </bd-item-property>
 
