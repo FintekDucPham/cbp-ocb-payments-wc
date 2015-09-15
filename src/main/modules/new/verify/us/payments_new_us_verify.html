@@ -1,10 +1,10 @@
 <div class="form-body" ng-controller="NewUsPaymentVerifyController">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.sender_account_name'|translate}}">
-        {{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }} <!-- | nazwa -->
-        |
+        {{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}&nbsp;<!-- | nazwa -->
+
         {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
-        |
+
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
 
