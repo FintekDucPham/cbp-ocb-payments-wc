@@ -17,6 +17,11 @@ angular.module('raiffeisen-payments')
                     isSelected: false
                 };
 
+                $scope.$watch('selectedInsurance', function(insurance) {
+                    $scope.selection.model = insurance;
+                    $scope.selection.isSelected = !!insurance;
+                });
+
                 insuranceAccounts.search().then(function(insuranceAccounts) {
                     $scope.insuranceAccountList = insuranceAccounts.content;
                 });

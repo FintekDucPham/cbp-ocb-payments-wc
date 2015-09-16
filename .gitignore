@@ -19,3 +19,4 @@ bin
 .tmp
 *.log
 npm-debug.log
+sum.md5
