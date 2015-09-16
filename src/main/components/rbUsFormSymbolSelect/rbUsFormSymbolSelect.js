@@ -33,6 +33,9 @@ angular.module('raiffeisen-payments')
                         };
                     }), 'code');
                     $scope.formSymbolList = $scope.allFormSymbols;
+                    update(lodash.find($scope.formSymbolList, {
+                        code: $scope.formSymbolId
+                    }), $scope.formSymbolId);
                 });
 
                 function update(item, model) {
