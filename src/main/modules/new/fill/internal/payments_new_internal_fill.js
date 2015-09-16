@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewInternalPaymentFillController', function ($scope, lodash, rbAccountSelectParams, translate) {
+    .controller('NewInternalPaymentFillController', function ($scope, lodash, rbAccountSelectParams, translate, $stateParams) {
 
         angular.extend($scope.payment.formData, {
             description: translate.property('raiff.payments.new.internal.fill.default_description')
@@ -37,6 +37,14 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.currency = senderAccountCurrency;
             recalculateCurrencies();
         }
+
+        $scope.getAccountByNrb = function(accountList, selectFn) {
+            if ($stateParams.accountId) {
+                selectFn(lodash.findWhere(accountList, {
+                    accountId: $stateParams.accountId
+                }));
+            }
+        };
 
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.senderSelectParams.payments = true;

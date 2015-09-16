@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new.fill', {
-            url: "/fill",
+            url: "/fill/:accountId",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html",
             controller: "NewPaymentFillController",
             params: {
