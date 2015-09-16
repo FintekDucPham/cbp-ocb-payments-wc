@@ -1,5 +1,10 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillController', function ($scope, formService, bdStepStateEvents, recipientGeneralService, authorizationService) {
+    .controller('RecipientsManageFillController', function (bdFillStepInitializer, $scope, formService, bdStepStateEvents, recipientGeneralService, authorizationService, translate, dateFilter) {
+
+        bdFillStepInitializer($scope, {
+            formName: 'recipient',
+            dataObject: $scope.recipient
+        });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.recipientForm;
@@ -12,7 +17,7 @@ angular.module('raiffeisen-payments')
                         $scope.recipient.transferId = responseObj;
                         $scope.recipient.promises.authorizationPromise = authorizationService.create({
                             resourceId: $scope.recipient.transferId,
-                            resourceType: 'MANAGE_RECIPIENT'
+                            resourceType: 'MANAGE_{0}_RECIPIENT'.format($scope.recipient.type.code)
                         }).then(function (authorization) {
                             return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
                                 var twoStep = $scope.recipient.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;

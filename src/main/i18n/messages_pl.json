@@ -101,7 +101,7 @@
     "raiff.payments.new.btn.accept": "Zatwierdź",
     "raiff.payments.new.btn.clear": "Wyczyść",
     "raiff.payments.new.btn.next": "Dalej",
-    "raiff.payments.new.btn.finalize": "Wróć do listy",
+    "raiff.payments.new.btn.finalize": "Powrót do listy",
 
     "raiff.payments.new.verify.smscode": "Podaj haslo SMS dla operacji",
     "raiff.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",
@@ -496,7 +496,7 @@
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
     "raiff.payments.recipients.authorization.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
 
-    "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wybierz rachunek US",
+    "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wybierz rachunek ZUS",
 
     "raiff.payments.recipients.details.zus.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.details.zus.account_no": "Numer rachunku",

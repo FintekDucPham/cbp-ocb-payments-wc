@@ -7,6 +7,7 @@
                            rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                            rb-product-list-name="TRANSFER_OWN_FROM_LIST"
                            rb-account-select-params="senderSelectParams"
+                           rb-init-select-fn="getAccountByNrb($accountList, $select)"
                            rb-on-account-select="recipientSelectParams.update($accountId)"></rb-account-select>
     </bd-item-property>
 

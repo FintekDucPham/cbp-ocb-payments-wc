@@ -90,6 +90,7 @@
                   class="input-field input-area--payment-description"
                   required
                   bd-split-text
+                  bd-split-text-length="132"
                   ng-pattern="PAYMENT_DESCRIPTION_REGEX"
                   placeholder="{{ ::'raiff.payments.new.domestic.fill.description.placeholder' | translate }}"></textarea>
 
@@ -100,7 +101,7 @@
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.description.TOO_LONG_TITLE'|translate}}
             </div>
-            <div eb-message-key="maxlength" class="validation-message animate-on">
+            <div eb-message-key="splitTextLength" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.description.TOO_LONG_TITLE'|translate}}
             </div>
         </eb-validation-messages>
