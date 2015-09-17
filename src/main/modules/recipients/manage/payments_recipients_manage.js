@@ -23,8 +23,8 @@ angular.module('raiffeisen-payments')
         $scope.PAYMENT_TITLE_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
 
         bdMainStepInitializer($scope, 'recipient', {
-            type: rbRecipientTypes[$stateParams.recipientType],
-            operation: rbRecipientOperationType[$stateParams.operation],
+            type: rbRecipientTypes[$stateParams.recipientType.toUpperCase()],
+            operation: rbRecipientOperationType[$stateParams.operation.toUpperCase()],
             formData: {},
             transferId: {},
             options: {},
