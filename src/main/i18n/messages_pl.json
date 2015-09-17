@@ -83,7 +83,7 @@
     "raiff.payments.new.domestic.fill.sender_account": "Z rachunku",
     "raiff.payments.new.domestic.fill.accessible_assets": "Dostępne środki",
     "raiff.payments.new.domestic.fill.recipient": "Wybierz odbiorcę",
-    "raiff.payments.new.domestic.fill.recipient.placeholder": "Brak",
+    "raiff.payments.new.domestic.fill.recipient.placeholder": "Odbiorca spoza listy",
     "raiff.payments.new.domestic.fill.recipient.clear": "Wyczyść",
     "raiff.payments.new.domestic.fill.recipient_account": "Rachunek odbiorcy",
     "raiff.payments.new.domestic.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
