@@ -239,6 +239,7 @@
                                    bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceType] }}"
                                    bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                                    ng-pattern="AMOUNT_PATTERN"
+                                   ng-model-options="{ allowInvalid: true }"
                                    step="0.01"
                                    required
                                    name="{{ insuranceType }}Amount"/>
@@ -261,6 +262,12 @@
                     </div>
 
                     <eb-validation-messages eb-name="{{ insuranceType }}Amount">
+                        <div eb-message-key="required" class="validation-message animate-on">
+                            {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
+                        </div>
+                        <div eb-message-key="number" class="validation-message animate-on">
+                            {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
+                        </div>
                         <div eb-message-key="pattern" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
                         </div>
@@ -279,6 +286,14 @@
             </bd-checkbox-select-option>
         </bd-checkbox-select>
 
+        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-show="totalPaymentAmount.length > 0">
+            <div class="rb-payments-new-zus-fill__summary">
+                <div ng-repeat="summary in totalPaymentAmount" class="rb-payments-new-zus-fill__summary-entry">
+                    <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
+                </div>
+            </div>
+        </bd-item-property>
+
         <input type="hidden"
                name="insuranceErrors"
                ng-model="payment.formData.insurancePremiums"
@@ -289,18 +304,10 @@
             <div eb-message-key="atLeastOne" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.zus.fill.payment_options.AT_LEAST_ONE_INSUR' | translate }}
             </div>
-            <div eb-message-key="amountExceedingFounds" class="validation-message animate-on">
-                {{ ::'raiff.payments.new.zus.fill.payment_options.AMOUNT_EXCEEDED FUNDS' | translate }}
+            <div eb-message-key="amountExceedingFunds" class="validation-message animate-on">
+                {{ ::'raiff.payments.new.zus.fill.payment_options.AMOUNT_EXCEEDED_FUNDS' | translate }}
             </div>
         </eb-validation-messages>
-
-        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-if="totalPaymentAmount.length > 0">
-            <div class="rb-payments-new-zus-fill__summary">
-                <div ng-repeat="summary in totalPaymentAmount" class="rb-payments-new-zus-fill__summary-entry">
-                    <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
-                </div>
-            </div>
-        </bd-item-property>
 
     </bd-panel>
 
