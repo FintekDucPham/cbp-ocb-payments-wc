@@ -37,9 +37,7 @@ angular.module('raiffeisen-payments')
         });
 
         function calculateInsurancesAmount() {
-            return lodash.map(lodash.groupBy(lodash.filter($scope.payment.formData.insurancePremiums, function (element) {
-                return element.active && !!element.currency;
-            }), 'currency'), function (values) {
+            return lodash.map(lodash.groupBy($scope.payment.formData.insurancePremiums, 'currency'), function (values) {
                 var totalAmount = 0;
                 lodash.forEach(values, function (value) {
                     totalAmount += value.amount || 0;
@@ -65,8 +63,14 @@ angular.module('raiffeisen-payments')
             return lodash.size(lodash.keys(insurances));
         }
 
-        $scope.$watch('payment.formData.insurancePremiums', function (insurances) {
+        $scope.$watch('payment.formData.insurancePremiums', function (newInsurances, oldInsurances) {
             $scope.totalPaymentAmount = calculateInsurancesAmount();
+            lodash.forEach(lodash.difference(lodash.keys(oldInsurances), lodash.keys(newInsurances)), function(insurance) {
+                var formElement = $scope.paymentForm[insurance + 'Amount'];
+                formElement.$setPristine();
+                formElement.$setUntouched();
+                formElement.$render();
+            });
         }, true);
 
         $scope.clearTaxpayer = function () {
@@ -96,9 +100,20 @@ angular.module('raiffeisen-payments')
             atLeastOne: function (insurances) {
                 return getActiveInsurancesCount(insurances) > 0;
             },
+            validSelection: function() {
+                return lodash.isEmpty(lodash.filter($scope.payment.formData.insurancePremiums, function(premiumValue, premiumType) {
+                   return !$scope.paymentForm[premiumType + 'Amount'].$valid || !$scope.paymentForm[premiumType + 'Currency'].$valid;
+                }));
+            },
             amountExceedingFunds: function (insurances) {
-                // todo after currency conversion
-                return true;
+                if($scope.payment.items.senderAccount) {
+                    var totalPayment = lodash.reduce(lodash.pluck(lodash.values(insurances), 'amount'), function(total, next) {
+                        return total + next;
+                    });
+                    return !totalPayment || totalPayment <= $scope.payment.items.senderAccount.accessibleAssets;
+                } else {
+                    return true;
+                }
             }
         };
 
