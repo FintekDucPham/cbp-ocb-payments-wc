@@ -24,9 +24,9 @@ angular.module('raiffeisen-payments')
 
         angular.extend($scope.payment.meta, {
             usSupplementaryIds: usSupplementaryIds,
-            usPeriodTypeCodes: lodash.map(usPeriodTypes, function (type, name) {
+            usPeriodTypeCodes: lodash.union([ 'unset' ], lodash.map(usPeriodTypes, function (type, name) {
                 return name;
-            }),
+            })),
             usPeriodTypes: usPeriodTypes
         });
 
@@ -78,7 +78,7 @@ angular.module('raiffeisen-payments')
 
         $scope.selectPeriodType = function (periodTypeCode) {
             $scope.payment.formData.periodNo = null;
-            if (!periodTypeCode) {
+            if (!periodTypeCode || periodTypeCode === 'unset') {
                 $scope.payment.formData.periodYear = null;
             } else {
                 var periodType = usPeriodTypes[periodTypeCode];
