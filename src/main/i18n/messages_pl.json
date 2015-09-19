@@ -296,6 +296,7 @@
     "raiff.payments.new.us.fill.form_symbol.placeholder": "Wybierz",
     "raiff.payments.new.us.fill.form_symbol.required": "Symbol formularza nie może być pusty",
     "raiff.payments.new.us.fill.period_type": "Typ okresu",
+    "raiff.payments.new.us.fill.period_type.unset": "Wybierz",
     "raiff.payments.new.us.fill.period_type.J": "J - dzień",
     "raiff.payments.new.us.fill.period_type.D": "D - dekada",
     "raiff.payments.new.us.fill.period_type.M": "M - miesiąc",
