@@ -15,7 +15,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.types = {
-            currentType:TYPES.ALL,
+            currentType:TYPES.DOMESTIC,
             list: [TYPES.ALL, TYPES.DOMESTIC]
         };
 
