@@ -2,8 +2,7 @@
     <bd-header>{{::"raiff.payments.new.label.header"|translate}}</bd-header>
     <bd-form-panel>
 
-        <bd-item-property ng-show="activeStep.id !== 'status'"
-                          label="{{::'raiff.payments.new.payment_type'|translate}}">
+        <bd-item-property label="{{::'raiff.payments.new.payment_type'|translate}}">
 
             <ui-select ng-model="payment.type"
                        theme="bootstrap"
