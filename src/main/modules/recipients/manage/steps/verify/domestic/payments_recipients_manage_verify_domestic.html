@@ -23,16 +23,12 @@
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                       label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
-        <span ng-repeat="data in recipient.formData.recipientData">
-            {{data}}<br/>
-        </span>
+        <p style="white-space: pre;" ng-bind-html="recipient.formData.recipientData.join('\n')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                       label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
-          <span ng-repeat="data in recipient.formData.description">
-            {{data}}<br/>
-        </span>
+        <p style="white-space: pre;" ng-bind-html="recipient.formData.description.join('\n')"></p>
     </bd-item-property>
 
     <span ng-if="recipient.promises.authorizationPromise.$$state.status === 1">
