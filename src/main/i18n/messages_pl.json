@@ -14,7 +14,7 @@
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
     "payments.submenu.options.list.header": "Lista płatności",
-    "payments.submenu.options.new.header": "Przelew w PLN",
+    "payments.submenu.options.new.header": "Przelew",
 
     "raiff.payments.widget.view.new_payment": "Nowa płatność",
     "raiff.payments.widget.content.total_payments": "Suma płatności",
