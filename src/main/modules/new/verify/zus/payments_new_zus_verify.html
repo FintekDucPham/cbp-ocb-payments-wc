@@ -57,11 +57,11 @@
 
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.verify.payment_data' | translate }}">
 
-        <div ng-repeat="(key, value) in payment.formData.insurancePremiums">
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + key |translate}}">
+        <div ng-repeat="insurance in payment.formData.insurancePremiums | insurancesFilter track by insurance.key">
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + insurance.key |translate}}">
                 {{ ::'raiff.payments.new.zus.verify.tmp.zus_name' | translate }}<br>
-                {{value.socialAccountNumber}}<br>
-                {{value.amount}} {{ value.currency }}
+                {{::insurance.socialAccountNumber}}<br>
+                {{::insurance.amount}} {{ ::insurance.currency }}
             </bd-item-property>
         </div>
 
