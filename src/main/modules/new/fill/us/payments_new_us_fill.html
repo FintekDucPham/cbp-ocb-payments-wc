@@ -153,7 +153,7 @@
             <ui-select-match placeholder="{{ ::'raiff.payments.new.us.fill.period_type.placeholder' | translate }}">
                 {{ 'raiff.payments.new.us.fill.period_type.' + $select.selected | translate }}
             </ui-select-match>
-            <ui-select-choices repeat="periodTypeCode in payment.meta.usPeriodTypeCodes track by $index">
+            <ui-select-choices repeat="periodTypeCode in payment.meta.usPeriodTypeCodes track by $index" null-option="payment.meta.usPeriodTypeCodes[0]">
                 <div ng-bind-html="::'raiff.payments.new.us.fill.period_type.' + periodTypeCode | translate | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
@@ -298,12 +298,6 @@
             </div>
             <div eb-message-key="elixir" class="validation-message animate-on">
                 {{ 'raiff.payments.new.us.fill.amount.NOT_ELIXIR_PMNT' | translate }}
-            </div>
-            <div eb-message-key="##todo##" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
-            </div>
-            <div eb-message-key="##todo##" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID'|translate}}
             </div>
         </eb-validation-messages>
 
