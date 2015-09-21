@@ -210,7 +210,7 @@
     "raiff.payments.new.zus.fill.additional_info.placeholder": "Wpisz informacje dodatkowe",
     "raiff.payments.new.zus.fill.additional_info.NOT_EMPTY_PAYMENT_TYPE_S": "Dla typu wpłaty S lub M informacje dodatkowe powinny być puste",
     "raiff.payments.new.zus.fill.additional_info.EMPTY_ ADDITIONAL_INF": "Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji",
-    "raiff.payments.new.zus.fill.additional_info.TOO_LONG_ADDITIONAL_INF": "Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji",
+    "raiff.payments.new.zus.fill.additional_info.TOO_LONG_ADDITIONAL_INF": "Informacje dodatkowe muszą zawierać nie więcej niż 54 znaków bez spacji",
     "raiff.payments.new.zus.fill.execution_date": "Data realizacji",
     "raiff.payments.new.zus.fill.execution_date.placeholder": "Wpisz datę realizacji",
     "raiff.payments.new.zus.fill.payment_options": "Dane ubezpieczeń",
