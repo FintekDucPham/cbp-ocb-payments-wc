@@ -55,6 +55,12 @@
 
     <!--</bd-item-property>-->
 
+    <!--<eb-validation-messages eb-name="taxpayer">-->
+        <!--<div eb-message-key="required" class="validation-message animate-on">-->
+            <!--{{ ::'raiff.payments.new.zus.fill.recipient_data.EMPTY_PAYER' | translate }}-->
+        <!--</div>-->
+    <!--</eb-validation-messages>-->
+
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip' | translate }}">
         <input name="taxpayerNip"
                   ng-model="payment.formData.nip"

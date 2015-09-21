@@ -257,7 +257,7 @@
     "raiff.payments.new.zus.verify.declaraton_no": "Numer deklaracji",
     "raiff.payments.new.zus.verify.additional_info": "Informacje dodatkowe",
     "raiff.payments.new.zus.verify.execution_date": "Data realizacji",
-    "raiff.payments.new.zus.verify.payment_data": "Dane przelewu",
+    "raiff.payments.new.zus.verify.payment_data": "Dane ubezpieczeń",
     "raiff.payments.new.zus.verify.payment.SOCIAL": "Na ubezpieczenie społeczne",
     "raiff.payments.new.zus.verify.payment.HEALTH": "Na ubezpieczenie zdrowotne",
     "raiff.payments.new.zus.verify.payment.FPIFGSP": "Na ubezpieczenie FP i FGSP",
