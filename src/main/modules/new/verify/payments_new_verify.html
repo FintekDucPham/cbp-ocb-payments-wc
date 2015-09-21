@@ -3,29 +3,53 @@
 <form class="form-body" name="paymentAuthForm" novalidate ng-if="payment.options.twoStepAuthorization">
     <div ng-init="setForm(paymentAuthForm);"></div>
 
-    <bd-item-property label="{{ payment.items.smsText }}">
+    <div ng-switch="payment.result.token_error">
 
-        <input type="text"
-               name="authCode"
-               ng-model="payment.items.credentials"
-               required/>
+        <div ng-switch-when="true" class="rb-payments-token-error">
 
-        <eb-validation-messages eb-name="authCode">
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
+            <div ng-messages="payment.result.token_errors"  class="messages">
+                <div ng-message="authorization_blocked" class="validation-message animate-on">
+                    {{::'raiff.payments.MSG-0518_BLOCKED_SMS'|translate}}
+                </div>
+                <div ng-message="incorrect_password" class="validation-message animate-on">
+                    {{::'raiff.payments.MSG-0514_INCORRECT_SMS'|translate}}
+                </div>
+                <div ng-message="expired" class="validation-message animate-on">
+                    {{::'raiff.payments.MSG-0515_EXPIRED_SMS'|translate}}
+                </div>
+                <div ng-message="incorrect_password_authorization_blocked" class="validation-message animate-on">
+                    {{::'raiff.payments.MSG-0517_INCORRECT_BLOCKED_SMS'|translate}}
+                </div>
+                <div ng-message="system_failure" class="validation-message animate-on">
+                    {{::'raiff.payments.MSG-0519_SMS_AGAIN'|translate}}
+                </div>
             </div>
-        </eb-validation-messages>
 
-    </bd-item-property>
-</form>
+            <bd-radio-select bd-model="payment.result.nextTokenType">
+                <bd-radio-option bd-option-value="'prev'">{{::'raiff.payments.new.verify.token.authorize.prev'|translate}}</bd-radio-option>
+                <bd-radio-option bd-option-value="'next'">{{::'raiff.payments.new.verify.token.authorize.next'|translate}}</bd-radio-option>
+            </bd-radio-select>
 
-<form name="paymentResponseForm">
-
-    <input ng-model="paymentResponseModel" type="hidden" name="payment" />
-    <eb-validation-messages eb-name="payment">
-        <div eb-message-key="payment.token.authorization_blocked" class="validation-message animate-on">
-            {{::'raiff.payments.new.domestic.fill.execution_date.BLOCKED_SMS'|translate}}
         </div>
-    </eb-validation-messages>
+
+        <div ng-switch-when="false">
+            <bd-item-property label="{{ payment.items.smsText }}">
+
+                <input type="text"
+                       name="authCode"
+                       bd-novalidate-when="payment.result.token_error"
+                       ng-model="payment.items.credentials"
+                       required/>
+
+                <eb-validation-messages eb-name="authCode">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
+                    </div>
+                </eb-validation-messages>
+
+            </bd-item-property>
+        </div>
+
+    </div>
 
 </form>
