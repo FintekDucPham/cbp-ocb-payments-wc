@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewInternalPaymentFillController', function ($scope, lodash, rbAccountSelectParams, translate, $stateParams) {
+    .controller('NewInternalPaymentFillController', function ($scope, lodash, rbAccountSelectParams, translate, $stateParams, customerService) {
 
         angular.extend($scope.payment.formData, {
             description: translate.property('raiff.payments.new.internal.fill.default_description')
@@ -46,15 +46,24 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        customerService.getCustomerDetails().then(function(data) {
+           $scope.payment.meta.customerContext = data.customerDetails.context;
+        });
+
+        function isSenderAccountCategoryRestricted() {
+            return $scope.payment.meta.customerContext === 'DETAL' ? $scope.payment.items.senderAccount.category === 1005 : $scope.payment.items.senderAccount.category === 1016;
+        }
+
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.senderSelectParams.payments = true;
+
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: false,
             alwaysSelected: false,
             accountFilter: function (accounts, $accountId) {
                 if (!!$accountId) {
-                    return lodash.reject(accounts, {
-                        accountId: $accountId
+                    return lodash.reject(accounts, function(account) {
+                        return account.accountId === $accountId || isSenderAccountCategoryRestricted() && lodash.contains([1101,3000,3008], account.category);
                     });
                 } else {
                     return accounts;

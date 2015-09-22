@@ -4,7 +4,7 @@
         <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-on-account-select="onAccountSelected($account, $oldAccount)"
-                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                            rb-product-list-name="TRANSFER_ZUS_FROM_LIST"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-account="payment.items.senderAccount"></rb-account-select>
@@ -54,6 +54,12 @@
                <!--placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer.placeholder' | translate }}" />-->
 
     <!--</bd-item-property>-->
+
+    <!--<eb-validation-messages eb-name="taxpayer">-->
+        <!--<div eb-message-key="required" class="validation-message animate-on">-->
+            <!--{{ ::'raiff.payments.new.zus.fill.recipient_data.EMPTY_PAYER' | translate }}-->
+        <!--</div>-->
+    <!--</eb-validation-messages>-->
 
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip' | translate }}">
         <input name="taxpayerNip"

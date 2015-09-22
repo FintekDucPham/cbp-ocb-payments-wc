@@ -5,7 +5,7 @@
                            rb-account="payment.items.senderAccount"
                            bd-attr-required="true"
                            rb-account-list="payment.meta.accountList"
-                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                            rb-product-list-name="TRANSFER_FROM_LIST"
                            rb-on-account-select="onSenderAccountSelect()"
                            rb-init-select-fn="getAccountByNrb($accountList, $select)"
@@ -63,6 +63,7 @@
               ng-model="payment.formData.recipientName"
               ng-pattern="RECIPIENT_DATA_REGEX"
               required
+              ng-disabled="payment.options.fixedRecipientSelection"
               bd-split-text
               bd-split-text-length="132"
               class="input-field input-area--party-data"
@@ -87,6 +88,7 @@
 
         <textarea name="description"
                   ng-model="payment.formData.description"
+                  ng-disabled="payment.options.fixedRecipientSelection"
                   class="input-field input-area--payment-description"
                   required
                   bd-split-text

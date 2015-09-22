@@ -13,25 +13,67 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.payment
         });
 
-        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
+        function sendAuthorizationToken() {
             $scope.payment.promises.authorizationPromise = authorizationService.create({
                 resourceId: $scope.payment.transferId,
                 resourceType: 'TRANSFER'
             }).then(function (authorization) {
                 return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
                     var twoStep = $scope.payment.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
-                    if(twoStep) {
+                    $scope.payment.result.token_error = false;
+                    if (twoStep) {
                         $scope.payment.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
                             .replace("##number##", content.authenticationAttributes.operationId)
                             .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'dd.MM.yyyy'));
                     }
                 });
+            }).catch(function() {
+                $scope.payment.result.token_error = true;
+                $scope.payment.result.nextTokenType = 'prev';
             });
+        }
+
+        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
+            $scope.payment.result.token_error = false;
+            sendAuthorizationToken();
         });
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             delete $scope.payment.items.credentials;
         });
+
+        function authorize(doneFn) {
+            transferService.realize($scope.payment.transferId, $scope.payment.items.credentials).then(function (resultCode) {
+                var parts = resultCode.split('|');
+                $scope.payment.result = {
+                    code: parts[1],
+                    type: parts[0] === 'OK' ? "success" : "error"
+                };
+                if (parts[0] !== 'OK' && !parts[1]) {
+                    $scope.payment.result.code = 'error';
+                }
+                $scope.payment.result.token_error = false;
+            }).catch(function (error) {
+                $scope.payment.result.token_error = true;
+                $scope.payment.result.nextTokenType = 'prev';
+                if (error.subType !== 'validation') {
+                    $scope.payment.result = {
+                        code: "error",
+                        type: "error"
+                    };
+                    doneFn();
+                } else {
+                    var tokenErrors = $scope.payment.result.token_errors = {};
+                    tokenErrors[error.errors[0].defaultMessage] = true;
+                    if (error.text === 'INCORRECT_TOKEN_PASSWORD_AUTHORIZATION_BLOCKED') {
+                        $scope.payment.result.authorization_blocked = true;
+                    }
+                }
+            }).finally(function() {
+                //delete $scope.payment.items.credentials;
+                formService.clearForm($scope.paymentAuthForm);
+            });
+        }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if ($scope.payment.promises.authorizationPromise.$$state.status !== 1) {
@@ -41,21 +83,15 @@ angular.module('raiffeisen-payments')
                 if (form && form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    transferService.realize($scope.payment.transferId, $scope.payment.items.credentials).then(function (resultCode) {
-                        var parts = resultCode.split('|');
-                        $scope.payment.result = {
-                            code: parts[1],
-                            type: parts[0] === 'OK' ? "success" : "error"
-                        };
-                        if (parts[0] !== 'OK' && !parts[1]) {
-                            $scope.payment.result.code = 'error';
+                    if($scope.payment.result.token_error) {
+                        if($scope.payment.result.nextTokenType === 'next') {
+                            sendAuthorizationToken();
+                        } else {
+                            $scope.payment.result.token_error = false;
                         }
-                    }).catch(function() {
-                        $scope.payment.result = {
-                            code: "error",
-                            type: "error"
-                        };
-                    }).finally(actions.proceed);
+                    } else {
+                        authorize(actions.proceed);
+                    }
                 }
             }
         });
