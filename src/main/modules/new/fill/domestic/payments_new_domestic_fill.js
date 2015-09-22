@@ -96,12 +96,12 @@ angular.module('raiffeisen-payments')
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             control.holdOn();
             taxOffices.search({
-                accountNo: $scope.payment.formData.recipientAccountNo
+                accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
             }).then(function (result) {
                 if (result.length > 0) {
                     $scope.payment.meta.recipientForbiddenAccounts.push({
                         code: 'notUs',
-                        value: $scope.payment.formData.recipientAccountNo.replace(" ", '')
+                        value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
                     });
                     $scope.paymentForm.recipientAccountNo.$validate();
                 }
