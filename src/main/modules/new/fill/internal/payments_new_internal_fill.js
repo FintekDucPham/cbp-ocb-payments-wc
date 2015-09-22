@@ -53,8 +53,8 @@ angular.module('raiffeisen-payments')
             alwaysSelected: false,
             accountFilter: function (accounts, $accountId) {
                 if (!!$accountId) {
-                    return lodash.reject(accounts, {
-                        accountId: $accountId
+                    return lodash.reject(accounts, function(account) {
+                        return account.accountId === $accountId || $scope.payment.items.senderAccount.category === 1016 && lodash.contains([1101,3000,3008], account.category);
                     });
                 } else {
                     return accounts;
