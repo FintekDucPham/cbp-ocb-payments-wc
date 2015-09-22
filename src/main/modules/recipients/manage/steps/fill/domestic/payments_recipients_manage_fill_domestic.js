@@ -27,7 +27,7 @@ angular.module('raiffeisen-payments')
             if($scope.recipientForm.recipientAccountNo.$valid) {
                 control.holdOn();
                 taxOffices.search({
-                    accountNo: $scope.recipient.formData.recipientAccountNo
+                    accountNo: $scope.recipient.formData.recipientAccountNo.replace(/ */g, '')
                 }).then(function (result) {
                     if (result.length > 0) {
                         lodash.forEach(result, function(value) {
