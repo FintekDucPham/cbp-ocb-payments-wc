@@ -17,7 +17,8 @@ angular.module('raiffeisen-payments')
             controller: "RecipientsManageRemoveStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageRemoveController', function ($scope, initialState, $stateParams, recipientGeneralService) {
+    .controller('PaymentsRecipientsManageRemoveController', function ($scope, initialState, $stateParams, recipientGeneralService, viewStateService, $state) {
+        $scope.recipientToEdit = initialState;
         $scope.recipient.formData.customName = initialState.customerName;
         $scope.recipient.formData.recipientData = [initialState.address];
         $scope.recipient.formData.recipientAccountNo = initialState.nrb;
@@ -25,6 +26,7 @@ angular.module('raiffeisen-payments')
         $scope.recipient.formData.description = [initialState.transferTitle];
         $scope.recipient.id = initialState.recipientId;
         $scope.recipient.operationType = initialState.operation;
+        $scope.recipient.recipientType = initialState.recipientType;
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
@@ -33,5 +35,15 @@ angular.module('raiffeisen-payments')
             };
         });
 
+        $scope.clearForm = function(){
+            $scope.$broadcast('clearForm');
+            var routeObject = {
+                recipientType: $scope.recipient.recipientType,
+                operation: 'edit'
+            };
+            var initObject = angular.extend(angular.copy($scope.recipientToEdit), routeObject);
+            viewStateService.setInitialState('payments.recipients.manage.edit', initObject);
+            $state.go("payments.recipients.manage.edit.fill", routeObject);
+        };
     }
 );

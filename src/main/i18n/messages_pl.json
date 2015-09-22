@@ -405,7 +405,7 @@
     "raiff.payments.recipients.new.domestic.fill.account_related": "Z rachunku",
     "raiff.payments.recipients.new.domestic.fill.custom_name.placeholder": "Wpisz nazwę skróconą odbiorcy",
     "raiff.payments.recipients.new.domestic.fill.custom_name.label": "Twoja nazwa odbiorcy",
-    "raiff.payments.recipients.new.domestic.fill.customName.EMPTY": "Nazwa odbiorcy nie może być pusta",
+    "raiff.payments.recipients.new.domestic.fill.customName.EMPTY": "Nazwa skrócona odbiorcy nie może być pusta",
     "raiff.payments.recipients.new.domestic.fill.customName.ILLEGAL": "Pole Nazwa skrócona odbiorcy nie może być dłuższe niż 35 znaków i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /",
     "raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
     "raiff.payments.recipients.new.domestic.fill.recipient_account.label": "Numer rachunku",
