@@ -1,5 +1,5 @@
 <div class="rb-insurance-account-select">
-    <ui-select ng-model="selection.model" theme="bootstrap" on-select="select($item, $model)">
+    <ui-select ng-model="selection.model" theme="bootstrap" on-select="select($item)">
         <ui-select-match placeholder="{{placeholder}}">
             {{ 'raiff.payments.insurances.type.' + $select.selected.insuranceCode | translate }} | {{ $select.selected.accountNo | nrbIbanShortFilter }}
         </ui-select-match>

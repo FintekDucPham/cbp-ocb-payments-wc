@@ -4,7 +4,8 @@ angular.module('raiffeisen-payments')
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxAccountSelect/rbTaxAccountSelect.html",
             scope: {
-                taxOffice: '=rbTaxOffice',
+                taxOffice: '=?rbTaxOffice',
+                taxOfficeId: '=?rbTaxOfficeId',
                 params: '=?rbTaxOfficeParams'
             },
             compile: function ($element, $attr) {
@@ -31,6 +32,14 @@ angular.module('raiffeisen-payments')
                     $scope.model.taxOffice = item;
                     $scope.taxOffice = item;
                 };
+
+                $scope.$watch('taxOfficeId', function(taxOfficeId) {
+                    if(taxOfficeId) {
+                        $scope.searchForOffice(taxOfficeId);
+                    } else {
+                        $scope.taxOffice = null;
+                    }
+                });
 
                 $scope.$watch('taxOffice', function(newVal) {
                     if(newVal) {

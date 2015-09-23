@@ -28,7 +28,7 @@
     </bd-item-property>
 
         <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-        <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
+        <div ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
 
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
                 <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
@@ -63,7 +63,7 @@
                 </span>
             </bd-item-property>
 
-        </span>
+        </div>
 
     </div>
 
