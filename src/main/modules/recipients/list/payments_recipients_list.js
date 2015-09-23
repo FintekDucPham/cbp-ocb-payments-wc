@@ -25,36 +25,29 @@ angular.module('raiffeisen-payments')
         $scope.recipientListPromise = {};
 
         $scope.onRecipientEdit = function(data){
-            var dataObject = angular.copy(data);
-            var routeObject = {
-                recipientType: dataObject.recipientType,
-                operation: 'edit'
-            };
-            var initObject = angular.extend(angular.copy(data), routeObject);
-            viewStateService.setInitialState('payments.recipients.manage.edit', initObject);
-            $state.go("payments.recipients.manage.edit.fill", routeObject);
+            $state.go("payments.recipients.manage.edit.fill", {
+                recipientType: data.recipientType.toLowerCase(),
+                operation: 'edit',
+                recipient: angular.copy(data)
+            });
         };
 
         $scope.onRecipientRemove = function(data){
             var dataObject = angular.copy(data);
             var routeObject = {
-                recipientType: dataObject.recipientType,
+                recipientType: dataObject.recipientType.toLowerCase(),
                 operation: 'remove'
             };
             var initObject = angular.extend(angular.copy(data), routeObject);
             viewStateService.setInitialState('payments.recipients.manage.remove', initObject);
             $state.go("payments.recipients.manage.remove.verify", routeObject);
-
         };
 
         $scope.onRecipientCreate = function(){
-            var routeObject = {
-                recipientType: rbRecipientTypes.DOMESTIC.code,
+            $state.go("payments.recipients.manage.new.fill", {
+                recipientType: rbRecipientTypes.DOMESTIC.code.toLowerCase(),
                 operation: rbRecipientOperationType.NEW.code
-            };
-            viewStateService.setInitialState('payments.recipients.manage.new', routeObject);
-            $state.go("payments.recipients.manage.new.fill", routeObject);
-
+            });
         };
 
         $scope.onRecipientTransfer = function(data){
@@ -101,13 +94,13 @@ angular.module('raiffeisen-payments')
                                     templateId: recipient.templateId,
                                     recipient: recipient.recipientName.join(" "),
                                     recipientName: recipient.recipientAddress.join(" "),
-                                    nrb: template.beneficiaryAccountNo
+                                    nrb: template.beneficiaryAccountNo,
+                                    debitNrb: template.remitterAccountNo
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
                                         case "DOMESTIC":
                                             return {
-                                                debitNrb: template.remitterAccountNo,
                                                 transferTitle: template.title.join(" "),
                                                 recipientAddress: recipient.recipientAddress,
                                                 transferTitleTable: template.title
@@ -121,7 +114,6 @@ angular.module('raiffeisen-payments')
                                             };
                                         case "TAX":
                                             return {
-                                                nip: paymentDetails.nip,
                                                 nameAndAddress: recipient.recipientName.join(" "),
                                                 secondaryIdType: paymentDetails.idtype,
                                                 secondaryId: paymentDetails.idnumber,

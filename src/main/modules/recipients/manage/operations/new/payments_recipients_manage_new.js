@@ -9,21 +9,19 @@ angular.module('raiffeisen-payments')
             url: "/fill",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/fill/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_fill_" + angular.lowercase($stateParams.recipientType) + ".html";
-            },
-            controller: "RecipientsManageFillController"
+            }
         }).state('payments.recipients.manage.new.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_verify_" + angular.lowercase($stateParams.recipientType) + ".html";
-            },
-            controller: "RecipientsManageVerifyController"
+            }
         }).state('payments.recipients.manage.new.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/new/status/payments_recipients_manage_new_status.html",
             controller: "RecipientsManageNewStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageNewController', function ($scope, $state, rbRecipientOperationType) {
+    .controller('PaymentsRecipientsManageNewController', function ($scope, $state, recipientGeneralService, authorizationService, rbRecipientOperationType) {
 
         $scope.clearForm = function () {
             $scope.recipient.formData = {};
@@ -32,7 +30,7 @@ angular.module('raiffeisen-payments')
 
         $scope.changeRecipientType = function (type) {
             $state.transitionTo($state.current, {
-                recipientType: type.state,
+                recipientType: type.code.toLowerCase(),
                 operation: rbRecipientOperationType.NEW.state
             }, {
                 reload: true,
@@ -40,6 +38,8 @@ angular.module('raiffeisen-payments')
                 notify: true
             });
         };
+
+        $scope.prepareOperation = $scope.create;
 
     }
 );

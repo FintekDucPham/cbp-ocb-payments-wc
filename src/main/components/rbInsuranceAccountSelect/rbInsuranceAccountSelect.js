@@ -4,7 +4,8 @@ angular.module('raiffeisen-payments')
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbInsuranceAccountSelect/rbInsuranceAccountSelect.html",
             scope: {
-                selectedInsurance: '=rbSelectedInsurance',
+                selectedInsuranceId: '=?rbSelectedInsuranceId',
+                selectedInsurance: '=?rbSelectedInsurance',
                 insurancesList: '=?rbInsurancesList',
                 onSelect: '&rbOnSelect',
                 placeholder: "@rbPlaceholder"
@@ -17,26 +18,43 @@ angular.module('raiffeisen-payments')
                     isSelected: false
                 };
 
-                $scope.$watch('selectedInsurance', function(insurance) {
-                    $scope.selection.model = insurance;
-                    $scope.selection.isSelected = !!insurance;
-                });
+                function clearSelection() {
+                    $scope.selectedInsurance = null;
+                }
 
-                insuranceAccounts.search().then(function(insuranceAccounts) {
+                var insuranceAccountsPromise = insuranceAccounts.search().then(function(insuranceAccounts) {
                     $scope.insuranceAccountList = insuranceAccounts.content;
                 });
 
-                function update(item, model) {
+                $scope.$watch('selectedInsuranceId', function(selectedInsuranceId) {
+                    if(selectedInsuranceId) {
+                        insuranceAccountsPromise.then(function() {
+                            select(lodash.find($scope.insuranceAccountList, {
+                                accountNo: selectedInsuranceId
+                            }));
+                        });
+                    } else {
+                        clearSelection();
+                    }
+                });
+
+                function update(item) {
                     $scope.selectedInsurance = item;
-                    $scope.selection.model = model;
+                    $scope.selection.model = item;
+                    $scope.selectedInsuranceId = !!item ? item.accountNo : null;
+                    $scope.selection.isSelected = !!item;
                 }
 
-                $scope.select = function (item, model) {
+                var select = $scope.select = function (item) {
                     $scope.onSelect({
                         $oldSymbol: $scope.formSymbol,
                         $symbol: item
                     });
-                    update(item, model);
+                    if(item) {
+                        update(item);
+                    } else {
+                        clearSelection();
+                    }
                 };
 
             }

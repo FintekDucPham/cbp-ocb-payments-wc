@@ -1,0 +1,46 @@
+<rb-payment-recipients-verify>
+    <div ng-controller="RecipientsManageVerifyTaxController">
+
+        <bd-item-property ng-if="recipient.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.micro_name' | translate }}">
+            {{ recipient.formData.customName }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.remitter_account' | translate }}">
+            {{ recipient.items.senderAccount.accountName }} | {{ recipient.items.senderAccount.accountNo }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.custom_name' | translate }}">
+            {{ recipient.formData.customName }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.recipient_account' | translate }}">
+            {{ recipient.items.recipientAccount.accountNo | nrbIbanFilter }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'raiff.payments.recipients.verify.us.recipient_data.label' | translate }}">
+            {{ recipient.items.recipientAccount.officeName }}, {{ recipient.items.recipientAccount.officeAddress }}
+        </bd-item-property>
+        
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.taxpayer_supplementary_id_type' | translate }}">
+            {{ ::'raiff.payments.recipients.new.us.fill.taxpayer_supplementary_id_type.' + recipient.formData.secondaryIdType | translate }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.taxpayer_supplementary_id' | translate }}">
+            {{ recipient.formData.idNumber }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.form_symbol' | translate }}">
+            {{ recipient.formData.formCode }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.period_type' | translate }}">
+            {{ 'raiff.payments.recipients.new.us.fill.period_type.' + recipient.formData.periodType | translate }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.obligation_id' | translate }}">
+            {{ recipient.formData.obligationId || '-' }}
+        </bd-item-property>
+
+    </div>
+</rb-payment-recipients-verify>

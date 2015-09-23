@@ -3,7 +3,7 @@
     <div ng-controller="RecipientsManageVerifyDomesticController">
 
         <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-        <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
+        <div ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
 
             <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                               label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
@@ -37,7 +37,7 @@
             <p style="white-space: pre;" ng-bind-html="recipient.formData.description.join('\n')"></p>
             </bd-item-property>
 
-        </span>
+        </div>
 
     </div>
 

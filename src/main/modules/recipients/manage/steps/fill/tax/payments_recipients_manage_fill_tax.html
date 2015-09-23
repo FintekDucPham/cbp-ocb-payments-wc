@@ -31,6 +31,7 @@
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.recipient_account' | translate }}">
 
             <rb-tax-account-select rb-tax-office="recipient.items.recipientAccount"
+                                   rb-tax-office-id="recipient.formData.selectedTaxOfficeId"
                                    rb-tax-office-params="{ searchText: 'raiff.payments.recipients.new.us.fill.recipient_account.search', clearText: 'raiff.payments.recipients.new.us.fill.recipient_account.clear' }">
             </rb-tax-account-select>
 
@@ -140,7 +141,6 @@
                     <div ng-bind-html="::'raiff.payments.recipients.new.us.fill.period_type.' + periodTypeCode | translate | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select>
-
 
             <eb-validation-messages eb-name="periodType">
                 <div eb-message-key="required" class="validation-message animate-on">
