@@ -34,21 +34,28 @@ angular.module('raiffeisen-payments', [
             baseItem: "payments.recipients.list",
             title: 'payments.title',
             items:[
-            {
-                id: "payments.new.fill",
-                label: 'payments.submenu.options.new.header',
-                icon: "raiff-icons raiff_przelew",
-                action: "payments.new.fill({ paymentType: 'domestic' })",
-				priority: 1
-            },
-            {
+                {
+                    id: "payments.new.fill",
+                    label: 'payments.submenu.options.new.header',
+                    icon: "raiff-icons raiff_przelew",
+                    action: "payments.new.fill({ paymentType: 'domestic' })",
+                    priority: 1
+                },
+                {
 
                     id: "payments.recipients.list",
                     label: 'raiff.payments.recipients.label',
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.recipients.list",
-					priority: 2
-             }
+                    priority: 2
+                },
+                {
+                    id: "payments.rejected.list",
+                    label: 'raiff.payments.rejected.label',
+                    icon: "raiff-icons raiff_historia",
+                    action: "payments.rejected.list",
+                    priority: 6
+                }
             ]
         });
     }

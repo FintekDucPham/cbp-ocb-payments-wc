@@ -1,0 +1,77 @@
+<rb-content-view class="rb-content-view--solid">
+    <bd-header>{{::"raiff.payments.rejected.label"|translate}}</bd-header>
+
+    <form  novalidate name="filterForm" ng-submit="onSubmit()">
+        <bd-radio-select bd-model="rejectedList.filterData.periodType.model">
+
+            <div class="bd-item-property row">
+                <div class="col-xs-12">
+                    <bd-radio-option bd-option-value="rejectedList.periodTypes.LAST" class="row__inline-block--middle"></bd-radio-option>
+                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
+                        <input bd-type="text" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-minlength="2"/>
+                    </div>
+                    <div class="row__inline-block--middle" style="width:120px;">
+                        <ui-select ng-model="rejectedList.filterData.last.type.selected"
+                                   theme="bootstrap"
+                                   reset-search-input="false"
+                                   required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
+                            <ui-select-match placeholder="placeholder">
+                                {{ 'raiff.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">
+                                {{ :: 'raiff.payments.rejected.list.filter.type.last.types.'+ item | translate }}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="row--spacing col-md-10 col-sm-12">
+                    <bd-radio-option bd-option-value="rejectedList.periodTypes.RANGE" class="row__inline-block--middle"></bd-radio-option>
+                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                        {{::'raiff.payments.rejected.list.filter.type.range.from.label'|translate}}
+                    </div>
+                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
+                        <rb-datepicker ng-model="rejectedList.filterData.range.dateFrom" name="dateFrom"
+                                       ng-model-options="{ allowInvalid: true }"
+                                       rb-name="dateFromInput"
+                                       rb-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"
+                                       ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"
+                                       max-search-date
+                                       style="width: 140px;"></rb-datepicker>
+                    </div>
+                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                        {{::'raiff.payments.rejected.list.filter.type.range.to.label'|translate}}
+                    </div>
+                    <div class="row__inline-block--middle" style="width:140px;">
+                        <rb-datepicker ng-model="rejectedList.filterData.range.dateTo" name="dateFrom"
+                                       ng-model-options="{ allowInvalid: true }"
+                                       rb-name="dateFromInput"
+                                       rb-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"
+                                       ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"
+                                       max-search-date
+                                       style="width: 140px;"></rb-datepicker>
+                    </div>
+                </div>
+                <div class="row--spacing col-md-2 col-sm-12" style="text-align: right;">
+                    <bd-button class="bd-button__primary" type="submit">{{::'raiff.payments.rejected.select.filter.button.action'|translate}}</bd-button>
+                </div>
+
+            </div>
+
+        </bd-radio-select>
+    </form>
+
+    <div></div>
+    <bd-table bd-type="typeP"
+              bd-table-params="table.tableConfig"
+              bd-table-control="table.tableControl"
+              bd-table-data="table.tableData"
+              bd-table-promise="recipientListPromise"
+              bd-table-data="tableData" bd-table-meta="{'first':{'title':'##raiff.payments.rejected.list.header.realizationDate.label','data':'realizationDate'},'second':{'title':'##raiff.payments.rejected.list.header.paymentType.label','data':'paymentType'},'third':{'title':'##raiff.payments.rejected.list.header.accountNo.label','data':'accountNo'},'fourth':{'title':'##raiff.payments.rejected.list.header.senderName.label'},'fifth':{'title':'##raiff.payments.rejected.list.header.title.label','data':'title'},'sixth':{'title':'##raiff.payments.rejected.list.header.amount.label','data':['amount','currency']}}">
+
+
+    </bd-table>
+
+</rb-content-view>
