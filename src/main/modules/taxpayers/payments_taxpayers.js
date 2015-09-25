@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .constant('rbRecipientOperationType', {
+    .constant('rbTaxpayerOperationType', {
         "NEW": {
             code: 'NEW',
             state: 'new'
@@ -13,11 +13,7 @@ angular.module('raiffeisen-payments')
             state: 'remove'
         }
     })
-    .constant('rbRecipientTypes', {
-        "DOMESTIC": {
-            code: 'DOMESTIC',
-            state: 'domestic'
-        },
+    .constant('rbTaxpayerTypes', {
         "INSURANCE": {
             code: 'INSURANCE',
             state: 'zus'
@@ -25,15 +21,11 @@ angular.module('raiffeisen-payments')
         "TAX": {
             code: 'TAX',
             state: 'us'
-        },
-        "CURRENCY": {
-            code: 'CURRENCY',
-            state: 'currency'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.recipients', {
-            url: "/recipients",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/payments_recipients.html"
+        stateServiceProvider.state('payments.taxpayers', {
+            url: "/taxpayers",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/payments_taxpayers.html"
         });
     });

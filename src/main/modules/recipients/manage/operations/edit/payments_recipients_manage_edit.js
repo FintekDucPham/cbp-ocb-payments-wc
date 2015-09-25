@@ -4,7 +4,8 @@ angular.module('raiffeisen-payments')
             url: "/edit/:recipientType",
             abstract: true,
             params: {
-                recipient: null
+                recipient: null,
+                dataConverted: false
             },
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/edit/payments_recipients_manage_edit.html",
             controller: "PaymentsRecipientsManageEditController"
@@ -29,7 +30,11 @@ angular.module('raiffeisen-payments')
 
         var myRecipientManager = recipientManager($stateParams.recipientType);
 
-        lodash.extend($scope.recipient, $stateParams.recipient ? myRecipientManager.makeEditable($stateParams.recipient) : null, $scope.recipient);
+        if(!$stateParams.dataConverted) {
+            lodash.extend($scope.recipient, $stateParams.recipient ? myRecipientManager.makeEditable($stateParams.recipient) : null, $scope.recipient);
+        } else {
+            lodash.extend($scope.recipient, $stateParams.recipient, $scope.recipient);
+        }
 
         $scope.clearForm = function () {
             $scope.recipient.formData = {};
