@@ -1,3 +1,4 @@
+
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers.manage', {
@@ -6,20 +7,22 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/payments_taxpayers_manage.html",
             controller: "PaymentsTaxpayersManageController",
             params: {
+                taxpayerType: 'zus',
                 operation: 'new'
             }
         });
     })
-    .controller('PaymentsTaxpayersManageController', function ($scope, lodash, bdMainStepInitializer, rbTaxpayerTypes, rbTaxpayerOperationType, $stateParams, authorizationService, taxpayerManagementService) {
+    .controller('PaymentsTaxpayersManageController', function ($scope, bdMainStepInitializer, rbTaxpayerTypes, rbTaxpayerOperationType, $stateParams, authorizationService, taxpayerManagementService) {
 
         bdMainStepInitializer($scope, 'taxpayer', {
             formName: 'taxpayerForm',
+            type: rbTaxpayerTypes[$stateParams.taxpayerType.toUpperCase()],
             operation: rbTaxpayerOperationType[$stateParams.operation.toUpperCase()],
             formData: {},
             transferId: {},
             options: {},
             meta: {
-                taxpayerTypes: lodash.map(rbTaxpayerTypes)
+                taxpayerTypes: lodash.map(rbRecipientTypes)
             }
         });
 

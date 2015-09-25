@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers.manage.edit', {
-            url: "/edit",
+            url: "/edit/:taxpayerType",
             abstract: true,
             params: {
                 taxpayer: null
@@ -10,14 +10,13 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsTaxpayersManageEditController"
         }).state('payments.taxpayers.manage.edit.fill', {
             url: "/fill",
-            templateUrl: function () {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/fill/payments_taxpayers_fill.html";
-            },
-            controller: 'paymentTaxpayersFillController'
+            templateUrl: function ($stateParams) {
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/fill/" + angular.lowercase($stateParams.taxpayerType) + "/payments_taxpayers_manage_fill_" + angular.lowercase($stateParams.taxpayerType) + ".html";
+            }
         }).state('payments.taxpayers.manage.edit.verify', {
             url: "/verify",
-            templateUrl: function () {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
+            templateUrl: function ($stateParams) {
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/verify/" + angular.lowercase($stateParams.taxpayerType) + "/payments_taxpayers_manage_verify_" + angular.lowercase($stateParams.taxpayerType) + ".html";
             },
             controller: "TaxpayersManageVerifyDomesticController"
         }).state('payments.taxpayers.manage.edit.status', {

@@ -1,7 +1,26 @@
 <rb-content-view class="rb-content-view--framed form">
-    <bd-header>Nowy p≈Çatnik</bd-header>
+    <bd-header>Nowy p≥atnik</bd-header>
 
     <bd-form-panel>
+
+        <bd-item-property ng-show="activeStep.id !== 'status'"
+                          label="{{::'raiff.payments.new.payment_type'|translate}}">
+
+            <ui-select ng-model="taxpayer.type"
+                       theme="bootstrap"
+                       on-select="changeRecipientType($item)"
+                       ng-disabled="activeStep.id !== 'fill'"
+                       reset-search-input="false"
+                       required>
+                <ui-select-match placeholder="{{ ::'raiff.payments.taxpayers.new.type.select.placeholder'|translate }}">
+                    {{'raiff.payments.taxpayers.select.type.' + $select.selected.code | translate}}
+                </ui-select-match>
+                <ui-select-choices repeat="taxpayerType in taxpayer.meta.taxpayerTypes">
+                    <div ng-bind-html="::'raiff.payments.taxpayers.select.type.' + taxpayerType.code | translate | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+
+        </bd-item-property>
 
         <rb-multistep-form bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.taxpayers.list', onClear: clearForm, cancelState: 'payments.taxpayers.list' }">
             <div ui-view></div>
