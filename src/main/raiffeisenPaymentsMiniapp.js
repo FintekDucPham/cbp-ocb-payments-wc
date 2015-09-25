@@ -33,7 +33,7 @@ angular.module('raiffeisen-payments', [
             showMain: true,
             baseItem: "payments.recipients.list",
             title: 'payments.title',
-            items: [
+            items:[
                 {
                     id: "payments.new.fill",
                     label: 'payments.submenu.options.new.header',
@@ -50,12 +50,11 @@ angular.module('raiffeisen-payments', [
                     priority: 2
                 },
                 {
-
-                    id: "payments.taxpayers.list",
-                    label: 'raiff.payments.taxpayers.label',
-                    icon: "raiff-icons raiff_odbiorcy",
-                    action: "payments.taxpayers.list",
-                    priority: 3
+                    id: "payments.rejected.list",
+                    label: 'raiff.payments.rejected.label',
+                    icon: "raiff-icons raiff_historia",
+                    action: "payments.rejected.list",
+                    priority: 6
                 }
             ]
         });

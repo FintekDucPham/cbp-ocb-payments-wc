@@ -555,6 +555,22 @@
     "raiff.payments.recipients.details.us.form_symbol": "Symbol formularza",
     "raiff.payments.recipients.details.us.period_type": "Typ okresu",
 
+    "raiff.payments.rejected.label": "płatności odrzucone",
+    "raiff.payments.rejected.list.header.realizationDate.label": "Data operacji",
+    "raiff.payments.rejected.list.header.paymentType.label": "Typ operacji",
+    "raiff.payments.rejected.list.header.accountNo.label": "Rachunek",
+    "raiff.payments.rejected.list.header.senderName.label": "Odbiorca",
+    "raiff.payments.rejected.list.header.title.label": "Tytuł",
+    "raiff.payments.rejected.list.header.amount.label": "Kwota",
+    "raiff.payments.rejected.list.empty.label": "Nie znaleziono płatności spełniających kryteria wyszukiwania",
+    "raiff.payments.rejected.list.filter.type.last.label": "Ostatnie",
+    "raiff.payments.rejected.list.filter.type.last.types.DAYS": "dni",
+    "raiff.payments.rejected.list.filter.type.last.types.WEEKS": "tygodni",
+    "raiff.payments.rejected.list.filter.type.last.types.MONTHS": "miesięcy",
+    "raiff.payments.rejected.list.filter.type.range.label": "Ostatnie",
+    "raiff.payments.rejected.list.filter.type.range.from.label": "od",
+    "raiff.payments.rejected.list.filter.type.range.to.label": "do",
+    "raiff.payments.rejected.select.filter.button.action": "wyszukaj",
     "raiff.payments.taxpayers.manage.remove.title": "Usuń płatnika",
 
     "raiff.payments.taxpayers.label": "Płatnicy",
@@ -571,6 +587,7 @@
     "raiff.payments.taxpayers.new.button": "Nowy płatnik",
     "raiff.payments.taxpayers.select.filter.text.label": "Szukaj płatnika",
     "raiff.payments.taxpayers.select.filter.button.action": "Szukaj",
+
     "raiff.payments.taxpayers.type.label": "Płatnicy",
 
     "raiff.payments.taxpayers.details.name.label": "Nazwa płatnika",
