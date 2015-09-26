@@ -15,7 +15,8 @@ angular.module('raiffeisen-payments')
             url: "/verify",
             templateUrl: function () {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
-            }
+            },
+            controller: 'TaxpayersManageVerifyController'
         }).state('payments.taxpayers.manage.new.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/new/status/payments_taxpayers_manage_new_status.html",

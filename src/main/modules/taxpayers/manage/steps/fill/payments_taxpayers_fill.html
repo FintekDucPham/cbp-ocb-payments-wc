@@ -32,7 +32,7 @@
                       label="{{ ::'raiff.payments.taxpayers.fill.taxpayer_data' | translate }}">
 
         <textarea name="taxpayerData"
-                  ng-model="payment.formData.taxpayerData"
+                  ng-model="taxpayer.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData"
                   required
                   bd-split-text
@@ -60,7 +60,7 @@
                required
                ng-disabled="taxpayer.formData.taxpayerType === 'TAX'"
                nip
-               bd-novalidate-when="taxpayer.formData.taxpayerType === 'TAX'"
+               bd-novalidate-when="{{ taxpayer.formData.taxpayerType === 'TAX' }}"
                class="input-field"
                placeholder="{{ ::'raiff.payments.taxpayers.fill.taxpayer_nip.placeholder' | translate }}" />
 
@@ -78,12 +78,13 @@
         <ui-select ng-model="taxpayer.formData.secondaryIdType"
                    name="secondaryIdType"
                    theme="bootstrap"
+                   on-select="onSecondaryIdTypeChange()"
                    required>
             <ui-select-match placeholder="{{ ::'raiff.payments.taxpayers.fill.taxpayer_supplementary_id_type.placeholder' | translate }}">
                 {{ 'raiff.payments.taxpayers.fill.taxpayer_supplementary_id_type.' + $select.selected | translate }}
             </ui-select-match>
             <ui-select-choices repeat="supplementaryId in taxpayer.meta.suplementaryIds[taxpayer.formData.taxpayerType] track by $index">
-                <div ng-bind-html="::'raiff.payments.taxpayers.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
+                <div ng-bind-html="'raiff.payments.taxpayers.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
 

@@ -561,6 +561,15 @@
     "raiff.payments.taxpayers.fill.supplementary_id.placeholder.ID_CARD": "Wpisz numer dowodu osobistego płatnika",
     "raiff.payments.taxpayers.fill.supplementary_id.placeholder.PASSPORT": "Wpisz numer paszportu płatnika",
     "raiff.payments.taxpayers.fill.supplementary_id.placeholder.none": "Wybierz typ drugiego identyfikatora",
+    "raiff.payments.taxpayers.verify.micro_name": "Nazwa firmy",
+    "raiff.payments.taxpayers.verify.custom_name": "Twoja nazwa płatnika",
+    "raiff.payments.taxpayers.verify.taxpayer_type": "Typ płatnika",
+    "raiff.payments.taxpayers.verify.taxpayer_type.INSURANCE": "ZUS",
+    "raiff.payments.taxpayers.verify.taxpayer_type.TAX": "US/IC",
+    "raiff.payments.taxpayers.verify.taxpayer_data": "Nazwa płatnika",
+    "raiff.payments.taxpayers.verify.taxpayer_nip": "NIP płatnika",
+    "raiff.payments.taxpayers.verify.taxpayer_supplementary_id_type": "Typ identyfikatora uzupełniającego",
+    "raiff.payments.taxpayers.verify.taxpayer_supplementary_id": "Numer identyfikatora uzupełniającego",
 
 
     "EOF" : "",
