@@ -73,17 +73,27 @@ angular.module('raiffeisen-payments')
             });
         }, true);
 
-        $scope.clearTaxpayer = function () {
-            $scope.payment.items.taxpayer = null;
-            $scope.payment.formData.taxpayer = null;
-            $scope.payment.formData.nip = null;
-            $scope.payment.formData.recipientName = null;
+        $scope.clearRecipient = function () {
+            delete $scope.payment.items.taxpayer;
+            delete $scope.payment.formData.taxpayer;
+            delete $scope.payment.formData.nip;
+            delete $scope.payment.formData.recipientName;
+            delete $scope.payment.formData.secondaryIdType;
+            delete $scope.payment.formData.secondaryIdNo;
+            delete $scope.payment.formData.paymentType;
+            $scope.payment.options.isFromRecipient = false;
         };
 
-        $scope.selectTaxpayer = function (taxpayer) {
-            $scope.payment.formData.taxpayer = taxpayer.name;
-            $scope.payment.formData.nip = taxpayer.nip;
-            $scope.payment.formData.recipientName = taxpayer.data;
+        $scope.selectRecipient = function (recipient) {
+            $scope.payment.formData.taxpayer = recipient.name;
+            $scope.payment.formData.nip = recipient.nip;
+            $scope.payment.formData.recipientName = recipient.recipientName;
+            $scope.payment.formData.secondaryIdType = recipient.secondaryIdType;
+            $scope.payment.formData.secondaryIdNo = recipient.secondaryId;
+            $scope.payment.formData.paymentType = recipient.paymentType;
+
+            // select insurances?
+            $scope.payment.options.isFromRecipient = true;
         };
 
         $scope.onAccountSelected = function (account, oldAccount) {
@@ -91,7 +101,7 @@ angular.module('raiffeisen-payments')
                 var oldOwnerCustId = oldAccount.ownersList[0].customerId;
                 var newOwnerCustId = oldAccount.ownersList[0].customerId;
                 if (oldOwnerCustId !== newOwnerCustId) {
-                    $scope.clearTaxpayer();
+                    $scope.clearRecipient();
                 }
             }
         };
