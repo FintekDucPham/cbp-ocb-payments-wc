@@ -11,7 +11,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsTaxpayersManageController', function ($scope, lodash, translate, dateFilter, bdMainStepInitializer, rbTaxpayerTypes, rbTaxpayerOperationType, $stateParams, authorizationService, taxpayerManagementService) {
+    .controller('PaymentsTaxpayersManageController', function ($scope, lodash, translate, dateFilter, bdMainStepInitializer, rbTaxpayerTypes, rbTaxpayerOperationType, $stateParams) {
 
         bdMainStepInitializer($scope, 'taxpayer', {
             formName: 'taxpayerForm',
@@ -24,17 +24,6 @@ angular.module('raiffeisen-payments')
                 taxpayerTypes: lodash.map(rbRecipientTypes)
             }
         });
-
-        $scope.getAccountByNrb = function (accountList, selectFn) {
-            if (lodash.isString($scope.taxpayer.formData.debitAccountNo)) {
-                var result = lodash.find(accountList, {'accountNo': $scope.taxpayer.formData.debitAccountNo});
-                if (lodash.isPlainObject(result)) {
-                    selectFn(result);
-                }
-            }
-            selectFn(accountList[0]);
-        };
-
 
         /**
          * This should be used to convert form data into format expected for the particular payment type.
@@ -67,49 +56,4 @@ angular.module('raiffeisen-payments')
         };
 
     }
-).factory('taxpayerManager', function (lodash) {
-
-        function wrapWithCommonData(data, taxpayer) {
-            return lodash.merge(data, {
-                formData: {
-                    taxpayerId: taxpayer.taxpayerId,
-                    customName: taxpayer.customerName,
-                    taxpayerAccountNo: taxpayer.nrb,
-                    debitAccountNo: taxpayer.debitNrb
-                }
-            });
-        }
-
-        var dataConverters = {
-            insurance: function (taxpayer) {
-                return wrapWithCommonData({
-                    formData: {
-                        nip: taxpayer.nip,
-                        paymentType: taxpayer.paymentType,
-                        secondaryIdType: taxpayer.secondaryIdType,
-                        secondaryIdNo: taxpayer.secondaryId,
-                        selectedInsuranceId: taxpayer.nrb
-                    }
-                }, taxpayer);
-            },
-            tax: function (taxpayer) {
-                return wrapWithCommonData({
-                    formData: {
-                        paymentType: taxpayer.paymentType,
-                        secondaryIdType: taxpayer.secondaryIdType,
-                        idNumber: taxpayer.secondaryId,
-                        periodType: taxpayer.periodType,
-                        formCode: taxpayer.formSymbol,
-                        selectedTaxOfficeId: taxpayer.nrb
-                    }
-                }, taxpayer);
-            }
-        };
-
-        return function (type) {
-            return {
-                makeEditable: dataConverters[type.toLowerCase()]
-            };
-        };
-
-    });
+);
