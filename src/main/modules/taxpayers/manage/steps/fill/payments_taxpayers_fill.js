@@ -11,7 +11,7 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var form = $scope.taxpayerForm;
+            var form = $scope.taxpayersForm;
             if (form) {
                 if (form.$invalid) {
                     formService.dirtyFields(form);
@@ -28,31 +28,34 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        $scope.$watch('taxpayer.formData.taxpayerType', function(type) {
-            delete $scope.taxpayer.formData.secondaryIdType;
-            if(type == 'TAX') {
-                delete $scope.taxpayer.formData.nip;
-                var taxpayerNipField = $scope.taxpayersForm.taxpayerNip;
-                taxpayerNipField.$setViewValue();
-                taxpayerNipField.$setPristine();
-                taxpayerNipField.$render();
+        $scope.$watch('taxpayer.formData.taxpayerType', function(newType, prevType) {
+            if(newType !== prevType) {
+                delete $scope.taxpayer.formData.secondaryIdType;
+                if(newType == 'TAX') {
+                    delete $scope.taxpayer.formData.nip;
+                    var taxpayerNipField = $scope.taxpayersForm.taxpayerNip;
+                    taxpayerNipField.$setViewValue();
+                    taxpayerNipField.$setPristine();
+                    taxpayerNipField.$render();
+                }
             }
         });
 
         $scope.setRequestConverter(function (formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             return {
-                shortName: copiedFormData.customName,
-                debitAccount: $scope.taxpayer.items.senderAccount.accountId,
-                creditAccount: $scope.taxpayer.items.selectedInsurance.accountNo,
-                beneficiary: "Zakład ubezpieczeń społecznych",
-                remarks: 'none',
-                taxId: copiedFormData.nip,
-                secondaryIdType: copiedFormData.secondaryIdType,
-                secondaryId: copiedFormData.secondaryIdNo,
-                paymentType: copiedFormData.paymentType
+                "name": copiedFormData.customName,
+                "secondaryIdType": copiedFormData.secondaryIdType,
+                "secondaryId": copiedFormData.secondaryIdNo,
+                "nip": copiedFormData.nip,
+                "data": copiedFormData.taxpayerData,
+                "payerType": copiedFormData.taxpayerType
             };
         });
+
+        $scope.onSecondaryIdTypeChange = function() {
+            $scope.taxpayersForm.taxpayerSupplementaryId.$validate();
+        };
 
         setDefaultValues({
             taxpayerType: 'INSURANCE',

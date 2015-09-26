@@ -1,4 +1,3 @@
-
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers.manage', {
@@ -12,7 +11,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsTaxpayersManageController', function ($scope, bdMainStepInitializer, rbTaxpayerTypes, rbTaxpayerOperationType, $stateParams, authorizationService, taxpayerManagementService) {
+    .controller('PaymentsTaxpayersManageController', function ($scope, lodash, translate, dateFilter, bdMainStepInitializer, rbTaxpayerTypes, rbTaxpayerOperationType, $stateParams, authorizationService, taxpayerManagementService) {
 
         bdMainStepInitializer($scope, 'taxpayer', {
             formName: 'taxpayerForm',
@@ -68,12 +67,12 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.create = function editRecipient(actions) {
-            taxpayerManagementService.create($scope.taxpayer.operation.code, $scope.taxpayer.type.code.toLowerCase(),
+            taxpayerManagementService.create($scope.taxpayer.operation.code,
                 $scope.convertRequestOperation($scope.requestConverter($scope.taxpayer.formData))).then(function (taxpayer) {
                     $scope.taxpayer.transferId = taxpayer;
                     $scope.taxpayer.promises.authorizationPromise = authorizationService.create({
                         resourceId: $scope.taxpayer.transferId,
-                        resourceType: 'MANAGE_{0}_RECIPIENT'.format($scope.taxpayer.type.code)
+                        resourceType: 'MANAGE_PAYER'
                     }).then(function (authorization) {
                         return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
                             var twoStep = $scope.taxpayer.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
