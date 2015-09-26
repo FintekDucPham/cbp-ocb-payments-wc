@@ -9,25 +9,20 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.taxpayer.promises.authorizationPromise.$$state.status !== 1) {
-
+            var form = $scope.taxpayerAuthForm;
+            if (form && form.$invalid) {
+                formService.dirtyFields(form);
             } else {
-                var form = $scope.taxpayerAuthForm;
-                if (form && form.$invalid) {
-                    formService.dirtyFields(form);
-                } else {
-                    taxpayerManagementService.realize(
-                        $scope.taxpayer.type.code.toLowerCase(),
-                        $scope.taxpayer.transferId,
-                        $scope.taxpayer.formData.credentials
-                    ).then(function () {
-                            $scope.taxpayer.result.type = 'success';
-                            actions.proceed();
-                        }).catch(function (e) {
-                            $scope.taxpayer.result.type = 'error';
-                            actions.proceed();
-                        });
-                }
+                taxpayerManagementService.realize(
+                    $scope.taxpayer.transferId,
+                    $scope.taxpayer.formData.credentials
+                ).then(function () {
+                        $scope.taxpayer.result.type = 'success';
+                        actions.proceed();
+                    }).catch(function (e) {
+                        $scope.taxpayer.result.type = 'error';
+                        actions.proceed();
+                    });
             }
         });
 
