@@ -26,22 +26,18 @@ angular.module('raiffeisen-payments')
             controller: "TaxpayersManageEditStatusController"
         });
     })
-    .controller('PaymentsTaxpayersManageEditController', function ($scope, lodash, taxpayerManager, authorizationService, $stateParams) {
+    .controller('PaymentsTaxpayersManageEditController', function ($scope, lodash, authorizationService, $stateParams) {
 
-        var myTaxpayerManager = taxpayerManager($stateParams.taxpayerType);
-
-        lodash.extend($scope.taxpayer, $stateParams.taxpayer ? myTaxpayerManager.makeEditable($stateParams.taxpayer) : null, $scope.taxpayer);
+        lodash.extend($scope.taxpayer.formData, $stateParams.taxpayer, $scope.taxpayer.formData);
 
         $scope.clearForm = function () {
             $scope.taxpayer.formData = {};
             $scope.$broadcast('clearForm');
         };
 
-        $scope.prepareOperation = $scope.create;
-
         $scope.setRequestOperationConverter(function(data) {
             return angular.extend(data, {
-                taxpayerId: $scope.taxpayer.formData.taxpayerId
+                payerId: $scope.taxpayer.formData.taxpayerId
             });
         });
 

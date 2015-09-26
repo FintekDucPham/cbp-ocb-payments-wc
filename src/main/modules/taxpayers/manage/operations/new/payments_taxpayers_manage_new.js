@@ -30,7 +30,5 @@ angular.module('raiffeisen-payments')
             $scope.$broadcast('clearForm');
         };
 
-        $scope.prepareOperation = $scope.create;
-
     }
 );
