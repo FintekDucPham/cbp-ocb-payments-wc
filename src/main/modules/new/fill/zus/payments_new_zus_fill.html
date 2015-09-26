@@ -46,6 +46,15 @@
 
     </bd-item-property>
 
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_select' | translate }}">
+        <rb-insurance-taxpayer-select
+                rb-zus-taxpayer="payment.items.taxpayer"
+                rb-on-clear-taxpayer="clearTaxpayer()"
+                rb-on-select-taxpayer="selectTaxpayer($taxpayer)"
+                rb-taxpayer-clear-text="{{ ::'raiff.payments.new.zus.fill.taxpayer_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.taxpayer_select.placeholder' | translate }}"></rb-insurance-taxpayer-select>
+    </bd-item-property>
+
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip' | translate }}">
         <input name="taxpayerNip"
                   ng-model="payment.formData.nip"
