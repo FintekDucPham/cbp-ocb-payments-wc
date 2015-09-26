@@ -16,12 +16,22 @@
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
+    <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.recipient_select' | translate }}">
+        <rb-insurance-recipient-select
+                rb-zus-recipient="payment.items.recipient"
+                rb-on-clear-recipient="clearRecipient()"
+                rb-on-select-recipient="selectRecipient($recipient)"
+                rb-recipient-clear-text="{{ ::'raiff.payments.new.zus.fill.recipient_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.recipient_select.placeholder' | translate }}"></rb-insurance-recipient-select>
+    </bd-item-property>
+
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.zus.fill.recipient_data' | translate }}">
         <textarea name="taxpayerData"
                   ng-model="payment.formData.recipientName"
                   required
                   ng-pattern="taxpayerRegexp"
+                  ng-disabled="payment.options.isFromRecipient"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.zus.fill.recipient_data.placeholder' | translate }}"></textarea>
 
@@ -36,36 +46,12 @@
 
     </bd-item-property>
 
-    <!-- W PACZCE 2 -->
-    <!--<bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_select' | translate }}">-->
-        <!--<rb-zus-taxpayer-select-->
-                <!--rb-zus-taxpayer="payment.items.taxpayer"-->
-                <!--rb-on-clear-taxpayer="clearTaxpayer()"-->
-                <!--rb-on-select-taxpayer="selectTaxpayer($taxpayer)"-->
-                <!--rb-taxpayer-clear-text="{{ ::'raiff.payments.new.zus.fill.taxpayer_select.clear' | translate }}"-->
-                <!--rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.taxpayer_select.placeholder' | translate }}"></rb-zus-taxpayer-select>-->
-    <!--</bd-item-property>-->
-
-    <!--<bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer' | translate }}">-->
-        <!--<input name="taxpayer"-->
-               <!--ng-model="payment.formData.taxpayer"-->
-               <!--required-->
-               <!--class="input-field"-->
-               <!--placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer.placeholder' | translate }}" />-->
-
-    <!--</bd-item-property>-->
-
-    <!--<eb-validation-messages eb-name="taxpayer">-->
-        <!--<div eb-message-key="required" class="validation-message animate-on">-->
-            <!--{{ ::'raiff.payments.new.zus.fill.recipient_data.EMPTY_PAYER' | translate }}-->
-        <!--</div>-->
-    <!--</eb-validation-messages>-->
-
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip' | translate }}">
         <input name="taxpayerNip"
                   ng-model="payment.formData.nip"
                   required
                   nip
+                  ng-disabled="payment.options.isFromRecipient"
                   class="input-field"
                   placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_nip.placeholder' | translate }}" />
 
@@ -83,6 +69,7 @@
         <ui-select ng-model="payment.formData.secondaryIdType"
                    theme="bootstrap"
                    on-select="onSecondaryIdTypeChanged(payment.formData.secondaryIdType)"
+                   ng-disabled="payment.options.isFromRecipient"
                    placeholder="{{ ::'raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>
             <ui-select-match>
@@ -99,6 +86,7 @@
                ng-model="payment.formData.secondaryIdNo"
                required
                class="input-field"
+               ng-disabled="payment.options.isFromRecipient"
                pesel="payment.formData.secondaryIdType === 'PESEL'"
                regon="payment.formData.secondaryIdType === 'REGON'"
                id-card="payment.formData.secondaryIdType === 'ID_CARD'"
@@ -123,6 +111,7 @@
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.payment_type' | translate }}">
         <ui-select ng-model="payment.formData.paymentType"
                    theme="bootstrap"
+                   ng-disabled="payment.options.isFromRecipient"
                    placeholder="{{ ::'raiff.payments.new.zus.fill.payment_type.placeholder' | translate }}"
                    ng-init="payment.formData.paymentType = payment.meta.zusPaymentTypes[0]"
                    required>
