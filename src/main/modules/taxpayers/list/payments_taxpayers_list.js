@@ -23,11 +23,14 @@ angular.module('raiffeisen-payments')
 
         $scope.taxpayerListPromise = {};
 
-        $scope.onTaxpayerEdit = function (data) {
+        function goToOperation(operationType, data, operationStep) {
+            if(!operationStep) {
+                operationStep = 'fill';
+            }
             var copiedData = angular.copy(data);
-            $state.go("payments.taxpayers.manage.edit.fill", {
+            $state.go("payments.taxpayers.manage.{0}.{1}".format(operationType, operationStep), {
                 taxpayerType: data.taxpayerType.code.toLowerCase(),
-                operation: 'edit',
+                operation: operationType,
                 taxpayer: {
                     "taxpayerId": copiedData.taxpayerId,
                     "customName": copiedData.customerName,
@@ -38,17 +41,14 @@ angular.module('raiffeisen-payments')
                     "taxpayerType": copiedData.taxpayerType.code
                 }
             });
+        }
+
+        $scope.onTaxpayerEdit = function (data) {
+            goToOperation('edit', data);
         };
 
         $scope.onTaxpayerRemove = function (data) {
-            var dataObject = angular.copy(data);
-            var routeObject = {
-                taxpayerType: dataObject.taxpayerType.code.toLowerCase(),
-                operation: 'remove'
-            };
-            var initObject = angular.extend(angular.copy(data), routeObject);
-            viewStateService.setInitialState('payments.taxpayers.manage.remove', initObject);
-            $state.go("payments.taxpayers.manage.remove.verify", routeObject);
+            goToOperation('remove', data, 'verify');
         };
 
         $scope.onTaxpayerCreate = function () {
