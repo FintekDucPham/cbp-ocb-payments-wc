@@ -64,7 +64,7 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.$watch('payment.formData.insurancePremiums', function (newInsurances, oldInsurances) {
-            $scope.totalPaymentAmount = calculateInsurancesAmount();
+            $scope.payment.meta.amountSummary = $scope.totalPaymentAmount = calculateInsurancesAmount();
             lodash.forEach(lodash.difference(lodash.keys(oldInsurances), lodash.keys(newInsurances)), function(insurance) {
                 var formElement = $scope.paymentForm[insurance + 'Amount'];
                 formElement.$setPristine();
