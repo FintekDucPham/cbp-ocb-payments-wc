@@ -61,26 +61,22 @@ angular.module('raiffeisen-payments')
                 return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(/ /g, '');
             },
             notUs: function (accountNo) {
-                if (accountNo) {
-                    return !lodash.some($scope.recipient.meta.recipientForbiddenAccounts, {
-                        code: 'notUs',
-                        value: accountNo.replace(" ", '')
-                    });
-                } else {
-                    return false;
-                }
+                return isAccountAllowed('notUs', accountNo, $scope.recipient.meta.recipientForbiddenAccounts);
             },
             notZus: function (accountNo) {
-                if (accountNo) {
-                    return !lodash.some($scope.recipient.meta.recipientForbiddenAccounts, {
-                        code: 'notZus',
-                        value: accountNo.replace(" ", '')
-                    });
-                } else {
-                    return false;
-                }
+                return isAccountAllowed('notZus', accountNo, $scope.recipient.meta.recipientForbiddenAccounts);
             }
         };
+
+        function isAccountAllowed(code, accountNo, accountList) {
+            if (accountNo) {
+                return !lodash.some(accountList, {
+                    code: code,
+                    value: accountNo.replace(/ /g, '')
+                });
+            }
+            return false;
+        }
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: true,
