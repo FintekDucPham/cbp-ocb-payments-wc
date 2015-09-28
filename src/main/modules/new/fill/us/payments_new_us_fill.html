@@ -15,27 +15,43 @@
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}">
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
+        <rb-tax-recipient-select
+                rb-tax-recipient="payment.items.recipient"
+                rb-on-clear-recipient="clearRecipient()"
+                rb-on-select-recipient="selectRecipient($recipient)"
+                rb-recipient-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-tax-recipient-select>
+    </bd-item-property>
 
-        <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
-                rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}" ng-switch="payment.options.isFromRecipient">
 
-        </rb-tax-account-select>
+        <div ng-switch-when="true">
+            <input class="input-field" disabled value="{{ payment.items.recipientAccount.recipientAccountNo }}" />
+            {{ payment.items.recipientAccount.officeName }}
+        </div>
 
-        <eb-validation-messages eb-name="recipientAccountNo">
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC'|translate}}
-            </div>
-            <div eb-message-key="bbanNrb" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US'|translate}}
-            </div>
-            <div eb-message-key="usNotFound" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
-            </div>
-            <div eb-message-key="notFromList" class="validation-message animate-on">
-                {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
-            </div>
-        </eb-validation-messages>
+        <div ng-switch-when="false">
+            <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
+                                   rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
+
+            </rb-tax-account-select>
+
+            <eb-validation-messages eb-name="recipientAccountNo">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC'|translate}}
+                </div>
+                <div eb-message-key="bbanNrb" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US'|translate}}
+                </div>
+                <div eb-message-key="usNotFound" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                </div>
+                <div eb-message-key="notFromList" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                </div>
+            </eb-validation-messages>
+        </div>
 
     </bd-item-property>
 
@@ -65,20 +81,10 @@
 
     </bd-item-property>
 
-    <!-- W PACZCE 2 -->
-    <!--<bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">-->
-        <!--<rb-us-taxpayer-select-->
-                <!--rb-us-taxpayer="payment.items.taxpayer"-->
-                <!--rb-on-clear-taxpayer="clearTaxpayer()"-->
-                <!--rb-on-select-taxpayer="selectTaxpayer($taxpayer)"-->
-                <!--rb-taxpayer-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"-->
-                <!--rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-us-taxpayer-select>-->
-    <!--</bd-item-property>-->
-
-
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type' | translate }}">
         <ui-select ng-model="payment.formData.idType"
                    theme="bootstrap"
+                   ng-disabled="payment.options.isFromRecipient"
                    placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>
             <ui-select-match>
@@ -95,6 +101,7 @@
         <input name="supplementaryId"
                ng-model="payment.formData.idNumber"
                required
+               ng-disabled="payment.options.isFromRecipient"
                class="input-field"
                type="text"
                nip="payment.formData.idType === 'NIP'"

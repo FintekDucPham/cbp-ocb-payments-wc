@@ -56,20 +56,26 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.clearTaxpayer = function () {
-            $scope.payment.items.taxpayer = null;
-            $scope.payment.formData.idType = null;
-            $scope.payment.formData.idNumber = null;
-            $scope.payment.formData.taxpayerData = null;
-            $scope.payment.formData.transferFromTemplate = false;
+        $scope.clearRecipient = function () {
+            delete $scope.payment.formData.idType;
+            delete $scope.payment.formData.idNumber;
+            delete $scope.payment.formData.formCode;
+            delete $scope.payment.formData.periodType;
+            delete $scope.payment.items.recipientAccount;
+            $scope.payment.options.isFromRecipient = false;
         };
 
-        $scope.selectTaxpayer = function (taxpayer) {
-            $scope.payment.formData.taxpayer = taxpayer.name;
-            $scope.payment.formData.idType = taxpayer.identifierType;
-            $scope.payment.formData.idNumber = taxpayer.identifier;
-            $scope.payment.formData.taxpayerData = taxpayer.data;
-            $scope.payment.formData.transferFromTemplate = true;
+        $scope.selectRecipient = function (recipient) {
+            var formData = $scope.payment.formData;
+            formData.idType = recipient.secondaryIdType;
+            formData.idNumber = recipient.secondaryId;
+            formData.formCode = recipient.formCode;
+            formData.periodType = recipient.periodType;
+            $scope.payment.items.recipientAccount = {
+                officeName: recipient.recipientName.join(', '),
+                recipientAccountNo: recipient.nrb
+            };
+            $scope.payment.options.isFromRecipient = true;
         };
 
         $scope.selectSymbol = function () {
@@ -98,5 +104,7 @@ angular.module('raiffeisen-payments')
                 recipientAccountNo: recipient.accountNo
             });
         });
+
+        $scope.payment.options.isFromRecipient = false;
 
     });
