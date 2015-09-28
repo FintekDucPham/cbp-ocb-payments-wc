@@ -57,6 +57,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.clearRecipient = function () {
+            delete $scope.payment.formData.templateId;
             delete $scope.payment.formData.idType;
             delete $scope.payment.formData.idNumber;
             delete $scope.payment.formData.formCode;
@@ -67,6 +68,7 @@ angular.module('raiffeisen-payments')
 
         $scope.selectRecipient = function (recipient) {
             var formData = $scope.payment.formData;
+            formData.templateId = recipient.templateId;
             formData.idType = recipient.secondaryIdType;
             formData.idNumber = recipient.secondaryId;
             formData.formCode = recipient.formCode;

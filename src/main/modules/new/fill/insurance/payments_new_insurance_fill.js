@@ -74,6 +74,7 @@ angular.module('raiffeisen-payments')
         }, true);
 
         $scope.clearRecipient = function () {
+            delete $scope.payment.formData.templateId;
             delete $scope.payment.formData.taxpayer;
             delete $scope.payment.formData.paymentType;
             if(!$scope.payment.options.isFromTaxpayer) {
@@ -85,6 +86,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.selectRecipient = function (recipient) {
+            $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
             if(!$scope.payment.options.isFromTaxpayer) {

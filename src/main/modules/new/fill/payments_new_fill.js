@@ -10,12 +10,20 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
+
+        angular.extend($scope.payment.formData, {
+            templateId: $stateParams.recipientId
+        }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+
+        if ($stateParams.accountId) {
+            $scope.payment.formData.remitterAccountId = $stateParams.accountId;
+        }
 
         $scope.$on('clearForm', function () {
             if($scope.paymentForm) {

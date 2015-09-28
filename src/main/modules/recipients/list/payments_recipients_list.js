@@ -51,13 +51,10 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onRecipientTransfer = function(data){
-            var dataObject = angular.copy(data);
-            var routeObject = {
-                recipientId: dataObject.recipientId,
-                templateId: dataObject.templateId, // todo not used right now - only one template for recipient supported
-                paymentType: angular.lowercase(dataObject.recipientType)
-            };
-            $state.go("payments.new.fill", routeObject);
+            $state.go("payments.new.fill", {
+                paymentType: data.recipientType.toLowerCase(),
+                recipientId: data.recipientId
+            });
         };
 
         $scope.resolveTemplateType = function (recipientType) {
