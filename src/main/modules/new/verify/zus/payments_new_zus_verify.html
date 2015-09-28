@@ -60,14 +60,14 @@
         <div ng-repeat="insurance in payment.formData.insurancePremiums | insurancesFilter track by insurance.key">
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + insurance.key |translate}}">
                 {{ ::'raiff.payments.new.zus.verify.tmp.zus_name' | translate }}<br>
-                {{::insurance.socialAccountNumber}}<br>
-                {{::insurance.amount}} {{ ::insurance.currency }}
+                {{::insurance.socialAccountNumber}}
+                <bd-amount amount="insurance.amount" currency="{{ insurance.currency }}" not-styled></bd-amount>
             </bd-item-property>
         </div>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}">
             <span ng-repeat="summary in payment.meta.amountSummary">
-                {{summary.amount}}&nbsp;{{summary.currency}}<br ng-if="!$last">
+                <bd-amount amount="summary.amount" currency="{{ summary.currency }}" not-styled></bd-amount>
             </span>
         </bd-item-property>
 
