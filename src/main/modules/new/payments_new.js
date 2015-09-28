@@ -8,13 +8,13 @@ angular.module('raiffeisen-payments')
             code: 'INTERNAL',
             state: 'internal'
         },
-        "ZUS": {
-            code: 'ZUS',
-            state: 'zus'
+        "INSURANCE": {
+            code: 'INSURANCE',
+            state: 'insurance'
         },
-        "US": {
-            code: 'US',
-            state: 'us'
+        "TAX": {
+            code: 'TAX',
+            state: 'tax'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {

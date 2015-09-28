@@ -17,6 +17,7 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_select' | translate }}">
         <rb-tax-recipient-select
+                rb-tax-recipient-id="payment.formData.templateId"
                 rb-tax-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
                 rb-on-select-recipient="selectRecipient($recipient)"

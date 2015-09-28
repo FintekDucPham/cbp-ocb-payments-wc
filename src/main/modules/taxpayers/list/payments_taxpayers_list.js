@@ -7,10 +7,10 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsTaxpayersListController', function ($scope, $state, bdTableConfig, $timeout, taxpayersService,
-                                                              viewStateService, translate, rbTaxpayerTypes, rbTaxpayerOperationType, lodash) {
+                                                             viewStateService, translate, rbTaxpayerTypes, rbTaxpayerOperationType, lodash) {
 
         var taxpayerFilterType = angular.extend({}, rbTaxpayerTypes, {
-            ALL : {
+            ALL: {
                 code: 'ALL'
             }
         });
@@ -23,7 +23,7 @@ angular.module('raiffeisen-payments')
 
         $scope.taxpayerListPromise = {};
 
-        $scope.onTaxpayerEdit = function(data){
+        $scope.onTaxpayerEdit = function (data) {
             var copiedData = angular.copy(data);
             $state.go("payments.taxpayers.manage.edit.fill", {
                 taxpayerType: data.taxpayerType.code.toLowerCase(),
@@ -40,7 +40,7 @@ angular.module('raiffeisen-payments')
             });
         };
 
-        $scope.onTaxpayerRemove = function(data){
+        $scope.onTaxpayerRemove = function (data) {
             var dataObject = angular.copy(data);
             var routeObject = {
                 taxpayerType: dataObject.taxpayerType.code.toLowerCase(),
@@ -51,19 +51,19 @@ angular.module('raiffeisen-payments')
             $state.go("payments.taxpayers.manage.remove.verify", routeObject);
         };
 
-        $scope.onTaxpayerCreate = function(){
+        $scope.onTaxpayerCreate = function () {
             $state.go("payments.taxpayers.manage.new.fill", {
                 operation: rbTaxpayerOperationType.NEW.code
             });
         };
 
         $scope.table = {
-            tableConfig : new bdTableConfig({
+            tableConfig: new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.taxpayers.label.empty_list")
             }),
-            tableData : {
+            tableData: {
                 getData: function ($promise, $params) {
-                    $timeout(function() {
+                    $timeout(function () {
                         var params = {
                             queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
                         };
@@ -71,7 +71,7 @@ angular.module('raiffeisen-payments')
                         params.pageSize = $params.pageSize;
                         params.pageNumber = $params.currentPage;
 
-                        if($scope.types.currentType !== taxpayerFilterType.ALL){
+                        if ($scope.types.currentType !== taxpayerFilterType.ALL) {
                             params.filerTemplateType = $scope.types.currentType.code;
                         } else {
                             delete params.filerTemplateType;

@@ -18,6 +18,27 @@ angular.module('raiffeisen-payments')
                     isSelected: false
                 };
 
+                $scope.$watch('recipientId', function(recipientId) {
+                   if(recipientId) {
+                       $scope.searchRecipientsPromise.then(function() {
+                           var recipient = lodash.find($scope.recipientList, {
+                               templateId: recipientId
+                           });
+                           if(recipient) {
+                               $scope.selectRecipient(recipient);
+                           } else {
+                                clearRecipient();
+                           }
+                       });
+                   } else {
+                       clearRecipient();
+                   }
+                });
+
+                function clearRecipient() {
+
+                }
+
                 $scope.selectRecipient = function($item) {
                     if($item) {
                         $scope.selection.isSelected = true;
@@ -38,7 +59,7 @@ angular.module('raiffeisen-payments')
                     $scope.selection.isSelected = !!recipient;
                 });
 
-                recipientsService.search({
+                $scope.searchRecipientsPromise = recipientsService.search({
                     filerTemplateType: 'TAX'
                 }).then(function(data) {
                     $scope.recipientList = lodash.union([ nullOption ], lodash.map(data.content, function(data) {

@@ -18,6 +18,7 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.recipient_select' | translate }}">
         <rb-insurance-recipient-select
+                rb-zus-recipient-id="payment.formData.templateId"
                 rb-zus-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
                 rb-on-select-recipient="selectRecipient($recipient)"
