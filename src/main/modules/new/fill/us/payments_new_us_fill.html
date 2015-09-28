@@ -15,13 +15,13 @@
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_select' | translate }}">
         <rb-tax-recipient-select
                 rb-tax-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
                 rb-on-select-recipient="selectRecipient($recipient)"
-                rb-recipient-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"
-                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-tax-recipient-select>
+                rb-recipient-clear-text="{{ ::'raiff.payments.new.us.fill.recipient_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.recipient_select.placeholder' | translate }}"></rb-tax-recipient-select>
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}" ng-switch="payment.options.isFromRecipient">
@@ -64,6 +64,7 @@
                   required
                   bd-split-text
                   bd-split-text-length="132"
+                  ng-disabled="payment.options.isFromTaxpayer"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
 
@@ -81,10 +82,19 @@
 
     </bd-item-property>
 
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
+        <rb-taxpayer-select
+                rb-taxpayer="payment.items.taxpayer"
+                rb-on-clear-taxpayer="clearTaxpayer()"
+                rb-on-select-taxpayer="selectTaxpayer($taxpayer)"
+                rb-taxpayer-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-taxpayer-select>
+    </bd-item-property>
+
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type' | translate }}">
         <ui-select ng-model="payment.formData.idType"
                    theme="bootstrap"
-                   ng-disabled="payment.options.isFromRecipient"
+                   ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                    placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>
             <ui-select-match>
@@ -101,7 +111,7 @@
         <input name="supplementaryId"
                ng-model="payment.formData.idNumber"
                required
-               ng-disabled="payment.options.isFromRecipient"
+               ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                class="input-field"
                type="text"
                nip="payment.formData.idType === 'NIP'"

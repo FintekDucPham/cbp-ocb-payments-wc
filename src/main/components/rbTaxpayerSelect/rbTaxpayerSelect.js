@@ -1,12 +1,12 @@
 angular.module('raiffeisen-payments')
-    .directive('rbInsuranceTaxpayerSelect', function (pathService, taxpayersService, lodash) {
+    .directive('rbTaxpayerSelect', function (pathService, taxpayersService, lodash) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbInsuranceTaxpayerSelect/rbInsuranceTaxpayerSelect.html",
+            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxpayerSelect/rbTaxpayerSelect.html",
             scope: {
-                taxpayerId: '=rbZusTaxpayerId',
-                taxpayer: '=rbZusTaxpayer',
-                taxpayerList: '=?rbZusTaxpayerList',
+                taxpayerId: '=rbTaxpayerId',
+                taxpayer: '=rbTaxpayer',
+                taxpayerList: '=?rbTaxpayerList',
                 placeholderText: '@rbPlaceholderText',
                 clearText: '@rbTaxpayerClearText',
                 onSelectTaxpayer: '&rbOnSelectTaxpayer',
@@ -19,7 +19,7 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.selectTaxpayer = function($item) {
-                    if($item) {
+                    if($item && $item !== nullOption) {
                         $scope.selection.isSelected = true;
                         var oldTaxpayer = $scope.taxpayer;
                         $scope.taxpayer = $item;
