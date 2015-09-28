@@ -544,6 +544,7 @@
     "raiff.payments.recipients.details.us.form_symbol": "Symbol formularza",
     "raiff.payments.recipients.details.us.period_type": "Typ okresu",
 
+    "raiff.payments.taxpayers.manage.remove.title": "Usuń płatnika",
 
     "raiff.payments.taxpayers.label": "Płatnicy",
     "raiff.payments.taxpayers.label.empty_list": "Brak zdefiniowanych płatników",
@@ -615,6 +616,8 @@
     "raiff.payments.taxpayers.manage.new.status.fail": "Płatnik nie został utworzony",
     "raiff.payments.taxpayers.manage.edit.status.ok": "Płatnik został uaktualniony",
     "raiff.payments.taxpayers.manage.edit.status.fail": "Płatnik nie został uaktualniony",
+    "raiff.payments.taxpayers.manage.remove.status.ok": "Płatnik został usunięty",
+    "raiff.payments.taxpayers.manage.remove.status.fail": "Płatnik nie został usunięty",
 
     "EOF" : "",
 
