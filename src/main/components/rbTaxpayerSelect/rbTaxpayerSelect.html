@@ -1,5 +1,5 @@
-<div class="rb-insurance-taxpayer-select">
-    <div class="rb-insurance-taxpayer-select__choice">
+<div class="rb-taxpayer-select">
+    <div class="rb-taxpayer-select__choice">
         <ui-select ng-model="selection.taxpayer"
                    theme="bootstrap"
                    placeholder="{{placeholderText}}"
@@ -12,7 +12,7 @@
             </ui-select-choices>
         </ui-select>
     </div>
-    <div class="rb-insurance-taxpayer-select__btn-clear">
+    <div class="rb-taxpayer-select__btn-clear">
         <bd-button ng-click="clearSelection()" ng-disabled="!selection.isSelected">{{ clearText }}</bd-button>
     </div>
 </div>

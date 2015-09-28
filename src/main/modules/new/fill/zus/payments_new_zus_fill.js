@@ -74,41 +74,42 @@ angular.module('raiffeisen-payments')
         }, true);
 
         $scope.clearRecipient = function () {
-            delete $scope.payment.items.taxpayer;
             delete $scope.payment.formData.taxpayer;
-            delete $scope.payment.formData.nip;
-            delete $scope.payment.formData.recipientName;
-            delete $scope.payment.formData.secondaryIdType;
-            delete $scope.payment.formData.secondaryIdNo;
             delete $scope.payment.formData.paymentType;
+            if(!$scope.payment.options.isFromTaxpayer) {
+                delete $scope.payment.formData.nip;
+                delete $scope.payment.formData.secondaryIdType;
+                delete $scope.payment.formData.secondaryIdNo;
+            }
             $scope.payment.options.isFromRecipient = false;
         };
 
         $scope.selectRecipient = function (recipient) {
             $scope.payment.formData.taxpayer = recipient.name;
-            $scope.payment.formData.nip = recipient.nip;
-            $scope.payment.formData.recipientName = recipient.recipientName;
-            $scope.payment.formData.secondaryIdType = recipient.secondaryIdType;
-            $scope.payment.formData.secondaryIdNo = recipient.secondaryId;
             $scope.payment.formData.paymentType = recipient.paymentType;
-
+            if(!$scope.payment.options.isFromTaxpayer) {
+                $scope.payment.formData.nip = recipient.nip;
+                $scope.payment.formData.secondaryIdType = recipient.secondaryIdType;
+                $scope.payment.formData.secondaryIdNo = recipient.secondaryId;
+            }
             // select insurances?
             $scope.payment.options.isFromRecipient = true;
         };
 
         $scope.clearTaxpayer = function () {
-            delete $scope.payment.formData.secondaryId;
-            delete $scope.payment.formData.secondaryIdType;
-            delete $scope.payment.formData.nip;
+            if(!$scope.payment.options.isFromRecipient) {
+                delete $scope.payment.formData.secondaryIdType;
+                delete $scope.payment.formData.secondaryIdNo;
+                delete $scope.payment.formData.nip;
+            }
             delete $scope.payment.formData.recipientName;
-
             $scope.payment.options.isFromTaxpayer = false;
         };
 
         $scope.selectTaxpayer = function (taxpayer) {
             var formData = $scope.payment.formData;
-            formData.secondaryId = taxpayer.secondaryId;
             formData.secondaryIdType = taxpayer.secondaryIdType;
+            formData.secondaryIdNo = taxpayer.secondaryId;
             formData.nip = taxpayer.nip;
             formData.recipientName = taxpayer.data;
             $scope.payment.options.isFromTaxpayer = true;
