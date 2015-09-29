@@ -23,12 +23,12 @@
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                       label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
-        <p style="white-space: pre;" ng-bind-html="recipient.formData.recipientData.join('\n')"></p>
+        <p style="white-space: pre;" ng-bind-html="formatTextBox(recipient.formData.recipientData)"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                       label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
-        <p style="white-space: pre;" ng-bind-html="recipient.formData.description.join('\n')"></p>
+        <p style="white-space: pre;" ng-bind-html="formatTextBox(recipient.formData.description)"></p>
     </bd-item-property>
 
 
