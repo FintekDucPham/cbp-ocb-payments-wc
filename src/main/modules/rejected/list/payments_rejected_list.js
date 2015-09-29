@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters) {
+    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService) {
 
         var PERIOD_TYPES = {
             LAST: 'LAST',
@@ -49,17 +49,35 @@ angular.module('raiffeisen-payments')
         var firstDayOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         var oneDayMilisecs  = 1000*60*60*24;
 
+
+        //calculate lasts
+        var calculateDateFromLast = function(){
+            var value = parseInt($scope.rejectedList.filterData.last.value);
+            var factor = 1; //days
+            if($scope.rejectedList.filterData.last.type.selected===LAST_TYPES.WEEKS){
+                factor=7;
+            }
+            if($scope.rejectedList.filterData.last.type.selected===LAST_TYPES.MONTH){
+                $scope.rejectedList.filterData.last.dateFrom = new Date( (new Date()).setMonth( now.getMonth() - value ) );
+            }else{
+                $scope.rejectedList.filterData.last.dateFrom = new Date( now.getTime() - value * factor * oneDayMilisecs );
+            }
+        };
+
         //scope object
         $scope.rejectedList = {
             data : null,
             periodTypes:PERIOD_TYPES,
             parameters: parameters,
+            minDate: new Date( (new Date()).setMonth( now.getMonth() - parameters.detal.max ) ),
+            maxOffset: parameters.detal.max,
             filterData: {
                 periodType: {
-                    model: parameters.customerDetails.context==='DETAL' ? PERIOD_TYPES.LAST : PERIOD_TYPES.RANGE
+                    model: parameters.customerDetails.context==='DETAL' ? PERIOD_TYPES.LAST : PERIOD_TYPES.RANGE,
                 },
                 last:{
                     value: parameters.detal.default,
+                    dateFrom: null,
                     type: {
                         selected: LAST_TYPES.DAYS,
                         list: [LAST_TYPES.DAYS, LAST_TYPES.WEEKS, LAST_TYPES.MONTH]
@@ -72,16 +90,20 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.$watch('rejectedList.filterData.last.type.selected', calculateDateFromLast);
+        $scope.$watch('rejectedList.filterData.last.value', calculateDateFromLast);
         //if micro
         if(parameters.customerDetails.context==='MICRO'){
             $scope.rejectedList.filterData.last.value = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs)/oneDayMilisecs);
             $scope.rejectedList.filterData.range.dateFrom = firstDayOfCurrentMonth;
+            $scope.rejectedList.minDate = new Date( (new Date()).setMonth( now.getMonth() - parameters.micro.max ) );
+            $scope.rejectedList.maxOffset = parameters.micro.max;
         }
 
         //table config
         $scope.tableConfig = new bdTableConfig({
             placeholderText: translate.property("raiff.payments.rejected.list.empty.label"),
-            range : {dateFrom : 0, dateTo : 0}
+            model: $scope.rejectedList
         });
 
         //table def
@@ -89,18 +111,104 @@ angular.module('raiffeisen-payments')
             tableConfig : $scope.tableConfig,
             tableData : {
                 getData: function ($promise, $params) {
-                    $timeout(function(){
-                        $promise.resolve([{"id":"1","accountNo":"2342423424242342342342434","accountCurrency":"PLN","accountId":"4","accountName":"konto jakies","recipientName":["3534523452345"],"recipientAddress":["fdgsdfgsdfg"],"senderName":["sdfgsdfg"],"senderAddress":["fgjfgjfghj"],"recipientAccountNo":"34523452345234532452345","amount":234,"currency":"PLN","title":["title"],"transferType":"","paymentType":"ZUS","status":"","realizationDate":"date-time","registrationDate":"date-time","paymentDetails":{},"cyclicDefinition":{"beginExecutionDate":"date-time","endExecutionDate":"date-time","previousExecutionDate":"date-time","nextExecutionDate":"date-time","suspensionDateFrom":"date-time","suspensionDateTo":"date-time","isBroken":false,"period":0,"periodType":"","executionDayInMonth":0},"isCyclic":false,"deliveryDate":"date-time","charges":[{"amount":0,"description":"","bonusCount":0,"currency":""}],"lastRealizationDesc":"","realizationDateShiftReason":"","templateId":"","saveTemplate":false,"templateName":""}]);
-                    }, 1500);
+
+                    var params = {
+                        statusPaymentCriteria: "rejected",
+                        realizationDateFrom : $params.model.filterData.range.dateFrom,
+                        realizationDateTo : $params.model.filterData.range.dateTo
+                    };
+
+                    if($params.model.filterData.periodType===PERIOD_TYPES.LAST){
+                        params.realizationDateTo = now;
+                        params.realizationDateFrom = $params.model.filterData.last.dateFrom;
+                    }
+
+                    paymentsService.search(params).then(function(paymentSummary) {
+                        $promise.resolve(paymentSummary.content);
+                    });
                 }
             },
             tableControl: undefined
         };
 
         //action
-        $scope.onSubmit = function(){
-            if($scope.filterForm.$valid){
+        $scope.onSubmit = function(form){
+            if(form.$valid){
                 $scope.table.tableControl.invalidate();
             }
         };
+    }).directive('minDate', function(){
+        return {
+            restrict:'A',
+            require: 'ngModel',
+            scope: {
+                minDate: "=",
+                modelDate: "=",
+                ngRequired: "="
+            },
+            link: function(s, e, a, model){
+                var validator = function(arg){
+                    var date = arg;
+                    if(!angular.isDate(arg)){
+                        date = s.modelDate;
+                    }
+                    if(s.ngRequired && date.getTime()< s.minDate.getTime()){
+                        model.$setValidity('mindate', false);
+                    }else{
+                        model.$setValidity('mindate', true);
+                    }
+                };
+                s.$watch('modelDate', validator);
+                s.$watch('ngRequired', validator);
+            }
+        };
+
+
+    }).directive('emptyDate', function(){
+        return {
+            restrict:'A',
+            require: 'ngModel',
+            scope: true,
+            link: function(s, e, a, model){
+                model.$parsers.unshift(function(value) {
+                    if(!value){
+                        if(value===undefined){
+                            model.$setValidity('invaliddate', false);
+                            model.$setValidity('emptydate', true);
+                        }
+                        if(value==null){
+                            model.$setValidity('emptydate', false);
+                            model.$setValidity('invaliddate', true);
+                        }
+                    }else{
+                        model.$setValidity('emptydate', true);
+                        model.$setValidity('emptydate', true);
+                    }
+
+                    return value;
+                });
+
+                //For model -> DOM validation
+                model.$formatters.unshift(function(value) {
+                    if(!value){
+                        if(value===undefined){
+                            model.$setValidity('invaliddate', false);
+                            model.$setValidity('emptydate', true);
+                        }
+                        if(value==null){
+                            model.$setValidity('emptydate', false);
+                            model.$setValidity('invaliddate', true);
+                        }
+                    }else{
+                        model.$setValidity('emptydate', true);
+                        model.$setValidity('emptydate', true);
+                    }
+
+                    return value;
+
+                });
+            }
+        };
+
+
     });
