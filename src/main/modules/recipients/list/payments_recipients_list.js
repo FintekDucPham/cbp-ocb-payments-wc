@@ -7,13 +7,26 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate) {
+                                                              viewStateService, translate, accountsService, lodash, customerService) {
 
+
+        accountsService.search().then(function(accountList){
+            $scope.accountList = accountList.content;
+        });
+
+        customerService.getCustomerDetails().then(function(customerDetails){
+            $scope.customerDetails = customerDetails.customerDetails;
+        });
         var TYPES = {
             ALL: 'ALL',
             DOMESTIC: 'DOMESTIC'
         };
 
+        $scope.getAccountByNrb = function(accountNrb){
+            return lodash.find($scope.accountList, {
+                accountNo: accountNrb
+            });
+        };
         $scope.types = {
             currentType:TYPES.DOMESTIC,
             list: [TYPES.ALL, TYPES.DOMESTIC]
@@ -101,7 +114,8 @@ angular.module('raiffeisen-payments')
                                             recipientType: template.templateType,
                                             recipientAddress : recipient.recipientAddress,
                                             recipientName : recipient.recipientName,
-                                            transferTitleTable : template.title
+                                            transferTitleTable : template.title,
+                                            ownerList: $scope.getAccountByNrb(template.remitterAccountNo)
                                         }
                                     );
                                 });
