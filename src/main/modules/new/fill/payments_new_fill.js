@@ -10,7 +10,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
+    .controller('NewPaymentFillController', function ($scope, exchangeRates, rbDateUtils, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -21,6 +21,11 @@ angular.module('raiffeisen-payments')
             if($scope.paymentForm) {
                 formService.clearForm($scope.paymentForm);
             }
+        });
+
+        $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
+            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
+            $scope.paymentForm.amount.$validate();
         });
 
         angular.extend($scope.payment.formData, {

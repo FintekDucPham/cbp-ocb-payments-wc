@@ -74,7 +74,7 @@
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
             <textarea name="recipientData"
                       ng-model="recipient.formData.recipientData"
-                      ng-maxlength="140"
+                      bd-split-text-length="132"
                       bd-split-text
                       ng-pattern="RECIPIENT_DATA_REGEX"
                       required
@@ -85,7 +85,7 @@
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.EMPTY'|translate}}
                 </div>
-                <div eb-message-key="maxlength" class="validation-message animate-on">
+                <div eb-message-key="splitTextLength" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
@@ -100,7 +100,7 @@
 
             <textarea name="description"
                       ng-model="recipient.formData.description"
-                      ng-maxlength="140"
+                      bd-split-text-length="132"
                       ng-pattern="PAYMENT_TITLE_REGEX"
                       class="input-field input-area--payment-description"
                       bd-split-text
@@ -114,7 +114,7 @@
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.description.PATTERN'|translate}}
                 </div>
-                <div eb-message-key="maxlength" class="validation-message animate-on">
+                <div eb-message-key="splitTextLength" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH'|translate}}
                 </div>
             </eb-validation-messages>
