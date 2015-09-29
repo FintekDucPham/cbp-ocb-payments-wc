@@ -15,6 +15,14 @@ angular.module('raiffeisen-payments')
         "US": {
             code: 'US',
             state: 'us'
+        },
+        "SWIFT": {
+            code: 'SWIFT',
+            state: 'swift'
+        },
+        "SEPA": {
+            code: 'SEPA',
+            state: 'sepa'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
