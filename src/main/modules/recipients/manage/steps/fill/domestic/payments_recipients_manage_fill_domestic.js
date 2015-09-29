@@ -9,7 +9,8 @@ angular.module('raiffeisen-payments')
         $scope.recipient.meta.recipientForbiddenAccounts = lodash.union($scope.recipient.meta.recipientForbiddenAccounts, lodash.map([
             "83101010230000261395100000",
             "78101010230000261395200000",
-            "73101010230000261395300000"
+            "73101010230000261395300000",
+            "68101010230000261395400000"
         ], function (val) {
             return {
                 code: 'notZus',
