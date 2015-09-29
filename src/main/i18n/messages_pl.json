@@ -394,15 +394,18 @@
     "raiff.payments.recipients.new.domestic.fill.description.EMPTY":"Tytuł przelewu nie może być pusty",
     "raiff.payments.recipients.new.domestic.fill.description.PATTERN":"Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /",
     "raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /",
-    "raiff.payments.recipients.manage.new.status.ok": "Odbiorca zdefiniowany został utworzony",
-    "raiff.payments.recipients.manage.new.status.fail": "Odbiorca zdefiniowany nie został utworzony",
-    "raiff.payments.recipients.manage.edit.status.ok": "Odbiorca zdefiniowany został uaktualniony",
-    "raiff.payments.recipients.manage.edit.status.fail": "Odbiorca zdefiniowany nie został uaktualniony",
-    "raiff.payments.recipients.manage.remove.status.ok": "Odbiorca zdefiniowany został usunięty",
-    "raiff.payments.recipients.manage.remove.status.fail": "Odbiorca zdefiniowany nie został usunięty",
     "raiff.payments.recipients.manage.remove.title": "Usuń odbiorcę",
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
     "raiff.payments.recipients.authorization.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
+
+    "raiff.payments.recipients.new.status.20": "Zlecnie przyjęte do realizacji",
+    "raiff.payments.recipients.new.status.40": "Zlecnie przyjęte do realizacji",
+    "raiff.payments.recipients.new.status.60": "Zlecnie przyjęte do realizacji",
+    "raiff.payments.recipients.new.status.100": "Zlecenie zrealizowane",
+    "raiff.payments.recipients.new.status.99": "Zlecenie odrzucone",
+    "raiff.payments.recipients.new.status.98": "Zlecenie odrzucone",
+    "raiff.payments.recipients.new.status.error": "Zlecenie odrzucone",
+    "raiff.payments.recipients.new.status.success": "Zlecnie przyjęte do realizacji",
 
     "EOF" : ""
 
