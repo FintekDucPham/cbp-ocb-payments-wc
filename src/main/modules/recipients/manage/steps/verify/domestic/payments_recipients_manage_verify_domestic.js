@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
         function authorize(doneFn) {
             recipientGeneralService.realize($scope.recipient.transferId, $scope.recipient.items.credentials).then(function (resultCode) {
                 $scope.recipient.result.type = 'success';
-                actions.proceed();
+                doneFn();
             }).catch(function (error) {
                 $scope.recipient.result.type = 'error';
 
