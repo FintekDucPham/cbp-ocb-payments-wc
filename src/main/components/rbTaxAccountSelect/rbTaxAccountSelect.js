@@ -74,9 +74,11 @@ angular.module('raiffeisen-payments')
                         } else {
                             $scope.taxAccounts = result;
                             $scope.isFromList = true;
-                            var office = $scope.model.taxOffice = $scope.taxAccounts[0];
-                            $scope.taxOffice = office;
+                            $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
                             $scope.$emit("taxAccountChanged", $scope.model.taxOffice);
+                            if(result.length > 2) {
+                                $scope.$broadcast('taxAccountSearched', selectedInput);
+                            }
                         }
                     });
                 };
@@ -101,4 +103,16 @@ angular.module('raiffeisen-payments')
 
             }
         };
+    }).directive('uiSelectPopupTrigger', function() {
+
+        return {
+            restrict: 'A',
+            require: 'uiSelect',
+            link: function($scope, $element, $attrs, $ctrl) {
+                $scope.$on($attrs.uiSelectPopupTrigger, function() {
+                    $ctrl.activate();
+                });
+            }
+        };
+
     });

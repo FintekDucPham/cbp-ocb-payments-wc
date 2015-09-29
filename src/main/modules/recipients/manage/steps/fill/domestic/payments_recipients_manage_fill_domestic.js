@@ -12,6 +12,19 @@ angular.module('raiffeisen-payments')
             $scope.recipientForm.recipientAccountNo.$validate();
         };
 
+
+        $scope.recipient.meta.recipientForbiddenAccounts = lodash.union($scope.recipient.meta.recipientForbiddenAccounts, lodash.map([
+            "83101010230000261395100000",
+            "78101010230000261395200000",
+            "73101010230000261395300000",
+            "68101010230000261395400000"
+        ], function (val) {
+            return {
+                code: 'notZus',
+                value: val
+            };
+        }));
+
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
                 formService.clearForm($scope.recipientForm);
