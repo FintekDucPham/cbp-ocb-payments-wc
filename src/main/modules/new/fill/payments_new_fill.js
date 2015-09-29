@@ -74,6 +74,10 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account) {
                 $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
+
+                if($scope.payment.meta.isFuturePaymentAllowed && $scope.payment.meta.extraVerificationAccountList){
+                    $scope.payment.meta.isFuturePaymentAllowed =  $scope.payment.meta.extraVerificationAccountList.indexOf(account.category?account.category.toString():null) === -1 ;
+                }
             }
         });
 
