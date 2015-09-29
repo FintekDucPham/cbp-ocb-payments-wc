@@ -1,9 +1,9 @@
 <div class="rb-tax-account-select">
 
     <div class="rb-tax-account-select__select">
-        <div class="rb-tax-account-select__account" ng-switch="isFromList">
+        <div class="rb-tax-account-select__account">
 
-            <div ng-switch-when="false">
+            <div ng-if="!isFromList">
                 <input id="recipientAccountNo"
                        name="recipientAccountNo"
                        ng-model-options="{ allowInvalid: true }"
@@ -16,13 +16,14 @@
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
             </div>
 
-            <div ng-switch-when="true">
+            <div ng-show="isFromList">
                 <ui-select ng-model="model.taxOffice"
                            search-enabled="false"
                            on-select="select($item)"
                            theme="bootstrap"
                            placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
                            ng-pattern="patterns.nrbPattern"
+                           ui-select-popup-trigger="taxAccountSearched"
                            required>
                     <ui-select-match>
                         {{ $select.selected.accountNo }}
