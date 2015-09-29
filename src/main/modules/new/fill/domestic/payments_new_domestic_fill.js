@@ -143,8 +143,10 @@ angular.module('raiffeisen-payments')
 
         var recipientFilter = $scope.recipientFilter = {
             doesMatch: function (recipient) {
-                var senderAccount = $scope.payment.items.senderAccount;
-                return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
+                return true;
+                // todo recipients should be displayed regardless of their source account
+                //var senderAccount = $scope.payment.items.senderAccount;
+                //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
 
