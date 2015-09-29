@@ -1,7 +1,21 @@
 <div>
 
     <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-
+    <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.domestic.verify.company.name' | translate }}">
+        <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+            <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
+                <span>{{owner.fullName}}</span>
+            </div>
+        </section>
+        <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+            <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.formData.debitAccountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
+                <span>{{owner.fullName}}</span>
+            </div>
+        </section>
+    </bd-item-property>
+    <bd-item-property ng-if="(recipient.operationType == 'remove' || recipient.operationType == 'edit')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
+        {{ recipient.id}}
+    </bd-item-property>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
         <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
             {{ recipient.items.senderAccount.accountName }}&nbsp;
