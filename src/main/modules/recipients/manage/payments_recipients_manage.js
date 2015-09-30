@@ -76,24 +76,11 @@ angular.module('raiffeisen-payments')
             $scope.convertRequestOperation = converterFn;
         };
 
-        $scope.create = function editRecipient(actions) {
+        $scope.create = function (actions) {
             recipientGeneralService.create($scope.recipient.operation.code, $scope.recipient.type.code.toLowerCase(),
                 $scope.convertRequestOperation($scope.requestConverter($scope.recipient.formData))).then(function (recipient) {
                     $scope.recipient.transferId = recipient;
-                    $scope.recipient.promises.authorizationPromise = authorizationService.create({
-                        resourceId: $scope.recipient.transferId,
-                        resourceType: 'MANAGE_{0}_RECIPIENT'.format($scope.recipient.type.code)
-                    }).then(function (authorization) {
-                        return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
-                            var twoStep = $scope.recipient.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
-                            if (twoStep) {
-                                $scope.recipient.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
-                                    .replace("##number##", content.authenticationAttributes.operationId)
-                                    .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'shortDate'));
-                            }
-                            actions.proceed();
-                        });
-                    });
+                    actions.proceed();
                 });
         };
 

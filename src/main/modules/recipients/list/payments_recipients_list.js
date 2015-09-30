@@ -46,14 +46,11 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onRecipientRemove = function(data){
-            var dataObject = angular.copy(data);
-            var routeObject = {
-                recipientType: dataObject.recipientType.toLowerCase(),
-                operation: 'remove'
-            };
-            var initObject = angular.extend(angular.copy(data), routeObject);
-            viewStateService.setInitialState('payments.recipients.manage.remove', initObject);
-            $state.go("payments.recipients.manage.remove.verify", routeObject);
+            $state.go("payments.recipients.manage.remove.verify", {
+                recipientType: data.recipientType.toLowerCase(),
+                operation: 'remove',
+                recipient: angular.copy(data)
+            });
         };
 
         $scope.onRecipientCreate = function(){
