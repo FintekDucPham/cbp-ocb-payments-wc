@@ -510,6 +510,10 @@
     "raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##months## miesięcy wstecz. Można wyszukiwać tylko operacje odrzucone w ciągu ostatnich ##months## miesięcy.",
     "raiff.payments.rejected.select.filter.EMPTY_DATE_FROM": "Musisz wprowadzić datę początkową okresu wyszukiwania",
     "raiff.payments.rejected.select.filter.EMPTY_DATE_TO": "Musisz wprowadzić datę końcową okresu wyszukiwania",
+    "raiff.payments.rejected.select.filter.INCORRECT_DATE_FROM": "Nieprawidłowa data początkowa okresu wyszukiwania",
+    "raiff.payments.rejected.select.filter.INCORRECT_DATE_TO": "Nieprawidłowa data końcowa okresu wyszukiwania",
+    "raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
+
 
     "raiff.MSG-0567_EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.MSG-0561_INCORRECT_DEBIT_ACC": "Wybrano nieprawidłowy rachunek ZUS",

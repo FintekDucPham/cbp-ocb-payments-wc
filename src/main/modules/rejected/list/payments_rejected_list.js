@@ -148,10 +148,8 @@ angular.module('raiffeisen-payments')
             },
             link: function(s, e, a, model){
                 var validator = function(arg){
-                    var date = arg;
-                    if(!angular.isDate(arg)){
-                        date = s.modelDate;
-                    }
+                    var date = s.modelDate;
+
                     if(s.ngRequired && date.getTime()< s.minDate.getTime()){
                         model.$setValidity('mindate', false);
                     }else{
@@ -160,53 +158,7 @@ angular.module('raiffeisen-payments')
                 };
                 s.$watch('modelDate', validator);
                 s.$watch('ngRequired', validator);
-            }
-        };
-
-
-    }).directive('emptyDate', function(){
-        return {
-            restrict:'A',
-            require: 'ngModel',
-            scope: true,
-            link: function(s, e, a, model){
-                model.$parsers.unshift(function(value) {
-                    if(!value){
-                        if(value===undefined){
-                            model.$setValidity('invaliddate', false);
-                            model.$setValidity('emptydate', true);
-                        }
-                        if(value==null){
-                            model.$setValidity('emptydate', false);
-                            model.$setValidity('invaliddate', true);
-                        }
-                    }else{
-                        model.$setValidity('emptydate', true);
-                        model.$setValidity('emptydate', true);
-                    }
-
-                    return value;
-                });
-
-                //For model -> DOM validation
-                model.$formatters.unshift(function(value) {
-                    if(!value){
-                        if(value===undefined){
-                            model.$setValidity('invaliddate', false);
-                            model.$setValidity('emptydate', true);
-                        }
-                        if(value==null){
-                            model.$setValidity('emptydate', false);
-                            model.$setValidity('invaliddate', true);
-                        }
-                    }else{
-                        model.$setValidity('emptydate', true);
-                        model.$setValidity('emptydate', true);
-                    }
-
-                    return value;
-
-                });
+                s.$watch('minDate', validator);
             }
         };
 
