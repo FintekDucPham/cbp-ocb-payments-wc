@@ -10,7 +10,13 @@
                                rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                rb-product-list-name="TRANSFER_FROM_LIST"
                                rb-account-select-params="recipientSelectParams"></rb-account-select>
+            <eb-validation-messages eb-name="remitterAccountId">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.remitterAccount.EMPTY'|translate}}
+                </div>
+            </eb-validation-messages>
         </bd-item-property>
+
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
             <input name="customName"
