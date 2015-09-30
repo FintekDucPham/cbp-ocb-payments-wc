@@ -1,6 +1,7 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyDomesticController', function () {
+    .controller('RecipientsManageVerifyDomesticController', function ($scope) {
 
+ 
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             delete $scope.recipient.items.credentials;
