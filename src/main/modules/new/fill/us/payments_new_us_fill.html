@@ -312,7 +312,7 @@
                        rb-name="realizationDate"
                        ng-model="payment.formData.realizationDate"
                        rb-datepicker-options="payment.meta.rbRealizationDateOptions"
-                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed"
+                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory"
                        rb-required="true">
 
             <!--bd-attr-bd-min-date="minRealizationDate"-->

@@ -198,7 +198,7 @@
                        rb-name="realizationDate"
                        rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                        ng-model="payment.formData.realizationDate"
-                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed"
+                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory"
                        rb-required="true">
 
         </rb-datepicker>
