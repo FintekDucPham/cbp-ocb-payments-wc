@@ -67,17 +67,21 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.selectRecipient = function (recipient) {
-            var formData = $scope.payment.formData;
-            formData.templateId = recipient.templateId;
-            formData.idType = recipient.secondaryIdType;
-            formData.idNumber = recipient.secondaryId;
-            formData.formCode = recipient.formCode;
-            formData.periodType = recipient.periodType;
-            $scope.payment.items.recipientAccount = {
-                officeName: recipient.recipientName.join(', '),
-                recipientAccountNo: recipient.nrb
-            };
-            $scope.payment.options.isFromRecipient = true;
+            if(recipient) {
+                var formData = $scope.payment.formData;
+                formData.templateId = recipient.templateId;
+                formData.idType = recipient.secondaryIdType;
+                formData.idNumber = recipient.secondaryId;
+                formData.formCode = recipient.formCode;
+                formData.periodType = recipient.periodType;
+                $scope.payment.items.recipientAccount = {
+                    officeName: recipient.recipientName.join(', '),
+                    recipientAccountNo: recipient.nrb
+                };
+                $scope.payment.options.isFromRecipient = true;
+            } else {
+                $scope.clearRecipient();
+            }
         };
 
         $scope.clearTaxpayer = function () {

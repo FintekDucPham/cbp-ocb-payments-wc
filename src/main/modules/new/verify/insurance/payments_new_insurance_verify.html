@@ -60,7 +60,7 @@
         <div ng-repeat="insurance in payment.formData.insurancePremiums | insurancesFilter track by insurance.key">
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + insurance.key |translate}}">
                 {{ ::'raiff.payments.new.zus.verify.tmp.zus_name' | translate }}<br>
-                {{::insurance.socialAccountNumber}}
+                {{::insurance.nrb}}
                 <bd-amount amount="insurance.amount" currency="{{ insurance.currency }}" not-styled></bd-amount>
             </bd-item-property>
         </div>
