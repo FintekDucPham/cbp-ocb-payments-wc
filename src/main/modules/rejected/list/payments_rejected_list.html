@@ -112,6 +112,53 @@
               bd-table-data="tableData" bd-table-meta="{'first':{'title':'##raiff.payments.rejected.list.header.realizationDate.label','data':'realizationDate'},'second':{'title':'##raiff.payments.rejected.list.header.paymentType.label','data':'transferType'},'third':{'title':'##raiff.payments.rejected.list.header.accountNo.label','data':'accountNo'},'fourth':{'title':'##raiff.payments.rejected.list.header.senderName.label', 'data':'recipientName'},'fifth':{'title':'##raiff.payments.rejected.list.header.title.label','data':'title'},'sixth':{'title':'##raiff.payments.rejected.list.header.amount.label','data':['amount','currency']}}">
 
 
+        <bd-details-section bd-table-row-details>
+            <div eb-preloader eb-promise="$data.promise"></div>
+
+            <section ng-if="$data.details">
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.transferType' | translate }}">
+                    {{ 'raiff.payments.new.types.'+$data.details.transferType | translate }}
+                </bd-item-property>
+                <bd-item-property  label="">
+                    {{ $data.details.status }}
+                </bd-item-property>
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.registrationDate' | translate }}">
+                    {{ $data.details.registrationDate | date : 'yyyy-MM-dd' }}
+                </bd-item-property>
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.accountNo' | translate }}">
+                    {{ $data.details.accountNo | nrbIbanFilter }}
+                </bd-item-property>
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.recipientAccountNo' | translate }}">
+                    {{ $data.details.recipientAccountNo | nrbIbanFilter }}
+                </bd-item-property>
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.recipientName' | translate }}">
+                    {{ $data.details.recipientName[0] }}
+                </bd-item-property>
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.amount' | translate }}">
+                    {{ $data.details.amount }} {{ $data.details.currency }}
+                </bd-item-property>
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.title' | translate }}">
+                    {{ $data.details.title[0] }}
+                </bd-item-property>
+                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.realizationDate' | translate }}">
+                    {{ $data.details.realizationDate | date : 'yyyy-MM-dd' }}
+                </bd-item-property>
+
+            </section>
+
+            <bd-details-action-section>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" style="text-align:right;">
+                        <bd-button ng-click="renew($data)" class="bd-button bd-button__primary">{{::'raiff.payments.rejected.list.details.renew.button' | translate}}</bd-button>
+                    </div>
+                </div>
+            </bd-details-action-section>
+
+        </bd-details-section>
+
+        <div bd-table-footer>
+            <bd-table-pagination></bd-table-pagination>
+        </div>
     </bd-table>
 
 </rb-content-view>
