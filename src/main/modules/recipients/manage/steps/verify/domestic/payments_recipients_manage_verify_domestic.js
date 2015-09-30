@@ -1,10 +1,21 @@
 
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyDomesticController', function ($scope, bdStepStateEvents, authorizationService, translate, dateFilter, recipientGeneralService, $stateParams, bdVerifyStepInitializer) {
+    .controller('RecipientsManageVerifyDomesticController', function ($scope, bdStepStateEvents, authorizationService, translate, dateFilter, recipientGeneralService, $stateParams, bdVerifyStepInitializer, accountsService, customerService, lodash) {
 
         $scope.recipientAuthForm = {};
+        $scope.accountListPromise = accountsService.search().then(function(accountList){
+            $scope.accountsList = accountList.content;
+        });
 
+        customerService.getCustomerDetails().then(function(customerDetails){
+            $scope.customerDetails = customerDetails.customerDetails;
+        });
 
+        $scope.getAccountByNrb = function(accountNumber){
+           return lodash.find($scope.accountsList, {
+                accountNo: accountNumber
+            });
+        };
 
 
         function sendAuthToken() {
@@ -37,7 +48,14 @@ angular.module('raiffeisen-payments')
 
         function authorize(doneFn) {
             recipientGeneralService.realize($scope.recipient.transferId, $scope.recipient.items.credentials).then(function (resultCode) {
-                $scope.recipient.result.type = 'success';
+                var parts = resultCode.split('|');
+                $scope.recipient.result = {
+                    code: parts[1],
+                    type: parts[0] === 'OK' ? "success" : "error"
+                };
+                if (parts[0] !== 'OK' && !parts[1]) {
+                    $scope.recipient.result.code = 'error';
+                }
                 doneFn();
             }).catch(function (error) {
                 $scope.recipient.result.type = 'error';
