@@ -82,7 +82,7 @@
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_TO'|translate}}
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.mindate">
-                        {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': rejectedList.maxOffset }}
+                        {{::'raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE' | translate }}
                     </div>
                 </div>
             </div>
