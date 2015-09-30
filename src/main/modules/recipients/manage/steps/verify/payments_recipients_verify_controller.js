@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyController', function (bdVerifyStepInitializer, $scope, pathService, recipientGeneralService, authorizationService,
+    .controller('RecipientsManageVerifyController', function (bdVerifyStepInitializer, translate, dateFilter, $scope, pathService, recipientGeneralService, authorizationService,
                                                               formService, bdStepStateEvents) {
 
         $scope.recipientAuthUrl = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
@@ -39,11 +39,42 @@ angular.module('raiffeisen-payments')
             actions.proceed();
         });
 
-        $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
-            delete $scope.recipient.items.credentials;
-            delete $scope.recipient.promises.authorizationPromise;
-            delete $scope.recipient.transferId;
+        function prepareAuthorization() {
+            $scope.recipient.promises.authorizationPromise = authorizationService.create({
+                resourceId: $scope.recipient.transferId,
+                resourceType: 'MANAGE_{0}_RECIPIENT'.format($scope.recipient.type.code)
+            }).then(function (authorization) {
+                return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
+                    var twoStep = $scope.recipient.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
+                    if (twoStep) {
+                        $scope.recipient.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
+                            .replace("##number##", content.authenticationAttributes.operationId)
+                            .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'shortDate'));
+                    }
+                });
+            });
+        }
+
+        var enterOnce = lodash.once(function() {
+            if($scope.recipient.operation.code === 'REMOVE') {
+                $scope.prepareOperation({
+                    proceed: function() {
+                        prepareAuthorization();
+                    }
+                });
+            } else {
+                prepareAuthorization();
+            }
+
+            // todo temporary solution - prevent calling ON_STEP_LEFT in step which is entered
+            $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+                delete $scope.recipient.items.credentials;
+                delete $scope.recipient.promises.authorizationPromise;
+                delete $scope.recipient.transferId;
+            });
         });
+
+        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, enterOnce);
 
         $scope.setForm = function (form) {
             $scope.recipientAuthForm = form;

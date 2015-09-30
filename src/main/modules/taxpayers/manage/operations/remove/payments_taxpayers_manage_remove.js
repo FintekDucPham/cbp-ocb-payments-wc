@@ -30,11 +30,10 @@ angular.module('raiffeisen-payments')
             };
         });
 
-        $scope.clearForm = function () {
-            $scope.$broadcast('clearForm');
+        $scope.editForm = function () {
             var formData = $scope.taxpayer.formData;
             $state.go("payments.taxpayers.manage.edit.fill", {
-                taxpayerType: formData.taxpayerType.code.toLowerCase(),
+                taxpayerType: formData.taxpayerType.toLowerCase(),
                 taxpayer: formData
             });
         };

@@ -17,7 +17,7 @@ angular.module('raiffeisen-payments')
             controller: "RecipientsManageVerifyDomesticController"
         }).state('payments.recipients.manage.remove.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/remove/status/payments_recipients_manage_remove_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/remove/status/payments_recipients_manage_remove_status.html",
             controller: "RecipientsManageRemoveStatusController"
         });
     })
