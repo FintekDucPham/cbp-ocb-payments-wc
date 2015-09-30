@@ -175,7 +175,7 @@
                 ng-model="payment.formData.realizationDate"
                 rb-form="paymentForm"
                 rb-name="realizationDate"
-                rb-date-disabled="!payment.meta.isFuturePaymentAllowed"
+                rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory"
                 rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                 rb-required="true">
 
