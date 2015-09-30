@@ -10,7 +10,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, $stateParams, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -89,11 +89,19 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account) {
                 $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
+                var lockDateAccountCategories = $scope.payment.meta.customerContext === 'DETAL' ? [1101, 3000, 3013] : [1101, 3008, 3013];
+                $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
+            } else {
+                $scope.payment.meta.dateSetByCategory = false;
             }
         });
 
         exchangeRates.search().then(function(currencies) {
             $scope.payment.meta.currencies = lodash.indexBy(currencies.content, 'currencySymbol');
+        });
+
+        customerService.getCustomerDetails().then(function(data) {
+            $scope.payment.meta.customerContext = data.customerDetails.context;
         });
 
     });
