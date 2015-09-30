@@ -193,7 +193,7 @@
                    ng-model="payment.formData.periodNo"
                    required
                    ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
-                   bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
+                   bd-novalidate-when="{{ payment.formData.periodType==='R' }}"
                    ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
                    class="input-field"
                    type="text"

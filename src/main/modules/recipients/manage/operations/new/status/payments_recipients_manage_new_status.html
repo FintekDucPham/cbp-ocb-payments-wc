@@ -1,1 +1,1 @@
-<bd-msg-panel bd-msg-type="{{recipient.result.type}}">{{recipient.result.text}}</bd-msg-panel>
+<bd-msg-panel bd-msg-type="{{ recipient.result.type }}">{{ ::'raiff.payments.recipients.new.status.' + (recipient.result.code || recipient.result.type) | translate }}</bd-msg-panel>
