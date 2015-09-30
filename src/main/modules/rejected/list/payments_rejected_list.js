@@ -124,11 +124,32 @@ angular.module('raiffeisen-payments')
                     }
 
                     paymentsService.search(params).then(function(paymentSummary) {
+                        angular.forEach(paymentSummary.content, function(payment){
+                           angular.extend(payment, {
+                               loadDetails: function () {
+
+                                   this.promise = paymentsService.get(this.id, {}).then(function(paymentDetails) {
+                                       payment.details = paymentDetails;
+                                   });
+
+                                   payment.loadDetails = undefined;
+                               }
+                           });
+                        });
                         $promise.resolve(paymentSummary.content);
                     });
                 }
             },
             tableControl: undefined
+        };
+
+        //renew
+        $scope.renew = function(data){
+            var dataObject = angular.copy(data);
+            var routeObject = {
+                paymentType: angular.lowercase(dataObject.transferType)
+            };
+            $state.go("payments.new.fill", routeObject);
         };
 
         //action
