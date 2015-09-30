@@ -238,6 +238,7 @@
                         <div class="bd-pair__value">
                             <input ng-model="payment.formData.insurancePremiums[insuranceType].amount"
                                    ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
+                                   ng-init="bindInsuranceAccount(insuranceType)"
                                    type="number"
                                    class="input-field"
                                    min="0.01"

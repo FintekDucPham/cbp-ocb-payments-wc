@@ -33,7 +33,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
-            if(lodash.isDefined($scope.paymentForm)) {
+            if(!!$scope.paymentForm.amount) {
                 $scope.paymentForm.amount.$validate();
             }
         });
