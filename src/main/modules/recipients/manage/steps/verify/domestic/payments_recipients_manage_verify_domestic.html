@@ -3,41 +3,38 @@
     <div ng-controller="RecipientsManageVerifyDomesticController">
 
         <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-        <span ng-show="recipient.promises.authorizationPromise.$$state.status === 1">
 
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                              label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
-                <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                    {{ recipient.items.senderAccount.accountName }}&nbsp;
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
+            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.items.senderAccount.accountName }}&nbsp;
 
-                    {{ recipient.items.senderAccount.accountNo }}
-                </section>
-                <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                    {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
-                </section>
-            </bd-item-property>
+                {{ recipient.items.senderAccount.accountNo }}
+            </section>
+            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
+            </section>
+        </bd-item-property>
 
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                              label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
-                {{ recipient.formData.customName }}
-            </bd-item-property>
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
+            {{ recipient.formData.customName }}
+        </bd-item-property>
 
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                              label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
-                {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
-            </bd-item-property>
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
+            {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
+        </bd-item-property>
 
-            <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
-                              label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
-                <p style="white-space: pre;" ng-bind-html="recipient.formData.recipientData.join('\n')"></p>
-            </bd-item-property>
+        <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
+            <p style="white-space: pre;" ng-bind-html="formatTextBox(recipient.formData.recipientData)"></p>
+        </bd-item-property>
 
-            <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
+        <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
-            <p style="white-space: pre;" ng-bind-html="recipient.formData.description.join('\n')"></p>
-            </bd-item-property>
-
-        </span>
+            <p style="white-space: pre;" ng-bind-html="formatTextBox(recipient.formData.description)"></p>
+        </bd-item-property>
 
     </div>
 

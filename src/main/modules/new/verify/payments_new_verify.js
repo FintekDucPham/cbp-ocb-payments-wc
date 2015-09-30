@@ -53,6 +53,7 @@ angular.module('raiffeisen-payments')
                     $scope.payment.result.code = 'error';
                 }
                 $scope.payment.result.token_error = false;
+                doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
                 $scope.payment.result.nextTokenType = 'prev';

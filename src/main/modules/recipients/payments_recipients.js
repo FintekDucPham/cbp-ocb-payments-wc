@@ -18,11 +18,11 @@ angular.module('raiffeisen-payments')
             code: 'DOMESTIC',
             state: 'domestic'
         },
-        "ZUS": {
+        "INSURANCE": {
             code: 'INSURANCE',
             state: 'zus'
         },
-        "US": {
+        "TAX": {
             code: 'TAX',
             state: 'us'
         },
@@ -34,10 +34,6 @@ angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients', {
             url: "/recipients",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/payments_recipients.html",
-            controller: "PaymentsRecipientsMainController"
-
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/payments_recipients.html"
         });
-    }).controller("PaymentsRecipientsMainController", function(){
-
     });

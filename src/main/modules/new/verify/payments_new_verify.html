@@ -26,7 +26,7 @@
             </div>
 
             <bd-radio-select bd-model="payment.result.nextTokenType">
-                <bd-radio-option bd-option-value="'prev'">{{::'raiff.payments.new.verify.token.authorize.prev'|translate}}</bd-radio-option>
+                <bd-radio-option ng-hide="payment.result.token_errors['expired']" bd-option-value="'prev'">{{::'raiff.payments.new.verify.token.authorize.prev'|translate}}</bd-radio-option>
                 <bd-radio-option bd-option-value="'next'">{{::'raiff.payments.new.verify.token.authorize.next'|translate}}</bd-radio-option>
             </bd-radio-select>
 

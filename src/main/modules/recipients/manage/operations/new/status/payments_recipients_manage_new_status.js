@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('RecipientsManageNewStatusController', function ($scope, bdStepStateEvents, translate) {
 
-        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function (event, actions) {
+        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
             if($scope.recipient.result.type == 'success'){
                 prepareResult('raiff.payments.recipients.manage.new.status.ok');
             }else {

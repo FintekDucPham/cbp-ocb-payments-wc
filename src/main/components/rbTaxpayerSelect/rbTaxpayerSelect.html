@@ -1,0 +1,20 @@
+<div class="rb-taxpayer-select">
+    <div class="rb-taxpayer-select__choice">
+        <ui-select ng-model="selection.taxpayer"
+                   theme="bootstrap"
+                   placeholder="{{placeholderText}}"
+                   on-select="selectTaxpayer($item)">
+            <ui-select-match placeholder="{{ placeholderText }}">
+                {{$select.selected.customerName}}
+            </ui-select-match>
+            <ui-select-choices repeat="taxpayerItem in taxpayerList track by $index" null-option="nullOption">
+                <div ng-bind-html="taxpayerItem.customerName | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="rb-taxpayer-select__btn-clear">
+        <bd-button ng-click="clearSelection()" ng-disabled="!selection.isSelected">{{ clearText }}</bd-button>
+    </div>
+</div>
+
+

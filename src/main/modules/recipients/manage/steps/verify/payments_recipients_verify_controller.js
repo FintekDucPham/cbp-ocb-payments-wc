@@ -8,7 +8,7 @@ angular.module('raiffeisen-payments')
 
 
         bdVerifyStepInitializer($scope, {
-            formName: 'recipient',
+            formName: 'recipientForm',
             dataObject: $scope.recipient
         });
 

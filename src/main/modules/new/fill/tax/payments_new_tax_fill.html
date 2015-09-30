@@ -1,0 +1,360 @@
+<div ng-controller="NewUsPaymentFillController">
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.sender_account' | translate }}">
+        <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
+        <rb-account-select rb-account-id="payment.formData.remitterAccountId"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                           rb-product-list-name="TRANSFER_US_FROM_LIST"
+                           rb-account-select-params="remitterAccountSelectParams"
+                           rb-account="payment.items.senderAccount"></rb-account-select>
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.remitterAccountId"
+                      label="{{ ::'raiff.payments.new.us.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+        <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                   currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_select' | translate }}">
+        <rb-tax-recipient-select
+                rb-tax-recipient-id="payment.formData.templateId"
+                rb-tax-recipient="payment.items.recipient"
+                rb-on-clear-recipient="clearRecipient()"
+                rb-on-select-recipient="selectRecipient($recipient)"
+                rb-recipient-clear-text="{{ ::'raiff.payments.new.us.fill.recipient_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.recipient_select.placeholder' | translate }}"></rb-tax-recipient-select>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}" ng-switch="payment.options.isFromRecipient">
+
+        <div ng-switch-when="true">
+            <input class="input-field" disabled value="{{ payment.items.recipientAccount.recipientAccountNo }}" />
+            {{ payment.items.recipientAccount.officeName }}
+        </div>
+
+        <div ng-switch-when="false">
+            <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
+                                   rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
+
+            </rb-tax-account-select>
+
+            <eb-validation-messages eb-name="recipientAccountNo">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC'|translate}}
+                </div>
+                <div eb-message-key="bbanNrb" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US'|translate}}
+                </div>
+                <div eb-message-key="usNotFound" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                </div>
+                <div eb-message-key="notFromList" class="validation-message animate-on">
+                    {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                </div>
+            </eb-validation-messages>
+        </div>
+
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.new.us.fill.taxpayer_data' | translate }}">
+
+        <textarea name="taxpayerData"
+                  ng-model="payment.formData.taxpayerData"
+                  ng-pattern="patterns.taxpayerData"
+                  required
+                  bd-split-text
+                  bd-split-text-length="132"
+                  ng-disabled="payment.options.isFromTaxpayer"
+                  class="input-field input-area--party-data"
+                  placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
+
+        <eb-validation-messages eb-name="taxpayerData">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{ ::'raiff.payments.new.us.fill.taxpayer_data.EMPTY_PAYER' | translate }}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
+            </div>
+            <div eb-message-key="splitTextLength" class="validation-message animate-on">
+                {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
+        <rb-taxpayer-select
+                rb-taxpayer="payment.items.taxpayer"
+                rb-on-clear-taxpayer="clearTaxpayer()"
+                rb-on-select-taxpayer="selectTaxpayer($taxpayer)"
+                rb-taxpayer-clear-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.clear' | translate }}"
+                rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.taxpayer_select.placeholder' | translate }}"></rb-taxpayer-select>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type' | translate }}">
+        <ui-select ng-model="payment.formData.idType"
+                   theme="bootstrap"
+                   ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
+                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
+                   required>
+            <ui-select-match>
+                {{ 'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.' + $select.selected | translate }}
+            </ui-select-match>
+            <ui-select-choices repeat="supplementaryId in payment.meta.usSupplementaryIds track by $index">
+                <div ng-bind-html="::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </bd-item-property>
+
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.supplementary_id' | translate }}">
+        <input name="supplementaryId"
+               ng-model="payment.formData.idNumber"
+               required
+               ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
+               class="input-field"
+               type="text"
+               nip="payment.formData.idType === 'NIP'"
+               pesel="payment.formData.idType === 'PESEL'"
+               regon="payment.formData.idType === 'REGON'"
+               id-card="payment.formData.idType === 'ID_CARD'"
+               placeholder="{{ ::'raiff.payments.new.us.fill.supplementary_id.placeholder' | translate }}">
+
+        <eb-validation-messages eb-name="supplementaryId">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.EMPTY_ADD_ID_NUMBER'|translate}}
+            </div>
+            <div eb-message-key="nip" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
+            </div>
+            <div eb-message-key="pesel" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
+            </div>
+            <div eb-message-key="regon" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
+            </div>
+            <div eb-message-key="idCard" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.form_symbol' | translate }}">
+        <rb-us-form-symbol-select
+                rb-form-symbol-id="payment.formData.formCode"
+                rb-form-symbol="payment.items.formSymbol"
+                rb-on-select="selectSymbol()"
+                bd-attr-name="formSymbol"
+                bd-attr-required
+                rb-placeholder="{{ ::'raiff.payments.new.us.fill.form_symbol.placeholder' | translate }}">
+
+        </rb-us-form-symbol-select>
+
+        <eb-validation-messages eb-name="formSymbol">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.form_symbol.required'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_type' | translate }}">
+        <ui-select ng-model="payment.formData.periodType"
+                   name="periodType"
+                   on-select="selectPeriodType($item)"
+                   theme="bootstrap"
+                   ng-disabled="!payment.items.formSymbol.periodRequired"
+                   bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
+                   required>
+            <ui-select-match placeholder="{{ ::'raiff.payments.new.us.fill.period_type.placeholder' | translate }}">
+                {{ 'raiff.payments.new.us.fill.period_type.' + $select.selected | translate }}
+            </ui-select-match>
+            <ui-select-choices repeat="periodTypeCode in payment.meta.usPeriodTypeCodes track by $index" null-option="payment.meta.usPeriodTypeCodes[0]">
+                <div ng-bind-html="::'raiff.payments.new.us.fill.period_type.' + periodTypeCode | translate | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+
+
+        <eb-validation-messages eb-name="periodType">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.period_type.NEEDED_PERIOD_TYPE'|translate}}
+            </div>
+        </eb-validation-messages>
+
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_no' | translate }}">
+
+        <div ng-if="payment.options.customPeriod || !payment.items.formSymbol.periodRequired">
+            <input name="periodNo"
+                   ng-model="payment.formData.periodNo"
+                   required
+                   ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
+                   bd-novalidate-when="{{ payment.formData.periodType==='R' }}"
+                   ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
+                   class="input-field"
+                   type="text"
+                   placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}">
+        </div>
+
+        <div ng-if="!payment.options.customPeriod && payment.items.formSymbol.periodRequired">
+            <ui-select
+                    name="periodNo"
+                    ng-model="payment.formData.periodNo"
+                    theme="bootstrap"
+                    placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}"
+                    ng-required="true">
+                <ui-select-match>
+                    {{ $select.selected}}
+                </ui-select-match>
+                <ui-select-choices repeat="periodNo in payment.meta.usPeriodTypes[payment.formData.periodType].values track by $index">
+                    <div ng-bind-html="periodNo | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <eb-validation-messages eb-name="periodNo">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.period_no.EMPTY_PERIOD_US'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                <span ng-show="payment.formData.periodType == 'J' ">
+                    {{::'raiff.payments.new.us.fill.period_no.INCORRECT_PERIOD_US'|translate}}
+                </span>
+                 <span ng-show="payment.formData.periodType != 'J' ">
+                    {{::'raiff.payments.new.us.fill.period_no.INCORRECT_PERIOD_US_R'|translate}}
+                </span>
+            </div>
+        </eb-validation-messages>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_year' | translate }}">
+        <input name="periodYear"
+               ng-model="payment.formData.periodYear"
+               ng-disabled="!payment.items.formSymbol.periodRequired"
+               bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
+               required
+               ng-pattern="patterns.periodYear"
+               class="input-field"
+               type="text"
+               placeholder="{{ ::'raiff.payments.new.us.fill.period_year.placeholder' | translate }}">
+
+        <eb-validation-messages eb-name="periodYear">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.period_year.NOT_EMPTY_PERIOD_TYPE'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.period_year.PERIOD_TYPE_2_NUMBER'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.commitment_id' | translate }}">
+        <input name="commitmentId"
+               ng-model="payment.formData.obligationId"
+               ng-pattern="patterns.usCommitmentId"
+               class="input-field"
+               type="text"
+               placeholder="{{ ::'raiff.payments.new.us.fill.commitment_id.placeholder' | translate }}">
+
+        <eb-validation-messages eb-name="commitmentId">
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multi"
+                      label="{{ ::'raiff.payments.new.us.fill.amount' | translate }}">
+        <div class="bd-item-property--multi__values">
+            <div class="bd-item-property__value--primary">
+                <input type="number"
+                       name="amount"
+                       class="input-field"
+                       ng-model="payment.formData.amount"
+                       min="0.01"
+                       ng-pattern="AMOUNT_PATTERN"
+                       bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
+                       required
+                       placeholder="{{ ::'raiff.payments.new.us.fill.amount.placeholder' | translate }}"/>
+            </div>
+            <div class="bd-item-property__value--secondary">
+                <ui-select ng-model="payment.formData.currency"
+                           theme="bootstrap"
+                           ng-disabled="true"
+                           ng-init="payment.formData.currency = 'PLN'"
+                           required>
+                    <ui-select-match>
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="currency in ['PLN'] track by $index">
+                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+
+        <eb-validation-messages eb-name="amount">
+            <div eb-message-key="number" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.amount.EMPTY_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="min" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="balance" class="validation-message animate-on">
+                {{ 'raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
+            </div>
+            <div eb-message-key="elixir" class="validation-message animate-on">
+                {{ 'raiff.payments.new.us.fill.amount.NOT_ELIXIR_PMNT' | translate }}
+            </div>
+            <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.us.fill.execution_date' | translate }}">
+
+        <rb-datepicker rb-form="paymentForm"
+                       rb-name="realizationDate"
+                       ng-model="payment.formData.realizationDate"
+                       rb-datepicker-options="payment.meta.rbRealizationDateOptions"
+                       rb-date-disabled="!payment.meta.isFuturePaymentAllowed"
+                       rb-required="true">
+
+            <!--bd-attr-bd-min-date="minRealizationDate"-->
+
+        </rb-datepicker>
+
+        <eb-validation-messages eb-name="realizationDate">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="date" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="bdMaxDate" class="validation-message animate-on">
+                {{ payment.meta.laterExecutedDateMsg }}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+</div>

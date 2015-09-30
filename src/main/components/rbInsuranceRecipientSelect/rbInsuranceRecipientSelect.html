@@ -1,0 +1,20 @@
+<div class="rb-zus-recipient-select">
+    <div class="rb-zus-recipient-select__choice">
+        <ui-select ng-model="selection.recipient"
+                   theme="bootstrap"
+                   placeholder="{{placeholderText}}"
+                   on-select="selectRecipient($item)">
+            <ui-select-match placeholder="{{ placeholderText }}">
+                {{$select.selected.customerName}}
+            </ui-select-match>
+            <ui-select-choices repeat="recipientItem in recipientList track by $index" null-option="nullOption">
+                <div ng-bind-html="recipientItem.customerName | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="rb-zus-recipient-select__btn-clear">
+        <bd-button ng-click="clearSelection()" ng-disabled="!selection.isSelected">{{ clearText }}</bd-button>
+    </div>
+</div>
+
+

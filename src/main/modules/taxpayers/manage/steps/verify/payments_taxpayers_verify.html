@@ -1,0 +1,57 @@
+<div ng-controller="RecipientsManageVerifyZusController">
+
+    <bd-item-property ng-if="taxpayer.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.micro_name' | translate }}">
+        {{ taxpayer.formData.customName }}
+    </bd-item-property>
+    
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.custom_name' | translate }}">
+        {{ taxpayer.formData.customName }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_type' | translate }}">
+        {{ 'raiff.payments.taxpayers.verify.taxpayer_type.' + taxpayer.formData.taxpayerType | translate }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.taxpayers.verify.taxpayer_data'|translate}}">
+        <p style="white-space: pre;" ng-bind-html="taxpayer.formData.taxpayerData.join('\n')"></p>
+    </bd-item-property>
+
+    <bd-item-property ng-if="taxpayer.formData.taxpayerType === 'ZUS'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_nip' | translate }}">
+        {{ taxpayer.formData.nip }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_supplementary_id_type' | translate }}">
+        {{ taxpayer.formData.secondaryIdType }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_supplementary_id' | translate }}">
+        {{ taxpayer.formData.secondaryIdNo }}
+    </bd-item-property>
+
+    <form name="taxpayerAuthForm" novalidate ng-if="taxpayer.options.twoStepAuthorization">
+        <div ng-init="setForm(taxpayerAuthForm);"></div>
+
+        <bd-item-property label="{{ taxpayer.items.smsText }}">
+
+            <input type="text"
+                   name="authCode"
+                   ng-model="taxpayer.formData.credentials"
+                   required/>
+
+            <eb-validation-messages eb-name="authCode">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+
+        <div class="authorization-blocked" ng-if="taxpayer.promises.authorizationPromise.$$state.status === 2">
+            <!--{{::"cards.label.empty_list"|translate}}-->
+            {{::'raiff.payments.taxpayers.authorization.fail'|translate}}
+        </div>
+
+    </form>
+
+</div>

@@ -1,11 +1,7 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, lodash, bdFocus, $timeout, $stateParams, taxOffices, bdStepStateEvents, rbAccountSelectParams) {
+    .controller('NewDomesticPaymentFillController', function ($scope, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams) {
 
         $scope.currencyList = [];
-
-        angular.extend($scope.payment.formData, {
-            templateId: $stateParams.recipientId // todo only one template per recipient supported - no templateIds
-        }, lodash.omit($scope.payment.formData, lodash.isUndefined));
 
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
@@ -89,10 +85,6 @@ angular.module('raiffeisen-payments')
             $timeout(recalculateCurrency);
         });
 
-        if ($stateParams.accountId) {
-            $scope.payment.formData.remitterAccountId = $stateParams.accountId;
-        }
-
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             control.holdOn();
             taxOffices.search({
@@ -143,8 +135,10 @@ angular.module('raiffeisen-payments')
 
         var recipientFilter = $scope.recipientFilter = {
             doesMatch: function (recipient) {
-                var senderAccount = $scope.payment.items.senderAccount;
-                return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
+                return true;
+                // todo recipients should be displayed regardless of their source account
+                //var senderAccount = $scope.payment.items.senderAccount;
+                //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
 
