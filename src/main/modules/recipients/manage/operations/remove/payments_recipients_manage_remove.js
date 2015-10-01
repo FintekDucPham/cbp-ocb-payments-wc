@@ -28,7 +28,7 @@ angular.module('raiffeisen-payments')
         if(!$stateParams.dataConverted) {
             lodash.extend($scope.recipient, $stateParams.recipient ? myRecipientManager.makeEditable($stateParams.recipient) : null, $scope.recipient);
         } else {
-            lodash.extend($scope.recipient, $stateParams.recipient, $scope.recipient);
+            lodash.extend($scope.recipient.formData, $stateParams.recipient, $scope.recipient.formData);
         }
 
         $scope.clearForm = function () {
@@ -44,9 +44,9 @@ angular.module('raiffeisen-payments')
             });
         });
 
-        $scope.clearForm = function(){
+        $scope.editForm = function(){
             $state.go("payments.recipients.manage.edit.fill", {
-                recipientType: $scope.recipient.recipientType.toLowerCase(),
+                recipientType: $scope.recipient.type.code.toLowerCase(),
                 operation: 'edit',
                 recipient: angular.copy($scope.recipient.formData),
                 dataConverted: true

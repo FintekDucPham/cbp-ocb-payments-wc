@@ -32,13 +32,14 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/payments_new.html",
             controller: "PaymentsNewController",
             params: {
-                paymentType: 'domestic'
+                paymentType: 'domestic',
+                payment: {}
             }
         });
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash) {
 
-        bdMainStepInitializer($scope, 'payment', {
+        bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             type: lodash.find(rbPaymentTypes, {
                 state: $stateParams.paymentType || 'domestic'
@@ -54,6 +55,8 @@ angular.module('raiffeisen-payments')
                 })
             },
             validation: {}
+        }), {
+            formData: $stateParams.payment
         });
 
         $scope.clearForm = function () {

@@ -1,6 +1,6 @@
 angular.module('raiffeisen-payments')
     .controller('RecipientsManageVerifyController', function (bdVerifyStepInitializer, translate, dateFilter, $scope, pathService, recipientGeneralService, authorizationService,
-                                                              formService, bdStepStateEvents) {
+                                                              formService, bdStepStateEvents, lodash) {
 
         $scope.recipientAuthUrl = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
 
