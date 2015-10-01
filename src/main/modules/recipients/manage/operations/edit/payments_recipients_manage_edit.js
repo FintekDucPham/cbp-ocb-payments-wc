@@ -33,7 +33,7 @@ angular.module('raiffeisen-payments')
         if(!$stateParams.dataConverted) {
             lodash.extend($scope.recipient, $stateParams.recipient ? myRecipientManager.makeEditable($stateParams.recipient) : null, $scope.recipient);
         } else {
-            lodash.extend($scope.recipient, $stateParams.recipient, $scope.recipient);
+            lodash.extend($scope.recipient.formData, $stateParams.recipient, $scope.recipient.formData);
         }
 
         $scope.clearForm = function () {
