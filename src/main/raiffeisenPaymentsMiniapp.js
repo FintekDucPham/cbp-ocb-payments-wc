@@ -42,20 +42,25 @@ angular.module('raiffeisen-payments', [
                     priority: 1
                 },
                 {
-
                     id: "payments.recipients.list",
                     label: 'raiff.payments.recipients.label',
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.recipients.list",
-                    priority: 2
+					priority: 2
                 },
                 {
-
                     id: "payments.taxpayers.list",
                     label: 'raiff.payments.taxpayers.label',
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.taxpayers.list",
                     priority: 3
+                },
+                {
+                    id: "payments.rejected.list",
+                    label: 'raiff.payments.rejected.label',
+                    icon: "raiff-icons raiff_operacje_odrzucone",
+                    action: "payments.rejected.list",
+                    priority: 6
                 }
             ]
         });
@@ -66,6 +71,6 @@ angular.module('raiffeisen-payments', [
     registerBaseState();
     registerNavigation();
 
-}).run(function () {
+}).run(function() {
 
 });
