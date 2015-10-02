@@ -42,6 +42,14 @@ angular.module('raiffeisen-payments')
         });
 
         function calculateInsurancesAmount() {
+            var summary = calculateInsurancesSummary();
+            if (!summary || !summary.length) {
+                summary = createEmptySummary();
+            }
+            return summary;
+        }
+
+        function calculateInsurancesSummary() {
             return lodash.map(lodash.groupBy($scope.payment.formData.insurancePremiums, 'currency'), function (values) {
                 var totalAmount = 0;
                 lodash.forEach(values, function (value) {
@@ -54,7 +62,14 @@ angular.module('raiffeisen-payments')
             });
         }
 
-        $scope.totalPaymentAmount = [];
+        function createEmptySummary() {
+            return [{
+                currency: "PLN",
+                amount: 0
+            }];
+        }
+
+        $scope.totalPaymentAmount = createEmptySummary();
         $scope.selectedInsurancesCount = 0;
         $scope.enoughBalance = false;
 

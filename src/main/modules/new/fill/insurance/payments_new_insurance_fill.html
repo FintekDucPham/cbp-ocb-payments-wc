@@ -251,19 +251,9 @@
                                    name="{{ insuranceType }}Amount"/>
                         </div>
                         <div class="bd-pair__value">
-                            <ui-select ng-model="payment.formData.insurancePremiums[insuranceType].currency"
-                                       theme="bootstrap"
-                                       ng-init="payment.formData.insurancePremiums[insuranceType].currency = 'PLN'"
-                                       ng-required="payment.formData.insurancePremiums[insuranceType]"
-                                       name="{{ insuranceType }}Currency"
-                                       ng-disabled="true">
-                                <ui-select-match placeholder="Waluta">
-                                    {{$select.selected}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="currency in ['PLN'] track by $index">
-                                    <div ng-bind-html="currency | highlight: $select.search"></div>
-                                </ui-select-choices>
-                            </ui-select>
+                            <input class="input-field input-field--currency" value="PLN"
+                                   ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
+                                   ng-readonly="payment.formData.insurancePremiums[insuranceType]">
                         </div>
                     </div>
 
