@@ -6,7 +6,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">
-            {{ recipient.items.senderAccount.accountName }} | {{ recipient.items.senderAccount.accountNo }}
+            {{ ( recipient.formData.debitAccountNo | ownAccountNrb:'customName' ) || ( recipient.formData.debitAccountNo | ownAccountNrb:'accountName' )  }} | {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.custom_name' | translate }}">
@@ -14,7 +14,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.recipient_account' | translate }}">
-            {{ recipient.items.selectedInsurance.accountNo | nrbIbanFilter }} | {{ ::'raiff.payments.insurances.type.' + recipient.items.selectedInsurance.insuranceCode | translate }}
+            {{ ::recipient.formData.selectedInsuranceId | insuranceRecipient:'accountNo' | nrbIbanFilter  }} | {{ ::'raiff.payments.insurances.type.' + (recipient.formData.selectedInsuranceId | insuranceRecipient:'insuranceCode') | translate }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.taxpayer_nip' | translate }}">

@@ -46,12 +46,11 @@
 
         </bd-item-property>
 
-
-        <div class="authorization-blocked" ng-if="taxpayer.promises.authorizationPromise.$$state.status === 2">
-            <!--{{::"cards.label.empty_list"|translate}}-->
-            {{::'raiff.payments.taxpayers.authorization.fail'|translate}}
-        </div>
-
     </form>
+
+    <div class="authorization-blocked" ng-if="taxpayer.promises.authorizationPromise.$$state.status === 2">
+        <!--{{::"cards.label.empty_list"|translate}}-->
+        {{::'raiff.payments.taxpayers.authorization.fail'|translate}}
+    </div>
 
 </div>
