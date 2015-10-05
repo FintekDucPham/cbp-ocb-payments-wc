@@ -19,7 +19,7 @@ angular.module('raiffeisen-payments')
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    $scope.prepareOperation(actions);
+                    actions.proceed();
                 }
             }
         });

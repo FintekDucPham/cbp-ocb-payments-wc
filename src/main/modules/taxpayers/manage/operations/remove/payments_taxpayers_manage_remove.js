@@ -30,20 +30,24 @@ angular.module('raiffeisen-payments')
             };
         });
 
-        $scope.onVerifyStepAttached = lodash.once(function($scope) {
-            $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
-                // this gets called because there is no first step
-                $scope.prepareOperation({
-                    proceed: angular.noop
-                });
-            });
-        });
+        //$scope.onVerifyStepAttached = lodash.once(function($scope) {
+        //    $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
+        //        // this gets called because there is no first step
+        //        $scope.prepareOperation({
+        //            proceed: angular.noop
+        //        });
+        //    });
+        //});
 
         $scope.editForm = function () {
             var formData = $scope.taxpayer.formData;
-            $state.go("payments.taxpayers.manage.edit.fill", {
+            $state.transitionTo("payments.taxpayers.manage.edit.fill", {
                 taxpayerType: formData.taxpayerType.toLowerCase(),
                 taxpayer: formData
+            }, {
+                reload: true,
+                inherit: false,
+                notify: true
             });
         };
 

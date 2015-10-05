@@ -21,6 +21,12 @@ angular.module('raiffeisen-payments')
             actions.proceed();
         });
 
+        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function() {
+            $scope.prepareOperation({
+                proceed: angular.noop
+            });
+        });
+
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             //delete $scope.taxpayer.formData.taxpayerId;
             //delete $scope.taxpayer.formData.credentials;
