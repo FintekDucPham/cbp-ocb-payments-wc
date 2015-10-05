@@ -20,14 +20,23 @@ angular.module('raiffeisen-payments')
             controller: "TaxpayersManageRemoveStatusController"
         });
     })
-    .controller('PaymentsTaxpayersManageRemoveController', function ($scope, $stateParams, $state, lodash) {
+    .controller('PaymentsTaxpayersManageRemoveController', function ($scope, $stateParams, $state, lodash, bdStepStateEvents) {
 
         lodash.extend($scope.taxpayer.formData, $stateParams.taxpayer, $scope.taxpayer.formData);
 
         $scope.setRequestConverter(function () {
             return {
-                taxpayerId: $scope.taxpayer.id
+                payerId: $scope.taxpayer.formData.taxpayerId
             };
+        });
+
+        $scope.onVerifyStepAttached = lodash.once(function($scope) {
+            $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
+                // this gets called because there is no first step
+                $scope.prepareOperation({
+                    proceed: angular.noop
+                });
+            });
         });
 
         $scope.editForm = function () {

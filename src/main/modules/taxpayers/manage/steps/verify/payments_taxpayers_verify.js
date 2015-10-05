@@ -13,16 +13,7 @@ angular.module('raiffeisen-payments')
             if (form && form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                taxpayerManagementService.realize(
-                    $scope.taxpayer.transferId,
-                    $scope.taxpayer.formData.credentials
-                ).then(function () {
-                        $scope.taxpayer.result.type = 'success';
-                        actions.proceed();
-                    }).catch(function (e) {
-                        $scope.taxpayer.result.type = 'error';
-                        actions.proceed();
-                    });
+                $scope.performOperation(actions);
             }
         });
 
@@ -31,14 +22,16 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
-            delete $scope.taxpayer.formData.credentials;
+            //delete $scope.taxpayer.formData.taxpayerId;
+            //delete $scope.taxpayer.formData.credentials;
             delete $scope.taxpayer.promises.authorizationPromise;
-            delete $scope.taxpayer.transferId;
         });
 
         $scope.setForm = function (form) {
             $scope.taxpayerAuthForm = form;
         };
+
+        $scope.onVerifyStepAttached($scope);
         
     });
 
