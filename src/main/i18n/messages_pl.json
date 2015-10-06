@@ -40,7 +40,8 @@
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
     "payments.submenu.options.list.header": "Lista płatności",
-    "payments.submenu.options.new.header": "Przelew",
+    "payments.submenu.options.new.header": "Przelew krajowy w PLN",
+    "payments.submenu.options.new_internal.header": "Przelew własny",
 
     "raiff.payments.widget.view.new_payment": "Nowa płatność",
     "raiff.payments.widget.content.total_payments": "Suma płatności",
@@ -90,6 +91,7 @@
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
     "raiff.payments.new.label.header": "Przelew",
+    "raiff.payments.new_internal.label.header": "Przelew własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
     "raiff.payments.new.types.INTERNAL": "Przelew własny",

@@ -1,0 +1,15 @@
+<rb-content-view class="rb-content-view--framed rb-payments-new form">
+    <bd-header>{{::"raiff.payments.new_internal.label.header"|translate}}</bd-header>
+    <bd-form-panel>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.payment_type'|translate}}">
+            {{ ::'raiff.payments.new.types.INTERNAL' | translate }}
+        </bd-item-property>
+
+        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="{ completeState: 'payments.recipients.list', onClear: clearForm, cancelState: 'payments.recipients.list', labels : { finalize: 'raiff.payments.new.btn.finalize' } }">
+            <div ui-view></div>
+        </rb-multistep-form>
+
+    </bd-form-panel>
+
+</rb-content-view>
