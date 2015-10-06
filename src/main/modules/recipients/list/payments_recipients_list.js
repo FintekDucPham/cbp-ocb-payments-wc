@@ -5,7 +5,7 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/list/payments_recipients_list.html",
             controller: "PaymentsRecipientsListController"
         });
-    }).controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService, viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService) {
+    }).controller('PaymentsRecipientsListController', function ($scope, accountsService, customerService, $state, bdTableConfig, $timeout, recipientsService, viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService) {
 
 
         accountsService.search().then(function(accountList){
