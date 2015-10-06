@@ -24,8 +24,15 @@ angular.module('raiffeisen-payments')
                         $scope.recipient.type.code.toLowerCase(),
                         $scope.recipient.transferId,
                         $scope.recipient.items.credentials
-                    ).then(function () {
-                        $scope.recipient.result.type = 'success';
+                    ).then(function (resultCode) {
+                        var parts = resultCode.split('|');
+                        $scope.recipient.result = {
+                            code: parts[1],
+                            type: parts[0] === 'OK' ? "success" : "error"
+                        };
+                        if (parts[0] !== 'OK' && !parts[1]) {
+                            $scope.recipient.result.code = 'error';
+                        }
                         actions.proceed();
                     }).catch(function (e) {
                         $scope.recipient.result.type = 'error';
