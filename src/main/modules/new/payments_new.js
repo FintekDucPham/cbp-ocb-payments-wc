@@ -50,9 +50,9 @@ angular.module('raiffeisen-payments')
                 fixedRecipientSelection: false
             },
             meta: {
-                paymentTypes: lodash.map(rbPaymentTypes, function (value) {
+                paymentTypes: lodash.without(lodash.map(rbPaymentTypes, function (value) {
                     return value;
-                })
+                }), rbPaymentTypes.INTERNAL)
             },
             validation: {}
         }), {

@@ -42,19 +42,32 @@ angular.module('raiffeisen-payments', [
                     priority: 1
                 },
                 {
-
+                    id: "payments.new_internal.fill",
+                    label: 'payments.submenu.options.new_internal.header',
+                    icon: "raiff-icons raiff_przelew",
+                    action: "payments.new_internal.fill",
+                    priority: 2
+                },
+                {
                     id: "payments.recipients.list",
                     label: 'raiff.payments.recipients.label',
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.recipients.list",
-                    priority: 2
+					priority: 3
+                },
+                {
+                    id: "payments.taxpayers.list",
+                    label: 'raiff.payments.taxpayers.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.taxpayers.list",
+                    priority: 4
                 },
                 {
                     id: "payments.rejected.list",
                     label: 'raiff.payments.rejected.label',
                     icon: "raiff-icons raiff_operacje_odrzucone",
                     action: "payments.rejected.list",
-                    priority: 6
+                    priority: 5
                 }
             ]
         });
