@@ -9,6 +9,10 @@ angular.module('raiffeisen-payments')
             usPeriodTypes: usPeriodTypes
         });
 
+        $scope.selectSymbol = function() {
+            delete $scope.recipient.formData.periodType;
+        };
+
         $scope.setRequestConverter(function (formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             return {

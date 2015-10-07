@@ -18,6 +18,8 @@
     "raiff.payments.us.period_type.R": "R - rok",
 
     "raiff.payments.id_type.PESEL": "PESEL",
+    "raiff.payments.id_type.NIP": "NIP",
+    "raiff.payments.id_type.OTHER": "Inny",
     "raiff.payments.id_type.REGON": "REGON",
     "raiff.payments.id_type.ID_CARD": "dowód osobisty",
     "raiff.payments.id_type.PASSPORT": "paszport",

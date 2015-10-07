@@ -35,7 +35,9 @@ angular.module('raiffeisen-payments')
 
                 $scope.$watch('taxOfficeId', function (taxOfficeId) {
                     if (taxOfficeId) {
-                        $scope.searchForOffice(taxOfficeId);
+                        if(!$scope.model.taxOffice || $scope.model.taxOffice && $scope.model.taxOffice.taxOfficeId !== taxOfficeId) {
+                            $scope.searchForOffice(taxOfficeId);
+                        }
                     } else {
                         $scope.taxOffice = null;
                     }
@@ -45,6 +47,7 @@ angular.module('raiffeisen-payments')
                     if (newVal) {
                         $scope.model.taxOffice = newVal;
                         $scope.isFromList = true;
+                        $scope.taxOfficeId = newVal.accountNo;
                     } else {
                         $scope.useCustom();
                     }

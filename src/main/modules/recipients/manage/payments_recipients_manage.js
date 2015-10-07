@@ -126,7 +126,8 @@ angular.module('raiffeisen-payments')
                         idNumber: recipient.secondaryId,
                         periodType: recipient.periodType,
                         formCode: recipient.formSymbol,
-                        selectedTaxOfficeId: recipient.nrb
+                        selectedTaxOfficeId: recipient.nrb,
+                        obligationId: recipient.obligationId
                     }
                 }, recipient);
             }

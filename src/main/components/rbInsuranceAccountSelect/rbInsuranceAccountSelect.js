@@ -59,27 +59,4 @@ angular.module('raiffeisen-payments')
 
             }
         };
-    }).filter('insuranceRecipient', function(insuranceAccounts, lodash) {
-
-        var insurancesByNrb = {};
-
-        insuranceAccounts.search().then(function(insuranceAccounts) {
-            insurancesByNrb = lodash.transform(insuranceAccounts.content, function(result, value) {
-                result[value.accountNo] = value;
-            }, {});
-        });
-
-        return function(nrb, what) {
-            if(nrb) {
-                if(insurancesByNrb) {
-                    var insurance = insurancesByNrb[nrb.replace(/ */g, '')];
-                    return !!insurance ? insurance[what] : '-';
-                } else {
-                    return '-';
-                }
-            } else {
-                return null;
-            }
-        };
-
     });
