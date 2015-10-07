@@ -54,7 +54,9 @@
                   bd-table-meta="{ 'first' : { 'title': '##raiff.payments.recipients.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##raiff.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' }, 'third' : { 'title': '##raiff.payments.recipients.list.header.nrb.label', 'data' : 'nrb' }, 'fourth' : { 'title': '##raiff.payments.recipients.list.header.type.label', 'data' : 'recipientTypeMessage' } }">
 
             <bd-details-section bd-table-row-details>
+
                 <div ng-include="::resolveTemplateType($data.recipientType)"></div>
+
                 <bd-details-action-section>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">

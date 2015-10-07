@@ -22,7 +22,7 @@ angular.module('raiffeisen-payments')
             formData: {},
             options: {},
             meta: {
-                taxpayerTypes: lodash.map(rbRecipientTypes)
+                taxpayerTypes: lodash.map(rbTaxpayerTypes)
             }
         });
 

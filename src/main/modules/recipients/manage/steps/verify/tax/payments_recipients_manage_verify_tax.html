@@ -6,7 +6,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.remitter_account' | translate }}">
-            {{ recipient.items.senderAccount.accountName }} | {{ recipient.items.senderAccount.accountNo }}
+            {{ ( recipient.formData.debitAccountNo | ownAccountNrb:'customName' ) || ( recipient.formData.debitAccountNo | ownAccountNrb:'accountName' )  }} | {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.custom_name' | translate }}">
@@ -14,12 +14,12 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.recipient_account' | translate }}">
-            {{ recipient.items.recipientAccount.accountNo | nrbIbanFilter }}
+            {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.verify.us.recipient_data.label' | translate }}">
-            {{ recipient.items.recipientAccount.officeName }}, {{ recipient.items.recipientAccount.officeAddress }}
+            {{ taxOfficeName  }} | {{ taxOfficeAddress }}
         </bd-item-property>
         
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.taxpayer_supplementary_id_type' | translate }}">

@@ -446,6 +446,7 @@
     "raiff.payments.recipients.new.zus.fill.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.zus.fill.custom_name.placeholder": "Wpisz nazwę odbiorcy",
     "raiff.payments.recipients.new.zus.fill.recipient_account": "Numer rachunku",
+    "raiff.payments.recipients.new.zus.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
     "raiff.payments.recipients.new.zus.fill.taxpayer_nip": "NIP płatnika",
     "raiff.payments.recipients.new.zus.fill.taxpayer_nip.placeholder": "Wpisz NIP płatnika",
     "raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type": "Typ drugiego identyfikatora",
