@@ -6,7 +6,9 @@
 
             <div class="bd-item-property row">
                 <div class="col-xs-12">
-                    <bd-radio-option bd-option-value="rejectedList.periodTypes.LAST" class="row__inline-block--middle"></bd-radio-option>
+                    <bd-radio-option bd-option-value="rejectedList.periodTypes.LAST" class="row__inline-block--middle">
+                        {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
+                    </bd-radio-option>
                     <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
                         <input bd-type="text" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-maxlength="2" ng-pattern="/^\d+$/"/>
                     </div>
@@ -42,7 +44,9 @@
 
             <div class="row">
                 <div class="row--spacing col-md-10 col-sm-12">
-                    <bd-radio-option bd-option-value="rejectedList.periodTypes.RANGE" class="row__inline-block--middle"></bd-radio-option>
+                    <bd-radio-option bd-option-value="rejectedList.periodTypes.RANGE" class="row__inline-block--middle">
+                        {{:: 'raiff.payments.rejected.list.filter.type.range.label' | translate}}
+                    </bd-radio-option>
                     <div class="row__inline-block--middle row__inline-block--adjacent">
                         {{::'raiff.payments.rejected.list.filter.type.range.from.label'|translate}}
                     </div>

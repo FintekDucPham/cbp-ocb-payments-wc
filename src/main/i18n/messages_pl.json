@@ -51,7 +51,7 @@
     "raiff.payments.widget.content.waiting_payments": "oczekująca płatność",
     "raiff.payments.widget.content.waiting_payments.2": "oczekujące płatności",
     "raiff.payments.widget.content.waiting_payments.3": "oczekujących płatności",
-    
+
     "raiff.payments.content.mini_bar.placeholder": "Wpisz szukany tekst",
     "raiff.payments.content.mini_bar.title": "Nowa płatność",
     "raiff.payments.content.tabs.active": "Aktywne",
@@ -569,7 +569,7 @@
     "raiff.payments.rejected.list.filter.type.last.types.DAYS": "dni",
     "raiff.payments.rejected.list.filter.type.last.types.WEEKS": "tygodni",
     "raiff.payments.rejected.list.filter.type.last.types.MONTHS": "miesięcy",
-    "raiff.payments.rejected.list.filter.type.range.label": "Ostatnie",
+    "raiff.payments.rejected.list.filter.type.range.label": "Okres",
     "raiff.payments.rejected.list.filter.type.range.from.label": "od",
     "raiff.payments.rejected.list.filter.type.range.to.label": "do",
     "raiff.payments.rejected.list.details.transferType": "Typ operacji",
