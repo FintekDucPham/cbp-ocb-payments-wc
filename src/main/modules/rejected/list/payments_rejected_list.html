@@ -129,6 +129,9 @@
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.transferType' | translate }}">
                     {{ 'raiff.payments.new.types.'+$data.details.transferType | translate }}
                 </bd-item-property>
+                <bd-item-property  label="">
+                    {{ :: 'raiff.payments.rejected.opration_type.rejected' | translate }}
+                </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.registrationDate' | translate }}">
                     {{ $data.details.realizationDate | date : 'dd.MM.yyyy' }} <!-- cannot resolve registration date from the bus -->
                 </bd-item-property>
