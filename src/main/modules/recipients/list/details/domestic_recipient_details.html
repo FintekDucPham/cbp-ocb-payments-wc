@@ -21,5 +21,4 @@
     <div ng-repeat="owner in ownerList = (getAccountByNrb($data.debitNrb).ownersList | filter: { relationType: 'OWNER' }:true)">
         <span>{{owner.fullName}}</span>
     </div>
-    </div>
 </bd-item-property>
