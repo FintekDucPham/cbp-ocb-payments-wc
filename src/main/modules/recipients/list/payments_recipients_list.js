@@ -7,9 +7,12 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, customerService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService) {
 
 
+        accountsService.search().then(function(accountList){
+            $scope.accountList = accountList.content;
+        });
         customerService.getCustomerDetails().then(function(customerDetails){
             $scope.customerDetails = customerDetails.customerDetails;
         });
@@ -31,6 +34,13 @@ angular.module('raiffeisen-payments')
             currentType: recipientFilterType.DOMESTIC,
             availableTypes: recipientFilterType,
             availableTypesList: lodash.map(recipientFilterType)
+        };
+
+
+        $scope.getAccountByNrb = function(accountNrb){
+            return lodash.find($scope.accountList, {
+                accountNo: accountNrb
+            });
         };
 
         $scope.recipientListPromise = {};
@@ -103,7 +113,8 @@ angular.module('raiffeisen-payments')
                                     recipient: recipient.recipientName.join(" "),
                                     recipientName: recipient.recipientAddress.join(" "),
                                     nrb: template.beneficiaryAccountNo,
-                                    debitNrb: template.remitterAccountNo
+                                    debitNrb: template.remitterAccountNo,
+                                    ownerList: $scope.getAccountByNrb(template.remitterAccountNo)
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
