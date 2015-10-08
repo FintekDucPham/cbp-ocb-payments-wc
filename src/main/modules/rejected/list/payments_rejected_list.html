@@ -119,11 +119,8 @@
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.transferType' | translate }}">
                     {{ 'raiff.payments.new.types.'+$data.details.transferType | translate }}
                 </bd-item-property>
-                <bd-item-property  label="">
-                    {{ $data.details.status }}
-                </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.registrationDate' | translate }}">
-                    {{ $data.details.registrationDate | date : 'yyyy-MM-dd' }}
+                    {{ $data.details.realizationDate | date : 'yyyy-MM-dd' }} <!-- cannot resolve registration date from the bus -->
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.accountNo' | translate }}">
                     {{ $data.details.accountNo | nrbIbanFilter }}
