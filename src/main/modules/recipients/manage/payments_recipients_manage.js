@@ -42,7 +42,6 @@ angular.module('raiffeisen-payments')
                     selectFn(result);
                 }
             }
-            selectFn(accountList[0]);
         };
 
 

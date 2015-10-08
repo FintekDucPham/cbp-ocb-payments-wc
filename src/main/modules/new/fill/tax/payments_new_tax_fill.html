@@ -34,6 +34,7 @@
 
         <div ng-switch-when="false">
             <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
+                                   rb-on-tax-account-select="selectTaxAccount($office)"
                                    rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
 
             </rb-tax-account-select>

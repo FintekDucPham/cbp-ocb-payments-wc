@@ -6,6 +6,7 @@ angular.module('raiffeisen-payments')
             scope: {
                 taxOffice: '=?rbTaxOffice',
                 taxOfficeId: '=?rbTaxOfficeId',
+                onAccountSelect: '&rbOnTaxAccountSelect',
                 params: '=?rbTaxOfficeParams'
             },
             compile: function ($element, $attr) {
@@ -31,6 +32,9 @@ angular.module('raiffeisen-payments')
                     $scope.taxAccountNo = item.accountNo;
                     $scope.model.taxOffice = item;
                     $scope.taxOffice = item;
+                    $scope.onAccountSelect({
+                        $office: item
+                    });
                 };
 
                 $scope.$watch('taxOfficeId', function (taxOfficeId) {
@@ -78,7 +82,6 @@ angular.module('raiffeisen-payments')
                             $scope.taxAccounts = result;
                             $scope.isFromList = true;
                             $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
-                            $scope.$emit("taxAccountChanged", $scope.model.taxOffice);
                             if (result.length > 2) {
                                 $scope.$broadcast('taxAccountSearched', selectedInput);
                             }

@@ -69,6 +69,10 @@ angular.module('raiffeisen-payments')
             return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType.toLowerCase());
         };
 
+        $scope.trimTable = lodash.memoize(function(table) {
+            return lodash.without(table, null);
+        });
+
         $scope.table = {
             tableConfig : new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
