@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, $state) {
+    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state) {
 
         var PERIOD_TYPES = {
             LAST: 'LAST',
@@ -73,7 +73,7 @@ angular.module('raiffeisen-payments')
             maxOffset: parameters.detal.max,
             filterData: {
                 periodType: {
-                    model: parameters.customerDetails.context === 'DETAL' ? PERIOD_TYPES.LAST : PERIOD_TYPES.RANGE,
+                    model: parameters.customerDetails.context === 'DETAL' ? PERIOD_TYPES.LAST : PERIOD_TYPES.RANGE
                 },
                 last: {
                     value: parameters.detal.default,
@@ -125,11 +125,18 @@ angular.module('raiffeisen-payments')
 
                     paymentsService.search(params).then(function (paymentSummary) {
                         angular.forEach(paymentSummary.content, function (payment) {
+                            if(payment.transferType === 'OWN') {
+                                payment.transferType = 'INTERNAL';
+                            }
+
                             angular.extend(payment, {
                                 loadDetails: function () {
 
                                     this.promise = paymentsService.get(this.id, {}).then(function (paymentDetails) {
                                         payment.details = paymentDetails;
+                                        if(payment.details.transferType === 'OWN') {
+                                            payment.details.transferType = 'INTERNAL';
+                                        }
                                     });
 
                                     payment.loadDetails = undefined;
@@ -148,54 +155,53 @@ angular.module('raiffeisen-payments')
             var copiedData = angular.copy(data);
             var details = copiedData.details;
             var paymentType = angular.lowercase(copiedData.transferType);
-            $state.go("payments.new.fill", {
+            $state.go(paymentType === 'internal' ? "payments.new_internal.fill" : "payments.new.fill", {
                 paymentType: paymentType,
                 payment: lodash.extend({
-                    remitterAccountId : copiedData.accountId,
+                    remitterAccountId : details.accountId,
                     recipientName : details.recipientName,
-                    realizationDate: copiedData.realizationDate
+                    realizationDate: details.realizationDate
                 }, (function() {
                     switch(paymentType) {
                         case 'insurance':
                             return {
-                                nip: "todo",
-                                secondaryIdType: "todo",
-                                secondaryIdNo: "todo",
-                                paymentType: "todo",
-                                declarationDate: "todo",
-                                declarationNo: "todo",
-                                additionalInfo: "todo",
-                                insurancePremiums: "todo"
+                                nip: details.nip,
+                                secondaryIdType: details.secondIDType,
+                                secondaryIdNo: details.secondIDNo,
+                                paymentType: details.paymentType,
+                                declarationDate: details.declaration,
+                                declarationNo: details.declarationNo,
+                                additionalInfo: details.decisionNo,
+                                insurancePremiums: null // todo cannot resolve
                             };
                         case 'domestic':
                             return {
                                 recipientAccountNo: details.accountNo,
                                 recipientName: details.recipientName,
                                 description: details.title,
-                                amount: copiedData.amount,
-                                currency: copiedData.currency
+                                amount: details.amount,
+                                currency: details.currency
                             };
                         case 'internal':
                             return {
-                                beneficiaryAccountId: "todo",
-                                amount: copiedData.amount,
-                                currency: copiedData.currency,
+                                beneficiaryAccountId: details.recipientAccountId,
+                                amount: details.amount,
+                                currency: details.currency,
                                 description: details.title
                             };
                         case 'tax':
                             return {
-                                // todo dopisac do rb-tax-account-select
-                                recipientAccountNo: "todo",
-                                taxpayerData: "todo",
-                                idType: "todo",
-                                idNumber: "todo",
-                                formCode: "todo",
-                                periodType: "todo",
-                                periodNo: "todo",
-                                periodYear: "todo",
-                                obligationId: "todo",
-                                amount: copiedData.amount,
-                                currency: copiedData.currency
+                                recipientAccountNo: details.recipientAccountNo,
+                                taxpayerData: copiedData.senderName,
+                                idType: details.iDType,
+                                idNumber: details.iDNumber,
+                                formCode: details.formCode,
+                                periodType: details.periodType,
+                                periodNo: details.periodNo,
+                                periodYear: details.periodYear,
+                                obligationId: details.obligationId,
+                                amount: details.amount,
+                                currency: details.currency
                             };
                         default:
                             throw "Payment type {0} not supported.".format(paymentType);

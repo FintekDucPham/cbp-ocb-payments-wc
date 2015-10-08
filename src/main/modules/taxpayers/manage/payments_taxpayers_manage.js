@@ -6,6 +6,7 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/payments_taxpayers_manage.html",
             controller: "PaymentsTaxpayersManageController",
             params: {
+                taxpayerType: 'zus',
                 operation: 'new'
             }
         });
@@ -16,6 +17,7 @@ angular.module('raiffeisen-payments')
 
         bdMainStepInitializer($scope, 'taxpayer', {
             formName: 'taxpayerForm',
+            type: rbTaxpayerTypes[$stateParams.taxpayerType.toUpperCase()],
             operation: rbTaxpayerOperationType[$stateParams.operation.toUpperCase()],
             formData: {},
             options: {},

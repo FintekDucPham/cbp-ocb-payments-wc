@@ -11,7 +11,7 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
-    {{ $data.recipientAddress[0] }}
+    <p style="white-space: pre;" ng-bind-html="trimTable($data.recipientAddress).join('\n')"></p>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
@@ -20,5 +20,6 @@
 <bd-item-property label="{{::'raiff.payments.recipients.edit.domestic.verify.company.name'|translate}}" ng-if="customerDetails.context == 'MICRO'">
     <div ng-repeat="owner in ownerList = (getAccountByNrb($data.debitNrb).ownersList | filter: { relationType: 'OWNER' }:true)">
         <span>{{owner.fullName}}</span>
+    </div>
     </div>
 </bd-item-property>

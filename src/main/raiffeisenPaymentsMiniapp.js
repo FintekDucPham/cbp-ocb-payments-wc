@@ -33,7 +33,7 @@ angular.module('raiffeisen-payments', [
             showMain: true,
             baseItem: "payments.recipients.list",
             title: 'payments.title',
-            items: [
+            items:[
                 {
                     id: "payments.new.fill",
                     label: 'payments.submenu.options.new.header',
@@ -78,6 +78,6 @@ angular.module('raiffeisen-payments', [
     registerBaseState();
     registerNavigation();
 
-}).run(function() {
+}).run(function () {
 
 });

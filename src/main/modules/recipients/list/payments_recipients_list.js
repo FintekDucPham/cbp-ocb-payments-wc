@@ -13,10 +13,17 @@ angular.module('raiffeisen-payments')
         accountsService.search().then(function(accountList){
             $scope.accountList = accountList.content;
         });
-
         customerService.getCustomerDetails().then(function(customerDetails){
             $scope.customerDetails = customerDetails.customerDetails;
         });
+
+
+        $scope.getAccountByNrb = function(accountNrb){
+            return lodash.find($scope.accountList, {
+                accountNo: accountNrb
+            });
+        };
+
         var recipientFilterType = angular.extend({}, rbRecipientTypes, {
             ALL : {
                 code: 'ALL'
@@ -72,6 +79,10 @@ angular.module('raiffeisen-payments')
             return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType.toLowerCase());
         };
 
+        $scope.trimTable = lodash.memoize(function(table) {
+            return lodash.without(table, null);
+        });
+
         $scope.table = {
             tableConfig : new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
@@ -91,7 +102,6 @@ angular.module('raiffeisen-payments')
                         }
 
                         $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
-
                             var list = $scope.recipientList = lodash.map(data.content, function (recipient) {
                                 var template = recipient.paymentTemplates[0];
                                 return lodash.extend({
@@ -127,7 +137,8 @@ angular.module('raiffeisen-payments')
                                                 secondaryIdType: paymentDetails.idtype,
                                                 secondaryId: paymentDetails.idnumber,
                                                 formSymbol: paymentDetails.formCode,
-                                                periodType: paymentDetails.periodType
+                                                periodType: paymentDetails.periodType,
+                                                obligationId: paymentDetails.obligationId
                                             };
                                     }
                                 })());
