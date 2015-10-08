@@ -7,11 +7,11 @@
             <div class="bd-item-property row">
                 <div class="col-xs-12">
                     <bd-radio-option bd-option-value="rejectedList.periodTypes.LAST" class="row__inline-block--middle">
-                        <div class="row__inline-block--middle">
+                        <div class="row__inline-block--middle row__inline-block--adjacent">
                             {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
                         </div>
-                        <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
-                            <input bd-type="text" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-maxlength="2" ng-pattern="/^\d+$/"/>
+                        <div class="row__inline-block--middle row__inline-block--adjacent" style="width:60px;">
+                            <input bd-type="number" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-pattern="/^\d+$/"/>
                         </div>
                         <div class="row__inline-block--middle" style="width:120px;">
                             <ui-select ng-model="rejectedList.filterData.last.type.selected"
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="row--spacing col-md-10 col-sm-12">
                     <bd-radio-option bd-option-value="rejectedList.periodTypes.RANGE" class="row__inline-block--middle">
-                        <div class="row__inline-block--middle">
+                        <div class="row__inline-block--middle row__inline-block--adjacent">
                             {{:: 'raiff.payments.rejected.list.filter.type.range.label' | translate}}
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent">
@@ -130,7 +130,7 @@
                     {{ 'raiff.payments.new.types.'+$data.details.transferType | translate }}
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.registrationDate' | translate }}">
-                    {{ $data.details.realizationDate | date : 'yyyy-MM-dd' }} <!-- cannot resolve registration date from the bus -->
+                    {{ $data.details.realizationDate | date : 'dd.MM.yyyy' }} <!-- cannot resolve registration date from the bus -->
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.accountNo' | translate }}">
                     {{ $data.details.accountNo | nrbIbanFilter }}
@@ -148,7 +148,7 @@
                     {{ $data.details.title[0] }}
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.realizationDate' | translate }}">
-                    {{ $data.details.realizationDate | date : 'yyyy-MM-dd' }}
+                    {{ $data.details.realizationDate | date : 'dd.MM.yyyy' }}
                 </bd-item-property>
 
             </section>
