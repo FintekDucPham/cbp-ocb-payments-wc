@@ -7,24 +7,27 @@
             <div class="bd-item-property row">
                 <div class="col-xs-12">
                     <bd-radio-option bd-option-value="rejectedList.periodTypes.LAST" class="row__inline-block--middle">
-                        {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
+                        <div class="row__inline-block--middle">
+                            {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
+                        </div>
+                        <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
+                            <input bd-type="text" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-maxlength="2" ng-pattern="/^\d+$/"/>
+                        </div>
+                        <div class="row__inline-block--middle" style="width:120px;">
+                            <ui-select ng-model="rejectedList.filterData.last.type.selected"
+                                       theme="bootstrap"
+                                       reset-search-input="false"
+                                       required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
+                                <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
+                                    {{ 'raiff.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">
+                                    {{ :: 'raiff.payments.rejected.list.filter.type.last.types.'+ item | translate }}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
                     </bd-radio-option>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
-                        <input bd-type="text" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-maxlength="2" ng-pattern="/^\d+$/"/>
-                    </div>
-                    <div class="row__inline-block--middle" style="width:120px;">
-                        <ui-select ng-model="rejectedList.filterData.last.type.selected"
-                                   theme="bootstrap"
-                                   reset-search-input="false"
-                                   required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
-                            <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
-                                {{ 'raiff.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
-                            </ui-select-match>
-                            <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">
-                                {{ :: 'raiff.payments.rejected.list.filter.type.last.types.'+ item | translate }}
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
+
                 </div>
             </div>
 
@@ -45,31 +48,34 @@
             <div class="row">
                 <div class="row--spacing col-md-10 col-sm-12">
                     <bd-radio-option bd-option-value="rejectedList.periodTypes.RANGE" class="row__inline-block--middle">
-                        {{:: 'raiff.payments.rejected.list.filter.type.range.label' | translate}}
+                        <div class="row__inline-block--middle">
+                            {{:: 'raiff.payments.rejected.list.filter.type.range.label' | translate}}
+                        </div>
+                        <div class="row__inline-block--middle row__inline-block--adjacent">
+                            {{::'raiff.payments.rejected.list.filter.type.range.from.label'|translate}}
+                        </div>
+                        <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
+                            <input name="dateFromInput_delgate" hidden ng-model="rejectedList.filterData.range.dateFrom" min-date="rejectedList.minDate" model-date="rejectedList.filterData.range.dateFrom" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
+                            <rb-datepicker ng-model="rejectedList.filterData.range.dateFrom"
+                                           ng-model-options="{ allowInvalid: false }"
+                                           rb-name="dateFromInput"
+                                           max-search-date
+                                           style="width: 140px;"></rb-datepicker>
+                        </div>
+                        <div class="row__inline-block--middle row__inline-block--adjacent">
+                            {{::'raiff.payments.rejected.list.filter.type.range.to.label'|translate}}
+                        </div>
+                        <div class="row__inline-block--middle" style="width:140px;">
+                            <input name="dateToInput_delgate" hidden ng-model="rejectedList.filterData.range.dateTo" min-date="rejectedList.filterData.range.dateFrom" model-date="rejectedList.filterData.range.dateTo" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
+                            <rb-datepicker ng-model="rejectedList.filterData.range.dateTo"
+                                           empty-date
+                                           ng-model-options="{ allowInvalid: false }"
+                                           rb-name="dateToInput"
+                                           max-search-date
+                                           style="width: 140px;"></rb-datepicker>
+                        </div>
                     </bd-radio-option>
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'raiff.payments.rejected.list.filter.type.range.from.label'|translate}}
-                    </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
-                        <input name="dateFromInput_delgate" hidden ng-model="rejectedList.filterData.range.dateFrom" min-date="rejectedList.minDate" model-date="rejectedList.filterData.range.dateFrom" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                        <rb-datepicker ng-model="rejectedList.filterData.range.dateFrom"
-                                       ng-model-options="{ allowInvalid: false }"
-                                       rb-name="dateFromInput"
-                                       max-search-date
-                                       style="width: 140px;"></rb-datepicker>
-                    </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'raiff.payments.rejected.list.filter.type.range.to.label'|translate}}
-                    </div>
-                    <div class="row__inline-block--middle" style="width:140px;">
-                        <input name="dateToInput_delgate" hidden ng-model="rejectedList.filterData.range.dateTo" min-date="rejectedList.filterData.range.dateFrom" model-date="rejectedList.filterData.range.dateTo" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                        <rb-datepicker ng-model="rejectedList.filterData.range.dateTo"
-                                       empty-date
-                                       ng-model-options="{ allowInvalid: false }"
-                                       rb-name="dateToInput"
-                                       max-search-date
-                                       style="width: 140px;"></rb-datepicker>
-                    </div>
+
                 </div>
                 <div class="row--spacing col-md-2 col-sm-12" style="text-align: right;">
                     <bd-button class="bd-button__primary" type="submit">{{::'raiff.payments.rejected.select.filter.button.action'|translate}}</bd-button>
