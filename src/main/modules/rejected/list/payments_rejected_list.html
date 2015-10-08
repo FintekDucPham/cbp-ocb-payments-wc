@@ -17,7 +17,7 @@
                                    theme="bootstrap"
                                    reset-search-input="false"
                                    required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
-                            <ui-select-match placeholder="placeholder">
+                            <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
                                 {{ 'raiff.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
                             </ui-select-match>
                             <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">

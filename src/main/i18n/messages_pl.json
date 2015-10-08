@@ -566,6 +566,7 @@
     "raiff.payments.rejected.list.header.amount.label": "Kwota",
     "raiff.payments.rejected.list.empty.label": "Nie znaleziono płatności spełniających kryteria wyszukiwania",
     "raiff.payments.rejected.list.filter.type.last.label": "Ostatnie",
+    "raiff.payments.rejected.list.filter.type.last.placeholder": "Wybierz",
     "raiff.payments.rejected.list.filter.type.last.types.DAYS": "dni",
     "raiff.payments.rejected.list.filter.type.last.types.WEEKS": "tygodni",
     "raiff.payments.rejected.list.filter.type.last.types.MONTHS": "miesięcy",
