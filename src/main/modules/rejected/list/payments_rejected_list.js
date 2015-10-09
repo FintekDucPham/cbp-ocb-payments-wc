@@ -52,6 +52,8 @@ angular.module('raiffeisen-payments')
 
         //calculate lasts
         var calculateDateFromLast = function () {
+
+
             var value = parseInt($scope.rejectedList.filterData.last.value);
             var factor = 1; //days
             if ($scope.rejectedList.filterData.last.type.selected === LAST_TYPES.WEEKS) {
@@ -91,7 +93,18 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$watch('rejectedList.filterData.last.type.selected', calculateDateFromLast);
-        $scope.$watch('rejectedList.filterData.last.value', calculateDateFromLast);
+        $scope.$watch('rejectedList.filterData.last.value', function(n,o){
+            if(n!=o){
+                if(!n){
+                    n=0;
+                }
+                if(String(n).length>3){
+                    $scope.rejectedList.filterData.last.value = o;
+                }else{
+                    calculateDateFromLast();
+                }
+            }
+        });
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
             $scope.rejectedList.filterData.last.value = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
@@ -118,7 +131,7 @@ angular.module('raiffeisen-payments')
                         realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
                     };
 
-                    if ($params.model.filterData.periodType === PERIOD_TYPES.LAST) {
+                    if ($params.model.filterData.periodType.model === PERIOD_TYPES.LAST) {
                         params.realizationDateTo = $filter('date')(now.getTime(), "yyyy-MM-dd");
                         params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
                     }
