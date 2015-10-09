@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state) {
+    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $filter) {
 
         var PERIOD_TYPES = {
             LAST: 'LAST',
@@ -114,13 +114,13 @@ angular.module('raiffeisen-payments')
 
                     var params = {
                         statusPaymentCriteria: "rejected",
-                        realizationDateFrom: $params.model.filterData.range.dateFrom,
-                        realizationDateTo: $params.model.filterData.range.dateTo
+                        realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
+                        realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
                     };
 
                     if ($params.model.filterData.periodType === PERIOD_TYPES.LAST) {
-                        params.realizationDateTo = now;
-                        params.realizationDateFrom = $params.model.filterData.last.dateFrom;
+                        params.realizationDateTo = $filter('date')(now.getTime(), "yyyy-MM-dd");
+                        params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
                     }
 
                     paymentsService.search(params).then(function (paymentSummary) {
