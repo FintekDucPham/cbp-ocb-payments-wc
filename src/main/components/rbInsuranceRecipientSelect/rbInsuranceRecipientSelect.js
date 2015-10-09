@@ -27,11 +27,11 @@ angular.module('raiffeisen-payments')
                             if(recipient) {
                                 $scope.selectRecipient(recipient);
                             } else {
-                                clearRecipient();
+                                $scope.clearSelection();
                             }
                         });
                     } else {
-                        clearRecipient();
+                        $scope.clearSelection();
                     }
                 });
 
