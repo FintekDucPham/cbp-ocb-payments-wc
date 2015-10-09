@@ -583,7 +583,7 @@
     "raiff.payments.rejected.list.details.title": "Tytułem",
     "raiff.payments.rejected.list.details.realizationDate": "Data realizacji",
     "raiff.payments.rejected.list.details.renew.button": "Wykonaj ponownie",
-    "raiff.payments.rejected.select.filter.button.action": "wyszukaj",
+    "raiff.payments.rejected.select.filter.button.action": "Szukaj",
     "raiff.payments.rejected.select.filter.EMPTY_PERIOD": "Musisz wprowadzić liczbę ostatnich",
     "raiff.payments.rejected.select.filter.INCORRECT_PERIOD": "Nieprawidłowa liczba ostatnich",
     "raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##months## miesięcy wstecz. Można wyszukiwać tylko operacje odrzucone w ciągu ostatnich ##months## miesięcy.",
