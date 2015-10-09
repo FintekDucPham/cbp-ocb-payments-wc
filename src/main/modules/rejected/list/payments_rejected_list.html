@@ -10,10 +10,10 @@
                         <div class="row__inline-block--middle row__inline-block--adjacent">
                             {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
                         </div>
-                        <div class="row__inline-block--middle row__inline-block--adjacent" style="width:60px;">
+                        <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
                             <input bd-type="number" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-pattern="/^\d+$/"/>
                         </div>
-                        <div class="row__inline-block--middle" style="width:120px;">
+                        <div class="row__inline-block--middle" style="width:100px;">
                             <ui-select ng-model="rejectedList.filterData.last.type.selected"
                                        theme="bootstrap"
                                        reset-search-input="false"
@@ -136,7 +136,9 @@
                     {{ $data.details.realizationDate | date : 'dd.MM.yyyy' }} <!-- cannot resolve registration date from the bus -->
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.accountNo' | translate }}">
-                    {{ $data.details.accountName }} | {{ $data.details.accountNo | nrbIbanFilter }}
+                    {{ $data.details.accountName }} <br/>
+                    {{ $data.details.accountNo | nrbIbanFilter }} <br/>
+                    {{ $data.details.owner }}
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.recipientAccountNo' | translate }}">
                     {{ $data.details.recipientAccountNo | nrbIbanFilter }}
