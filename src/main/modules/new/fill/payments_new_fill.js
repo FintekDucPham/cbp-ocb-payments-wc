@@ -42,6 +42,7 @@ angular.module('raiffeisen-payments')
                 minDate: new Date(),
                 maxDaysFromNow: result.maxDaysToDelayPayment
             });
+            $scope.payment.meta.extraVerificationAccountList = result.extraVerificationAccountList;
             $scope.payment.meta.laterExecutedDateMsg = translate.property('raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
 
