@@ -21,7 +21,7 @@ angular.module('raiffeisen-payments')
         angular.extend($scope.payment.formData, {
             templateId: $stateParams.recipientId,
             taxpayerId: $stateParams.taxpayerId
-        }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+        }, lodash.omit($stateParams.payment, lodash.isUndefined), lodash.omit($scope.payment.formData, lodash.isUndefined));
 
         if ($stateParams.accountId) {
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;

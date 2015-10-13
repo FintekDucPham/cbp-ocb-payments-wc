@@ -80,10 +80,10 @@
                    required
                    class="input-field"
                    type="text"
-                   nip="recipient.formData.idType === 'NIP'"
-                   pesel="recipient.formData.idType === 'PESEL'"
-                   regon="recipient.formData.idType === 'REGON'"
-                   id-card="recipient.formData.idType === 'ID_CARD'"
+                   nip="recipient.formData.secondaryIdType === 'NIP'"
+                   pesel="recipient.formData.secondaryIdType === 'PESEL'"
+                   regon="recipient.formData.secondaryIdType === 'REGON'"
+                   id-card="recipient.formData.secondaryIdType === 'ID_CARD'"
                    placeholder="{{ ::'raiff.payments.recipients.new.us.fill.supplementary_id.placeholder' | translate }}">
 
             <eb-validation-messages eb-name="supplementaryId">
