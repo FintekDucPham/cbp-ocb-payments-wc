@@ -156,6 +156,8 @@ angular.module('raiffeisen-payments')
                                 }
                             });
                         });
+                        $params.pageCount = paymentSummary.totalPages;
+
                         $promise.resolve(paymentSummary.content);
                     });
                 }
