@@ -6,7 +6,8 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentFillController",
             params: {
                 accountId: null,
-                recipientId: null
+                recipientId: null,
+                taxpayerId: null
             }
         });
     })
@@ -18,7 +19,8 @@ angular.module('raiffeisen-payments')
         });
 
         angular.extend($scope.payment.formData, {
-            templateId: $stateParams.recipientId
+            templateId: $stateParams.recipientId,
+            taxpayerId: $stateParams.taxpayerId
         }, lodash.omit($scope.payment.formData, lodash.isUndefined));
 
         if ($stateParams.accountId) {

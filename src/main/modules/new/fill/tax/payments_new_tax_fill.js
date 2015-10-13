@@ -124,7 +124,7 @@ angular.module('raiffeisen-payments')
             var recipient = $scope.payment.items.recipientAccount;
             return angular.extend(copiedFormData, {
                 recipientName: recipient.officeName,
-                recipientAccountNo: recipient.accountNo
+                recipientAccountNo: recipient.recipientAccountNo
             });
         });
 

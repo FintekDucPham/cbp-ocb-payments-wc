@@ -67,7 +67,7 @@
                     {{ $data.data.join('\n') }}
                 </bd-item-property>
 
-                <bd-item-property ng-if="$data.taxpayerType === 'ZUS'" class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.nip.label' | translate }}">
+                <bd-item-property ng-if="$data.taxpayerType.code === 'INSURANCE'" class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.nip.label' | translate }}">
                     {{ $data.nip }}
                 </bd-item-property>
 
@@ -79,17 +79,18 @@
                     {{ $data.secondaryId }}
                 </bd-item-property>
 
-
-
                 <bd-details-action-section>
 
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <bd-button ng-click="onTaxpayerEdit($data)" class="bd-button">{{::'raiff.payments.taxpayers.list.details.edit' | translate}}</bd-button>
-                            <bd-button ng-click="onTaxpayerRemove($data)" class="bd-button">{{::'raiff.payments.taxpayers.list.details.remove' | translate}}</bd-button>
-                        </div>
-                        <div class="col-sm-12 col-md-6" style="text-align:right;">
-                            <!--<bd-button ng-click="onTaxpayerTransfer($data)" class="bd-button bd-button__primary">{{::'raiff.payments.taxpayers.list.details.transfer' | translate}}</bd-button>-->
+                    <div class="bd-grid">
+                        <div class="bd-grid__row">
+                            <div class="bd-grid__col--sm-12">
+                                <bd-button ng-click="onBack(this)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.back' | translate}}</bd-button>
+                                <bd-button ng-click="onTaxpayerEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.edit' | translate}}</bd-button>
+                                <bd-button ng-click="onTaxpayerRemove($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.remove' | translate}}</bd-button>
+                            </div>
+                            <div class="bd-grid__col--sm-4">
+                                <bd-button ng-click="onTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm bd-float-right">{{::'raiff.payments.taxpayers.list.details.transfer' | translate}}</bd-button>
+                            </div>
                         </div>
                     </div>
 

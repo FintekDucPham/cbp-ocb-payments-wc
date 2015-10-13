@@ -9,7 +9,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.recipient_account_no'|translate}}">
-        {{payment.items.recipientAccount.accountNo | nrbIbanFilter }} | {{payment.items.recipientAccount.officeName}}
+        {{payment.items.recipientAccount.recipientAccountNo | nrbIbanFilter }} | {{payment.items.recipientAccount.officeName}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.taxpayer_data'|translate}}">

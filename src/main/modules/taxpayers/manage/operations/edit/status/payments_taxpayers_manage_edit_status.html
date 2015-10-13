@@ -1,1 +1,5 @@
+<bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.manage.status.taxpayer_type' | translate }}">
+    {{::'raiff.payments.taxpayers.fill.type.' + taxpayer.formData.taxpayerType.toLowerCase() | translate}}
+</bd-item-property>
+
 <bd-msg-panel bd-msg-type="{{taxpayer.result.type}}">{{taxpayer.result.text}}</bd-msg-panel>

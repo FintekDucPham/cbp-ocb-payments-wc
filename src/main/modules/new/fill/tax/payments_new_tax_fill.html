@@ -86,6 +86,8 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
         <rb-taxpayer-select
+                rb-taxpayer-id="payment.formData.taxpayerId"
+                rb-taxpayer-type="TAX"
                 rb-taxpayer="payment.items.taxpayer"
                 rb-on-clear-taxpayer="clearTaxpayer()"
                 rb-on-select-taxpayer="selectTaxpayer($taxpayer)"

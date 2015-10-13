@@ -3,9 +3,9 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
             if ($scope.taxpayer.result.type == 'success') {
-                prepareResult('raiff.payments.taxpayers.manage.edit.status.ok');
+                prepareResult('raiff.payments.taxpayers.manage.new.status.ok');
             } else {
-                prepareResult('raiff.payments.taxpayers.manage.edit.status.fail');
+                prepareResult('raiff.payments.taxpayers.manage.new.status.fail');
             }
 
         });

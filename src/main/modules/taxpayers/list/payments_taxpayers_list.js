@@ -23,6 +23,17 @@ angular.module('raiffeisen-payments')
 
         $scope.taxpayerListPromise = {};
 
+        $scope.onBack = function(childScope) {
+            childScope.$emit('$collapseRows');
+        };
+
+        $scope.onTransfer = function(taxpayer) {
+            $state.go("payments.new.fill", {
+                paymentType: taxpayer.taxpayerType.state,
+                taxpayerId: taxpayer.taxpayerId
+            });
+        };
+
         function goToOperation(operationType, data, operationStep) {
             if(!operationStep) {
                 operationStep = 'fill';

@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .directive('rbTaxpayerSelect', function (pathService, taxpayersService, lodash) {
+    .directive('rbTaxpayerSelect', function (pathService, taxpayersService, rbTaxpayerTypes, lodash) {
         return {
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxpayerSelect/rbTaxpayerSelect.html",
@@ -10,9 +10,14 @@ angular.module('raiffeisen-payments')
                 placeholderText: '@rbPlaceholderText',
                 clearText: '@rbTaxpayerClearText',
                 onSelectTaxpayer: '&rbOnSelectTaxpayer',
-                onClearTaxpayer: '&rbOnClearTaxpayer'
+                onClearTaxpayer: '&rbOnClearTaxpayer',
+                taxpayerType: '@rbTaxpayerType'
             },
             controller: function ($scope) {
+
+                if(lodash.isUndefined($scope.taxpayerType)) {
+                    $scope.taxpayerType = rbTaxpayerTypes.INSURANCE.code;
+                }
 
                 $scope.selection = {
                     isSelected: false
@@ -28,7 +33,7 @@ angular.module('raiffeisen-payments')
                             $oldTaxpayer: oldTaxpayer
                         });
                     } else {
-                        $scope.taxpayer = null;
+                        clearSelection();
                         $scope.onClearTaxpayer();
                     }
                 };
@@ -38,8 +43,25 @@ angular.module('raiffeisen-payments')
                     $scope.selection.isSelected = !!taxpayer;
                 });
 
-                taxpayersService.search({
-                    filerTemplateType: 'INSURANCE'
+                $scope.$watch('taxpayerId', function(taxpayerId) {
+                    if(taxpayerId) {
+                        waitForTaxpayers.then(function() {
+                            var taxpayerToSelect = lodash.find($scope.taxpayerList, {
+                                taxpayerId: taxpayerId
+                            });
+                            if(taxpayerToSelect) {
+                                $scope.selectTaxpayer(taxpayerToSelect);
+                            } else {
+                                clearSelection();
+                            }
+                        });
+                    } else {
+                        clearSelection();
+                    }
+                });
+
+                var waitForTaxpayers = taxpayersService.search({
+                    filerTemplateType: $scope.taxpayerType
                 }).then(function(data) {
                     $scope.taxpayerList = lodash.union([ nullOption ], lodash.map(data.content, function(data) {
                         return {
@@ -53,7 +75,7 @@ angular.module('raiffeisen-payments')
                     }));
                 });
 
-                $scope.clearSelection = function () {
+                var clearSelection = $scope.clearSelection = function () {
                     $scope.selection.taxpayer = null;
                     $scope.taxpayer = null;
                     $scope.onClearTaxpayer();
@@ -61,7 +83,7 @@ angular.module('raiffeisen-payments')
                 };
 
                 var nullOption = $scope.nullOption = {
-                    customerName: 'Odbiorca spoza listy'
+                    customerName: 'Płatnik spoza listy'
                 };
 
             }

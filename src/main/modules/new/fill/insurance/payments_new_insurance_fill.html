@@ -49,6 +49,8 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.taxpayer_select' | translate }}">
         <rb-taxpayer-select
+                rb-taxpayer-id="payment.formData.taxpayerId"
+                rb-taxpayer-type="INSURANCE"
                 rb-taxpayer="payment.items.taxpayer"
                 rb-on-clear-taxpayer="clearTaxpayer()"
                 rb-on-select-taxpayer="selectTaxpayer($taxpayer)"

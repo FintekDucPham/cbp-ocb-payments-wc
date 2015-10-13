@@ -11,7 +11,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
-        {{payment.formData.recipientName}}
+        <p style="white-space: pre;" ng-bind-html="payment.formData.recipientName.join('\n')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">
@@ -20,7 +20,6 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_supplementary_id_type'|translate}}">
         {{::('raiff.payments.new.zus.fill.taxpayer_supplementary_id_type.' + payment.formData.secondaryIdType) | translate }}
-        <!-- desc? -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_supplementary_id'|translate}}">
@@ -29,7 +28,6 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment_type'|translate}}">
         {{::'raiff.payments.zus.payment_type.' + payment.formData.paymentType | translate }}
-        <!-- desc? -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.declaration_date'|translate}}">

@@ -1,4 +1,4 @@
-<div ng-controller="RecipientsManageVerifyZusController">
+<div ng-controller="TaxpayersManageVerifyController">
 
     <bd-item-property ng-if="taxpayer.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.micro_name' | translate }}">
         {{ taxpayer.formData.customName }}
@@ -16,12 +16,12 @@
         <p style="white-space: pre;" ng-bind-html="taxpayer.formData.taxpayerData.join('\n')"></p>
     </bd-item-property>
 
-    <bd-item-property ng-if="taxpayer.formData.taxpayerType === 'ZUS'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_nip' | translate }}">
+    <bd-item-property ng-if="taxpayer.formData.taxpayerType === 'INSURANCE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_nip' | translate }}">
         {{ taxpayer.formData.nip }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_supplementary_id_type' | translate }}">
-        {{ taxpayer.formData.secondaryIdType }}
+        {{ 'raiff.payments.taxpayers.details.supplementary_id_type.' + taxpayer.formData.secondaryIdType | translate }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_supplementary_id' | translate }}">

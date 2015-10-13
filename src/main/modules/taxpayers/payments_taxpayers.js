@@ -16,11 +16,11 @@ angular.module('raiffeisen-payments')
     .constant('rbTaxpayerTypes', {
         "INSURANCE": {
             code: 'INSURANCE',
-            state: 'zus'
+            state: 'insurance'
         },
         "TAX": {
             code: 'TAX',
-            state: 'us'
+            state: 'tax'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
