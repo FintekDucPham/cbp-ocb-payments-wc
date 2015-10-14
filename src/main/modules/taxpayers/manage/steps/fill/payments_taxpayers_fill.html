@@ -4,16 +4,16 @@
         <input name="customName"
                ng-model="taxpayer.formData.customName"
                required
-               ng-pattern="RECIPIENT_NAME_REGEX"
+               ng-pattern="TAXPAYER_NAME_REGEX"
                class="input-field"
                placeholder="{{ ::'raiff.payments.taxpayers.fill.custom_name.placeholder' | translate }}"/>
 
         <eb-validation-messages eb-name="customName"><!--max 35-->
             <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.change_me.CUSTOM_NAME_EMPTY'|translate}}
+                {{::'raiff.payments.taxpayers.fill.custom_name.required'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.change_me.CUSTOM_NAME_PATTERN'|translate}}
+                {{::'raiff.payments.taxpayers.fill.custom_name.pattern'|translate}}
             </div>
         </eb-validation-messages>
 
@@ -100,6 +100,7 @@
                ng-model="taxpayer.formData.secondaryIdNo"
                required
                class="input-field"
+               nip="taxpayer.formData.secondaryIdType === 'NIP'"
                pesel="taxpayer.formData.secondaryIdType === 'PESEL'"
                regon="taxpayer.formData.secondaryIdType === 'REGON'"
                id-card="taxpayer.formData.secondaryIdType === 'ID_CARD'"
@@ -109,14 +110,17 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{ ::'raiff.EMPTY_ADD_ID_NUMBER' | translate }}
             </div>
+            <div eb-message-key="nip" class="validation-message animate-on">
+                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
+            </div>
             <div eb-message-key="pesel" class="validation-message animate-on">
-                {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
+                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
             </div>
             <div eb-message-key="regon" class="validation-message animate-on">
-                {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
+                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
             </div>
             <div eb-message-key="idCard" class="validation-message animate-on">
-                {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
+                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
             </div>
         </eb-validation-messages>
     </bd-item-property>

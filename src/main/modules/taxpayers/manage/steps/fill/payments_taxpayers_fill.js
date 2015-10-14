@@ -2,12 +2,14 @@ angular.module('raiffeisen-payments')
     .controller('paymentTaxpayersFillController', function (lodash, bdFillStepInitializer, authorizationService,
                                                             taxpayerManagementService, zusSuplementaryIds,
                                                             usSupplementaryIds, dateFilter, translate, $scope,
-                                                            formService, bdStepStateEvents) {
+                                                            formService, bdStepStateEvents, validationRegexp) {
 
         bdFillStepInitializer($scope, {
             formName: 'taxpayerForm',
             dataObject: $scope.taxpayer
         });
+
+        $scope.TAXPAYER_NAME_REGEX = validationRegexp('RECIPIENT_NAME');
 
         function setDefaultValues(what) {
             lodash.extend($scope.taxpayer.formData, what, lodash.omit($scope.taxpayer.formData, lodash.isUndefined));
