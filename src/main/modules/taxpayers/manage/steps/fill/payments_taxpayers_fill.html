@@ -98,6 +98,7 @@
     <bd-item-property label="{{ ::'raiff.payments.taxpayers.fill.supplementary_id' | translate }}">
         <input name="taxpayerSupplementaryId"
                ng-model="taxpayer.formData.secondaryIdNo"
+               maxlength="15"
                required
                class="input-field"
                nip="taxpayer.formData.secondaryIdType === 'NIP'"
