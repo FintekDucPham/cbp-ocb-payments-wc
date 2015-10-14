@@ -51,7 +51,7 @@
                   bd-table-control="table.tableControl"
                   bd-table-data="table.tableData"
                   bd-table-promise="taxpayerListPromise"
-                  bd-table-meta="{ 'first' : { 'title': '##raiff.payments.taxpayers.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##raiff.payments.taxpayers.list.header.data.label', 'data' : 'dataShort' }, 'third' : { 'title': '##raiff.payments.taxpayers.list.header.type.label', 'data' : 'customerName' } }">
+                  bd-table-meta="{ 'first' : { 'title': '##raiff.payments.taxpayers.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##raiff.payments.taxpayers.list.header.data.label', 'data' : 'dataShort' }, 'third' : { 'title': '##raiff.payments.taxpayers.list.header.type.label', 'data' : 'taxpayerTypeMessage' } }">
 
             <bd-details-section bd-table-row-details>
 
@@ -64,7 +64,7 @@
                 </bd-item-property>
 
                 <bd-item-property class="eb-item-property--text" label="{{::'raiff.payments.taxpayers.details.data.label'|translate}}">
-                    {{ $data.data.join('\n') }}
+                    <p style="white-space: pre;" ng-bind-html="$data.data.join('\n')"></p>
                 </bd-item-property>
 
                 <bd-item-property ng-if="$data.taxpayerType.code === 'INSURANCE'" class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.nip.label' | translate }}">
