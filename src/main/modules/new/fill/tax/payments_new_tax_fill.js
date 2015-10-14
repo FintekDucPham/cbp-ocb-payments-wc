@@ -130,4 +130,10 @@ angular.module('raiffeisen-payments')
 
         $scope.payment.options.isFromRecipient = false;
 
+        $scope.$on('clearForm', function () {
+            $scope.payment.options.isFromRecipient = false;
+            $scope.payment.options.isFromTaxpayer = false;
+            $scope.payment.formData.currency = 'PLN';
+        });
+
     });
