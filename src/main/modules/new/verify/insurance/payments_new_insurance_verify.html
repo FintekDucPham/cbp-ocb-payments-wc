@@ -11,7 +11,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
-        <p style="white-space: pre;" ng-bind-html="payment.formData.recipientName.join('\n')"></p>
+        <bd-multiline-text bd-text="payment.formData.recipientName"></bd-multiline-text>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">

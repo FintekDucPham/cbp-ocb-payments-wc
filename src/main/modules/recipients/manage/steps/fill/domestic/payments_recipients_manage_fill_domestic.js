@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, taxOffices, insuranceAccounts) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate) {
 
         $scope.recipient.meta.forbiddenAccounts = [];
 
@@ -41,6 +41,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
+            messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.domestic.fill.account_related.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
             accountFilter: function (accounts) {

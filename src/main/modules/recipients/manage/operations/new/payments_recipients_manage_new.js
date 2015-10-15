@@ -4,7 +4,10 @@ angular.module('raiffeisen-payments')
             url: "/new/:recipientType",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/new/payments_recipients_manage_new.html",
-            controller: "PaymentsRecipientsManageNewController"
+            controller: "PaymentsRecipientsManageNewController",
+            params: {
+                recipient: null
+            }
         }).state('payments.recipients.manage.new.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
@@ -21,12 +24,14 @@ angular.module('raiffeisen-payments')
             controller: "RecipientsManageNewStatusController"
         });
     })
-    .controller('PaymentsRecipientsManageNewController', function ($scope, $state, recipientGeneralService, authorizationService, rbRecipientOperationType) {
+    .controller('PaymentsRecipientsManageNewController', function ($scope, $state, recipientGeneralService, authorizationService, rbRecipientOperationType, $stateParams, lodash) {
 
         $scope.clearForm = function () {
             $scope.recipient.formData = {};
             $scope.$broadcast('clearForm');
         };
+
+        lodash.extend($scope.recipient, $stateParams.recipient, $scope.recipient);
 
         $scope.changeRecipientType = function (type) {
             $state.transitionTo($state.current, {

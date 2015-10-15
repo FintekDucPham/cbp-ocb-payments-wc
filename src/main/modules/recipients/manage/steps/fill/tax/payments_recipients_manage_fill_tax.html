@@ -80,6 +80,7 @@
                    required
                    class="input-field"
                    type="text"
+                   ng-disabled="!recipient.formData.secondaryIdType"
                    nip="recipient.formData.secondaryIdType === 'NIP'"
                    pesel="recipient.formData.secondaryIdType === 'PESEL'"
                    regon="recipient.formData.secondaryIdType === 'REGON'"

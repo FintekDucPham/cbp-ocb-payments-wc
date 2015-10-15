@@ -133,7 +133,7 @@ angular.module('raiffeisen-payments')
                                             };
                                         case "TAX":
                                             return {
-                                                nameAndAddress: recipient.recipientName.join(" "),
+                                                nameAndAddress: recipient.recipientAddress.join(" "),
                                                 secondaryIdType: paymentDetails.idtype,
                                                 secondaryId: paymentDetails.idnumber,
                                                 formSymbol: paymentDetails.formCode,

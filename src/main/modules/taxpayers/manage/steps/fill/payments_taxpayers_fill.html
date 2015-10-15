@@ -35,8 +35,9 @@
                   ng-model="taxpayer.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData"
                   required
-                  bd-split-text
-                  bd-split-text-length="132"
+                  bd-split-text="taxpayer.formData.taxpayerType === 'INSURANCE' ? 35 : 27"
+                  bd-split-text-length="taxpayer.formData.taxpayerType === 'INSURANCE' ? 132 : 54"
+                  bd-split-text-max-rows="taxpayer.formData.taxpayerType === 'INSURANCE' ? 4 : 2"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.taxpayers.fill.taxpayer_data.placeholder' | translate }}"></textarea>
 

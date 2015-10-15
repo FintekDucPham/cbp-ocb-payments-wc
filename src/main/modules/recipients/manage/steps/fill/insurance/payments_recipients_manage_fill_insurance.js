@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillZusController', function ($scope, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, zusSuplementaryIds, zusPaymentTypes) {
+    .controller('RecipientsManageFillZusController', function ($scope, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, zusSuplementaryIds, zusPaymentTypes, translate) {
 
         angular.extend($scope.recipient.meta, {
             zusSuplementaryIds: zusSuplementaryIds,
@@ -20,5 +20,24 @@ angular.module('raiffeisen-payments')
                 paymentType: copiedFormData.paymentType
             };
         });
+
+        $scope.recipientSelectParams = new rbAccountSelectParams({
+            messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.zus.fill.remitter_account.none_available'),
+            useFirstByDefault: true,
+            alwaysSelected: false,
+            accountFilter: function (accounts) {
+                return accounts;
+            },
+            decorateRequest: function(params){
+                return angular.extend(params, {
+                    currency: "PLN",
+                    productList: "BENEFICIARY_CREATE_FROM_LIST"
+                });
+            }
+        });
+
+        $scope.onSecondaryIdTypeChanged = function() {
+            $scope.recipientForm.taxpayerSupplementaryId.$validate();
+        };
 
     });

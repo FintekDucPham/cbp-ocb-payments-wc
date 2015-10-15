@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillUsController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, usSupplementaryIds, usPeriodTypes) {
+    .controller('RecipientsManageFillUsController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, usSupplementaryIds, usPeriodTypes, translate) {
 
         angular.extend($scope.recipient.meta, {
             usSupplementaryIds: usSupplementaryIds,
@@ -27,5 +27,24 @@ angular.module('raiffeisen-payments')
                 remarks: 'none'
             };
         });
+
+        $scope.recipientSelectParams = new rbAccountSelectParams({
+            messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.us.fill.remitter_account.none_available'),
+            useFirstByDefault: true,
+            alwaysSelected: false,
+            accountFilter: function (accounts) {
+                return accounts;
+            },
+            decorateRequest: function(params){
+                return angular.extend(params, {
+                    currency: "PLN",
+                    productList: "BENEFICIARY_CREATE_FROM_LIST"
+                });
+            }
+        });
+
+        $scope.onSecondaryIdTypeChanged = function() {
+            $scope.recipientForm.supplementaryId.$validate();
+        };
 
     });

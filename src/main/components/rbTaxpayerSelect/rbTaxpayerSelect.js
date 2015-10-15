@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .directive('rbTaxpayerSelect', function (pathService, taxpayersService, rbTaxpayerTypes, lodash) {
+    .directive('rbTaxpayerSelect', function (pathService, taxpayersService, rbTaxpayerTypes, lodash, systemParameterService) {
         return {
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxpayerSelect/rbTaxpayerSelect.html",
@@ -85,6 +85,10 @@ angular.module('raiffeisen-payments')
                 var nullOption = $scope.nullOption = {
                     customerName: 'Płatnik spoza listy'
                 };
+
+                systemParameterService.getParameterByName("payer.name.combo.length").then(function(data) {
+                    $scope.payerNameLength = parseInt(data.value);
+                });
 
             }
         };
