@@ -142,10 +142,7 @@ angular.module('raiffeisen-payments')
             return {
                 customName: "Nowy odbiorca",
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
-                creditAccount: $scope.payment.formData.recipientAccountNo,
-                beneficiary: $scope.payment.formData.recipientName,
-                remarks: $scope.payment.formData.description,
-                taxId: $scope.payment.formData.nip,
+                selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
                 secondaryIdType:  $scope.payment.formData.idType,
                 idNumber: $scope.payment.formData.idNumber,
                 formCode: $scope.payment.formData.formCode,
