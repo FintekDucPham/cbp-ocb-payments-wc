@@ -11,7 +11,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
-        {{payment.formData.recipientAccountNo}} <!-- | nrb -->
+        {{payment.formData.recipientAccountNo | nrbIbanFilter }} <!-- | nrb -->
         <!--| <span eb-domestic-bank-details nrb="{{payment.formData.recipientAccountNo}}"></span>-->
     </bd-item-property>
 

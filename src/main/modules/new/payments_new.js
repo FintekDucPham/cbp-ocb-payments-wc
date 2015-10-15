@@ -82,7 +82,7 @@ angular.module('raiffeisen-payments')
         $scope.saveRecipient = function() {
             if($scope.resolveRecipientData) {
                 $state.go("payments.recipients.manage.new.fill", {
-                    recipientType: $scope.payment.type.code,
+                    recipientType: $scope.payment.type.state.toLowerCase(),
                     operation: 'new',
                     recipient: $scope.resolveRecipientData()
                 });
