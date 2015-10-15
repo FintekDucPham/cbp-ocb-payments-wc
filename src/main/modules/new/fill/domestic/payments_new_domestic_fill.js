@@ -146,9 +146,9 @@ angular.module('raiffeisen-payments')
             return {
                 customName: "Nowy odbiorca",
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
-                creditAccount: $scope.payment.formData.recipientAccountNo,
-                beneficiary: $scope.payment.formData.recipientName,
-                remarks: $scope.payment.formData.description
+                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
+                recipientData: $scope.payment.formData.recipientName,
+                description: $scope.payment.formData.description
             };
         });
 

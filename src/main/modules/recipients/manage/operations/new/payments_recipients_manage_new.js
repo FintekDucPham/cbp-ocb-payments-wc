@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
             $scope.$broadcast('clearForm');
         };
 
-        lodash.extend($scope.recipient, $stateParams.recipient, $scope.recipient);
+        lodash.extend($scope.recipient.formData, $stateParams.recipient, $scope.recipient.formData);
 
         $scope.changeRecipientType = function (type) {
             $state.transitionTo($state.current, {
