@@ -24,7 +24,8 @@ angular.module('raiffeisen-payments')
                 debitAccount: copiedFormData.remitterAccountId,
                 beneficiary: $scope.recipient.items.recipientAccount.officeName,
                 periodType: copiedFormData.periodType,
-                remarks: 'none'
+                remarks: 'none',
+                obligationId: copiedFormData.obligationId
             };
         });
 
