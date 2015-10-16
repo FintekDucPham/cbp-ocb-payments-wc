@@ -1,138 +1,143 @@
 <rb-payment-recipients-fill>
     <div ng-controller="RecipientsManageFillZusController">
 
-            <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.remitter_account' | translate }}">
-                <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
-                                   rb-account="recipient.items.senderAccount"
-                                   rb-account-list="recipient.items.accountList"
-                                   rb-on-account-select="onSenderAccountSelect()"
-                                   rb-account-select-params="recipientSelectParams"></rb-account-select>
-            </bd-item-property>
+        <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.remitter_account' | translate }}">
+            <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
+                               rb-account="recipient.items.senderAccount"
+                               rb-account-list="recipient.items.accountList"
+                               rb-on-account-select="onSenderAccountSelect()"
+                               rb-account-select-params="recipientSelectParams"></rb-account-select>
+        </bd-item-property>
 
-            <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.custom_name' | translate }}">
-                <input name="customName"
-                       ng-model="recipient.formData.customName"
-                       required
-                       ng-pattern="RECIPIENT_NAME_REGEX"
-                       class="input-field"
-                       placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.custom_name.placeholder' | translate }}"/>
+        <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.custom_name' | translate }}">
+            <input name="customName"
+                   ng-model="recipient.formData.customName"
+                   required
+                   ng-pattern="RECIPIENT_NAME_REGEX"
+                   class="input-field"
+                   placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.custom_name.placeholder' | translate }}"/>
 
-                <eb-validation-messages eb-name="customName"><!--max 35-->
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{::'raiff.change_me.CUSTOM_NAME_EMPTY'|translate}}
-                    </div>
-                    <div eb-message-key="pattern" class="validation-message animate-on">
-                        {{::'raiff.change_me.CUSTOM_NAME_PATTERN'|translate}}
-                    </div>
-                </eb-validation-messages>
+            <eb-validation-messages eb-name="customName"><!--max 35-->
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.change_me.CUSTOM_NAME_EMPTY'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.change_me.CUSTOM_NAME_PATTERN'|translate}}
+                </div>
+            </eb-validation-messages>
 
-            </bd-item-property>
+        </bd-item-property>
 
-            <bd-item-property
-                    label="{{ ::'raiff.payments.recipients.new.zus.fill.recipient_account' | translate }}">
+        <bd-item-property
+                label="{{ ::'raiff.payments.recipients.new.zus.fill.recipient_account' | translate }}">
 
-                <rb-insurance-account-select
-                        bd-attr-ng-required="true"
-                        bd-attr-name="recipientAccountNo"
-                        rb-placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.recipient_account.placeholder' | translate }}"
-                        rb-selected-insurance-id="recipient.formData.selectedInsuranceId"
-                        rb-selected-insurance="recipient.items.selectedInsurance"
-                        rb-insurances-list="recipient.meta.insuranceAccounts">
+            <rb-insurance-account-select
+                    bd-attr-ng-required="true"
+                    bd-attr-name="recipientAccountNo"
+                    rb-placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.recipient_account.placeholder' | translate }}"
+                    rb-selected-insurance-id="recipient.formData.selectedInsuranceId"
+                    rb-selected-insurance="recipient.items.selectedInsurance"
+                    rb-insurances-list="recipient.meta.insuranceAccounts">
 
-                </rb-insurance-account-select>
+            </rb-insurance-account-select>
 
-                <eb-validation-messages eb-name="recipientAccountNo">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{::'raiff.MSG-0567_EMPTY_BNF_ACC'|translate}}
-                    </div>
-                </eb-validation-messages>
+            <eb-validation-messages eb-name="recipientAccountNo">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.MSG-0567_EMPTY_BNF_ACC'|translate}}
+                </div>
+            </eb-validation-messages>
 
-            </bd-item-property>
+        </bd-item-property>
 
-            <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_nip' | translate }}">
-                <input name="taxpayerNip"
-                       ng-model="recipient.formData.nip"
-                       required
-                       nip
-                       class="input-field"
-                       placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_nip.placeholder' | translate }}" />
+        <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_nip' | translate }}">
+            <input name="taxpayerNip"
+                   ng-model="recipient.formData.nip"
+                   required
+                   nip
+                   class="input-field"
+                   placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_nip.placeholder' | translate }}"/>
 
-                <eb-validation-messages eb-name="taxpayerNip">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{ ::'raiff.EMPTY_NIP' | translate }}
-                    </div>
-                    <div eb-message-key="nip" class="validation-message animate-on">
-                        {{ ::'raiff.INCORRECT_NIP' | translate }}
-                    </div>
-                </eb-validation-messages>
-            </bd-item-property>
+            <eb-validation-messages eb-name="taxpayerNip">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{ ::'raiff.EMPTY_NIP' | translate }}
+                </div>
+                <div eb-message-key="nip" class="validation-message animate-on">
+                    {{ ::'raiff.INCORRECT_NIP' | translate }}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
 
-            <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type' | translate }}">
-                <ui-select ng-model="recipient.formData.secondaryIdType"
-                           name="secondaryIdType"
-                           theme="bootstrap"
-                           on-select="onSecondaryIdTypeChanged(recipient.formData.secondaryIdType)"
-                           required>
-                    <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.placeholder' | translate }}">
-                        {{ 'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.' + $select.selected | translate }}
-                    </ui-select-match>
-                    <ui-select-choices repeat="supplementaryId in recipient.meta.zusSuplementaryIds track by $index">
-                        <div ng-bind-html="::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
+        <bd-item-property
+                label="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type' | translate }}">
+            <ui-select ng-model="recipient.formData.secondaryIdType"
+                       name="secondaryIdType"
+                       theme="bootstrap"
+                       on-select="onSecondaryIdTypeChanged(recipient.formData.secondaryIdType)"
+                       required>
+                <ui-select-match
+                        placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.placeholder' | translate }}">
+                    {{ 'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.' + $select.selected |
+                    translate }}
+                </ui-select-match>
+                <ui-select-choices repeat="supplementaryId in recipient.meta.zusSuplementaryIds track by $index">
+                    <div ng-bind-html="::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
 
-                <eb-validation-messages eb-name="secondaryIdType">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{ ::'raiff.change_me.EMPTY_SECONDARY_ID_TYPE' | translate }}
-                    </div>
-                </eb-validation-messages>
-            </bd-item-property>
+            <eb-validation-messages eb-name="secondaryIdType">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{ ::'raiff.change_me.EMPTY_SECONDARY_ID_TYPE' | translate }}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
 
-            <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id' | translate }}">
-                <input name="taxpayerSupplementaryId"
-                       ng-model="recipient.formData.secondaryIdNo"
-                       required
-                       class="input-field"
-                       pesel="recipient.formData.secondaryIdType === 'PESEL'"
-                       regon="recipient.formData.secondaryIdType === 'REGON'"
-                       id-card="recipient.formData.secondaryIdType === 'ID_CARD'"
-                       ng-disabled="!recipient.formData.secondaryIdType"
-                       placeholder="{{ 'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id.placeholder.' + (recipient.formData.secondaryIdType || 'none')  | translate }}"/>
-                <eb-validation-messages eb-name="taxpayerSupplementaryId">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{ ::'raiff.EMPTY_ADD_ID_NUMBER' | translate }}
-                    </div>
-                    <div eb-message-key="pesel" class="validation-message animate-on">
-                        {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
-                    </div>
-                    <div eb-message-key="regon" class="validation-message animate-on">
-                        {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
-                    </div>
-                    <div eb-message-key="idCard" class="validation-message animate-on">
-                        {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
-                    </div>
-                </eb-validation-messages>
-            </bd-item-property>
+        <bd-item-property
+                label="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id' | translate }}">
+            <input name="taxpayerSupplementaryId"
+                   ng-model="recipient.formData.secondaryIdNo"
+                   required
+                   class="input-field"
+                   pesel="recipient.formData.secondaryIdType === 'PESEL'"
+                   regon="recipient.formData.secondaryIdType === 'REGON'"
+                   id-card="recipient.formData.secondaryIdType === 'ID_CARD'"
+                   ng-disabled="!recipient.formData.secondaryIdType"
+                   placeholder="{{ 'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id.placeholder.' + (recipient.formData.secondaryIdType || 'none')  | translate }}"/>
+            <eb-validation-messages eb-name="taxpayerSupplementaryId">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{ ::'raiff.EMPTY_ADD_ID_NUMBER' | translate }}
+                </div>
+                <div eb-message-key="pesel" class="validation-message animate-on">
+                    {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
+                </div>
+                <div eb-message-key="regon" class="validation-message animate-on">
+                    {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
+                </div>
+                <div eb-message-key="idCard" class="validation-message animate-on">
+                    {{ ::'raiff.INCORRECT_ID_NUMBER_ZUS' | translate }}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
 
-            <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.payment_type' | translate }}">
-                <ui-select ng-model="recipient.formData.paymentType"
-                           theme="bootstrap"
-                           name="paymentType"
-                           required>
-                    <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.payment_type.placeholder' | translate }}">
-                        {{ 'raiff.payments.zus.payment_type.' + $select.selected | translate}}
-                    </ui-select-match>
-                    <ui-select-choices repeat="paymentType in recipient.meta.zusPaymentTypes track by $index">
-                        <div ng-bind-html="::'raiff.payments.zus.payment_type.' + paymentType | translate  | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
+        <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.payment_type' | translate }}">
+            <ui-select ng-model="recipient.formData.paymentType"
+                       theme="bootstrap"
+                       name="paymentType"
+                       required>
+                <ui-select-match
+                        placeholder="{{ ::'raiff.payments.recipients.new.zus.fill.payment_type.placeholder' | translate }}">
+                    {{ 'raiff.payments.zus.payment_type.' + $select.selected | translate}}
+                </ui-select-match>
+                <ui-select-choices repeat="paymentType in recipient.meta.zusPaymentTypes track by $index">
+                    <div ng-bind-html="::'raiff.payments.zus.payment_type.' + paymentType | translate  | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
 
-                <eb-validation-messages eb-name="paymentType">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{ ::'raiff.change_me.EMPTY_PAYMENT_TYPE' | translate }}
-                    </div>
-                </eb-validation-messages>
-            </bd-item-property>
+            <eb-validation-messages eb-name="paymentType">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{ ::'raiff.change_me.EMPTY_PAYMENT_TYPE' | translate }}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
 
     </div>
 </rb-payment-recipients-fill>

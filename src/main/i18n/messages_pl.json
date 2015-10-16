@@ -38,6 +38,7 @@
     "raiff.payments.insurances.type.HEALTH": "Ubezpieczenie Zdrowotne",
     "raiff.payments.insurances.type.FPIFGSP": "FP i FGSP",
     "raiff.payments.insurances.type.PENSION": "Fundusz Emerytur Pomostowych",
+    "raiff.payments.insurances.type.NOT_SELECTED": "-",
 
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
@@ -448,6 +449,7 @@
 
 
     "raiff.payments.recipients.new.zus.fill.remitter_account": "Z rachunku",
+    "raiff.payments.recipients.new.zus.fill.recipient_name": "Nazwa rachunku",
     "raiff.payments.recipients.new.zus.fill.remitter_account.none_available": "Nie posiadasz wystarczającej liczby rachunków aby dodać odbiorcę ZUS.",
     "raiff.payments.recipients.new.zus.fill.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.zus.fill.custom_name.placeholder": "Wpisz nazwę odbiorcy",
@@ -475,6 +477,7 @@
     "raiff.payments.recipients.new.zus.verify.remitter_account": "Z rachunku",
     "raiff.payments.recipients.new.zus.verify.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.zus.verify.recipient_account": "Numer rachunku",
+    "raiff.payments.recipients.new.zus.verify.recipient_name": "Nazwa rachunku",
     "raiff.payments.recipients.new.zus.verify.micro_name": "Nazwa firmy",
     "raiff.payments.recipients.new.zus.verify.taxpayer_nip": "NIP płatnika",
     "raiff.payments.recipients.new.zus.verify.taxpayer_supplementary_id_type": "Typ drugiego identyfikatora",
