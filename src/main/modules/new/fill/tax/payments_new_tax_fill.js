@@ -57,13 +57,15 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.clearRecipient = function () {
-            delete $scope.payment.formData.templateId;
-            delete $scope.payment.formData.idType;
-            delete $scope.payment.formData.idNumber;
-            delete $scope.payment.formData.formCode;
-            delete $scope.payment.formData.periodType;
-            delete $scope.payment.items.recipientAccount;
-            $scope.payment.options.isFromRecipient = false;
+            if($scope.payment.options.isFromRecipient) {
+                delete $scope.payment.formData.templateId;
+                delete $scope.payment.formData.idType;
+                delete $scope.payment.formData.idNumber;
+                delete $scope.payment.formData.formCode;
+                delete $scope.payment.formData.periodType;
+                delete $scope.payment.items.recipientAccount;
+                $scope.payment.options.isFromRecipient = false;
+            }
         };
 
         $scope.selectRecipient = function (recipient) {
@@ -86,12 +88,14 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.clearTaxpayer = function () {
-            if(!$scope.payment.options.isFromRecipient) {
-                delete $scope.payment.formData.idType;
-                delete $scope.payment.formData.idNumber;
+            if($scope.payment.options.isFromTaxpayer) {
+                if(!$scope.payment.options.isFromRecipient) {
+                    delete $scope.payment.formData.idType;
+                    delete $scope.payment.formData.idNumber;
+                }
+                delete $scope.payment.formData.taxpayerData;
+                $scope.payment.options.isFromTaxpayer = false;
             }
-            delete $scope.payment.formData.taxpayerData;
-            $scope.payment.options.isFromTaxpayer = false;
         };
 
         $scope.selectTaxpayer = function (taxpayer) {

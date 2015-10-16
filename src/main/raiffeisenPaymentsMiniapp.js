@@ -7,7 +7,7 @@ angular.module('raiffeisen-payments', [
 
     function registerModule() {
         webComponentRegistry['raiffeisen-payments'].simpleName = "payments";
-        webComponentRegistry['raiffeisen-payments'].startState = "payments.content";
+        webComponentRegistry['raiffeisen-payments'].startState = "payments.recipients.list";
     }
 
     function registerComponents() {

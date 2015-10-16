@@ -94,7 +94,7 @@
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
     "raiff.payments.new.label.header": "Przelew",
-    "raiff.payments.new_internal.label.header": "Przelew własny",
+    "raiff.payments.new_internal.label.header": "Przelew na rachunek własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
     "raiff.payments.new.types.INTERNAL": "Przelew własny",
