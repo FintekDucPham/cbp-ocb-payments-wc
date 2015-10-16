@@ -8,7 +8,8 @@ angular.module('raiffeisen-payments')
                 formSymbol: '=rbFormSymbol',
                 formSymbolList: '=?rbFormSymbolList',
                 onSelect: '&rbOnSelect',
-                placeholder: "@rbPlaceholder"
+                placeholder: "@rbPlaceholder",
+                isDisabled: '=rbIsDisabled'
             },
             compile: function ($element, $attr) {
                 attrBinder.bindParams($element.find('ui-select'), $attr);
