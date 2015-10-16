@@ -20,11 +20,11 @@ angular.module('raiffeisen-payments')
         },
         "INSURANCE": {
             code: 'INSURANCE',
-            state: 'zus'
+            state: 'insurance'
         },
         "TAX": {
             code: 'TAX',
-            state: 'us'
+            state: 'tax'
         },
         "CURRENCY": {
             code: 'CURRENCY',

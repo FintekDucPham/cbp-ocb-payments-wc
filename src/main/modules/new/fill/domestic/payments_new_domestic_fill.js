@@ -142,5 +142,14 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.setRecipientDataExtractor(function() {
+            return {
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
+                recipientData: $scope.payment.formData.recipientName,
+                description: $scope.payment.formData.description
+            };
+        });
 
     });

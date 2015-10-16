@@ -28,12 +28,13 @@
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.recipient_account' | translate }}" ng-switch="payment.options.isFromRecipient">
 
         <div ng-switch-when="true">
-            <input class="input-field" disabled value="{{ payment.items.recipientAccount.recipientAccountNo }}" />
+            <input class="input-field" disabled value="{{ payment.items.recipientAccount.accountNo | nrbIbanFilter }}" />
             {{ payment.items.recipientAccount.officeName }}
         </div>
 
         <div ng-switch-when="false">
             <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
+                                   rb-tax-office-id="payment.formData.recipientAccountNo"
                                    rb-on-tax-account-select="selectTaxAccount($office)"
                                    rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
 
@@ -110,7 +111,6 @@
         </ui-select>
     </bd-item-property>
 
-
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.supplementary_id' | translate }}">
         <input name="supplementaryId"
                ng-model="payment.formData.idNumber"
@@ -151,6 +151,7 @@
                 rb-on-select="selectSymbol()"
                 bd-attr-name="formSymbol"
                 bd-attr-required
+                rb-is-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                 rb-placeholder="{{ ::'raiff.payments.new.us.fill.form_symbol.placeholder' | translate }}">
 
         </rb-us-form-symbol-select>
@@ -168,7 +169,7 @@
                    name="periodType"
                    on-select="selectPeriodType($item)"
                    theme="bootstrap"
-                   ng-disabled="!payment.items.formSymbol.periodRequired"
+                   ng-disabled="!payment.items.formSymbol.periodRequired || payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                    required>
             <ui-select-match placeholder="{{ ::'raiff.payments.new.us.fill.period_type.placeholder' | translate }}">

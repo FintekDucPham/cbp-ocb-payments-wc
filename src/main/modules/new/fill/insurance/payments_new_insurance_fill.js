@@ -211,4 +211,18 @@ angular.module('raiffeisen-payments')
             $scope.paymentForm.taxpayerSupplementaryId.$validate();
         };
 
+        $scope.setRecipientDataExtractor(function() {
+
+            return {
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                selectedInsuranceId: $scope.payment.formData.recipientAccountNo,
+                nip: $scope.payment.formData.nip,
+                secondaryIdType:  $scope.payment.formData.secondaryIdType,
+                secondaryIdNo: $scope.payment.formData.secondaryIdNo,
+                paymentType: $scope.payment.formData.paymentType
+            };
+
+        });
+
     });

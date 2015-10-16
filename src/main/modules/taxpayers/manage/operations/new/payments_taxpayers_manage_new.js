@@ -26,7 +26,6 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsTaxpayersManageNewController', function ($scope) {
 
         $scope.clearForm = function () {
-            $scope.taxpayer.formData = {};
             $scope.$broadcast('clearForm');
         };
 

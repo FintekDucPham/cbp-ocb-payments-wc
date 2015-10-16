@@ -3,6 +3,7 @@
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.remitter_account' | translate }}">
             <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
+                               rb-account-no="recipient.formData.debitAccountNo"
                                rb-account="recipient.items.senderAccount"
                                rb-account-list="recipient.items.accountList"
                                rb-on-account-select="onSenderAccountSelect()"
@@ -80,6 +81,7 @@
                    required
                    class="input-field"
                    type="text"
+                   ng-disabled="!recipient.formData.secondaryIdType"
                    nip="recipient.formData.secondaryIdType === 'NIP'"
                    pesel="recipient.formData.secondaryIdType === 'PESEL'"
                    regon="recipient.formData.secondaryIdType === 'REGON'"

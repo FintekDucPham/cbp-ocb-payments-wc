@@ -38,11 +38,12 @@
     "raiff.payments.insurances.type.HEALTH": "Ubezpieczenie Zdrowotne",
     "raiff.payments.insurances.type.FPIFGSP": "FP i FGSP",
     "raiff.payments.insurances.type.PENSION": "Fundusz Emerytur Pomostowych",
+    "raiff.payments.insurances.type.NOT_SELECTED": "-",
 
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
     "payments.submenu.options.list.header": "Lista płatności",
-    "payments.submenu.options.new.header": "Przelew krajowy w PLN",
+    "payments.submenu.options.new.header": "Przelew w PLN",
     "payments.submenu.options.new_internal.header": "Przelew własny",
 
     "raiff.payments.widget.view.new_payment": "Nowa płatność",
@@ -109,6 +110,7 @@
     "raiff.payments.new.btn.clear": "Wyczyść",
     "raiff.payments.new.btn.next": "Dalej",
     "raiff.payments.new.btn.finalize": "Powrót do listy",
+    "raiff.payments.new.btn.final_action": "Zapisz odbiorcę",
 
     "raiff.payments.new.verify.smscode": "Podaj haslo SMS dla operacji",
     "raiff.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",
@@ -385,7 +387,7 @@
 
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
-    "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
+    "raiff.payments.recipients.label": "Odbiorcy",
     "raiff.payments.recipients.type.label": "Typ odbiorcy",
     "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.new.button": "Nowy odbiorca",
@@ -421,6 +423,7 @@
     "raiff.payments.recipients.new.domestic.fill.custom_name.placeholder": "Wpisz nazwę skróconą odbiorcy",
     "raiff.payments.recipients.new.domestic.fill.custom_name.label": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.domestic.fill.customName.EMPTY": "Nazwa skrócona odbiorcy nie może być pusta",
+    "raiff.payments.recipients.new.domestic.fill.account_related.none_available": "Nie posiadasz wystarczającej liczby rachunków aby dodać odbiorcę krajowego",
     "raiff.payments.recipients.new.domestic.fill.remitterAccount.EMPTY":"Pole nie może być puste",
     "raiff.payments.recipients.new.domestic.fill.customName.ILLEGAL": "Pole Nazwa skrócona odbiorcy nie może być dłuższe niż 35 znaków i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /",
     "raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
@@ -446,6 +449,8 @@
 
 
     "raiff.payments.recipients.new.zus.fill.remitter_account": "Z rachunku",
+    "raiff.payments.recipients.new.zus.fill.recipient_name": "Nazwa rachunku",
+    "raiff.payments.recipients.new.zus.fill.remitter_account.none_available": "Nie posiadasz wystarczającej liczby rachunków aby dodać odbiorcę ZUS.",
     "raiff.payments.recipients.new.zus.fill.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.zus.fill.custom_name.placeholder": "Wpisz nazwę odbiorcy",
     "raiff.payments.recipients.new.zus.fill.recipient_account": "Numer rachunku",
@@ -472,6 +477,7 @@
     "raiff.payments.recipients.new.zus.verify.remitter_account": "Z rachunku",
     "raiff.payments.recipients.new.zus.verify.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.zus.verify.recipient_account": "Numer rachunku",
+    "raiff.payments.recipients.new.zus.verify.recipient_name": "Nazwa rachunku",
     "raiff.payments.recipients.new.zus.verify.micro_name": "Nazwa firmy",
     "raiff.payments.recipients.new.zus.verify.taxpayer_nip": "NIP płatnika",
     "raiff.payments.recipients.new.zus.verify.taxpayer_supplementary_id_type": "Typ drugiego identyfikatora",
@@ -479,6 +485,7 @@
     "raiff.payments.recipients.new.zus.verify.payment_type": "Typ wpłaty",
 
     "raiff.payments.recipients.new.us.fill.remitter_account": "Z rachunku",
+    "raiff.payments.recipients.new.us.fill.remitter_account.none_available": "Nie posiadasz wystarczającej liczby rachunków aby dodać odbiorcę US/IC.",
     "raiff.payments.recipients.new.us.fill.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.us.fill.custom_name.placeholder": "Wpisz nazwę odbiorcy",
     "raiff.payments.recipients.new.us.fill.recipient_account": "Rachunek Urzędu Skarbowego/Izby Celnej",
@@ -594,6 +601,8 @@
     "raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
     "raiff.payments.rejected.opration_type.rejected": "Odrzucona",
     "raiff.payments.taxpayers.manage.remove.title": "Usuń płatnika",
+    "raiff.payments.taxpayers.manage.remove.cancel_btn": "Powrót",
+    "raiff.payments.taxpayers.manage.remove.remove_btn": "Usuń",
 
     "raiff.payments.taxpayers.label": "Płatnicy",
     "raiff.payments.taxpayers.label.empty_list": "Nie znaleziono płatników",

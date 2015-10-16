@@ -40,7 +40,7 @@ angular.module('raiffeisen-payments')
                 $scope.$watch('taxOfficeId', function (taxOfficeId) {
                     if (taxOfficeId) {
                         if(!$scope.model.taxOffice || $scope.model.taxOffice && $scope.model.taxOffice.taxOfficeId !== taxOfficeId) {
-                            $scope.searchForOffice(taxOfficeId);
+                            searchForOffice(taxOfficeId);
                         }
                     } else {
                         $scope.taxOffice = null;
@@ -63,8 +63,16 @@ angular.module('raiffeisen-payments')
                     }
                 });
 
-                $scope.searchForOffice = function (selectedInput) {
-                    taxOffices.search((function (selectedInput) {
+                $scope.onSearched = function(selectedInput) {
+                    searchForOffice(selectedInput).then(function() {
+                        if($scope.taxAccounts.length > 1) {
+                            $scope.$broadcast('taxAccountSearched', selectedInput);
+                        }
+                    });
+                };
+
+                function searchForOffice(selectedInput) {
+                    return taxOffices.search((function (selectedInput) {
                         var regexp = new RegExp('^[0-9 ]+$');
                         if (regexp.test(selectedInput)) {
                             return {
@@ -82,12 +90,9 @@ angular.module('raiffeisen-payments')
                             $scope.taxAccounts = result;
                             $scope.isFromList = true;
                             $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
-                            if (result.length > 2) {
-                                $scope.$broadcast('taxAccountSearched', selectedInput);
-                            }
                         }
                     });
-                };
+                }
 
                 $scope.useCustom = function () {
                     $scope.isFromList = false;

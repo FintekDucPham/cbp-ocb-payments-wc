@@ -20,7 +20,7 @@
 
         </bd-item-property>
 
-        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="{ completeState: 'payments.recipients.list', onClear: clearForm, cancelState: 'payments.recipients.list', labels : { finalize: 'raiff.payments.new.btn.finalize' } }">
+        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="{ completeState: 'payments.recipients.list', finalAction: saveRecipient, onClear: clearForm, cancelState: 'payments.recipients.list', labels : { finalize: 'raiff.payments.new.btn.finalize', finalAction: 'raiff.payments.new.btn.final_action' } }">
             <div ui-view></div>
         </rb-multistep-form>
 

@@ -73,10 +73,11 @@ angular.module('raiffeisen-payments')
                 formData.idType = recipient.secondaryIdType;
                 formData.idNumber = recipient.secondaryId;
                 formData.formCode = recipient.formCode;
-                formData.periodType = recipient.periodType;
+                var periodTypeCode = formData.periodType = recipient.periodType;
+                $scope.payment.options.customPeriod = !usPeriodTypes[periodTypeCode].values;
                 $scope.payment.items.recipientAccount = {
                     officeName: recipient.recipientName.join(', '),
-                    recipientAccountNo: recipient.nrb
+                    accountNo: recipient.nrb
                 };
                 $scope.payment.options.isFromRecipient = true;
             } else {
@@ -124,10 +125,30 @@ angular.module('raiffeisen-payments')
             var recipient = $scope.payment.items.recipientAccount;
             return angular.extend(copiedFormData, {
                 recipientName: recipient.officeName,
-                recipientAccountNo: recipient.recipientAccountNo
+                recipientAccountNo: recipient.accountNo
             });
         });
 
         $scope.payment.options.isFromRecipient = false;
+
+        $scope.$on('clearForm', function () {
+            $scope.payment.options.isFromRecipient = false;
+            $scope.payment.options.isFromTaxpayer = false;
+            $scope.payment.formData.currency = 'PLN';
+        });
+
+        $scope.setRecipientDataExtractor(function() {
+
+            return {
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
+                secondaryIdType:  $scope.payment.formData.idType,
+                idNumber: $scope.payment.formData.idNumber,
+                formCode: $scope.payment.formData.formCode,
+                periodType: $scope.payment.formData.periodType
+            };
+
+        });
 
     });

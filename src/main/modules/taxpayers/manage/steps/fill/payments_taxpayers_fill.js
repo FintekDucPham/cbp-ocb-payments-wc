@@ -43,6 +43,7 @@ angular.module('raiffeisen-payments')
                     taxpayerNipField.$setPristine();
                     taxpayerNipField.$render();
                 }
+                $scope.taxpayersForm.taxpayerData.$validate();
             }
         });
 
@@ -69,6 +70,9 @@ angular.module('raiffeisen-payments')
 
         $scope.onFillStepAttached($scope);
 
+        $scope.$on('clearForm', function() {
+            formService.clearForm($scope.taxpayersForm);
+        });
 
     });
 

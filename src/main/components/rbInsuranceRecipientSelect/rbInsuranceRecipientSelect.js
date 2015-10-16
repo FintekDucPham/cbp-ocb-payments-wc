@@ -36,7 +36,7 @@ angular.module('raiffeisen-payments')
                 });
 
                 $scope.selectRecipient = function($item) {
-                    if($item) {
+                    if($item && $item !== nullOption) {
                         $scope.selection.isSelected = true;
                         var oldRecipient = $scope.recipient;
                         $scope.recipient = $item;

@@ -38,7 +38,7 @@
         </div>
 
         <div class="rb-tax-account-select__control">
-            <bd-button type="button" ng-show="!isFromList" ng-click="searchForOffice(model.searchQuery)">{{ ::params.searchText |
+            <bd-button type="button" ng-show="!isFromList" ng-click="onSearched(model.searchQuery)">{{ ::params.searchText |
                 translate }}
             </bd-button>
             <bd-button type="button" ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate

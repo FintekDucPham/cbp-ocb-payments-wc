@@ -133,7 +133,7 @@ angular.module('raiffeisen-payments')
                                             };
                                         case "TAX":
                                             return {
-                                                nameAndAddress: recipient.recipientName.join(" "),
+                                                nameAndAddress: lodash.union(paymentDetails.taxAccountName, recipient.recipientAddress),
                                                 secondaryIdType: paymentDetails.idtype,
                                                 secondaryId: paymentDetails.idnumber,
                                                 formSymbol: paymentDetails.formCode,

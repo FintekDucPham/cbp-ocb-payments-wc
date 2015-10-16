@@ -52,7 +52,7 @@ angular.module('raiffeisen-payments')
             meta: {
                 paymentTypes: lodash.without(lodash.map(rbPaymentTypes, function (value) {
                     return value;
-                }), rbPaymentTypes.INTERNAL)
+                }), rbPaymentTypes.INTERNAL, rbPaymentTypes.SWIFT, rbPaymentTypes.SEPA)
             },
             validation: {}
         }), {
@@ -75,6 +75,19 @@ angular.module('raiffeisen-payments')
             });
         };
 
+        $scope.setRecipientDataExtractor = function(fn) {
+            $scope.resolveRecipientData = fn;
+        };
+
+        $scope.saveRecipient = function() {
+            if($scope.resolveRecipientData) {
+                $state.go("payments.recipients.manage.new.fill", {
+                    recipientType: $scope.payment.type.state.toLowerCase(),
+                    operation: 'new',
+                    recipient: $scope.resolveRecipientData()
+                });
+            }
+        };
 
         var alreadySet = false;
         $scope.setDefaultValues = function (value) {
