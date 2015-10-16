@@ -599,6 +599,7 @@
     "raiff.payments.rejected.select.filter.INCORRECT_DATE_FROM": "Nieprawidłowa data początkowa okresu wyszukiwania",
     "raiff.payments.rejected.select.filter.INCORRECT_DATE_TO": "Nieprawidłowa data końcowa okresu wyszukiwania",
     "raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
+    "raiff.payments.rejected.select.filter.FUTURE_DATE": "Data końcowa nie może być późniejsza niż data bieżąca.",
     "raiff.payments.rejected.opration_type.rejected": "Odrzucona",
     "raiff.payments.taxpayers.manage.remove.title": "Usuń płatnika",
     "raiff.payments.taxpayers.manage.remove.cancel_btn": "Powrót",

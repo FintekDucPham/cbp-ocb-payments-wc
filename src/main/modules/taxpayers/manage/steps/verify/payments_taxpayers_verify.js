@@ -1,8 +1,8 @@
 angular.module('raiffeisen-payments')
-    .controller('TaxpayersManageVerifyController', function ($scope, bdVerifyStepInitializer, taxpayerManagementService, bdStepStateEvents, formService) {
+    .controller('TaxpayersManageVerifyController', function ($scope, bdVerifyStepInitializer, taxpayerManagementService, bdStepStateEvents, formService, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
 
-        $scope.taxpayerAuthForm = {};
-        
+
+
         bdVerifyStepInitializer($scope, {
             formName: 'taxpayerForm',
             dataObject: $scope.taxpayer
@@ -13,12 +13,18 @@ angular.module('raiffeisen-payments')
             if (form && form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                $scope.performOperation(actions);
-            }
-        });
+                //token
+                if($scope.taxpayerAuthForm.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM){
+                    if($scope.taxpayerAuthForm.model.$tokenRequired && $scope.taxpayerAuthForm.model.input.$isValid()) {
+                        $scope.performOperation(actions, $scope.taxpayerAuthForm.model);
+                    }
+                }else{
+                    if($scope.taxpayerAuthForm.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                        $scope.taxpayerAuthForm.model.$proceed();
+                    }
+                }
 
-        $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-            actions.proceed();
+            }
         });
 
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function() {
@@ -38,6 +44,6 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onVerifyStepAttached($scope);
-        
+
     });
 

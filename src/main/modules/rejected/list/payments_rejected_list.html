@@ -77,6 +77,7 @@
                     </bd-radio-option>
 
                 </div>
+
                 <div class="row--spacing col-md-2 col-sm-12" style="text-align: right;">
                     <bd-button class="bd-button__primary" type="submit">{{::'raiff.payments.rejected.select.filter.button.action'|translate}}</bd-button>
                 </div>
@@ -93,6 +94,9 @@
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.mindate">
                         {{::'raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE' | translate }}
+                    </div>
+                    <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.future">
+                        {{::'raiff.payments.rejected.select.filter.FUTURE_DATE' | translate }}
                     </div>
                 </div>
             </div>
