@@ -28,29 +28,13 @@
         {{ taxpayer.formData.secondaryIdNo }}
     </bd-item-property>
 
-    <form name="taxpayerAuthForm" novalidate ng-if="taxpayer.options.twoStepAuthorization">
-        <div ng-init="setForm(taxpayerAuthForm);"></div>
+    <bd-item-property class="bd-item-property--text" ng-if="taxpayerAuthForm.params.resourceId" label="{{ taxpayerAuthForm.model.currentToken.label }}">
+        <rb-token-authorization rb-operation-type="MANAGE_PAYER" rb-model="taxpayerAuthForm.model" rb-params="taxpayerAuthForm.params"></rb-token-authorization>
+    </bd-item-property>
 
-        <bd-item-property label="{{ taxpayer.items.smsText }}">
-
-            <input type="text"
-                   name="authCode"
-                   ng-model="taxpayer.formData.credentials"
-                   required/>
-
-            <eb-validation-messages eb-name="authCode">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
-                </div>
-            </eb-validation-messages>
-
-        </bd-item-property>
-
-    </form>
-
-    <div class="authorization-blocked" ng-if="taxpayer.promises.authorizationPromise.$$state.status === 2">
-        <!--{{::"cards.label.empty_list"|translate}}-->
-        {{::'raiff.payments.recipients.authorization.BLOCKED_SMS'|translate}}
+    <div ng-messages="taxpayerAuthForm.model.currentToken.$errors"  class="messages">
+        <div ng-message="AUTHORIZATION_BLOCKED" class="validation-message animate-on">
+            {{::'raiff.payments.MSG-0518_BLOCKED_SMS'|translate}}
+        </div>
     </div>
-
 </div>

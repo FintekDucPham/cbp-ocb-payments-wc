@@ -15,6 +15,13 @@ angular.module('raiffeisen-payments')
                                                                rbTaxpayerTypes, rbTaxpayerOperationType, $stateParams,
                                                                taxpayerManagementService, authorizationService) {
 
+        $scope.taxpayerAuthForm = {
+            model:null,
+            params: {
+                resourceId: null
+            }
+        };
+
         bdMainStepInitializer($scope, 'taxpayer', {
             formName: 'taxpayerForm',
             type: rbTaxpayerTypes[$stateParams.taxpayerType.toUpperCase()],
@@ -74,20 +81,7 @@ angular.module('raiffeisen-payments')
             taxpayerManagementService.create($scope.taxpayer.operation.code,
                 $scope.convertRequestOperation($scope.requestConverter($scope.taxpayer.formData))).then(function (taxpayer) {
                     $scope.taxpayer.formData.taxpayerId = taxpayer;
-                    $scope.taxpayer.promises.authorizationPromise = authorizationService.create({
-                        resourceId: $scope.taxpayer.formData.taxpayerId,
-                        resourceType: 'MANAGE_PAYER'
-                    }).then(function (authorization) {
-                        return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
-                            var twoStep = $scope.taxpayer.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
-                            if (twoStep) {
-                                $scope.taxpayer.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
-                                    .replace("##number##", content.authenticationAttributes.operationId)
-                                    .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'shortDate'));
-                            }
-                            actions.proceed();
-                        });
-                    });
+                    $scope.taxpayerAuthForm.params.resourceId = taxpayer;
                 });
         };
 
@@ -96,16 +90,21 @@ angular.module('raiffeisen-payments')
          *
          * @param actions
          */
-        $scope.performOperation = function(actions) {
+        $scope.performOperation = function(actions, tokenModel) {
+
             taxpayerManagementService.realize(
                 $scope.taxpayer.formData.taxpayerId,
-                $scope.taxpayer.formData.credentials
+                tokenModel.input.model
             ).then(function () {
                     $scope.taxpayer.result.type = 'success';
                     actions.proceed();
                 }).catch(function (e) {
                     $scope.taxpayer.result.type = 'error';
-                    actions.proceed();
+                    if(tokenModel && tokenModel.$tokenRequired && tokenModel.currentToken.$errors.INCORRECT_PASSWORD){
+                        tokenModel.$proceed();
+                    }else{
+                        actions.proceed();
+                    }
                 });
         };
 

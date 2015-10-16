@@ -69,5 +69,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onFillStepAttached($scope);
 
+
     });
 
