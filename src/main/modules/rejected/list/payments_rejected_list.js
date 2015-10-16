@@ -256,6 +256,12 @@ angular.module('raiffeisen-payments')
                 s.$watch('modelDate', validator);
                 s.$watch('ngRequired', validator);
                 s.$watch('minDate', validator);
+                s.$watch('modelDate', function(n, o){
+                    if(n!=o){
+                        var now = new Date();
+                        model.$setValidity('future', (now.getTime() > s.modelDate.getTime()));
+                    }
+                });
             }
         };
 
