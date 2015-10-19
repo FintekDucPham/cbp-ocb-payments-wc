@@ -1,12 +1,12 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams) {
+    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams) {
 
         $scope.currencyList = [];
 
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
-            $scope.payment.formData.recipientAccountNo = recipient.accountNo;
+            $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
             $scope.payment.formData.recipientName = recipient.data;
             $scope.payment.formData.description = recipient.title;
         };
@@ -86,18 +86,20 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            control.holdOn();
-            taxOffices.search({
-                accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-            }).then(function (result) {
-                if (result.length > 0) {
-                    $scope.payment.meta.recipientForbiddenAccounts.push({
-                        code: 'notUs',
-                        value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-                    });
-                    $scope.paymentForm.recipientAccountNo.$validate();
-                }
-            }).finally(control.done);
+            if($scope.payment.formData.recipientAccountNo) {
+                control.holdOn();
+                taxOffices.search({
+                    accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
+                }).then(function (result) {
+                    if (result.length > 0) {
+                        $scope.payment.meta.recipientForbiddenAccounts.push({
+                            code: 'notUs',
+                            value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
+                        });
+                        $scope.paymentForm.recipientAccountNo.$validate();
+                    }
+                }).finally(control.done);
+            }
         });
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
