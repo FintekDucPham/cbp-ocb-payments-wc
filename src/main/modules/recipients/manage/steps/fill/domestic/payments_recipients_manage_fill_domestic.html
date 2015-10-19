@@ -1,6 +1,5 @@
 <rb-payment-recipients-fill>
     <div ng-controller="RecipientsManageFillDomesticController">
-
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
             <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
             <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
@@ -17,8 +16,23 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-
-
+        <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.domestic.verify.company.name' | translate }}">
+            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
+                    <span ng-if="owner != null">{{owner.fullName}}</span>
+                    <span ng-if="owner == null">-</span>
+                </div>
+            </section>
+            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.formData.debitAccountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
+                    <span ng-if="owner != null">{{owner.fullName}}</span>
+                    <span ng-if="owner == null">-</span>
+                </div>
+            </section>
+        </bd-item-property>
+        <bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
+            {{ recipient.formData.recipientId}}
+        </bd-item-property>
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
             <input name="customName"
                    ng-model="recipient.formData.customName"
@@ -71,7 +85,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_data.label' | translate }}">
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
             <textarea name="recipientData"
                       ng-model="recipient.formData.recipientData"
                       bd-split-text-length="132"

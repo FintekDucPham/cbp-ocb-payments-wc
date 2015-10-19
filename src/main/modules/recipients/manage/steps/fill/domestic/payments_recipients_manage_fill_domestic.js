@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService) {
 
         $scope.recipient.meta.forbiddenAccounts = [];
 
@@ -7,7 +7,17 @@ angular.module('raiffeisen-payments')
             tax: notTaxAccountGuard($scope.recipient.meta),
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
         };
-
+        customerService.getCustomerDetails().then(function(customerDetails){
+            $scope.customerDetails = customerDetails.customerDetails;
+        });
+        $scope.accountListPromise = accountsService.search().then(function(accountList){
+            $scope.accountsList = accountList.content;
+        });
+        $scope.getAccountByNrb = function(accountNumber){
+            return lodash.find($scope.accountsList, {
+                accountNo: accountNumber
+            });
+        };
         $scope.onSenderAccountSelect = function () {
             $scope.recipientForm.recipientAccountNo.$validate();
         };
