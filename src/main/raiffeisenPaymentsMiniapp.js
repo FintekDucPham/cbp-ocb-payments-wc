@@ -63,11 +63,18 @@ angular.module('raiffeisen-payments', [
                     priority: 4
                 },
                 {
+                    id: "payments.future.list",
+                    label: 'raiff.payments.future.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.future.list",
+                    priority: 5
+                },
+                {
                     id: "payments.rejected.list",
                     label: 'raiff.payments.rejected.label',
                     icon: "raiff-icons raiff_operacje_odrzucone",
                     action: "payments.rejected.list",
-                    priority: 5
+                    priority: 6
                 }
             ]
         });
