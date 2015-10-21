@@ -7,6 +7,11 @@
                                rb-account-list="recipient.items.accountList"
                                rb-on-account-select="onSenderAccountSelect()"
                                rb-account-select-params="recipientSelectParams"></rb-account-select>
+            <eb-validation-messages eb-name="remitterAccountId">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.remitterAccount.EMPTY'|translate}}
+                </div>
+            </eb-validation-messages>
         </bd-item-property>
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.custom_name' | translate }}">
