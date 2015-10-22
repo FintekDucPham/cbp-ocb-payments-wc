@@ -9,7 +9,15 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.taxpayer
         });
 
-        $scope.TAXPAYER_NAME_REGEX = validationRegexp('RECIPIENT_NAME');
+        $scope.TAXPAYER_NAME_REGEX = validationRegexp('TAXPAYER_NAME');
+
+        $scope.patterns = {};
+        angular.extend($scope.patterns, {
+            taxpayerData: {
+                INSURANCE: validationRegexp('INSURANCE_TAXPAYER_DATA'),
+                TAX: validationRegexp('TAX_TAXPAYER_DATA')
+            }
+        });
 
         function setDefaultValues(what) {
             lodash.extend($scope.taxpayer.formData, what, lodash.omit($scope.taxpayer.formData, lodash.isUndefined));

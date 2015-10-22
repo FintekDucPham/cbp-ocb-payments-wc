@@ -151,7 +151,7 @@
                 rb-on-select="selectSymbol()"
                 bd-attr-name="formSymbol"
                 bd-attr-required
-                rb-is-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
+                rb-is-disabled="payment.options.isFromRecipient"
                 rb-placeholder="{{ ::'raiff.payments.new.us.fill.form_symbol.placeholder' | translate }}">
 
         </rb-us-form-symbol-select>
@@ -169,7 +169,7 @@
                    name="periodType"
                    on-select="selectPeriodType($item)"
                    theme="bootstrap"
-                   ng-disabled="!payment.items.formSymbol.periodRequired || payment.options.isFromRecipient || payment.options.isFromTaxpayer"
+                   ng-disabled="!payment.items.formSymbol.periodRequired || payment.options.isFromRecipient"
                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                    required>
             <ui-select-match placeholder="{{ ::'raiff.payments.new.us.fill.period_type.placeholder' | translate }}">

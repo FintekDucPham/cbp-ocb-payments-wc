@@ -33,11 +33,11 @@
 
         <textarea name="taxpayerData"
                   ng-model="taxpayer.formData.taxpayerData"
-                  ng-pattern="patterns.taxpayerData"
+                  ng-pattern="patterns.taxpayerData[taxpayer.formData.taxpayerType]"
                   required
-                  bd-split-text="taxpayer.formData.taxpayerType === 'INSURANCE' ? 35 : 27"
-                  bd-split-text-length="taxpayer.formData.taxpayerType === 'INSURANCE' ? 132 : 54"
-                  bd-split-text-max-rows="taxpayer.formData.taxpayerType === 'INSURANCE' ? 4 : 2"
+                  bd-split-text="{{ taxpayer.formData.taxpayerType === 'INSURANCE' ? 27 : 35 }}"
+                  bd-split-text-length="{{ taxpayer.formData.taxpayerType === 'INSURANCE' ? 54 : 140 }}"
+                  bd-split-text-max-rows="{{ taxpayer.formData.taxpayerType === 'INSURANCE' ? 2 : 4 }}"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.taxpayers.fill.taxpayer_data.placeholder' | translate }}"></textarea>
 
@@ -46,10 +46,10 @@
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.EMPTY_PAYER' | translate }}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
+                {{ taxpayer.formData.taxpayerType === 'INSURANCE' ? ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_ZUS' | translate) : ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_US_IC' | translate) }}
             </div>
             <div eb-message-key="splitTextLength" class="validation-message animate-on">
-                {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
+                {{ taxpayer.formData.taxpayerType === 'INSURANCE' ? ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_ZUS' | translate) : ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_US_IC' | translate) }}
             </div>
         </eb-validation-messages>
 
