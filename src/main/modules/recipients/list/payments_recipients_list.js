@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.types = {
-            currentType: recipientFilterType.DOMESTIC,
+            currentType: recipientFilterType.ALL,
             availableTypes: recipientFilterType,
             availableTypesList: lodash.map(recipientFilterType)
         };

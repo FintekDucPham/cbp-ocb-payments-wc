@@ -387,7 +387,7 @@
 
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
-    "raiff.payments.recipients.label": "Odbiorcy",
+    "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
     "raiff.payments.recipients.type.label": "Typ odbiorcy",
     "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.new.button": "Nowy odbiorca",
@@ -406,9 +406,10 @@
     "raiff.payments.recipients.select.type.ZUS": "ZUS",
     "raiff.payments.recipients.select.type.US": "US/IC",
     "raiff.payments.recipients.select.type.INSURANCE": "ZUS",
-    "raiff.payments.recipients.select.type.TAX": "US",
+    "raiff.payments.recipients.select.type.TAX": "US/IC",
     "raiff.payments.recipients.select.type.CURRENCY": "Walutowy",
 
+    "raiff.payments.recipients.new.type.select": "Typ odbiorcy",
     "raiff.payments.recipients.new.type.select.placeholder": "Wybierz typ odbiorcy",
     "raiff.payments.recipients.new.type.DOMESTIC": "Krajowy",
     "raiff.payments.recipients.new.type.ZUS": "ZUS",
@@ -535,6 +536,7 @@
     "raiff.payments.recipients.verify.us.period_type": "Typ okresu",
     "raiff.payments.recipients.verify.us.obligation_id": "Identyfikacja zobowiązania",
 
+    "raiff.payments.recipients.manage.status.taxpayer_type": "Typ odbiorcy",
 
     "raiff.payments.recipients.manage.remove.title": "Usuń odbiorcę",
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
@@ -643,13 +645,15 @@
 
     "raiff.payments.taxpayers.fill.custom_name": "Twoja nazwa płatnika",
     "raiff.payments.taxpayers.fill.custom_name.required": "Twoja nazwa płatnika jest wymagana",
-    "raiff.payments.taxpayers.fill.custom_name.pattern": "Twoja nazwa płatnika nie może być dłuższa niż 35 znaków i powinna zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /.",
+    "raiff.payments.taxpayers.fill.custom_name.pattern": "Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? ~ ` ' , /.",
     "raiff.payments.taxpayers.fill.custom_name.placeholder": "Wpisz nazwę płatnika",
     "raiff.payments.taxpayers.fill.taxpayer_type": "Typ płatnika",
     "raiff.payments.taxpayers.fill.type.insurance": "ZUS",
     "raiff.payments.taxpayers.fill.type.tax": "US/IC",
     "raiff.payments.taxpayers.fill.taxpayer_data": "Nazwa płatnika",
     "raiff.payments.taxpayers.fill.taxpayer_data.placeholder": "Wpisz nazwę płatnika",
+    "raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_ZUS": "Pole Dane płatnika  nie może być dłuższe niż 54 (dla płatnika ZUS) i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_US_IC": "Pole Dane płatnika  nie może być dłuższe niż 140 znaków (dla płatnika US) i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.taxpayers.fill.taxpayer_nip": "NIP płatnika",
     "raiff.payments.taxpayers.fill.taxpayer_nip.placeholder" : "Wpisz NIP płatnika",
     "raiff.payments.taxpayers.fill.taxpayer_supplementary_id_type": "Typ identyfikatora uzupełniającego",
@@ -706,7 +710,7 @@
     "raiff.change_me.CUSTOM_NAME_PATTERN": "Pole Nazwa skrócona odbiorcy nie może być dłuższe niż 35 znaków i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /.",
     "raiff.EMPTY_ADD_ID_NUMBER": "Numer identyfikatora uzupełniającego nie może być pusty",
     "raiff.INCORRECT_ID_NUMBER_ZUS": "Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu",
-    "raiff.INCORRECT_ID_NUMBER_TAXPAYER": "Niepoprawny numer wybranego identyfikatora",
+    "raiff.INCORRECT_ID_NUMBER_TAXPAYER": "Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu",
     "raiff.EMPTY_NIP": "NIP płatnika nie może być pusty i powinien składać się z 10 cyfr",
     "raiff.INCORRECT_NIP": "Niepoprawny numer NIP płatnika",
     "raiff.change_me.EMPTY_SECONDARY_ID_TYPE": "Typ drugiego identyfikatora musi zostać wybrany",
