@@ -1,55 +1,7 @@
 <div ng-include="getTemplateName('verify')"></div>
 
-<form class="form-body" name="paymentAuthForm" novalidate ng-if="payment.options.twoStepAuthorization">
-    <div ng-init="setForm(paymentAuthForm);"></div>
-
-    <div ng-switch="payment.result.token_error">
-
-        <div ng-switch-when="true" class="rb-payments-token-error">
-
-            <div ng-messages="payment.result.token_errors"  class="messages">
-                <div ng-message="authorization_blocked" class="validation-message animate-on">
-                    {{::'raiff.payments.MSG-0518_BLOCKED_SMS'|translate}}
-                </div>
-                <div ng-message="incorrect_password" class="validation-message animate-on">
-                    {{::'raiff.payments.MSG-0514_INCORRECT_SMS'|translate}}
-                </div>
-                <div ng-message="expired" class="validation-message animate-on">
-                    {{::'raiff.payments.MSG-0515_EXPIRED_SMS'|translate}}
-                </div>
-                <div ng-message="incorrect_password_authorization_blocked" class="validation-message animate-on">
-                    {{::'raiff.payments.MSG-0517_INCORRECT_BLOCKED_SMS'|translate}}
-                </div>
-                <div ng-message="system_failure" class="validation-message animate-on">
-                    {{::'raiff.payments.MSG-0519_SMS_AGAIN'|translate}}
-                </div>
-            </div>
-
-            <bd-radio-select bd-model="payment.result.nextTokenType">
-                <bd-radio-option ng-hide="payment.result.token_errors['expired']" bd-option-value="'prev'">{{::'raiff.payments.new.verify.token.authorize.prev'|translate}}</bd-radio-option>
-                <bd-radio-option bd-option-value="'next'">{{::'raiff.payments.new.verify.token.authorize.next'|translate}}</bd-radio-option>
-            </bd-radio-select>
-
-        </div>
-
-        <div ng-switch-when="false">
-            <bd-item-property label="{{ payment.items.smsText }}">
-
-                <input type="text"
-                       name="authCode"
-                       bd-novalidate-when="payment.result.token_error"
-                       ng-model="payment.items.credentials"
-                       required/>
-
-                <eb-validation-messages eb-name="authCode">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH'|translate}}
-                    </div>
-                </eb-validation-messages>
-
-            </bd-item-property>
-        </div>
-
-    </div>
-
-</form>
+<section ng-if="payment.options.twoStepAuthorization">
+    <bd-item-property class="bd-item-property--text" ng-if="payment.token.params.resourceId" label="{{ payment.token.model.currentToken.label }}">
+        <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
+    </bd-item-property>
+</section>

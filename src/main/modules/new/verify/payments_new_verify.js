@@ -6,39 +6,20 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
 
-        function sendAuthorizationToken() {
-            $scope.payment.promises.authorizationPromise = authorizationService.create({
-                resourceId: $scope.payment.transferId,
-                resourceType: 'TRANSFER'
-            }).then(function (authorization) {
-                return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
-                    var twoStep = $scope.payment.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
-                    $scope.payment.result.token_error = false;
-                    if (twoStep) {
-                        $scope.payment.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
-                            .replace("##number##", content.authenticationAttributes.operationId)
-                            .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'dd.MM.yyyy'));
-                    }
-                });
-            }).catch(function() {
-                $scope.payment.result.token_error = true;
-                $scope.payment.result.nextTokenType = 'prev';
-            });
-        }
-
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
             $scope.payment.result.token_error = false;
-            sendAuthorizationToken();
+            $scope.payment.token.params.resourceId = $scope.payment.transferId;
         });
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+            $scope.payment.token.params = {};
             delete $scope.payment.items.credentials;
         });
 
@@ -56,20 +37,15 @@ angular.module('raiffeisen-payments')
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
-                $scope.payment.result.nextTokenType = 'prev';
-                if (error.subType !== 'validation') {
-                    $scope.payment.result = {
-                        code: "error",
-                        type: "error"
-                    };
-                    doneFn();
-                } else {
-                    var tokenErrors = $scope.payment.result.token_errors = {};
-                    tokenErrors[error.errors[0].defaultMessage] = true;
-                    if (error.text === 'INCORRECT_TOKEN_PASSWORD_AUTHORIZATION_BLOCKED') {
-                        $scope.payment.result.authorization_blocked = true;
+
+                if($scope.payment.token.model && $scope.payment.token.model.$tokenRequired){
+                    if(!$scope.payment.token.model.$isErrorRegardingToken(error)){
+                        actions.proceed();
                     }
+                }else{
+                    actions.proceed();
                 }
+
             }).finally(function() {
                 //delete $scope.payment.items.credentials;
                 formService.clearForm($scope.paymentAuthForm);
@@ -84,15 +60,16 @@ angular.module('raiffeisen-payments')
                 if (form && form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    if($scope.payment.result.token_error) {
-                        if($scope.payment.result.nextTokenType === 'next') {
-                            sendAuthorizationToken();
-                        } else {
-                            $scope.payment.result.token_error = false;
+                    if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM){
+                        if($scope.payment.token.model.$tokenRequired && $scope.payment.token.model.input.$isValid()) {
+                            authorize(actions.proceed);
                         }
-                    } else {
-                        authorize(actions.proceed);
+                    }else{
+                        if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                            $scope.payment.token.model.$proceed();
+                        }
                     }
+
                 }
             }
         });
@@ -102,6 +79,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
+            $scope.payment.token.params = {};
             actions.proceed();
         });
 
