@@ -4,10 +4,16 @@
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.remitter_account' | translate }}">
             <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
                                rb-account-no="recipient.formData.debitAccountNo"
+                               bd-attr-name="remitterAccountId"
                                rb-account="recipient.items.senderAccount"
                                rb-account-list="recipient.items.accountList"
                                rb-on-account-select="onSenderAccountSelect()"
                                rb-account-select-params="recipientSelectParams"></rb-account-select>
+            <eb-validation-messages eb-name="remitterAccountId">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.remitterAccount.EMPTY'|translate}}
+                </div>
+            </eb-validation-messages>
         </bd-item-property>
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.custom_name' | translate }}">
@@ -160,9 +166,9 @@
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.commitment_id' | translate }}">
             <input name="commitmentId"
                    ng-model="recipient.formData.obligationId"
-                   ng-pattern="patterns.usCommitmentId"
                    class="input-field"
                    type="text"
+                   ng-pattern="COMMITMENT_ID_REGEX"
                    placeholder="{{ ::'raiff.payments.recipients.new.us.fill.commitment_id.placeholder' | translate }}">
 
             <eb-validation-messages eb-name="commitmentId">

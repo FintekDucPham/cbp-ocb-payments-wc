@@ -6,7 +6,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">
-            {{ recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName  }} | {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
+            {{ recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName  }} {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.custom_name' | translate }}">
@@ -14,7 +14,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.recipient_account' | translate }}">
-            {{ recipient.items.selectedInsurance.accountNo | nrbIbanFilter  }} |
+            {{ recipient.items.selectedInsurance.accountNo | nrbIbanFilter  }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.taxpayer_nip' | translate }}">
