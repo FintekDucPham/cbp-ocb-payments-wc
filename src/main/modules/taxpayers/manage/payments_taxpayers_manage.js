@@ -100,11 +100,14 @@ angular.module('raiffeisen-payments')
                     actions.proceed();
                 }).catch(function (e) {
                     $scope.taxpayer.result.type = 'error';
-                    if(tokenModel && tokenModel.$tokenRequired && tokenModel.currentToken.$errors.INCORRECT_PASSWORD){
-                        tokenModel.$proceed();
+                    if(tokenModel && tokenModel.$tokenRequired){
+                        if(!tokenModel.$isErrorRegardingToken(e)){
+                            actions.proceed();
+                        }
                     }else{
                         actions.proceed();
                     }
+
                 });
         };
 
