@@ -5,7 +5,7 @@ angular.module('raiffeisen-payments')
             transclude: true,
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/payments_recipients_verify.html",
             controller: function (bdVerifyStepInitializer, translate, dateFilter, $scope, pathService, recipientGeneralService, authorizationService,
-                                  formService, transferService, bdStepStateEvents, lodash) {
+                                  formService, transferService, bdStepStateEvents, lodash, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
 
                 $scope.recipientAuthUrl = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
 
@@ -41,46 +41,52 @@ angular.module('raiffeisen-payments')
                         if (form && form.$invalid) {
                             formService.dirtyFields(form);
                         } else {
-                            recipientGeneralService.realize(
-                                $scope.recipient.type.code.toLowerCase(),
-                                $scope.recipient.transferId,
-                                $scope.recipient.items.credentials
-                            ).then(function (resultCode) {
-                                    var parts = resultCode.split('|');
-                                    $scope.recipient.result = {
-                                        code: parts[1],
-                                        type: parts[0] === 'OK' ? "success" : "error"
-                                    };
-                                    if (parts[0] !== 'OK' && !parts[1]) {
-                                        $scope.recipient.result.code = 'error';
-                                    }
-                                    actions.proceed();
-                                }).catch(function (e) {
-                                    $scope.recipient.result.type = 'error';
-                                    actions.proceed();
-                                });
+
+                            if($scope.recipient.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM){
+                                if($scope.recipient.token.model.$tokenRequired && $scope.recipient.token.model.input.$isValid()) {
+
+                                    recipientGeneralService.realize(
+                                        $scope.recipient.type.code.toLowerCase(),
+                                        $scope.recipient.transferId,
+                                        $scope.recipient.token.model.input.model
+                                    ).then(function (resultCode) {
+                                            var parts = resultCode.split('|');
+                                            $scope.recipient.result = {
+                                                code: parts[1],
+                                                type: parts[0] === 'OK' ? "success" : "error"
+                                            };
+                                            if (parts[0] !== 'OK' && !parts[1]) {
+                                                $scope.recipient.result.code = 'error';
+                                            }
+                                            actions.proceed();
+                                        }).catch(function (e) {
+                                            $scope.recipient.result.type = 'error';
+                                            if($scope.recipient.token.model && $scope.recipient.token.model.$tokenRequired){
+                                                if(!$scope.recipient.token.model.$isErrorRegardingToken(error)){
+                                                    actions.proceed();
+                                                }
+                                            }else{
+                                                actions.proceed();
+                                            }
+                                        });
+
+                                }
+                            }else{
+                                if($scope.recipient.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                                    $scope.recipient.token.model.$proceed();
+                                }
+                            }
                         }
                     }
                 });
 
                 $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
+                    $scope.recipient.token.params = {};
                     actions.proceed();
                 });
 
                 function prepareAuthorization() {
-                    $scope.recipient.promises.authorizationPromise = authorizationService.create({
-                        resourceId: $scope.recipient.transferId,
-                        resourceType: 'MANAGE_{0}_RECIPIENT'.format($scope.recipient.type.code)
-                    }).then(function (authorization) {
-                        return authorizationService.get(authorization.authorizationRequestId).then(function (content) {
-                            var twoStep = $scope.recipient.options.twoStepAuthorization = !!content.twoFactorAuthenticationRequired;
-                            if (twoStep) {
-                                $scope.recipient.items.smsText = translate.property('raiff.payments.new.verify.smscode.value')
-                                    .replace("##number##", content.authenticationAttributes.operationId)
-                                    .replace("##date##", dateFilter(content.authenticationAttributes.operationDate, 'shortDate'));
-                            }
-                        });
-                    });
+                    $scope.recipient.token.params.transferId = $scope.recipient.transferId;
                 }
 
 

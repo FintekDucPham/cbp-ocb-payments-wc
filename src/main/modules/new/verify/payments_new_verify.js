@@ -24,7 +24,7 @@ angular.module('raiffeisen-payments')
         });
 
         function authorize(doneFn) {
-            transferService.realize($scope.payment.transferId, $scope.payment.items.credentials).then(function (resultCode) {
+            transferService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.payment.result = {
                     code: parts[1],
