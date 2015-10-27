@@ -91,6 +91,11 @@ angular.module('raiffeisen-payments')
                 $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
                 var lockDateAccountCategories = $scope.payment.meta.customerContext === 'DETAL' ? [1101, 3000, 3013] : [1101, 3008, 3013];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
+                if(_.eq(account.subProduct,'CC')){
+                    $scope.payment.meta.rbRealizationDateOptions.disableOpen = true;
+                } else {
+                    delete $scope.payment.meta.rbRealizationDateOptions.disableOpen;
+                }
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
             }
