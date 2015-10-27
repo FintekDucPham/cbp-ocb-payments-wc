@@ -62,7 +62,7 @@ angular.module('raiffeisen-payments')
                                         }).catch(function (e) {
                                             $scope.recipient.result.type = 'error';
                                             if($scope.recipient.token.model && $scope.recipient.token.model.$tokenRequired){
-                                                if(!$scope.recipient.token.model.$isErrorRegardingToken(error)){
+                                                if(!$scope.recipient.token.model.$isErrorRegardingToken(e)){
                                                     actions.proceed();
                                                 }
                                             }else{
