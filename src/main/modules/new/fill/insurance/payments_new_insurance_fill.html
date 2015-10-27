@@ -247,12 +247,12 @@
                             <input ng-model="payment.formData.insurancePremiums[insuranceType].amount"
                                    ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
                                    ng-init="bindInsuranceAccount(insuranceType)"
-                                   type="number"
+                                   type="text"
                                    class="input-field"
                                    min="0.01"
                                    bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceType] }}"
                                    bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
-                                   ng-pattern="AMOUNT_PATTERN"
+                                   bd-amount
                                    ng-model-options="{ allowInvalid: true }"
                                    step="0.01"
                                    required
@@ -272,7 +272,7 @@
                         <div eb-message-key="number" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
                         </div>
-                        <div eb-message-key="pattern" class="validation-message animate-on">
+                        <div eb-message-key="amount" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
                         </div>
                         <div eb-message-key="ngMin" class="validation-message animate-on">

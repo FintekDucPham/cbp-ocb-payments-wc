@@ -22,7 +22,7 @@
     "raiff.payments.id_type.REGON": "R - REGON",
     "raiff.payments.id_type.ID_CARD": "1 - dowód osobisty",
     "raiff.payments.id_type.PASSPORT": "2 - paszport",
-    "raiff.payments.id_type.OTHER": "3 - Inny",
+    "raiff.payments.id_type.OTHER": "3 - Inny dokument tożsamości",
 
     "raiff.payments.widget.recipient_name": "Odbiorca",
     "raiff.payments.widget.realization_date": "Data realizacji",
@@ -566,6 +566,7 @@
     "raiff.payments.recipients.details.us.secondary_id": "Numer identyfikatora uzupełniającego",
     "raiff.payments.recipients.details.us.form_symbol": "Symbol formularza",
     "raiff.payments.recipients.details.us.period_type": "Typ okresu",
+    "raiff.payments.recipients.details.us.obligation_id": "Identyfikacja zobowiązania",
 
     "raiff.payments.rejected.label": "płatności odrzucone",
     "raiff.payments.rejected.list.header.realizationDate.label": "Data operacji",

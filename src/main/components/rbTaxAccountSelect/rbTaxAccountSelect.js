@@ -37,10 +37,10 @@ angular.module('raiffeisen-payments')
                     });
                 };
 
-                $scope.$watch('taxOfficeId', function (taxOfficeId) {
-                    if (taxOfficeId) {
-                        if(!$scope.model.taxOffice || $scope.model.taxOffice && $scope.model.taxOffice.taxOfficeId !== taxOfficeId) {
-                            searchForOffice(taxOfficeId);
+                $scope.$watch('taxOfficeId', function (taxAccountNo) {
+                    if (taxAccountNo) {
+                        if(!$scope.model.taxOffice || $scope.model.taxOffice && $scope.model.taxOffice.accountNo !== taxAccountNo) {
+                            searchForOffice(taxAccountNo);
                         }
                     } else {
                         $scope.taxOffice = null;
