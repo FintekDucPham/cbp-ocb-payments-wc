@@ -51,10 +51,32 @@ angular.module('raiffeisen-payments')
 
 
         //calculate lasts
-        var calculateDateFromLast = function () {
-
-
+        var calculateDateFromLast = function (n, o) {
+            //@ TODO: value + type -> dataFrom -> value(const type)
+            /*
+            * $scope.$watch('rejectedList.filterData.last.type.selected', calculateDateFromLast);
+             $scope.$watch('rejectedList.filterData.last.value', function(n,o){
+             if(n!=o){
+             if(!n){
+             n=0;
+             }
+             if(String(n).length>3){
+             $scope.rejectedList.filterData.last.value = o;
+             }else{
+             calculateDateFromLast();
+             }
+             }
+             });*/
             var value = parseInt($scope.rejectedList.filterData.last.value);
+
+            if( (n===LAST_TYPES.WEEKS && o===LAST_TYPES.DAYS) || (n===LAST_TYPES.MONTH && o===LAST_TYPES.WEEKS) ){
+                value = $scope.rejectedList.filterData.last.default;
+
+
+
+
+            }
+
             var factor = 1; //days
             if ($scope.rejectedList.filterData.last.type.selected === LAST_TYPES.WEEKS) {
                 factor = 7;
@@ -62,8 +84,15 @@ angular.module('raiffeisen-payments')
             if ($scope.rejectedList.filterData.last.type.selected === LAST_TYPES.MONTH) {
                 $scope.rejectedList.filterData.last.dateFrom = new Date((new Date()).setMonth(now.getMonth() - value));
             } else {
+                factor = 30;
                 $scope.rejectedList.filterData.last.dateFrom = new Date(now.getTime() - value * factor * oneDayMilisecs);
             }
+
+            /*if( (n===LAST_TYPES.WEEKS && o===LAST_TYPES.DAYS) || (n===LAST_TYPES.MONTH && o===LAST_TYPES.WEEKS) ){
+                var diff = factor * oneDayMilisecs;
+                $scope.rejectedList.filterData.last.value = diff/factor/oneDayMilisecs;
+            }*/
+
         };
 
         //scope object
@@ -79,6 +108,7 @@ angular.module('raiffeisen-payments')
                 },
                 last: {
                     value: parameters.detal.default,
+                    default: parameters.detal.default,
                     dateFrom: null,
                     type: {
                         selected: LAST_TYPES.DAYS,
@@ -108,6 +138,7 @@ angular.module('raiffeisen-payments')
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
             $scope.rejectedList.filterData.last.value = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
+            $scope.rejectedList.filterData.last.default = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
             $scope.rejectedList.filterData.range.dateFrom = firstDayOfCurrentMonth;
             $scope.rejectedList.minDate = new Date((new Date()).setMonth(now.getMonth() - parameters.micro.max));
             $scope.rejectedList.maxOffset = parameters.micro.max;
