@@ -700,6 +700,7 @@
     "raiff.EMPTY_ADD_ID_NUMBER": "Numer identyfikatora uzupełniającego nie może być pusty",
     "raiff.INCORRECT_ID_NUMBER_ZUS": "Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu",
     "raiff.INCORRECT_ID_NUMBER_TAXPAYER": "Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu",
+    "raiff.MSG-0547_INCORRECT_ID_NUMER_US_IC" : "Niepoprawny numer NIP/ PESEL / REGON / dowodu osobistego / paszportu / innego dowodu tożsamości",
     "raiff.EMPTY_NIP": "NIP płatnika nie może być pusty i powinien składać się z 10 cyfr",
     "raiff.INCORRECT_NIP": "Niepoprawny numer NIP płatnika",
     "raiff.change_me.EMPTY_SECONDARY_ID_TYPE": "Typ drugiego identyfikatora musi zostać wybrany",
