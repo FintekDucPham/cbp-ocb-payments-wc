@@ -53,7 +53,7 @@ angular.module('raiffeisen-payments')
             return lodash.map(lodash.groupBy($scope.payment.formData.insurancePremiums, 'currency'), function (values) {
                 var totalAmount = 0;
                 lodash.forEach(values, function (value) {
-                    totalAmount += value.amount || 0;
+                    totalAmount += parseFloat(value.amount) || 0;
                 });
                 return {
                     currency: values[0].currency,
