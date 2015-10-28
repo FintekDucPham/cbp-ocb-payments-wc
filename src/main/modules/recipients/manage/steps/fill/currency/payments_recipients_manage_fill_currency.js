@@ -3,38 +3,15 @@ angular.module('raiffeisen-payments')
         "BIC_OR_SWIFT": "BIC_OR_SWIFT",
         "NAME_AND_COUNTRY": "NAME_AND_COUNTRY"
     })
-    .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, RECIPIENT_IDENTITY_TYPES) {
-
-        $scope.recipientIdentityTypes = RECIPIENT_IDENTITY_TYPES;
+    .controller('PaymentsRecipientsManageFillCurrencyController', function (swiftBicService, $q, $scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, RECIPIENT_IDENTITY_TYPES) {
+        $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
 
         $scope.recipient.meta.forbiddenAccounts = [];
 
-        /** BEGIN MOCK DATA **/
-        $scope.ibanValidationRulesPerCountry = [
-            { "COUNTRY_CODE": "PL", "IBAN_LENGTH": 24},
-            { "COUNTRY_CODE": "EN", "IBAN_LENGTH": 24},
-            { "COUNTRY_CODE": "DE", "IBAN_LENGTH": 24},
-            { "COUNTRY_CODE": "SR", "IBAN_LENGTH": 24}
-        ];
-
-        $scope.countries = [
-            { "CODE": "PL", "DESCRIPTION": "Country#1", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
-            { "CODE": "EN", "DESCRIPTION": "Country#2", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
-            { "CODE": "DE", "DESCRIPTION": "Country#3", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
-            { "CODE": "SR", "DESCRIPTION": "Country#4", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""}
-        ];
-
-        $scope.swiftCodes = [
-            { 'CODE': "134234", "NAME": "BANK #1" },
-            { 'CODE': "234234", "NAME": "BANK #2" },
-            { 'CODE': "334234", "NAME": "BANK #3" },
-            { 'CODE': "4344234", "NAME": "BANK #4" },
-            { 'CODE': "534234", "NAME": "BANK #5" },
-            { 'CODE': "634234", "NAME": "BANK #6" }
-        ];
+        // TODO: change to promise when you have properly working service
+        $scope.countries = swiftBicService.getCountries();
 
         /** END MOCK DATA **/
-
         var recipientValidators = {
             tax: notTaxAccountGuard($scope.recipient.meta),
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
@@ -52,6 +29,44 @@ angular.module('raiffeisen-payments')
             return lodash.find($scope.accountsList, {
                 accountNo: accountNumber
             });
+        };
+
+
+
+        // last and most actual promise
+        // e.g to show loader
+        $scope.searchBankPromise = null;
+        // in case of request race hazard, we want to consider only last one
+        // also backend do not want to return passed swift code back to identity request
+        // so we need to index each one
+        $scope.currentSearchCode = 0;
+
+        // non debounced change
+        $scope.onSwiftCodeChangeNonDebounced = function() {
+            //$scope.recipient.formData
+            // TODO: when have all data, check if current select bank has the same code
+            $scope.searchBankPromise = null;
+            $scope.recipient.formData.recipientBankName = null;
+            $scope.recipient.formData.bankCountry = null;
+        };
+
+        // debounced change
+        $scope.onSwiftCodeChangeDebounced = function() {
+            var enteredCode = $scope.recipient.formData.recipientBicOrSwift;
+
+            $scope.searchBankPromise = swiftBicService.search(enteredCode);
+
+            // because we want to consider response only from last request
+            $scope.searchBankPromise.then((
+                function(searchCode) {
+                    return function(response) {
+                        if ($scope.currentSearchCode == searchCode && response.length > 0) {
+                            $scope.recipient.formData.recipientBankName = response[0].NAME;
+                            $scope.remission.formData.bankCountry = response[0].COUNTRY; // TODO: search via code or something
+                        }
+                    };
+                })(++$scope.currentRequestIndex)
+            );
         };
 
         $scope.onSenderAccountSelect = function () {
@@ -101,8 +116,12 @@ angular.module('raiffeisen-payments')
             }
         });
 
+
+
         $scope.setRequestConverter(function (formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
+
+
             return {
                 shortName: copiedFormData.customName,
                 debitAccount: copiedFormData.remitterAccountId,
@@ -110,6 +129,8 @@ angular.module('raiffeisen-payments')
                 beneficiary: copiedFormData.recipientData,
                 remarks: copiedFormData.description
             };
+
+
         });
 
     });

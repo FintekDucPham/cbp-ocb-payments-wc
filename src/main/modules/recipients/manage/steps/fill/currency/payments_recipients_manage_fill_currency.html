@@ -56,14 +56,24 @@
 
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankData' | translate }}">
-            <input type="hidden" name="remission_crit_delegate" ng-required="true" ng-model="TODO.bankSwiftOrNameModel"/>
+
             <bd-radio-select bd-model="recipient.formData.recipientIdentityType">
                 <!-- criterion : amount -->
                 <div class="bd-item-property row">
                     <div class="col-xs-12">
-                        <bd-radio-option bd-option-value="recipientIdentityTypes.BIC_OR_SWIFT" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.swfitbic'|translate}}</bd-radio-option>
+                        <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.BIC_OR_SWIFT" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.swfitbic'|translate}}</bd-radio-option>
                         <div class="row__inline-block--middle row__inline-block--adjacent">
-                            <input class="input-field" ng-model="recipient.formData.recipientBicOrSwift" name="swift_bic" />
+                            <input ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.BIC_OR_SWIFT"
+                                   class="input-field"
+                                   ng-model="recipient.formData.recipientBicOrSwift"
+                                   ng-model-options="{ updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
+                                   ng-keypress="onSwiftCodeChangeNonDebounced()"
+                                   ng-keyup="onSwiftCodeChangeNonDebounced()"
+                                   ng-keydown="onSwiftCodeChangeNonDebounced()"
+                                   ng-change="onSwiftCodeChangeDebounced()"
+                                   name="swift_bic" />
+
+                            <eb-preloader eb-promise="searchBankPromise"></eb-preloader>
                         </div>
 
                         <!-- TODO: komunikaty walidacji -->
@@ -82,17 +92,18 @@
                 <div class="bd-item-property row">
                     <div class="col-xs-12">
                         <div>
-                            <bd-radio-option bd-option-value="recipientIdentityTypes.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.recipientBankData'|translate}}</bd-radio-option>
+                            <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.recipientBankData'|translate}}</bd-radio-option>
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent">
                             <bd-item-property
                                     label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}">
-                                <input class="input-field" ng-model="recipient.formData.recipientBankName" name="bank_name" />
+                                <input ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY" class="input-field" ng-model="recipient.formData.recipientBankName" name="bank_name" />
                             </bd-item-property>
 
                             <bd-item-property
                                     label="{{ ::'raiff.payments.recipients.new.currency.fill.bankCountry' | translate }}">
-                                <ui-select ng-model="recipient.formData.recipientBankCountry"
+                                <ui-select ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"
+                                           ng-model="recipient.formData.recipientBankCountry"
                                            ng-change="onRecipientBankCountryChange()"
                                            name="recipientBankCountry"
                                            theme="bootstrap"
