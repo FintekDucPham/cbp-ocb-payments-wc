@@ -418,6 +418,15 @@
     "raiff.payments.recipients.new.type.INSURANCE": "ZUS",
     "raiff.payments.recipients.new.type.TAX": "US/IC",
 
+
+    "raiff.payments.recipients.new.currency.fill.bankData": "Dane banku",
+    "raiff.payments.recipients.new.currency.fill.swfitbic": "SWIFT/BIC banku",
+    "raiff.payments.recipients.new.currency.fill.recipientBankData": "Dane banku odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.bankName": "Nazwa banku",
+    "raiff.payments.recipients.new.currency.fill.bankCountry": "Kraj banku",
+    "raiff.payments.recipients.new.currency.fill.recipientCountry": "Kraj odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
+    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
     "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
 
 

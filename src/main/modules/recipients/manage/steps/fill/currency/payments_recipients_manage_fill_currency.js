@@ -18,10 +18,10 @@ angular.module('raiffeisen-payments')
         ];
 
         $scope.countries = [
-            { "CODE": "PL", "DESCRIPTION": "ddd", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
-            { "CODE": "EN", "DESCRIPTION": "ddd", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
-            { "CODE": "DE", "DESCRIPTION": "ddd", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
-            { "CODE": "SR", "DESCRIPTION": "ddd", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""}
+            { "CODE": "PL", "DESCRIPTION": "Country#1", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
+            { "CODE": "EN", "DESCRIPTION": "Country#2", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
+            { "CODE": "DE", "DESCRIPTION": "Country#3", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""},
+            { "CODE": "SR", "DESCRIPTION": "Country#4", "SHORT_DESCRIPTION": "", "GEOGRAPHICAL_BLOCK": "", "LANGUAGE": "", "CURRENCY_CODE": ""}
         ];
 
         $scope.swiftCodes = [
