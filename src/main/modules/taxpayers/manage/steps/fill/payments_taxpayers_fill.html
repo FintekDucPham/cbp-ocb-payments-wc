@@ -113,16 +113,16 @@
                 {{ ::'raiff.EMPTY_ADD_ID_NUMBER' | translate }}
             </div>
             <div eb-message-key="nip" class="validation-message animate-on">
-                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
+                {{ 'raiff.' + (taxpayer.formData.taxpayerType === 'INSURANCE' ? 'INCORRECT_ID_NUMBER_TAXPAYER' : 'MSG-0547_INCORRECT_ID_NUMER_US_IC') | translate }}
             </div>
             <div eb-message-key="pesel" class="validation-message animate-on">
-                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
+                {{ 'raiff.' + (taxpayer.formData.taxpayerType === 'INSURANCE' ? 'INCORRECT_ID_NUMBER_TAXPAYER' : 'MSG-0547_INCORRECT_ID_NUMER_US_IC') | translate }}
             </div>
             <div eb-message-key="regon" class="validation-message animate-on">
-                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
+                {{ 'raiff.' + (taxpayer.formData.taxpayerType === 'INSURANCE' ? 'INCORRECT_ID_NUMBER_TAXPAYER' : 'MSG-0547_INCORRECT_ID_NUMER_US_IC') | translate }}
             </div>
             <div eb-message-key="idCard" class="validation-message animate-on">
-                {{ ::'raiff.INCORRECT_ID_NUMBER_TAXPAYER' | translate }}
+                {{ 'raiff.' + (taxpayer.formData.taxpayerType === 'INSURANCE' ? 'INCORRECT_ID_NUMBER_TAXPAYER' : 'MSG-0547_INCORRECT_ID_NUMER_US_IC') | translate }}
             </div>
         </eb-validation-messages>
     </bd-item-property>
