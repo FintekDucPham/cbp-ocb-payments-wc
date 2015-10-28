@@ -1,5 +1,6 @@
 <rb-payment-recipients-fill>
-    <div ng-controller="RecipientsManageFillDomesticController">
+    <div ng-controller="PaymentsRecipientsManageFillCurrencyController">
+        <pre>{{ recipient.formData | json }} </pre>
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
             <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
             <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
@@ -31,7 +32,7 @@
             </section>
         </bd-item-property>
         <bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
-            {{ recipient.formData.recipientId}}
+            {{ recipient.formData.recipientId }}
         </bd-item-property>
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
             <input name="customName"
@@ -51,6 +52,94 @@
             </eb-validation-messages>
 
         </bd-item-property>
+        <!-- custom name end -->
+
+
+        <bd-item-property label="{{ ::'TODO:danebankulabale' | translate }}">
+            <input type="hidden" name="remission_crit_delegate" ng-required="true" ng-model="TODO.bankSwiftOrNameModel"/>
+            <bd-radio-select bd-model="recipient.formData.recipientIdentityType">
+                <!-- criterion : amount -->
+                <div class="bd-item-property row">
+                    <div class="col-xs-12">
+                        <bd-radio-option bd-option-value="recipientIdentityTypes.BIC_OR_SWIFT" class="row__inline-block--middle">{{::'TODO.SwiftBicLabel'|translate}}</bd-radio-option>
+                        <div class="row__inline-block--middle row__inline-block--adjacent">
+                            <input class="input-field" ng-model="recipient.formData.recipientBicOrSwift" name="swift_bic" />
+                        </div>
+
+                        <!-- TODO: komunikaty walidacji -->
+                        <!--<div class="eb-validation-messages col-xs-12" ng-if="remissionForm.criterion_amount.$invalid">-->
+                            <!--<div class="messages">-->
+                                <!--<div class="validation-message animate-on" ng-if="remissionForm.criterion_amount.$error.required">-->
+                                    <!--{{::'raiff.investments.remission.fill.amount.validation.required.message'|translate}}-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    </div>
+                </div>
+
+                <!-- criterion : quantity -->
+                <div class="bd-item-property row">
+                    <div class="col-xs-12">
+                        <div>
+                            <bd-radio-option bd-option-value="recipientIdentityTypes.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'TODO.enterBankData'|translate}}</bd-radio-option>
+                        </div>
+                        <div class="row__inline-block--middle row__inline-block--adjacent">
+                            <bd-item-property
+                                    label="{{ ::'TODO.LaBEl1' | translate }}">
+                                <input class="input-field" ng-model="recipient.formData.recipientBankName" name="bank_name" />
+                            </bd-item-property>
+
+                            <bd-item-property
+                                    label="{{ ::'TODO.LaBEl2' | translate }}">
+                                <ui-select ng-model="recipient.formData.recipientBankCountry"
+                                           ng-change="onRecipientBankCountryChange()"
+                                           name="recipientBankCountry"
+                                           theme="bootstrap"
+                                           >
+                                    <ui-select-match placeholder="{{ ::'raiff.investments.buy.fill.placeholderAny' | translate }}">
+
+                                        {{ $selected.DESCRIPTION || ('raif.TODO' | translate)  }}
+
+                                    </ui-select-match>
+
+                                    <ui-select-choices repeat="country in countries">
+                                        {{ country.DESCRIPTION }}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </bd-item-property>
+
+                        </div>
+
+                        <!--<div class="eb-validation-messages col-xs-12" ng-if="remissionForm.criterion_quantity.$invalid">-->
+                            <!--<div class="messages">-->
+                                <!--<div class="validation-message animate-on" ng-if="remissionForm.criterion_quantity.$error.required">-->
+                                    <!--{{::'raiff.investments.remission.fill.quantity.validation.required.message'|translate}}-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+
+            </bd-radio-select>
+
+            <eb-validation-messages eb-name="remission_crit_delegate"><!--max 35-->
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.investments.remission.fill.citerion.validation.required.message'|translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
+
+
+
+
+
+
+
+
+
+
+        <!-- account label -->
 
         <bd-item-property
                 label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
@@ -106,7 +195,27 @@
                     {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
                 </div>
             </eb-validation-messages>
+        </bd-item-property>
 
+        <bd-item-property class="bd-item-property--multirow"
+                          label="{{ ::'TODO.krajOdbiorcyLabel' | translate }}">
+
+            <input name="TODOrecipientCountryInputShouldBeSelectBoxem"
+                   ng-model="recipient.formData.customName"
+                   class="input-field"
+                   placeholder="{{ ::'TODO.placeholder' | translate }}"/>
+
+            <!--<eb-validation-messages eb-name="recipientData">-->
+                <!--<div eb-message-key="required" class="validation-message animate-on">-->
+                    <!--{{::'raiff.payments.recipients.new.domestic.fill.recipient_data.EMPTY'|translate}}-->
+                <!--</div>-->
+                <!--<div eb-message-key="splitTextLength" class="validation-message animate-on">-->
+                    <!--{{::'raiff.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}-->
+                <!--</div>-->
+                <!--<div eb-message-key="pattern" class="validation-message animate-on">-->
+                    <!--{{::'raiff.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}-->
+                <!--</div>-->
+            <!--</eb-validation-messages>-->
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
