@@ -30,6 +30,10 @@ angular.module('raiffeisen-payments')
             formData: {},
             transferId: {},
             options: {},
+            token: {
+                model: {},
+                params: {}
+            },
             meta: {
                 recipientTypes: lodash.map(rbRecipientTypes)
             }

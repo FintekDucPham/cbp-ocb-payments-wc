@@ -45,6 +45,10 @@ angular.module('raiffeisen-payments')
                 state: $stateParams.paymentType || 'domestic'
             }),
             formData: {},
+            token: {
+                model: null,
+                params: {}
+            },
             options: {
                 fixedAccountSelection: false,
                 fixedRecipientSelection: false
