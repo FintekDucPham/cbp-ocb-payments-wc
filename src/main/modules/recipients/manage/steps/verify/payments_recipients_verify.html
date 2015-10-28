@@ -2,11 +2,7 @@
 
     <div ng-transclude></div>
 
-    <section ng-if="recipient.options.twoStepAuthorization">
-        <bd-item-property class="bd-item-property--text" ng-if="recipient.token.params.resourceId" label="{{ recipient.token.model.currentToken.label }}">
-            <rb-token-authorization rb-operation-type="'MANAGE_'+recipient.type.code+'_RECIPIENT'" rb-model="recipient.token.model" rb-params="recipient.token.params"></rb-token-authorization>
-        </bd-item-property>
-    </section>
-
-
+    <bd-item-property class="bd-item-property--text" ng-if="recipient.token.params.resourceId" ng-show="recipient.token.model.$tokenRequired" label="{{ recipient.token.model.currentToken.label }}">
+        <rb-token-authorization rb-operation-type="{{ 'MANAGE_'+recipient.type.code+'_RECIPIENT' }}" rb-model="recipient.token.model" rb-params="recipient.token.params"></rb-token-authorization>
+    </bd-item-property>
 </div>

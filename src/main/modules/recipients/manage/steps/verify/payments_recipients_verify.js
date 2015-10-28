@@ -34,50 +34,40 @@ angular.module('raiffeisen-payments')
                 //});
 
                 $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-                    if ($scope.recipient.promises.authorizationPromise.$$state.status !== 1) {
 
-                    } else {
-                        var form = $scope.recipientAuthForm;
-                        if (form && form.$invalid) {
-                            formService.dirtyFields(form);
-                        } else {
+                    if($scope.recipient.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                        if($scope.recipient.token.model.input.$isValid()) {
 
-                            if($scope.recipient.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM){
-                                if($scope.recipient.token.model.$tokenRequired && $scope.recipient.token.model.input.$isValid()) {
-
-                                    recipientGeneralService.realize(
-                                        $scope.recipient.type.code.toLowerCase(),
-                                        $scope.recipient.transferId,
-                                        $scope.recipient.token.model.input.model
-                                    ).then(function (resultCode) {
-                                            var parts = resultCode.split('|');
-                                            $scope.recipient.result = {
-                                                code: parts[1],
-                                                type: parts[0] === 'OK' ? "success" : "error"
-                                            };
-                                            if (parts[0] !== 'OK' && !parts[1]) {
-                                                $scope.recipient.result.code = 'error';
-                                            }
+                            recipientGeneralService.realize(
+                                $scope.recipient.type.code.toLowerCase(),
+                                $scope.recipient.transferId,
+                                $scope.recipient.token.model.input.model
+                            ).then(function (resultCode) {
+                                    var parts = resultCode.split('|');
+                                    $scope.recipient.result = {
+                                        code: parts[1],
+                                        type: parts[0] === 'OK' ? "success" : "error"
+                                    };
+                                    if (parts[0] !== 'OK' && !parts[1]) {
+                                        $scope.recipient.result.code = 'error';
+                                    }
+                                    actions.proceed();
+                                }).catch(function (e) {
+                                    $scope.recipient.result.type = 'error';
+                                    if($scope.recipient.token.model && $scope.recipient.token.model.$tokenRequired){
+                                        if(!$scope.recipient.token.model.$isErrorRegardingToken(e)){
                                             actions.proceed();
-                                        }).catch(function (e) {
-                                            $scope.recipient.result.type = 'error';
-                                            if($scope.recipient.token.model && $scope.recipient.token.model.$tokenRequired){
-                                                if(!$scope.recipient.token.model.$isErrorRegardingToken(e)){
-                                                    actions.proceed();
-                                                }
-                                            }else{
-                                                actions.proceed();
-                                            }
-                                        });
+                                        }
+                                    }else{
+                                        actions.proceed();
+                                    }
+                                });
 
-                                }
-                            }else{
-                                if($scope.recipient.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
-                                    $scope.recipient.token.model.$proceed();
-                                }
-                            }
                         }
+                    }else if($scope.recipient.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                        $scope.recipient.token.model.$proceed();
                     }
+
                 });
 
                 $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
@@ -86,7 +76,7 @@ angular.module('raiffeisen-payments')
                 });
 
                 function prepareAuthorization() {
-                    $scope.recipient.token.params.transferId = $scope.recipient.transferId;
+                    $scope.recipient.token.params.resourceId = $scope.recipient.transferId;
                 }
 
 

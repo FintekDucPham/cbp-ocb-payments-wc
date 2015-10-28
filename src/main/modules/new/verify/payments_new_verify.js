@@ -8,6 +8,8 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
 
+        $scope.payment.token.params.resourceId = null;
+
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -53,25 +55,15 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.payment.promises.authorizationPromise.$$state.status !== 1) {
 
-            } else {
-                var form = $scope.paymentAuthForm;
-                if (form && form.$invalid) {
-                    formService.dirtyFields(form);
-                } else {
-                    if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM){
-                        if($scope.payment.token.model.$tokenRequired && $scope.payment.token.model.input.$isValid()) {
-                            authorize(actions.proceed);
-                        }
-                    }else{
-                        if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
-                            $scope.payment.token.model.$proceed();
-                        }
-                    }
-
+            if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                if($scope.payment.token.model.input.$isValid()) {
+                    authorize(actions.proceed);
                 }
+            }else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                $scope.payment.token.model.$proceed();
             }
+
         });
 
         $scope.setForm = function (form) {
