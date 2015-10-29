@@ -76,6 +76,10 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.paymentForm;
+            $scope.limitExeeded = {
+                show: false
+            };
+
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
@@ -85,6 +89,18 @@ angular.module('raiffeisen-payments')
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     actions.proceed();
+                }).catch(function(errorReason){
+                    if(errorReason.subType == 'validation'){
+                        for(var i=0; i<=errorReason.errors.length; i++){
+                            var currentError = errorReason.errors[i];
+                            if(currentError.field == 'raiff.transfer.limit.exceeed'){
+                                $scope.limitExeeded = {
+                                    show: true,
+                                    messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                                };
+                            }
+                        }
+                    }
                 });
             }
         });
