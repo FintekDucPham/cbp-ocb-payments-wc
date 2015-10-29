@@ -106,8 +106,18 @@ angular.module('raiffeisen-payments')
             $scope.payment.options.isFromTaxpayer = true;
         };
 
+        function resetControl(ctrl) {
+            ctrl.$setViewValue('');
+            ctrl.$modelValue = null;
+            ctrl.$render();
+            ctrl.$setPristine();
+            ctrl.$setUntouched();
+        }
+
         $scope.selectSymbol = function () {
-            $scope.payment.formData.periodType = null;
+            resetControl($scope.paymentForm.periodType);
+            resetControl($scope.paymentForm.periodNo);
+            resetControl($scope.paymentForm.periodYear);
         };
 
         $scope.selectPeriodType = function (periodTypeCode) {
