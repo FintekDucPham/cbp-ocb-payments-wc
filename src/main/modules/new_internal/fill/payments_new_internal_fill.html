@@ -95,7 +95,10 @@
                     {{ 'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
                 </div>
             </eb-validation-messages>
-
+            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+                 ng-if="limitExeeded !== undefined && limitExeeded.show">
+                {{limitExeeded.messages}}
+            </div>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
