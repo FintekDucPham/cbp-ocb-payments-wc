@@ -166,7 +166,10 @@
                 {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
             </div>
         </eb-validation-messages>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="limitExeeded !== undefined && limitExeeded.show">
+            {{limitExeeded.messages}}
+        </div>
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
