@@ -296,6 +296,10 @@
                     <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
                 </div>
             </div>
+            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+                 ng-if="limitExeeded !== undefined && limitExeeded.show">
+                {{limitExeeded.messages}}
+            </div>
         </bd-item-property>
 
         <input type="hidden"
