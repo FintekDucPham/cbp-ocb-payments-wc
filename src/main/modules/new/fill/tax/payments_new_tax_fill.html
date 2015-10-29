@@ -197,7 +197,7 @@
                    ng-model="payment.formData.periodNo"
                    required
                    ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
-                   bd-novalidate-when="{{ payment.formData.periodType==='R' }}"
+                   bd-novalidate-when="{{ payment.formData.periodType==='R' || !payment.items.formSymbol.periodRequired }}"
                    ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
                    class="input-field"
                    type="text"
@@ -210,6 +210,7 @@
                     ng-model="payment.formData.periodNo"
                     theme="bootstrap"
                     placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}"
+                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                     ng-required="true">
                 <ui-select-match>
                     {{ $select.selected}}
