@@ -106,6 +106,15 @@ angular.module('raiffeisen-payments')
                     }
                 }, recipient);
             },
+            currency: function (recipient) {
+                // TODO: sprawdzic czy to smiga i czy jest wykorzystywane faktycznie
+                return wrapWithCommonData({
+                    formData: {
+                        recipientData: recipient.recipientAddress,
+                        description: recipient.transferTitleTable
+                    }
+                }, recipient);
+            },
             insurance: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
