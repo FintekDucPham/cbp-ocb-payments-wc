@@ -118,6 +118,12 @@ angular.module('raiffeisen-payments')
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
+                                        case "CURRENCY":
+                                            return {
+                                                transferTitle: template.title.join(" "),
+                                                recipientAddress: recipient.recipientAddress,
+                                                transferTitleTable: template.title
+                                            };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: template.title.join(" "),

@@ -350,6 +350,7 @@
 
 
     "raiff.payments.recipients.new.currency.fill.account_related.label": "Z rachunku",
+    "raiff.payments.recipients.new.currency.fill.account_related": "Z rachunku",
 
     "raiff.payments.recipients.new.currency.fill.custom_name.label": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.currency.fill.custom_name.placeholder": "Wpisz nazwę odbiorcy",
@@ -453,6 +454,11 @@
     "raiff.payments.recipients.new.type.TAX": "US/IC",
 
 
+
+    "raiff.payments.recipients.currency.recipientBankName": "Nazwa banku odbiorcy",
+    "raiff.payments.recipients.currency.accountNr": "Numer rachunku",
+    "raiff.payments.recipients.currency.recipientAddress": "Nazwa i adres",
+    "raiff.payments.recipients.currency.transferTitle": "Tytułem",
 
     "raiff.payments.recipients.new.currency.fill.bankData": "Dane banku",
     "raiff.payments.recipients.new.currency.fill.swfitbic": "SWIFT/BIC banku",
