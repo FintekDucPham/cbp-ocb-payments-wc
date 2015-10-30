@@ -25,7 +25,7 @@ angular.module('raiffeisen-payments')
             delete $scope.payment.items.credentials;
         });
 
-        function authorize(doneFn) {
+        function authorize(doneFn, actions) {
             transferService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.payment.result = {
@@ -58,7 +58,7 @@ angular.module('raiffeisen-payments')
 
             if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if($scope.payment.token.model.input.$isValid()) {
-                    authorize(actions.proceed);
+                    authorize(actions.proceed, actions);
                 }
             }else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
                 $scope.payment.token.model.$proceed();

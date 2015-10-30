@@ -28,7 +28,7 @@
         {{ taxpayer.formData.secondaryIdNo }}
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text" ng-if="taxpayerAuthForm.params.resourceId" label="{{ taxpayerAuthForm.model.currentToken.label }}">
+    <bd-item-property class="bd-item-property--text" ng-if="taxpayerAuthForm.params.resourceId" ng-show="taxpayerAuthForm.model.$tokenRequired" label="{{ taxpayerAuthForm.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="MANAGE_PAYER" rb-model="taxpayerAuthForm.model" rb-params="taxpayerAuthForm.params"></rb-token-authorization>
     </bd-item-property>
 

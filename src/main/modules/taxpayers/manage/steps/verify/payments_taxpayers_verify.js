@@ -9,22 +9,17 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var form = $scope.taxpayerAuthForm;
-            if (form && form.$invalid) {
-                formService.dirtyFields(form);
-            } else {
-                //token
-                if($scope.taxpayerAuthForm.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM){
-                    if($scope.taxpayerAuthForm.model.$tokenRequired && $scope.taxpayerAuthForm.model.input.$isValid()) {
-                        $scope.performOperation(actions, $scope.taxpayerAuthForm.model);
-                    }
-                }else{
-                    if($scope.taxpayerAuthForm.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
-                        $scope.taxpayerAuthForm.model.$proceed();
-                    }
-                }
 
+            if($scope.taxpayerAuthForm.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM){
+                if($scope.taxpayerAuthForm.model.input.$isValid()) {
+                    $scope.performOperation(actions, $scope.taxpayerAuthForm.model);
+                }
+            }else{
+                if($scope.taxpayerAuthForm.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                    $scope.taxpayerAuthForm.model.$proceed();
+                }
             }
+
         });
 
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function() {
