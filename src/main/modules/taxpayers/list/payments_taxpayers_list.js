@@ -76,7 +76,7 @@ angular.module('raiffeisen-payments')
                 getData: function ($promise, $params) {
                     $timeout(function () {
                         var params = {
-                            queryString: $scope.table.operationTitle
+                            queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
                         };
 
                         params.pageSize = $params.pageSize;
