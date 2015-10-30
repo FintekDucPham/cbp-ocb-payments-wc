@@ -16,6 +16,10 @@ angular.module('raiffeisen-payments')
             formName: 'paymentForm',
             options: {
                 fixedAccountSelection: false
+            },
+            token: {
+                model: null,
+                params: {}
             }
         }), {
             formData: $stateParams.payment
