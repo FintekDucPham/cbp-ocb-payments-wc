@@ -36,7 +36,8 @@ angular.module('raiffeisen-payments')
             },
             meta: {
                 recipientTypes: lodash.map(rbRecipientTypes)
-            }
+            },
+            manageAction: ""
         });
 
         $scope.getAccountByNrb = function (accountList, selectFn) {

@@ -5,7 +5,7 @@
             {{ recipient.formData.customName }}
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.remitter_account' | translate }}">
+        <bd-item-property ng-if="recipient.manageAction!=='REMOVE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.remitter_account' | translate }}">
             {{ recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName  }} {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
         </bd-item-property>
 
