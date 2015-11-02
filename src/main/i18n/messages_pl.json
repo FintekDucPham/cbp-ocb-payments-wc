@@ -593,6 +593,7 @@
     "raiff.payments.rejected.list.details.title": "Tytułem",
     "raiff.payments.rejected.list.details.realizationDate": "Data realizacji",
     "raiff.payments.rejected.list.details.renew.button": "Wykonaj ponownie",
+    "raiff.payments.rejected.list.details.back": "Powrót",
     "raiff.payments.rejected.select.filter.button.action": "Szukaj",
     "raiff.payments.rejected.select.filter.EMPTY_PERIOD": "Musisz wprowadzić liczbę ostatnich",
     "raiff.payments.rejected.select.filter.INCORRECT_PERIOD": "Nieprawidłowa liczba ostatnich",

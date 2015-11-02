@@ -49,6 +49,9 @@ angular.module('raiffeisen-payments')
         var firstDayOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         var oneDayMilisecs = 1000 * 60 * 60 * 24;
 
+        $scope.onBack = function(child) {
+            child.$emit('$collapseRows');
+        };
 
         //calculate lasts
         var calculateDateFromLast = function (n, o) {
