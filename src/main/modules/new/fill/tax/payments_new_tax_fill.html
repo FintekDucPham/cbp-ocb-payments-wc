@@ -103,6 +103,7 @@
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type' | translate }}">
         <ui-select ng-model="payment.formData.idType"
                    theme="bootstrap"
+                   ng-change="onIdTypeChange($select.selected)"
                    ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                    placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>

@@ -142,6 +142,10 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.onIdTypeChange = function() {
+            $scope.paymentForm.supplementaryId.$validate();
+        };
+
         $scope.selectTaxAccount = function(office) {
             $scope.$broadcast("filterFormSymbols", office.taxAccountType);
         };
