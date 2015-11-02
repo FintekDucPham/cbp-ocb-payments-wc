@@ -287,7 +287,7 @@
                        class="input-field"
                        ng-model="payment.formData.amount"
                        min="0.01"
-                       bd-amount
+                       ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                        required
                        placeholder="{{ ::'raiff.payments.new.us.fill.amount.placeholder' | translate }}"/>
@@ -310,6 +310,9 @@
 
         <eb-validation-messages eb-name="amount">
             <div eb-message-key="number" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
             </div>
             <div eb-message-key="required" class="validation-message animate-on">

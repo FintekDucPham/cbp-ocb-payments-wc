@@ -53,7 +53,6 @@ angular.module('raiffeisen-payments')
 
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
-        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
