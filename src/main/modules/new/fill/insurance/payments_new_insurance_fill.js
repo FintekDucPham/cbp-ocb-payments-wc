@@ -216,7 +216,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.setRecipientDataExtractor(function() {
-
+            var recipientData = $scope.payment;
             return {
                 customName: "Nowy odbiorca",
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
