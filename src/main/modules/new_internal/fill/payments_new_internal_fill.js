@@ -38,10 +38,6 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        angular.extend($scope.payment.formData, {
-            realizationDate: new Date()
-        }, lodash.omit($scope.payment.formData, lodash.isUndefined));
-
         angular.extend($scope.payment.meta, {
             recipientForbiddenAccounts: []
         });
@@ -71,6 +67,21 @@ angular.module('raiffeisen-payments')
             requestConverter = converterFn;
         };
 
+        var setRealizationDateToCurrent = function () {
+            angular.extend($scope.payment.formData, {
+                realizationDate: new Date()
+            }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+        };
+
+        var resetRealizationOnBlockedInput = function () {
+            if(!$scope.payment.meta.isFuturePaymentAllowed || $scope.payment.meta.dateSetByCategory) {
+                delete $scope.payment.formData.realizationDate;
+                setRealizationDateToCurrent(true);
+            }
+        };
+
+        setRealizationDateToCurrent();
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.paymentForm;
             if (form.$invalid) {
@@ -94,6 +105,7 @@ angular.module('raiffeisen-payments')
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
             }
+            resetRealizationOnBlockedInput();
         });
 
         exchangeRates.search().then(function(currencies) {
