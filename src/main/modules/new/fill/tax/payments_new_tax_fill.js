@@ -56,6 +56,18 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.payment.meta.taxForbiddenAccounts = lodash.union($scope.payment.meta.taxForbiddenAccounts, lodash.map([
+            "83101010230000261395100000",
+            "78101010230000261395200000",
+            "73101010230000261395300000",
+            "68101010230000261395400000"
+        ], function (val) {
+            return {
+                code: 'notZus',
+                value: val
+            };
+        }));
+
         $scope.clearRecipient = function () {
             if($scope.payment.options.isFromRecipient) {
                 delete $scope.payment.formData.templateId;

@@ -36,6 +36,7 @@
             <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
                                    rb-tax-office-id="payment.formData.recipientAccountNo"
                                    rb-on-tax-account-select="selectTaxAccount($office)"
+                                   rb-forbidden-accounts="payment.meta.taxForbiddenAccounts"
                                    rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
 
             </rb-tax-account-select>
@@ -49,6 +50,9 @@
                 </div>
                 <div eb-message-key="usNotFound" class="validation-message animate-on">
                     {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                </div>
+                <div eb-message-key="notZus" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_ZUS'|translate}}
                 </div>
                 <div eb-message-key="notFromList" class="validation-message animate-on">
                     {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
