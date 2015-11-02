@@ -41,7 +41,7 @@ angular.module('raiffeisen-payments')
                 $scope.$watch('taxOfficeId', function (taxAccountNo) {
                     if (taxAccountNo) {
                         if(!$scope.model.taxOffice || $scope.model.taxOffice && $scope.model.taxOffice.accountNo !== taxAccountNo) {
-                            searchForOffice(taxAccountNo);
+                            $scope.searchForOffice(taxAccountNo);
                         }
                     } else {
                         $scope.taxOffice = null;
@@ -65,14 +65,14 @@ angular.module('raiffeisen-payments')
                 });
 
                 $scope.onSearched = function(selectedInput) {
-                    searchForOffice(selectedInput).then(function() {
+                    $scope.searchForOffice(selectedInput).then(function() {
                         if($scope.taxAccounts.length > 1) {
                             $scope.$broadcast('taxAccountSearched', selectedInput);
                         }
                     });
                 };
 
-                function searchForOffice(selectedInput) {
+                $scope.searchForOffice = function(selectedInput) {
                     return taxOffices.search((function (selectedInput) {
                         var regexp = new RegExp('^[0-9 ]+$');
                         if (regexp.test(selectedInput)) {
@@ -93,7 +93,7 @@ angular.module('raiffeisen-payments')
                             $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
                         }
                     });
-                }
+                };
 
                 $scope.useCustom = function () {
                     $scope.isFromList = false;
