@@ -156,6 +156,15 @@ angular.module('raiffeisen-payments')
                     $scope.clearRecipient();
                 }
             }
+
+            if ($scope.paymentForm) {
+
+                _.forEach(zusPaymentInsurances, function(val, key) {
+                    if ($scope.paymentForm[val + 'Amount']) {
+                        $scope.paymentForm[val + 'Amount'].$validate();
+                    }
+                });
+            }
         };
 
         $scope.insurancesValidators = {

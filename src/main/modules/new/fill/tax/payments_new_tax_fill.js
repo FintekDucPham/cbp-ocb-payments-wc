@@ -142,6 +142,14 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.onRemitterAccountSelect = function() {
+            if ($scope.paymentForm) {
+                if ($scope.paymentForm.amount) {
+                    $scope.paymentForm.amount.$validate();
+                }
+            }
+        };
+
         $scope.onIdTypeChange = function() {
             $scope.paymentForm.supplementaryId.$validate();
         };
