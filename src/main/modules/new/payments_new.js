@@ -37,7 +37,8 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',

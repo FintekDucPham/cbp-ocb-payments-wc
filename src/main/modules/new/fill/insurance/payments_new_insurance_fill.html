@@ -253,7 +253,7 @@
                                    min="0.01"
                                    bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceType] }}"
                                    bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
-                                   bd-amount
+                                   ng-pattern="AMOUNT_PATTERN"
                                    ng-model-options="{ allowInvalid: true }"
                                    step="0.01"
                                    required
@@ -268,6 +268,9 @@
 
                     <eb-validation-messages eb-name="{{ insuranceType }}Amount">
                         <div eb-message-key="required" class="validation-message animate-on">
+                            {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
+                        </div>
+                        <div eb-message-key="pattern" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
                         </div>
                         <div eb-message-key="number" class="validation-message animate-on">
