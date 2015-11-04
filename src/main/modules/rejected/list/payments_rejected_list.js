@@ -53,50 +53,23 @@ angular.module('raiffeisen-payments')
             child.$emit('$collapseRows');
         };
 
-        //calculate lasts
-        var calculateDateFromLast = function (n, o) {
-            //@ TODO: value + type -> dataFrom -> value(const type)
-            /*
-            * $scope.$watch('rejectedList.filterData.last.type.selected', calculateDateFromLast);
-             $scope.$watch('rejectedList.filterData.last.value', function(n,o){
-             if(n!=o){
-             if(!n){
-             n=0;
-             }
-             if(String(n).length>3){
-             $scope.rejectedList.filterData.last.value = o;
-             }else{
-             calculateDateFromLast();
-             }
-             }
-             });*/
-            var value = parseInt($scope.rejectedList.filterData.last.value);
+        $scope.onFilterLastChange = function() {
+            var lastMiliseconds = $scope.rejectedList.filterData.last.value * 24 * 3600 * 1000;
 
-            if( (n===LAST_TYPES.WEEKS && o===LAST_TYPES.DAYS) || (n===LAST_TYPES.MONTH && o===LAST_TYPES.WEEKS) ){
-                value = $scope.rejectedList.filterData.last.default;
-
-
-
-
+            switch($scope.rejectedList.filterData.last.type.selected) {
+                case LAST_TYPES.WEEKS: {
+                    lastMiliseconds *= 7;
+                    break;
+                }
+                case LAST_TYPES.MONTH: {
+                    lastMiliseconds *= 30;
+                    break;
+                }
             }
 
-            var factor = 1; //days
-            if ($scope.rejectedList.filterData.last.type.selected === LAST_TYPES.WEEKS) {
-                factor = 7;
-            }
-            if ($scope.rejectedList.filterData.last.type.selected === LAST_TYPES.MONTH) {
-                $scope.rejectedList.filterData.last.dateFrom = new Date((new Date()).setMonth(now.getMonth() - value));
-            } else {
-                factor = 30;
-                $scope.rejectedList.filterData.last.dateFrom = new Date(now.getTime() - value * factor * oneDayMilisecs);
-            }
-
-            /*if( (n===LAST_TYPES.WEEKS && o===LAST_TYPES.DAYS) || (n===LAST_TYPES.MONTH && o===LAST_TYPES.WEEKS) ){
-                var diff = factor * oneDayMilisecs;
-                $scope.rejectedList.filterData.last.value = diff/factor/oneDayMilisecs;
-            }*/
-
+            $scope.rejectedList.filterData.last.dateFrom = new Date((+new Date()) - lastMiliseconds);
         };
+
 
         //scope object
         $scope.rejectedList = {
@@ -125,25 +98,17 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.$watch('rejectedList.filterData.last.type.selected', calculateDateFromLast);
-        $scope.$watch('rejectedList.filterData.last.value', function(n,o){
-            if(n!=o){
-                if(!n){
-                    n=0;
-                }
-                if(String(n).length>3){
-                    $scope.rejectedList.filterData.last.value = o;
-                }else{
-                    calculateDateFromLast();
-                }
-            }
-        });
+        $scope.onFilterLastChange();
+
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
             $scope.rejectedList.filterData.last.value = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
             $scope.rejectedList.filterData.last.default = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
             $scope.rejectedList.filterData.range.dateFrom = firstDayOfCurrentMonth;
+
+            // hello world, tutaj weeeee ned to change something, i hope only here ;)
             $scope.rejectedList.minDate = new Date((new Date()).setMonth(now.getMonth() - parameters.micro.max));
+
             $scope.rejectedList.maxOffset = parameters.micro.max;
         }
 

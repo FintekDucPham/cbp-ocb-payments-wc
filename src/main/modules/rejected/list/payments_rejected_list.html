@@ -11,11 +11,21 @@
                             {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
-                            <input bd-type="number" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-pattern="/^\d+$/"/>
+                            <input
+                                    bd-type="number"
+                                    class="input-field"
+                                    ng-model="rejectedList.filterData.last.value"
+                                    name="last_value"
+                                    ng-change="onFilterLastChange()"
+                                    ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST"
+                                    min-date="rejectedList.minDate"
+                                    model-date="rejectedList.filterData.last.dateFrom"
+                                    ng-pattern="/^\d+$/"/>
                         </div>
                         <div class="row__inline-block--middle" style="width:100px;">
                             <ui-select ng-model="rejectedList.filterData.last.type.selected"
                                        theme="bootstrap"
+                                       ng-change="onFilterLastChange()"
                                        reset-search-input="false"
                                        required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
                                 <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
