@@ -16,7 +16,7 @@
                                     class="input-field"
                                     ng-model="rejectedList.filterData.last.value"
                                     name="last_value"
-                                    ng-change="onFilterLastChange()"
+                                    ng-change="onFilterLastValueChange()"
                                     ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST"
                                     min-date="rejectedList.minDate"
                                     model-date="rejectedList.filterData.last.dateFrom"
@@ -25,7 +25,7 @@
                         <div class="row__inline-block--middle" style="width:100px;">
                             <ui-select ng-model="rejectedList.filterData.last.type.selected"
                                        theme="bootstrap"
-                                       ng-change="onFilterLastChange()"
+                                       ng-change="onFilterLastTypeChange()"
                                        reset-search-input="false"
                                        required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
                                 <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">

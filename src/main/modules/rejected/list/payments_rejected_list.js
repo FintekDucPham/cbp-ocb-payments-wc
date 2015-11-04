@@ -49,11 +49,12 @@ angular.module('raiffeisen-payments')
         var firstDayOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         var oneDayMilisecs = 1000 * 60 * 60 * 24;
 
+
         $scope.onBack = function(child) {
             child.$emit('$collapseRows');
         };
 
-        $scope.onFilterLastChange = function() {
+        var calculateModelDate = function() {
             var lastMiliseconds = $scope.rejectedList.filterData.last.value * 24 * 3600 * 1000;
 
             switch($scope.rejectedList.filterData.last.type.selected) {
@@ -68,6 +69,38 @@ angular.module('raiffeisen-payments')
             }
 
             $scope.rejectedList.filterData.last.dateFrom = new Date((+new Date()) - lastMiliseconds);
+        };
+
+        $scope.onFilterLastTypeChange = function() {
+            calculateModelDate();
+
+            var modelDate = $scope.rejectedList.filterData.last.dateFrom,
+                minDate   = $scope.rejectedList.minDate,
+                diffMS    = now.getTime() - minDate.getTime();
+
+            // if value is incorrect (too big)
+            if (modelDate.getTime() < minDate.getTime()) {
+                switch ($scope.rejectedList.filterData.last.type.selected) {
+                    case LAST_TYPES.WEEKS:
+                    {
+                        $scope.rejectedList.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 7));
+                        break;
+                    }
+                    case LAST_TYPES.MONTH:
+                    {
+                        $scope.rejectedList.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 31));
+                        break;
+                    }
+                }
+            }
+
+
+            // we need to recalculate model date after changing week
+            calculateModelDate();
+        };
+
+        $scope.onFilterLastValueChange = function() {
+           calculateModelDate();
         };
 
 
@@ -98,7 +131,7 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.onFilterLastChange();
+        $scope.onFilterLastValueChange();
 
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
