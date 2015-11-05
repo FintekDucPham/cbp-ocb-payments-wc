@@ -16,15 +16,15 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
-        <p style="white-space: pre;" ng-bind-html="payment.formData.recipientName.join('\n')"></p>
+        <p style="white-space: pre;" ng-bind-html="payment.formData.recipientName.join('')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
-        {{payment.formData.amount}}&nbsp;{{payment.formData.currency}} <!-- | nrb -->
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
-        <p style="white-space: pre;" ng-bind-html="payment.formData.description.join('\n')"></p>
+        <p style="white-space: pre;" ng-bind-html="payment.formData.description.join('')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
