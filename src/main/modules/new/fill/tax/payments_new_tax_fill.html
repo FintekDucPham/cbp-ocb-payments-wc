@@ -70,8 +70,7 @@
                   ng-model="payment.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData"
                   required
-                  bd-split-text
-                  bd-split-text-length="132"
+                  split-text-max-length-validators="140"
                   ng-disabled="payment.options.isFromTaxpayer"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
@@ -83,7 +82,7 @@
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
-            <div eb-message-key="splitTextLength" class="validation-message animate-on">
+            <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
         </eb-validation-messages>

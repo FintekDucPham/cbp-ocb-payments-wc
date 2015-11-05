@@ -49,6 +49,7 @@
                     <input type="number"
                            lang="PL"
                            name="amount"
+                           lang="PL"
                            class="input-field"
                            min="0.01"
                            step="0.01"
@@ -104,8 +105,7 @@
     <textarea name="description"
               ng-model="payment.formData.description"
               ng-pattern="PAYMENT_DESCRIPTION_REGEX"
-              bd-split-text
-              bd-split-text-length="132"
+              split-text-max-length-validators="140"
               required
               class="input-area input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
@@ -117,7 +117,7 @@
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
-                <div eb-message-key="splitTextLength" class="validation-message animate-on">
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
             </eb-validation-messages>

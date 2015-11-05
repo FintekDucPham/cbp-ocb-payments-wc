@@ -59,6 +59,7 @@ angular.module('raiffeisen-payments')
         });
 
         var requestConverter = function (formData) {
+            formData.description = splitTextEveryNSign(formData.description);
             return formData;
         };
 
@@ -210,4 +211,12 @@ angular.module('raiffeisen-payments')
             recalculateCurrencies();
         }, true);
 
+
+        function splitTextEveryNSign(text, lineLength){
+            text = text.replace(/(\n)+/g, '');
+            var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+            return lodash.filter(text.split(regexp), function(val) {
+                return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+            });
+        }
     });

@@ -69,6 +69,9 @@ angular.module('raiffeisen-payments')
         };
 
         var requestConverter = function (formData) {
+            formData.amount = formData.amount.replace(",", ".");
+            formData.recipientName = splitTextEveryNSign(formData.recipientName);
+            formData.description = splitTextEveryNSign(formData.description);
             return formData;
         };
 
@@ -99,6 +102,9 @@ angular.module('raiffeisen-payments')
                 }, requestConverter($scope.payment.formData))).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                    if(angular.isDefined($scope.payment.items.recipient)){
+                        $scope.payment.rbPaymentsStepParams.finalAction = undefined;
+                    }
                     actions.proceed();
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
@@ -135,4 +141,11 @@ angular.module('raiffeisen-payments')
             $scope.payment.meta.customerContext = data.customerDetails.context;
         });
 
+        function splitTextEveryNSign(text, lineLength){
+            text = text.replace(/(\n)+/g, '');
+            var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+            return lodash.filter(text.split(regexp), function(val) {
+                return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+            });
+        }
     });
