@@ -3,10 +3,10 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.future.list', {
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/payments_future_list.html",
-            controller: "PaymentsTaxpayersListController"
+            controller: "PaymentsFuturePaymentsListController"
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter) {
 
 
         $scope.taxpayerListPromise = {};
@@ -62,8 +62,6 @@ angular.module('raiffeisen-payments')
             }),
             tableData: {
                 getData: function ($promise, $params) {
-                    params.pageSize = $params.pageSize;
-                    params.pageNumber = $params.currentPage;
 
                     paymentsService.search({
                         statusPaymentCriteria: "waiting",
