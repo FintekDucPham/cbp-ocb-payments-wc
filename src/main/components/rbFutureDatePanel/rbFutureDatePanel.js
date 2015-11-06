@@ -14,16 +14,12 @@ angular.module('raiffeisen-payments')
             labels: {
             },
             initialValues: {
-                selectedMode: FUTURE_DATE_TYPES.RANGE,  // range or next 5 days
+                selectedMode: FUTURE_DATE_TYPES.PERIOD,  // range or next 5 days
                 dateFrom: new Date(),
                 dateTo: new Date(),
             },
             // how many month upward we can search
             maxOffsetInMonths: 10
-        };
-
-        this.mergeDefaults = function (defaults) {
-            lodash.merge(defaultOptions, defaults);
         };
 
         function RbFutureDateRangeParams(options) {
@@ -57,6 +53,7 @@ angular.module('raiffeisen-payments')
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbFutureDatePanel/rbFutureDatePanel.html",
             scope: {
                 "dateRange": "=",
+                "options": "=",
                 "onChange": "=?"
             },
             link: function($scope, $element, $attrs, $controller, $transcludeFn) {
@@ -74,22 +71,21 @@ angular.module('raiffeisen-payments')
                 $scope.FUTURE_DATE_TYPES_LIST  = Object.keys(FUTURE_DATE_TYPES);
 
                 // max date, based on now and business parameter
-                var now     = new Date(),
-                    maxDate,
-                    config = rbFutureDateRangeParams();
+                var now     = new Date();
+                var maxDate;
+                var options = rbFutureDateRangeParams($scope.options);
 
                 // this version is bad, because it causes problem when calculating max weeks or months which can be entered
-                //maxDate.setMonth(now.getMonth() + config.maxOffsetInMonths);
+                //maxDate.setMonth(now.getMonth() + options.maxOffsetInMonths);
                 // maybe precision is lower
-                maxDate = new Date(now.getTime() + (config.maxOffsetInMonths * 3600 * 1000 * 24 * 30));
+                maxDate = new Date(now.getTime() + (options.offset * 3600 * 1000));
 
                 $scope.inputData = {
-                    selectedMode: rbFutureDateRangeParams().initialValues.selectedMode,
+                    selectedMode: options.dateChooseType,
                     periodRange: FUTURE_DATE_RANGES.DAYS,
-                    period: 5, // TODO:
-                    fromDate: new Date(),
-                    toDate: new Date(),
-                    "EOO": "end"
+                    period: options.period,
+                    dateFrom: options.dateFrom,
+                    dateTo: options.dateTo
                 };
 
                 var calculateCurrentPeriodBaseDate = function() {
@@ -119,54 +115,65 @@ angular.module('raiffeisen-payments')
                 };
 
 
-                $scope.$watch('inputData.period', function(period) {
-                    var tmp;
-                    //if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
-                        tmp = calculateCurrentPeriodBaseDate();
-                        if (tmp.getTime() <= maxDate.getTime()) {
-                            $scope.futureDatePanelForm.period.$setValidity("period", true);
-                        }
-                        else {
-                            $scope.futureDatePanelForm.period.$setValidity("period", false);
-                        }
+                var validatePeriod = function() {
+                    if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
+                        var tmp = calculateCurrentPeriodBaseDate();
+                        $scope.futureDatePanelForm.period.$setValidity("period", tmp.getTime() <= maxDate.getTime());
+                    }
+                    else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
+                        $scope.futureDatePanelForm.period.$setValidity("period", true);
+                    }
+                };
 
-                    //}
-                    //else {
-                   //     $scope.futureDatePanelForm.period.$setValidity("period", true);
-                    //}
-                });
+                var validateRange = function() {
+                    var dateFrom, dateTo;
+                    if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
+                        $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', true);
+                        $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
+                        $scope.futureDatePanelForm.dateToInput.$setValidity('maxValue', true);
+                        $scope.futureDatePanelForm.dateToInput.$setValidity('minValue', true);
+                    }
+                    else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
+                        dateFrom = $scope.inputData.dateFrom;
+                        dateTo   = $scope.inputData.dateTo;
+                        // TODO: walidacja zgodnie z regulami gry
+                    }
+                };
+
+                $scope.$watch('inputData.period', validatePeriod); // bind uneccessary
+                $scope.$watch('inputData.dateFrom', validateRange); // bind uneccessary
+                $scope.$watch('inputData.dateTo', validateRange); // bind uneccessary
+
 
                 // change DAYS / WEEKS / MONTHS
-                $scope.$watch('inputData.periodRange', function(selectedMode) {
+                $scope.$watch('inputData.periodRange', function() {
                     var tmp = calculateCurrentPeriodBaseDate();
 
                     // if value is incorrect (too big)
                     if (tmp.getTime() >  maxDate.getTime()) {
-
                         switch ($scope.inputData.periodRange) {
-                            case FUTURE_DATE_RANGES.MONTHS: {
+                            case FUTURE_DATE_RANGES.MONTHS:
                                 $scope.inputData.period = Math.floor((maxDate.getTime() - now.getTime()) / (1000 * 3600 * 24 * 30));
                                 break;
-                            }
 
-                            case FUTURE_DATE_RANGES.WEEKS: {
+                            case FUTURE_DATE_RANGES.WEEKS:
                                 $scope.inputData.period = Math.floor((maxDate.getTime() - now.getTime()) / (1000 * 3600 * 24 * 7));
                                 break;
-                            }
-
-                            default: {
-                                Math.random();
-                                break;
-                            }
                         }
                     }
 
-                    // TODO: revalidate inputData.period
+                    validatePeriod();
                 });
 
+                // change date select mode between range and period
                 $scope.$watch('inputData.selectedMode', function(selectedMode) {
+                    validatePeriod();
+                    if (selectedMode == FUTURE_DATE_TYPES.PERIOD) {
+                        $scope.futureDatePanelForm.period.$setValidity("period", true);
+                    }
+                    else if(selectedMode == FUTURE_DATE_TYPES.RANGE) {
 
-
+                    }
                 });
 
                 $scope.constraints = {

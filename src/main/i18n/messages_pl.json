@@ -705,6 +705,22 @@
     "raiff.payments.future.list.header.amount": "Kwota",
     "raiff.payments.future.list.empty": "Brak zaplanowanych płatności",
 
+
+    "raiff.payments.components.futureDatePanel.dateRanges.DAYS": "dni",
+    "raiff.payments.components.futureDatePanel.dateRanges.WEEKS": "tygodni",
+    "raiff.payments.components.futureDatePanel.dateRanges.MONTHS": "miesięcy",
+
+    "raiff.payments.components.futureDatePanel.dateTypes.PERIOD": "Najbliższe",
+    "raiff.payments.components.futureDatePanel.dateTypes.RANGE": "Okres",
+
+
+    "raiff.payments.components.futureDatePanel.labels.from": "od",
+    "raiff.payments.components.futureDatePanel.labels.to": "do",
+    "raiff.payments.components.futureDatePanel.labels.search": "Szukaj",
+
+    "raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED": "EMPTY_PERIOD_PLANNED",
+
+
     "EOF" : "",
 
     "raiff.MSG-0567_EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
@@ -719,4 +735,6 @@
     "raiff.INCORRECT_NIP": "Niepoprawny numer NIP płatnika",
     "raiff.change_me.EMPTY_SECONDARY_ID_TYPE": "Typ drugiego identyfikatora musi zostać wybrany",
     "raiff.change_me.EMPTY_PAYMENT_TYPE": "Typ wpłaty musi zostać wybrany"
+
+
 }

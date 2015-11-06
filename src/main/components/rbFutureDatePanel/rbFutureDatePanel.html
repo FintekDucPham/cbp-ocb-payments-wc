@@ -5,7 +5,7 @@
             <div class="col-xs-12">
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.PERIOD" class="row__inline-block--middle">
                     <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{:: 'NastêpnE' | translate}}
+                        {{:: 'raiff.payments.components.futureDatePanel.dateTypes.PERIOD' | translate}}
                     </div>
                     <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
                         <input
@@ -13,19 +13,18 @@
                                 class="input-field"
                                 ng-model="inputData.period"
                                 name="period"
-                                ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST"
-                                model-date="rejectedList.filterData.last.dateFrom"
+                                ng-required="inputData.selectedMode===FUTURE_DATE_TYPES.PERIOD"
                                 ng-pattern="/^\d+$/"/>
                     </div>
                     <div class="row__inline-block--middle" style="width:100px;">
                         <ui-select ng-model="inputData.periodRange"
                                    theme="bootstrap"
                                    reset-search-input="false">
-                            <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
-                                {{ 'raiff.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
+                            <ui-select-match placeholder="{{:: 'TODO' | translate }}">
+                                {{ 'raiff.payments.components.futureDatePanel.dateRanges.'+ $select.selected | translate }}
                             </ui-select-match>
                             <ui-select-choices repeat="item in FUTURE_DATE_RANGES_LIST">
-                                {{ :: 'raiff.payments.rejected.list.filter.type.last.types.'+ item | translate }}
+                                {{ :: 'raiff.payments.components.futureDatePanel.dateRanges.'+ item | translate }}
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -34,43 +33,47 @@
             </div>
         </div>
 
-        <div class="eb-validation-messages col-xs-12" ng-if="filterForm.last_value.$invalid">
-            <div class="messages">
-                <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.required">
-                    {{::'raiff.payments.rejected.select.filter.EMPTY_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+rejectedList.filterData.last.type.selected | translate }}
-                </div>
-                <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.pattern">
-                    {{::'raiff.payments.rejected.select.filter.INCORRECT_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+rejectedList.filterData.last.type.selected | translate }}
-                </div>
-                <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.mindate">
-                    {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': rejectedList.maxOffset }}
-                </div>
-            </div>
-        </div>
+
+        <eb-validation-messages eb-name="period">
+            <div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED' | translate}}</div>
+            <div eb-message-key="pattern" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER' | translate}}</div>
+            <div eb-message-key="incorrectDate" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
+        </eb-validation-messages>
+
 
         <div class="row">
             <div class="row--spacing col-md-10 col-sm-12">
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE" class="row__inline-block--middle">
                     <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{:: 'raiff.payments.rejected.list.filter.type.range.label' | translate}}
+                        {{:: 'raiff.payments.components.futureDatePanel.dateTypes.RANGE' | translate}}
                     </div>
                     <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'raiff.payments.rejected.list.filter.type.range.from.label'|translate}}
+                        {{::'raiff.payments.components.futureDatePanel.labels.from'|translate}}
                     </div>
                     <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
-                        <input name="dateFromInput_delgate" hidden ng-model="rejectedList.filterData.range.dateFrom" min-date="rejectedList.minDate" model-date="rejectedList.filterData.range.dateFrom" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                        <rb-datepicker ng-model="rejectedList.filterData.range.dateFrom"
+                        <input name="dateFromInput_delegate"
+                               hidden
+                               ng-model="inputData.dateFrom_delegate"
+                               min-date="rejectedList.minDate"
+                               model-date="rejectedList.filterData.range.dateFrom"
+                               ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
+                        <rb-datepicker ng-model="inputData.dateFrom"
                                        ng-model-options="{ allowInvalid: false }"
                                        rb-name="dateFromInput"
                                        max-search-date
                                        style="width: 140px;"></rb-datepicker>
                     </div>
                     <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'raiff.payments.rejected.list.filter.type.range.to.label'|translate}}
+                        {{::'raiff.payments.components.futureDatePanel.labels.to'|translate}}
                     </div>
                     <div class="row__inline-block--middle" style="width:140px;">
-                        <input name="dateToInput_delgate" hidden ng-model="rejectedList.filterData.range.dateTo" min-date="rejectedList.filterData.range.dateFrom" model-date="rejectedList.filterData.range.dateTo" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                        <rb-datepicker ng-model="rejectedList.filterData.range.dateTo"
+                        <input name="dateToInput_delegate"
+                               hidden
+                               ng-model="inputData.dateTo_delegate"
+                               min-date="rejectedList.filterData.range.dateFrom"
+                               model-date="rejectedList.filterData.range.dateTo"
+                                />
+                        <rb-datepicker ng-model="inputData.dateTo"
                                        empty-date
                                        ng-model-options="{ allowInvalid: false }"
                                        rb-name="dateToInput"
@@ -82,37 +85,44 @@
             </div>
 
             <div class="row--spacing col-md-2 col-sm-12" style="text-align: right;">
-                <bd-button class="bd-button__primary" type="submit">{{::'raiff.payments.rejected.select.filter.button.action'|translate}}</bd-button>
+                <bd-button class="bd-button__primary" type="submit">{{::'raiff.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
             </div>
 
         </div>
 
-        <div class="eb-validation-messages col-xs-12" ng-if="filterForm.dateToInput_delgate.$invalid">
-            <div class="messages">
-                <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.required && !filterForm.dateToInput.$error.date">
-                    {{::'raiff.payments.rejected.select.filter.EMPTY_DATE_TO'|translate}}
-                </div>
-                <div class="validation-message animate-on" ng-if="filterForm.dateToInput.$error.date">
-                    {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_TO'|translate}}
-                </div>
-                <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.mindate">
-                    {{::'raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE' | translate }}
-                </div>
-                <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.future">
-                    {{::'raiff.payments.rejected.select.filter.FUTURE_DATE' | translate }}
-                </div>
-            </div>
+        <!--<div class="eb-validation-messages" id="{{name}}" ng-show="form.$submitted || form[name].$touched || form[name].$dirty">-->
+            <!--<div class="messages" ng-messages="form[name].$error"></div>-->
+        <!--</div>-->
+
+
+        <!--<eb-validation-messages eb-name="dateToInput_delegate">-->
+        <!--<div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>-->
+        <!--<div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>-->
+        <!--<div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate}}</div>-->
+        <!--</eb-validation-messages>-->
+
+
+        <pre>{{futureDatePanelForm.dateFromInput|json}}</pre>
+        <div class="eb-validation-messages col-xs-12" ng-messages="futureDatePanelForm.dateFromInput.$error">
+            <!--<div class="messages">-->
+            <div ng-message="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
+            <div ng-message="date" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
+            <div ng-message="parse" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
+            <div ng-message="INCORRECT_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
+            <div ng-message="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate}}</div>
+            <!--</div>-->
         </div>
+
         <div class="eb-validation-messages col-xs-12" ng-if="filterForm.dateFromInput_delgate.$invalid">
             <div class="messages">
                 <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.required && !filterForm.dateFromInput.$error.date">
-                    {{::'raiff.payments.rejected.select.filter.EMPTY_DATE_FROM'|translate}}
+                    {{::'tODO.select.filter.EMPTY_DATE_FROM'|translate}}
                 </div>
                 <div class="validation-message animate-on" ng-if="filterForm.dateFromInput.$error.date">
-                    {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_FROM'|translate}}
+                    {{::'tODO.select.filter.INCORRECT_DATE_FROM'|translate}}
                 </div>
                 <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.mindate">
-                    {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': rejectedList.maxOffset }}
+                    {{::'tODO.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': rejectedList.maxOffset }}
                 </div>
             </div>
         </div>

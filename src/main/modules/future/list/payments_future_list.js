@@ -3,52 +3,90 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.future.list', {
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/payments_future_list.html",
-            controller: "PaymentsFuturePaymentsListController"
+            controller: "PaymentsFuturePaymentsListController",
+            resolve: {
+                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
+                    return $q.all({
+                        detalOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.detal"),
+                        microOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.micro"),
+                        //microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
+                        //detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
+                        //microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
+                        customerDetails: customerService.getCustomerDetails()
+                    }).then(function (data) {
+                        var result = {
+                            context: data.customerDetails.customerDetails.context,
+                            maxOffset: 70 // TODO:
+                        };
+
+                        if (result.context === 'DETAL') {
+                            result.offset = parseInt(data.detalOffset.value, 10);
+                            result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
+                            result.dateFrom = new Date();
+                            result.dateTo   = new Date();
+                            result.period   = result.offset;
+
+                            result.dateTo.setDate(result.dateTo.getDate() + result.offset);
+
+                            Math.random();
+                            //result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
+                        }
+                        // if (result.context == 'MICRO') {
+                        // in case of unproper context we can load parameters for MICRO context
+                        else {
+                            result.offset = parseInt(data.detalOffset.value, 10);
+                            result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
+                            result.dateFrom = new Date();
+                            result.dateTo   = new Date();
+                            result.period   = result.offset;
+
+                            result.dateTo = new Date(result.dateFrom.getFullYear(), result.dateFrom.getMonth()+1, 0);
+
+                            Math.random();
+                        }
+
+                        return result;
+                    });
+                }]
+            }
+
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters) {
+        $scope.dateRange = {};
 
 
-        $scope.taxpayerListPromise = {};
 
-        $scope.onBack = function(childScope) {
-            childScope.$emit('$collapseRows');
+        $scope.options = {
+            "futureDatePanelConfig": parameters
         };
 
-        $scope.onTransfer = function(taxpayer) {
-            $state.go("payments.new.fill", {
-                paymentType: taxpayer.taxpayerType.state,
-                taxpayerId: taxpayer.taxpayerId
-            });
-        };
-
+        Math.random();
         function goToOperation(operationType, data, operationStep) {
-            if(!operationStep) {
-                operationStep = 'fill';
-            }
-            var copiedData = angular.copy(data);
-            $state.go("payments.taxpayers.manage.{0}.{1}".format(operationType, operationStep), {
-                taxpayerType: data.taxpayerType.code.toLowerCase(),
-                operation: operationType,
-                taxpayer: {
-                    "taxpayerId": copiedData.taxpayerId,
-                    "customName": copiedData.customerName,
-                    "secondaryIdType": copiedData.secondaryIdType,
-                    "secondaryIdNo": copiedData.secondaryId,
-                    "nip": copiedData.nip,
-                    "taxpayerData": copiedData.data,
-                    "taxpayerType": copiedData.taxpayerType.code
-                }
-            });
+            console.log("%c goToOperation: ", "color: red; font-weight: bold; font-size: 18px");
+            // TODO: goToOperation zaimplementowac
+            //if(!operationStep) {
+            //    operationStep = 'fill';
+            //}
+            //var copiedData = angular.copy(data);
+            //$state.go("payments.taxpayers.manage.{0}.{1}".format(operationType, operationStep), {
+            //    taxpayerType: data.taxpayerType.code.toLowerCase(),
+            //    operation: operationType,
+            //    taxpayer: {
+            //        "taxpayerId": copiedData.taxpayerId,
+            //        "customName": copiedData.customerName,
+            //        "secondaryIdType": copiedData.secondaryIdType,
+            //        "secondaryIdNo": copiedData.secondaryId,
+            //        "nip": copiedData.nip,
+            //        "taxpayerData": copiedData.data,
+            //        "taxpayerType": copiedData.taxpayerType.code
+            //    }
+            //});
         }
 
-        $scope.onPaymentEdit = function (data) {
-            goToOperation('edit', data);
-        };
-
-        $scope.onPaymentRemove = function (data) {
-            goToOperation('remove', data, 'verify');
-        };
+        //$scope.timeRangModel = {
+        //    'way': "only one"
+        //};
 
         $scope.search = function (form) {
             if (form.$valid) {
@@ -64,15 +102,16 @@ angular.module('raiffeisen-payments')
                 getData: function ($promise, $params) {
 
                     paymentsService.search({
-                        statusPaymentCriteria: "waiting",
-                        realizationDateFrom: $filter('date')($params.model.dateFrom.getTime(), "yyyy-MM-dd"),
-                        realizationDateTo: $filter('date')($params.model.dateTo.getTime(), "yyyy-MM-dd")
+                        statusPaymentCriteria: "waiting"
+                        ///realizationDateFrom: $filter('date')($params.model.dateFrom.getTime(), "yyyy-MM-dd"),
+                        //realizationDateTo: $filter('date')($params.model.dateTo.getTime(), "yyyy-MM-dd")
                     }).then(function (paymentSummary) {
                         angular.forEach(paymentSummary.content, function (payment) {
                             if (payment.transferType === 'OWN') {
                                 payment.transferType = 'INTERNAL';
                             }
 
+                            // TODO: sprawdzic czy i jak to dziala
                             angular.extend(payment, {
                                 loadDetails: function () {
 
@@ -87,6 +126,7 @@ angular.module('raiffeisen-payments')
                                 }
                             });
                         });
+
                         $params.pageCount = paymentSummary.totalPages;
                         $promise.resolve(paymentSummary.content);
                     });
