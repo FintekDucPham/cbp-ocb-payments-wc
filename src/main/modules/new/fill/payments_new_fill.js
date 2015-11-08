@@ -13,6 +13,8 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
+
+
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -32,6 +34,8 @@ angular.module('raiffeisen-payments')
                 formService.clearForm($scope.paymentForm);
             }
         });
+
+
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
@@ -81,6 +85,36 @@ angular.module('raiffeisen-payments')
                 setRealizationDateToCurrent(true);
             }
         };
+
+
+        function isCurrentDateSelected() {
+            return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
+        }
+
+        function isAmountOverBalance() {
+            return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
+        }
+
+        function isZUSAmountOverBalance() {
+            return   $scope.payment.meta.amountSummary[0].amount > $scope.payment.meta.convertedAssets;
+        }
+
+        function validateBalance() {
+            if($scope.payment.type.code!='INSURANCE'){
+                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+            }
+        }
+
+        $scope.$watch('payment.formData.amount',function(newVal){
+            validateBalance();
+        });
+
+        $scope.$watch('payment.formData.realizationDate',function(newVal){
+            validateBalance();
+        });
+
+
+
 
         setRealizationDateToCurrent();
 

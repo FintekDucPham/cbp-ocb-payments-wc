@@ -58,6 +58,8 @@ angular.module('raiffeisen-payments')
 
         }
 
+
+
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {
                 updateRecipientsList();
@@ -77,6 +79,7 @@ angular.module('raiffeisen-payments')
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
             updateRecipientsList();
+            validateBalance();
             recipientFilter.filter();
         };
 

@@ -80,6 +80,27 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        function validateBalance() {
+                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+        }
+
+        function isCurrentDateSelected() {
+            return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
+        }
+
+        function isAmountOverBalance() {
+            return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
+        }
+
+
+        $scope.$watch('payment.formData.amount',function(newVal){
+            validateBalance();
+        });
+
+        $scope.$watch('payment.formData.realizationDate',function(newVal){
+            validateBalance();
+        });
+
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
@@ -122,6 +143,7 @@ angular.module('raiffeisen-payments')
                 $scope.payment.meta.dateSetByCategory = false;
             }
             resetRealizationOnBlockedInput();
+            validateBalance();
         });
 
         exchangeRates.search().then(function(currencies) {
