@@ -107,6 +107,26 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.$watch('payment.formData.insuranceAccount', function(newValue){
+           if(newValue){
+               insuranceAccountsPromise.then(function() {
+                  lodash.forEach($scope.insuranceAccountList, function(item){
+                      if(item.accountNo === newValue){
+                          $scope.payment.formData.insurancePremiums = [];
+                          $scope.payment.formData.insurancePremiums[item.insuranceCode] = {
+                                currency: "PLN",
+                                amount: $scope.payment.formData.amount
+                          };
+                      }
+                   });
+                  /* $scope.payment.formData.insurancePremiums[lodash.find($scope.insuranceAccountList, {
+                       accountNo : newValue
+                   }).insuranceCode] = {
+                       currency: 'PLN'
+                   };*/
+               });
+           }
+        });
         $scope.selectRecipient = function (recipient) {
             $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
