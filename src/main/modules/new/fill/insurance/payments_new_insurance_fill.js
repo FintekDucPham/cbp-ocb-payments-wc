@@ -112,13 +112,14 @@ angular.module('raiffeisen-payments')
                insuranceAccountsPromise.then(function() {
                   lodash.forEach($scope.insuranceAccountList, function(item){
                       if(item.accountNo === newValue){
-                          $scope.payment.formData.insurancePremiums = [];
                           $scope.payment.formData.insurancePremiums[item.insuranceCode] = {
                                 currency: "PLN",
                                 amount: $scope.payment.formData.amount
                           };
                       }
                    });
+                   calculateInsurancesAmount();
+
                   /* $scope.payment.formData.insurancePremiums[lodash.find($scope.insuranceAccountList, {
                        accountNo : newValue
                    }).insuranceCode] = {
