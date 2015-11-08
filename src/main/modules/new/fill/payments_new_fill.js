@@ -69,7 +69,7 @@ angular.module('raiffeisen-payments')
         };
 
         var requestConverter = function (formData) {
-            formData.amount = formData.amount.replace(",", ".");
+            formData.amount = angular.isNumber(formData.amount) ? formData.amount : formData.amount.replace(",", ".");
             formData.recipientName = splitTextEveryNSign(formData.recipientName);
             formData.description = splitTextEveryNSign(formData.description);
             return formData;

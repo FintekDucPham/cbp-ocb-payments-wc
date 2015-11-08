@@ -7,8 +7,8 @@ angular.module('raiffeisen-payments')
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
             $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
-            $scope.payment.formData.recipientName = recipient.data.join('\n');
-            $scope.payment.formData.description = recipient.title.join('\n');
+            $scope.payment.formData.recipientName = recipient.data.join('');
+            $scope.payment.formData.description = recipient.title.join('');
         };
 
         $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([

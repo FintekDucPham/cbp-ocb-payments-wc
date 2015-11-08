@@ -7,6 +7,8 @@
                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                            rb-product-list-name="TRANSFER_ZUS_FROM_LIST"
                            rb-account-select-params="remitterAccountSelectParams"
+                           rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                           rb-account-no="payment.items.recipient.debitNrb"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 

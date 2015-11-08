@@ -88,7 +88,7 @@
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
             <textarea name="recipientData"
                       ng-model="recipient.formData.recipientData"
-                      bd-split-text-length="132"
+                      split-text-max-length-validators="140"
                       ng-pattern="RECIPIENT_DATA_REGEX"
                       required
                       class="input-field input-area--party-data"
@@ -98,7 +98,7 @@
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.EMPTY'|translate}}
                 </div>
-                <div eb-message-key="splitTextLength" class="validation-message animate-on">
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
@@ -113,10 +113,9 @@
 
             <textarea name="description"
                       ng-model="recipient.formData.description"
-                      bd-split-text-length="132"
+                      split-text-max-length-validators="140"
                       ng-pattern="PAYMENT_TITLE_REGEX"
                       class="input-field input-area--payment-description"
-                      bd-split-text
                       required
                       placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.description.placeholder' | translate }}"></textarea>
 
@@ -127,7 +126,7 @@
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.description.PATTERN'|translate}}
                 </div>
-                <div eb-message-key="splitTextLength" class="validation-message animate-on">
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH'|translate}}
                 </div>
             </eb-validation-messages>

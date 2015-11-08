@@ -87,6 +87,7 @@ angular.module('raiffeisen-payments')
                 formData.idType = recipient.secondaryIdType;
                 formData.idNumber = recipient.secondaryId;
                 formData.formCode = recipient.formCode;
+                $scope.payment.items.recipient = recipient;
                 var periodTypeCode = formData.periodType = recipient.periodType;
                 $scope.payment.options.customPeriod = !usPeriodTypes[periodTypeCode].values;
                 $scope.payment.items.recipientAccount = {
@@ -114,7 +115,7 @@ angular.module('raiffeisen-payments')
             var formData = $scope.payment.formData;
             formData.idType = taxpayer.secondaryIdType;
             formData.idNumber = taxpayer.secondaryId;
-            formData.taxpayerData = taxpayer.data;
+            formData.taxpayerData = taxpayer.data.join('');
             $scope.payment.options.isFromTaxpayer = true;
         };
 
@@ -163,7 +164,7 @@ angular.module('raiffeisen-payments')
             var recipient = $scope.payment.items.recipientAccount;
             formData.taxpayerData = splitTextEveryNSign(formData.taxpayerData);
             return angular.extend(copiedFormData, {
-                recipientName: recipient.officeName,
+                recipientName: splitTextEveryNSign("Urzad skarbowy superowy"),//recipient.officeName),
                 recipientAccountNo: recipient.accountNo
             });
         });

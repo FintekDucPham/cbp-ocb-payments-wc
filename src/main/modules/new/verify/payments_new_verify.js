@@ -36,8 +36,6 @@ angular.module('raiffeisen-payments')
                     $scope.payment.result.code = 'error';
                 }
                 $scope.payment.result.token_error = false;
-                $scope.payment.formData = {};
-                $scope.payment.items = {};
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;

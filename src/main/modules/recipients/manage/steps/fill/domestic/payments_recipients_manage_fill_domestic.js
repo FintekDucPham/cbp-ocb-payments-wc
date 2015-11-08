@@ -66,7 +66,9 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.setRequestConverter(function (formData) {
-            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            var copiedFormData = formData;
+            copiedFormData.recipientData = splitTextEveryNSign(copiedFormData.recipientData);
+            copiedFormData.description = splitTextEveryNSign(copiedFormData.description);
             return {
                 shortName: copiedFormData.customName,
                 debitAccount: copiedFormData.remitterAccountId,
@@ -76,4 +78,11 @@ angular.module('raiffeisen-payments')
             };
         });
 
+        function splitTextEveryNSign(text, lineLength){
+            text = text.replace(/(\n)+/g, '');
+            var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+            return lodash.filter(text.split(regexp), function(val) {
+                return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+            });
+        }
     });

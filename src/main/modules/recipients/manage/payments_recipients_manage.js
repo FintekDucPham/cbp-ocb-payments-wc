@@ -106,8 +106,8 @@ angular.module('raiffeisen-payments')
             domestic: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
-                        recipientData: recipient.recipientAddress,
-                        description: recipient.transferTitleTable
+                        recipientData: recipient.recipientAddress.join(""),
+                        description: recipient.transferTitleTable.join("")
                     }
                 }, recipient);
             },

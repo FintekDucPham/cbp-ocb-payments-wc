@@ -111,6 +111,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
+            $scope.payment.items.recipient = recipient;
             insuranceAccountsPromise.then(function() {
                 $scope.payment.formData.insurancePremiums[lodash.find($scope.insuranceAccountList, {
                     accountNo : recipient.nrb
