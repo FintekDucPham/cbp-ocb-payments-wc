@@ -2,5 +2,9 @@
     {{::'raiff.payments.recipients.new.type.' + recipient.type.code  | translate}}
 </bd-item-property>
 
+<bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                  label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
+    {{ recipient.formData.customName }}
+</bd-item-property>
 
 <bd-msg-panel bd-msg-type="{{ recipient.result.type }}">{{ ::'raiff.payments.recipients.new.status.' + (recipient.result.code || recipient.result.type) | translate }}</bd-msg-panel>
