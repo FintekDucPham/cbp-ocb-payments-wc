@@ -59,26 +59,32 @@ angular.module('raiffeisen-payments')
             link: function($scope, $element, $attrs, $controller, $transcludeFn) {
 
             },
-            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES) {
+            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, translate) {
+                // max date, based on now and business parameter
+                var now     = new Date();
+                var maxDate;
+                var options = rbFutureDateRangeParams($scope.options);
+
                 var commitDateRange = function(fromDate, toDate) {
                     $scope.dateRange.fromDate = fromDate;
                     $scope.dateRange.toDate   = toDate;
                 };
+
+                $scope.replace = String.prototype.replace;
 
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;
                 $scope.FUTURE_DATE_TYPES  = FUTURE_DATE_TYPES;
                 $scope.FUTURE_DATE_RANGES_LIST = Object.keys(FUTURE_DATE_RANGES);  // because repeat doesn't support objects
                 $scope.FUTURE_DATE_TYPES_LIST  = Object.keys(FUTURE_DATE_TYPES);
 
-                // max date, based on now and business parameter
-                var now     = new Date();
-                var maxDate;
-                var options = rbFutureDateRangeParams($scope.options);
+                $scope.messages = {
+                    'INCORRECT_END_DATE': translate.property('raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
+                };
+
 
                 // this version is bad, because it causes problem when calculating max weeks or months which can be entered
                 //maxDate.setMonth(now.getMonth() + options.maxOffsetInMonths);
-                // maybe precision is lower
-                maxDate = new Date(now.getTime() + (options.offset * 3600 * 1000));
+                maxDate = new Date(now.getTime() + (options.maxOffsetInMonths * 3600 * 1000 * 24 * 30));
 
                 $scope.inputData = {
                     selectedMode: options.dateChooseType,
@@ -117,8 +123,13 @@ angular.module('raiffeisen-payments')
 
                 var validatePeriod = function() {
                     if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
+                        ////$scope.inputData.periodRange
+                        //if (_.isEmpty(_.trim($scope.inputData.period))) {
+                        //    $scope.futureDatePanelForm.period.$setValidity("required", tmp.getTime() <= maxDate.getTime());
+                        //}
+
                         var tmp = calculateCurrentPeriodBaseDate();
-                        $scope.futureDatePanelForm.period.$setValidity("period", tmp.getTime() <= maxDate.getTime());
+                        $scope.futureDatePanelForm.period.$setValidity("INCORRECT_END_DATE", tmp.getTime() <= maxDate.getTime());
                     }
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
                         $scope.futureDatePanelForm.period.$setValidity("period", true);

@@ -1,4 +1,5 @@
 <form novalidate name="futureDatePanelForm" ng-submit="onSubmit(futureDatePanelForm)">
+    <!-- <pre>{{futureDatePanelForm.$error | json}}</pre> -->
     <bd-radio-select bd-model="inputData.selectedMode">
 
         <div class="bd-item-property row">
@@ -35,9 +36,11 @@
 
 
         <eb-validation-messages eb-name="period">
-            <div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED' | translate}}</div>
-            <div eb-message-key="pattern" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER' | translate}}</div>
-            <div eb-message-key="incorrectDate" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
+            <div eb-message-key="required" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange | translate}}</div>
+
+            <div eb-message-key="pattern" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange | translate}}</div>
+
+            <div eb-message-key="INCORRECT_END_DATE" class="validation-message animate-on">{{::messages.INCORRECT_END_DATE}}</div>
         </eb-validation-messages>
 
 
@@ -102,7 +105,7 @@
         <!--</eb-validation-messages>-->
 
 
-        <pre>{{futureDatePanelForm.dateFromInput|json}}</pre>
+        <pre>{{futureDatePanelForm.dateFromInput.$error|json}}</pre>
         <div class="eb-validation-messages col-xs-12" ng-messages="futureDatePanelForm.dateFromInput.$error">
             <!--<div class="messages">-->
             <div ng-message="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
@@ -110,22 +113,11 @@
             <div ng-message="parse" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
             <div ng-message="INCORRECT_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
             <div ng-message="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate}}</div>
+            <div ng-message="TOO_LATE_FINISH_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}</div>
             <!--</div>-->
         </div>
 
-        <div class="eb-validation-messages col-xs-12" ng-if="filterForm.dateFromInput_delgate.$invalid">
-            <div class="messages">
-                <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.required && !filterForm.dateFromInput.$error.date">
-                    {{::'tODO.select.filter.EMPTY_DATE_FROM'|translate}}
-                </div>
-                <div class="validation-message animate-on" ng-if="filterForm.dateFromInput.$error.date">
-                    {{::'tODO.select.filter.INCORRECT_DATE_FROM'|translate}}
-                </div>
-                <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.mindate">
-                    {{::'tODO.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': rejectedList.maxOffset }}
-                </div>
-            </div>
-        </div>
+
 
     </bd-radio-select>
 </form>

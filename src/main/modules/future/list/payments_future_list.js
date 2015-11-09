@@ -9,6 +9,9 @@ angular.module('raiffeisen-payments')
                     return $q.all({
                         detalOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.detal"),
                         microOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.micro"),
+                        detalMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.detal", 12),
+                        microMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.micro", 12),
+
                         //microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
                         //detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
                         //microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
@@ -21,6 +24,7 @@ angular.module('raiffeisen-payments')
 
                         if (result.context === 'DETAL') {
                             result.offset = parseInt(data.detalOffset.value, 10);
+                            result.maxOffsetInMonths = parseInt(data.detalMaxMonthsOffset.value, 10);
                             result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
                             result.dateFrom = new Date();
                             result.dateTo   = new Date();
@@ -35,6 +39,7 @@ angular.module('raiffeisen-payments')
                         // in case of unproper context we can load parameters for MICRO context
                         else {
                             result.offset = parseInt(data.detalOffset.value, 10);
+                            result.maxOffsetInMonths = parseInt(data.microMaxMonthsOffset.value, 10);
                             result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
                             result.dateFrom = new Date();
                             result.dateTo   = new Date();
