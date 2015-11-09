@@ -123,6 +123,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.validationErrors = [];
             var form = $scope.paymentForm;
             $scope.limitExeeded = {
                 show: false
@@ -149,6 +150,8 @@ angular.module('raiffeisen-payments')
                                     show: true,
                                     messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
                                 };
+                            }else{
+                                $scope.validationErrors[currentError.field] = translate.property('raiff.payments.new.error.'+currentError.codes[2]);
                             }
                         }
                     }

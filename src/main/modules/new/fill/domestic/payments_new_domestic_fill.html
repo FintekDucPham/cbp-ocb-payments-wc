@@ -67,6 +67,10 @@
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['recipientName'] !== undefined">
+            {{validationErrors['recipientName']}}
+        </div>
 
         <eb-validation-messages eb-name="recipientName">
             <div eb-message-key="required" class="validation-message animate-on">
@@ -93,7 +97,10 @@
                   split-text-max-length-validators="140"
                   ng-pattern="PAYMENT_DESCRIPTION_REGEX"
                   placeholder="{{ ::'raiff.payments.new.domestic.fill.description.placeholder' | translate }}"></textarea>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['description'] !== undefined">
+            {{validationErrors['description']}}
+        </div>
         <eb-validation-messages eb-name="description">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.description.EMPTY_TITLE'|translate}}
