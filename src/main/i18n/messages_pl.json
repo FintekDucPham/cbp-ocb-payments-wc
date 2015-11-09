@@ -115,6 +115,7 @@
     "raiff.payments.new.verify.smscode": "Podaj haslo SMS dla operacji",
     "raiff.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",
 
+    "raiff.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
     "raiff.payments.new.domestic.fill.sender_account": "Z rachunku",
     "raiff.payments.new.domestic.fill.accessible_assets": "Dostępne środki",
     "raiff.payments.new.domestic.fill.recipient": "Wybierz odbiorcę",
