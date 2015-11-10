@@ -88,6 +88,18 @@ angular.module('raiffeisen-payments')
             $timeout(recalculateCurrency);
         });
 
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
+                recipientData: $scope.payment.formData.recipientName,
+                description: $scope.payment.formData.description
+            });
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData;
+            });
+        });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
@@ -146,15 +158,4 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
-
-        $scope.setRecipientDataExtractor(function() {
-            return {
-                customName: "Nowy odbiorca",
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
-                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
-                recipientData: $scope.payment.formData.recipientName,
-                description: $scope.payment.formData.description
-            };
-        });
-
     });
