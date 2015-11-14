@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
         },
         'R': {}
     })
-    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams) {
+    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents) {
 
         angular.extend($scope.payment.formData, {
             idType: "NIP"
@@ -28,6 +28,22 @@ angular.module('raiffeisen-payments')
                 return name;
             })),
             usPeriodTypes: usPeriodTypes
+        });
+
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
+                secondaryIdType:  $scope.payment.formData.idType,
+                idNumber: $scope.payment.formData.idNumber,
+                formCode: $scope.payment.formData.formCode,
+                periodType: $scope.payment.formData.periodType,
+                obligationId: $scope.payment.formData.obligationId
+            });
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData;
+            });
         });
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
@@ -177,7 +193,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.currency = 'PLN';
         });
 
-        $scope.setRecipientDataExtractor(function() {
+        /*$scope.setRecipientDataExtractor(function() {
 
             return {
                 customName: "Nowy odbiorca",
@@ -189,7 +205,7 @@ angular.module('raiffeisen-payments')
                 periodType: $scope.payment.formData.periodType
             };
 
-        });
+        });*/
 
         function splitTextEveryNSign(text, lineLength){
             if(text !== undefined && text.length > 0) {

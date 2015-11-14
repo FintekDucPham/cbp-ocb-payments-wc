@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams) {
+    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents) {
 
         angular.extend($scope.payment.meta, {
             zusInsuranceTypes: zusPaymentInsurances,
@@ -246,7 +246,21 @@ angular.module('raiffeisen-payments')
             $scope.paymentForm.taxpayerSupplementaryId.$validate();
         };
 
-        $scope.setRecipientDataExtractor(function() {
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = $scope.payment;
+            var recipientData2 = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                nip: $scope.payment.formData.nip,
+                secondaryIdType:  $scope.payment.formData.secondaryIdType,
+                secondaryIdNo: $scope.payment.formData.secondaryIdNo,
+                paymentType: $scope.payment.formData.paymentType
+            });
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData2;
+            });
+        });
+       /* $scope.setRecipientDataExtractor(function() {
             var recipientData = $scope.payment;
             return {
                 customName: "Nowy odbiorca",
@@ -258,6 +272,6 @@ angular.module('raiffeisen-payments')
                 paymentType: $scope.payment.formData.paymentType
             };
 
-        });
+        });*/
 
     });
