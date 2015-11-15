@@ -133,12 +133,16 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
             $scope.payment.items.recipient = recipient;
+
             insuranceAccountsPromise.then(function() {
-                $scope.payment.formData.insurancePremiums[lodash.find($scope.insuranceAccountList, {
+                var insuranceAccountType = lodash.find($scope.insuranceAccountList, {
                     accountNo : recipient.nrb
-                }).insuranceCode] = {
-                    currency: 'PLN'
-                };
+                }).insuranceCode;
+                if(angular.isUndefined($scope.payment.formData.insurancePremiums[insuranceAccountType])){
+                    $scope.payment.formData.insurancePremiums[insuranceAccountType] = {
+                        currency: 'PLN'
+                    };
+                }
             });
             if(!$scope.payment.options.isFromTaxpayer) {
                 $scope.payment.formData.nip = recipient.nip;
