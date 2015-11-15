@@ -309,6 +309,10 @@
                  ng-if="limitExeeded !== undefined && limitExeeded.show">
                 {{limitExeeded.messages}}
             </div>
+            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+                 ng-if="limitNonResExeeded !== undefined && limitNonResExeeded.show">
+                {{limitNonResExeeded.messages}}
+            </div>
         </bd-item-property>
 
         <input type="hidden"
