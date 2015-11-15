@@ -164,7 +164,19 @@ angular.module('raiffeisen-payments')
                 $scope.payment.options.isFromTaxpayer = false;
             }
         };
-
+       /* $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            console.debug($scope.insuranceAccountList);
+            for(var k in $scope.payment.formData.insurancePremiums){
+                console.debug(k);
+            }
+            /!*var recipient = lodash.find($scope.payment.items.recipientList, {
+                templateType: 'INSURANCE',
+                nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+            });
+            if(angular.isDefined(recipient) && recipient !== null){
+                delete $scope.payment.rbPaymentsStepParams.finalAction;
+            }*!/
+        });*/
         $scope.selectTaxpayer = function (taxpayer) {
             var formData = $scope.payment.formData;
             formData.secondaryIdType = taxpayer.secondaryIdType;

@@ -137,9 +137,6 @@ angular.module('raiffeisen-payments')
                 }, requestConverter($scope.payment.formData))).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                    if(angular.isDefined($scope.payment.items.recipient)){
-                        $scope.payment.rbPaymentsStepParams.finalAction = undefined;
-                    }
                     actions.proceed();
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){

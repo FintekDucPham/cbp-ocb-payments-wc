@@ -30,6 +30,14 @@ angular.module('raiffeisen-payments')
             usPeriodTypes: usPeriodTypes
         });
 
+         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            var recipient = lodash.find($scope.payment.items.recipientList, {
+                 nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+             });
+             if(angular.isDefined(recipient) && recipient !== null){
+                 $scope.payment.formData.hideSaveRecipientButton = true;
+             }
+         });
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
                 customName: "Nowy odbiorca",
