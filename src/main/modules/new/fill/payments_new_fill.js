@@ -143,12 +143,17 @@ angular.module('raiffeisen-payments')
                     actions.proceed();
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
-                        for(var i=0; i<=errorReason.errors.length; i++){
+                        for(var i=0; i<errorReason.errors.length; i++){
                             var currentError = errorReason.errors[i];
                             if(currentError.field == 'raiff.transfer.limit.exceeed'){
                                 $scope.limitExeeded = {
                                     show: true,
                                     messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                                };
+                            }else if(currentError.field == 'raiff.transfer.limit.nonres'){
+                                $scope.limitNonResExeeded = {
+                                    show: true,
+                                    messages: translate.property("raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
                                 };
                             }else{
                                 $scope.validationErrors[currentError.field] = translate.property('raiff.payments.new.error.'+currentError.codes[2]);

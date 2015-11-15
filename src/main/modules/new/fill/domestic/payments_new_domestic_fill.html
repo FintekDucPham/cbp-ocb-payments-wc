@@ -175,10 +175,18 @@
             <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
             </div>
+            <div eb-message-key="transfer.amount.raiff.transfer.limit.nonres" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+            </div>
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="limitExeeded !== undefined && limitExeeded.show">
             {{limitExeeded.messages}}
+        </div>
+
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="limitNonResExeeded !== undefined && limitNonResExeeded.show">
+            {{limitNonResExeeded.messages}}
         </div>
     </bd-item-property>
 
