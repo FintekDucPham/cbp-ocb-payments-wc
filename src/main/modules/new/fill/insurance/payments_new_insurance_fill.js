@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams) {
+    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents) {
 
         angular.extend($scope.payment.meta, {
             zusInsuranceTypes: zusPaymentInsurances,
@@ -133,12 +133,16 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
             $scope.payment.items.recipient = recipient;
+
             insuranceAccountsPromise.then(function() {
-                $scope.payment.formData.insurancePremiums[lodash.find($scope.insuranceAccountList, {
+                var insuranceAccountType = lodash.find($scope.insuranceAccountList, {
                     accountNo : recipient.nrb
-                }).insuranceCode] = {
-                    currency: 'PLN'
-                };
+                }).insuranceCode;
+                if(angular.isUndefined($scope.payment.formData.insurancePremiums[insuranceAccountType])){
+                    $scope.payment.formData.insurancePremiums[insuranceAccountType] = {
+                        currency: 'PLN'
+                    };
+                }
             });
             if(!$scope.payment.options.isFromTaxpayer) {
                 $scope.payment.formData.nip = recipient.nip;
@@ -160,7 +164,19 @@ angular.module('raiffeisen-payments')
                 $scope.payment.options.isFromTaxpayer = false;
             }
         };
-
+       /* $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            console.debug($scope.insuranceAccountList);
+            for(var k in $scope.payment.formData.insurancePremiums){
+                console.debug(k);
+            }
+            /!*var recipient = lodash.find($scope.payment.items.recipientList, {
+                templateType: 'INSURANCE',
+                nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+            });
+            if(angular.isDefined(recipient) && recipient !== null){
+                delete $scope.payment.rbPaymentsStepParams.finalAction;
+            }*!/
+        });*/
         $scope.selectTaxpayer = function (taxpayer) {
             var formData = $scope.payment.formData;
             formData.secondaryIdType = taxpayer.secondaryIdType;
@@ -246,7 +262,21 @@ angular.module('raiffeisen-payments')
             $scope.paymentForm.taxpayerSupplementaryId.$validate();
         };
 
-        $scope.setRecipientDataExtractor(function() {
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = $scope.payment;
+            var recipientData2 = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                nip: $scope.payment.formData.nip,
+                secondaryIdType:  $scope.payment.formData.secondaryIdType,
+                secondaryIdNo: $scope.payment.formData.secondaryIdNo,
+                paymentType: $scope.payment.formData.paymentType
+            });
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData2;
+            });
+        });
+       /* $scope.setRecipientDataExtractor(function() {
             var recipientData = $scope.payment;
             return {
                 customName: "Nowy odbiorca",
@@ -258,6 +288,6 @@ angular.module('raiffeisen-payments')
                 paymentType: $scope.payment.formData.paymentType
             };
 
-        });
+        });*/
 
     });

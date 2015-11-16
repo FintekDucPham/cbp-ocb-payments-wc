@@ -45,7 +45,9 @@ angular.module('raiffeisen-payments')
             type: lodash.find(rbPaymentTypes, {
                 state: $stateParams.paymentType || 'domestic'
             }),
-            formData: {},
+            formData: {
+                hideSaveRecipientButton: false
+            },
             token: {
                 model: null,
                 params: {}
@@ -101,6 +103,7 @@ angular.module('raiffeisen-payments')
                 alreadySet = true;
             }
         };
+
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',

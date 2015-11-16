@@ -101,6 +101,14 @@ angular.module('raiffeisen-payments')
             });
         });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            var recipient = lodash.find($scope.payment.items.recipientList, {
+                templateType: 'DOMESTIC',
+                accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+            });
+            if(angular.isDefined(recipient) && recipient !== null){
+                $scope.payment.formData.hideSaveRecipientButton = true;
+            }
+
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
                 taxOffices.search({
