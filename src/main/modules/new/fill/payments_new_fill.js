@@ -7,13 +7,22 @@ angular.module('raiffeisen-payments')
             params: {
                 accountId: null,
                 recipientId: null,
-                taxpayerId: null
+                taxpayerId: null,
+                nrb: null
             }
         });
     })
     .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
-
+        if($stateParams.nrb) {
+            $scope.remote = {
+                model: {
+                    onAccountsLoaded: function (remoteObject) {
+                        remoteObject.setSelectedNrb($stateParams.nrb);
+                    }
+                }
+            };
+        }
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
