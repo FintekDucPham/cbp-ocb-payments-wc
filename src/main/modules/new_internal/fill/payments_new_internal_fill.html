@@ -8,7 +8,8 @@
                                rb-product-list-name="TRANSFER_OWN_FROM_LIST"
                                rb-account-select-params="senderSelectParams"
                                rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                               rb-on-account-select="recipientSelectParams.update($accountId)"></rb-account-select>
+                               rb-on-account-select="recipientSelectParams.update($accountId)"
+                               rb-remote="remote.model"></rb-account-select>
         </bd-item-property>
 
         <bd-item-property ng-if="payment.formData.remitterAccountId"

@@ -10,7 +10,8 @@
                            rb-on-account-select="onSenderAccountSelect()"
                            rb-init-select-fn="getAccountByNrb($accountList, $select)"
                            rb-account-no="payment.items.recipient.srcAccountNo"
-                           rb-account-select-params="remitterAccountSelectParams"></rb-account-select>
+                           rb-account-select-params="remitterAccountSelectParams"
+                           rb-remote="remote.model"></rb-account-select>
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.remitterAccountId"
