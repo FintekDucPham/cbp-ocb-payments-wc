@@ -71,12 +71,11 @@ angular.module('raiffeisen-payments')
                     $scope.dateRange.toDate   = toDate;
                 };
 
-                $scope.replace = String.prototype.replace;
-
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;
                 $scope.FUTURE_DATE_TYPES  = FUTURE_DATE_TYPES;
                 $scope.FUTURE_DATE_RANGES_LIST = Object.keys(FUTURE_DATE_RANGES);  // because repeat doesn't support objects
                 $scope.FUTURE_DATE_TYPES_LIST  = Object.keys(FUTURE_DATE_TYPES);
+                $scope.options = options.maxOffsetInMonths;
 
                 $scope.messages = {
                     'INCORRECT_END_DATE': translate.property('raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
@@ -149,22 +148,32 @@ angular.module('raiffeisen-payments')
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
                         dateFrom = $scope.inputData.dateFrom;
                         dateTo   = $scope.inputData.dateTo;
-                        /*
-                         $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', true);
-                         $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
-                         $scope.futureDatePanelForm.dateToInput.$setValidity('maxValue', true);
-                         $scope.futureDatePanelForm.dateToInput.$setValidity('minValue', true);
-                         */
 
-                        $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', dateFrom.getTime() < minDate.getTime());
-                        $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
+                        $scope.futureDatePanelForm.dateFromInput.$setValidity('required', !!$scope.futureDatePanelForm.dateFromInput.$viewValue);
+                        $scope.futureDatePanelForm.dateToInput.$setValidity('required', !!$scope.futureDatePanelForm.dateToInput.$viewValue);
 
+                        if (dateFrom && dateTo) {
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', dateFrom.getTime() <= dateTo.getTime());
+                            Math.random();
+                        }
+                        else {
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', true);
+                            Math.random();
+                        }
+
+                        if (dateTo) {
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', dateTo.getTime() <= maxDate.getTime());
+                            Math.random();
+                        }
+                        else {
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', true);
+                            Math.random();
+                        }
                     }
                 };
 
                 $scope.$watch('inputData.period', validatePeriod); // bind uneccessary
-                $scope.$watch('inputData.dateFrom', validateRange); // bind uneccessary
-                $scope.$watch('inputData.dateTo', validateRange); // bind uneccessary
+                $scope.$watchGroup(['inputData.dateFrom', 'inputData.dateTo'], validateRange);
 
 
                 // change DAYS / WEEKS / MONTHS

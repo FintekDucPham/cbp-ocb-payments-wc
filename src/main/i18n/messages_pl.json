@@ -732,7 +732,7 @@
     "raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE": "Musisz wprowadzić datę końcową okresu wyszukiwania",
 
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE": "Nieprawidłowa data początkowa okresu wyszukiwania",
-    "raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE": "Data końcowa okresu wyszukiwania jest późniejsza niż ##MONTHS## miesięcy w przód. Można wyszukiwać tylko operacje zaplanowane na najbliższe ##MONTHS## miesięcy.",
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE": "Nieprawidłowa data końcowa okresu wyszukiwania",
 
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE": "Data końcowa okresu wyszukiwania jest późniejsza niż ##MONTHS## miesięcy w przód. Można wyszukiwać tylko operacje zaplanowane na najbliższe ##MONTHS## miesięcy.",
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE": "Data początkowa nie może być późniejsza niż data końcowa",

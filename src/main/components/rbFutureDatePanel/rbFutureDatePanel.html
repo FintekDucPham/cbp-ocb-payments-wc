@@ -1,5 +1,4 @@
 <form novalidate name="futureDatePanelForm" ng-submit="onSubmit(futureDatePanelForm)">
-    <!-- <pre>{{futureDatePanelForm.$error | json}}</pre> -->
     <bd-radio-select bd-model="inputData.selectedMode">
 
         <div class="bd-item-property row">
@@ -93,35 +92,24 @@
 
         </div>
 
-        <!--<div class="eb-validation-messages" id="{{name}}" ng-show="form.$submitted || form[name].$touched || form[name].$dirty">-->
-            <!--<div class="messages" ng-messages="form[name].$error"></div>-->
-        <!--</div>-->
-
-
-        <!--<eb-validation-messages eb-name="dateToInput_delegate">-->
-        <!--<div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>-->
-        <!--<div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>-->
-        <!--<div eb-message-key="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate}}</div>-->
-        <!--</eb-validation-messages>-->
-
-
-        <pre>{{futureDatePanelForm.dateFromInput.$error|json}}</pre>
-        <div class="eb-validation-messages col-xs-12" ng-messages="futureDatePanelForm.dateFromInput.$error">
-            <!--<div class="messages">-->
-            <div ng-message="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
-            <div ng-message="parse" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
-            <div ng-message="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate}}</div>
-            <!--</div>-->
+        <div class="eb-validation-messages col-xs-12"
+             ng-show="futureDatePanelForm.$dirty || futureDatePanelForm.$submitted"
+                >
+            <div class="messages">
+                <div ng-show="futureDatePanelForm.dateFromInput.$error.required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE' | translate}}</div>
+                <div ng-show="futureDatePanelForm.dateFromInput.$error.date || futureDatePanelForm.dateFromInput.$error.parse || futureDatePanelForm.dateFromInput.$error.rbDatepickerFormat" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
+                <div ng-show="futureDatePanelForm.dateFromInput.$error.TOO_LATE_FINISH_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}</div>
+            </div>
         </div>
 
-
-        <pre>{{futureDatePanelForm.dateToInput.$error|json}}</pre>
-        <div class="eb-validation-messages col-xs-12" ng-messages="futureDatePanelForm.dateFromInput.$error">
-            <!--<div class="messages">-->
-            <div ng-message="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE' | translate}}</div>
-            <div ng-message="parse" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
-            <div ng-message="TOO_LATE_FINISH_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}</div>
-            <!--</div>-->
+        <div class="eb-validation-messages col-xs-12"
+             ng-show="futureDatePanelForm.$dirty || futureDatePanelForm.$submitted"
+                >
+            <div class="messages">
+                <div ng-show="futureDatePanelForm.dateToInput.$error.required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
+                <div ng-show="futureDatePanelForm.dateToInput.$error.date || futureDatePanelForm.dateToInput.$error.parse || futureDatePanelForm.dateToInput.$error.rbDatepickerFormat" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
+                <div ng-show="futureDatePanelForm.dateToInput.$error.TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
+            </div>
         </div>
 
     </bd-radio-select>
