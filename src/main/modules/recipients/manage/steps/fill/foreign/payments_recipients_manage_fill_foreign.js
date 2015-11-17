@@ -3,7 +3,10 @@ angular.module('raiffeisen-payments')
         "SWIFT_OR_BIC": "SWIFT_OR_BIC",
         "NAME_AND_COUNTRY": "NAME_AND_COUNTRY"
     })
-    .controller('PaymentsRecipientsManageFillCurrencyController', function (swiftBicService, $q, $scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES) {
+    .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $scope, recipientGeneralService, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES) {
+
+
+
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
 
         $scope.recipient.meta.forbiddenAccounts = [];
@@ -12,9 +15,16 @@ angular.module('raiffeisen-payments')
         $scope.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
 
         // TODO: change to promise when you have properly working service
-        $scope.countries = swiftBicService.getCountries();
-        /** END MOCK DATA **/
+        $scope.countries = {
+            promise: recipientGeneralService.utils.getCountries(),
+            data: null
+        };
 
+        $scope.countries.promise.then(function(data){
+            $scope.countries.data = data;
+        }).catch(function(error){
+            $scope.countries.data = error;
+        });
 
         var recipientValidators = {
             tax: notTaxAccountGuard($scope.recipient.meta),
@@ -43,40 +53,16 @@ angular.module('raiffeisen-payments')
         // so we need to index each one
         $scope.currentSearchCode = 0;
 
-        // non debounced change
-        $scope.onSwiftCodeChangeNonDebounced = function() {
-            //$scope.recipient.formData
-            // TODO: when have all data, check if current select bank has the same code
-        };
-
-        // debounced change
-        $scope.onSwiftCodeChangeDebounced = function() {
-            var enteredCode = $scope.recipient.formData.recipientSwiftOrBic;
-
-            $scope.searchBankPromise = null;
-            $scope.recipient.formData.recipientBankName = null;
-            $scope.recipient.formData.bankCountry = null;
-
-            $scope.searchBankPromise = swiftBicService.search(enteredCode);
-
-            // because we want to consider response only from last request
-            // TODO: try to use asyncvalidators
-            $scope.searchBankPromise.then((
-                function(searchCode) {
-                    return function(response) {
-                        if ($scope.currentSearchCode == searchCode && response.length > 0) {
-                            $scope.recipient.formData.recipientBankName = response[0].NAME;
-                            $scope.remission.formData.bankCountry = response[0].COUNTRY; // TODO: search via code or something
-
-                            $scope.recipientForm.swift_bic.$setValidity('correctSwift', true);
-                        }
-                        else {
-                            $scope.recipientForm.swift_bic.$setValidity('correctSwift', false);
-                        }
-                    };
-                })(++$scope.currentRequestIndex)
-            );
-        };
+        $scope.$watch('recipient.formData.recipientSwiftOrBic', function(n,o){
+            if(n && !angular.equals(n, o)){
+                $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
+                    $scope.recipient.formData.recipientSwiftOrBic,
+                    recipientGeneralService.utils.getBankInformation.strategies.SWIFT
+                ).then(function(data){
+                    console.log(data);
+                });
+            }
+        });
 
         $scope.onSenderAccountSelect = function () {
             $scope.recipientForm.recipientAccountNo.$validate();
@@ -135,8 +121,6 @@ angular.module('raiffeisen-payments')
             }
         };
 
-
-
         $scope.recipientSelectParams = new rbAccountSelectParams({
             messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.domestic.fill.account_related.none_available'),
             useFirstByDefault: true,
@@ -152,17 +136,23 @@ angular.module('raiffeisen-payments')
             }
         });
 
-
-
         $scope.setRequestConverter(function (formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
 
             return {
                 shortName: copiedFormData.customName,
-                debitAccount: copiedFormData.remitterAccountId,
                 creditAccount: copiedFormData.recipientAccountNo,
                 beneficiary: copiedFormData.recipientData,
-                remarks: copiedFormData.description
+                remarks: copiedFormData.description,
+                swift_bic: "",
+                bankInformation: [
+                    copiedFormData.recipientBankName || null
+                ],
+                bankCountry: copiedFormData.recipientBankCountry.countryCode || null,
+                address: copiedFormData.recipientData,
+                beneficiaryCountry: copiedFormData.recipientCountry.countryCode,
+                debitAccount: copiedFormData.remitterAccountId,
+                informationProvider: copiedFormData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 'SWIFT' : 'MANUAL'
             };
         });
 

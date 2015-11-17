@@ -354,7 +354,9 @@
 
     "raiff.payments.recipients.new.currency.fill.custom_name.label": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.new.currency.fill.custom_name.placeholder": "Wpisz nazwę odbiorcy",
-
+    "raiff.payments.recipients.new.currency.fill.country.select.placeholder": "Wybierz kraj",
+    "raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder": "podaj SWIFT/BIC",
+    "raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label": "SWIFT/BIC banku",
     "raiff.payments.recipients.new.currency.fill.FIELD.RULE": "Rachunek odbiorcy nie może przekraczać 34 znaków i powinnien zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.remitterAccount.EMPTY": "Pole nie może być puste",
     "raiff.payments.recipients.new.currency.fill.customName.EMPTY": "Nazwa skrócona odbiorcy nie może być pusta",
@@ -442,14 +444,14 @@
     "raiff.payments.recipients.select.type.US": "US/IC",
     "raiff.payments.recipients.select.type.INSURANCE": "ZUS",
     "raiff.payments.recipients.select.type.TAX": "US/IC",
-    "raiff.payments.recipients.select.type.CURRENCY": "Walutowy",
+    "raiff.payments.recipients.select.type.FOREIGN": "Walutowy",
 
     "raiff.payments.recipients.new.type.select": "Typ odbiorcy",
     "raiff.payments.recipients.new.type.select.placeholder": "Wybierz typ odbiorcy",
     "raiff.payments.recipients.new.type.DOMESTIC": "Krajowy",
     "raiff.payments.recipients.new.type.ZUS": "ZUS",
     "raiff.payments.recipients.new.type.US": "US/IC",
-    "raiff.payments.recipients.new.type.CURRENCY": "Walutowy",
+    "raiff.payments.recipients.new.type.FOREIGN": "Walutowy",
     "raiff.payments.recipients.new.type.INSURANCE": "ZUS",
     "raiff.payments.recipients.new.type.TAX": "US/IC",
 
@@ -466,6 +468,7 @@
     "raiff.payments.recipients.new.currency.fill.bankName": "Nazwa banku",
     "raiff.payments.recipients.new.currency.fill.bankCountry": "Kraj banku",
     "raiff.payments.recipients.new.currency.fill.recipientCountry": "Kraj odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder": "Wybierz kraj",
     "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
     "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
     "raiff.payments.recipients.new.currency.fill.TODO": "TODO",

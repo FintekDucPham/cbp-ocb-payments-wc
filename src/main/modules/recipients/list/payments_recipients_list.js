@@ -118,7 +118,7 @@ angular.module('raiffeisen-payments')
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
-                                        case "CURRENCY":
+                                        case "FOREIGN":
                                             return {
                                                 transferTitle: template.title.join(" "),
                                                 recipientAddress: recipient.recipientAddress,
