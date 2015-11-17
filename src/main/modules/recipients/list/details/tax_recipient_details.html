@@ -22,7 +22,7 @@
     {{ $data.formSymbol }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.period_type'|translate}}">
+<bd-item-property class="eb-item-property--text" ng-if="$data.periodType !== undefined && $data.periodType !== null " label="{{::'raiff.payments.recipients.details.us.period_type'|translate}}">
     {{ ::'raiff.payments.us.period_type.' + $data.periodType | translate }}
 </bd-item-property>
 

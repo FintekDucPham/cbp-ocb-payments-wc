@@ -7,6 +7,7 @@
                            rb-product-list-name="TRANSFER_US_FROM_LIST"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-on-account-select="onRemitterAccountSelect()"
+                           rb-account-no="payment.items.recipient.debitNrb"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -21,6 +22,7 @@
                 rb-tax-recipient-id="payment.formData.templateId"
                 rb-tax-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
+                rb-tax-recipient-list="payment.items.recipientList"
                 rb-on-select-recipient="selectRecipient($recipient)"
                 rb-recipient-clear-text="{{ ::'raiff.payments.new.us.fill.recipient_select.clear' | translate }}"
                 rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.recipient_select.placeholder' | translate }}"></rb-tax-recipient-select>
@@ -70,8 +72,7 @@
                   ng-model="payment.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData"
                   required
-                  bd-split-text
-                  bd-split-text-length="132"
+                  split-text-max-length-validators="140"
                   ng-disabled="payment.options.isFromTaxpayer"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
@@ -83,7 +84,7 @@
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
-            <div eb-message-key="splitTextLength" class="validation-message animate-on">
+            <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
         </eb-validation-messages>
@@ -283,8 +284,7 @@
                       label="{{ ::'raiff.payments.new.us.fill.amount' | translate }}">
         <div class="bd-item-property--multi__values">
             <div class="bd-item-property__value--primary">
-                <input type="number"
-                       lang="PL"
+                <input type="text"
                        name="amount"
                        class="input-field"
                        ng-model="payment.formData.amount"
@@ -340,6 +340,10 @@
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="limitExeeded !== undefined && limitExeeded.show">
             {{limitExeeded.messages}}
+        </div>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="limitNonResExeeded !== undefined && limitNonResExeeded.show">
+            {{limitNonResExeeded.messages}}
         </div>
     </bd-item-property>
 

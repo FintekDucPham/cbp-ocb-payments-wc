@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
         },
         'R': {}
     })
-    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams) {
+    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents) {
 
         angular.extend($scope.payment.formData, {
             idType: "NIP"
@@ -28,6 +28,30 @@ angular.module('raiffeisen-payments')
                 return name;
             })),
             usPeriodTypes: usPeriodTypes
+        });
+
+         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            var recipient = lodash.find($scope.payment.items.recipientList, {
+                 nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+             });
+             if(angular.isDefined(recipient) && recipient !== null){
+                 $scope.payment.formData.hideSaveRecipientButton = true;
+             }
+         });
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
+                secondaryIdType:  $scope.payment.formData.idType,
+                idNumber: $scope.payment.formData.idNumber,
+                formCode: $scope.payment.formData.formCode,
+                periodType: $scope.payment.formData.periodType,
+                obligationId: $scope.payment.formData.obligationId
+            });
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData;
+            });
         });
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
@@ -87,6 +111,7 @@ angular.module('raiffeisen-payments')
                 formData.idType = recipient.secondaryIdType;
                 formData.idNumber = recipient.secondaryId;
                 formData.formCode = recipient.formCode;
+                $scope.payment.items.recipient = recipient;
                 var periodTypeCode = formData.periodType = recipient.periodType;
                 $scope.payment.options.customPeriod = !usPeriodTypes[periodTypeCode].values;
                 $scope.payment.items.recipientAccount = {
@@ -114,7 +139,7 @@ angular.module('raiffeisen-payments')
             var formData = $scope.payment.formData;
             formData.idType = taxpayer.secondaryIdType;
             formData.idNumber = taxpayer.secondaryId;
-            formData.taxpayerData = taxpayer.data;
+            formData.taxpayerData = taxpayer.data.join('');
             $scope.payment.options.isFromTaxpayer = true;
         };
 
@@ -161,8 +186,9 @@ angular.module('raiffeisen-payments')
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             var recipient = $scope.payment.items.recipientAccount;
+            formData.taxpayerData = splitTextEveryNSign(formData.taxpayerData);
             return angular.extend(copiedFormData, {
-                recipientName: recipient.officeName,
+                recipientName: splitTextEveryNSign("Urzad skarbowy superowy"),//recipient.officeName),
                 recipientAccountNo: recipient.accountNo
             });
         });
@@ -175,7 +201,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.currency = 'PLN';
         });
 
-        $scope.setRecipientDataExtractor(function() {
+        /*$scope.setRecipientDataExtractor(function() {
 
             return {
                 customName: "Nowy odbiorca",
@@ -187,6 +213,15 @@ angular.module('raiffeisen-payments')
                 periodType: $scope.payment.formData.periodType
             };
 
-        });
+        });*/
 
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
     });

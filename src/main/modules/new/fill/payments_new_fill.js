@@ -7,11 +7,22 @@ angular.module('raiffeisen-payments')
             params: {
                 accountId: null,
                 recipientId: null,
-                taxpayerId: null
+                taxpayerId: null,
+                nrb: null
             }
         });
     })
     .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
+
+        if($stateParams.nrb) {
+            $scope.remote = {
+                model: {
+                    onAccountsLoaded: function (remoteObject) {
+                        remoteObject.setSelectedNrb($stateParams.nrb);
+                    }
+                }
+            };
+        }
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -32,6 +43,8 @@ angular.module('raiffeisen-payments')
                 formService.clearForm($scope.paymentForm);
             }
         });
+
+
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
@@ -69,6 +82,9 @@ angular.module('raiffeisen-payments')
         };
 
         var requestConverter = function (formData) {
+            formData.amount = (""+formData.amount).replace(",", ".");
+            formData.recipientName = splitTextEveryNSign(formData.recipientName);
+            formData.description = splitTextEveryNSign(formData.description);
             return formData;
         };
 
@@ -79,6 +95,36 @@ angular.module('raiffeisen-payments')
             }
         };
 
+
+        function isCurrentDateSelected() {
+            return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
+        }
+
+        function isAmountOverBalance() {
+            return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
+        }
+
+        function isZUSAmountOverBalance() {
+            return   $scope.payment.meta.amountSummary[0].amount > $scope.payment.meta.convertedAssets;
+        }
+
+        function validateBalance() {
+            if($scope.payment.type.code!='INSURANCE'){
+                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+            }
+        }
+
+        $scope.$watch('payment.formData.amount',function(newVal){
+            validateBalance();
+        });
+
+        $scope.$watch('payment.formData.realizationDate',function(newVal){
+            validateBalance();
+        });
+
+
+
+
         setRealizationDateToCurrent();
 
         $scope.setRequestConverter = function (converterFn) {
@@ -86,6 +132,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.validationErrors = [];
             var form = $scope.paymentForm;
             $scope.limitExeeded = {
                 show: false
@@ -102,13 +149,20 @@ angular.module('raiffeisen-payments')
                     actions.proceed();
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
-                        for(var i=0; i<=errorReason.errors.length; i++){
+                        for(var i=0; i<errorReason.errors.length; i++){
                             var currentError = errorReason.errors[i];
                             if(currentError.field == 'raiff.transfer.limit.exceeed'){
                                 $scope.limitExeeded = {
                                     show: true,
                                     messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
                                 };
+                            }else if(currentError.field == 'raiff.transfer.limit.nonres'){
+                                $scope.limitNonResExeeded = {
+                                    show: true,
+                                    messages: translate.property("raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
+                                };
+                            }else{
+                                $scope.validationErrors[currentError.field] = translate.property('raiff.payments.new.error.'+currentError.codes[2]);
                             }
                         }
                     }
@@ -135,4 +189,13 @@ angular.module('raiffeisen-payments')
             $scope.payment.meta.customerContext = data.customerDetails.context;
         });
 
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
     });

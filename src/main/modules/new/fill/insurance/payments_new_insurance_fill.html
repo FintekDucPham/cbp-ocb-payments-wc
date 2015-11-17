@@ -7,6 +7,8 @@
                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                            rb-product-list-name="TRANSFER_ZUS_FROM_LIST"
                            rb-account-select-params="remitterAccountSelectParams"
+                           rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                           rb-account-no="payment.items.recipient.debitNrb"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -21,6 +23,7 @@
                 rb-zus-recipient-id="payment.formData.templateId"
                 rb-zus-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
+                rb-zus-recipient-list="payment.items.recipientList"
                 rb-on-select-recipient="selectRecipient($recipient)"
                 rb-recipient-clear-text="{{ ::'raiff.payments.new.zus.fill.recipient_select.clear' | translate }}"
                 rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.recipient_select.placeholder' | translate }}"></rb-insurance-recipient-select>
@@ -247,8 +250,7 @@
                             <input ng-model="payment.formData.insurancePremiums[insuranceType].amount"
                                    ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
                                    ng-init="bindInsuranceAccount(insuranceType)"
-                                   type="number"
-                                   lang="PL"
+                                   type="text"
                                    class="input-field"
                                    min="0.01"
                                    bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceType] }}"
@@ -282,6 +284,9 @@
                         <div eb-message-key="ngMin" class="validation-message animate-on">
                             {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
                         </div>
+                        <div eb-message-key="min" class="validation-message animate-on">
+                            {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
+                        </div>
                         <div eb-message-key="balance" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
                         </div>
@@ -303,6 +308,10 @@
             <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
                  ng-if="limitExeeded !== undefined && limitExeeded.show">
                 {{limitExeeded.messages}}
+            </div>
+            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+                 ng-if="limitNonResExeeded !== undefined && limitNonResExeeded.show">
+                {{limitNonResExeeded.messages}}
             </div>
         </bd-item-property>
 

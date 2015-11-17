@@ -10,6 +10,7 @@ angular.module('raiffeisen-payments')
 
         $scope.payment.token.params.resourceId = null;
 
+
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -35,9 +36,14 @@ angular.module('raiffeisen-payments')
                 if (parts[0] !== 'OK' && !parts[1]) {
                     $scope.payment.result.code = 'error';
                 }
+                if($scope.payment.formData.hideSaveRecipientButton){
+                    delete $scope.payment.rbPaymentsStepParams.labels.finalAction;
+                }
                 $scope.payment.result.token_error = false;
                 $scope.payment.formData = {};
                 $scope.payment.items = {};
+                $scope.payment.options = {};
+
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
