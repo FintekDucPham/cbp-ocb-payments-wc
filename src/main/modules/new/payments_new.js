@@ -37,14 +37,21 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             type: lodash.find(rbPaymentTypes, {
                 state: $stateParams.paymentType || 'domestic'
             }),
-            formData: {},
+            formData: {
+                hideSaveRecipientButton: false
+            },
+            token: {
+                model: null,
+                params: {}
+            },
             options: {
                 fixedAccountSelection: false,
                 fixedRecipientSelection: false
@@ -59,7 +66,7 @@ angular.module('raiffeisen-payments')
             formData: $stateParams.payment
         });
 
-        $scope.clearForm = function () {
+        $scope.clearForm = function() {
             $scope.payment.formData = {};
             $scope.payment.items = {};
             $scope.$broadcast('clearForm');
@@ -97,4 +104,15 @@ angular.module('raiffeisen-payments')
             }
         };
 
+
+        $scope.payment.rbPaymentsStepParams = {
+            completeState: 'payments.recipients.list',
+            finalAction: $scope.saveRecipient,
+            onClear: $scope.clearForm,
+            cancelState: 'payments.recipients.list',
+            labels : {
+                finalize: 'raiff.payments.new.btn.finalize',
+                finalAction: 'raiff.payments.new.btn.final_action'
+            }
+        };
     });

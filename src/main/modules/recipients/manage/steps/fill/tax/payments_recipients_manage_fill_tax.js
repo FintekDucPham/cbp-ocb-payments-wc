@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillUsController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, usSupplementaryIds, usPeriodTypes, translate) {
+    .controller('RecipientsManageFillUsController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, usSupplementaryIds, usPeriodTypes, translate, validationRegexp) {
 
         angular.extend($scope.recipient.meta, {
             usSupplementaryIds: usSupplementaryIds,
@@ -8,6 +8,8 @@ angular.module('raiffeisen-payments')
             })),
             usPeriodTypes: usPeriodTypes
         });
+
+        $scope.COMMITMENT_ID_REGEX = validationRegexp('TAX_COMMITMENT_ID_REGEX');
 
         $scope.selectSymbol = function() {
             delete $scope.recipient.formData.periodType;

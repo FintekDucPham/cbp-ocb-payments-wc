@@ -38,10 +38,6 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        angular.extend($scope.payment.formData, {
-            realizationDate: new Date()
-        }, lodash.omit($scope.payment.formData, lodash.isUndefined));
-
         angular.extend($scope.payment.meta, {
             recipientForbiddenAccounts: []
         });
@@ -57,13 +53,13 @@ angular.module('raiffeisen-payments')
 
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
-        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
         var requestConverter = function (formData) {
+            formData.description = splitTextEveryNSign(formData.description);
             return formData;
         };
 
@@ -71,8 +67,47 @@ angular.module('raiffeisen-payments')
             requestConverter = converterFn;
         };
 
+        var setRealizationDateToCurrent = function () {
+            angular.extend($scope.payment.formData, {
+                realizationDate: new Date()
+            }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+        };
+
+        var resetRealizationOnBlockedInput = function () {
+            if(!$scope.payment.meta.isFuturePaymentAllowed || $scope.payment.meta.dateSetByCategory) {
+                delete $scope.payment.formData.realizationDate;
+                setRealizationDateToCurrent(true);
+            }
+        };
+
+        function validateBalance() {
+                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+        }
+
+        function isCurrentDateSelected() {
+            return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
+        }
+
+        function isAmountOverBalance() {
+            return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
+        }
+
+
+        $scope.$watch('payment.formData.amount',function(newVal){
+            validateBalance();
+        });
+
+        $scope.$watch('payment.formData.realizationDate',function(newVal){
+            validateBalance();
+        });
+
+        setRealizationDateToCurrent();
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.paymentForm;
+            $scope.limitExeeded = {
+                show: false
+            };
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
@@ -82,6 +117,18 @@ angular.module('raiffeisen-payments')
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     actions.proceed();
+                }).catch(function(errorReason){
+                    if(errorReason.subType == 'validation'){
+                        for(var i=0; i<=errorReason.errors.length; i++){
+                            var currentError = errorReason.errors[i];
+                            if(currentError.field == 'raiff.transfer.limit.exceeed'){
+                                $scope.limitExeeded = {
+                                    show: true,
+                                    messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                                };
+                            }
+                        }
+                    }
                 });
             }
         });
@@ -89,11 +136,14 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account) {
                 $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
-                var lockDateAccountCategories = $scope.payment.meta.customerContext === 'DETAL' ? [1101, 3000, 3013] : [1101, 3008, 3013];
+                $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ? false : true;
+                var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
             }
+            resetRealizationOnBlockedInput();
+            validateBalance();
         });
 
         exchangeRates.search().then(function(currencies) {
@@ -183,4 +233,12 @@ angular.module('raiffeisen-payments')
             recalculateCurrencies();
         }, true);
 
+
+        function splitTextEveryNSign(text, lineLength){
+            text = text.replace(/(\n)+/g, '');
+            var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+            return lodash.filter(text.split(regexp), function(val) {
+                return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+            });
+        }
     });

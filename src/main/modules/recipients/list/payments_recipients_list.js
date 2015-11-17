@@ -24,6 +24,10 @@ angular.module('raiffeisen-payments')
             });
         };
 
+        $scope.searchRecipient = function(){
+            $scope.table.tableData.newSearch = true;
+            $scope.table.tableControl.invalidate();
+        };
         var recipientFilterType = angular.extend({}, rbRecipientTypes, {
             ALL : {
                 code: 'ALL'
@@ -94,8 +98,13 @@ angular.module('raiffeisen-payments')
                             queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
                         };
 
-                        params.pageSize = $params.pageSize;
-                        params.pageNumber = $params.currentPage;
+                        if($scope.table.tableData.newSearch){
+                            params.pageNumber = 1;
+                            $scope.table.tableData.newSearch = false;
+                        }else{
+                            params.pageSize = $params.pageSize;
+                            params.pageNumber = $params.currentPage;
+                        }
 
                         if($scope.types.currentType !== recipientFilterType.ALL){
                             params.filerTemplateType = $scope.types.currentType.code;

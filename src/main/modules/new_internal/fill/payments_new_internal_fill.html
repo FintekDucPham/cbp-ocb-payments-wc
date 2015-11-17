@@ -47,7 +47,9 @@
             <div class="bd-item-property--multi__values">
                 <div class="bd-item-property__value--primary">
                     <input type="number"
+                           lang="PL"
                            name="amount"
+                           lang="PL"
                            class="input-field"
                            min="0.01"
                            step="0.01"
@@ -72,20 +74,17 @@
                 </div>
             </div>
 
-            <eb-validation-messages eb-name="transfer">
-                <div eb-message-key="amount" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
-                </div>
-            </eb-validation-messages>
-
             <eb-validation-messages eb-name="amount">
                 <div eb-message-key="number" class="validation-message animate-on">
+                    {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
                 <div eb-message-key="min" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
-                <div eb-message-key="pattern" class="validation-message animate-on">
+                <div eb-message-key="amount" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
                 <div eb-message-key="required" class="validation-message animate-on">
@@ -95,7 +94,10 @@
                     {{ 'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
                 </div>
             </eb-validation-messages>
-
+            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+                 ng-if="limitExeeded !== undefined && limitExeeded.show">
+                {{limitExeeded.messages}}
+            </div>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
@@ -103,8 +105,7 @@
     <textarea name="description"
               ng-model="payment.formData.description"
               ng-pattern="PAYMENT_DESCRIPTION_REGEX"
-              bd-split-text
-              bd-split-text-length="132"
+              split-text-max-length-validators="140"
               required
               class="input-area input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
@@ -116,7 +117,7 @@
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
-                <div eb-message-key="splitTextLength" class="validation-message animate-on">
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
             </eb-validation-messages>

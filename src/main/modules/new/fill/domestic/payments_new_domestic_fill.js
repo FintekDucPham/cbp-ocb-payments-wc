@@ -7,8 +7,8 @@ angular.module('raiffeisen-payments')
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
             $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
-            $scope.payment.formData.recipientName = recipient.data;
-            $scope.payment.formData.description = recipient.title;
+            $scope.payment.formData.recipientName = recipient.data.join('');
+            $scope.payment.formData.description = recipient.title.join('');
         };
 
         $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
@@ -58,6 +58,8 @@ angular.module('raiffeisen-payments')
 
         }
 
+
+
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {
                 updateRecipientsList();
@@ -77,6 +79,7 @@ angular.module('raiffeisen-payments')
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
             updateRecipientsList();
+            validateBalance();
             recipientFilter.filter();
         };
 
@@ -85,7 +88,27 @@ angular.module('raiffeisen-payments')
             $timeout(recalculateCurrency);
         });
 
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
+                recipientData: $scope.payment.formData.recipientName,
+                description: $scope.payment.formData.description
+            });
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData;
+            });
+        });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            var recipient = lodash.find($scope.payment.items.recipientList, {
+                templateType: 'DOMESTIC',
+                accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+            });
+            if(angular.isDefined(recipient) && recipient !== null){
+                $scope.payment.formData.hideSaveRecipientButton = true;
+            }
+
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
                 taxOffices.search({
@@ -143,15 +166,4 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
-
-        $scope.setRecipientDataExtractor(function() {
-            return {
-                customName: "Nowy odbiorca",
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
-                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
-                recipientData: $scope.payment.formData.recipientName,
-                description: $scope.payment.formData.description
-            };
-        });
-
     });

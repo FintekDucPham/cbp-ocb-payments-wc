@@ -30,9 +30,14 @@ angular.module('raiffeisen-payments')
             formData: {},
             transferId: {},
             options: {},
+            token: {
+                model: {},
+                params: {}
+            },
             meta: {
                 recipientTypes: lodash.map(rbRecipientTypes)
-            }
+            },
+            manageAction: ""
         });
 
         $scope.getAccountByNrb = function (accountList, selectFn) {
@@ -101,8 +106,8 @@ angular.module('raiffeisen-payments')
             domestic: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
-                        recipientData: recipient.recipientAddress,
-                        description: recipient.transferTitleTable
+                        recipientData: recipient.recipientAddress.join(""),
+                        description: recipient.transferTitleTable.join("")
                     }
                 }, recipient);
             },

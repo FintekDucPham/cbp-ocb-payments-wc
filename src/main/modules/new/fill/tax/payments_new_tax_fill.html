@@ -6,6 +6,8 @@
                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                            rb-product-list-name="TRANSFER_US_FROM_LIST"
                            rb-account-select-params="remitterAccountSelectParams"
+                           rb-on-account-select="onRemitterAccountSelect()"
+                           rb-account-no="payment.items.recipient.debitNrb"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -20,6 +22,7 @@
                 rb-tax-recipient-id="payment.formData.templateId"
                 rb-tax-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
+                rb-tax-recipient-list="payment.items.recipientList"
                 rb-on-select-recipient="selectRecipient($recipient)"
                 rb-recipient-clear-text="{{ ::'raiff.payments.new.us.fill.recipient_select.clear' | translate }}"
                 rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.recipient_select.placeholder' | translate }}"></rb-tax-recipient-select>
@@ -36,6 +39,7 @@
             <rb-tax-account-select rb-tax-office="payment.items.recipientAccount"
                                    rb-tax-office-id="payment.formData.recipientAccountNo"
                                    rb-on-tax-account-select="selectTaxAccount($office)"
+                                   rb-forbidden-accounts="payment.meta.taxForbiddenAccounts"
                                    rb-tax-office-params="{ searchText: 'raiff.payments.new.us.fill.recipient_account.search', clearText: 'raiff.payments.new.us.fill.recipient_account.clear' }">
 
             </rb-tax-account-select>
@@ -49,6 +53,9 @@
                 </div>
                 <div eb-message-key="usNotFound" class="validation-message animate-on">
                     {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                </div>
+                <div eb-message-key="notZus" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_ZUS'|translate}}
                 </div>
                 <div eb-message-key="notFromList" class="validation-message animate-on">
                     {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
@@ -65,8 +72,7 @@
                   ng-model="payment.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData"
                   required
-                  bd-split-text
-                  bd-split-text-length="132"
+                  split-text-max-length-validators="140"
                   ng-disabled="payment.options.isFromTaxpayer"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_data.placeholder' | translate }}"></textarea>
@@ -78,7 +84,7 @@
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
-            <div eb-message-key="splitTextLength" class="validation-message animate-on">
+            <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
         </eb-validation-messages>
@@ -99,6 +105,7 @@
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type' | translate }}">
         <ui-select ng-model="payment.formData.idType"
                    theme="bootstrap"
+                   ng-change="onIdTypeChange($select.selected)"
                    ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                    placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>
@@ -197,7 +204,7 @@
                    ng-model="payment.formData.periodNo"
                    required
                    ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
-                   bd-novalidate-when="{{ payment.formData.periodType==='R' }}"
+                   bd-novalidate-when="{{ payment.formData.periodType==='R' || !payment.items.formSymbol.periodRequired }}"
                    ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
                    class="input-field"
                    type="text"
@@ -210,6 +217,7 @@
                     ng-model="payment.formData.periodNo"
                     theme="bootstrap"
                     placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}"
+                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                     ng-required="true">
                 <ui-select-match>
                     {{ $select.selected}}
@@ -277,10 +285,12 @@
         <div class="bd-item-property--multi__values">
             <div class="bd-item-property__value--primary">
                 <input type="number"
+                       lang="PL"
                        name="amount"
                        class="input-field"
                        ng-model="payment.formData.amount"
                        min="0.01"
+                       step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                        required
@@ -306,13 +316,16 @@
             <div eb-message-key="number" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
             </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+            </div>
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
             <div eb-message-key="min" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="pattern" class="validation-message animate-on">
+            <div eb-message-key="amount" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
             <div eb-message-key="balance" class="validation-message animate-on">
@@ -325,7 +338,14 @@
                 {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
             </div>
         </eb-validation-messages>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="limitExeeded !== undefined && limitExeeded.show">
+            {{limitExeeded.messages}}
+        </div>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="limitNonResExeeded !== undefined && limitNonResExeeded.show">
+            {{limitNonResExeeded.messages}}
+        </div>
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.execution_date' | translate }}">
