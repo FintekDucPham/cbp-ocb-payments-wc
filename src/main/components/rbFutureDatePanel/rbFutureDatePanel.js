@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
             initialValues: {
                 selectedMode: FUTURE_DATE_TYPES.PERIOD,  // range or next 5 days
                 dateFrom: new Date(),
-                dateTo: new Date(),
+                dateTo: new Date()
             },
             // how many month upward we can search
             maxOffsetInMonths: 10
@@ -61,9 +61,10 @@ angular.module('raiffeisen-payments')
             },
             controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, translate) {
                 // max date, based on now and business parameter
-                var now     = new Date();
-                var maxDate;
-                var options = rbFutureDateRangeParams($scope.options);
+                var now     = new Date(),
+                    maxDate,
+                    minDate = now,
+                    options = rbFutureDateRangeParams($scope.options);
 
                 var commitDateRange = function(fromDate, toDate) {
                     $scope.dateRange.fromDate = fromDate;
@@ -132,6 +133,7 @@ angular.module('raiffeisen-payments')
                         $scope.futureDatePanelForm.period.$setValidity("INCORRECT_END_DATE", tmp.getTime() <= maxDate.getTime());
                     }
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
+                        // TODO: all range validitons set to true
                         $scope.futureDatePanelForm.period.$setValidity("period", true);
                     }
                 };
@@ -147,7 +149,16 @@ angular.module('raiffeisen-payments')
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
                         dateFrom = $scope.inputData.dateFrom;
                         dateTo   = $scope.inputData.dateTo;
-                        // TODO: walidacja zgodnie z regulami gry
+                        /*
+                         $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', true);
+                         $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
+                         $scope.futureDatePanelForm.dateToInput.$setValidity('maxValue', true);
+                         $scope.futureDatePanelForm.dateToInput.$setValidity('minValue', true);
+                         */
+
+                        $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', dateFrom.getTime() < minDate.getTime());
+                        $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
+
                     }
                 };
 
