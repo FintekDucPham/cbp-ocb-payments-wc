@@ -35,7 +35,7 @@
                 <div class="row-line">
                     <div class="row-line__cell">
                         <bd-item-property label="{{::'raiff.payments.recipients.select.filter.text.label' | translate}}">
-                            <input bd-type="text" ng-model="table.operationTitle" name="contentText" style="width: 100%; height: 34px;"/>
+                            <input bd-type="text" ng-model="table.operationTitle" class="input-field" name="contentText" style="width: 100%; height: 34px;"/>
                         </bd-item-property>
                     </div>
                     <div class="row-line__cell row-line__cell--right-button">
@@ -56,7 +56,6 @@
             <bd-details-section bd-table-row-details>
 
                 <div ng-include="::resolveTemplateType($data.recipientType)"></div>
-
                 <bd-details-action-section>
 
                     <div class="bd-grid">

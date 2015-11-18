@@ -111,6 +111,18 @@ angular.module('raiffeisen-payments')
                     }
                 }, recipient);
             },
+            foreign: function (recipient) {
+                return wrapWithCommonData({
+                    formData: {
+                        recipientData: recipient.recipientAddress,
+                        description: recipient.transferTitleTable,
+                        recipientIdentityType: recipient.recipientIdentityType,
+                        recipientBankName: recipient.bankData,
+                        recipientBankCountry: recipient.recipientBankCountry,
+                        recipientCountry: recipient.recipientCountry
+                    }
+                }, recipient);
+            },
             insurance: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
