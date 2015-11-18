@@ -32,7 +32,6 @@ angular.module('raiffeisen-payments')
 
                             result.dateTo.setDate(result.dateTo.getDate() + result.offset);
 
-                            Math.random();
                             //result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
                         }
                         // if (result.context == 'MICRO') {
@@ -46,8 +45,6 @@ angular.module('raiffeisen-payments')
                             result.period   = result.offset;
 
                             result.dateTo = new Date(result.dateFrom.getFullYear(), result.dateFrom.getMonth()+1, 0);
-
-                            Math.random();
                         }
 
                         return result;
@@ -61,12 +58,10 @@ angular.module('raiffeisen-payments')
         $scope.dateRange = {};
 
 
-
         $scope.options = {
             "futureDatePanelConfig": parameters
         };
 
-        Math.random();
         function goToOperation(operationType, data, operationStep) {
             console.log("%c goToOperation: ", "color: red; font-weight: bold; font-size: 18px");
             // TODO: goToOperation zaimplementowac

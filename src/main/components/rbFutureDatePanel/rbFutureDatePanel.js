@@ -33,20 +33,6 @@ angular.module('raiffeisen-payments')
         };
     })
 
-    /*.directive('maxFutureDate', function() {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            scope: {
-                minFutureDate: '='
-            },
-            link: function($scope, $element, $attrs, $controller, $transcludeFn) {
-                $controller.$validators.maxFutureDate = function(modelValue, viewValue) {
-                    return Math.random() > 0.5;
-                }
-            }
-        }
-    })*/
     .directive('rbFutureDatePanel', function(pathService, lodash) {
         return {
             restrict: 'E',
@@ -54,7 +40,7 @@ angular.module('raiffeisen-payments')
             scope: {
                 "dateRange": "=",
                 "options": "=",
-                "onChange": "=?"
+                "onChange": "&?"
             },
             link: function($scope, $element, $attrs, $controller, $transcludeFn) {
 
@@ -69,6 +55,10 @@ angular.module('raiffeisen-payments')
                 var commitDateRange = function(fromDate, toDate) {
                     $scope.dateRange.fromDate = fromDate;
                     $scope.dateRange.toDate   = toDate;
+
+                    if ($scope.futureDatePanelForm.$valid && $scope.onChange) {
+                        $scope.onChange();
+                    }
                 };
 
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;
@@ -116,9 +106,6 @@ angular.module('raiffeisen-payments')
                     return periodDate;
                 };
 
-                var calculateCurrentRangeDate = function() {
-
-                };
 
 
                 var validatePeriod = function() {
@@ -134,6 +121,10 @@ angular.module('raiffeisen-payments')
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
                         // TODO: all range validitons set to true
                         $scope.futureDatePanelForm.period.$setValidity("period", true);
+                    }
+
+                    if ($scope.futureDatePanelForm.$valid) {
+                        commitDateRange();
                     }
                 };
 
@@ -154,21 +145,21 @@ angular.module('raiffeisen-payments')
 
                         if (dateFrom && dateTo) {
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', dateFrom.getTime() <= dateTo.getTime());
-                            Math.random();
                         }
                         else {
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', true);
-                            Math.random();
                         }
 
                         if (dateTo) {
                             $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', dateTo.getTime() <= maxDate.getTime());
-                            Math.random();
                         }
                         else {
                             $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', true);
-                            Math.random();
                         }
+                    }
+
+                    if ($scope.futureDatePanelForm.$valid) {
+                        commitDateRange();
                     }
                 };
 
