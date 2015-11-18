@@ -111,12 +111,15 @@ angular.module('raiffeisen-payments')
                     }
                 }, recipient);
             },
-            currency: function (recipient) {
-                // TODO: sprawdzic czy to smiga i czy jest wykorzystywane faktycznie
+            foreign: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
                         recipientData: recipient.recipientAddress,
-                        description: recipient.transferTitleTable
+                        description: recipient.transferTitleTable,
+                        recipientIdentityType: recipient.recipientIdentityType,
+                        recipientBankName: recipient.bankData,
+                        recipientBankCountry: recipient.recipientBankCountry,
+                        recipientCountry: recipient.recipientCountry
                     }
                 }, recipient);
             },

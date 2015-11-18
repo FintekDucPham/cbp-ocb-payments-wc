@@ -3,9 +3,20 @@ angular.module('raiffeisen-payments')
         "SWIFT_OR_BIC": "SWIFT_OR_BIC",
         "NAME_AND_COUNTRY": "NAME_AND_COUNTRY"
     })
-    .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $scope, recipientGeneralService, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES) {
+    .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $timeout, $scope, recipientGeneralService, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents) {
 
+        $scope.onInited= function(){
+            if($scope.recipient && $scope.recipient.formData && $scope.recipient.formData.recipientIdentityType){
 
+                if($scope.recipient.formData.recipientIdentityType==='MANUAL'){
+                    $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
+                }else if($scope.recipient.formData.recipientIdentityType==='SWIFT'){
+                    $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                }
+                $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
+
+            }
+        };
 
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
 
@@ -21,7 +32,24 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.countries.promise.then(function(data){
+
+            if($scope.recipient.formData.recipientBankCountry){
+                angular.forEach(data.content, function(country){
+                    if($scope.recipient.formData.recipientBankCountry===country.countryCode){
+                        $scope.recipient.formData.recipientBankCountry=angular.copy(country);
+                    }
+                });
+            }
+            if($scope.recipient.formData.recipientCountry){
+                angular.forEach(data.content, function(country){
+                    if($scope.recipient.formData.recipientCountry===country.countryCode){
+                        $scope.recipient.formData.recipientCountry=angular.copy(country);
+                    }
+                });
+            }
+
             $scope.countries.data = data;
+
         }).catch(function(error){
             $scope.countries.data = error;
         });
@@ -75,17 +103,11 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            //Math.random();
-            //if($scope.recipientForm.recipientAccountNo.$valid) {
-            //    control.holdOn();
-            //    var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
-            //    recipientValidators.insurance.validate(recipientAccountNo, function() {
-            //        recipientValidators.tax.validate(recipientAccountNo, function() {
-            //            $scope.recipientForm.recipientAccountNo.$validate();
-            //            control.done();
-            //        });
-            //    });
-            //}
+
+            if($scope.recipientForm.recipientAccountNo.$valid) {
+                control.holdOn();
+                control.done();
+            }
         });
 
         $scope.recipientAccountNrValidators = {
@@ -145,9 +167,7 @@ angular.module('raiffeisen-payments')
                 beneficiary: copiedFormData.recipientData,
                 remarks: copiedFormData.description,
                 swift_bic: "",
-                bankInformation: [
-                    copiedFormData.recipientBankName || null
-                ],
+                bankInformation: copiedFormData.recipientBankName,
                 bankCountry: copiedFormData.recipientBankCountry.countryCode || null,
                 address: copiedFormData.recipientData,
                 beneficiaryCountry: copiedFormData.recipientCountry.countryCode,
