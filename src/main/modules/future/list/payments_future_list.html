@@ -1,15 +1,12 @@
 <rb-content-view class="rb-content-view--solid">
+
     <bd-header>{{::"raiff.payments.future.list.header"|translate}}</bd-header>
 
-    <form novalidate name="filterForm" ng-submit="search(filterForm)">
 
-        <rb-time-range-panel rb-time-range="table.tableConfig.timeRange">
-
-        </rb-time-range-panel>
-
-        <bd-button class="bd-button__primary" type="submit">{{ ::'raiff.payments.future.list.search_btn' | translate }}</bd-button>
-
-    </form>
+    <rb-future-date-panel
+            date-range="dateRange.range"
+            options="options.futureDatePanelConfig"
+            ></rb-future-date-panel>
 
     <bd-table bd-type="typeV"
               bd-table-params="table.tableConfig"

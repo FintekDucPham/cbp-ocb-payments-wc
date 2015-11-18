@@ -706,7 +706,40 @@
     "raiff.payments.future.list.header.amount": "Kwota",
     "raiff.payments.future.list.empty": "Brak zaplanowanych płatności",
 
-    "EOF" : "",
+
+    "raiff.payments.components.futureDatePanel.dateRanges.DAYS": "dni",
+    "raiff.payments.components.futureDatePanel.dateRanges.WEEKS": "tygodni",
+    "raiff.payments.components.futureDatePanel.dateRanges.MONTHS": "miesięcy",
+
+    "raiff.payments.components.futureDatePanel.dateTypes.PERIOD": "Najbliższe",
+    "raiff.payments.components.futureDatePanel.dateTypes.RANGE": "Okres",
+
+
+    "raiff.payments.components.futureDatePanel.labels.from": "od",
+    "raiff.payments.components.futureDatePanel.labels.to": "do",
+    "raiff.payments.components.futureDatePanel.labels.search": "Szukaj",
+
+
+    "raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_DAYS": "Musisz wprowadzić liczbę najbliższych dni",
+    "raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_WEEKS": "Musisz wprowadzić liczbę najbliższych tygodni",
+    "raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Musisz wprowadzić liczbę najbliższych miesięcy",
+
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_DAYS": "Nieprawidłowa liczba najbliższych dni",
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_WEEKS": "Nieprawidłowa liczba najbliższych miesięcy",
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_MONTHS": "Nieprawidłowa liczba najbliższych tygodni",
+
+
+    "raiff.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE": "Musisz wprowadzić datę początkową okresu wyszukiwania",
+    "raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE": "Musisz wprowadzić datę końcową okresu wyszukiwania",
+
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE": "Nieprawidłowa data początkowa okresu wyszukiwania",
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE": "Nieprawidłowa data końcowa okresu wyszukiwania",
+
+    "raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE": "Data końcowa okresu wyszukiwania jest późniejsza niż ##MONTHS## miesięcy w przód. Można wyszukiwać tylko operacje zaplanowane na najbliższe ##MONTHS## miesięcy.",
+    "raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
+
+    "raiff.payments.components.futureDatePanel.validation.AMNT_EXCEEDED_MODIFY_NON_RESID": "Modyfikacja danych tego przelewu w internecie nie jest możliwa ze względu na wymogi sprawozdawcze Banku wobec NBP (płatność z rachunku  nierezydenta). Aby zmodyfikować ten przelew, skontaktuj się z Operatorem Centrum Telefonicznego lub doradcą bankowym w Oddziale Banku.",
+
 
     "raiff.MSG-0567_EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.MSG-0561_INCORRECT_DEBIT_ACC": "Wybrano nieprawidłowy rachunek ZUS",
@@ -719,5 +752,8 @@
     "raiff.EMPTY_NIP": "NIP płatnika nie może być pusty i powinien składać się z 10 cyfr",
     "raiff.INCORRECT_NIP": "Niepoprawny numer NIP płatnika",
     "raiff.change_me.EMPTY_SECONDARY_ID_TYPE": "Typ drugiego identyfikatora musi zostać wybrany",
-    "raiff.change_me.EMPTY_PAYMENT_TYPE": "Typ wpłaty musi zostać wybrany"
+    "raiff.change_me.EMPTY_PAYMENT_TYPE": "Typ wpłaty musi zostać wybrany",
+
+
+    "EOF" : ""
 }
