@@ -7,10 +7,11 @@ angular.module('raiffeisen-payments')
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
                     return $q.all({
+                        // TODO: remove defaults
                         detalOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.detal"),
                         microOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.micro"),
-                        detalMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.detal", 12),
-                        microMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.micro", 12),
+                        detalMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.detal"),
+                        microMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.micro"),
 
                         //microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
                         //detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
@@ -21,6 +22,11 @@ angular.module('raiffeisen-payments')
                             context: data.customerDetails.customerDetails.context,
                             maxOffset: 70 // TODO:
                         };
+
+                        data.detalOffset = data.detalOffset || { value: 30 }; // TODO: default values
+                        data.microOffset = data.microOffset || { value: 30 };
+                        data.detalMaxMonthsOffset = data.detalMaxMonthsOffset || { value: 12 };
+                        data.microMaxMonthsOffset = data.microMaxMonthsOffset || { value: 12 };
 
                         if (result.context === 'DETAL') {
                             result.offset = parseInt(data.detalOffset.value, 10);
@@ -54,16 +60,28 @@ angular.module('raiffeisen-payments')
 
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService) {
         $scope.dateRange = {};
-
+      //  $scope.listPromise = {};
 
         $scope.options = {
             "futureDatePanelConfig": parameters
         };
 
+        $scope.onOperationsDateSubmit = function() {
+            $scope.table.tableData.newSearch = true;
+            $scope.table.tableControl.invalidate();
+        };
+
+        $scope.resolveTemplateType = function (recipientType) {
+            if (!recipientType) {
+                recipientType = 'domestic';
+            }
+            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType.toLowerCase());
+        };
+
+
         function goToOperation(operationType, data, operationStep) {
-            console.log("%c goToOperation: ", "color: red; font-weight: bold; font-size: 18px");
             // TODO: goToOperation zaimplementowac
             //if(!operationStep) {
             //    operationStep = 'fill';
@@ -84,51 +102,36 @@ angular.module('raiffeisen-payments')
             //});
         }
 
-        //$scope.timeRangModel = {
-        //    'way': "only one"
-        //};
 
-        $scope.search = function (form) {
-            if (form.$valid) {
-                $scope.table.tableControl.invalidate();
-            }
-        };
 
         $scope.table = {
             tableConfig: new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.future.list.empty")
             }),
             tableData: {
-                getData: function ($promise, $params) {
-
-                    paymentsService.search({
+                getData: function (defer, $params) {
+                   // $scope.listPromise =
+                    var params = {
                         statusPaymentCriteria: "waiting"
-                        ///realizationDateFrom: $filter('date')($params.model.dateFrom.getTime(), "yyyy-MM-dd"),
-                        //realizationDateTo: $filter('date')($params.model.dateTo.getTime(), "yyyy-MM-dd")
-                    }).then(function (paymentSummary) {
-                        angular.forEach(paymentSummary.content, function (payment) {
-                            if (payment.transferType === 'OWN') {
-                                payment.transferType = 'INTERNAL';
-                            }
+                    };
 
-                            // TODO: sprawdzic czy i jak to dziala
-                            angular.extend(payment, {
-                                loadDetails: function () {
+                    if ($scope.dateRange.fromDate && $scope.dateRange.toDate) {
+                        params.realizationDateFrom = $filter('date')($scope.dateRange.fromDate.getTime(), "yyyy-MM-dd");
+                        params.realizationDateTo   = $filter('date')($scope.dateRange.toDate.getTime(), "yyyy-MM-dd");
+                    }
 
-                                    this.promise = paymentsService.get(this.id, {}).then(function (paymentDetails) {
-                                        payment.details = paymentDetails;
-                                        if (payment.details.transferType === 'OWN') {
-                                            payment.details.transferType = 'INTERNAL';
-                                        }
-                                    });
+                    if($scope.table.tableData.newSearch){
+                        params.pageNumber = 1;
+                        $scope.table.tableData.newSearch = false;
+                    }else{
+                        params.pageSize   = $params.pageSize;
+                        params.pageNumber = $params.currentPage;
+                    }
 
-                                    payment.loadDetails = undefined;
-                                }
-                            });
-                        });
+                    paymentsService.search(params).then(function (response) {
+                        defer.resolve(response.content);
 
-                        $params.pageCount = paymentSummary.totalPages;
-                        $promise.resolve(paymentSummary.content);
+                        $params.pageCount = response.totalPages;
                     });
                 }
             },

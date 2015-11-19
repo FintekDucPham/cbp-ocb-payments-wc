@@ -741,6 +741,16 @@
     "raiff.payments.components.futureDatePanel.validation.AMNT_EXCEEDED_MODIFY_NON_RESID": "Modyfikacja danych tego przelewu w internecie nie jest możliwa ze względu na wymogi sprawozdawcze Banku wobec NBP (płatność z rachunku  nierezydenta). Aby zmodyfikować ten przelew, skontaktuj się z Operatorem Centrum Telefonicznego lub doradcą bankowym w Oddziale Banku.",
 
 
+    "raiff.payments.future.list.details.domestict.paymentType": "TODO: raiff.payments.future.list.details.domestict.paymentType",
+    "raiff.payments.future.list.details.domestict.stats": "TODO: raiff.payments.future.list.details.domestict.stats",
+    "raiff.payments.future.list.details.domestict.accountName": "TODO: raiff.payments.future.list.details.domestict.accountName",
+    "raiff.payments.future.list.details.domestict.nrbIbanFilter": "TODO: raiff.payments.future.list.details.domestict.nrbIbanFilter",
+    "raiff.payments.future.list.details.domestict.debitAccountName": "TODO: raiff.payments.future.list.details.domestict.debitAccountName",
+    "raiff.payments.future.list.details.domestict.recipientAdress": "TODO: raiff.payments.future.list.details.domestict.recipientAdress",
+    "raiff.payments.future.list.details.domestict.transferTitle": "TODO: raiff.payments.future.list.details.domestict.transferTitle",
+
+
+
     "raiff.MSG-0567_EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.MSG-0561_INCORRECT_DEBIT_ACC": "Wybrano nieprawidłowy rachunek ZUS",
     "raiff.change_me.CUSTOM_NAME_EMPTY": "Nazwa odbiorcy nie może być pusta",

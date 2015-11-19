@@ -9,7 +9,6 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
                                                               viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService) {
 
-
         accountsService.search().then(function(accountList){
             $scope.accountList = accountList.content;
         });

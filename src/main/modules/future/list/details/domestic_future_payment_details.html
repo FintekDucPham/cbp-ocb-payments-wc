@@ -1,3 +1,27 @@
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.account_related'|translate}}">
-    {{ $data.debitNrb | nrbIbanFilter }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.paymentType'|translate}}">
+    {{ $data.paymentType }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.stats'|translate}}">
+    {{ $data.status }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.accountName'|translate}}">
+    {{ $data.accountName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.nrbIbanFilter'|translate}}">
+    {{ $data.accountNo | nrbIbanFilter }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.debitAccountName'|translate}}">
+    {{ $data.debitAccountName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.recipientAdress'|translate}}">
+    <bd-multiline-text bd-text="$data.recipientAddress"></bd-multiline-text>
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.transferTitle'|translate}}">
+    {{ $data.transferTitle }}
 </bd-item-property>

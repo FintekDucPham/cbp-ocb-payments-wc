@@ -4,8 +4,9 @@
 
 
     <rb-future-date-panel
-            date-range="dateRange.range"
+            date-range="dateRange"
             options="options.futureDatePanelConfig"
+            on-submit="onOperationsDateSubmit()"
             ></rb-future-date-panel>
 
     <bd-table bd-type="typeV"
@@ -13,32 +14,60 @@
               bd-table-control="table.tableControl"
               bd-table-data="table.tableData"
               bd-table-promise="listPromise"
-              bd-table-meta="{ 'first' : { 'title': '##raiff.payments.future.list.header.operation_date', 'data' : 'realizationDate' },
-                'second' : { 'title': '##raiff.payments.future.list.header.debit_account', 'data' : 'remitterAccountNo' },
-                'third' : { 'title': '##raiff.payments.future.list.header.payment_type', 'data' : 'transferType' },
-                'fourth' : { 'title': '##raiff.payments.future.list.header.recipient_data', 'data' : 'recipientName' },
-                'fifth' : { 'title': '##raiff.payments.future.list.header.payment_title', 'data' : 'title' },
-                'sixth' : { 'title': '##raiff.payments.future.list.header.credit_account', 'data' : 'accountNo' },
-                'seventh' : { 'title': '##raiff.payments.future.list.header.amount', 'data' : ['amount','currency'] }}">
+              bd-table-meta="{
+                    'first': {
+                        'title': '##raiff.payments.future.list.header.operation_date',
+                        'data': 'realizationDate'
+                    },
+                    'second': {
+                        'title': '##raiff.payments.future.list.header.credit_account',
+                        'data': 'accountNo'
+                    },
+                    'third': {
+                        'title': '##raiff.payments.future.list.header.payment_type',
+                        'data': 'transferType'
+                    },
+                    'fourth': {
+                        'title': '##raiff.payments.future.list.header.recipient_data',
+                        'data': 'recipientName'
+                    },
+                    'fifth': {
+                        'title': '##raiff.payments.future.list.header.payment_title',
+                        'data': 'title'
+                    },
+                    'sixth': {
+                        'title': '##raiff.payments.future.list.header.debit_account',
+                        'data': 'recipientAccountNo'
+                    },
+                    'seventh': {
+                        'title': '##raiff.payments.future.list.header.amount',
+                        'data': [
+                            'amount',
+                            'currency'
+                        ]
+                    }
+                }">
 
         <bd-details-section bd-table-row-details>
 
+            {{resolveTemplateType($data.paymentType)}}
+
             <div ng-include="::resolveTemplateType($data.paymentType)"></div>
 
-            <bd-details-action-section>
+            <!--<bd-details-action-section>-->
 
-                <div class="bd-grid">
-                    <div class="bd-grid__row">
+                <!--<div class="bd-grid">-->
+                    <!--<div class="bd-grid__row">-->
                         <!--<div class="bd-grid__col&#45;&#45;sm-12">-->
                             <!--<bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.edit' | translate}}</bd-button>-->
                         <!--</div>-->
                         <!--<div class="bd-grid__col&#45;&#45;sm-4">-->
                             <!--<bd-button ng-click="onRecipientTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm bd-float-right">{{::'raiff.payments.recipients.list.details.transfer' | translate}}</bd-button>-->
                         <!--</div>-->
-                    </div>
-                </div>
+                    <!--</div>-->
+                <!--</div>-->
 
-            </bd-details-action-section>
+            <!--</bd-details-action-section>-->
 
         </bd-details-section>
 
