@@ -18,7 +18,7 @@ angular.module('raiffeisen-payments')
 
         bdMainStepInitializer($scope, 'future', {
             formName: 'paymentForm',
-            type: rbFuturePaymentsTypes[$stateParams.paymentType.toUpperCase()],
+            type: rbFuturePaymentsTypes[angular.uppercase($stateParams.paymentType)],
             operation: rbFutureOperationType[$stateParams.operation.toUpperCase()],
             formData: {},
             transferId: {},
