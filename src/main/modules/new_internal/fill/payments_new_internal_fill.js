@@ -1,12 +1,11 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_internal.fill', {
-            url: "/fill/:accountId",
+            url: "/fill/:accountId/:nrb",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/fill/payments_new_internal_fill.html",
             controller: "NewPaymentInternalFillController",
             params: {
                 accountId: null,
-                nrb:null,
                 recipientId: null
             }
         });
@@ -14,13 +13,7 @@ angular.module('raiffeisen-payments')
     .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
         if($stateParams.nrb) {
-        $scope.remote = {
-            model: {
-                onAccountsLoaded: function (remoteObject) {
-                    remoteObject.setSelectedNrb($stateParams.nrb);
-                }
-            }
-        };
+            $scope.selectNrb = $stateParams.nrb;
     }
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
