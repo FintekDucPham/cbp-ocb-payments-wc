@@ -156,18 +156,17 @@ angular.module('raiffeisen-payments')
             tableConfig: $scope.tableConfig,
             tableData: {
                 getData: function ($promise, $params) {
-
                     var params = {
                         statusPaymentCriteria: "rejected",
                         realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
                         realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
                     };
 
-                    params.pageSize = $params.pageSize;
+                    params.pageSize   = $params.pageSize;
                     params.pageNumber = $params.currentPage;
 
                     if ($params.model.filterData.periodType.model === PERIOD_TYPES.LAST) {
-                        params.realizationDateTo = $filter('date')(now.getTime(), "yyyy-MM-dd");
+                        params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
                         params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
                     }
 

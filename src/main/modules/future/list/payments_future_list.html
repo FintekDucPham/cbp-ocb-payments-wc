@@ -49,10 +49,11 @@
                 }">
 
         <bd-details-section bd-table-row-details>
+            <div eb-preloader eb-promise="$data.promise"></div>
 
-            {{resolveTemplateType($data.paymentType)}}
-
-            <div ng-include="::resolveTemplateType($data.paymentType)"></div>
+            <div ng-if="$data.details">
+                 <ng-include src="::resolveTemplateType($data.paymentType)"></ng-include>
+            </div>
 
             <!--<bd-details-action-section>-->
 

@@ -1,27 +1,47 @@
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.paymentType'|translate}}">
-    {{ $data.paymentType }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferType'|translate}}">
+    {{ ::'raiff.payments.future.list.details.domestic.transferTypes.' + $data.details.transferType | translate}}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.stats'|translate}}">
-    {{ $data.status }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.status'|translate}}">
+    {{ ::'raiff.payments.future.list.details.domestic.statusese' + $data.details.status | translate }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.accountName'|translate}}">
-    {{ $data.accountName }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.accountName'|translate}}">
+    {{ $data.details.accountName }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.nrbIbanFilter'|translate}}">
-    {{ $data.accountNo | nrbIbanFilter }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.nrbIbanFilter'|translate}}">
+    {{ $data.details.accountNo | nrbIbanFilter }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.debitAccountName'|translate}}">
-    {{ $data.debitAccountName }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientBankName'|translate}}">
+    {{ $data.details.recipientBankName }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.recipientAdress'|translate}}">
-    <bd-multiline-text bd-text="$data.recipientAddress"></bd-multiline-text>
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientAccountNo'|translate}}">
+    {{ $data.details.recipientAccountNo }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestict.transferTitle'|translate}}">
-    {{ $data.transferTitle }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientName'|translate}}">
+    <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
 </bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.amount'|translate}}">
+    {{ $data.details.amount }} {{ $data.details.currency }}
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferTitle'|translate}}">
+    <bd-multiline-text bd-text="$data.details.title"></bd-multiline-text>
+</bd-item-property>
+
+
+<bd-details-action-section>
+    <div class="row">
+        <div class="col-sm-12 col-md-12" style="text-align:right;">
+            <bd-button ng-click="onEdit($data)"       class="bd-button bd-hmargin-sm">{{::'raiff.payments.future.list.details.domestic.buttons.edit' | translate}}</bd-button>
+            <bd-button ng-click="onDelete($data)"     class="bd-button bd-hmargin-sm">{{::'raiff.payments.future.list.details.domestic.buttons.delete' | translate}}</bd-button>
+            <bd-button ng-click="onBackToList($data)" class="bd-button bd-button__primary">{{::'raiff.payments.future.list.details.domestic.buttons.backToList' | translate}}</bd-button>
+        </div>
+    </div>
+</bd-details-action-section>

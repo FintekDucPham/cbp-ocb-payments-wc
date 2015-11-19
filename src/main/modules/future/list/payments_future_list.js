@@ -131,6 +131,16 @@ angular.module('raiffeisen-payments')
                     paymentsService.search(params).then(function (response) {
                         defer.resolve(response.content);
 
+
+                        _.each(response.content, function(payment, idx) {
+                            payment.loadDetails = function() {
+                                payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
+                                    payment.details = resp;
+                                });
+
+                            };
+                        });
+
                         $params.pageCount = response.totalPages;
                     });
                 }
