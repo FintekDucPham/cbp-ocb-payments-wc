@@ -163,7 +163,7 @@
     "raiff.payments.new.domestic.verify.description": "Tytułem",
     "raiff.payments.new.domestic.verify.execution_date": "Data realizacji",
 
-    "raiff.payments.new.internal.fill.default_description": [ "Przelew środków" ],
+    "raiff.payments.new.internal.fill.default_description": "Przelew środków",
     "raiff.payments.new.internal.fill.sender_account": "Z rachunku",
     "raiff.payments.new.internal.fill.sender_account.accessible_assets": "Dostępne środki",
     "raiff.payments.new.internal.fill.recipient_account": "Na rachunek",
@@ -349,6 +349,43 @@
     "raiff.payments.new.us.fill.execution_date.INCORRECT_EXECUTED_DATE": "Niepoprawna data realizacji przelewu",
     "raiff.payments.new.us.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
+
+    "raiff.payments.recipients.new.currency.fill.account_related.label": "Z rachunku",
+    "raiff.payments.recipients.new.currency.fill.account_related": "Z rachunku",
+
+    "raiff.payments.recipients.new.currency.fill.custom_name.label": "Twoja nazwa odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.custom_name.placeholder": "Wpisz nazwę odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.country.select.placeholder": "Wybierz kraj",
+    "raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder": "podaj SWIFT/BIC",
+    "raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label": "SWIFT/BIC banku",
+    "raiff.payments.recipients.new.currency.fill.FIELD.RULE": "Rachunek odbiorcy nie może przekraczać 34 znaków i powinnien zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
+    "raiff.payments.recipients.new.currency.fill.remitterAccount.EMPTY": "Pole nie może być puste",
+    "raiff.payments.recipients.new.currency.fill.customName.EMPTY": "Nazwa skrócona odbiorcy nie może być pusta",
+    "raiff.payments.recipients.new.currency.fill.customName.ILLEGAL": "Nazwa skrócona odbiorcy nie może przekraczać 35 znaków i powinno zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+
+    "raiff.payments.recipients.new.currency.fill.recipient_account.label": "Rachunek odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
+
+    "raiff.payments.recipients.new.currency.fill.recipient_name_address": "Nazwa i adres odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.placeholder": "Wpisz nazwę i adres odbiorcy",
+
+    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC": "Rachunek odbiorcy nie może przekraczać 34 znaków i powinnien zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK": "Dane banku odbiorcy nie mogą być puste",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK": "Musisz wybrać kraj banku odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT": "Kod SWIFT banku nie może być pusty",
+    "raiff.payments.recipients.new.currency.fill.swift_bic.INCORRECT_SWIFT": "Niepoprawny kod SWIFT banku",
+
+    "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.TOO_LONG_BANK": "Dane banku odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN": "Rachunek odbiorcy nie jest zgodny z formatem IBAN.",
+
+    "raiff.payments.recipients.new.currency.fill.description.label": "Tytułem",
+    "raiff.payments.recipients.new.currency.fill.description.placeholder": "Wpisz tytuł",
+
     "raiff.payments.new.us.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.us.verify.recipient_account_no": "Na rachunek",
     "raiff.payments.new.us.verify.taxpayer_data": "Nazwa płatnika",
@@ -408,16 +445,36 @@
     "raiff.payments.recipients.select.type.US": "US/IC",
     "raiff.payments.recipients.select.type.INSURANCE": "ZUS",
     "raiff.payments.recipients.select.type.TAX": "US/IC",
-    "raiff.payments.recipients.select.type.CURRENCY": "Walutowy",
+    "raiff.payments.recipients.select.type.FOREIGN": "Walutowy",
 
     "raiff.payments.recipients.new.type.select": "Typ odbiorcy",
     "raiff.payments.recipients.new.type.select.placeholder": "Wybierz typ odbiorcy",
     "raiff.payments.recipients.new.type.DOMESTIC": "Krajowy",
     "raiff.payments.recipients.new.type.ZUS": "ZUS",
     "raiff.payments.recipients.new.type.US": "US/IC",
-    "raiff.payments.recipients.new.type.CURRENCY": "Walutowy",
+    "raiff.payments.recipients.new.type.FOREIGN": "Walutowy",
     "raiff.payments.recipients.new.type.INSURANCE": "ZUS",
     "raiff.payments.recipients.new.type.TAX": "US/IC",
+    "raiff.payments.recipients.new.type.SWIFT": "Walutowy",
+
+
+    "raiff.payments.recipients.currency.recipientBankName": "Nazwa banku odbiorcy",
+    "raiff.payments.recipients.currency.accountNr": "Numer rachunku",
+    "raiff.payments.recipients.currency.recipientAddress": "Nazwa i adres",
+    "raiff.payments.recipients.currency.transferTitle": "Tytułem",
+
+    "raiff.payments.recipients.new.currency.fill.bankData": "Dane banku",
+    "raiff.payments.recipients.new.currency.fill.swfitbic": "SWIFT/BIC banku",
+    "raiff.payments.recipients.new.currency.fill.recipientBankData": "Dane banku odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.bankName": "Nazwa banku",
+    "raiff.payments.recipients.new.currency.fill.bankCountry": "Kraj banku",
+    "raiff.payments.recipients.new.currency.fill.recipientCountry": "Kraj odbiorcy",
+    "raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder": "Wybierz kraj",
+    "raiff.payments.recipients.new.currency.verify.bank_data.label": "Nazwa i adres banku",
+    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
+    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
+    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
+
 
     "raiff.payments.recipients.new.domestic.fill.account_related": "Z rachunku",
     "raiff.payments.recipients.edit.domestic.verify.company.name":"Nazwa firmy",

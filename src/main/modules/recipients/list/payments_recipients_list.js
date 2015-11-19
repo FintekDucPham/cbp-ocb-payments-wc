@@ -16,7 +16,6 @@ angular.module('raiffeisen-payments')
             $scope.customerDetails = customerDetails.customerDetails;
         });
 
-
         $scope.getAccountByNrb = function(accountNrb){
             return lodash.find($scope.accountList, {
                 accountNo: accountNrb
@@ -49,16 +48,24 @@ angular.module('raiffeisen-payments')
         $scope.recipientListPromise = {};
 
         $scope.onRecipientEdit = function(data){
+            var recipientType = data.recipientType.toLowerCase();
+            if(recipientType==='swift'){
+                recipientType='foreign';
+            }
             $state.go("payments.recipients.manage.edit.fill", {
-                recipientType: data.recipientType.toLowerCase(),
+                recipientType: recipientType,
                 operation: 'edit',
                 recipient: angular.copy(data)
             });
         };
 
         $scope.onRecipientRemove = function(data){
+            var recipientType = data.recipientType.toLowerCase();
+            if(recipientType==='swift'){
+                recipientType='foreign';
+            }
             $state.go("payments.recipients.manage.remove.verify", {
-                recipientType: data.recipientType.toLowerCase(),
+                recipientType: recipientType,
                 operation: 'remove',
                 recipient: angular.copy(data)
             });
@@ -109,6 +116,10 @@ angular.module('raiffeisen-payments')
                             params.filerTemplateType = $scope.types.currentType.code;
                         }
 
+                        if(params.filerTemplateType==='FOREIGN'){
+                            params.filerTemplateType = 'SWIFT';
+                        }
+
                         $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
                             var list = $scope.recipientList = lodash.map(data.content, function (recipient) {
                                 var template = recipient.paymentTemplates[0];
@@ -126,6 +137,17 @@ angular.module('raiffeisen-payments')
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
+                                        case "SWIFT":
+                                            return {
+                                                transferTitle: template.title.join(" "),
+                                                bankName: template.paymentDetails.bankDetails[0],
+                                                bankData:template.paymentDetails.bankDetails,
+                                                recipientIdentityType: template.paymentDetails.informationProvider,
+                                                recipientBankCountry: template.paymentDetails.bankCountry,
+                                                recipientCountry: template.paymentDetails.foreignCountryCode,
+                                                recipientAddress: recipient.recipientAddress,
+                                                transferTitleTable: template.title
+                                            };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: template.title.join(" "),
@@ -162,7 +184,6 @@ angular.module('raiffeisen-payments')
             },
             tableControl: undefined
         };
-
 
     }
 );

@@ -125,11 +125,22 @@ angular.module('raiffeisen-payments')
             }
         });
 
+        function isAccountInvestmentFulfilsRules(account){
+            if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
+                if(account.actions.indexOf('create_domestic_transfer')>-1){
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
-                return lodash.filter(accounts, {
-                    currency: 'PLN'
+                return lodash.filter(accounts,  function(account){
+                    return account.currency == 'PLN' &&  isAccountInvestmentFulfilsRules(account);
                 });
             },
             payments: true

@@ -202,7 +202,7 @@
         <div ng-if="payment.options.customPeriod || !payment.items.formSymbol.periodRequired">
             <input name="periodNo"
                    ng-model="payment.formData.periodNo"
-                   required
+                   ng-required="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
                    ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
                    bd-novalidate-when="{{ payment.formData.periodType==='R' || !payment.items.formSymbol.periodRequired }}"
                    ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"

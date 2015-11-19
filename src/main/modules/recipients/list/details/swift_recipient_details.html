@@ -1,0 +1,21 @@
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.currency.fill.custom_name.label'|translate}}">
+    {{ $data.customerName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="">
+    {{ $data.bankName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.currency.accountNr'|translate}}">
+    {{ $data.nrb }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.currency.recipientAddress'|translate}}">
+    <bd-multiline-text bd-text="$data.recipientAddress"></bd-multiline-text>
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.currency.transferTitle'|translate}}">
+    <bd-multiline-text bd-text="$data.transferTitleTable"></bd-multiline-text>
+</bd-item-property>
+

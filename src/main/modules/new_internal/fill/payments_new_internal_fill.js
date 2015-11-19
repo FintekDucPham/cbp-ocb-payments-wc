@@ -1,12 +1,11 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_internal.fill', {
-            url: "/fill/:accountId",
+            url: "/fill/:accountId/:nrb",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/fill/payments_new_internal_fill.html",
             controller: "NewPaymentInternalFillController",
             params: {
                 accountId: null,
-                nrb:null,
                 recipientId: null
             }
         });
@@ -14,13 +13,7 @@ angular.module('raiffeisen-payments')
     .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
         if($stateParams.nrb) {
-        $scope.remote = {
-            model: {
-                onAccountsLoaded: function (remoteObject) {
-                    remoteObject.setSelectedNrb($stateParams.nrb);
-                }
-            }
-        };
+            $scope.selectNrb = $stateParams.nrb;
     }
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -217,8 +210,24 @@ angular.module('raiffeisen-payments')
             return $scope.payment.meta.customerContext === 'DETAL' ? $scope.payment.items.senderAccount.category === 1005 : $scope.payment.items.senderAccount.category === 1016;
         }
 
+        function isAccountInvestmentFulfilsRules(account){
+            if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
+                if(account.actions.indexOf('create_between_own_accounts_transfer')>-1){
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.senderSelectParams.payments = true;
+        $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
+            return lodash.filter(accounts, function(account){
+                return isAccountInvestmentFulfilsRules(account);
+            });
+        };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: false,
@@ -229,7 +238,9 @@ angular.module('raiffeisen-payments')
                         return account.accountId === $accountId || isSenderAccountCategoryRestricted() && lodash.contains([1101,3000,3008], account.category);
                     });
                 } else {
-                    return accounts;
+                    return lodash.filter(accounts, function(account){
+                       return isAccountInvestmentFulfilsRules(account);
+                    });
                 }
             },
             payments: true

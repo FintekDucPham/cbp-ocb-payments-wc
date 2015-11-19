@@ -9,7 +9,7 @@ angular.module('raiffeisen-payments')
                 recipient: null
             }
         }).state('payments.recipients.manage.new.fill', {
-            url: "/fill",
+            url: "/fill/:nrb",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/fill/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_fill_" + angular.lowercase($stateParams.recipientType) + ".html";
             }
