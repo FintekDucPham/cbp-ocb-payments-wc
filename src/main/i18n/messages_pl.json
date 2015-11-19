@@ -163,7 +163,7 @@
     "raiff.payments.new.domestic.verify.description": "Tytułem",
     "raiff.payments.new.domestic.verify.execution_date": "Data realizacji",
 
-    "raiff.payments.new.internal.fill.default_description": [ "Przelew środków" ],
+    "raiff.payments.new.internal.fill.default_description": "Przelew środków",
     "raiff.payments.new.internal.fill.sender_account": "Z rachunku",
     "raiff.payments.new.internal.fill.sender_account.accessible_assets": "Dostępne środki",
     "raiff.payments.new.internal.fill.recipient_account": "Na rachunek",

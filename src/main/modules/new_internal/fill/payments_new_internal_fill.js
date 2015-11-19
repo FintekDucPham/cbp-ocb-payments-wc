@@ -256,7 +256,7 @@ angular.module('raiffeisen-payments')
 
 
         function splitTextEveryNSign(text, lineLength){
-            text = text.join("").replace(/(\n)+/g, '');
+            text = text.replace(/(\n)+/g, '');
             var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
             return lodash.filter(text.split(regexp), function(val) {
                 return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
