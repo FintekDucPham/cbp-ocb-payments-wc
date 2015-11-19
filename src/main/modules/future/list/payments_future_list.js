@@ -80,28 +80,23 @@ angular.module('raiffeisen-payments')
             return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType.toLowerCase());
         };
 
+        $scope.onEdit = function(payment) {
+            $state.go('payments.future.manage.edit', {
+                'transferType': payment.transferType,
+                id: payment.id
+            });
+        };
 
-        function goToOperation(operationType, data, operationStep) {
-            // TODO: goToOperation zaimplementowac
-            //if(!operationStep) {
-            //    operationStep = 'fill';
-            //}
-            //var copiedData = angular.copy(data);
-            //$state.go("payments.taxpayers.manage.{0}.{1}".format(operationType, operationStep), {
-            //    taxpayerType: data.taxpayerType.code.toLowerCase(),
-            //    operation: operationType,
-            //    taxpayer: {
-            //        "taxpayerId": copiedData.taxpayerId,
-            //        "customName": copiedData.customerName,
-            //        "secondaryIdType": copiedData.secondaryIdType,
-            //        "secondaryIdNo": copiedData.secondaryId,
-            //        "nip": copiedData.nip,
-            //        "taxpayerData": copiedData.data,
-            //        "taxpayerType": copiedData.taxpayerType.code
-            //    }
-            //});
-        }
+        $scope.onDelete = function(payment) {
+            $state.go('payments.future.manage.delete', {
+                'transferType': payment.transferType,
+                id: payment.id
+            });
+        };
 
+        $scope.onBack = function(child) {
+            child.$emit('$collapseRows');
+        };
 
 
         $scope.table = {
@@ -129,18 +124,15 @@ angular.module('raiffeisen-payments')
                     }
 
                     paymentsService.search(params).then(function (response) {
-                        defer.resolve(response.content);
-
-
                         _.each(response.content, function(payment, idx) {
                             payment.loadDetails = function() {
                                 payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
                                     payment.details = resp;
                                 });
-
                             };
                         });
 
+                        defer.resolve(response.content);
                         $params.pageCount = response.totalPages;
                     });
                 }
