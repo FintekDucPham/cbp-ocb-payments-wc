@@ -3,18 +3,12 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.status'|translate}}">
-    {{ ::'raiff.payments.future.list.details.domestic.statusese' + $data.details.status | translate }}
+    {{ ::'raiff.payments.future.list.details.domestic.statuses' + $data.details.status | translate }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.accountName'|translate}}">
-    {{ $data.details.accountName }}
-</bd-item-property>
-
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.nrbIbanFilter'|translate}}">
-    {{ $data.details.accountNo | nrbIbanFilter }}
-</bd-item-property>
-
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientBankName'|translate}}">
+    {{ $data.details.accountName }} <br/>
+    {{ $data.details.accountNo | nrbIbanFilter }}<br/>
     {{ $data.details.recipientBankName }}
 </bd-item-property>
 
@@ -29,7 +23,6 @@
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.amount'|translate}}">
     {{ $data.details.amount }} {{ $data.details.currency }}
 </bd-item-property>
-
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferTitle'|translate}}">
     <bd-multiline-text bd-text="$data.details.title"></bd-multiline-text>

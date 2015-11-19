@@ -21,11 +21,11 @@
                     },
                     'second': {
                         'title': '##raiff.payments.future.list.header.credit_account',
-                        'data': 'accountNo'
+                        'data': 'recipientAccountNo'
                     },
                     'third': {
                         'title': '##raiff.payments.future.list.header.payment_type',
-                        'data': 'transferType'
+                        'data': 'paymentType'
                     },
                     'fourth': {
                         'title': '##raiff.payments.future.list.header.recipient_data',
@@ -37,7 +37,7 @@
                     },
                     'sixth': {
                         'title': '##raiff.payments.future.list.header.debit_account',
-                        'data': 'recipientAccountNo'
+                        'data': 'accountNo'
                     },
                     'seventh': {
                         'title': '##raiff.payments.future.list.header.amount',
@@ -51,8 +51,9 @@
         <bd-details-section bd-table-row-details>
             <div eb-preloader eb-promise="$data.promise"></div>
 
+
             <div ng-if="$data.details">
-                 <ng-include src="::resolveTemplateType($data.paymentType)"></ng-include>
+                 <ng-include src="::resolveTemplateType($data.details.transferType)"></ng-include>
             </div>
 
             <!--<bd-details-action-section>-->

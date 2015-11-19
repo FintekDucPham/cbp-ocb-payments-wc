@@ -73,23 +73,20 @@ angular.module('raiffeisen-payments')
             $scope.table.tableControl.invalidate();
         };
 
-        $scope.resolveTemplateType = function (recipientType) {
-            if (!recipientType) {
-                recipientType = 'domestic';
-            }
-            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType.toLowerCase());
+        $scope.resolveTemplateType = function (transferType) {
+            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
         };
 
         $scope.onEdit = function(payment) {
             $state.go('payments.future.manage.edit', {
-                'transferType': payment.transferType,
+                'paymentType': payment.paymentType,
                 id: payment.id
             });
         };
 
         $scope.onDelete = function(payment) {
             $state.go('payments.future.manage.delete', {
-                'transferType': payment.transferType,
+                'paymentType': payment.paymentType,
                 id: payment.id
             });
         };
