@@ -1,27 +1,20 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new.fill', {
-            url: "/fill/:accountId",
+            url: "/fill/:accountId/:nrb",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html",
             controller: "NewPaymentFillController",
             params: {
                 accountId: null,
                 recipientId: null,
-                taxpayerId: null,
-                nrb: null
+                taxpayerId: null
             }
         });
     })
     .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
 
         if($stateParams.nrb) {
-            $scope.remote = {
-                model: {
-                    onAccountsLoaded: function (remoteObject) {
-                        remoteObject.setSelectedNrb($stateParams.nrb);
-                    }
-                }
-            };
+            $scope.selectNrb = $stateParams.nrb;
         }
 
         bdFillStepInitializer($scope, {

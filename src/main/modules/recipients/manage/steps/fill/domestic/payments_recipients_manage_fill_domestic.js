@@ -1,5 +1,9 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, $stateParams) {
+
+        if($stateParams.nrb) {
+            $scope.selectNrb = $stateParams.nrb;
+        }
 
         $scope.recipient.meta.forbiddenAccounts = [];
 
