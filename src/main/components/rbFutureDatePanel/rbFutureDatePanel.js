@@ -40,7 +40,7 @@ angular.module('raiffeisen-payments')
             scope: {
                 "dateRange": "=",
                 "options": "=",
-                "onChange": "&?"
+                "onSubmit": "&?"
             },
             link: function($scope, $element, $attrs, $controller, $transcludeFn) {
 
@@ -52,12 +52,14 @@ angular.module('raiffeisen-payments')
                     minDate = now,
                     options = rbFutureDateRangeParams($scope.options);
 
-                var commitDateRange = function(fromDate, toDate) {
-                    $scope.dateRange.fromDate = fromDate;
-                    $scope.dateRange.toDate   = toDate;
-
-                    if ($scope.futureDatePanelForm.$valid && $scope.onChange) {
-                        $scope.onChange();
+                var commitDateRange = function() {
+                    if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
+                        $scope.dateRange.fromDate = now;
+                        $scope.dateRange.toDate   = calculateCurrentPeriodBaseDate();
+                    }
+                    else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
+                        $scope.dateRange.fromDate = $scope.inputData.dateFrom;
+                        $scope.dateRange.toDate   = $scope.inputData.dateTo;
                     }
                 };
 
@@ -83,6 +85,7 @@ angular.module('raiffeisen-payments')
                     dateFrom: options.dateFrom,
                     dateTo: options.dateTo
                 };
+
 
                 var calculateCurrentPeriodBaseDate = function() {
                     var periodDate = new Date(now.getTime());
@@ -131,10 +134,12 @@ angular.module('raiffeisen-payments')
                 var validateRange = function() {
                     var dateFrom, dateTo;
                     if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
-                        $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', true);
-                        $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
-                        $scope.futureDatePanelForm.dateToInput.$setValidity('maxValue', true);
-                        $scope.futureDatePanelForm.dateToInput.$setValidity('minValue', true);
+                        if ($scope.futureDatePanelForm.dateFromInput && $scope.futureDatePanelForm.dateToInput) {
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', true);
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('maxValue', true);
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('minValue', true);
+                        }
                     }
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
                         dateFrom = $scope.inputData.dateFrom;
@@ -197,6 +202,7 @@ angular.module('raiffeisen-payments')
 
                     }
                 });
+
 
                 $scope.constraints = {
                     maxLastFieldValue: 6

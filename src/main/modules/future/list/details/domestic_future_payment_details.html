@@ -1,3 +1,40 @@
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.account_related'|translate}}">
-    {{ $data.debitNrb | nrbIbanFilter }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferType'|translate}}">
+    {{ ::'raiff.payments.future.list.details.domestic.transferTypes.' + $data.details.transferType | translate}}
 </bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.status'|translate}}">
+    {{ ::'raiff.payments.future.list.details.domestic.statuses' + $data.details.status | translate }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.accountName'|translate}}">
+    {{ $data.details.accountName }} <br/>
+    {{ $data.details.accountNo | nrbIbanFilter }}<br/>
+    {{ $data.details.recipientBankName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientAccountNo'|translate}}">
+    {{ $data.details.recipientAccountNo }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientName'|translate}}">
+    <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.amount'|translate}}">
+    {{ $data.details.amount }} {{ $data.details.currency }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferTitle'|translate}}">
+    <bd-multiline-text bd-text="$data.details.title"></bd-multiline-text>
+</bd-item-property>
+
+
+<bd-details-action-section>
+    <div class="row">
+        <div class="col-sm-12 col-md-12" style="text-align:right;">
+            <bd-button ng-click="onEdit($data)"       class="bd-button bd-hmargin-sm">{{::'raiff.payments.future.list.details.domestic.buttons.edit' | translate}}</bd-button>
+            <bd-button ng-click="onDelete($data)"     class="bd-button bd-hmargin-sm">{{::'raiff.payments.future.list.details.domestic.buttons.delete' | translate}}</bd-button>
+            <bd-button ng-click="onBack(this)" class="bd-button bd-button__primary">{{::'raiff.payments.future.list.details.domestic.buttons.backToList' | translate}}</bd-button>
+        </div>
+    </div>
+</bd-details-action-section>
