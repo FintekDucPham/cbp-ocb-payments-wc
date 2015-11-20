@@ -34,26 +34,6 @@ angular.module('raiffeisen-payments')
             bdFocus('recipientAccountNo');
         };
 
-        $scope.getAccountByNrb = function(accountList, selectFn){
-
-            function select(recipient) {
-                selectFn(lodash.findWhere(accountList, {
-                    accountNo: recipient.srcAccountNo
-                }));
-            }
-
-            if($scope.payment.items.recipient) {
-                select($scope.payment.items.recipient);
-            } else {
-                var callOff = $scope.$on('payment.items.recipient', function(recipient) {
-                    if(recipient) {
-                        select(recipient);
-                        callOff();
-                    }
-                });
-            }
-        };
-
         function updateRecipientsList() {
 
         }
@@ -81,7 +61,7 @@ angular.module('raiffeisen-payments')
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
             updateRecipientsList();
-            validateBalance();
+            $scope.validateBalance();
             recipientFilter.filter();
         };
 

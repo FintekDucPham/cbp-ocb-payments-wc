@@ -16,15 +16,15 @@ angular.module('raiffeisen-payments')
                     };
                 }]
             }
-        }).state('payments.future.manage.edit.fill', {
+        }).state('payments.future.manage.edit.template.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/" + angular.lowercase($stateParams.paymentType) + "/payments_new_" + angular.lowercase($stateParams.recipientType) + "_fill.html";
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/" + angular.lowercase($stateParams.paymentType) + "/payments_new_" + angular.lowercase($stateParams.paymentType) + "_fill.html";
             }
         }).state('payments.future.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/steps/verify/" + angular.lowercase($stateParams.recipientType) + "/payments_future_manage_verify_" + angular.lowercase($stateParams.paymentType) + ".html";
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/" + angular.lowercase($stateParams.paymentType) + "/payments_new_" + angular.lowercase($stateParams.paymentType) + "_verify.html";
             },
             controller: "FutureManageVerifyDomesticController"
         }).state('payments.future.manage.edit.status', {
@@ -33,9 +33,12 @@ angular.module('raiffeisen-payments')
             controller: "FutureManageEditStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService) {
+    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService, rbPaymentOperationTypes, rbPaymentTypes) {
 
         var myRecipientManager = recipientManager($stateParams.paymentType);
+
+        $scope.payment.type = rbPaymentTypes[angular.uppercase($stateParams.paymentType)];
+        $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(manageData.id, {}).then(function(data){
             data.description = data.title;

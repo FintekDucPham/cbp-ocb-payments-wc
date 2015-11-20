@@ -4,22 +4,19 @@ angular.module('raiffeisen-payments')
             url: "/manage",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/payments_future_manage.html",
-            controller: "PaymentsFutureManageController",
-            params: {
-                recipientType: 'domestic',
-                operation: 'new'
-            }
+            controller: "PaymentsFutureManageController"
+
         });
     })
     .controller('PaymentsFutureManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, validationRegexp,
-                                                                rbFuturePaymentsTypes, rbFutureOperationType) {
+                                                                rbPaymentTypes) {
 
         bdMainStepInitializer($scope, 'payment', {
             formName: 'paymentForm',
-            type: rbFuturePaymentsTypes[angular.uppercase($stateParams.paymentType)],
-            operation: rbFutureOperationType[$stateParams.operation.toUpperCase()],
+            type: null,
+            operation: null,
             formData: {},
             transferId: {},
             options: {},
@@ -32,7 +29,7 @@ angular.module('raiffeisen-payments')
                 params: {}
             },
             meta: {
-                recipientTypes: lodash.map(rbFuturePaymentsTypes)
+                recipientTypes: lodash.map(rbPaymentTypes)
             },
             manageAction: ""
         });

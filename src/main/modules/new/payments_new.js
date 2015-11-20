@@ -1,4 +1,21 @@
 angular.module('raiffeisen-payments')
+    .constant('rbPaymentOperationTypes', {
+        "NEW": {
+            code: 'NEW',
+            state: 'new',
+            link: 'create'
+        },
+        "EDIT": {
+            code: 'EDIT',
+            state: 'edit',
+            link: 'modify'
+        },
+        "REMOVE": {
+            code: 'REMOVE',
+            state: 'remove',
+            link: 'remove'
+        }
+    })
     .constant('rbPaymentTypes', {
         "DOMESTIC": {
             code: 'DOMESTIC',
@@ -37,7 +54,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
@@ -45,6 +62,7 @@ angular.module('raiffeisen-payments')
             type: lodash.find(rbPaymentTypes, {
                 state: $stateParams.paymentType || 'domestic'
             }),
+            operation: rbPaymentOperationTypes.NEW,
             formData: {
                 hideSaveRecipientButton: false
             },

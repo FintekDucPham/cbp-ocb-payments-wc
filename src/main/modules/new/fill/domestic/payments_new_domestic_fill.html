@@ -8,11 +8,9 @@
                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                            rb-product-list-name="TRANSFER_FROM_LIST"
                            rb-on-account-select="onSenderAccountSelect()"
-                           rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                           rb-account-no="payment.items.recipient.srcAccountNo"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-remote="remote.model"
-                           rb-init-select-value = "{{selectNrb}}"></rb-account-select>
+                           rb-init-select-value = "{{ payment.items.recipient.srcAccountNo || payment.formData.accountNo || selectNrb}}"></rb-account-select>
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.remitterAccountId"
@@ -44,7 +42,7 @@
                type="text"
                placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
 
-        <eb-validation-messages ng-if="paymentForm" eb-name="recipientAccountNo">
+        <eb-validation-messages eb-name="recipientAccountNo">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
             </div>
@@ -76,7 +74,7 @@
             {{validationErrors['recipientName']}}
         </div>
 
-        <eb-validation-messages ng-if="paymentForm" eb-name="recipientName">
+        <eb-validation-messages eb-name="recipientName">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.recipient_data.EMPTY_BNF_DATA'|translate}}
             </div>
@@ -105,7 +103,7 @@
              ng-if="validationErrors['description'] !== undefined">
             {{validationErrors['description']}}
         </div>
-        <eb-validation-messages ng-if="paymentForm" eb-name="description">
+        <eb-validation-messages eb-name="description">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.description.EMPTY_TITLE'|translate}}
             </div>
@@ -148,7 +146,7 @@
                 </ui-select>
             </div>
         </div>
-        <eb-validation-messages ng-if="paymentForm" eb-name="amount">
+        <eb-validation-messages eb-name="amount">
             <div eb-message-key="number" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
             </div>
@@ -203,7 +201,7 @@
 
         </rb-datepicker>
 
-        <eb-validation-messages ng-if="paymentForm" eb-name="realizationDate">
+        <eb-validation-messages eb-name="realizationDate">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
             </div>
