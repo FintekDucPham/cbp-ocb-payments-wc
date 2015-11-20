@@ -73,7 +73,9 @@ angular.module('raiffeisen-payments')
             var senderAccount = $scope.payment.items.senderAccount;
             $scope.payment.formData.currency = 'PLN';
             $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
-            $scope.paymentForm.amount.$validate();
+            if($scope.paymentForm){
+                $scope.paymentForm.amount.$validate();
+            }
         }
 
         $scope.onSenderAccountSelect = function () {

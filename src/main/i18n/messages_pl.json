@@ -762,7 +762,8 @@
     "raiff.payments.future.list.header.credit_account": "Na rachunek",
     "raiff.payments.future.list.header.amount": "Kwota",
     "raiff.payments.future.list.empty": "Brak zaplanowanych płatności",
-    "raiff.payments.future.fill.transferType": "Typ przelewu",
+    "raiff.payments.future.fill.transferType.label": "Typ przelewu",
+    "raiff.payments.future.fill.debit_account.label": "Z rachunku",
 
     "raiff.payments.components.futureDatePanel.dateRanges.DAYS": "dni",
     "raiff.payments.components.futureDatePanel.dateRanges.WEEKS": "tygodni",

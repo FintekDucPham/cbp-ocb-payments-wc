@@ -230,7 +230,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            useFirstByDefault: false,
+            useFirstByDefault: true,
             alwaysSelected: false,
             accountFilter: function (accounts, $accountId) {
                 if (!!$accountId) {
