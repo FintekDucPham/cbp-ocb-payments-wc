@@ -798,7 +798,7 @@
     "raiff.payments.components.futureDatePanel.validation.AMNT_EXCEEDED_MODIFY_NON_RESID": "Modyfikacja danych tego przelewu w internecie nie jest możliwa ze względu na wymogi sprawozdawcze Banku wobec NBP (płatność z rachunku  nierezydenta). Aby zmodyfikować ten przelew, skontaktuj się z Operatorem Centrum Telefonicznego lub doradcą bankowym w Oddziale Banku.",
 
 
-    "raiff.payments.future.list.details.domestic.transferType": "Typ operacji",
+    "raiff.payments.future.list.details.domestic.transferType": "Typ płatności",
     "raiff.payments.future.list.details.domestic.status": "Status płatności",
     "raiff.payments.future.list.details.domestic.accountName": "Z rachunku",
     "raiff.payments.future.list.details.domestic.recipientAccountNo": "Na rachunek",
@@ -811,6 +811,38 @@
     "raiff.payments.future.list.details.domestic.buttons.edit": "Edytuj",
     "raiff.payments.future.list.details.domestic.buttons.delete": "Usuń",
     "raiff.payments.future.list.details.domestic.buttons.backToList": "Powrót",
+
+
+    "raiff.payments.future.list.details.domestic.transferTypes.TAX": "TODO: transfer type US/IC",
+
+    "raiff.payments.future.list.details.tax.payerName": "Nazwa płatnika",
+
+    "raiff.payments.future.list.details.tax.additionalIdType": "Type identyfikatora uzupełniającego",
+    "raiff.payments.future.list.details.tax.additionalIdNumer": "Numer identyfikatora uzupełniającego",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.N": "NIP",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.P": "PESEL",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.R": "REGON",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.1": "Dowód osobisty",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.2": "Paszport",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.3": "Inny dokument tożsamości",
+
+    "raiff.payments.future.list.details.tax.formSymbol": "Symbol formularza",
+    "raiff.payments.future.list.details.tax.periodType": "Typ okresu",
+
+    "raiff.payments.future.list.details.tax.periodTypes.J": "dzień",
+    "raiff.payments.future.list.details.tax.periodTypes.D": "dekada",
+    "raiff.payments.future.list.details.tax.periodTypes.M": "miesiąc",
+    "raiff.payments.future.list.details.tax.periodTypes.K": "kwartał",
+    "raiff.payments.future.list.details.tax.periodTypes.P": "półrocze",
+    "raiff.payments.future.list.details.tax.periodTypes.R": "rok",
+
+    "raiff.payments.future.list.details.tax.periodNumber": "Numer okresu",
+    "raiff.payments.future.list.details.tax.periodYear": "Rok okresu",
+    "raiff.payments.future.list.details.tax.obligationId": "Identyfikacja zobowiazania",
+
+    "raiff.payments.future.list.tax.insurance.amount": "Kwota",
+
+    "raiff.payments.future.list.tax.insurance.date": "Data realizacji",
 
 
 

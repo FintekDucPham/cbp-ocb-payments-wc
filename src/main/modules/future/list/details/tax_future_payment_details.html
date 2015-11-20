@@ -13,20 +13,73 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}">
-    {{ $data.details.recipientAccountNo }}
-</bd-item-property>
-
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientName'|translate}}">
+    {{ $data.details.recipientAccountNo }}<br/>
     <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.amount'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.payerName'|translate}}">
+    <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.additionalIdType'|translate}}">
+    {{::'raiff.payments.future.list.details.tax.additionalIdTypes' + $data.details.paymentDetails.idtype | translate}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.additionalIdNumber'|translate}}">
+    {{$data.details.paymentDetails.idnumber}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.formSymbol'|translate}}">
+    {{$data.details.paymentDetails.formCode}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodType'|translate}}">
+    {{::'raiff.payments.future.list.details.tax.periodTypes.' + $data.details.paymentDetails.periodType | translate}}
+</bd-item-property>
+
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodNumber'|translate}}">
+    {{$data.details.paymentDetails.periodNumber}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodYear'|translate}}">
+    {{$data.details.paymentDetails.periodYear}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.obligationId'|translate}}">
+    {{$data.details.paymentDetails.obligationId}}
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.tax.insurance.amount'|translate}}">
     {{ $data.details.amount }} {{ $data.details.currency }}
 </bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.tax.insurance.deliveryDate'|translate}}">
+    {{ $data.deliveryDate | 'yyyy-MM-dd' }}
+</bd-item-property>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferTitle'|translate}}">
     <bd-multiline-text bd-text="$data.details.title"></bd-multiline-text>
 </bd-item-property>
+
 
 
 <bd-details-action-section>
