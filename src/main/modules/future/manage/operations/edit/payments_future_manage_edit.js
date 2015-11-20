@@ -16,17 +16,19 @@ angular.module('raiffeisen-payments')
                     };
                 }]
             }
-        }).state('payments.future.manage.edit.template.fill', {
+        }).state('payments.future.manage.edit.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/" + angular.lowercase($stateParams.paymentType) + "/payments_new_" + angular.lowercase($stateParams.paymentType) + "_fill.html";
-            }
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html";
+            },
+            controller: 'NewPaymentFillController'
+
         }).state('payments.future.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/" + angular.lowercase($stateParams.paymentType) + "/payments_new_" + angular.lowercase($stateParams.paymentType) + "_verify.html";
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/payments_new_verify.html";
             },
-            controller: "FutureManageVerifyDomesticController"
+            controller: 'NewPaymentVerifyController'
         }).state('payments.future.manage.edit.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/status/payments_future_manage_edit_status.html",
@@ -35,14 +37,13 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService, rbPaymentOperationTypes, rbPaymentTypes) {
 
-        var myRecipientManager = recipientManager($stateParams.paymentType);
-
         $scope.payment.type = rbPaymentTypes[angular.uppercase($stateParams.paymentType)];
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(manageData.id, {}).then(function(data){
             data.description = data.title;
             lodash.extend($scope.payment.formData, data, $scope.payment.formData);
+            $scope.payment.formData.referenceId = manageData.id;
         });
 
         $scope.clearForm = function () {

@@ -203,19 +203,19 @@
 
         <eb-validation-messages eb-name="realizationDate">
             <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.domestic.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}} [A]
             </div>
             <div eb-message-key="date" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.domestic.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}} [B]
             </div>
             <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.domestic.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}} [C]
             </div>
             <div eb-message-key="bdMinDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}} [D]
             </div>
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
-                {{ payment.meta.laterExecutedDateMsg }}
+                {{ payment.meta.laterExecutedDateMsg }} [E]
             </div>
         </eb-validation-messages>
 
