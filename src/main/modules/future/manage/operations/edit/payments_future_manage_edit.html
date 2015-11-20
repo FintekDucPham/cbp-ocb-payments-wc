@@ -1,7 +1,8 @@
-<rb-content-view class="rb-content-view--framed form">
+<rb-content-view class="rb-content-view--framed rb-content-view--relative form">
     <bd-header>Edycja przelewu zaplanowanego</bd-header>
 
-    <bd-form-panel>
+    <eb-preloader class="rb-content-view__preloader--main" eb-promise="payment.initData.promise"></eb-preloader>
+    <bd-form-panel ng-if="payment.initData.promise.$$state.status!==0">
 
         <rb-multistep-form bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.recipients.list', onClear: clearForm, cancelState: 'payments.recipients.list' }">
             <div ui-view></div>

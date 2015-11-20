@@ -16,22 +16,27 @@ angular.module('raiffeisen-payments')
                                                                 bdMainStepInitializer, validationRegexp,
                                                                 rbFuturePaymentsTypes, rbFutureOperationType) {
 
-        bdMainStepInitializer($scope, 'future', {
+        bdMainStepInitializer($scope, 'payment', {
             formName: 'paymentForm',
-            type: rbFuturePaymentsTypes[$stateParams.paymentType.toUpperCase()],
+            type: rbFuturePaymentsTypes[angular.uppercase($stateParams.paymentType)],
             operation: rbFutureOperationType[$stateParams.operation.toUpperCase()],
             formData: {},
             transferId: {},
             options: {},
+            initData: {
+                promise: null,
+                data: null
+            },
             token: {
                 model: {},
                 params: {}
             },
             meta: {
-                recipientTypes: lodash.map(rbRecipientTypes)
+                recipientTypes: lodash.map(rbFuturePaymentsTypes)
             },
             manageAction: ""
         });
+
 
     }
 );

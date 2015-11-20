@@ -8,11 +8,18 @@ angular.module('raiffeisen-payments')
                 dataConverted: false
             },
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/payments_future_manage_edit.html",
-            controller: "PaymentsFutureManageEditController"
+            controller: "PaymentsFutureManageEditController",
+            resolve: {
+                manageData: [function(){
+                    return {
+                        id: 'NIBabdf874f-9bce-49d6-9245-3fee49@waiting'
+                    };
+                }]
+            }
         }).state('payments.future.manage.edit.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/steps/fill/" + angular.lowercase($stateParams.paymentType) + "/payments_future_manage_fill_" + angular.lowercase($stateParams.recipientType) + ".html";
+                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/" + angular.lowercase($stateParams.paymentType) + "/payments_new_" + angular.lowercase($stateParams.recipientType) + "_fill.html";
             }
         }).state('payments.future.manage.edit.verify', {
             url: "/verify",
@@ -26,14 +33,17 @@ angular.module('raiffeisen-payments')
             controller: "FutureManageEditStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams) {
+    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService) {
 
         var myRecipientManager = recipientManager($stateParams.paymentType);
 
-        lodash.extend($scope.future.formData, $stateParams.future, $scope.future.formData);
+        $scope.payment.initData.promise = paymentsService.get(manageData.id, {}).then(function(data){
+            data.description = data.title;
+            lodash.extend($scope.payment.formData, data, $scope.payment.formData);
+        });
 
         $scope.clearForm = function () {
-            $scope.future.formData = {};
+            $scope.payment.formData = {};
             $scope.$broadcast('clearForm');
         };
 
