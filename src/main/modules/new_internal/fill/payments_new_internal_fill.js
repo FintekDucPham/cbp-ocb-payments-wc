@@ -11,7 +11,7 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
-
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
     }
