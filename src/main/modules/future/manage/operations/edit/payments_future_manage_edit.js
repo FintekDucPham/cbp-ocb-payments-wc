@@ -1,12 +1,8 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.future.manage.edit', {
-            url: "/edit/:paymentType",
+            url: "/edit",
             abstract: true,
-            params: {
-                payment: null,
-                dataConverted: false
-            },
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/payments_future_manage_edit.html",
             controller: "PaymentsFutureManageEditController",
             resolve: {
@@ -32,18 +28,18 @@ angular.module('raiffeisen-payments')
         }).state('payments.future.manage.edit.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/status/payments_future_manage_edit_status.html",
-            controller: "FutureManageEditStatusController"
+            controller: "NewPaymentStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService, rbPaymentOperationTypes, rbPaymentTypes) {
+    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState) {
 
-        $scope.payment.type = rbPaymentTypes[angular.uppercase($stateParams.paymentType)];
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
-        $scope.payment.initData.promise = paymentsService.get(manageData.id, {}).then(function(data){
+        $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
             data.description = data.title;
             lodash.extend($scope.payment.formData, data, $scope.payment.formData);
-            $scope.payment.formData.referenceId = manageData.id;
+            $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
+            $scope.payment.formData.referenceId = initialState.referenceId;
         });
 
         $scope.clearForm = function () {

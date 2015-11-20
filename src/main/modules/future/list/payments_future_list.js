@@ -60,7 +60,7 @@ angular.module('raiffeisen-payments')
 
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService) {
         $scope.dateRange = {};
       //  $scope.listPromise = {};
 
@@ -78,13 +78,14 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onEdit = function(payment) {
-            $state.go('payments.future.manage.edit', {
-                'paymentType': payment.paymentType,
-                id: payment.id
+            viewStateService.setInitialState('payments.future.manage.edit', {
+                referenceId: payment.id
             });
+            $state.go('payments.future.manage.edit.fill');
         };
 
         $scope.onDelete = function(payment) {
+
             $state.go('payments.future.manage.delete', {
                 'paymentType': payment.paymentType,
                 id: payment.id

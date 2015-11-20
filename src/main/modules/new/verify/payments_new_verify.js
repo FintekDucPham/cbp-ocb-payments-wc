@@ -50,9 +50,11 @@ angular.module('raiffeisen-payments')
 
                 if($scope.payment.token.model && $scope.payment.token.model.$tokenRequired){
                     if(!$scope.payment.token.model.$isErrorRegardingToken(error)){
+                        $scope.payment.result = error;
                         actions.proceed();
                     }
                 }else{
+                    $scope.payment.result = error;
                     actions.proceed();
                 }
 

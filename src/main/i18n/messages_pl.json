@@ -889,7 +889,8 @@
     "raiff.payments.future.list.details.insurance.buttons.delete": "Usuń",
     "raiff.payments.future.list.details.insurance.buttons.backToList": "Powrót",
 
-
+    "raiff.payments.future.edit.status.error": "Operacja nie powiodła się",
+    "raiff.payments.future.edit.status.success": "Dane zostały zmienione",
 
     "raiff.MSG-0567_EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.MSG-0561_INCORRECT_DEBIT_ACC": "Wybrano nieprawidłowy rachunek ZUS",
