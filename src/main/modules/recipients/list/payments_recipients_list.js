@@ -60,6 +60,10 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onRecipientRemove = function(data){
+            angular.extend(data, {
+                recipientData: data.recipientName,
+                description: data.transferTitle
+            });
             var recipientType = data.recipientType.toLowerCase();
             if(recipientType==='swift'){
                 recipientType='foreign';

@@ -1,5 +1,5 @@
 <div class="rb-us-form-symbol-select">
-    <ui-select ng-model="selection.model" theme="bootstrap" on-select="select($item, $model)" ng-disabled="isDisabled">
+    <ui-select ng-model="selection.model" theme="bootstrap" on-select="select($item, $model)" ng-required="true" ng-disabled="isDisabled">
         <ui-select-match placeholder="{{placeholder}}">
             {{ $select.selected.code }}
         </ui-select-match>
