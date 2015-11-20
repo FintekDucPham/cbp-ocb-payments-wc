@@ -117,7 +117,7 @@ angular.module('raiffeisen-payments')
             } else {
                 transferService.create('INTERNAL', angular.extend({
                     "remitterId": 0
-                }, requestConverter($scope.payment.formData))).then(function (transfer) {
+                }, requestConverter($scope.payment.formData)), "create").then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     actions.proceed();
