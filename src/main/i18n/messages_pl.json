@@ -799,7 +799,7 @@
     "raiff.payments.components.futureDatePanel.validation.AMNT_EXCEEDED_MODIFY_NON_RESID": "Modyfikacja danych tego przelewu w internecie nie jest możliwa ze względu na wymogi sprawozdawcze Banku wobec NBP (płatność z rachunku  nierezydenta). Aby zmodyfikować ten przelew, skontaktuj się z Operatorem Centrum Telefonicznego lub doradcą bankowym w Oddziale Banku.",
 
 
-    "raiff.payments.future.list.details.domestic.transferType": "Typ operacji",
+    "raiff.payments.future.list.details.domestic.transferType": "Typ płatności",
     "raiff.payments.future.list.details.domestic.status": "Status płatności",
     "raiff.payments.future.list.details.domestic.accountName": "Z rachunku",
     "raiff.payments.future.list.details.domestic.recipientAccountNo": "Na rachunek",
@@ -814,6 +814,43 @@
     "raiff.payments.future.list.details.domestic.buttons.backToList": "Powrót",
 
 
+    "raiff.payments.future.list.details.domestic.transferTypes.TAX": "Przelew do US/IC",
+    "raiff.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Przelew krajowy",
+    "raiff.payments.future.list.details.domestic.transferTypes.TAX": "Przelew podatkowy",
+    "raiff.payments.future.list.details.domestic.transferTypes.OWN": "Przelew własny",
+
+    "raiff.payments.future.list.details.tax.payerName": "Nazwa płatnika",
+
+    "raiff.payments.future.list.details.tax.additionalIdType": "Type identyfikatora uzupełniającego",
+    "raiff.payments.future.list.details.tax.additionalIdNumer": "Numer identyfikatora uzupełniającego",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.N": "NIP",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.P": "PESEL",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.R": "REGON",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.1": "Dowód osobisty",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.2": "Paszport",
+    "raiff.payments.future.list.details.tax.additionalIdTypes.3": "Inny dokument tożsamości",
+
+    "raiff.payments.future.list.details.tax.formSymbol": "Symbol formularza",
+    "raiff.payments.future.list.details.tax.periodType": "Typ okresu",
+
+    "raiff.payments.future.list.details.tax.periodTypes.J": "dzień",
+    "raiff.payments.future.list.details.tax.periodTypes.D": "dekada",
+    "raiff.payments.future.list.details.tax.periodTypes.M": "miesiąc",
+    "raiff.payments.future.list.details.tax.periodTypes.K": "kwartał",
+    "raiff.payments.future.list.details.tax.periodTypes.P": "półrocze",
+    "raiff.payments.future.list.details.tax.periodTypes.R": "rok",
+
+    "raiff.payments.future.list.details.tax.periodNumber": "Numer okresu",
+    "raiff.payments.future.list.details.tax.periodYear": "Rok okresu",
+    "raiff.payments.future.list.details.tax.obligationId": "Identyfikacja zobowiazania",
+
+    "raiff.payments.future.list.tax.insurance.amount": "Kwota",
+
+    "raiff.payments.future.list.tax.insurance.date": "Data realizacji",
+
+
+    "raiff.payments.future.list.details.insurance.statuses.null": "",
+
 
     "raiff.payments.future.list.details.insurance.transferType": "Typ operacji",
     "raiff.payments.future.list.details.insurance.status": "Status płatności",
@@ -825,6 +862,18 @@
     "raiff.payments.future.list.details.insurance.transferTitle": "Tytułem",
     "raiff.payments.future.list.details.insurance.date": "Data realizacji",
 
+    "raiff.payments.future.list.details.insurance.payerName": "Nazwa płatnika",
+    "raiff.payments.future.list.details.insurance.payerNip": "NIP płatnika",
+    "raiff.payments.future.list.details.insurance.payerSecondIdType": "Typ drugiego identyfikatora",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdNumber": "Drugi identyfikator",
+    "raiff.payments.future.list.details.insurance.payerPaymentType": "Typ wpłaty",
+    "raiff.payments.future.list.details.insurance.declarationDate": "Deklaracja",
+    "raiff.payments.future.list.details.insurance.declarationNo": "Numer deklaracji",
+    "raiff.payments.future.list.details.insurance.additionalInfo": "Informacje dodatkowe",
+
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.": "",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.P": "P",
+
     "raiff.payments.future.list.details.insurance.senderName": "Płatnik",
     "raiff.payments.future.list.details.insurance.senderNip": "NIP płatnika",
     "raiff.payments.future.list.details.insurance.identityType": "Typ drugiego identyfikatora",
@@ -834,6 +883,7 @@
     "raiff.payments.future.list.details.insurance.declarationNumber": "Numer deklaracji",
     "raiff.payments.future.list.details.insurance.additionalInformation": "Additional information",
     "raiff.payments.future.list.details.insurance.amount": "Kwota całkowita",
+    "raiff.payments.future.list.own.deliveryDate": "Data realizacji",
 
     "raiff.payments.future.list.details.insurance.buttons.edit": "Edytuj",
     "raiff.payments.future.list.details.insurance.buttons.delete": "Usuń",
