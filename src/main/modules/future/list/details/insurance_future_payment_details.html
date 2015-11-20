@@ -3,7 +3,7 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.status'|translate}}">
-    {{ ::'raiff.payments.future.list.details.insurance.statuses' + $data.details.status | translate }}
+    {{ ::'raiff.payments.future.list.details.insurance.statuses.' + $data.details.status | translate }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}">
@@ -13,19 +13,60 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}">
-    {{ $data.details.recipientAccountNo }}
-</bd-item-property>
-
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientName'|translate}}">
+    {{ $data.details.recipientAccountNo }}<br/>
     <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.amount'|translate}}">
+<!--
+    "raiff.payments.future.list.details.insurance.payerName": "Nazwa p³atnika",
+    "raiff.payments.future.list.details.insurance.payerNip": "NIP p³atnika",
+    "raiff.payments.future.list.details.insurance.payerSecondIdType": "Typ drugiego identyfikatora",
+    "raiff.payments.future.list.details.insurance.payerSecondIdNumber": "Drugi identyfikator",
+    "raiff.payments.future.list.details.insurance.payerPaymentType": "Typ wp³aty",
+    "raiff.payments.future.list.details.insurance.declarationDate": "Data deklaracji",
+    "raiff.payments.future.list.details.insurance.declarationNumber": "Numer deklaracji",
+    "raiff.payments.future.list.details.insurance.additionalInfo": "Informacje dodatkowe",
+-->
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerName'|translate}}">
+    {{$data.details.paymentDetails.senderName}}
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerNip'|translate}}">
+    {{$data.details.paymentDetails.nip}}
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerSecondaryIdType'|translate}}">
+    {{::'raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.' + $data.details.paymentDetails.secondIDType | translate }}
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerSecondaryIdNumber'|translate}}">
+    {{$data.details.paymentDetails.secondIDNo}}
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.declarationDate'|translate}}">
+    {{$data.details.paymentDetails.declaration}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.declarationNo'|translate}}">
+    {{$data.details.paymentDetails.declarationNo}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.additionalInfo'|translate}}">
+    {{$data.details.paymentDetails.additionalInfo}}
+</bd-item-property>
+
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.tax.insurance.amount'|translate}}">
     {{ $data.details.amount }} {{ $data.details.currency }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferTitle'|translate}}">
-    <bd-multiline-text bd-text="$data.details.title"></bd-multiline-text>
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.tax.insurance.deliveryDate'|translate}}">
+    {{ $data.deliveryDate | date:'yyyy-MM-dd' }}
 </bd-item-property>
 
 
