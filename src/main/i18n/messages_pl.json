@@ -865,13 +865,14 @@
     "raiff.payments.future.list.details.insurance.payerName": "Nazwa płatnika",
     "raiff.payments.future.list.details.insurance.payerNip": "NIP płatnika",
     "raiff.payments.future.list.details.insurance.payerSecondIdType": "Typ drugiego identyfikatora",
-    "raiff.payments.future.list.details.insurance.payerSecondIdNumber": "Drugi identyfikator",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdNumber": "Drugi identyfikator",
     "raiff.payments.future.list.details.insurance.payerPaymentType": "Typ wpłaty",
     "raiff.payments.future.list.details.insurance.declarationDate": "Deklaracja",
     "raiff.payments.future.list.details.insurance.declarationNo": "Numer deklaracji",
     "raiff.payments.future.list.details.insurance.additionalInfo": "Informacje dodatkowe",
 
-    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.": "Informacje dodatkowe",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.": "",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.P": "P",
 
     "raiff.payments.future.list.details.insurance.senderName": "Płatnik",
     "raiff.payments.future.list.details.insurance.senderNip": "NIP płatnika",

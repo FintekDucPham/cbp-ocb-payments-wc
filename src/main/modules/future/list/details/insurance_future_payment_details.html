@@ -13,8 +13,8 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}">
-    {{ $data.details.recipientAccountNo }}<br/>
     <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
+    {{ $data.details.recipientAccountNo }}<br/>
 </bd-item-property>
 
 <!--
@@ -38,7 +38,7 @@
 </bd-item-property>
 
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerSecondaryIdType'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerSecondIdType'|translate}}">
     {{::'raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.' + $data.details.paymentDetails.secondIDType | translate }}
 </bd-item-property>
 
