@@ -814,7 +814,10 @@
     "raiff.payments.future.list.details.domestic.buttons.backToList": "Powrót",
 
 
-    "raiff.payments.future.list.details.domestic.transferTypes.TAX": "TODO: transfer type US/IC",
+    "raiff.payments.future.list.details.domestic.transferTypes.TAX": "Przelew do US/IC",
+    "raiff.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Przelew krajowy",
+    "raiff.payments.future.list.details.domestic.transferTypes.TAX": "Przelew podatkowy",
+    "raiff.payments.future.list.details.domestic.transferTypes.OWN": "Przelew własny",
 
     "raiff.payments.future.list.details.tax.payerName": "Nazwa płatnika",
 
@@ -846,6 +849,8 @@
     "raiff.payments.future.list.tax.insurance.date": "Data realizacji",
 
 
+    "raiff.payments.future.list.details.insurance.statuses.null": "",
+
 
     "raiff.payments.future.list.details.insurance.transferType": "Typ operacji",
     "raiff.payments.future.list.details.insurance.status": "Status płatności",
@@ -866,6 +871,7 @@
     "raiff.payments.future.list.details.insurance.declarationNumber": "Numer deklaracji",
     "raiff.payments.future.list.details.insurance.additionalInformation": "Additional information",
     "raiff.payments.future.list.details.insurance.amount": "Kwota całkowita",
+    "raiff.payments.future.list.own.deliveryDate": "Data realizacji",
 
     "raiff.payments.future.list.details.insurance.buttons.edit": "Edytuj",
     "raiff.payments.future.list.details.insurance.buttons.delete": "Usuń",
