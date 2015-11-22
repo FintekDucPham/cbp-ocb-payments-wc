@@ -815,11 +815,11 @@
 
 
     "raiff.payments.future.list.details.domestic.transferTypes.TAX": "Przelew do US/IC",
-    "raiff.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Przelew krajowy",
-    "raiff.payments.future.list.details.domestic.transferTypes.TAX": "Przelew podatkowy",
+    "raiff.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Przelew krajowy w PLN",
     "raiff.payments.future.list.details.domestic.transferTypes.OWN": "Przelew własny",
+    "raiff.payments.future.list.details.domestic.transferTypes.INSURANCE": "Przelew do ZUS",
 
-    "raiff.payments.future.list.details.tax.payerName": "Nazwa płatnika",
+    "raiff.payments.future.list.details.tax.payerName": "Płatnik",
 
     "raiff.payments.future.list.details.tax.additionalIdType": "Type identyfikatora uzupełniającego",
     "raiff.payments.future.list.details.tax.additionalIdNumer": "Numer identyfikatora uzupełniającego",
@@ -859,6 +859,7 @@
     "raiff.payments.future.list.details.insurance.recipientName": "Nazwa odbiorcy",
     "raiff.payments.future.list.details.insurance.amount": "Kwota",
     "raiff.payments.future.list.details.insurance.recipientAdress": "TODO: raiff.payments.future.list.details.domestict.recipientAdress",
+    "raiff.payments.future.list.details.domestic.recipientBankAccountName": "Nazwa banku odbiorcy",
     "raiff.payments.future.list.details.insurance.transferTitle": "Tytułem",
     "raiff.payments.future.list.details.insurance.date": "Data realizacji",
 
@@ -872,7 +873,14 @@
     "raiff.payments.future.list.details.insurance.additionalInfo": "Informacje dodatkowe",
 
     "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.": "",
-    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.P": "P",
+
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.N": "NIP",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.P": "PESEL",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.R": "REGON",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.1": "Dowód osobisty",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.2": "Paszport",
+    "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.3": "Inny dokument tożsamości",
+
 
     "raiff.payments.future.list.details.insurance.senderName": "Płatnik",
     "raiff.payments.future.list.details.insurance.senderNip": "NIP płatnika",
@@ -908,8 +916,8 @@
     "raiff.payments.future.delete.buttons.proceed": "Usuń",
     "raiff.payments.future.delete.buttons.cancel": "Anuluj",
 
-    "raiff.payments.future.delete.status.label.success": "TODO: Success",
-    "raiff.payments.future.delete.status.label.error": "TODO: error",
+    "raiff.payments.future.manage.delete.header": "Usuń przelew zaplanowany",
+
 
     "raiff.payments.future.delete.status.label.status.20": "Zlecnie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.40": "Zlecnie przyjęte do realizacji ",
@@ -917,6 +925,7 @@
     "raiff.payments.future.delete.status.label.status.100": "Zlecenie zrealizowane",
     "raiff.payments.future.delete.status.label.status.99": "Zlecenie odrzucone",
     "raiff.payments.future.delete.status.label.status.98": "Zlecenie odrzucone",
+
 
 
     "EOF" : ""

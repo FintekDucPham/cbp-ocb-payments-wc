@@ -13,9 +13,9 @@ angular.module('raiffeisen-payments')
         "98": "error",
         "default": "warning"
     })
-    .controller('PaymentsFutureManageDeleteController', function ($scope, paymentsService, pathService, $state, gate, viewStateService, RB_TOKEN_AUTHORIZATION_CONSTANTS, CODE_TO_ICONS) {
+    .controller('PaymentsFutureManageDeleteController', function ($scope, paymentsService, pathService, $state, gate, viewStateService, RB_TOKEN_AUTHORIZATION_CONSTANTS, CODE_TO_ICONS, initialState) {
         // TODO: ideka from initialState wyciagnac
-        $scope.paymentDetailsPromise = paymentsService.get('NIB52381010-8eb7-463b-947d-f01cb8@waiting', {});
+        $scope.paymentDetailsPromise = paymentsService.get(initialState.referenceId, {});
 
         $scope.paymentDetailsPromise.then(function(details) {
             // we need such structure and naming because we reuse some templates
@@ -37,8 +37,8 @@ angular.module('raiffeisen-payments')
 
                     paymentsService.remove($scope.$data.details, {
                         // verifyToken
-                        id: $scope.token.model.currentToken.data.id,
-                        value: $scope.token.model.input.model
+                        tokenId: $scope.token.model.currentToken.data.id, // TODO: TOKEN ID
+                        tokenValue: $scope.token.model.input.model
                     }).then(function(resp) {
                         viewStateService.setInitialState('payments.future.manage.delete.status', {
                             status: {

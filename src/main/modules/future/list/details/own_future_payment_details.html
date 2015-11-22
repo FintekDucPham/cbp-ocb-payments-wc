@@ -1,5 +1,5 @@
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferType'|translate}}">
-    {{ ::'raiff.payments.future.list.details.insurance.transferTypes.' + $data.details.transferType | translate}}
+    {{ ::'raiff.payments.future.list.details.domestic.transferTypes.' + $data.details.transferType | translate}}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.status'|translate}}">
@@ -14,7 +14,7 @@
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}">
     {{ $data.details.recipientAccountName }} <br/>
-    {{ $data.details.recipientAccountNo }}<br/>
+    {{ $data.details.recipientAccountNo | nrbIbanFilter }}<br/>
 </bd-item-property>
 
 
@@ -28,7 +28,7 @@
 
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.own.deliveryDate'|translate}}">
-    {{ $data.deliveryDate | date:'yyyy-MM-dd' }}
+    {{ $data.deliveryDate | date:'dd-MM-yyyy' }}
 </bd-item-property>
 
 

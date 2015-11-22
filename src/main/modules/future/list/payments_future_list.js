@@ -7,15 +7,11 @@ angular.module('raiffeisen-payments')
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
                     return $q.all({
-                        // TODO: remove defaults
                         detalOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.detal"),
                         microOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.micro"),
                         detalMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.detal"),
                         microMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.micro"),
 
-                        //microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
-                        //detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
-                        //microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
                         customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         var result = {
