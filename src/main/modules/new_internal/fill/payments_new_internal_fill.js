@@ -11,7 +11,7 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
-
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
     }
@@ -63,6 +63,7 @@ angular.module('raiffeisen-payments')
 
         var requestConverter = function (formData) {
             formData.description = splitTextEveryNSign(formData.description);
+            formData.amount = (""+formData.amount).replace(",", ".");
             return formData;
         };
 
@@ -116,7 +117,7 @@ angular.module('raiffeisen-payments')
             } else {
                 transferService.create('INTERNAL', angular.extend({
                     "remitterId": 0
-                }, requestConverter($scope.payment.formData))).then(function (transfer) {
+                }, requestConverter($scope.payment.formData)), "create").then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     actions.proceed();
