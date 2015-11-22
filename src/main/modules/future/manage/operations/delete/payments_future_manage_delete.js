@@ -12,7 +12,7 @@ angular.module('raiffeisen-payments')
             //        });
             //    }]
             //}
-        })
+        });
     })
     .controller('PaymentsFutureManageDeleteController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService) {
 
