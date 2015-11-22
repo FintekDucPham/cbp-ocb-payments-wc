@@ -86,10 +86,9 @@ angular.module('raiffeisen-payments')
 
         $scope.onDelete = function(payment) {
             viewStateService.setInitialState('payments.future.manage.delete', {
-                paymentType: payment.paymentType,
                 referenceId: payment.id
             });
-            $state.go('payments.future.manage.delete');
+            $state.go('payments.future.manage.delete.fill');
         };
 
         $scope.onBack = function(child) {
@@ -126,6 +125,7 @@ angular.module('raiffeisen-payments')
                             payment.loadDetails = function() {
                                 payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
                                     payment.details = resp;
+                                    payment.details._showButtons = true;
                                 });
                             };
                         });

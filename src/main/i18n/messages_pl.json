@@ -905,6 +905,19 @@
     "raiff.change_me.EMPTY_SECONDARY_ID_TYPE": "Typ drugiego identyfikatora musi zostać wybrany",
     "raiff.change_me.EMPTY_PAYMENT_TYPE": "Typ wpłaty musi zostać wybrany",
 
+    "raiff.payments.future.delete.buttons.proceed": "Usuń",
+    "raiff.payments.future.delete.buttons.cancel": "Anuluj",
+
+    "raiff.payments.future.delete.status.label.success": "TODO: Success",
+    "raiff.payments.future.delete.status.label.error": "TODO: error",
+
+    "raiff.payments.future.delete.status.label.status.20": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.future.delete.status.label.status.40": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.future.delete.status.label.status.60": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.future.delete.status.label.status.100": "Zlecenie zrealizowane",
+    "raiff.payments.future.delete.status.label.status.99": "Zlecenie odrzucone",
+    "raiff.payments.future.delete.status.label.status.98": "Zlecenie odrzucone",
+
 
     "EOF" : ""
 }
