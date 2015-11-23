@@ -941,6 +941,12 @@
 
     "raiff.payments.standing.list.empty": "TODO: empy payment list",
 
+    "raiff.payments.standing.list.header.name": "Twoja nazwa zlecenia",
+    "raiff.payments.standing.list.header.realizationDate": "Data realizacji",
+    "raiff.payments.standing.list.header.amount": "Kwota",
+    "raiff.payments.standing.list.header.recipientData": "Odbiorca",
+    "raiff.payments.standing.list.header.recipientAccount": "Rachunek",
+
     "raiff.payments.standing.list.details.insurance.buttons.edit": "Edytuj",
     "raiff.payments.standing.list.details.insurance.buttons.delete": "Usuń",
     "raiff.payments.standing.list.details.insurance.buttons.backToList": "Powrót",

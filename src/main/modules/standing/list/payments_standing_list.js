@@ -54,7 +54,7 @@ angular.module('raiffeisen-payments')
             //}
         });
     })
-    .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService) {
+    .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, pathService, viewStateService) {
         $scope.dateRange = {};
 
         $scope.options = {
@@ -85,7 +85,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.resolveTemplate = function () {
-            return "{0}/modules/standing/list/details/payments_standing_list_detail.html";
+            return "/modules/standing/list/details/payments_standing_list_detail.html";
         };
 
 
@@ -96,9 +96,9 @@ angular.module('raiffeisen-payments')
             tableData: {
                 getData: function (defer, $params) {
                     // BACKEND: ustawic jakie parametry zostana wyslane do koncowki zwracajace platnosci zaplanowane
-                    // obecnie: statusPaymentCriteria=standing na potrzeby testow
+                    // obecnie: statusPaymentCriteria=waiting na potrzeby testow
                     var params = {
-                        statusPaymentCriteria: "standing"
+                        statusPaymentCriteria: "waiting"
                     };
 
                     // BACKEND: ustawienie daty od - do
