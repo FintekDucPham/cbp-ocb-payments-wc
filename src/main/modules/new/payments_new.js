@@ -40,6 +40,10 @@ angular.module('raiffeisen-payments')
         "SEPA": {
             code: 'SEPA',
             state: 'sepa'
+        },
+        "OWN": {
+            code: 'OWN',
+            state: 'own'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
