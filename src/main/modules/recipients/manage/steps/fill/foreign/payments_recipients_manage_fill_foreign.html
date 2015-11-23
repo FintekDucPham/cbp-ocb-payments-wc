@@ -177,7 +177,7 @@
             <textarea name="recipientData"
                       ng-model="recipient.formData.recipientData"
                       split-text-max-length-validators="140"
-                      ng-pattern="INTERNATIONAL_RECIPIENT_DATA_REGEX"
+                      ng-pattern="PAYMENT_TITLE_REGEX"
                       required
                       class="input-field input-area--party-data"
                       placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -190,7 +190,7 @@
                 <!-- {{::'raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}} -->
                 <!--</div>-->
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_data.TOO_LONG_BANK'|translate}}
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
                 </div>
                 <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
