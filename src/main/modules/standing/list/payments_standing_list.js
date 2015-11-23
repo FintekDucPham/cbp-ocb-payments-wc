@@ -85,7 +85,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.resolveTemplate = function () {
-            return "/modules/standing/list/details/payments_standing_list_detail.html";
+            return pathService.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
         };
 
 

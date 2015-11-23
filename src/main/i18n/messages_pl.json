@@ -955,7 +955,7 @@
     "raiff.payments.standing.list.details.orderName": "Nazwa zlecenia",
     "raiff.payments.standing.list.details.senderAccount": "Z rachunku",
     "raiff.payments.standing.list.details.senderAccountOwner": "Właściciel",
-    "raiff.payments.standing.list.details.recipientAccountName": "Na rachunek",
+    "raiff.payments.standing.list.details.recipientAccount": "Na rachunek",
     "raiff.payments.standing.list.details.recipientData": "Dane odbiorcy",
     "raiff.payments.standing.list.details.amount": "Kwota",
     "raiff.payments.standing.list.details.title": "Tytułem",
