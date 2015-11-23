@@ -760,13 +760,15 @@
     "raiff.payments.future.list.header": "Płatności zaplanowane",
     "raiff.payments.future.list.search_btn": "Szukaj",
     "raiff.payments.future.list.header.operation_date": "Data operacji",
-    "raiff.payments.future.list.header.debit_account": "Z rachunku",
+    "raiff.payments.future.list.header.debit_account": "Na rachunek",
     "raiff.payments.future.list.header.payment_type": "Typ płatności",
     "raiff.payments.future.list.header.recipient_data": "Nazwa odbiorcy",
     "raiff.payments.future.list.header.payment_title": "Tytułem",
-    "raiff.payments.future.list.header.credit_account": "Na rachunek",
+    "raiff.payments.future.list.header.credit_account": "Z rachunku",
     "raiff.payments.future.list.header.amount": "Kwota",
-    "raiff.payments.future.list.empty": "Brak zaplanowanych płatności",
+
+    "raiff.payments.future.list.header.plannedoperationdate": "Planowana data realizacji",
+    "raiff.payments.future.list.empty": "Nie znaleziono płatności spełniających kryteria wyszukiwania",
     "raiff.payments.future.fill.transferType.label": "Typ przelewu",
     "raiff.payments.future.fill.debit_account.label": "Z rachunku",
 
@@ -797,6 +799,8 @@
 
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE": "Nieprawidłowa data początkowa okresu wyszukiwania",
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE": "Nieprawidłowa data końcowa okresu wyszukiwania",
+
+
 
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE": "Data końcowa okresu wyszukiwania jest późniejsza niż ##MONTHS## miesięcy w przód. Można wyszukiwać tylko operacje zaplanowane na najbliższe ##MONTHS## miesięcy.",
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
