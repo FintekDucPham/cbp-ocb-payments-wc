@@ -936,6 +936,19 @@
     "raiff.payments.future.delete.status.label.status.98": "Zlecenie odrzucone",
 
 
+    "raiff.payments.standing.label": "Zlecenia stałe",
+    "raiff.payments.standing.list.header": "Zlecenia stałe",
+
+    "raiff.payments.standing.list.empty": "TODO: empy payment list",
+
+    "raiff.payments.standing.list.details.insurance.buttons.edit": "Edytuj",
+    "raiff.payments.standing.list.details.insurance.buttons.delete": "Usuń",
+    "raiff.payments.standing.list.details.insurance.buttons.backToList": "Powrót",
+
+    "raiff.payments.standing.list.details.orderNo": "Numer zlecenia",
+    "raiff.payments.standing.list.details.orderName": "Nazwa zlecenia",
+    "raiff.payments.standing.list.details.senderAccount": "Z rachunku",
+
 
     "EOF" : ""
 }

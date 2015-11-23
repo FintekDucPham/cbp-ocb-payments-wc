@@ -75,6 +75,13 @@ angular.module('raiffeisen-payments', [
                     icon: "raiff-icons raiff_operacje_odrzucone",
                     action: "payments.rejected.list",
                     priority: 6
+                },
+                {
+                    id: "payments.standing.list",
+                    label: 'raiff.payments.standing.label',
+                    icon: "raiff-icons",
+                    action: "payments.standing.list",
+                    priority: 7
                 }
             ]
         });
