@@ -21,11 +21,20 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        customerService.getCustomerDetails().then(function(customerDetails){
+            $scope.customerDetails = customerDetails.customerDetails;
+        });
+        $scope.accountListPromise = accountsService.search().then(function(accountList){
+            $scope.accountsList = accountList.content;
+        });
+
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
 
         $scope.recipient.meta.forbiddenAccounts = [];
 
-        $scope.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
+        console.debug( validationRegexp('INTERNATIONAL_ACCOUNT_REGEX'));
+        $scope.regex = {};
+        $scope.regex.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
         $scope.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
 
         // TODO: change to promise when you have properly working service
@@ -156,7 +165,7 @@ angular.module('raiffeisen-payments')
             decorateRequest: function(params){
                 return angular.extend(params, {
                     currency: "PLN",
-                    productList: "BENEFICIARY_CREATE_FROM_LIST"
+                    productList: "TRANSFER_FOREIGN_FROM_LIST"
                 });
             }
         });

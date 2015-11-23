@@ -18,7 +18,7 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-        <!--<bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{ ::'raiff.payments.recipients.edit.currency.verify.company.name' | translate }}">
+        <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.currency.verify.company.name' | translate }}">
             <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
                 <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
                     <span ng-if="owner != null">{{owner.fullName}}</span>
@@ -31,7 +31,7 @@
                     <span ng-if="owner == null">-</span>
                 </div>
             </section>
-        </bd-item-property>-->
+        </bd-item-property>
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.custom_name.label' | translate }}">
             <input name="customName"
@@ -138,14 +138,14 @@
 
 
         <!-- account label -->
-
+    {{regex.INTERNATIONAL_ACCOUNT_REGEX}}
         <bd-item-property
                 label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
             <input id="recipientAccountNo"
                    name="recipientAccountNo"
                    ng-model="recipient.formData.recipientAccountNo"
                    required
-                   ng-pattern="INTERNATIONAL_ACCOUNT_REGEX"
+                   pattern="{{regex.INTERNATIONAL_ACCOUNT_REGEX}}"
                    ng-maxlength = "recipient.formData.recipientBankCountry.ibanLength || null"
                    ng-minlength = "recipient.formData.recipientBankCountry.ibanLength || null"
                    class="input-field"
@@ -228,7 +228,7 @@
                     {{::'raiff.payments.recipients.new.currency.fill.description.EMPTY'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.description.PATTERN'|translate}}
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA'|translate}}
                 </div>
                 <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA'|translate}}

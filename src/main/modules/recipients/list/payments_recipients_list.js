@@ -149,14 +149,14 @@ angular.module('raiffeisen-payments')
                                                 recipientIdentityType: template.paymentDetails.informationProvider,
                                                 recipientBankCountry: template.paymentDetails.bankCountry,
                                                 recipientCountry: template.paymentDetails.foreignCountryCode,
-                                                recipientAddress: recipient.recipientAddress,
-                                                transferTitleTable: template.title
+                                                recipientAddress: recipient.recipientAddress.join(""),
+                                                transferTitleTable: template.title.join("")
                                             };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: template.title.join(" "),
-                                                recipientAddress: recipient.recipientAddress,
-                                                transferTitleTable: template.title
+                                                recipientAddress: recipient.recipientAddress.join(""),
+                                                transferTitleTable: template.title.join("")
                                             };
                                         case "INSURANCE":
                                             return {
