@@ -20,7 +20,7 @@
                         <ui-select ng-model="inputData.periodRange"
                                    theme="bootstrap"
                                    reset-search-input="false">
-                            <ui-select-match placeholder="{{:: 'TODO' | translate }}">
+                            <ui-select-match placeholder="">
                                 {{ 'raiff.payments.components.futureDatePanel.dateRanges.'+ $select.selected | translate }}
                             </ui-select-match>
                             <ui-select-choices repeat="item in FUTURE_DATE_RANGES_LIST">
@@ -40,6 +40,9 @@
             <div eb-message-key="pattern" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange | translate}}</div>
 
             <div eb-message-key="INCORRECT_END_DATE" class="validation-message animate-on">{{::messages.INCORRECT_END_DATE}}</div>
+
+            <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
+
         </eb-validation-messages>
 
 

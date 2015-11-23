@@ -67,16 +67,15 @@ angular.module('raiffeisen-payments')
                 $scope.FUTURE_DATE_TYPES  = FUTURE_DATE_TYPES;
                 $scope.FUTURE_DATE_RANGES_LIST = Object.keys(FUTURE_DATE_RANGES);  // because repeat doesn't support objects
                 $scope.FUTURE_DATE_TYPES_LIST  = Object.keys(FUTURE_DATE_TYPES);
-                $scope.options = options.maxOffsetInMonths;
+                $scope.options = options;
 
                 $scope.messages = {
                     'INCORRECT_END_DATE': translate.property('raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
                 };
 
 
-                // this version is bad, because it causes problem when calculating max weeks or months which can be entered
-                //maxDate.setMonth(now.getMonth() + options.maxOffsetInMonths);
-                maxDate = new Date(now.getTime() + (options.maxOffsetInMonths * 3600 * 1000 * 24 * 30));
+                maxDate = new Date(now.getTime());
+                maxDate.setMonth(now.getMonth() + parseInt(options.maxOffsetInMonths, 10));
 
                 $scope.inputData = {
                     selectedMode: options.dateChooseType,
@@ -119,10 +118,9 @@ angular.module('raiffeisen-payments')
                         //}
 
                         var tmp = calculateCurrentPeriodBaseDate();
-                        $scope.futureDatePanelForm.period.$setValidity("INCORRECT_END_DATE", tmp.getTime() <= maxDate.getTime());
+                        $scope.futureDatePanelForm.period.$setValidity("TOO_LATE_END_DATE", tmp.getTime() <= maxDate.getTime());
                     }
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
-                        // TODO: all range validitons set to true
                         $scope.futureDatePanelForm.period.$setValidity("period", true);
                     }
 
