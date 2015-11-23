@@ -91,8 +91,7 @@
                         ng-model="recipient.formData.recipientBankName"
                         name="recipientBankName"
                         bd-matches-none-of="recipientBankNameValidators"
-                        bd-split-text-length="132"
-                        bd-split-text
+                        split-text-max-length-validators="140"
                         ng-required="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"
                     ></textarea>
 
@@ -100,6 +99,9 @@
             <eb-validation-messages eb-name="recipientBankName"><!--max 35-->
                 <div eb-message-key="recipientBankNameNonEmpty" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
+                </div>
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
                 </div>
             </eb-validation-messages>
         </bd-item-property>
@@ -168,7 +170,7 @@
                           label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_name_address' | translate }}">
             <textarea name="recipientData"
                       ng-model="recipient.formData.recipientData"
-                      bd-split-text-length="132"
+                      split-text-max-length-validators="140"
                       bd-split-text
                       ng-pattern="INTERNATIONAL_RECIPIENT_DATA_REGEX"
                       required
@@ -184,6 +186,9 @@
                 <!--</div>-->
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_data.TOO_LONG_BANK'|translate}}
+                </div>
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
                 </div>
             </eb-validation-messages>
         </bd-item-property>
@@ -209,10 +214,9 @@
 
             <textarea name="description"
                       ng-model="recipient.formData.description"
-                      bd-split-text-length="132"
+                      split-text-max-length-validators="140"
                       ng-pattern="PAYMENT_TITLE_REGEX"
                       class="input-field input-area--payment-description"
-                      bd-split-text
                       required
                       placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.description.placeholder' | translate }}"></textarea>
 
@@ -223,8 +227,8 @@
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.description.PATTERN'|translate}}
                 </div>
-                <div eb-message-key="splitTextLength" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.description.MAXLENGTH'|translate}}
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA'|translate}}
                 </div>
             </eb-validation-messages>
 

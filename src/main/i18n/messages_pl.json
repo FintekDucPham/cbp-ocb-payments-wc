@@ -361,9 +361,10 @@
     "raiff.payments.recipients.new.currency.fill.FIELD.RULE": "Rachunek odbiorcy nie może przekraczać 34 znaków i powinnien zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.remitterAccount.EMPTY": "Pole nie może być puste",
     "raiff.payments.recipients.new.currency.fill.customName.EMPTY": "Nazwa skrócona odbiorcy nie może być pusta",
-    "raiff.payments.recipients.new.currency.fill.customName.ILLEGAL": "Nazwa skrócona odbiorcy nie może przekraczać 35 znaków i powinno zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.customName.ILLEGAL": "Nazwa skrócona odbiorcy nie może przekraczać 35 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",
-    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA": "Tytuł nie może przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
 
     "raiff.payments.recipients.new.currency.fill.recipient_account.label": "Rachunek odbiorcy",
     "raiff.payments.recipients.new.currency.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
@@ -371,7 +372,7 @@
     "raiff.payments.recipients.new.currency.fill.recipient_name_address": "Nazwa i adres odbiorcy",
     "raiff.payments.recipients.new.currency.fill.recipient_data.placeholder": "Wpisz nazwę i adres odbiorcy",
 
-    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC": "Rachunek odbiorcy nie może przekraczać 34 znaków i powinnien zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK": "Dane banku odbiorcy nie mogą być puste",
@@ -380,7 +381,7 @@
     "raiff.payments.recipients.new.currency.fill.swift_bic.INCORRECT_SWIFT": "Niepoprawny kod SWIFT banku",
 
     "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",
-    "raiff.payments.recipients.new.currency.fill.recipient_data.TOO_LONG_BANK": "Dane banku odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.TOO_LONG_BANK": "Dane banku odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN": "Rachunek odbiorcy nie jest zgodny z formatem IBAN.",
 
     "raiff.payments.recipients.new.currency.fill.description.label": "Tytułem",
