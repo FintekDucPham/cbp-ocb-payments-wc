@@ -35,7 +35,7 @@ angular.module('raiffeisen-payments')
         console.debug( validationRegexp('INTERNATIONAL_ACCOUNT_REGEX'));
         $scope.regex = {};
         $scope.regex.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
-        $scope.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
+        $scope.regex.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
 
         // TODO: change to promise when you have properly working service
         $scope.countries = {
@@ -130,28 +130,32 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientBankNameValidators = {
             recipientBankNameNonEmpty: function(recipientBankName) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
                     return !_.isEmpty(_.trim(recipientBankName));
                 }
+                return true;
             }
         };
 
         $scope.recipientBankCountryValidators = {
             recipientBankCountryNonEmpty: function(recipientBankCountryNonEmpty) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
                     return !_.isEmpty(recipientBankCountryNonEmpty);
                 }
+                return true;
             }
         };
 
         $scope.recipientBankSwiftCodeValidators = {
             recipientBankSwiftOrBicNonEmpty: function(recipientBankSwiftOrBic) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                    console.debug(!_.isEmpty(_.trim(recipientBankSwiftOrBic)));
                     return !_.isEmpty(_.trim(recipientBankSwiftOrBic));
                 }
+                return true;
             },
             recipientBankSwiftAsyncCheck: function(recipientBankSwiftOrBic) {
-                // TODO: zrobic asynchroniczna walidacje tegoz
+                return true;
             }
         };
 
