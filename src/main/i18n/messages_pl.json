@@ -790,8 +790,8 @@
     "raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Musisz wprowadzić liczbę najbliższych miesięcy",
 
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_DAYS": "Nieprawidłowa liczba najbliższych dni",
-    "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_WEEKS": "Nieprawidłowa liczba najbliższych miesięcy",
-    "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_MONTHS": "Nieprawidłowa liczba najbliższych tygodni",
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_WEEKS": "Nieprawidłowa liczba najbliższych tygodni",
+    "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_MONTHS": "Nieprawidłowa liczba najbliższych miesięcy",
 
 
     "raiff.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE": "Musisz wprowadzić datę początkową okresu wyszukiwania",
