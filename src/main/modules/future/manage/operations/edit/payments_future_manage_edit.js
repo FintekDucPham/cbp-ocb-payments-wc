@@ -4,21 +4,13 @@ angular.module('raiffeisen-payments')
             url: "/edit",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/payments_future_manage_edit.html",
-            controller: "PaymentsFutureManageEditController",
-            resolve: {
-                manageData: [function(){
-                    return {
-                        id: 'NIBabdf874f-9bce-49d6-9245-3fee49@waiting'
-                    };
-                }]
-            }
+            controller: "PaymentsFutureManageEditController"
         }).state('payments.future.manage.edit.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html";
             },
             controller: 'NewPaymentFillController'
-
         }).state('payments.future.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
@@ -31,12 +23,16 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, manageData, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState) {
+    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState) {
 
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
-            data.description = data.title;
+            if(data.transferType===rbPaymentTypes.OWN.code){
+                data.description = data.title.join("\n");
+            }else{
+                data.description = data.title;
+            }
             lodash.extend($scope.payment.formData, data, $scope.payment.formData);
             $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
             $scope.payment.formData.referenceId = initialState.referenceId;

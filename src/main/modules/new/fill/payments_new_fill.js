@@ -102,7 +102,7 @@ angular.module('raiffeisen-payments')
         }
 
         function validateBalance() {
-            if($scope.payment.type.code!='INSURANCE'){
+            if($scope.payment.type && $scope.payment.type.code!='INSURANCE'){
                 $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
             }
         }
@@ -136,7 +136,7 @@ angular.module('raiffeisen-payments')
             } else {
                 transferService.create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
-                }, requestConverter($scope.payment.formData)), "create").then(function (transfer) {
+                }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     actions.proceed();
