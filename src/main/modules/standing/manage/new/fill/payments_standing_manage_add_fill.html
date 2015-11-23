@@ -1,0 +1,229 @@
+<form name="investmentBuyForm" class="form-body">
+    <p>
+        {{ ::'raiff.investments.buy.fill.marketingText' | translate}}
+    </p>
+
+    <bd-form-panel>
+        <bd-item-property label="{{ ::'raiff.investments.buy.fill.sender_account' | translate }}">
+            <rb-account-select rb-account-id="investmentBuyContext.formData.senderAccountId"
+                               rb-account="investmentBuyContext.items.senderAccount"
+                               rb-product-list-name="{{productList}}"
+                               rb-account-restrictions="{{productRestrictions}}"
+                               rb-on-account-select="onSenderAccountSelect()"
+                               rb-init-select-fn="rbInitSenderAccountSelectFn($accountList, $select)"
+                               ng-class="{ 'no-accounts-available': investmentBuyForm.$error.noAccountsAvailable }"
+                    ></rb-account-select>
+
+            <div ng-messages="investmentBuyForm.$error" class="messages"
+                 ng-if="investmentBuyForm.$submitted">
+                <div ng-message="noAccountsAvailable" class="validation-message animate-on">
+                    {{::'raiff.investments.buy.fill.validation.noAccountsAvailable' | translate}}
+                </div>
+            </div>
+
+        </bd-item-property>
+
+        <bd-item-property ng-if="investmentBuyContext.formData.senderAccountId"
+                          label="{{ ::'raiff.investments.buy.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="investmentBuyContext.items.senderAccount.accessibleAssets"
+                       currency="{{ investmentBuyContext.items.senderAccount.currency }}"></bd-amount>
+
+        </bd-item-property>
+
+        <bd-item-property
+                label="{{ ::'raiff.investments.buy.fill.fundType' | translate }}">
+            <ui-select ng-model="investmentBuyContext.formData.fundType"
+                       ng-change="onFundTypeChange()"
+                       name="fundType"
+                       theme="bootstrap">
+                <ui-select-match placeholder="{{ ::'raiff.investments.buy.fill.placeholderAny' | translate }}">
+                    {{ 'raiff.investments.tfi.type.' + investmentBuyContext.formData.fundType.fundType | translate }}
+                </ui-select-match>
+
+                <ui-select-choices repeat="fundType in renderData.fundsTypes">
+                    {{ ::'raiff.investments.tfi.type.'+fundType.fundType | translate }}
+                </ui-select-choices>
+            </ui-select>
+
+            <eb-validation-messages eb-name="fundType">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.investments.buy.fill.validation.chooseFundType' | translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
+
+        <bd-item-property
+                class="choose-fund"
+                label="{{ ::'raiff.investments.buy.fill.fundToBuy' | translate }}">
+            <ui-select ng-model="investmentBuyContext.formData.fundToBuy"
+                       ng-change="onFundToBuyChange()"
+                       name="fundToBuy"
+                       bd-matches-none-of="validators['fundToBuy']"
+                       theme="bootstrap">
+                <ui-select-match placeholder="{{::'raiff.investments.buy.fill.chooseFund' | translate }}">
+                    <div class="fund_name_truncate" title="{{ $select.selected.fundName }}">{{ $select.selected.fundName }}</div>
+                </ui-select-match>
+
+                <ui-select-choices repeat="fund in renderData.fundsArray | orderBy:'fundName' | filter:fundsFilter">
+                    <div class="fund_name_truncate" title="{{ fund.fundName }}">{{ fund.fundName }}</div>
+                </ui-select-choices>
+            </ui-select>
+
+
+            <eb-validation-messages eb-name="fundToBuy">
+                <div eb-message-key="chooseFund" class="validation-message animate-on">
+                    {{::'raiff.investments.buy.fill.validation.chooseFund' | translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+        <bd-item-property
+                label="{{ ::'raiff.investments.buy.fill.register' | translate }}"
+                ng-show="!investmentBuyContext.formData.fundToBuy.id || renderData.fundsToRegisters[investmentBuyContext.formData.fundToBuy.id].length >= 2"
+                >
+            <ui-select ng-model="investmentBuyContext.formData.choosenRegister"
+                       ng-change="onRegisterChange()"
+                       name="choosenRegister"
+                       bd-matches-none-of="validators['choosenRegister']"
+                       theme="bootstrap">
+                <ui-select-match placeholder="{{::'raiff.investments.buy.fill.chooseRegister' | translate }}">
+                    {{ $select.selected.registryName || $select.selected.registryId}}
+                </ui-select-match>
+
+                <ui-select-choices repeat="register in renderData.fundsToRegisters[investmentBuyContext.formData.fundToBuy.id]">
+                    {{ register.registryName || register.registryId }}
+                </ui-select-choices>
+            </ui-select>
+
+            <eb-validation-messages eb-name="choosenRegister">
+                <div eb-message-key="chooseRegister" class="validation-message animate-on">
+                    {{::'raiff.investments.buy.fill.validation.chooseRegister' | translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          ng-show="renderData.fundsToRegisters[investmentBuyContext.formData.fundToBuy.id].length == 1"
+                          label="{{::'raiff.investments.buy.fill.register'|translate}}">
+            {{ ::'raiff.investments.buy.fill.newRegister'|translate }}
+        </bd-item-property>
+
+        <bd-item-property label="{{::'raiff.investments.buy.fill.tfi'|translate}}" ng-show="investmentBuyContext.formData.choosenRegister.fundProduct.name">
+            <input readonly class="input-field" type="text" ng-model="investmentBuyContext.formData.choosenRegister.fundProduct.name" />
+        </bd-item-property>
+
+        <bd-item-property label="{{::'raiff.investments.buy.fill.minBuyValue'|translate}}" ng-show="investmentBuyContext.formData.choosenRegister">
+            <input readonly class="input-field" type="text" ng-model="investmentBuyContext.meta.calculatedMinBuyValueWithCurrency" />
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--multi"
+                          label="{{ ::'raiff.investments.buy.fill.amount' | translate }}">
+
+            <div class="bd-item-property--multi__values">
+                <div class="bd-item-property__value--primary">
+                    <input type="number"
+                           name="amount"
+                           required
+                           class="input-field"
+                           bd-matches-none-of="validators['amount']"
+                           ng-model="investmentBuyContext.formData.amount"
+                           min="0.01"
+                           step="0.01"
+                           ng-pattern="AMOUNT_PATTERN"
+                           ng-non-resident-limit="nonResidentValidationParams"
+                           placeholder="{{ ::'raiff.investments.buy.fill.amount.placeholder' | translate }}"/>
+                </div>
+
+                <div class="bd-item-property__value--secondary">
+                    <ui-select ng-model="investmentBuyContext.items.senderAccount.currency"
+                               theme="bootstrap"
+                               ng-disabled="true">
+                        <ui-select-match placeholder="Waluta">
+                            {{$select.selected}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="currency in ['PLN'] track by $index">
+                            <div ng-bind-html="currency | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+
+            <eb-validation-messages eb-name="amount">
+                <div eb-message-key="nonResidentLimit" class="validation-message animate-on">{{::'raiff.investments.buy.fill.validation.nonResidentLimit' | translate}}</div>
+                <div eb-message-key="badAmount" class="validation-message animate-on">{{::'raiff.investments.buy.fill.validation.badAmount' | translate}}</div>
+                <div eb-message-key="required" class="validation-message animate-on">{{::'raiff.investments.buy.fill.validation.badAmount' | translate}}</div>
+                <div eb-message-key="minBuyValue" class="validation-message animate-on">{{::'raiff.investments.buy.fill.validation.minBuyValue' | translate}}</div>
+                <div eb-message-key="tooLowAvailableAssets" class="validation-message animate-on">{{::'raiff.investments.buy.fill.validation.tooLowAvailableAssets' | translate}}</div>
+            </eb-validation-messages>
+
+
+        </bd-item-property>
+
+
+        <bd-item-property
+                label="{{ ::'raiff.investments.buy.fill.sell_account' | translate }}"
+                ng-show="(investmentBuyContext.formData.choosenRegister && !investmentBuyContext.formData.choosenRegister.registryId) && investmentBuyContext.formData.fundToBuy.redeemAccountRequired"
+                >
+            <rb-account-select rb-account-id="investmentBuyContext.formData.sellAccountId"
+                               rb-account="investmentBuyContext.items.sellAccount"
+                               rb-product-list-name="{{productList}}"
+                               rb-account-restrictions="{{productRestrictions}}"
+                               rb-on-account-select="onSellAccountSelect()"
+                               rb-init-select-fn="rbInitSellAccountSelectFn($accountList, $select)"
+                    ></rb-account-select>
+        </bd-item-property>
+    </bd-form-panel>
+
+    <!--<p ng-bind-html="'raiff.investments.buy.fill.marketingText2_bottom' | translate"></p>-->
+
+
+    <rb-expandable-description rb-bind-html="true" rb-show-more-text="raiff.investments.buy.fill.show_more" rb-show-less-text="raiff.investments.buy.fill.show_less" rb-collapsed-description="raiff.investments.buy.fill.marketingText2_bottom.collapsed" rb-full-description="raiff.investments.buy.fill.marketingText2_bottom.full" rb-start-expanded="{{descriptionExpanded}}">
+    </rb-expandable-description>
+
+    <p ng-bind-html="prospectusHtml"></p>
+
+    <div class="bd-regulations">
+        <div class="bd-regulations__checkbox">
+            <bd-checkbox
+                    name="prospectusAccept"
+                    ng-model="investmentBuyContext.formData.prospectusAccept"
+                    bd-matches-none-of="validators['prospectusAccept']"
+                    ></bd-checkbox>
+        </div>
+        <div class="bd-regulations__text" >{{::'raiff.investments.buy.fill.prospectusAccept' | translate}}</div>
+
+        <div class="eb-validation-messages col-xs-12" ng-if="investmentBuyForm.$submitted && !investmentBuyContext.formData.prospectusAccept">
+            <div class="messages">
+                <div class="validation-message animate-on">
+                    {{::'raiff.investments.buy.fill.validation.prospectusAcceptRequired'|translate}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bd-regulations">
+        <div class="bd-regulations__checkbox">
+            <bd-checkbox
+                    name="privacyAccept"
+                    ng-model="investmentBuyContext.formData.privacyAccept"
+                    bd-matches-none-of="validators['privacyAccept']"
+                    ></bd-checkbox>
+        </div>
+        <div class="bd-regulations__text" >{{::'raiff.investments.buy.fill.privacyAccept' | translate}}</div>
+        <div class="eb-validation-messages col-xs-12" ng-if="investmentBuyForm.$submitted && !investmentBuyContext.formData.privacyAccept">
+            <div class="messages">
+                <div class="validation-message animate-on">
+                    {{::'raiff.investments.buy.fill.validation.privacyAcceptRequired'|translate}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-include src="privacyAcceptTemplate"></ng-include>
+
+    <p class="bd-regulations__text" ng-bind-html="mifidStatamentHtml" ></p>
+</form>

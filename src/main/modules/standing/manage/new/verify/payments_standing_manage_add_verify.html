@@ -1,0 +1,89 @@
+<bd-form-panel>
+    <div class="form-body">
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.investments.buy.domestic.verify.sender_account_name'|translate}}">
+            {{ investmentBuyContext.items.senderAccount.customName || investmentBuyContext.items.senderAccount.accountName }}&nbsp;<!-- | nazwa -->
+
+            {{ investmentBuyContext.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+        </bd-item-property>
+
+        <bd-item-property ng-if="investmentBuyContext.formData.senderAccountId"
+                          label="{{ ::'raiff.investments.buy.domestic.verify.senderAccountAmount' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="investmentBuyContext.items.senderAccount.accessibleAssets"
+                       currency="{{ investmentBuyContext.items.senderAccount.currency }}"></bd-amount>
+        </bd-item-property>
+
+        <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'raiff.investments.buy.domestic.verify.sender_account_name'|translate}}">-->
+        <!--{{ investmentBuyContext.items.senderAccount.customName || investmentBuyContext.items.senderAccount.accountName }}&nbsp;&lt;!&ndash; | nazwa &ndash;&gt;-->
+        <!--{{ investmentBuyContext.items.senderAccount.accountNo | nrbIbanFilter }} &lt;!&ndash; numer &ndash;&gt;-->
+        <!--</bd-item-property>-->
+
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.investments.buy.domestic.verify.fundType'|translate}}">
+            {{ 'raiff.investments.tfi.type.' + investmentBuyContext.formData.fundType.fundType | translate }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.investments.buy.domestic.verify.fundName'|translate}}">
+            {{ investmentBuyContext.formData.fundToBuy.fundName }}
+        </bd-item-property>
+
+        <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'raiff.investments.buy.domestic.verify.register'|translate}}">-->
+        <!--{{ investmentBuyContext.formData.fundToBuy.register }}-->
+
+
+        <bd-item-property
+                ng-show="investmentBuyContext.formData.choosenRegister && investmentBuyContext.formData.choosenRegister.registryId"
+                class="bd-item-property--text bd-item-property--disabled"
+                label="{{::'raiff.investments.buy.domestic.verify.register'|translate}}">
+            {{ investmentBuyContext.formData.choosenRegister.registryId }}
+        </bd-item-property>
+
+        <bd-item-property
+                ng-show="investmentBuyContext.formData.choosenRegister && !investmentBuyContext.formData.choosenRegister.registryId"
+                class="bd-item-property--text bd-item-property--disabled"
+                label="{{::'raiff.investments.buy.domestic.verify.register'|translate}}">
+            {{::'raiff.investments.buy.fill.newRegister' | translate}}
+        </bd-item-property>
+
+        <bd-item-property
+                class="bd-item-property--text bd-item-property--disabled"
+                label="{{::'raiff.investments.buy.domestic.verify.tfi'|translate}}"
+                ng-show="investmentBuyContext.formData.choosenRegister.fundProduct.name"
+                >
+            {{ investmentBuyContext.formData.choosenRegister.fundProduct.name }}
+        </bd-item-property>
+
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{::'raiff.investments.buy.domestic.verify.minBuyValue'|translate}}"
+                          ng-show="investmentBuyContext.formData.choosenRegister"
+                >
+            {{ investmentBuyContext.meta.calculatedMinBuyValueWithCurrency}}
+        </bd-item-property>
+
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.investments.buy.domestic.verify.amount'|translate}}">
+          {{ investmentBuyContext.formData.amount }} {{ investmentBuyContext.items.senderAccount.currency }}
+        </bd-item-property>
+
+
+        <bd-item-property
+                class="bd-item-property--text bd-item-property--disabled"
+                label="{{::'raiff.investments.buy.domestic.verify.sellAccountName'|translate}}"
+                ng-show="investmentBuyContext.formData.choosenRegister && !investmentBuyContext.formData.choosenRegister.registryId"
+                >
+            {{ investmentBuyContext.items.sellAccount.customName || investmentBuyContext.items.sellAccount.accountName }}&nbsp;<!-- | nazwa -->
+            {{ investmentBuyContext.items.sellAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+        </bd-item-property>
+
+
+        <bd-item-property  label="{{ token.model.currentToken.label }}">
+            <!-- dodajemy dyrektywê z typem operacji, bindujemy parametr jakiegoœ obiektu scopa jako model dla dyrektywy (zostanie przerobiony na obiekt z danymi i metodami do sterowania) -->
+            <rb-token-authorization rb-params="{resourceType: 'MANAGE_INVESTMENTS', 'resourceId': resourceId, customerId: identity.id }" rb-operation-type="MANAGE_INVESTMENTS"  rb-model="token.model"></rb-token-authorization>
+        </bd-item-property>
+
+        <!-- opcjonalnie mozemy zrobiæ podgl¹d tego co sta³o siê z modelem i jak aktualnie wygl¹da -->
+        <!--<pre>{{ token.model | json }}</pre>-->
+
+    </div>
+</bd-form-panel>
