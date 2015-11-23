@@ -1,71 +1,57 @@
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderNo'|translate}}">
-    {{ :: $data.details.orderNo }}
+    <!-- BACKEND -->
+    {{ $data.details.orderNo }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderName'|translate}}">
-    {{ :: $data.details.orderName }}
+    <!-- BACKEND -->
+    {{$data.details.orderName }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccountNo'|translate}}">
-    {{ :: $data.details.senderAccountNo }}
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccount'|translate}}">
+    <!-- BACKEND -->
+    {{$data.details.senderAccountDescription }}<br/>
+    {{$data.details.senderAccountNo }}
 </bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.insurance.status'|translate}}">-->
-    <!--{{ ::'raiff.payments.future.list.details.insurance.statuses.' + $data.details.status | translate }}-->
-<!--</bd-item-property>-->
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccountOwner'|translate}}">
+    <!-- BACKEND -->
+    {{$data.details.senderAccountOwner }}
+</bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}">-->
-    <!--{{ $data.details.accountName }} <br/>-->
-    <!--{{ $data.details.accountNo | nrbIbanFilter }}<br/>-->
-<!--</bd-item-property>-->
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount'|translate}}">
+    <!-- BACKEND -->
+    {{ $data.details.recipientAccountName }}<br/>
+    {{ $data.details.recipientAccount }}
+</bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}">-->
-    <!--{{ $data.details.recipientAccountNo | nrbIbanFilter}}<br/>-->
-    <!--<bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>-->
-<!--</bd-item-property>-->
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientData'|translate}}">
+    <!-- BACKEND -->
+    <bd-multiline-text bd-text="$data.details.recipientData"></bd-multiline-text>
+</bd-item-property>
 
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.amount'|translate}}">
+    <!-- BACKEND -->
+    {{ $data.details.amount }} {{ $data.details.currency }}
+</bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.insurance.payerName'|translate}}">-->
-    <!--{{ $data.details.payerName }}<br/>-->
-    <!--<bd-multiline-text bd-text="$data.details.payerName"></bd-multiline-text>-->
-<!--</bd-item-property>-->
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.title'|translate}}">
+    <!-- BACKEND -->
+    {{ $data.details.title }}
+</bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.tax.additionalIdType'|translate}}">-->
-    <!--{{::'raiff.payments.future.list.details.tax.additionalIdTypes.' + $data.details.paymentDetails.idtype | translate}}-->
-<!--</bd-item-property>-->
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.frequencyDescription'|translate}}">
+    <!-- BACKEND -->
+    {{ $data.details.frequencyDescription }}
+</bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.tax.additionalIdNumer'|translate}}">-->
-    <!--{{$data.details.paymentDetails.idnumber}}-->
-<!--</bd-item-property>-->
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.closestRealizationDate'|translate}}">
+    <!-- BACKEND -->
+    {{ $data.details.closestRealizationDate | date:'dd-MM-yyy' }}
+</bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.tax.formSymbol'|translate}}">-->
-    <!--{{$data.details.paymentDetails.formCode}}-->
-<!--</bd-item-property>-->
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.endDate'|translate}}">
+    <!-- BACKEND -->
+    {{ $data.details.endDate | date:'dd-MM-yyy' }}
+</bd-item-property>
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.tax.periodType'|translate}}">-->
-    <!--{{::'raiff.payments.future.list.details.tax.periodTypes.' + $data.details.paymentDetails.periodType | translate}}-->
-<!--</bd-item-property>-->
-
-
-
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.tax.periodNumber'|translate}}">-->
-    <!--{{$data.details.paymentDetails.periodNumber}}-->
-<!--</bd-item-property>-->
-
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.tax.periodYear'|translate}}">-->
-    <!--{{$data.details.paymentDetails.periodYear}}-->
-<!--</bd-item-property>-->
-
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.details.tax.obligationId'|translate}}">-->
-    <!--{{$data.details.paymentDetails.obligationId}}-->
-<!--</bd-item-property>-->
-
-
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.tax.insurance.amount'|translate}}">-->
-    <!--{{ $data.details.amount }} {{ $data.details.currency }}-->
-<!--</bd-item-property>-->
-
-
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.future.list.own.deliveryDate'|translate}}">-->
-    <!--{{ $data.deliveryDate | date:'dd-MM-yyyy' }}-->
-<!--</bd-item-property>-->
