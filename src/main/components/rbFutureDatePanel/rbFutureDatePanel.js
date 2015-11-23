@@ -205,6 +205,8 @@ angular.module('raiffeisen-payments')
                 $scope.constraints = {
                     maxLastFieldValue: 6
                 };
+
+                commitDateRange();
             }
         };
     });

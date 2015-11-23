@@ -15,14 +15,13 @@ angular.module('raiffeisen-payments')
                         customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         var result = {
-                            context: data.customerDetails.customerDetails.context,
-                            maxOffset: 70 // TODO:
+                            context: data.customerDetails.customerDetails.context
                         };
 
-                        data.detalOffset = data.detalOffset || { value: 30 }; // TODO: default values
-                        data.microOffset = data.microOffset || { value: 30 };
-                        data.detalMaxMonthsOffset = data.detalMaxMonthsOffset || { value: 12 };
-                        data.microMaxMonthsOffset = data.microMaxMonthsOffset || { value: 12 };
+                        data.detalOffset = data.detalOffset;
+                        data.microOffset = data.microOffset;
+                        data.detalMaxMonthsOffset = data.detalMaxMonthsOffset;
+                        data.microMaxMonthsOffset = data.microMaxMonthsOffset;
 
                         if (result.context === 'DETAL') {
                             result.offset = parseInt(data.detalOffset.value, 10);
