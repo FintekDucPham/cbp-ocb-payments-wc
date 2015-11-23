@@ -18,7 +18,7 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-        <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.currency.verify.company.name' | translate }}">
+        <!--<bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{ ::'raiff.payments.recipients.edit.currency.verify.company.name' | translate }}">
             <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
                 <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
                     <span ng-if="owner != null">{{owner.fullName}}</span>
@@ -31,7 +31,7 @@
                     <span ng-if="owner == null">-</span>
                 </div>
             </section>
-        </bd-item-property>
+        </bd-item-property>-->
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.custom_name.label' | translate }}">
             <input name="customName"
@@ -66,6 +66,7 @@
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
             <input ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                    class="input-field"
+                   required="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                    ng-model="recipient.formData.recipientSwiftOrBic"
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    bd-matches-none-of="recipientBankSwiftCodeValidators"
@@ -74,12 +75,15 @@
 
             <eb-preloader ng-if="searchBankPromise" ng-show="searchBankPromise.$$state.status===0" class="eb-inline-preloader" eb-promise="searchBankPromise"></eb-preloader>
 
-            <eb-validation-messages eb-name="swift_bic"><!--max 35-->
+            <eb-validation-messages eb-name="swift_bic" ng-hide="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"><!--max 35-->
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.MSG-0609_EMPTY_SWIFT' |translate}}
+                </div>
                 <div eb-message-key="recipientBankSwiftOrBicNonEmpty" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT'|translate}}
                 </div>
                 <div eb-message-key="recipientBankIncorrectSwift" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.swift_bic.INCORRECT_SWIFT'|translate}}
+                    {{::'raiff.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
                 </div>
             </eb-validation-messages>
 
@@ -96,7 +100,7 @@
                     ></textarea>
 
 
-            <eb-validation-messages eb-name="recipientBankName"><!--max 35-->
+            <eb-validation-messages eb-name="recipientBankName" ng-hide="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"><!--max 35-->
                 <div eb-message-key="recipientBankNameNonEmpty" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
                 </div>
@@ -171,7 +175,6 @@
             <textarea name="recipientData"
                       ng-model="recipient.formData.recipientData"
                       split-text-max-length-validators="140"
-                      bd-split-text
                       ng-pattern="INTERNATIONAL_RECIPIENT_DATA_REGEX"
                       required
                       class="input-field input-area--party-data"

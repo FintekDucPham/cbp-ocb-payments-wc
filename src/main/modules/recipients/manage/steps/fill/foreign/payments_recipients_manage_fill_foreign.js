@@ -15,6 +15,9 @@ angular.module('raiffeisen-payments')
                 }
                 $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
 
+            }else{
+                $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
             }
         };
 
@@ -164,16 +167,24 @@ angular.module('raiffeisen-payments')
             return {
                 shortName: copiedFormData.customName,
                 creditAccount: copiedFormData.recipientAccountNo,
-                beneficiary: copiedFormData.recipientData,
-                remarks: copiedFormData.description,
+                beneficiary: splitTextEveryNSign(copiedFormData.recipientData),
+                remarks: splitTextEveryNSign(copiedFormData.description),
                 swift_bic: "",
                 bankInformation: copiedFormData.recipientBankName,
-                bankCountry: copiedFormData.recipientBankCountry.countryCode || null,
-                address: copiedFormData.recipientData,
-                beneficiaryCountry: copiedFormData.recipientCountry.countryCode,
+                bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.countryCode : null,
+                address: splitTextEveryNSign(copiedFormData.recipientData),
+                beneficiaryCountry: (copiedFormData.recipientCountry !== undefined && copiedFormData.recipientCountry !== null) ? copiedFormData.recipientCountry.countryCode : null,
                 debitAccount: copiedFormData.remitterAccountId,
                 informationProvider: copiedFormData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 'SWIFT' : 'MANUAL'
             };
         });
-
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && !angular.isArray(text) && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
     });
