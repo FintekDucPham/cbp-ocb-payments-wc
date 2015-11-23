@@ -66,6 +66,7 @@
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
             <input ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                    class="input-field"
+                   required="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                    ng-model="recipient.formData.recipientSwiftOrBic"
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    bd-matches-none-of="recipientBankSwiftCodeValidators"
@@ -75,11 +76,14 @@
             <eb-preloader ng-if="searchBankPromise" ng-show="searchBankPromise.$$state.status===0" class="eb-inline-preloader" eb-promise="searchBankPromise"></eb-preloader>
 
             <eb-validation-messages eb-name="swift_bic"><!--max 35-->
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.MSG-0609_EMPTY_SWIFT' |translate}}
+                </div>
                 <div eb-message-key="recipientBankSwiftOrBicNonEmpty" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT'|translate}}
                 </div>
                 <div eb-message-key="recipientBankIncorrectSwift" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.swift_bic.INCORRECT_SWIFT'|translate}}
+                    {{::'raiff.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
                 </div>
             </eb-validation-messages>
 
