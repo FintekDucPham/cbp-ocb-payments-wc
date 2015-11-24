@@ -140,6 +140,7 @@ angular.module('raiffeisen-payments')
         $scope.recipientBankCountryValidators = {
             recipientBankCountryNonEmpty: function(recipientBankCountryNonEmpty) {
                 if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                    console.debug($scope.recipient.formData.recipientIdentityType, recipientBankCountryNonEmpty);
                     return !_.isEmpty(recipientBankCountryNonEmpty);
                 }
                 return true;
