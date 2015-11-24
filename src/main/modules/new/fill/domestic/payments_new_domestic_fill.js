@@ -83,7 +83,7 @@ angular.module('raiffeisen-payments')
             });
         });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            var recipient = lodash.find($scope.payment.items.recipientList, {
+            var recipient = lodash.find($scope.payment.meta.recipientList, {
                 templateType: 'DOMESTIC',
                 accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
             });

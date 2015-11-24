@@ -15,15 +15,27 @@ angular.module('raiffeisen-payments')
                 }
                 $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
 
+            }else{
+                $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
             }
         };
+
+        customerService.getCustomerDetails().then(function(customerDetails){
+            $scope.customerDetails = customerDetails.customerDetails;
+        });
+        $scope.accountListPromise = accountsService.search().then(function(accountList){
+            $scope.accountsList = accountList.content;
+        });
 
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
 
         $scope.recipient.meta.forbiddenAccounts = [];
 
-        $scope.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
-        $scope.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
+        console.debug( validationRegexp('INTERNATIONAL_ACCOUNT_REGEX'));
+        $scope.regex = {};
+        $scope.regex.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
+        $scope.regex.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
 
         // TODO: change to promise when you have properly working service
         $scope.countries = {
@@ -118,28 +130,32 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientBankNameValidators = {
             recipientBankNameNonEmpty: function(recipientBankName) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
                     return !_.isEmpty(_.trim(recipientBankName));
                 }
+                return true;
             }
         };
 
         $scope.recipientBankCountryValidators = {
             recipientBankCountryNonEmpty: function(recipientBankCountryNonEmpty) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
                     return !_.isEmpty(recipientBankCountryNonEmpty);
                 }
+                return true;
             }
         };
 
         $scope.recipientBankSwiftCodeValidators = {
             recipientBankSwiftOrBicNonEmpty: function(recipientBankSwiftOrBic) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                    console.debug(!_.isEmpty(_.trim(recipientBankSwiftOrBic)));
                     return !_.isEmpty(_.trim(recipientBankSwiftOrBic));
                 }
+                return true;
             },
             recipientBankSwiftAsyncCheck: function(recipientBankSwiftOrBic) {
-                // TODO: zrobic asynchroniczna walidacje tegoz
+                return true;
             }
         };
 
@@ -153,7 +169,7 @@ angular.module('raiffeisen-payments')
             decorateRequest: function(params){
                 return angular.extend(params, {
                     currency: "PLN",
-                    productList: "BENEFICIARY_CREATE_FROM_LIST"
+                    productList: "TRANSFER_FOREIGN_FROM_LIST"
                 });
             }
         });
@@ -164,16 +180,24 @@ angular.module('raiffeisen-payments')
             return {
                 shortName: copiedFormData.customName,
                 creditAccount: copiedFormData.recipientAccountNo,
-                beneficiary: copiedFormData.recipientData,
-                remarks: copiedFormData.description,
+                beneficiary: splitTextEveryNSign(copiedFormData.recipientData),
+                remarks: splitTextEveryNSign(copiedFormData.description),
                 swift_bic: "",
                 bankInformation: copiedFormData.recipientBankName,
-                bankCountry: copiedFormData.recipientBankCountry.countryCode || null,
-                address: copiedFormData.recipientData,
-                beneficiaryCountry: copiedFormData.recipientCountry.countryCode,
+                bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.countryCode : null,
+                address: splitTextEveryNSign(copiedFormData.recipientData),
+                beneficiaryCountry: (copiedFormData.recipientCountry !== undefined && copiedFormData.recipientCountry !== null) ? copiedFormData.recipientCountry.countryCode : null,
                 debitAccount: copiedFormData.remitterAccountId,
                 informationProvider: copiedFormData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 'SWIFT' : 'MANUAL'
             };
         });
-
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && !angular.isArray(text) && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
     });

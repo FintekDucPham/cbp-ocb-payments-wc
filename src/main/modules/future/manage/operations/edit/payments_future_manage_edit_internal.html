@@ -1,0 +1,7 @@
+<section ng-if="activeStep.id==='fill'" ng-controller="NewPaymentInternalFillController">
+    <section ng-include="getInternalProxyTemplate(activeStep.id)"></section>
+</section>
+
+<section ng-if="activeStep.id==='verify'" ng-controller="NewPaymentInternalVerifyController">
+    <section ng-include="getInternalProxyTemplate(activeStep.id)"></section>
+</section>
