@@ -108,11 +108,18 @@ angular.module('raiffeisen-payments')
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            var a = $scope.payment.items.recipientAccount;
+            var b = $scope.payment.formData.beneficiaryAccountId;
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 var form = $scope.paymentForm;
                 $scope.limitExeeded = {
                     show: false
                 };
+
+                if (!$scope.payment.items.recipientAccount || $scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                    return false;
+                }
+
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
