@@ -34,7 +34,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}" style="word-break: break-all">
             {{ recipient.formData.customName }}
         </bd-item-property>
 
@@ -44,12 +44,12 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}" style="word-break: break-all">
             <p style="white-space: pre;" ng-bind-html="recipient.formData.recipientData.join('')"></p>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}" style="word-break: break-all">
             <p style="white-space: pre;" ng-bind-html="recipient.formData.description.join('')"></p>
         </bd-item-property>
 
