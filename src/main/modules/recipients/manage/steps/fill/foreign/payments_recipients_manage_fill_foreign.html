@@ -18,21 +18,6 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-        <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.currency.verify.company.name' | translate }}">
-            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                    <span ng-if="owner != null">{{owner.fullName}}</span>
-                    <span ng-if="owner == null">-</span>
-                </div>
-            </section>
-            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.formData.debitAccountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                    <span ng-if="owner != null">{{owner.fullName}}</span>
-                    <span ng-if="owner == null">-</span>
-                </div>
-            </section>
-        </bd-item-property>
-
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.custom_name.label' | translate }}">
             <input name="customName"
                    ng-model="recipient.formData.customName"

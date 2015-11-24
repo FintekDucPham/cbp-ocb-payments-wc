@@ -71,14 +71,6 @@ angular.module('raiffeisen-payments')
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
         };
 
-        customerService.getCustomerDetails().then(function(customerDetails){
-            $scope.customerDetails = customerDetails.customerDetails;
-        });
-
-        $scope.accountListPromise = accountsService.search().then(function(accountList){
-            $scope.accountsList = accountList.content;
-        });
-
         $scope.getAccountByNrb = function(accountNumber){
             return lodash.find($scope.accountsList, {
                 accountNo: accountNumber
@@ -111,6 +103,8 @@ angular.module('raiffeisen-payments')
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
                 formService.clearForm($scope.recipientForm);
+                $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
             }
         });
 
