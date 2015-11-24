@@ -113,6 +113,11 @@ angular.module('raiffeisen-payments')
                 $scope.limitExeeded = {
                     show: false
                 };
+
+                if (!$scope.payment.items.recipientAccount || $scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                    return false;
+                }
+
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {

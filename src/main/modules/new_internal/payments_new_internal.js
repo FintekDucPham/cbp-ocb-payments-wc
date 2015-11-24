@@ -10,13 +10,14 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash) {
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             options: {
                 fixedAccountSelection: false
             },
+            operation: rbPaymentOperationTypes.NEW,
             token: {
                 model: null,
                 params: {}

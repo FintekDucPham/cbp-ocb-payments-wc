@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentInternalVerifyController"
         });
     })
-    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter) {
+    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes ) {
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',

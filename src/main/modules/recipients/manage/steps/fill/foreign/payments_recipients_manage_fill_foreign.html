@@ -18,21 +18,6 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-        <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.currency.verify.company.name' | translate }}">
-            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                    <span ng-if="owner != null">{{owner.fullName}}</span>
-                    <span ng-if="owner == null">-</span>
-                </div>
-            </section>
-            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.formData.debitAccountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                    <span ng-if="owner != null">{{owner.fullName}}</span>
-                    <span ng-if="owner == null">-</span>
-                </div>
-            </section>
-        </bd-item-property>
-
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.custom_name.label' | translate }}">
             <input name="customName"
                    ng-model="recipient.formData.customName"
@@ -94,6 +79,7 @@
                         class="input-field input-area--party-data"
                         ng-model="recipient.formData.recipientBankName"
                         name="recipientBankName"
+                        ng-pattern="PAYMENT_TITLE_REGEX"
                         bd-matches-none-of="recipientBankNameValidators"
                         split-text-max-length-validators="140"
                         ng-required="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"
@@ -104,6 +90,9 @@
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
                 </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
+                </div>
                 <div eb-message-key="recipientBankNameNonEmpty" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
                 </div>
@@ -112,7 +101,6 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankCountry' | translate }}">
 
             <eb-preloader ng-if="countries.promise" ng-hide="countries.data" class="eb-inline-preloader" eb-promise="countries.promise"></eb-preloader>
@@ -120,17 +108,22 @@
             <ui-select ng-show="countries.data" ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"
                        ng-model="recipient.formData.recipientBankCountry"
                        name="recipientBankCountry"
+                       ng-required="true"
+                       bd-matches-none-of="recipientBankCountryValidators"
                        theme="bootstrap">
                 <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">
-                    {{ $select.selected.countryName }}
+                    {{ $select.selected.countryName | uppercase}}
                 </ui-select-match>
 
-                <ui-select-choices repeat="country in countries.data.content">
-                    {{ country.countryName }}
+                <ui-select-choices repeat="country in countries.data.content | filter: {countryName : '!null'} | filter: $select.search | orderBy: 'countryName'">
+                    {{ country.countryName  | uppercase}}
                 </ui-select-choices>
             </ui-select>
 
             <eb-validation-messages eb-name="recipientBankCountry"><!--max 35-->
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
+                </div>
                 <div eb-message-key="recipientBankCountryNonEmpty" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
                 </div>
@@ -205,11 +198,11 @@
                        name="recipientCountry"
                        theme="bootstrap">
                 <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
-                    {{ $select.selected.countryName }}
+                    {{ $select.selected.countryName  | uppercase}}
                 </ui-select-match>
 
-                <ui-select-choices repeat="country in countries.data.content">
-                    {{ country.countryName }}
+                <ui-select-choices repeat="country in countries.data.content | filter: {countryName : '!null'} | filter: $select.search | orderBy: 'countryName'">
+                    {{ country.countryName  | uppercase}}
                 </ui-select-choices>
             </ui-select>
         </bd-item-property>

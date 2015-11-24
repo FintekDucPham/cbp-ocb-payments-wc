@@ -169,7 +169,7 @@ angular.module('raiffeisen-payments')
             for(var k in $scope.payment.formData.insurancePremiums){
                 console.debug(k);
             }
-            /!*var recipient = lodash.find($scope.payment.items.recipientList, {
+            /!*var recipient = lodash.find($scope.payment.meta.recipientList, {
                 templateType: 'INSURANCE',
                 nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
             });
