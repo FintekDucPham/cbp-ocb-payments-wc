@@ -91,7 +91,9 @@ angular.module('raiffeisen-payments')
                     $scope.recipient.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
                 ).then(function(data){
-                    console.log(data);
+                    if(data !== undefined && data !== null){
+                        $scope.recipient.formData.recipientBankName = data.institution;
+                    }
                 });
             }
         });
