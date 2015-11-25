@@ -116,7 +116,7 @@ angular.module('raiffeisen-payments')
                     }
 
                     paymentsService.search(params).then(function (response) {
-                        _.each(response.content, function(payment, idx) {
+                        _.each(response.content, function(payment) {
                             payment.loadDetails = function() {
                                 payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
                                     payment.details = resp;
