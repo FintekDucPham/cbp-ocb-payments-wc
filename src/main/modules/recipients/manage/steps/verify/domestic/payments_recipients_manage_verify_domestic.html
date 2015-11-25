@@ -34,8 +34,8 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
-            <p style="word-break: break-all">{{ recipient.formData.customName.join('')}}</p>
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}" style="word-break: break-all">
+            {{ recipient.formData.customName }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
