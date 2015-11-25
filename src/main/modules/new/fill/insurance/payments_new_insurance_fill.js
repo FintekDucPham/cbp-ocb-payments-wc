@@ -53,7 +53,7 @@ angular.module('raiffeisen-payments')
             return lodash.map(lodash.groupBy($scope.payment.formData.insurancePremiums, 'currency'), function (values) {
                 var totalAmount = 0;
                 lodash.forEach(values, function (value) {
-                    totalAmount += parseFloat(value.amount) || 0;
+                    totalAmount += value.amount ? parseFloat(value.amount.replace( /,/, '.')) : 0;
                 });
                 return {
                     currency: values[0].currency,
@@ -211,14 +211,17 @@ angular.module('raiffeisen-payments')
             },
             validSelection: function() {
                 return lodash.isEmpty(lodash.filter($scope.payment.formData.insurancePremiums, function(premiumValue, premiumType) {
-                   return !$scope.paymentForm[premiumType + 'Amount'].$valid || !$scope.paymentForm[premiumType + 'Currency'].$valid;
+                   return !$scope.paymentForm[premiumType + 'Amount'].$valid;
                 }));
             },
             amountExceedingFunds: function (insurances) {
-                if($scope.payment.items.senderAccount) {
-                    var totalPayment = lodash.reduce(lodash.pluck(lodash.values(insurances), 'amount'), function(total, next) {
-                        return total + next;
+                if($scope.payment.items.senderAccount && insurances) {
+                    var totalPayment = 0;
+
+                    _.each(_.pluck(_.values(insurances), "amount"), function(val) {
+                        totalPayment += val ?  parseFloat(val.replace(/,/, ".")) : 0;
                     });
+
                     return !totalPayment || totalPayment <= $scope.payment.items.senderAccount.accessibleAssets;
                 } else {
                     return true;
