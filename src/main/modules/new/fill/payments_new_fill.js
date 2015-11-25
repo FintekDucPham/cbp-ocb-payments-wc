@@ -75,10 +75,11 @@ angular.module('raiffeisen-payments')
         };
 
         var requestConverter = function (formData) {
-            formData.amount = (""+formData.amount).replace(",", ".");
-            formData.recipientName = splitTextEveryNSign(formData.recipientName);
-            formData.description = splitTextEveryNSign(formData.description);
-            return formData;
+            var copiedForm = angular.copy(formData);
+            copiedForm.amount = (""+formData.amount).replace(",", ".");
+            copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
+            copiedForm.description = splitTextEveryNSign(formData.description);
+            return copiedForm;
         };
 
         var resetRealizationOnBlockedInput = function () {

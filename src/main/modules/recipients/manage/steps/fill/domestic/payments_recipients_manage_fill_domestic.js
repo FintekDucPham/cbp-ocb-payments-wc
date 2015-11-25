@@ -70,7 +70,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.setRequestConverter(function (formData) {
-            var copiedFormData = formData;
+            var copiedFormData = angular.copy(formData);
             copiedFormData.recipientData = splitTextEveryNSign(copiedFormData.recipientData);
             copiedFormData.description = splitTextEveryNSign(copiedFormData.description);
             return {

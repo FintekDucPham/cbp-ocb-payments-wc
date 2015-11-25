@@ -62,9 +62,10 @@ angular.module('raiffeisen-payments')
         });
 
         var requestConverter = function (formData) {
-            formData.description = splitTextEveryNSign(formData.description);
-            formData.amount = (""+formData.amount).replace(",", ".");
-            return formData;
+            var copiedForm = angular.copy(formData);
+            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.amount = (""+formData.amount).replace(",", ".");
+            return copiedForm;
         };
 
         $scope.setRequestConverter = function (converterFn) {
