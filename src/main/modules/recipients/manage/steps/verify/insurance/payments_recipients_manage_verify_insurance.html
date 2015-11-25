@@ -2,7 +2,7 @@
     <div ng-controller="RecipientsManageVerifyZusController">
 
         <bd-item-property ng-if="recipient.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.micro_name' | translate }}">
-            {{ recipient.formData.customName }}
+            {{ recipient.formData.microName }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">
