@@ -82,11 +82,11 @@
                         ng-pattern="PAYMENT_TITLE_REGEX"
                         bd-matches-none-of="recipientBankNameValidators"
                         split-text-max-length-validators="140"
-                        ng-required="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"
+                        ng-required="true"
                     ></textarea>
 
 
-            <eb-validation-messages eb-name="recipientBankName" ng-if="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"><!--max 35-->
+            <eb-validation-messages eb-name="recipientBankName" ><!--max 35-->
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
                 </div>
