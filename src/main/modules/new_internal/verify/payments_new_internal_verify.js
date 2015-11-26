@@ -60,14 +60,16 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
-                if ($scope.payment.result.token_error) {
-                    if ($scope.payment.result.nextTokenType === 'next') {
-                        sendAuthorizationToken();
+                if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                    if ($scope.payment.result.token_error) {
+                        if ($scope.payment.result.nextTokenType === 'next') {
+                            sendAuthorizationToken();
+                        } else {
+                            $scope.payment.result.token_error = false;
+                        }
                     } else {
-                        $scope.payment.result.token_error = false;
+                        authorize(actions.proceed, actions);
                     }
-                } else {
-                    authorize(actions.proceed, actions);
                 }
             }
         });
