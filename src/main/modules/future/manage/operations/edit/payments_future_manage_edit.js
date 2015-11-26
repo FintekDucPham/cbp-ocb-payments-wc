@@ -58,6 +58,7 @@ angular.module('raiffeisen-payments')
             data.paymentType = 'TYPE_'+data.secondIDType;
             data.secondaryIdNo = data.secondIDNo;
             data.declarationDate = data.declaration;
+            data.realizationDate = new Date(data.realizationDate);
             return insuranceAccounts.search().then(function(accounts){
                 var matchedInsurance = lodash.find(accounts.content, {'accountNo': data.recipientAccountNo});
                 if(matchedInsurance){
@@ -86,6 +87,7 @@ angular.module('raiffeisen-payments')
 
         paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function(data){
             data.recipientName = data.recipientName.join('');
+            data.realizationDate = new Date(data.realizationDate);
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
