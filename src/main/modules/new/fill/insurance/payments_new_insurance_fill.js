@@ -190,7 +190,7 @@ angular.module('raiffeisen-payments')
             formData.secondaryIdType = taxpayer.secondaryIdType;
             formData.secondaryIdNo = taxpayer.secondaryId;
             formData.nip = taxpayer.nip;
-            formData.recipientName = taxpayer.data;
+            formData.recipientName = taxpayer.data.join('');
             $scope.payment.options.isFromTaxpayer = true;
         };
 

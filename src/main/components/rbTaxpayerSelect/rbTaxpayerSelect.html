@@ -5,10 +5,10 @@
                    placeholder="{{placeholderText}}"
                    on-select="selectTaxpayer($item)">
             <ui-select-match placeholder="{{ placeholderText }}">
-                {{$select.selected.customerName | limitTo:payerNameLength}}
+                {{$select.selected.customerName.join('') | limitTo:payerNameLength}}
             </ui-select-match>
             <ui-select-choices repeat="taxpayerItem in taxpayerList track by $index" null-option="nullOption">
-                <div ng-bind-html="taxpayerItem.customerName | limitTo:payerNameLength | highlight: $select.search"></div>
+                <div ng-bind-html="taxpayerItem.customerName.join('') | limitTo:payerNameLength | highlight: $select.search" title="{{taxpayerItem.customerName.join('')}}" class="truncate_text"></div>
             </ui-select-choices>
         </ui-select>
     </div>
