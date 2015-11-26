@@ -613,6 +613,7 @@
     "raiff.payments.recipients.new.status.98": "Zlecenie odrzucone",
     "raiff.payments.recipients.new.status.error": "Zlecenie odrzucone",
     "raiff.payments.recipients.new.status.success": "Zlecenie przyjęte do realizacji",
+    "raiff.payments.recipients.new.status.SMS_AUTH_BLOCKED": "Autoryzacja hasłem SMS została zablokowana",
 
     "raiff.payments.recipients.details.zus.custom_name": "Twoja nazwa odbiorcy",
     "raiff.payments.recipients.details.zus.account_no": "Numer rachunku",
