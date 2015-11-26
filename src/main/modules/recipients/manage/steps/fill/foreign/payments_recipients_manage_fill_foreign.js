@@ -30,6 +30,7 @@ angular.module('raiffeisen-payments')
 
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
 
+        $scope.BANK_NAME_VALIDATION_REGEX = validationRegexp('BANK_NAME_VALIDATION_REGEX');
         $scope.recipient.meta.forbiddenAccounts = [];
 
         console.debug( validationRegexp('INTERNATIONAL_ACCOUNT_REGEX'));
