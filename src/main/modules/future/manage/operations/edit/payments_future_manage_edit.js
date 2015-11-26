@@ -25,6 +25,15 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances) {
 
+        var idTypesMap = {
+            "P": "PESEL",
+            "N": "NIP",
+            "R": "REGON",
+            "1": "ID_CARD",
+            "2": "PASSPORT",
+            "3": "OTHER"
+        };
+
         //dispatcher
         var paymentDataResolveStrategyStrategies = {};
         function paymentDataResolveStrategy(transferType, strategy){
@@ -43,7 +52,6 @@ angular.module('raiffeisen-payments')
 
         //set strategies
         paymentDataResolveStrategy(rbPaymentTypes.INSURANCE.code, function(data){
-
             angular.forEach(data.paymentDetails, function(val, key){
                 data[key] = val;
             });
@@ -62,6 +70,18 @@ angular.module('raiffeisen-payments')
                 return true;
             });
 
+        });
+
+        paymentDataResolveStrategy(rbPaymentTypes.TAX.code, function(data){
+            data.taxpayerData = data.senderName;
+            data.idType = idTypesMap[data.paymentDetails.idtype];
+            data.idNumber = data.paymentDetails.idnumber;
+            data.formCode = data.paymentDetails.formCode;
+            data.periodType = data.paymentDetails.periodType;
+            data.periodNo = data.paymentDetails.periodNumber;
+            data.periodYear = data.paymentDetails.periodYear;
+            data.obligationId = data.paymentDetails.obligationId;
+            data.realizationDate = new Date(data.realizationDate);
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
