@@ -33,6 +33,7 @@ angular.module('raiffeisen-payments')
             }else{
                 data.description = data.title;
             }
+            console.debug(data, $scope.payment.formData);
             lodash.extend($scope.payment.formData, data, $scope.payment.formData);
             $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
             $scope.payment.formData.referenceId = initialState.referenceId;

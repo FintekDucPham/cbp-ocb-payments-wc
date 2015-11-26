@@ -1,7 +1,7 @@
 <div class="form-body" ng-controller="NewZusPaymentVerifyController">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_account_name'|translate}}">
-        <span style="word-break: break-word;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>&nbsp;<!-- | nazwa -->
+        <span style="word-break: break-all;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>&nbsp;<!-- | nazwa -->
 
         {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
@@ -11,7 +11,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
-        <bd-multiline-text bd-text="payment.formData.recipientName"></bd-multiline-text>
+        {{payment.formData.recipientName}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">

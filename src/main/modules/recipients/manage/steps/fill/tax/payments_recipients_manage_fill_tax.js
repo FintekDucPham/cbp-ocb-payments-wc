@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.setRequestConverter(function (formData) {
-            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            var copiedFormData = angular.copy(JSON.parse(JSON.stringify(formData)));
             return {
                 shortName: copiedFormData.customName,
                 formSymbol: copiedFormData.formCode,
