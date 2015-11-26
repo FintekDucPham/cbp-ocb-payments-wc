@@ -8,6 +8,7 @@
 
             <ui-select ng-model="recipient.type"
                        theme="bootstrap"
+                       search-enabled="false"
                        on-select="changeRecipientType($item)"
                        ng-disabled="activeStep.id !== 'fill'"
                        reset-search-input="false"
