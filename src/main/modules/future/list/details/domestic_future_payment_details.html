@@ -3,7 +3,7 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.status'|translate}}">
-    {{ ::'raiff.payments.future.list.details.insurance.statuses.' + $data.details.status | translate }}
+    {{ ::'raiff.payments.future.delete.status.label.status.' + $data.operationStatus | translate }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.accountName'|translate}}">
@@ -24,7 +24,7 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.amount'|translate}}">
-    {{ $data.details.amount }} {{ $data.details.currency }}
+    {{ $data.details.amount | number: 2}} {{ $data.details.currency }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferTitle'|translate}}">
@@ -33,6 +33,6 @@
 
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.own.deliveryDate'|translate}}">
-    {{ $data.deliveryDate | date:'dd-MM-yyyy' }}
+    {{ $data.deliveryDate | date:'dd.MM.yyyy' }}
 </bd-item-property>
 

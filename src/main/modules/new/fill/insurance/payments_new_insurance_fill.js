@@ -11,6 +11,14 @@ angular.module('raiffeisen-payments')
         });
 
 
+        if($scope.payment.formData.insurancePremiums==null){
+            $scope.payment.formData.insurancePremiums = [];
+            lodash.forEach(zusPaymentInsurances, function (value) {
+                $scope.payment.formData.insurancePremiums[value] = {};
+            });
+        }
+
+
         var insuranceAccountsPromise = insuranceAccounts.search().then(function(insuranceAccounts) {
             $scope.insuranceAccountList = insuranceAccounts.content;
         });
