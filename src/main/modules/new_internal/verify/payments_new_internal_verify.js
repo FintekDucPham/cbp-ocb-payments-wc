@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentInternalVerifyController"
         });
     })
-    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes ) {
+    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS ) {
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
@@ -39,6 +39,7 @@ angular.module('raiffeisen-payments')
                 if (parts[0] !== 'OK' && !parts[1]) {
                     $scope.payment.result.code = 'error';
                 }
+                depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
                 doneFn();
             }).catch(function (error) {

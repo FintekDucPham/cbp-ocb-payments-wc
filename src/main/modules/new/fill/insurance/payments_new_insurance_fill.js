@@ -249,6 +249,7 @@ angular.module('raiffeisen-payments')
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
             copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
+                element.amount = ("" + element.amount).replace(/,/, ".");
                 return lodash.pick(angular.extend({}, element, {
                     insuranceDestinationType: key
                 }), ['amount', 'currency', 'insuranceDestinationType']);
