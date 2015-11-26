@@ -831,7 +831,7 @@
 
     "raiff.payments.future.list.details.tax.payerName": "Płatnik",
 
-    "raiff.payments.future.list.details.tax.additionalIdType": "Type identyfikatora uzupełniającego",
+    "raiff.payments.future.list.details.tax.additionalIdType": "Typ identyfikatora uzupełniającego",
     "raiff.payments.future.list.details.tax.additionalIdNumer": "Numer identyfikatora uzupełniającego",
     "raiff.payments.future.list.details.tax.additionalIdTypes.N": "NIP",
     "raiff.payments.future.list.details.tax.additionalIdTypes.P": "PESEL",
@@ -862,12 +862,13 @@
     "raiff.payments.future.list.details.insurance.statuses.null": "",
 
 
-    "raiff.payments.future.list.details.insurance.transferType": "Typ operacji",
+    "raiff.payments.future.list.details.insurance.transferType": "Typ płatności",
     "raiff.payments.future.list.details.insurance.status": "Status płatności",
     "raiff.payments.future.list.details.insurance.accountName": "Z rachunku",
     "raiff.payments.future.list.details.insurance.recipientAccountNo": "Na rachunek",
     "raiff.payments.future.list.details.insurance.recipientName": "Nazwa odbiorcy",
     "raiff.payments.future.list.details.insurance.amount": "Kwota",
+    "raiff.payments.future.list.details.insurance.whole.amount": "Kwota całkowita",
     "raiff.payments.future.list.details.insurance.recipientAdress": "TODO: raiff.payments.future.list.details.domestict.recipientAdress",
     "raiff.payments.future.list.details.domestic.recipientBankAccountName": "Nazwa banku odbiorcy",
     "raiff.payments.future.list.details.insurance.transferTitle": "Tytułem",
@@ -879,6 +880,7 @@
     "raiff.payments.future.list.details.insurance.payerSecondaryIdNumber": "Drugi identyfikator",
     "raiff.payments.future.list.details.insurance.payerPaymentType": "Typ wpłaty",
     "raiff.payments.future.list.details.insurance.declarationDate": "Deklaracja",
+    "raiff.payments.future.list.details.insurance.paymentType":"Typ wpłaty",
     "raiff.payments.future.list.details.insurance.declarationNo": "Numer deklaracji",
     "raiff.payments.future.list.details.insurance.additionalInfo": "Informacje dodatkowe",
 

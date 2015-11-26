@@ -8,13 +8,13 @@
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}">
     {{ $data.details.accountName }} <br/>
-    {{ $data.details.accountNo | nrbIbanFilter }}<br/>
+    {{ $data.details.accountNo | nrbIbanFilter }}<br ng-if="$data.details.recipientBankName && $data.details.recipientBankName.length > 0"/>
     {{ $data.details.recipientBankName }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}">
-    {{ $data.details.recipientAccountName }} <br/>
-    {{ $data.details.recipientAccountNo | nrbIbanFilter }}<br/>
+    {{ $data.details.recipientAccountName }} <br ng-if="$data.details.recipientAccountName && $data.details.recipientAccountName.length > 0"/>
+    {{ $data.details.recipientAccountNo | nrbIbanFilter }}
 </bd-item-property>
 
 
