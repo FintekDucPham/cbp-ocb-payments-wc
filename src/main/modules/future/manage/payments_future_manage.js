@@ -50,6 +50,14 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        var alreadySet = false;
+        $scope.setDefaultValues = function (value) {
+            if (!alreadySet) {
+                angular.extend($scope.payment.formData, value, lodash.pick($scope.payment.formData, angular.isDefined));
+                alreadySet = true;
+            }
+        };
+
         $scope.step = 'fill';
         $scope.getInternalProxyTemplate = function(stepName){
             return "{0}/modules/new_internal/{1}/payments_new_internal_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName);
