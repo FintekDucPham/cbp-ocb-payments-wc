@@ -124,7 +124,7 @@ angular.module('raiffeisen-payments')
                                 });
                             };
                         });
-
+                        console.debug(response.content);
                         defer.resolve(response.content);
                         $params.pageCount = response.totalPages;
                     });

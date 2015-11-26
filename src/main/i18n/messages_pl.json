@@ -133,6 +133,7 @@
     "raiff.payments.new.domestic.fill.recipient_data.EMPTY_BANK_DATA": "Dane banku nie mogą być puste",
     "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BANK_DATA":"Dane banku nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.domestic.fill.bank_data.TOO_LONG_BNF_DATA": "Nazwa banku nie może przekraczać 140 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.new.domestic.fill.description": "Tytułem",
     "raiff.payments.new.domestic.fill.description.placeholder": "Wpisz tytuł przelewu",
     "raiff.payments.new.domestic.fill.description.EMPTY_TITLE": "Tytuł przelewu nie może być pusty",

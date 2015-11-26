@@ -81,7 +81,7 @@ angular.module('raiffeisen-payments')
             meta: {
                 paymentTypes: lodash.without(lodash.map(rbPaymentTypes, function (value) {
                     return value;
-                }), rbPaymentTypes.INTERNAL, rbPaymentTypes.SWIFT, rbPaymentTypes.SEPA)
+                }), rbPaymentTypes.INTERNAL, rbPaymentTypes.SWIFT, rbPaymentTypes.SEPA, rbPaymentTypes.OWN)
             },
             validation: {}
         }), {

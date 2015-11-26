@@ -23,19 +23,67 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, lodash, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState) {
+    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances) {
 
+        //dispatcher
+        var paymentDataResolveStrategyStrategies = {};
+        function paymentDataResolveStrategy(transferType, strategy){
+            if(strategy){
+                paymentDataResolveStrategyStrategies[transferType] = strategy;
+            }
+            if(paymentDataResolveStrategyStrategies[transferType]){
+                return paymentDataResolveStrategyStrategies[transferType];
+            }else{
+                return function(){
+                    return $q.when(true);
+                };
+            }
+
+        }
+
+        //set strategies
+        paymentDataResolveStrategy(rbPaymentTypes.INSURANCE.code, function(data){
+
+            angular.forEach(data.paymentDetails, function(val, key){
+                data[key] = val;
+            });
+            data.paymentType = 'TYPE_'+data.secondIDType;
+            data.secondaryIdNo = data.secondIDNo;
+            data.declarationDate = data.declaration;
+            return insuranceAccounts.search().then(function(accounts){
+                var matchedInsurance = lodash.find(accounts.content, {'accountNo': data.recipientAccountNo});
+                if(matchedInsurance){
+                    data.insurancePremiums = {};
+                    data.insurancePremiums[matchedInsurance.insuranceCode] = {
+                        currency: data.currency,
+                        amount: data.amount
+                    };
+                }
+                return true;
+            });
+
+        });
+
+        paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
+            data.description = data.title.join("\n");
+            return $q.when(true);
+        });
+
+
+
+        //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
-            if(data.transferType===rbPaymentTypes.OWN.code){
-                data.description = data.title.join("\n");
-            }else{
-                data.description = data.title;
-            }
-            lodash.extend($scope.payment.formData, data, $scope.payment.formData);
-            $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
-            $scope.payment.formData.referenceId = initialState.referenceId;
+            data.description = data.title;
+
+            $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function(){
+                lodash.extend($scope.payment.formData, data, $scope.payment.formData);
+                $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
+                $scope.payment.formData.referenceId = initialState.referenceId;
+            });
+
+
         });
 
         $scope.clearForm = function () {

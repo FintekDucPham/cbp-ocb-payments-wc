@@ -44,13 +44,13 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}" style="word-break: break-all">
-            <p ng-bind-html="recipient.formData.recipientData.join('')"></p>
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
+            <p style="word-break: break-all" ng-bind-html="recipient.formData.recipientData"></p>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}" style="word-break: break-all">
-            <p ng-bind-html="recipient.formData.description.join('')"></p>
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
+            <p style="word-break: break-all" ng-bind-html="recipient.formData.description"></p>
         </bd-item-property>
 
     </div>
