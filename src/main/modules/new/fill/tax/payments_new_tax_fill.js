@@ -161,6 +161,9 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.periodNo = initNo || null;
             if (!periodTypeCode || periodTypeCode === 'unset') {
                 $scope.payment.formData.periodYear = null;
+                if($scope.payment.formData.periodType){
+                    $scope.payment.formData.periodType = undefined;
+                }
             } else {
                 var periodType = usPeriodTypes[periodTypeCode];
                 $scope.payment.options.customPeriod = !periodType.values;
