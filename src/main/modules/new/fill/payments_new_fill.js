@@ -166,13 +166,11 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account) {
-                console.debug('jednak jest jakis rachunek', account);
                 $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
                 $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ? false : true;
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, ''+account.category);
             } else {
-                console.debug('nie ma rachunku');
                 $scope.payment.meta.dateSetByCategory = false;
                 $scope.payment.meta.isFuturePaymentAllowed = true;
             }
