@@ -210,6 +210,8 @@ angular.module('raiffeisen-payments')
                         $scope.paymentForm[val + 'Amount'].$validate();
                     }
                 });
+
+                $scope.paymentForm.insuranceErrors.$validate();
             }
         };
 
