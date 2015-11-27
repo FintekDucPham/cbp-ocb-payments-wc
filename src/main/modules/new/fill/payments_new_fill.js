@@ -104,7 +104,9 @@ angular.module('raiffeisen-payments')
 
         function validateBalance() {
             if($scope.payment.type && $scope.payment.type.code!='INSURANCE'){
-                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+                if($scope.paymentForm.amount){
+                    $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+                }
             }
         }
 
