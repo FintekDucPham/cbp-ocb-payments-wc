@@ -21,7 +21,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.description'|translate}}">
-        <p style="white-space: pre;" ng-bind-html="payment.formData.description.join('')"></p>
+        <p style="word-break: break-all" ng-bind-html="payment.formData.description.join('')"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">
@@ -29,7 +29,9 @@
     </bd-item-property>
 
 </div>
+<section ng-if="payment.operation.code!=='EDIT'">
+    <bd-item-property class="bd-item-property--text" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
+        <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
+    </bd-item-property>
+</section>
 
-<bd-item-property class="bd-item-property--text" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
-    <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
-</bd-item-property>

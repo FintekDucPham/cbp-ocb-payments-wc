@@ -21,12 +21,22 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        customerService.getCustomerDetails().then(function(customerDetails){
+            $scope.customerDetails = customerDetails.customerDetails;
+        });
+        $scope.accountListPromise = accountsService.search().then(function(accountList){
+            $scope.accountsList = accountList.content;
+        });
+
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
 
+        $scope.BANK_NAME_VALIDATION_REGEX = validationRegexp('BANK_NAME_VALIDATION_REGEX');
         $scope.recipient.meta.forbiddenAccounts = [];
 
-        $scope.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
-        $scope.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
+        console.debug( validationRegexp('INTERNATIONAL_ACCOUNT_REGEX'));
+        $scope.regex = {};
+        $scope.regex.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
+        $scope.regex.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
 
         // TODO: change to promise when you have properly working service
         $scope.countries = {
@@ -62,14 +72,6 @@ angular.module('raiffeisen-payments')
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
         };
 
-        customerService.getCustomerDetails().then(function(customerDetails){
-            $scope.customerDetails = customerDetails.customerDetails;
-        });
-
-        $scope.accountListPromise = accountsService.search().then(function(accountList){
-            $scope.accountsList = accountList.content;
-        });
-
         $scope.getAccountByNrb = function(accountNumber){
             return lodash.find($scope.accountsList, {
                 accountNo: accountNumber
@@ -90,7 +92,9 @@ angular.module('raiffeisen-payments')
                     $scope.recipient.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
                 ).then(function(data){
-                    console.log(data);
+                    if(data !== undefined && data !== null){
+                        $scope.recipient.formData.recipientBankName = data.institution;
+                    }
                 });
             }
         });
@@ -102,6 +106,8 @@ angular.module('raiffeisen-payments')
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
                 formService.clearForm($scope.recipientForm);
+                $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
             }
         });
 
@@ -121,28 +127,33 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientBankNameValidators = {
             recipientBankNameNonEmpty: function(recipientBankName) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
                     return !_.isEmpty(_.trim(recipientBankName));
                 }
+                return true;
             }
         };
 
         $scope.recipientBankCountryValidators = {
             recipientBankCountryNonEmpty: function(recipientBankCountryNonEmpty) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                    console.debug($scope.recipient.formData.recipientIdentityType, recipientBankCountryNonEmpty);
                     return !_.isEmpty(recipientBankCountryNonEmpty);
                 }
+                return true;
             }
         };
 
         $scope.recipientBankSwiftCodeValidators = {
             recipientBankSwiftOrBicNonEmpty: function(recipientBankSwiftOrBic) {
-                if ($scope.recipient.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                    console.debug(!_.isEmpty(_.trim(recipientBankSwiftOrBic)));
                     return !_.isEmpty(_.trim(recipientBankSwiftOrBic));
                 }
+                return true;
             },
             recipientBankSwiftAsyncCheck: function(recipientBankSwiftOrBic) {
-                // TODO: zrobic asynchroniczna walidacje tegoz
+                return true;
             }
         };
 
@@ -156,13 +167,13 @@ angular.module('raiffeisen-payments')
             decorateRequest: function(params){
                 return angular.extend(params, {
                     currency: "PLN",
-                    productList: "BENEFICIARY_CREATE_FROM_LIST"
+                    productList: "TRANSFER_FOREIGN_FROM_LIST"
                 });
             }
         });
 
         $scope.setRequestConverter(function (formData) {
-            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            var copiedFormData = angular.copy(JSON.parse(JSON.stringify(formData)));
 
             return {
                 shortName: copiedFormData.customName,

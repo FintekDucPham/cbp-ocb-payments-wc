@@ -1,5 +1,13 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyZusController', function ($scope, lodash, insuranceAccounts, translate) {
+    .controller('RecipientsManageVerifyZusController', function ($scope, lodash, insuranceAccounts, translate, customerService) {
+
+
+        customerService.getCustomerDetails().then(function(userDetails) {
+            $scope.customerDetails = userDetails.customerDetails;
+            if($scope.customerDetails.context == 'MICRO') {
+                $scope.recipient.formData.microName = $scope.customerDetails.fullName;
+            }
+        });
 
         if(!$scope.recipient.items.selectedInsurance) {
             insuranceAccounts.search().then(function(insuranceAccounts) {

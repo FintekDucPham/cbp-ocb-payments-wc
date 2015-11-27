@@ -10,13 +10,13 @@
                                rb-init-select-fn="getAccountByNrb($accountList, $select)"
                                rb-on-account-select="recipientSelectParams.update($accountId)"
                                rb-remote="remote.model"
-                               rb-init-select-value = "{{selectNrb}}"></rb-account-select>
+                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
         </bd-item-property>
 
         <bd-item-property ng-if="payment.formData.remitterAccountId"
                           label="{{ ::'raiff.payments.new.internal.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <bd-amount amount="payment.items.senderAccount.accessibleAssets"
-                       currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
+                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
 
         <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}">
@@ -27,7 +27,8 @@
                     rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                     rb-product-list-name="TRANSFER_OWN_TO_LIST"
                     bd-attr-name="recipientAccountId"
-                    bd-attr-required></rb-account-select>
+                    bd-attr-required
+                    rb-init-select-value = "{{payment.formData.recipientAccountNo}}"></rb-account-select>
 
             <eb-validation-messages eb-name="recipientAccountId">
                 <div eb-message-key="required" class="validation-message animate-on">

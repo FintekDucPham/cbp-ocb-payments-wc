@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
         });
 
          $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            var recipient = lodash.find($scope.payment.items.recipientList, {
+            var recipient = lodash.find($scope.payment.meta.recipientList, {
                  nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
              });
              if(angular.isDefined(recipient) && recipient !== null){
@@ -157,13 +157,21 @@ angular.module('raiffeisen-payments')
             resetControl($scope.paymentForm.periodYear);
         };
 
-        $scope.selectPeriodType = function (periodTypeCode) {
-            $scope.payment.formData.periodNo = null;
+        $scope.selectPeriodType = function (periodTypeCode, initNo) {
+            $scope.payment.formData.periodNo = initNo || null;
             if (!periodTypeCode || periodTypeCode === 'unset') {
                 $scope.payment.formData.periodYear = null;
+                if($scope.payment.formData.periodType){
+                    $scope.payment.formData.periodType = undefined;
+                }
             } else {
                 var periodType = usPeriodTypes[periodTypeCode];
                 $scope.payment.options.customPeriod = !periodType.values;
+            }
+        };
+        $scope.selectPeriodTypeInit = function(){
+            if($scope.payment.formData.periodType){
+                $scope.selectPeriodType($scope.payment.formData.periodType, $scope.payment.formData.periodNo);
             }
         };
 
@@ -186,9 +194,10 @@ angular.module('raiffeisen-payments')
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             var recipient = $scope.payment.items.recipientAccount;
-            formData.taxpayerData = splitTextEveryNSign(formData.taxpayerData);
+            formData.taxpayerDataTable = splitTextEveryNSign(formData.taxpayerData);
             return angular.extend(copiedFormData, {
-                recipientName: splitTextEveryNSign("Urzad skarbowy superowy"),//recipient.officeName),
+                recipientName: recipient.officeName,
+                recipientNameTable: splitTextEveryNSign(recipient.officeName),
                 recipientAccountNo: recipient.accountNo
             });
         });

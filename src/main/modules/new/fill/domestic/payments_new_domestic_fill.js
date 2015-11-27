@@ -1,6 +1,7 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams) {
+    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp) {
 
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
 
         $scope.selectRecipient = function (recipient) {
@@ -83,7 +84,7 @@ angular.module('raiffeisen-payments')
             });
         });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            var recipient = lodash.find($scope.payment.items.recipientList, {
+            var recipient = lodash.find($scope.payment.meta.recipientList, {
                 templateType: 'DOMESTIC',
                 accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
             });

@@ -33,7 +33,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.types = {
-            currentType: recipientFilterType.ALL,
+            currentType: recipientFilterType.DOMESTIC,
             availableTypes: recipientFilterType,
             availableTypesList: lodash.map(recipientFilterType)
         };
@@ -145,18 +145,18 @@ angular.module('raiffeisen-payments')
                                             return {
                                                 transferTitle: template.title.join(" "),
                                                 bankName: template.paymentDetails.bankDetails[0],
-                                                bankData:template.paymentDetails.bankDetails,
+                                                bankData:template.paymentDetails.bankDetails.join(""),
                                                 recipientIdentityType: template.paymentDetails.informationProvider,
                                                 recipientBankCountry: template.paymentDetails.bankCountry,
                                                 recipientCountry: template.paymentDetails.foreignCountryCode,
-                                                recipientAddress: recipient.recipientAddress,
-                                                transferTitleTable: template.title
+                                                recipientAddress: recipient.recipientAddress.join(""),
+                                                transferTitleTable: template.title.join("")
                                             };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: template.title.join(" "),
-                                                recipientAddress: recipient.recipientAddress,
-                                                transferTitleTable: template.title
+                                                recipientAddress: recipient.recipientAddress.join(""),
+                                                transferTitleTable: template.title.join("")
                                             };
                                         case "INSURANCE":
                                             return {

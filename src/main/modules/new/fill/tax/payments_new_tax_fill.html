@@ -22,7 +22,7 @@
                 rb-tax-recipient-id="payment.formData.templateId"
                 rb-tax-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
-                rb-tax-recipient-list="payment.items.recipientList"
+                rb-tax-recipient-list="payment.meta.recipientList"
                 rb-on-select-recipient="selectRecipient($recipient)"
                 rb-recipient-clear-text="{{ ::'raiff.payments.new.us.fill.recipient_select.clear' | translate }}"
                 rb-placeholder-text="{{ ::'raiff.payments.new.us.fill.recipient_select.placeholder' | translate }}"></rb-tax-recipient-select>
@@ -206,6 +206,7 @@
                    ng-disabled="!payment.items.formSymbol.periodRequired || payment.formData.periodType==='R'"
                    bd-novalidate-when="{{ payment.formData.periodType==='R' || !payment.items.formSymbol.periodRequired }}"
                    ng-pattern="payment.formData.periodType == 'J' ? patterns.period : patterns.periodYear"
+                   ng-init="selectPeriodTypeInit()"
                    class="input-field"
                    type="text"
                    placeholder="{{ ::'raiff.payments.new.us.fill.period_no.placeholder' | translate }}">
@@ -241,7 +242,6 @@
             </div>
         </eb-validation-messages>
     </bd-item-property>
-
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_year' | translate }}">
         <input name="periodYear"
                ng-model="payment.formData.periodYear"

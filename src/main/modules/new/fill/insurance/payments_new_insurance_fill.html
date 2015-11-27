@@ -23,7 +23,7 @@
                 rb-zus-recipient-id="payment.formData.templateId"
                 rb-zus-recipient="payment.items.recipient"
                 rb-on-clear-recipient="clearRecipient()"
-                rb-zus-recipient-list="payment.items.recipientList"
+                rb-zus-recipient-list="payment.meta.recipientList"
                 rb-on-select-recipient="selectRecipient($recipient)"
                 rb-recipient-clear-text="{{ ::'raiff.payments.new.zus.fill.recipient_select.clear' | translate }}"
                 rb-placeholder-text="{{ ::'raiff.payments.new.zus.fill.recipient_select.placeholder' | translate }}"></rb-insurance-recipient-select>
@@ -35,9 +35,7 @@
                   ng-model="payment.formData.recipientName"
                   required
                   ng-pattern="taxpayerRegexp"
-                  bd-split-text="27"
-                  bd-split-text-length="54"
-                  bd-split-text-max-rows="2"
+                  split-text-max-length-validators="54"
                   ng-disabled="payment.options.isFromTaxpayer"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.new.zus.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -49,7 +47,7 @@
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.zus.fill.recipient_data.TOO_LONG_PAYER_ZUS' | translate }}
             </div>
-            <div eb-message-key="splitTextLength" class="validation-message animate-on">
+            <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                 {{ ::'raiff.payments.new.zus.fill.recipient_data.TOO_LONG_PAYER_ZUS' | translate }}
             </div>
         </eb-validation-messages>

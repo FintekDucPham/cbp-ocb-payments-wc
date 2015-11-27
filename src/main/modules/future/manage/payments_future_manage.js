@@ -40,10 +40,27 @@ angular.module('raiffeisen-payments')
 
         $scope.getTemplateName = function (stepName) {
             if($scope.payment.type){
-                return "{0}/modules/new/{1}/{2}/payments_new_{2}_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName, $scope.payment.type.state);
+                if($scope.payment.type.code === rbPaymentTypes.OWN.code){
+                    return "{0}/modules/future/manage/operations/edit/payments_future_manage_edit_internal.html".format(pathService.generateTemplatePath("raiffeisen-payments"));
+                }else{
+                    return "{0}/modules/new/{1}/{2}/payments_new_{2}_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName, $scope.payment.type.state);
+                }
             }else{
                 return undefined;
             }
+        };
+
+        var alreadySet = false;
+        $scope.setDefaultValues = function (value) {
+            if (!alreadySet) {
+                angular.extend($scope.payment.formData, value, lodash.pick($scope.payment.formData, angular.isDefined));
+                alreadySet = true;
+            }
+        };
+
+        $scope.step = 'fill';
+        $scope.getInternalProxyTemplate = function(stepName){
+            return "{0}/modules/new_internal/{1}/payments_new_internal_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName);
         };
     }
 );

@@ -10,7 +10,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
+    .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -62,9 +62,10 @@ angular.module('raiffeisen-payments')
         });
 
         var requestConverter = function (formData) {
-            formData.description = splitTextEveryNSign(formData.description);
-            formData.amount = (""+formData.amount).replace(",", ".");
-            return formData;
+            var copiedForm = angular.copy(formData);
+            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.amount = (""+formData.amount).replace(",", ".");
+            return copiedForm;
         };
 
         $scope.setRequestConverter = function (converterFn) {
@@ -108,32 +109,39 @@ angular.module('raiffeisen-payments')
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var form = $scope.paymentForm;
-            $scope.limitExeeded = {
-                show: false
-            };
-            if (form.$invalid) {
-                formService.dirtyFields(form);
-            } else {
-                transferService.create('INTERNAL', angular.extend({
-                    "remitterId": 0
-                }, requestConverter($scope.payment.formData)), "create").then(function (transfer) {
-                    $scope.payment.transferId = transfer.referenceId;
-                    $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                    actions.proceed();
-                }).catch(function(errorReason){
-                    if(errorReason.subType == 'validation'){
-                        for(var i=0; i<=errorReason.errors.length; i++){
-                            var currentError = errorReason.errors[i];
-                            if(currentError.field == 'raiff.transfer.limit.exceeed'){
-                                $scope.limitExeeded = {
-                                    show: true,
-                                    messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
-                                };
+            if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
+                var form = $scope.paymentForm;
+                $scope.limitExeeded = {
+                    show: false
+                };
+
+                if (!$scope.payment.items.recipientAccount || $scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                    return false;
+                }
+
+                if (form.$invalid) {
+                    formService.dirtyFields(form);
+                } else {
+                    transferService.create('INTERNAL', angular.extend({
+                        "remitterId": 0
+                    }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
+                        $scope.payment.transferId = transfer.referenceId;
+                        $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                        actions.proceed();
+                    }).catch(function(errorReason){
+                        if(errorReason.subType == 'validation'){
+                            for(var i=0; i<=errorReason.errors.length; i++){
+                                var currentError = errorReason.errors[i];
+                                if(currentError.field == 'raiff.transfer.limit.exceeed'){
+                                    $scope.limitExeeded = {
+                                        show: true,
+                                        messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                                    };
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
@@ -257,6 +265,9 @@ angular.module('raiffeisen-payments')
 
 
         function splitTextEveryNSign(text, lineLength){
+            if(angular.isArray(text)){
+                text = angular.copy(text).join("\n");
+            }
             text = text.replace(/(\n)+/g, '');
             var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
             return lodash.filter(text.split(regexp), function(val) {

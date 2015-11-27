@@ -3,7 +3,7 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.status'|translate}}">
-    {{ ::'raiff.payments.future.list.details.insurance.statuses.' + $data.details.status | translate }}
+    {{ ::'raiff.payments.future.delete.status.label.status.' + $data.operationStatus | translate }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}">
@@ -12,14 +12,13 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}">
-    {{ $data.details.recipientAccountNo | nrbIbanFilter}}<br/>
     <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
+    {{ $data.details.recipientAccountNo | nrbIbanFilter}}
 </bd-item-property>
 
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerName'|translate}}">
-    {{ $data.details.payerName }}<br/>
-    <bd-multiline-text bd-text="$data.details.payerName"></bd-multiline-text>
+    {{ $data.details.senderName.join('') }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.additionalIdType'|translate}}">
@@ -45,7 +44,7 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodYear'|translate}}">
-    {{$data.details.paymentDetails.periodYear}}
+    <span>20{{$data.details.paymentDetails.periodYear}}</span>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.obligationId'|translate}}">
@@ -54,10 +53,10 @@
 
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.tax.insurance.amount'|translate}}">
-    {{ $data.details.amount }} {{ $data.details.currency }}
+    {{ $data.details.amount | number: 2}} {{ $data.details.currency }}
 </bd-item-property>
 
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.future.list.own.deliveryDate'|translate}}">
-    {{ $data.deliveryDate | date:'dd-MM-yyyy' }}
+    {{ $data.deliveryDate | date:'dd.MM.yyyy' }}
 </bd-item-property>

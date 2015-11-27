@@ -31,9 +31,9 @@
                 </div>
             </section>
         </bd-item-property>
-        <bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
+        <!--<bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
             {{ recipient.formData.recipientId}}
-        </bd-item-property>
+        </bd-item-property>-->
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
             <input name="customName"
                    ng-model="recipient.formData.customName"

@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentInternalVerifyController"
         });
     })
-    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter) {
+    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS ) {
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
@@ -19,8 +19,10 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
-            $scope.payment.result.token_error = false;
-            sendAuthorizationToken();
+            if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
+                $scope.payment.result.token_error = false;
+                sendAuthorizationToken();
+            }
         });
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
@@ -37,6 +39,7 @@ angular.module('raiffeisen-payments')
                 if (parts[0] !== 'OK' && !parts[1]) {
                     $scope.payment.result.code = 'error';
                 }
+                depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
                 doneFn();
             }).catch(function (error) {
@@ -57,17 +60,21 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-
-            if($scope.payment.result.token_error) {
-                if($scope.payment.result.nextTokenType === 'next') {
-                    sendAuthorizationToken();
-                } else {
-                    $scope.payment.result.token_error = false;
+            if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
+                if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                    if($scope.payment.token.model.input.$isValid()) {
+                        if ($scope.payment.result.token_error) {
+                            if ($scope.payment.result.nextTokenType === 'next') {
+                                sendAuthorizationToken();
+                            } else {
+                                $scope.payment.result.token_error = false;
+                            }
+                        } else {
+                            authorize(actions.proceed, actions);
+                        }
+                    }
                 }
-            } else {
-                authorize(actions.proceed, actions);
             }
-
         });
 
         $scope.setForm = function (form) {

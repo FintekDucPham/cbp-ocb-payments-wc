@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService,depositsService, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
 
         $scope.payment.token.params.resourceId = null;
 
@@ -39,6 +39,7 @@ angular.module('raiffeisen-payments')
                 if($scope.payment.formData.hideSaveRecipientButton){
                     delete $scope.payment.rbPaymentsStepParams.labels.finalAction;
                 }
+                depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
                 $scope.payment.formData = {};
                 $scope.payment.items = {};

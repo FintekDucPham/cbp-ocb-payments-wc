@@ -50,12 +50,17 @@ angular.module('raiffeisen-payments')
 
                         return result;
                     });
+                }],
+                insuranceAccountList : ['insuranceAccounts', function(insuranceAccounts){
+                    return insuranceAccounts.search().then(function(insuranceAccounts) {
+                        return insuranceAccounts.content;
+                    });
                 }]
             }
 
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, insuranceAccountList, lodash) {
         $scope.dateRange = {};
       //  $scope.listPromise = {};
 
@@ -63,6 +68,14 @@ angular.module('raiffeisen-payments')
             "futureDatePanelConfig": parameters
         };
 
+        $scope.insuranceAccounts = insuranceAccountList;
+
+        $scope.getInsuranceAccountName = function(accountNo){
+            var foundElement = lodash.find($scope.insuranceAccounts, {
+                accountNo: accountNo
+            });
+            return translate.property("raiff.payments.insurances.type."+foundElement.insuranceCode);
+        };
         $scope.onOperationsDateSubmit = function() {
             $scope.table.tableData.newSearch = true;
             $scope.table.tableControl.invalidate();
@@ -116,7 +129,7 @@ angular.module('raiffeisen-payments')
                     }
 
                     paymentsService.search(params).then(function (response) {
-                        _.each(response.content, function(payment, idx) {
+                        _.each(response.content, function(payment) {
                             payment.loadDetails = function() {
                                 payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
                                     payment.details = resp;
@@ -124,7 +137,7 @@ angular.module('raiffeisen-payments')
                                 });
                             };
                         });
-
+                        console.debug(response.content);
                         defer.resolve(response.content);
                         $params.pageCount = response.totalPages;
                     });

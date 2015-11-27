@@ -40,6 +40,10 @@ angular.module('raiffeisen-payments')
         "SEPA": {
             code: 'SEPA',
             state: 'sepa'
+        },
+        "OWN": {
+            code: 'OWN',
+            state: 'own'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -77,7 +81,9 @@ angular.module('raiffeisen-payments')
             meta: {
                 paymentTypes: lodash.without(lodash.map(rbPaymentTypes, function (value) {
                     return value;
-                }), rbPaymentTypes.INTERNAL, rbPaymentTypes.SWIFT, rbPaymentTypes.SEPA)
+                }), rbPaymentTypes.INTERNAL, rbPaymentTypes.SWIFT, rbPaymentTypes.SEPA, rbPaymentTypes.OWN),
+                isFuturePaymentAllowed: true,
+                dateSetByCategory: false
             },
             validation: {}
         }), {

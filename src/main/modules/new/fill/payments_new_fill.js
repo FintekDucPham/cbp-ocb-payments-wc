@@ -75,10 +75,11 @@ angular.module('raiffeisen-payments')
         };
 
         var requestConverter = function (formData) {
-            formData.amount = (""+formData.amount).replace(",", ".");
-            formData.recipientName = splitTextEveryNSign(formData.recipientName);
-            formData.description = splitTextEveryNSign(formData.description);
-            return formData;
+            var copiedForm = angular.copy(formData);
+            copiedForm.amount = (""+formData.amount).replace(",", ".");
+            copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
+            copiedForm.description = splitTextEveryNSign(formData.description);
+            return copiedForm;
         };
 
         var resetRealizationOnBlockedInput = function () {
@@ -101,18 +102,20 @@ angular.module('raiffeisen-payments')
             return   $scope.payment.meta.amountSummary[0].amount > $scope.payment.meta.convertedAssets;
         }
 
-        function validateBalance() {
-            if($scope.payment.type.code!='INSURANCE'){
-                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+        $scope.validateBalance = function() {
+            if($scope.payment.type && $scope.payment.type.code!='INSURANCE'){
+                if($scope.paymentForm.amount){
+                    $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+                }
             }
-        }
+        };
 
         $scope.$watch('payment.formData.amount',function(newVal){
-            validateBalance();
+            $scope.validateBalance();
         });
 
         $scope.$watch('payment.formData.realizationDate',function(newVal){
-            validateBalance();
+            $scope.validateBalance();
         });
 
 
@@ -136,7 +139,7 @@ angular.module('raiffeisen-payments')
             } else {
                 transferService.create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
-                }, requestConverter($scope.payment.formData)), "create").then(function (transfer) {
+                }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     actions.proceed();
@@ -171,6 +174,7 @@ angular.module('raiffeisen-payments')
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, ''+account.category);
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
+                $scope.payment.meta.isFuturePaymentAllowed = true;
             }
             resetRealizationOnBlockedInput();
         });
