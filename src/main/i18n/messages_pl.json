@@ -97,6 +97,7 @@
     "raiff.payments.new_internal.label.header": "Przelew na rachunek własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
+    "raiff.payments.new.types.loading": "",
     "raiff.payments.new.types.INTERNAL": "Przelew własny",
     "raiff.payments.new.types.OWN": "Przelew własny",
     "raiff.payments.new.types.DOMESTIC": "Przelew krajowy w PLN",
@@ -758,6 +759,7 @@
 
     "raiff.payments.taxpayers.manage.status.taxpayer_type": "Typ płatnika",
 
+    "raiff.payments.edit.domestic.fill.recipient.clear": "Wyczyść dane  odbiorcy",
     "raiff.payments.future.label": "Płatności zaplanowane",
     "raiff.payments.future.list.header": "Płatności zaplanowane",
     "raiff.payments.future.list.search_btn": "Szukaj",

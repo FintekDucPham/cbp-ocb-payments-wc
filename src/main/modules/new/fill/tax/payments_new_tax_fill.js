@@ -157,13 +157,21 @@ angular.module('raiffeisen-payments')
             resetControl($scope.paymentForm.periodYear);
         };
 
-        $scope.selectPeriodType = function (periodTypeCode) {
-            $scope.payment.formData.periodNo = null;
+        $scope.selectPeriodType = function (periodTypeCode, initNo) {
+            $scope.payment.formData.periodNo = initNo || null;
             if (!periodTypeCode || periodTypeCode === 'unset') {
                 $scope.payment.formData.periodYear = null;
+                if($scope.payment.formData.periodType){
+                    $scope.payment.formData.periodType = undefined;
+                }
             } else {
                 var periodType = usPeriodTypes[periodTypeCode];
                 $scope.payment.options.customPeriod = !periodType.values;
+            }
+        };
+        $scope.selectPeriodTypeInit = function(){
+            if($scope.payment.formData.periodType){
+                $scope.selectPeriodType($scope.payment.formData.periodType, $scope.payment.formData.periodNo);
             }
         };
 

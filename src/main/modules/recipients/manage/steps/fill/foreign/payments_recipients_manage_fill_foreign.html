@@ -82,7 +82,7 @@
                         ng-pattern="BANK_NAME_VALIDATION_REGEX"
                         bd-matches-none-of="recipientBankNameValidators"
                         split-text-max-length-validators="140"
-                        ng-required="true"
+                        ng-required="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                     ></textarea>
 
 
@@ -108,7 +108,7 @@
             <ui-select ng-show="countries.data" ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"
                        ng-model="recipient.formData.recipientBankCountry"
                        name="recipientBankCountry"
-                       ng-required="true"
+                       ng-required="recipient.formData.recipientIdentityType !== RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                        bd-matches-none-of="recipientBankCountryValidators"
                        theme="bootstrap">
                 <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">

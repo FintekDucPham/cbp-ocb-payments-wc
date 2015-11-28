@@ -59,6 +59,7 @@ angular.module('raiffeisen-payments')
             data.secondaryIdNo = data.secondIDNo;
             data.declarationDate = data.declaration;
             data.realizationDate = new Date(data.realizationDate);
+            data.recipientName = data.recipientName.join("\n");
             return insuranceAccounts.search().then(function(accounts){
                 var matchedInsurance = lodash.find(accounts.content, {'accountNo': data.recipientAccountNo});
                 if(matchedInsurance){
@@ -74,7 +75,7 @@ angular.module('raiffeisen-payments')
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.TAX.code, function(data){
-            data.taxpayerData = data.senderName;
+            data.taxpayerData = data.senderName.join("\n");
             data.idType = idTypesMap[data.paymentDetails.idtype];
             data.idNumber = data.paymentDetails.idnumber;
             data.formCode = data.paymentDetails.formCode;
@@ -83,26 +84,29 @@ angular.module('raiffeisen-payments')
             data.periodYear = data.paymentDetails.periodYear;
             data.obligationId = data.paymentDetails.obligationId;
             data.realizationDate = new Date(data.realizationDate);
+            return $q.when(true);
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function(data){
             data.recipientName = data.recipientName.join('');
             data.realizationDate = new Date(data.realizationDate);
+            return $q.when(true);
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
             data.description = data.title.join("\n");
+            data.realizationDate = new Date(data.realizationDate);
             return $q.when(true);
         });
 
-
+        $scope.payment.meta.transferType = 'loading';
 
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
             data.description = data.title;
-
+            $scope.payment.meta.transferType = data.transferType;
             $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function(){
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
@@ -111,6 +115,8 @@ angular.module('raiffeisen-payments')
 
 
         });
+
+
 
         $scope.clearForm = function () {
             $scope.payment.formData = {};
