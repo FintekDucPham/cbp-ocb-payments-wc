@@ -3,9 +3,8 @@
 
         <ng-include src="detailsTemplatePath"></ng-include>
 
-
         <bd-item-property  label="{{ token.model.currentToken.label }}">
-            <rb-token-authorization rb-operation-type="payments_future_manage_delete_fill" rb-model="token.model"></rb-token-authorization>
+            <rb-token-authorization rb-operation-type="TRANSFER" rb-model="token.model" rb-params="tokenParams"></rb-token-authorization>
         </bd-item-property>
 
     </bd-form-content>
@@ -14,7 +13,14 @@
 <bd-form-footer>
 
     <bd-button class="bd-form-footer__button--positive bd-button__primary"
-               ng-click="onProceedButtonClick()">{{::'raiff.payments.future.delete.buttons.proceed' | translate}}
+               ng-click="onProceedButtonClick()">
+        <span ng-hide="$scope.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION">
+            {{::'raiff.payments.future.delete.buttons.proceed' | translate}}
+        </span>
+        <span ng-show="token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION">
+            {{::'raiff.payments.future.bad_token.buttons.proceed' | translate}}
+            <i class="eb-icon eb-raiffeisen-theme eb-ico-next"></i>
+        </span>
     </bd-button>
 
     <bd-button class="bd-form-footer__button--negative"

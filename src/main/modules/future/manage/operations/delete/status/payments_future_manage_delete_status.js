@@ -6,6 +6,6 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsFutureManageDeleteStatusController"
         });
     })
-    .controller('PaymentsFutureManageDeleteStatusController', function ($scope) {
-
+    .controller('PaymentsFutureManageDeleteStatusController', function ($scope, initialState) {
+        $scope.status = initialState.status;
     });
