@@ -92,8 +92,11 @@ angular.module('raiffeisen-payments')
                     $scope.recipient.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
                 ).then(function(data){
-                    if(data !== undefined && data !== null){
+                    if(data !== undefined && data !== null && data !==''){
                         $scope.recipient.formData.recipientBankName = data.institution;
+                        $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                    }else{
+                        $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                     }
                 });
             }
@@ -180,7 +183,7 @@ angular.module('raiffeisen-payments')
                 creditAccount: copiedFormData.recipientAccountNo,
                 beneficiary: splitTextEveryNSign(copiedFormData.recipientData),
                 remarks: splitTextEveryNSign(copiedFormData.description),
-                swift_bic: "",
+                swift_bic: copiedFormData.recipientSwiftOrBic,
                 bankInformation: copiedFormData.recipientBankName,
                 bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.countryCode : null,
                 address: splitTextEveryNSign(copiedFormData.recipientData),
