@@ -95,6 +95,7 @@ angular.module('raiffeisen-payments')
 
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
             data.description = data.title.join("\n");
+            data.realizationDate = new Date(data.realizationDate);
             return $q.when(true);
         });
 
