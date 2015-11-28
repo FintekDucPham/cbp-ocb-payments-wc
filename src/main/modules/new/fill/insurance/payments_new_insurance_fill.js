@@ -255,12 +255,24 @@ angular.module('raiffeisen-payments')
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
-            copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
-                element.amount = ("" + element.amount).replace(/,/, ".");
-                return lodash.pick(angular.extend({}, element, {
-                    insuranceDestinationType: key
-                }), ['amount', 'currency', 'insuranceDestinationType']);
-            });
+            if($scope.payment.operation.code==='EDIT'){
+                var out = null;
+                angular.forEach(copiedFormData.insurancePremiums, function(val, key){
+                    if(!out){
+                        out = angular.copy(val);
+                        out.insuranceDestinationType=key;
+                    }
+                });
+                copiedFormData.insurancePremium = out;
+            }else{
+                copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
+                    element.amount = ("" + element.amount).replace(/,/, ".");
+                    return lodash.pick(angular.extend({}, element, {
+                        insuranceDestinationType: key
+                    }), ['amount', 'currency', 'insuranceDestinationType']);
+                });
+            }
+
             return copiedFormData;
         });
 
