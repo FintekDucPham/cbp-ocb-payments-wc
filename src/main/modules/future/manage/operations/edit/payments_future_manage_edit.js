@@ -98,14 +98,14 @@ angular.module('raiffeisen-payments')
             return $q.when(true);
         });
 
-
+        $scope.payment.meta.transferType = 'loading';
 
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
             data.description = data.title;
-
+            $scope.payment.meta.transferType = data.transferType;
             $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function(){
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
@@ -114,6 +114,8 @@ angular.module('raiffeisen-payments')
 
 
         });
+
+
 
         $scope.clearForm = function () {
             $scope.payment.formData = {};

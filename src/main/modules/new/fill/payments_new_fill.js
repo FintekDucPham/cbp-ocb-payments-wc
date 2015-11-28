@@ -102,20 +102,20 @@ angular.module('raiffeisen-payments')
             return   $scope.payment.meta.amountSummary[0].amount > $scope.payment.meta.convertedAssets;
         }
 
-        function validateBalance() {
+        $scope.validateBalance = function() {
             if($scope.payment.type && $scope.payment.type.code!='INSURANCE'){
                 if($scope.paymentForm.amount){
                     $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
                 }
             }
-        }
+        };
 
         $scope.$watch('payment.formData.amount',function(newVal){
-            validateBalance();
+            $scope.validateBalance();
         });
 
         $scope.$watch('payment.formData.realizationDate',function(newVal){
-            validateBalance();
+            $scope.validateBalance();
         });
 
 
