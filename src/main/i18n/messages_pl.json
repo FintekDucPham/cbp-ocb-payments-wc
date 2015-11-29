@@ -371,9 +371,11 @@
     "raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA": "Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
 
     "raiff.payments.recipients.new.currency.fill.recipient_account.label": "Rachunek odbiorcy",
+    "raiff.payments.recipients.new.currency.remove.recipient_account.label": "Numer rachunku",
     "raiff.payments.recipients.new.currency.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
 
     "raiff.payments.recipients.new.currency.fill.recipient_name_address": "Nazwa i adres odbiorcy",
+    "raiff.payments.recipients.new.currency.remove.recipient_name_address": "Nazwa i adres",
     "raiff.payments.recipients.new.currency.fill.recipient_data.placeholder": "Wpisz nazwę i adres odbiorcy",
 
     "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
