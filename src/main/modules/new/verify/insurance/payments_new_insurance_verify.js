@@ -24,4 +24,8 @@ angular.module('raiffeisen-payments')
             return filtered;
 
         });
+    }).filter('arrayToString', function(lodash){
+        return function(items) {
+            return lodash.isArray(items) ? items.join("<br />") : items ;
+        };
     });
