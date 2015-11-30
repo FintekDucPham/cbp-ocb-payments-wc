@@ -89,7 +89,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onNewStandingOrderClick = function() {
-
+            $state.go('payments.standing.manage.new');
         };
 
 

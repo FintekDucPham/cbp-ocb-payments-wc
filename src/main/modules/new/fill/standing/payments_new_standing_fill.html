@@ -1,0 +1,244 @@
+<div ng-controller="NewDomesticPaymentFillController">
+
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.custom_name' | translate }}">
+        <input name="customName"
+               ng-model="payment.formData.customName"
+               required
+               ng-pattern="TODO_ODPOWIEDNI_REGEX"
+               class="input-field"
+               placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.placeholder' | translate }}"/>
+
+        <eb-validation-messages eb-name="customName"><!--max 35-->
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.recipients.new.domestic.fill.customName.EMPTY'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.recipients.new.domestic.fill.customName.ILLEGAL'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.sender_account' | translate }}">
+        <rb-account-select rb-account-id="payment.formData.remitterAccountId"
+                           rb-account="payment.items.senderAccount"
+                           bd-attr-required="true"
+                           rb-account-list="payment.meta.accountList"
+                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                           rb-product-list-name="TRANSFER_FROM_LIST"
+                           rb-on-account-select="onSenderAccountSelect()"
+                           rb-account-select-params="remitterAccountSelectParams"
+                           rb-remote="remote.model"
+                           rb-init-select-value = "{{ payment.items.recipient.srcAccountNo || payment.formData.accountNo || selectNrb}}"></rb-account-select>
+    </bd-item-property>
+
+    <bd-item-property ng-if="payment.formData.remitterAccountId"
+                      label="{{ ::'raiff.payments.new.standing.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+        <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                   currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}">
+        <rb-recipient-select rb-recipient="payment.items.recipient"
+                             rb-recipient-id="payment.formData.templateId"
+                             rb-recipient-list="payment.meta.recipientList"
+                             rb-recipient-filter="recipientFilter"
+                             rb-recipient-clear-text="{{ ::'raiff.payments.new.standing.fill.recipient.clear' | translate }}"
+                             rb-recipient-placeholder-text="{{ ::'raiff.payments.new.standing.fill.recipient.placeholder' | translate }}"
+                             rb-on-recipient-clear="clearRecipient()"
+                             rb-on-recipient-select="selectRecipient($recipient)"></rb-recipient-select>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient_account' | translate }}">
+        <input id="recipientAccountNo"
+               name="recipientAccountNo"
+               ng-model="payment.formData.recipientAccountNo"
+               ng-disabled="payment.options.fixedRecipientSelection"
+               required
+               bban-nrb
+               bd-matches-none-of="recipientAccountValidators"
+               class="input-field"
+               type="text"
+               placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_account.placeholder' | translate }}">
+
+        <eb-validation-messages eb-name="recipientAccountNo">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
+            </div>
+            <div eb-message-key="bbanNrb" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.recipient_account.INCORECT_FORMAT_ACC'|translate}}
+            </div>
+            <div eb-message-key="notUs" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.recipient_account.BNF_ACC_NOT_US'|translate}}
+            </div>
+            <div eb-message-key="notZus" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.new.standing.fill.recipient_data' | translate }}">
+    <textarea name="recipientName"
+              ng-model="payment.formData.recipientName"
+              ng-pattern="RECIPIENT_DATA_REGEX"
+              required
+              ng-disabled="payment.options.fixedRecipientSelection"
+              split-text-max-length-validators="140"
+              class="input-field input-area--party-data"
+              placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_data.placeholder' | translate }}"></textarea>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['recipientName'] !== undefined">
+            {{validationErrors['recipientName']}}
+        </div>
+
+        <eb-validation-messages eb-name="recipientName">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.recipient_data.EMPTY_BNF_DATA'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
+            </div>
+            <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow"
+                      label="{{ ::'raiff.payments.new.standing.fill.description' | translate }}">
+
+        <textarea name="description"
+                  ng-model="payment.formData.description"
+                  ng-disabled="payment.options.fixedRecipientSelection"
+                  class="input-field input-area--payment-description"
+                  required
+                  split-text-max-length-validators="140"
+                  ng-pattern="PAYMENT_DESCRIPTION_REGEX"
+                  placeholder="{{ ::'raiff.payments.new.standing.fill.description.placeholder' | translate }}"></textarea>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['description'] !== undefined">
+            {{validationErrors['description']}}
+        </div>
+        <eb-validation-messages eb-name="description">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.description.EMPTY_TITLE'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.description.TOO_LONG_TITLE'|translate}}
+            </div>
+            <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.description.TOO_LONG_TITLE'|translate}}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multi"
+                      label="{{ ::'raiff.payments.new.standing.fill.amount' | translate }}">
+        <div class="bd-item-property--multi__values">
+            <div class="bd-item-property__value--primary">
+                <input type="text"
+                       name="amount"
+                       class="input-field"
+                       ng-model="payment.formData.amount"
+                       min="0.01"
+                       step="0.01"
+                       ng-pattern="AMOUNT_PATTERN"
+                       bd-no-more-than="{ 'elixir' : payment.meta.maxElixirAmount }"
+                       required
+                       placeholder="{{ ::'raiff.payments.new.standing.fill.amount.placeholder' | translate }}"/>
+            </div>
+            <div class="bd-item-property__value--secondary">
+                <ui-select ng-model="payment.formData.currency"
+                           theme="bootstrap"
+                           ng-disabled="true"
+                           required>
+                    <ui-select-match placeholder="Waluta">
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="currency in ['PLN'] track by $index">
+                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <eb-validation-messages eb-name="amount">
+            <div eb-message-key="number" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.EMPTY_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="min" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.INCORRECT_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="amount" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.INCORRECT_AMOUNT'|translate}}
+            </div>
+            <div eb-message-key="balance" class="validation-message animate-on">
+                {{ 'raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
+            </div>
+            <div eb-message-key="elixir" class="validation-message animate-on">
+                {{ 'raiff.payments.new.standing.fill.amount.NOT_ELIXIR_PMNT' | translate }}
+            </div>
+            <div eb-message-key="##todo##" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID'|translate}}
+            </div>
+            <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+            </div>
+            <div eb-message-key="transfer.amount.raiff.transfer.limit.nonres" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+            </div>
+        </eb-validation-messages>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="limitExeeded !== undefined && limitExeeded.show">
+            {{limitExeeded.messages}}
+        </div>
+
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="limitNonResExeeded !== undefined && limitNonResExeeded.show">
+            {{limitNonResExeeded.messages}}
+        </div>
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.execution_date' | translate }}">
+
+        <rb-datepicker
+                ng-model="payment.formData.realizationDate"
+                rb-form="paymentForm"
+                rb-name="realizationDate"
+                rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory"
+                rb-datepicker-options="payment.meta.rbRealizationDateOptions"
+                rb-required="true">
+
+        </rb-datepicker>
+
+        <eb-validation-messages eb-name="realizationDate">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="date" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
+            </div>
+            <div eb-message-key="bdMaxDate" class="validation-message animate-on">
+                {{ payment.meta.laterExecutedDateMsg }}
+            </div>
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+</div>
