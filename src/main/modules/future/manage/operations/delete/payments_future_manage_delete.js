@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
             details :
         };*/
         console.debug($scope.$data);
-        $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/details/"+$scope.$data.details.transferType+"_future_payment_details.html";
+        $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/details/"+$scope.$data.details.transferType.toLowerCase()+"_future_payment_details.html";
         $scope.payment = {
             formData: {},
             meta: {}
