@@ -70,6 +70,10 @@ angular.module('raiffeisen-payments')
 
         $scope.insuranceAccounts = insuranceAccountList;
 
+        $scope.model = {
+            dateRangeValidity: false
+        };
+
         $scope.getInsuranceAccountName = function(accountNo){
             var foundElement = lodash.find($scope.insuranceAccounts, {
                 accountNo: accountNo
@@ -77,8 +81,10 @@ angular.module('raiffeisen-payments')
             return translate.property("raiff.payments.insurances.type."+foundElement.insuranceCode);
         };
         $scope.onOperationsDateSubmit = function() {
-            $scope.table.tableData.newSearch = true;
-            $scope.table.tableControl.invalidate();
+            if ($scope.model.dateRangeValidity) {
+                $scope.table.tableData.newSearch = true;
+                $scope.table.tableControl.invalidate();
+            }
         };
 
         $scope.resolveTemplateType = function (transferType) {
