@@ -145,7 +145,7 @@
     "raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT": "Nieprawidłowa kwota przelewu",
     "raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS": "Kwota przelewu przekracza środki dostępne na rachunku",
     "raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID": "Kwota przelewu przekracza środki dostępne na rachunku",
-    "raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED": "Przekroczony dzienny limit operacji",
+    "raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED": "Przekroczony dzienny limit operacji. Wartość limitu oraz kwotę pozostałą dziś do wykorzystania znajdziesz w menu \"Ustawienia - Bankowość internetowa - Limity dzienne\".",
     "raiff.payments.new.domestic.fill.amount.NOT_ELIXIR_PMNT": "Przelew nie może być wykonany jako płatność Elixir",
     "raiff.payments.new.domestic.fill.execution_date": "Data realizacji",
     "raiff.payments.new.domestic.fill.execution_date.placeholder": "Wybierz datę realizacji",
@@ -371,9 +371,11 @@
     "raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA": "Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
 
     "raiff.payments.recipients.new.currency.fill.recipient_account.label": "Rachunek odbiorcy",
+    "raiff.payments.recipients.new.currency.remove.recipient_account.label": "Numer rachunku",
     "raiff.payments.recipients.new.currency.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
 
     "raiff.payments.recipients.new.currency.fill.recipient_name_address": "Nazwa i adres odbiorcy",
+    "raiff.payments.recipients.new.currency.remove.recipient_name_address": "Nazwa i adres",
     "raiff.payments.recipients.new.currency.fill.recipient_data.placeholder": "Wpisz nazwę i adres odbiorcy",
 
     "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",

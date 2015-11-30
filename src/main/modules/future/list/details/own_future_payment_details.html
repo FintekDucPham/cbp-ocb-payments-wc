@@ -26,8 +26,7 @@
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferTitle'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
         <bd-multiline-text bd-text="$data.details.title"></bd-multiline-text>
     </bd-item-property>
-    
-    
+
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.own.deliveryDate'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
         {{ $data.deliveryDate | date:'dd.MM.yyyy' }}
     </bd-item-property>
