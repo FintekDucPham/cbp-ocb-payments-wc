@@ -9,8 +9,7 @@
     
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
         {{ $data.details.accountName }} <br/>
-        {{ $data.details.accountNo | nrbIbanFilter }}<br ng-if="$data.details.recipientBankName && $data.details.recipientBankName.length > 0"/>
-        {{ $data.details.recipientBankName }}
+        {{ $data.details.accountNo | nrbIbanFilter }}
     </bd-item-property>
     
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
