@@ -41,8 +41,9 @@
                bd-matches-none-of="recipientAccountValidators"
                class="input-field"
                type="text"
+               ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
-
+         <span rb-bank-name account-no="payment.formData.recipientAccountNo" response-value="payment.formData.recipientAccountName"></span>
         <eb-validation-messages eb-name="recipientAccountNo">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
