@@ -1,7 +1,12 @@
 <rb-content-view class="rb-content-view--solid">
     <bd-header>{{::"raiff.payments.standing.list.header"|translate}}</bd-header>
 
-    <bd-button class="bd-button__primary" type="submit">{{::'raiff.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
+    <div class="row">
+        <div class="col-sm-12 col-md-2 ">
+            <bd-button ng-click="onNewStandingOrderClick" class="bd-button__primary">{{::'raiff.payments.standing.button.new.label'|translate}}</bd-button>
+        </div>
+    </div>
+
     <!-- BACKEND:
       bd-table-meta, data: pole z ktorego beda brane dane
     -->

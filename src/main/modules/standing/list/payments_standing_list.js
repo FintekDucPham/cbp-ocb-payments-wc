@@ -88,6 +88,10 @@ angular.module('raiffeisen-payments')
             return pathService.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
         };
 
+        $scope.onNewStandingOrderClick = function() {
+
+        };
+
 
         $scope.table = {
             tableConfig: new bdTableConfig({
