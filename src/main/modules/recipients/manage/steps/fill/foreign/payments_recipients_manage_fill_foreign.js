@@ -21,6 +21,13 @@ angular.module('raiffeisen-payments')
             }
         };
 
+
+        $scope.$watch('recipient.formData.recipientIdentityType', function(newValue, oldValue){
+            if(newValue === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
+                $scope.recipient.formData.recipientBankName = undefined;
+                $scope.recipient.formData.recipientBankCountry = undefined;
+            }
+        });
         customerService.getCustomerDetails().then(function(customerDetails){
             $scope.customerDetails = customerDetails.customerDetails;
         });
@@ -33,7 +40,6 @@ angular.module('raiffeisen-payments')
         $scope.BANK_NAME_VALIDATION_REGEX = validationRegexp('BANK_NAME_VALIDATION_REGEX');
         $scope.recipient.meta.forbiddenAccounts = [];
 
-        console.debug( validationRegexp('INTERNATIONAL_ACCOUNT_REGEX'));
         $scope.regex = {};
         $scope.regex.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
         $scope.regex.INTERNATIONAL_RECIPIENT_DATA_REGEX = validationRegexp('INTERNATIONAL_RECIPIENT_DATA_REGEX');
@@ -140,7 +146,6 @@ angular.module('raiffeisen-payments')
         $scope.recipientBankCountryValidators = {
             recipientBankCountryNonEmpty: function(recipientBankCountryNonEmpty) {
                 if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
-                    console.debug($scope.recipient.formData.recipientIdentityType, recipientBankCountryNonEmpty);
                     return !_.isEmpty(recipientBankCountryNonEmpty);
                 }
                 return true;
@@ -150,7 +155,6 @@ angular.module('raiffeisen-payments')
         $scope.recipientBankSwiftCodeValidators = {
             recipientBankSwiftOrBicNonEmpty: function(recipientBankSwiftOrBic) {
                 if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
-                    console.debug(!_.isEmpty(_.trim(recipientBankSwiftOrBic)));
                     return !_.isEmpty(_.trim(recipientBankSwiftOrBic));
                 }
                 return true;
