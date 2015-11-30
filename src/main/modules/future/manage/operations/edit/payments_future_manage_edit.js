@@ -57,6 +57,7 @@ angular.module('raiffeisen-payments')
             });
             data.paymentType = 'TYPE_'+data.secondIDType;
             data.secondaryIdNo = data.secondIDNo;
+            data.secondaryIdType = idTypesMap[data.secondIDType];
             data.declarationDate = data.declaration;
             data.realizationDate = new Date(data.realizationDate);
             data.recipientName = data.recipientName.join("\n");
@@ -95,17 +96,18 @@ angular.module('raiffeisen-payments')
 
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
             data.description = data.title.join("\n");
+            data.realizationDate = new Date(data.realizationDate);
             return $q.when(true);
         });
 
-
+        $scope.payment.meta.transferType = 'loading';
 
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
             data.description = data.title;
-
+            $scope.payment.meta.transferType = data.transferType;
             $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function(){
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
@@ -114,6 +116,8 @@ angular.module('raiffeisen-payments')
 
 
         });
+
+
 
         $scope.clearForm = function () {
             $scope.payment.formData = {};

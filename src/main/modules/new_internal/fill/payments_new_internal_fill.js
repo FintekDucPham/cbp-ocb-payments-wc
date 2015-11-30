@@ -11,6 +11,11 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
+
+        $scope.remote = {
+            model_from:{},
+            model_to:{}
+        };
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -86,7 +91,9 @@ angular.module('raiffeisen-payments')
         };
 
         function validateBalance() {
+            if($scope.paymentForm.amount){
                 $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+            }
         }
 
         function isCurrentDateSelected() {
@@ -191,7 +198,10 @@ angular.module('raiffeisen-payments')
             } else {
                 $scope.payment.meta.convertedAssets = Number.MAX_VALUE;
             }
-            $scope.paymentForm.amount.$validate();
+            if($scope.paymentForm.amount){
+                $scope.paymentForm.amount.$validate();
+            }
+
         }
 
         function updatePaymentCurrencies() {

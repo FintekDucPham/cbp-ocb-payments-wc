@@ -97,12 +97,35 @@ angular.module('raiffeisen-payments')
             });
             $state.go('payments.future.manage.edit.fill');
         };
-
+        var parseDataByTransfer = function (details) {
+            var responseObject = {
+                transferType: details.transferType,
+                id: details.id,
+                transactionId: details.transactionId,
+                remitterAccountId: details.accountId,
+                currency: details.currency,
+                amount: details.amount,
+                realizationDate: details.realizationDate
+            };
+            responseObject.beneficiaryAccountNo = details.recipientAccountNo;
+            responseObject.beneficiaryAccountId = details.recipientAccountNo;
+            responseObject.recipientName = details.recipientName;
+            responseObject.description = details.recipientName;
+            return responseObject;
+        };
         $scope.onDelete = function(payment) {
-            viewStateService.setInitialState('payments.future.manage.delete', {
-                referenceId: payment.id
-            });
-            $state.go('payments.future.manage.delete.fill');
+            var responseObject = parseDataByTransfer(payment);
+                console.debug(payment, responseObject);
+                paymentsService.remove(responseObject).then(function(resp) {
+                    var responseJson = angular.fromJson(resp.content);
+                    var referenceId = responseJson.referenceId;
+                    viewStateService.setInitialState('payments.future.manage.delete', {
+                        paymentId: payment.id,
+                        referenceId: referenceId,
+                        paymentDetails: payment
+                    });
+                    $state.go('payments.future.manage.delete.fill');
+                });
         };
 
         $scope.onBack = function(child) {
