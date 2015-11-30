@@ -57,6 +57,7 @@ angular.module('raiffeisen-payments')
             });
             data.paymentType = 'TYPE_'+data.secondIDType;
             data.secondaryIdNo = data.secondIDNo;
+            data.secondaryIdType = idTypesMap[data.secondIDType];
             data.declarationDate = data.declaration;
             data.realizationDate = new Date(data.realizationDate);
             data.recipientName = data.recipientName.join("\n");
