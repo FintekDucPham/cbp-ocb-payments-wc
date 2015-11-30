@@ -40,7 +40,8 @@ angular.module('raiffeisen-payments')
             scope: {
                 "dateRange": "=",
                 "options": "=",
-                "onSubmit": "&?"
+                "onSubmit": "&?",
+                "valid": "=?"
             },
             link: function($scope, $element, $attrs, $controller, $transcludeFn) {
 
@@ -61,6 +62,7 @@ angular.module('raiffeisen-payments')
                         $scope.dateRange.fromDate = $scope.inputData.dateFrom;
                         $scope.dateRange.toDate   = $scope.inputData.dateTo;
                     }
+
                 };
 
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;
@@ -124,6 +126,7 @@ angular.module('raiffeisen-payments')
                         $scope.futureDatePanelForm.period.$setValidity("period", true);
                     }
 
+                    $scope.valid = $scope.futureDatePanelForm.$valid;
                     if ($scope.futureDatePanelForm.$valid) {
                         commitDateRange();
                     }
@@ -140,6 +143,20 @@ angular.module('raiffeisen-payments')
                         }
                     }
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
+                        if ($scope.inputData.dateFrom) {
+                            $scope.inputData.dateFrom.setHours(0);
+                            $scope.inputData.dateFrom.setMinutes(0);
+                            $scope.inputData.dateFrom.setSeconds(0);
+                            $scope.inputData.dateFrom.setMilliseconds(0);
+                        }
+
+                        if ($scope.inputData.dateTo) {
+                            $scope.inputData.dateTo.setHours(0);
+                            $scope.inputData.dateTo.setMinutes(0);
+                            $scope.inputData.dateTo.setSeconds(0);
+                            $scope.inputData.dateTo.setMilliseconds(0);
+                        }
+
                         dateFrom = $scope.inputData.dateFrom;
                         dateTo   = $scope.inputData.dateTo;
 
@@ -161,6 +178,7 @@ angular.module('raiffeisen-payments')
                         }
                     }
 
+                    $scope.valid = $scope.futureDatePanelForm.$valid;
                     if ($scope.futureDatePanelForm.$valid) {
                         commitDateRange();
                     }
