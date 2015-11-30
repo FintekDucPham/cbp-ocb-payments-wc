@@ -1028,13 +1028,8 @@
     "raiff.payments.new.standing.fill.finish_date.INCORRECT_EXECUTED_DATE": "TODO: ",
     "raiff.payments.new.standing.fill.finish_date.INCORRECT_EXECUTED_DATE": "TODO: ",
 
-    "raiff.payments.new.standing.verify.sender_account_name": "Z rachunku",
-    "raiff.payments.new.standing.verify.sender_data": "Właściciel",
-    "raiff.payments.new.standing.verify.recipient_account_no": "Na rachunek",
-    "raiff.payments.new.standing.verify.recipient_data": "Nazwa odbiorcy",
-    "raiff.payments.new.standing.verify.amount": "Kwota",
-    "raiff.payments.new.standing.verify.description": "Tytułem",
-    "raiff.payments.new.standing.verify.execution_date": "Data realizacji",
+    "raiff.payments.new.standing.verify.custom_name": "Nazwa zlecenia",
+    "raiff.payments.new.standing.verify.recipient": "Odbiorca",
 
 
     "EOF" : ""
