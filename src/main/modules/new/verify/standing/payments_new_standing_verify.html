@@ -1,4 +1,25 @@
-<div class="form-body" ng-controller="NewDomesticPaymentVerifyController">
+<div class="form-body" ng-controller="NewStandingPaymentVerifyController">
+
+
+    <!--<bd-item-property label="{{ ::'raiff.payments.new.standing.fill.custom_name' | translate }}">-->
+        <!--<input name="customName"-->
+               <!--ng-model="payment.formData.customName"-->
+               <!--required-->
+               <!--ng-pattern="TODO_ODPOWIEDNI_REGEX"-->
+               <!--class="input-field"-->
+               <!--placeholder="{{ ::'raiff.payments.new.standing.fill.custom_name.placeholder' | translate }}"/>-->
+
+        <!--<eb-validation-messages eb-name="customName">&lt;!&ndash;max 35&ndash;&gt;-->
+            <!--<div eb-message-key="required" class="validation-message animate-on">-->
+                <!--{{::'raiff.payments.new.standing.fill.custom_name.EMPTY'|translate}}-->
+            <!--</div>-->
+            <!--<div eb-message-key="pattern" class="validation-message animate-on">-->
+                <!--{{::'raiff.payments.new.standing.fill.custom_name.ILLEGAL'|translate}}-->
+            <!--</div>-->
+        <!--</eb-validation-messages>-->
+
+    <!--</bd-item-property>-->
+
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
         <span style="word-break: break-word;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>&nbsp;<!-- | nazwa -->

@@ -1,4 +1,4 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentVerifyController', function ($scope, lodash) {
+    .controller('NewStandingPaymentVerifyController', function ($scope, lodash) {
 
     });
