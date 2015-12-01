@@ -1,7 +1,19 @@
 angular.module('raiffeisen-payments')
-    .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp) {
+    .constant('STANDING_FREQUENCY_TYPES', [
+        "DAILY",
+        "WEEKLY",
+        "MONTHLY"
+    ])
+    .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
+                                                              bdStepStateEvents, rbAccountSelectParams, validationRegexp,
+                                                              STANDING_FREQUENCY_TYPES) {
 
         // TODO: add field frequencyTypes to payment.meta (payment.meta.frequencyTypes)
+
+        // TODO: filtrowac rachunki po walucie PLN
+
+        $scope.STANDING_FREQUENCY_TYPES = _.keys(STANDING_FREQUENCY_TYPES);
+
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];

@@ -1021,7 +1021,21 @@
     "raiff.payments.new.standing.fill.frequency.EMPTY": "TODO: empty",
     "raiff.payments.new.standing.fill.frequency.ILLEGAL": "TODO: illegal",
     "raiff.payments.new.standing.fill.frequencyType.placeholder": "Wybierz typ częstotliwości",
-    "raiff.payments.new.standing.fill.frequencyType.types.null": "TODO: empty frequency",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.empty": "Brak",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.1.MONTHLY": "miesiąc",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.WEEKLY": "tydzień",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.DAILY": "każdego dnia roboczego",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.MONTHLY": "miesiące",
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.WEEKLY": "tygodnie",
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.DAILY": "każdego dnia roboczego",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.MONTHLY": "miesięcy",
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.WEEKLY": "tygodni",
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.DAILY": "każdego dnia roboczego",
+
 
     "raiff.payments.new.standing.fill.finish_date": "Data zakończenia",
     "raiff.payments.new.standing.fill.finish_date.EMPTY_EXECUTED_DATE": "TODO: ",
@@ -1031,6 +1045,16 @@
     "raiff.payments.new.standing.verify.custom_name": "Nazwa zlecenia",
     "raiff.payments.new.standing.verify.recipient": "Odbiorca",
 
+
+    "raiff.payments.new.standing.verify.sender_account_name": "Z rachunku",
+    "raiff.payments.new.standing.verify.sender_data": "Właściciel",
+    "raiff.payments.new.standing.verify.recipient_account_no": "Na rachunek",
+    "raiff.payments.new.standing.verify.recipient_data": "Nazwa odbiorcy",
+    "raiff.payments.new.standing.verify.amount": "Kwota",
+    "raiff.payments.new.standing.verify.description": "Tytułem",
+    "raiff.payments.new.standing.verify.first_execution_date": "Data pierwszej realizacji",
+    "raiff.payments.new.standing.verify.finish_date": "Data zakończenia",
+    "raiff.payments.new.standing.verify.frequency": "Częstotliwość co",
 
     "EOF" : ""
 }

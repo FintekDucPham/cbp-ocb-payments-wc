@@ -20,13 +20,14 @@
     </bd-item-property>
 
 
+
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.sender_account' | translate }}">
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-account="payment.items.senderAccount"
                            bd-attr-required="true"
                            rb-account-list="payment.meta.accountList"
                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                           rb-product-list-name="TRANSFER_FROM_LIST"
+                           rb-product-list-name="STANDING_ORDER_CREATE_FROM_LIST"
                            rb-on-account-select="onSenderAccountSelect()"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-remote="remote.model"
@@ -246,17 +247,28 @@
                class="input-field"
                placeholder="{{ ::'raiff.payments.new.standing.fill.frequency.placeholder' | translate }}"/>
 
+        <pre>{{STANDING_FREQUENCY_TYPES|json}}</pre>
+
         <ui-select ng-model="payment.formData.frequencyType"
                    theme="bootstrap"
                    on-select="onPaymentFrequencyTypeChange($item)"
                    reset-search-input="false"
                    required
                 >
-            <ui-select-match placeholder="{{ ::'raiff.payments.new.standing.fill.frequencyType.placeholder'|translate }}">
-                {{'raiff.payments.new.standing.fill.frequencyType.types.' + $select.selected.code | translate}}
+            <ui-select-match placeholder="{{ ::'raiff.payments.new.standing.fill.frequencyType.types.empty'|translate }}">
+
+                <div ng-show="payment.formData.frequency == 1">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $select.selected | translate}}</div>
+                <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency <= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $select.selected | translate}}</div>
+                <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more' + $select.selected | translate}}</div>
+
             </ui-select-match>
-            <ui-select-choices repeat="frequency in payment.meta.frequencyTypes">
-                <div ng-bind-html="::'raiff.payments.new.standing.fill.frequencyType.types.' + frequency.code | translate | highlight: $select.search"></div>
+
+            <ui-select-choices repeat="frequency in STANDING_FREQUENCY_TYPES">
+
+                <div ng-show="payment.formData.frequency == 1">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + frequency | translate}}</div>
+                <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency <= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + frequency | translate}}</div>
+                <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more' + frequency | translate}}</div>
+
             </ui-select-choices>
         </ui-select>
 

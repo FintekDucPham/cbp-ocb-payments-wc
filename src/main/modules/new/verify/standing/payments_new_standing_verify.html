@@ -32,7 +32,7 @@
         <p style="word-break: break-all" ng-bind-html="payment.formData.description"></p>
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.execution_date'|translate}}">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.first_execution_date'|translate}}">
         {{ payment.formData.firstRealizationDate | date:'dd.MM.yyyy' }}
     </bd-item-property>
 
@@ -41,7 +41,7 @@
     </bd-item-property>
 
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.execution_date'|translate}}">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.finish_date'|translate}}">
         {{payment.formData.finishDate | date:'dd.MM.yyyy' }}
     </bd-item-property>
 
