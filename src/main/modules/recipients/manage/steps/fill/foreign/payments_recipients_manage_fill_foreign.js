@@ -54,14 +54,14 @@ angular.module('raiffeisen-payments')
 
             if($scope.recipient.formData.recipientBankCountry){
                 angular.forEach(data.content, function(country){
-                    if($scope.recipient.formData.recipientBankCountry===country.countryCode){
+                    if($scope.recipient.formData.recipientBankCountry===country.location){
                         $scope.recipient.formData.recipientBankCountry=angular.copy(country);
                     }
                 });
             }
             if($scope.recipient.formData.recipientCountry){
                 angular.forEach(data.content, function(country){
-                    if($scope.recipient.formData.recipientCountry===country.countryCode){
+                    if($scope.recipient.formData.recipientCountry===country.location){
                         $scope.recipient.formData.recipientCountry=angular.copy(country);
                     }
                 });
