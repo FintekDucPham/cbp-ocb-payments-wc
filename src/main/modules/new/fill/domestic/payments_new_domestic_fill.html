@@ -132,7 +132,7 @@
                        min="0.01"
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
-                       bd-no-more-than="{ 'elixir' : payment.meta.maxElixirAmount }"
+                       bd-no-more-than="{ 'elixir' : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
                        required
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
             </div>

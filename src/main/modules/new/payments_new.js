@@ -132,11 +132,28 @@ angular.module('raiffeisen-payments')
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',
             finalAction: $scope.saveRecipient,
+            footerType: 'payment',
             onClear: $scope.clearForm,
             cancelState: 'payments.recipients.list',
             labels : {
+                cancel: 'config.multistepform.buttons.cancel',
+                change: 'config.multistepform.buttons.change',
+                edit: 'config.multistepform.buttons.edit',
+                clear: 'config.multistepform.buttons.clear',
+                prev: 'config.multistepform.buttons.prev',
+                next: 'config.multistepform.buttons.next',
+                accept: 'config.multistepform.buttons.accept',
                 finalize: 'raiff.payments.new.btn.finalize',
                 finalAction: 'raiff.payments.new.btn.final_action'
+            },
+            visibility:{
+                cancel: true,
+                change: true,
+                clear: true,
+                next: true,
+                accept: true,
+                finalAction: true,
+                finalize: true
             }
         };
     });

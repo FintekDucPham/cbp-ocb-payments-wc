@@ -8,10 +8,17 @@ angular.module('raiffeisen-payments')
                 accountId: null,
                 recipientId: null,
                 taxpayerId: null
+            },
+            resolve:{
+                CURRENT_DATE: ['utilityService', function(utilityService){
+                  return utilityService.getCurrentDate().then(function(currentDate){
+                     return currentDate;
+                  });
+                }]
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE) {
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -40,7 +47,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
-            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
+            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate), new Date(CURRENT_DATE));
             if(!!$scope.paymentForm.amount) {
                 $scope.paymentForm.amount.$validate();
             }
@@ -74,14 +81,9 @@ angular.module('raiffeisen-payments')
 
 
         var setRealizationDateToCurrent = function () {
-            currentDateService.search().then(function (currentDateObj) {
-                var currentDate = new Date(currentDateObj.currentDate);
                 angular.extend($scope.payment.formData, {
-                    realizationDate: currentDate
+                    realizationDate: CURRENT_DATE
                 }, lodash.omit($scope.payment.formData, lodash.isUndefined));
-            });
-
-
         };
 
         var requestConverter = function (formData) {
