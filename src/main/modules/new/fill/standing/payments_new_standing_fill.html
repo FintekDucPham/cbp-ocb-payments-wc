@@ -1,4 +1,4 @@
-<div ng-controller="NewDomesticPaymentFillController">
+<div ng-controller="NewStandingPaymentFillController">
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.custom_name' | translate }}">
         <input name="customName"
@@ -18,8 +18,6 @@
         </eb-validation-messages>
 
     </bd-item-property>
-
-
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.sender_account' | translate }}">
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
@@ -189,9 +187,6 @@
             <div eb-message-key="elixir" class="validation-message animate-on">
                 {{ 'raiff.payments.new.standing.fill.amount.NOT_ELIXIR_PMNT' | translate }}
             </div>
-            <div eb-message-key="##todo##" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID'|translate}}
-            </div>
             <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
             </div>
@@ -216,62 +211,68 @@
                 ng-model="payment.formData.firstRealizationDate"
                 rb-form="paymentForm"
                 rb-name="firstRealizationDate"
+                rb-datepicker-options="firstDateDatepickerOptions"
                 rb-required="true">
         </rb-datepicker>
 
         <eb-validation-messages eb-name="firstRealizationDate">
             <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.EMPTY_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE'|translate}}
             </div>
             <div eb-message-key="date" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
             </div>
             <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
             </div>
-            <!--<div eb-message-key="bdMinDate" class="validation-message animate-on">-->
-                <!--{{::'raiff.payments.new.standing.fill.first_execution_date.EARLIER_EXECUTED_DATE'|translate}}-->
-            <!--</div>-->
-            <!--<div eb-message-key="bdMaxDate" class="validation-message animate-on">-->
-                <!--{{ payment.meta.laterExecutedDateMsg }}-->
-            <!--</div>-->
+
+            <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE'|translate}}
+            </div>
+
+            <div eb-message-key="bdMaxDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE'|translate}}
+            </div>
+
+
         </eb-validation-messages>
 
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.frequency' | translate }}">
-        <input name="frequency"
-               ng-model="payment.formData.frequency"
-               required
-               ng-pattern="TODO_ODPOWIEDNI_REGEX"
-               class="input-field"
-               placeholder="{{ ::'raiff.payments.new.standing.fill.frequency.placeholder' | translate }}"/>
+        <div class="frequency-select">
+            <input name="frequency"
+                   ng-model="payment.formData.frequency"
+                   ng-required="payment.formData.frequencyType != 'DAILY'"
+                   on-select="onFrequencyTypeSelect()"
+                   ng-pattern="TODO_ODPOWIEDNI_REGEX"
+                   ng-disabled="payment.formData.frequencyType == 'DAILY'"
+                   class="input-field order-frequency "
+                   placeholder="{{ payment.formData.frequencyType == 'DAILY' ? '' : ('raiff.payments.new.standing.fill.frequency.placeholder' | translate) }}"/>
 
-        <pre>{{STANDING_FREQUENCY_TYPES|json}}</pre>
 
-        <ui-select ng-model="payment.formData.frequencyType"
-                   theme="bootstrap"
-                   on-select="onPaymentFrequencyTypeChange($item)"
-                   reset-search-input="false"
-                   required
-                >
-            <ui-select-match placeholder="{{ ::'raiff.payments.new.standing.fill.frequencyType.types.empty'|translate }}">
+            <ui-select ng-model="payment.formData.frequencyType"
+                       theme="bootstrap"
+                       on-select="onFrequencyTypeSelect($item)"
+                       reset-search-input="false"
+                       class="order-frequency-type"
+                       required
+                    >
+                <ui-select-match placeholder="{{ ::'raiff.payments.new.standing.fill.frequencyType.types.empty'|translate }}">
 
-                <div ng-show="payment.formData.frequency == 1">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $select.selected | translate}}</div>
-                <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency <= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $select.selected | translate}}</div>
-                <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more' + $select.selected | translate}}</div>
+                    <div ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $select.selected | translate}}</div>
+                    <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $select.selected | translate}}</div>
+                    <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $select.selected | translate}}</div>
 
-            </ui-select-match>
+                </ui-select-match>
 
-            <ui-select-choices repeat="frequency in STANDING_FREQUENCY_TYPES">
-
-                <div ng-show="payment.formData.frequency == 1">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + frequency | translate}}</div>
-                <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency <= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + frequency | translate}}</div>
-                <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more' + frequency | translate}}</div>
-
-            </ui-select-choices>
-        </ui-select>
-
+                <ui-select-choices repeat="frequency in STANDING_FREQUENCY_TYPES">
+                    <div ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + frequency | translate}}</div>
+                    <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + frequency | translate}}</div>
+                    <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + frequency | translate}}</div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
 
         <eb-validation-messages eb-name="frequency"><!--max 35-->
             <div eb-message-key="required" class="validation-message animate-on">
@@ -301,24 +302,22 @@
         </rb-datepicker>
 
         <eb-validation-messages eb-name="finishDate">
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.finish_date.EMPTY_EXECUTED_DATE'|translate}}
-            </div>
+
             <div eb-message-key="date" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_END_DATE'|translate}}
             </div>
             <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_EXECUTED_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_END_DATE'|translate}}
             </div>
-            <!--<div eb-message-key="bdMinDate" class="validation-message animate-on">-->
-            <!--{{::'raiff.payments.new.standing.fill.first_execution_date.EARLIER_EXECUTED_DATE'|translate}}-->
-            <!--</div>-->
-            <!--<div eb-message-key="bdMaxDate" class="validation-message animate-on">-->
-            <!--{{ payment.meta.laterExecutedDateMsg }}-->
-            <!--</div>-->
+
+
+
+
         </eb-validation-messages>
 
     </bd-item-property>
+
+    <pre>{{paymentForm.$error | json}}</pre>
 
 
 </div>

@@ -6,14 +6,40 @@ angular.module('raiffeisen-payments')
     ])
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
-                                                              STANDING_FREQUENCY_TYPES) {
+                                                              STANDING_FREQUENCY_TYPES,
+                                                              rbDatepickerOptions, $q, systemParameterService, SYSTEM_PARAMETERS) {
 
-        // TODO: add field frequencyTypes to payment.meta (payment.meta.frequencyTypes)
+        // TODO: data biezaca Globus?? WTF, a data biezaca NIB
+        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30,// TODO: remove this element
+            firstDateMinDate = new Date(),
+            firstDateMaxDate = new Date();
 
-        // TODO: filtrowac rachunki po walucie PLN
+        firstDateMinDate.setDate(firstDateMinDate.getDate() + 2);
+        firstDateMaxDate.setDate(firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
 
-        $scope.STANDING_FREQUENCY_TYPES = _.keys(STANDING_FREQUENCY_TYPES);
+        $scope.firstDateDatepickerOptions = rbDatepickerOptions({
+            minDate: firstDateMinDate,
+            maxDate: firstDateMaxDate
+        });
 
+        $scope.onFrequencyTypeSelect = function() {
+            if ($scope.payment.formData.frequencyType == "DAILY") {
+                $scope.payment.formData.frequency = "";
+            }
+        };
+
+        $scope.$watch('$scope.payment.formData.finishDate', function(newValue) {
+            if ($scope.payment && $scope.payment.formData && $scope.payment.formData.firstRealizationDate) {
+                if (newValue) {
+                    if ($scope.firstRealizationDate) {
+                        $scope.firstRealizationDate.$setValidity('TOO_LATE_END_DATE', $scope.newValue.getTime() >= $scope.payment.formData.firstRealizationDate.getTime());
+                    }
+                }
+            }
+        });
+
+
+        $scope.STANDING_FREQUENCY_TYPES = STANDING_FREQUENCY_TYPES;
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];

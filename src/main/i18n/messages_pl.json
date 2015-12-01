@@ -1020,7 +1020,7 @@
     "raiff.payments.new.standing.fill.frequency.placeholder": "Wpisz częstotliowość przelewu",
     "raiff.payments.new.standing.fill.frequency.EMPTY": "TODO: empty",
     "raiff.payments.new.standing.fill.frequency.ILLEGAL": "TODO: illegal",
-    "raiff.payments.new.standing.fill.frequencyType.placeholder": "Wybierz typ częstotliwości",
+    "raiff.payments.new.standing.fill.frequencyType.placeholder": "Brak",
 
     "raiff.payments.new.standing.fill.frequencyType.types.empty": "Brak",
 
@@ -1038,9 +1038,13 @@
 
 
     "raiff.payments.new.standing.fill.finish_date": "Data zakończenia",
-    "raiff.payments.new.standing.fill.finish_date.EMPTY_EXECUTED_DATE": "TODO: ",
-    "raiff.payments.new.standing.fill.finish_date.INCORRECT_EXECUTED_DATE": "TODO: ",
-    "raiff.payments.new.standing.fill.finish_date.INCORRECT_EXECUTED_DATE": "TODO: ",
+    "raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być pusta",
+    "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE": "Niepoprawna data pierwszej realizacji zlecenia",
+    "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_END_DATE": "Niepoprawna data zakończenia zlecenia",
+    "raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być wcześniejsza niż ##DATE##",
+    "raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_END_DATE": "Data zakończenia zlecenia nie może być wcześniejsza niż data pierwszej realizacji zlecenia",
+    "raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##DATE##",
+
 
     "raiff.payments.new.standing.verify.custom_name": "Nazwa zlecenia",
     "raiff.payments.new.standing.verify.recipient": "Odbiorca",
