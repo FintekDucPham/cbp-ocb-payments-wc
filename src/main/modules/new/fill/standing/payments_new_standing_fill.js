@@ -10,16 +10,17 @@ angular.module('raiffeisen-payments')
                                                               rbDatepickerOptions, $q, systemParameterService, SYSTEM_PARAMETERS) {
 
         // TODO: data biezaca Globus?? WTF, a data biezaca NIB
-        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30,// TODO: remove this element
-            firstDateMinDate = new Date(),
-            firstDateMaxDate = new Date();
+        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30; // TODO: remove this element
 
-        firstDateMinDate.setDate(firstDateMinDate.getDate() + 2);
-        firstDateMaxDate.setDate(firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
+        $scope.firstDateMinDate = new Date();
+        $scope.firstDateMaxDate = new Date();
+
+        $scope.firstDateMinDate.setDate($scope.firstDateMinDate.getDate() + 2);
+        $scope.firstDateMaxDate.setDate($scope.firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
 
         $scope.firstDateDatepickerOptions = rbDatepickerOptions({
-            minDate: firstDateMinDate,
-            maxDate: firstDateMaxDate
+            minDate: $scope.firstDateMinDate,
+            maxDate: $scope.firstDateMaxDate
         });
 
         $scope.onFrequencyTypeSelect = function() {
@@ -28,11 +29,11 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.$watch('$scope.payment.formData.finishDate', function(newValue) {
+        $scope.$watch('payment.formData.finishDate', function(newValue) {
             if ($scope.payment && $scope.payment.formData && $scope.payment.formData.firstRealizationDate) {
                 if (newValue) {
-                    if ($scope.firstRealizationDate) {
-                        $scope.firstRealizationDate.$setValidity('TOO_LATE_END_DATE', $scope.newValue.getTime() >= $scope.payment.formData.firstRealizationDate.getTime());
+                    if ($scope.paymentForm.firstRealizationDate) {
+                        $scope.paymentForm.finishDate.$setValidity('TOO_LATE_END_DATE', newValue.getTime() >= $scope.payment.formData.firstRealizationDate.getTime());
                     }
                 }
             }
