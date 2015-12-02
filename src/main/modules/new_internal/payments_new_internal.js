@@ -40,4 +40,19 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.payment.rbMultistepParams = {
+            completeState: 'payments.recipients.list',
+            onClear: clearForm,
+            cancelState: 'payments.recipients.list',
+            labels : {
+                change: 'config.multistepform.buttons.change',
+                edit: 'config.multistepform.buttons.edit',
+                clear: 'config.multistepform.buttons.clear',
+                prev: 'config.multistepform.buttons.prev',
+                next: 'config.multistepform.buttons.next',
+                accept: 'config.multistepform.buttons.accept',
+                finalAction: 'raiff.payments.new.btn.final_action',
+                finalize: 'raiff.payments.new.btn.finalize'
+            }
+        };
     });

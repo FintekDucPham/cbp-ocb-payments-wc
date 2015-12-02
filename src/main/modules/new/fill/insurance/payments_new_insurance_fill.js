@@ -219,7 +219,9 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.insuranceErrors.$validate();
             }
         };
-
+        $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
+            $scope.paymentForm.insuranceErrors.$validate();
+        });
         $scope.insurancesValidators = {
             atLeastOne: function (insurances) {
                 return getActiveInsurancesCount(insurances) > 0;
@@ -236,8 +238,7 @@ angular.module('raiffeisen-payments')
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
                         totalPayment += val ?  parseFloat(val.replace(/,/, ".")) : 0;
                     });
-
-                    return !totalPayment || totalPayment <= $scope.payment.items.senderAccount.accessibleAssets;
+                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
                     return true;
                 }

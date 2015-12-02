@@ -12,7 +12,7 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
         {{payment.formData.recipientAccountNo | nrbIbanFilter }} <!-- | nrb -->
-        <!--| <span eb-domestic-bank-details nrb="{{payment.formData.recipientAccountNo}}"></span>-->
+        <br ng-if="payment.formData.recipientAccountName"/>{{payment.formData.recipientAccountName}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
