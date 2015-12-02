@@ -1,13 +1,22 @@
 angular.module('raiffeisen-payments')
-    .constant('STANDING_FREQUENCY_TYPES', [
-        "DAILY",
-        "WEEKLY",
-        "MONTHLY"
-    ])
+    .constant('STANDING_FREQUENCY_TYPES', {
+        "DAILY": {
+            code: "DAILY",
+            symbol: "D"
+        },
+        "WEEKLY": {
+            code: "WEEKLY",
+            symbol: "W"
+        },
+        "MONTHLY": {
+            code: "MONTHLY",
+            symbol: "M"
+        }
+    })
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
-                                                              STANDING_FREQUENCY_TYPES,
-                                                              rbDatepickerOptions, $q, systemParameterService, SYSTEM_PARAMETERS) {
+                                                              STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
+                                                              systemParameterService, SYSTEM_PARAMETERS, $filter) {
 
         // TODO: data biezaca Globus?? WTF, a data biezaca NIB
         var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30; // TODO: remove this element
@@ -40,7 +49,25 @@ angular.module('raiffeisen-payments')
         });
 
 
-        $scope.STANDING_FREQUENCY_TYPES = STANDING_FREQUENCY_TYPES;
+        $scope.setRequestConverter(function(formData) {
+            return {
+              "shortName": formData.shortName,
+              "amount": formData.amount,
+              "beneficiary": splitTextEveryNSign(formData.recipientName),
+              "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
+              "remarks": splitTextEveryNSign(formData.description),
+              "debitAccountId": formData.remitterAccountId,
+              "currency": formData.currency,
+              "startDate": $filter('date')(formData.firstRealizationDate, 'yyyy-MM-dd'),
+              "endDate": $filter('date')(formData.finishDate, 'yyyy-MM-dd'),
+              "periodUnit": STANDING_FREQUENCY_TYPES[formData.frequencyType].symbol,
+              "periodCount": formData.frequency,
+              "dayOfMonth": (formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) ? formData.firstRealizationDate.getDate() : ""
+            };
+        });
+
+
+        $scope.STANDING_FREQUENCY_TYPES = _.pluck(STANDING_FREQUENCY_TYPES, 'code');
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
@@ -201,4 +228,14 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
+
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
     });

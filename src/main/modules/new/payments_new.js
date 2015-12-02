@@ -62,7 +62,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp, transferService, standingTransferService) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
@@ -141,6 +141,17 @@ angular.module('raiffeisen-payments')
             labels : {
                 finalize: 'raiff.payments.new.btn.finalize',
                 finalAction: 'raiff.payments.new.btn.final_action'
+            }
+        };
+
+
+        $scope.getProperPaymentService = function(paymentType) {
+            // unfortunatelly we have different services for different transfer types
+            if (paymentType == rbPaymentTypes.STANDING.code) {
+                return standingTransferService;
+            }
+            else {
+                return transferService;
             }
         };
     });

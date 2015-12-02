@@ -1,8 +1,8 @@
 <div ng-controller="NewStandingPaymentFillController" class="new-standing-payment-fill">
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.custom_name' | translate }}">
-        <input name="customName"
-               ng-model="payment.formData.customName"
+        <input name="shortName"
+               ng-model="payment.formData.shortName"
                required
                ng-pattern="TODO_ODPOWIEDNI_REGEX"
                class="input-field"
