@@ -3,11 +3,11 @@ angular.module('raiffeisen-payments')
 
 
         customerService.getCustomerDetails().then(function(userDetails) {
-            $scope.currentContext = lodash.find(userDetails.customerDetails.customerContexts, {
-                current: true
-            });
-            if($scope.currentContext.context == 'MICRO') {
-                $scope.recipient.formData.microName = $scope.currentContext.fullName;
+            if(userDetails.customerDetails.context == 'MICRO') {
+                var ownerList = $scope.recipient.items.senderAccount.ownersList;
+                $scope.recipient.formData.microName = lodash.find(ownerList, {
+                    relationType: 'OWNER'
+                }).fullName;
             }
         });
 
