@@ -97,6 +97,8 @@ angular.module('raiffeisen-payments')
 
             // we need to recalculate model date after changing week
             calculateModelDate();
+
+            $scope.rejectedList.filterData.periodType.model = PERIOD_TYPES.LAST;
         };
 
         $scope.onFilterLastValueChange = function() {
