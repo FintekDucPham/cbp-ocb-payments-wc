@@ -42,7 +42,7 @@ angular.module('raiffeisen-payments')
 
         $scope.payment.rbMultistepParams = {
             completeState: 'payments.recipients.list',
-            onClear: clearForm,
+            onClear: $scope.clearForm,
             cancelState: 'payments.recipients.list',
             labels : {
                 change: 'config.multistepform.buttons.change',
