@@ -1017,8 +1017,7 @@
     "raiff.payments.new.standing.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
     "raiff.payments.new.standing.fill.frequency": "Częstotliwość co",
-    "raiff.payments.new.standing.fill.frequency.EMPTY": "TODO: empty",
-    "raiff.payments.new.standing.fill.frequency.ILLEGAL": "TODO: illegal",
+
     "raiff.payments.new.standing.fill.frequencyType.placeholder": "Brak",
 
     "raiff.payments.new.standing.fill.frequencyType.types.empty": "Brak",
@@ -1056,6 +1055,27 @@
     "raiff.payments.new.standing.verify.first_execution_date": "Data pierwszej realizacji",
     "raiff.payments.new.standing.verify.finish_date": "Data zakończenia",
     "raiff.payments.new.standing.verify.frequency": "Częstotliwość co",
+
+
+  "raiff.payments.new.standing.fill.EMPTY_ORDER_NAME": "Nazwa zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.INCORRECT_ORDER_NAME": "Nazwa zlecenia nie może przekraczać 35 znaków i powinno zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.EMPTY_BNF_DATA": "Nazwa i adres odbiorcy nie może być pusta",
+  "raiff.payments.new.standing.fill.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie może przekraczać 132 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.EMPTY_AMOUNT_SO": "Kwota zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO": "Nieprawidłowa kwota zlecenia",
+  "raiff.payments.new.standing.fill.EMPTY_TITLE_SO": "Tytuł zlecenia nie może być pusty",
+
+  "raiff.payments.new.standing.fill.TOO_LONG_TITLE_SO": "Tytuł zlecenia nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+
+  "raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY": "Częstotliwość realizacji zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY": "Częstotliwość realizacji zlecenia tygodniowego powinna być liczbą z zakresu od 1 do 9",
+  "raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY": "Częstotliwość realizacji zlecenia miesięcznego powinna być liczbą z zakresu od 1 do 99",
+
+  "raiff.payments.new.standing.fill.MSG-0599_EXECUTED_DATE_NOT_EMPTY_SO": "Dzień realizacji zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.MSG-0600_INCORRECT_EXECUTED_DATE_SO": "Dzień realizacji zlecenia powinnien być liczbą z zakresu od 1 do 31",
+
+  "raiff.payments.new.standing.fill.frequency.EMPTY": "Typ częstotliowości realizacji zlecenia nie może być pusty",
+
 
     "EOF" : ""
 }

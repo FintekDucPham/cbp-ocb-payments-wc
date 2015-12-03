@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
-                                                              systemParameterService, SYSTEM_PARAMETERS, $filter) {
+                                                              systemParameterService, SYSTEM_PARAMETERS) {
 
         // TODO: data biezaca Globus?? WTF, a data biezaca NIB
         var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30; // TODO: remove this element
@@ -70,6 +70,9 @@ angular.module('raiffeisen-payments')
         $scope.STANDING_FREQUENCY_TYPES = _.pluck(STANDING_FREQUENCY_TYPES, 'code');
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+        $scope.STANDING_ORDER_NAME_REGEX   = validationRegexp('STANDING_ORDER_NAME_REGEX');
+        $scope.STANDING_ORDER_BNF_REGEX   = validationRegexp('STANDING_ORDER_BNF_REGEX');
+        $scope.INTEGER_REGEX   = validationRegexp('INTEGER');
         $scope.currencyList = [];
 
         $scope.selectRecipient = function (recipient) {
