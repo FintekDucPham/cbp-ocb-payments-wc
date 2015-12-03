@@ -248,15 +248,16 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.frequency' | translate }}" class="bd-item-property--multi">
         <div class="bd-item-property--multi__values">
+
             <div class="bd-item-property__value--secondary frequency">
+
                 <input name="frequency"
                        ng-model="payment.formData.frequency"
                        ng-required="payment.formData.frequencyType != 'DAILY'"
                        on-select="onFrequencyTypeSelect()"
                        ng-pattern="INTEGER_REGEX"
                        ng-disabled="payment.formData.frequencyType == 'DAILY'"
-                       min="1"
-                       max="payment.formData.frequencyType == 'WEEKLY' ? 9 : 99"
+                       bd-matches-none-of="frequencyValidators"
                        class="input-field order-frequency "
                        placeholder=""/>
             </div>
@@ -287,8 +288,7 @@
             </div>
         </div>
 
-
-        <eb-validation-messages eb-name="frequency"><!--max 35-->
+        <eb-validation-messages eb-name="frequency">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY'|translate}}
             </div>
@@ -296,21 +296,27 @@
                 <span ng-show="payment.formData.frequencyType == 'WEEKLY'">{{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}</span>
                 <span ng-show="payment.formData.frequencyType == 'MONTHLY'">{{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}</span>
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
-                <span ng-show="payment.formData.frequencyType == 'WEEKLY'">{{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}</span>
-                <span ng-show="payment.formData.frequencyType == 'MONTHLY'">{{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}</span>
+            <div eb-message-key="maxWeeklyValue" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}
             </div>
-            <div eb-message-key="max" class="validation-message animate-on">
-                <span ng-show="payment.formData.frequencyType == 'WEEKLY'">{{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}</span>
-                <span ng-show="payment.formData.frequencyType == 'MONTHLY'">{{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}</span>
+            <div eb-message-key="maxMonthlyValue" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}
+            </div>
+
+            <div eb-message-key="minWeeklyValue" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}
+            </div>
+
+            <div eb-message-key="minMonthlyValue" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}
+            </div>
+
+            <div eb-message-key="frequencyTypeRequired" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY'|translate}}
             </div>
         </eb-validation-messages>
 
-        <eb-validation-messages eb-name="frequencyTypes"><!--max 35-->
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.frequency.EMPTY'|translate}}
-            </div>
-        </eb-validation-messages>
+
 
     </bd-item-property>
 
@@ -320,15 +326,16 @@
         <rb-datepicker
                 ng-model="payment.formData.finishDate"
                 rb-form="paymentForm"
-                rb-name="finishDate"
-                rb-required="true">
+                rb-name="finishDate">
         </rb-datepicker>
+
 
         <eb-validation-messages eb-name="finishDate">
 
             <div eb-message-key="date" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_END_DATE'|translate}}
             </div>
+
             <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_END_DATE'|translate}}
             </div>

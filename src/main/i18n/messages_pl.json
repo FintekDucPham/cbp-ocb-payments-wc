@@ -1074,8 +1074,5 @@
   "raiff.payments.new.standing.fill.MSG-0599_EXECUTED_DATE_NOT_EMPTY_SO": "Dzień realizacji zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.MSG-0600_INCORRECT_EXECUTED_DATE_SO": "Dzień realizacji zlecenia powinnien być liczbą z zakresu od 1 do 31",
 
-  "raiff.payments.new.standing.fill.frequency.EMPTY": "Typ częstotliowości realizacji zlecenia nie może być pusty",
-
-
-    "EOF" : ""
+  "EOF" : ""
 }

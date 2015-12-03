@@ -36,6 +36,10 @@ angular.module('raiffeisen-payments')
             if ($scope.payment.formData.frequencyType == "DAILY") {
                 $scope.payment.formData.frequency = "";
             }
+
+            if ($scope.paymentForm.frequency) {
+                $scope.paymentForm.frequency.$validate();
+            }
         };
 
         $scope.$watch('payment.formData.finishDate', function(newValue) {
@@ -111,6 +115,40 @@ angular.module('raiffeisen-payments')
         }
 
 
+
+        $scope.frequencyValidators = {
+            frequencyTypeRequired: function() {
+                return !_.isEmpty($scope.payment.formData.frequencyType);
+            },
+            minWeeklyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                    return val >= 1;
+                }
+
+                return true;
+            },
+            minMonthlyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                    return val >= 1;
+                }
+
+                return true;
+            },
+            maxWeeklyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
+                    return val <= 9;
+                }
+
+                return true;
+            },
+            maxMonthlyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                    return val <= 99;
+                }
+
+                return true;
+            }
+        };
 
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {

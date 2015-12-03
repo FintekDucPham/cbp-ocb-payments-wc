@@ -95,6 +95,7 @@ angular.module('raiffeisen-payments')
         };
 
 
+
         $scope.table = {
             tableConfig: new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.standing.list.empty")
