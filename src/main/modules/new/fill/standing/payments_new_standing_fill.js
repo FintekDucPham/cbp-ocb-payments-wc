@@ -71,7 +71,8 @@ angular.module('raiffeisen-payments')
         });
 
 
-        $scope.STANDING_FREQUENCY_TYPES = _.pluck(STANDING_FREQUENCY_TYPES, 'code');
+        $scope.STANDING_FREQUENCY_TYPES_LIST = _.pluck(STANDING_FREQUENCY_TYPES, 'code');
+        $scope.STANDING_FREQUENCY_TYPES = STANDING_FREQUENCY_TYPES;
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.STANDING_ORDER_NAME_REGEX   = validationRegexp('STANDING_ORDER_NAME_REGEX');

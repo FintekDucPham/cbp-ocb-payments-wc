@@ -3,9 +3,16 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-2 ">
-            <bd-button ng-click="onNewStandingOrderClick()" class="bd-button__primary">{{::'raiff.payments.standing.button.new.label'|translate}}</bd-button>
+            <bd-button ng-click="onNewStandingOrderClick()" class="bd-button__primary bd-md-button-margin">{{::'raiff.payments.standing.button.new.label'|translate}}</bd-button>
         </div>
     </div>
+
+    <!--<div class="row">-->
+        <!-- -->
+        <!--<div class="col-sm-12 col-md-2 pull-right text-right">-->
+            <!--<button class="bd-button__primary bd-md-button-margin bd-button" id="" ng-transclude="" ng-click="refreshList()"><span>Szukaj</span></button>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <!-- BACKEND:
       bd-table-meta, data: pole z ktorego beda brane dane
@@ -18,11 +25,11 @@
               bd-table-meta="{
                     'first': {
                         'title': '##raiff.payments.standing.list.header.name',
-                        'data': 'name'
+                        'data': 'shortName'
                     },
                     'second': {
                         'title': '##raiff.payments.standing.list.header.realizationDate',
-                        'data': 'realizationDate'
+                        'data': 'frequency.nextDate'
                     },
                     'third': {
                         'title': '##raiff.payments.standing.list.header.amount',
@@ -42,11 +49,8 @@
                 }">
 
         <bd-details-section bd-table-row-details>
-            <div eb-preloader eb-promise="$data.promise"></div>
-
-
-            <div ng-if="$data.details">
-                <ng-include src="::resolveTemplate($data.details.transferType)"></ng-include>
+            <div ng-if="$data">
+                <ng-include src="::paymentDetailsTemplate"></ng-include>
 
                 <bd-details-action-section>
                     <div class="row">

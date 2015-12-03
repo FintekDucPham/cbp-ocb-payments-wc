@@ -54,12 +54,16 @@ angular.module('raiffeisen-payments')
             //}
         });
     })
-    .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, pathService, viewStateService) {
+    .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
+                                                                    paymentsService, $filter, pathService, viewStateService,
+                                                                    standingTransferService) {
         $scope.dateRange = {};
 
         $scope.options = {
             "futureDatePanelConfig": {} //parameters TODO: wlasciwe parametry z resolva uzyskac
         };
+
+        $scope.paymentDetailsTemplate = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
 
         $scope.onOperationsDateSubmit = function() {
             $scope.table.tableData.newSearch = true;
@@ -84,14 +88,12 @@ angular.module('raiffeisen-payments')
             child.$emit('$collapseRows');
         };
 
-        $scope.resolveTemplate = function () {
-            return pathService.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
-        };
 
         $scope.onNewStandingOrderClick = function() {
-            $state.go('payments.new.fill', {
-                paymentType: "standing"
-            });
+                $scope.table.tableControl.invalidate();
+            //$state.go('payments.new.fill', {
+//                paymentType: "standing"
+//            });
         };
 
 
@@ -102,18 +104,7 @@ angular.module('raiffeisen-payments')
             }),
             tableData: {
                 getData: function (defer, $params) {
-                    // BACKEND: ustawic jakie parametry zostana wyslane do koncowki zwracajace platnosci zaplanowane
-                    // obecnie: statusPaymentCriteria=waiting na potrzeby testow
-                    var params = {
-                        statusPaymentCriteria: "waiting"
-                    };
-
-                    // BACKEND: ustawienie daty od - do
-                    if ($scope.dateRange.fromDate && $scope.dateRange.toDate) {
-                        params.realizationDateFrom = $filter('date')($scope.dateRange.fromDate.getTime(), "yyyy-MM-dd");
-                        params.realizationDateTo   = $filter('date')($scope.dateRange.toDate.getTime(), "yyyy-MM-dd");
-                    }
-
+                    var params = {};
 
                     if($scope.table.tableData.newSearch){
                         params.pageNumber = 1;
@@ -123,16 +114,15 @@ angular.module('raiffeisen-payments')
                         params.pageNumber = $params.currentPage;
                     }
 
-                    // BACKEND: paymentService, mozna zmienic na inne wedle potrzeb
-                    paymentsService.search(params).then(function (response) {
-                        _.each(response.content, function(payment, idx) {
-                            payment.loadDetails = function() {
-                                // BACKEND: pobranie szczegolow zlecenia stalego
-                                payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
-                                    payment.details = resp;
-                                });
-                            };
-                        });
+                    standingTransferService.search(params).then(function (response) {
+                        //_.each(response.content, function(payment, idx) {
+                        //    payment.loadDetails = function() {
+                        //        // BACKEND: pobranie szczegolow zlecenia stalego
+                        //        // payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
+                        //        //    payment.details = resp;
+                        //        // });
+                        //    };
+                        //});
 
                         defer.resolve(response.content);
                         $params.pageCount = response.totalPages;

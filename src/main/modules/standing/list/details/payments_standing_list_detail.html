@@ -1,57 +1,52 @@
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderNo'|translate}}">
-    <!-- BACKEND -->
-    {{ $data.details.orderNo }}
+    <!-- TODO: czy to na pewno jest to co trzeba -->
+    {{ $data.id }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderName'|translate}}">
-    <!-- BACKEND -->
-    {{$data.details.orderName }}
+    {{$data.shortName }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccount'|translate}}">
-    <!-- BACKEND -->
-    {{$data.details.senderAccountDescription }}<br/>
-    {{$data.details.senderAccountNo }}
+    <!-- TODO: nazwa rachunku? -->
+    {{$data.debitAccount | nrbIbanFilter }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccountOwner'|translate}}">
-    <!-- BACKEND -->
-    {{$data.details.senderAccountOwner }}
+    <!-- czy to na pewno to co trzeba? -->
+     <bd-multiline-text bd-text="$data.orderingCustomer"></bd-multiline-text>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount'|translate}}">
-    <!-- BACKEND -->
-    {{ $data.details.recipientAccountName }}<br/>
-    {{ $data.details.recipientAccount }}
+    <!--. TODO: nazwa konta -->
+    {{$data.creditAccount | nrbIbanFilter }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientData'|translate}}">
-    <!-- BACKEND -->
-    <bd-multiline-text bd-text="$data.details.recipientData"></bd-multiline-text>
+    <bd-multiline-text bd-text="$data.beneficiary"></bd-multiline-text>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.amount'|translate}}">
-    <!-- BACKEND -->
-    {{ $data.details.amount }} {{ $data.details.currency }}
+    {{ $data.amount }} {{ $data.currency }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.title'|translate}}">
-    <!-- BACKEND -->
-    {{ $data.details.title }}
+    <bd-multiline-text bd-text="$data.remarks"></bd-multiline-text>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.frequencyDescription'|translate}}">
-    <!-- BACKEND -->
-    {{ $data.details.frequencyDescription }}
+    <div ng-show="$data.frequency.periodCount <= 1 || !$data.frequency.periodCount">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $data.frequency.periodUnit | translate}}</div>
+    <div ng-show="$data.frequency.periodCount >= 2 && $data.frequency.periodCount < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $data.frequency.periodUnit | translate}}</div>
+    <div ng-show="$data.frequency.periodCount >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $data.frequency.periodUnit | translate}}</div>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.closestRealizationDate'|translate}}">
     <!-- BACKEND -->
-    {{ $data.details.closestRealizationDate | date:'dd-MM-yyy' }}
+    {{ $data.frequency.nextDate | date:'dd-MM-yyy' }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.endDate'|translate}}">
     <!-- BACKEND -->
-    {{ $data.details.endDate | date:'dd-MM-yyy' }}
+    {{ $data.endDate | date:'dd-MM-yyy' }}
 </bd-item-property>
 
