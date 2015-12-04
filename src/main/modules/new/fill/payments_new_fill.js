@@ -153,7 +153,7 @@ angular.module('raiffeisen-payments')
 
 
                 // for standing orders we need standingTransferService
-                $scope.getProperPaymentService($scope.payment.type.code).create(angular.extend({
+                $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
                 }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;

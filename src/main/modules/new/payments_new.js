@@ -19,27 +19,33 @@ angular.module('raiffeisen-payments')
     .constant('rbPaymentTypes', {
         "DOMESTIC": {
             code: 'DOMESTIC',
-            state: 'domestic'
+            state: 'domestic',
+            parentState: 'new'
         },
         "INTERNAL": {
             code: 'INTERNAL',
-            state: 'internal'
+            state: 'internal',
+            parentState: 'new_internal'
         },
         "INSURANCE": {
             code: 'INSURANCE',
-            state: 'insurance'
+            state: 'insurance',
+            parentState: 'new'
         },
         "TAX": {
             code: 'TAX',
-            state: 'tax'
+            state: 'tax',
+            parentState: 'new'
         },
         "SWIFT": {
             code: 'SWIFT',
-            state: 'swift'
+            state: 'swift',
+            parentState: 'new_foreign'
         },
         "SEPA": {
             code: 'SEPA',
-            state: 'sepa'
+            state: 'sepa',
+            parentState: 'new_foreign'
         },
         "OWN": {
             code: 'OWN',
@@ -48,8 +54,7 @@ angular.module('raiffeisen-payments')
         },
         "STANDING": {
             code: 'STANDING',
-            state: 'standing',
-            parentState: 'new'
+            state: 'standing'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
