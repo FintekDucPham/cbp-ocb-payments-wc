@@ -1,0 +1,46 @@
+<div class="form-body" ng-controller="NewSepaPaymentVerifyController">
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
+        <span style="word-break: break-word;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>&nbsp;<!-- | nazwa -->
+
+        {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+    </bd-item-property>
+
+    <!-- swift -->
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
+        {{:: payment.formData.recipientSwiftOrBic}}
+    </bd-item-property>
+
+    <!-- bank country -->
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.bankCountry' | translate }}">
+        {{:: payment.formData.recipientBankCountry.countryName }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}" ng-show="payment.formData.recipientBankName">
+        {{:: payment.formData.recipientBankName }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
+        {{::payment.formData.recipientAccountNo}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.fill.recipient_data'|translate}}">
+        <p style="word-break: break-all" ng-bind-html="payment.formData.recipientName | arrayToHtml"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
+        {{:: payment.formData.recipientCountry.countryName }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.fill.description'|translate}}">
+        <p style="word-break: break-all" ng-bind-html="payment.formData.description | arrayToHtml"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
+        {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}}
+    </bd-item-property>
+</div>

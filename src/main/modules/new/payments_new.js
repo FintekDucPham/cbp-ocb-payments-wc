@@ -19,31 +19,38 @@ angular.module('raiffeisen-payments')
     .constant('rbPaymentTypes', {
         "DOMESTIC": {
             code: 'DOMESTIC',
-            state: 'domestic'
+            state: 'domestic',
+            parentState: 'new'
         },
         "INTERNAL": {
             code: 'INTERNAL',
-            state: 'internal'
+            state: 'internal',
+            parentState: 'new_internal'
         },
         "INSURANCE": {
             code: 'INSURANCE',
-            state: 'insurance'
+            state: 'insurance',
+            parentState: 'new'
         },
         "TAX": {
             code: 'TAX',
-            state: 'tax'
+            state: 'tax',
+            parentState: 'new'
         },
         "SWIFT": {
             code: 'SWIFT',
-            state: 'swift'
+            state: 'swift',
+            parentState: 'new_foreign'
         },
         "SEPA": {
             code: 'SEPA',
-            state: 'sepa'
+            state: 'sepa',
+            parentState: 'new_foreign'
         },
         "OWN": {
             code: 'OWN',
-            state: 'own'
+            state: 'own',
+            parentState: 'new_internal'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -79,9 +86,7 @@ angular.module('raiffeisen-payments')
                 fixedRecipientSelection: false
             },
             meta: {
-                paymentTypes: lodash.without(lodash.map(rbPaymentTypes, function (value) {
-                    return value;
-                }), rbPaymentTypes.INTERNAL, rbPaymentTypes.SWIFT, rbPaymentTypes.SEPA, rbPaymentTypes.OWN),
+                paymentTypes: [],
                 isFuturePaymentAllowed: true,
                 dateSetByCategory: false
             },
@@ -89,6 +94,9 @@ angular.module('raiffeisen-payments')
         }), {
             formData: $stateParams.payment
         });
+
+        $scope.payment.meta.paymentTypes = lodash.where(rbPaymentTypes, {'parentState': $scope.payment.type.parentState});
+
 
         $scope.clearForm = function() {
             $scope.payment.formData = {};
@@ -101,7 +109,8 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.changePaymentType = function (type) {
-            $state.go('payments.new.fill', {
+            var stateToGo = "payments.{0}.fill".format(type.parentState);
+            $state.go(stateToGo, {
                 paymentType: type.state
             });
         };
