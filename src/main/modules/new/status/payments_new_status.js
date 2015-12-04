@@ -8,6 +8,7 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer) {
 
+
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment

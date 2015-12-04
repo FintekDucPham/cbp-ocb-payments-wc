@@ -1,7 +1,85 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp) {
+    .constant('STANDING_FREQUENCY_TYPES', {
+        "DAILY": {
+            code: "DAILY",
+            symbol: "D"
+        },
+        "WEEKLY": {
+            code: "WEEKLY",
+            symbol: "W"
+        },
+        "MONTHLY": {
+            code: "MONTHLY",
+            symbol: "M"
+        }
+    })
+    .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
+                                                              bdStepStateEvents, rbAccountSelectParams, validationRegexp,
+                                                              STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
+                                                              systemParameterService, SYSTEM_PARAMETERS) {
+
+
+        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30; // TODO: remove this element
+
+        $scope.firstDateMinDate = new Date();
+        $scope.firstDateMaxDate = new Date();
+
+        $scope.firstDateMinDate.setDate($scope.firstDateMinDate.getDate() + 2);
+        $scope.firstDateMaxDate.setDate($scope.firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
+
+        $scope.firstDateDatepickerOptions = rbDatepickerOptions({
+            minDate: $scope.firstDateMinDate,
+            maxDate: $scope.firstDateMaxDate
+        });
+
+        $scope.payment.formData.hideSaveRecipientButton = true;
+
+        $scope.onFrequencyTypeSelect = function() {
+            if ($scope.payment.formData.frequencyType == "DAILY") {
+                $scope.payment.formData.frequency = "";
+            }
+
+            if ($scope.paymentForm.frequency) {
+                $scope.paymentForm.frequency.$validate();
+            }
+        };
+
+        $scope.$watch('payment.formData.finishDate', function(newValue) {
+            if ($scope.payment && $scope.payment.formData && $scope.payment.formData.firstRealizationDate) {
+                if (newValue) {
+                    if ($scope.paymentForm.firstRealizationDate) {
+                        $scope.paymentForm.finishDate.$setValidity('TOO_LATE_END_DATE', newValue.getTime() >= $scope.payment.formData.firstRealizationDate.getTime());
+                    }
+                }
+            }
+        });
+
+
+        $scope.setRequestConverter(function(formData) {
+            return {
+              "shortName": formData.shortName,
+              "amount": formData.amount,
+              "beneficiary": splitTextEveryNSign(formData.recipientName),
+              "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
+              "remarks": splitTextEveryNSign(formData.description),
+              "debitAccountId": formData.remitterAccountId,
+              "currency": formData.currency,
+              "startDate": $filter('date')(formData.firstRealizationDate, 'yyyy-MM-dd'),
+              "endDate": $filter('date')(formData.finishDate, 'yyyy-MM-dd'),
+              "periodUnit": STANDING_FREQUENCY_TYPES[formData.frequencyType].symbol,
+              "periodCount": formData.frequency,
+              "dayOfMonth": (formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) ? formData.firstRealizationDate.getDate() : ""
+            };
+        });
+
+
+        $scope.STANDING_FREQUENCY_TYPES_LIST = _.pluck(STANDING_FREQUENCY_TYPES, 'code');
+        $scope.STANDING_FREQUENCY_TYPES = STANDING_FREQUENCY_TYPES;
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+        $scope.STANDING_ORDER_NAME_REGEX   = validationRegexp('STANDING_ORDER_NAME_REGEX');
+        $scope.STANDING_ORDER_BNF_REGEX   = validationRegexp('STANDING_ORDER_BNF_REGEX');
+        $scope.INTEGER_REGEX   = validationRegexp('INTEGER');
         $scope.currencyList = [];
 
         $scope.selectRecipient = function (recipient) {
@@ -39,6 +117,41 @@ angular.module('raiffeisen-payments')
 
         }
 
+
+
+        $scope.frequencyValidators = {
+            frequencyTypeRequired: function() {
+                return !_.isEmpty($scope.payment.formData.frequencyType);
+            },
+            minWeeklyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                    return val >= 1;
+                }
+
+                return true;
+            },
+            minMonthlyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                    return val >= 1;
+                }
+
+                return true;
+            },
+            maxWeeklyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
+                    return val <= 9;
+                }
+
+                return true;
+            },
+            maxMonthlyValue: function(val) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                    return val <= 99;
+                }
+
+                return true;
+            }
+        };
 
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {
@@ -159,4 +272,17 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
+
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
+
+
+
     });

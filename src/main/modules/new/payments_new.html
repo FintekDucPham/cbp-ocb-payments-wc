@@ -1,15 +1,19 @@
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
-    <bd-header>{{::"raiff.payments.new.label.header"|translate}}</bd-header>
+    <bd-header>{{::"raiff.payments.new.label."+payment.type.code+".header"|translate}}</bd-header>
     <bd-form-panel>
 
-        <bd-item-property label="{{::'raiff.payments.new.payment_type'|translate}}">
+        <bd-item-property
+                label="{{::'raiff.payments.new.payment_type'|translate}}"
+                ng-show="payment.type.code != 'STANDING'"
+                >
 
             <ui-select ng-model="payment.type"
                        theme="bootstrap"
                        on-select="changePaymentType($item)"
                        ng-disabled="activeStep.id !== 'fill' || payment.fixedAccountSelection"
                        reset-search-input="false"
-                       required>
+                       required
+                    >
                 <ui-select-match placeholder="{{ ::'raiff.payments.new.payment_type.select'|translate }}">
                     {{'raiff.payments.new.types.' + $select.selected.code | translate}}
                 </ui-select-match>

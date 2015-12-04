@@ -51,6 +51,10 @@ angular.module('raiffeisen-payments')
             code: 'OWN',
             state: 'own',
             parentState: 'new_internal'
+        },
+        "STANDING": {
+            code: 'STANDING',
+            state: 'standing'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -65,7 +69,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp, standingTransferService, transferService) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
@@ -109,8 +113,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.changePaymentType = function (type) {
-            var stateToGo = "payments.{0}.fill".format(type.parentState);
-            $state.go(stateToGo, {
+            $state.go('payments.new.fill', {
                 paymentType: type.state
             });
         };
@@ -165,4 +168,22 @@ angular.module('raiffeisen-payments')
                 finalize: true
             }
         };
+
+        if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
+            $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
+            $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
+            $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
+        }
+
+
+        $scope.getProperPaymentService = function(paymentType) {
+            // unfortunatelly we have different services for different transfer types
+            if (paymentType == rbPaymentTypes.STANDING.code) {
+                return standingTransferService;
+            }
+            else {
+                return transferService;
+            }
+        };
+
     });

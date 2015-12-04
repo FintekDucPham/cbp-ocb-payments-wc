@@ -140,6 +140,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+                
             $scope.validationErrors = [];
             var form = $scope.paymentForm;
             $scope.limitExeeded = {
@@ -149,7 +150,10 @@ angular.module('raiffeisen-payments')
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                transferService.create($scope.payment.type.code, angular.extend({
+
+
+                // for standing orders we need standingTransferService
+                $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
                 }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;

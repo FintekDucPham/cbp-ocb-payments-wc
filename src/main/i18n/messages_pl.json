@@ -94,7 +94,15 @@
     "raiff.payments.new.step2.row.info.costs_not_available": "Informacje o przewidywancyh kosztach zlecenia nie są obecnie dostępne. Nie wpływa to na możliwość przekazania dyspozycji do realizacji.",
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
-    "raiff.payments.new.label.header": "Przelew",
+    "raiff.payments.new.label.OWN.header": "Przelew",
+    "raiff.payments.new.label.INSURANCE.header": "Przelew",
+    "raiff.payments.new.label.INTERNAL.header": "Przelew",
+    "raiff.payments.new.label.SWIFT.header": "Przelew",
+    "raiff.payments.new.label.DOMESTIC.header": "Przelew",
+    "raiff.payments.new.label.SEPA.header": "Przelew",
+    "raiff.payments.new.label.TAX.header": "Przelew",
+    "raiff.payments.new.label.STANDING.header": "Dodawanie zlecenia stałego",
+
     "raiff.payments.new_internal.label.header": "Przelew na rachunek własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
@@ -948,6 +956,150 @@
     "raiff.payments.future.delete.status.label.status.98": "Zlecenie odrzucone",
 
 
+    "raiff.payments.standing.label": "Zlecenia stałe",
+    "raiff.payments.standing.list.header": "Zlecenia stałe",
 
-    "EOF" : ""
+    "raiff.payments.standing.list.empty": "TODO: empy payment list",
+    "raiff.payments.standing.button.new.label": "Nowe zlecenie",
+
+    "raiff.payments.standing.list.header.name": "Twoja nazwa zlecenia",
+    "raiff.payments.standing.list.header.realizationDate": "Data realizacji",
+    "raiff.payments.standing.list.header.amount": "Kwota",
+    "raiff.payments.standing.list.header.recipientData": "Odbiorca",
+    "raiff.payments.standing.list.header.recipientAccount": "Rachunek",
+
+    "raiff.payments.standing.list.details.insurance.buttons.edit": "Edytuj",
+    "raiff.payments.standing.list.details.insurance.buttons.delete": "Usuń",
+    "raiff.payments.standing.list.details.insurance.buttons.backToList": "Powrót",
+
+    "raiff.payments.standing.list.details.orderNo": "Numer zlecenia",
+    "raiff.payments.standing.list.details.orderName": "Nazwa zlecenia",
+    "raiff.payments.standing.list.details.senderAccount": "Z rachunku",
+    "raiff.payments.standing.list.details.senderAccountOwner": "Właściciel",
+    "raiff.payments.standing.list.details.recipientAccount": "Na rachunek",
+    "raiff.payments.standing.list.details.recipientData": "Dane odbiorcy",
+    "raiff.payments.standing.list.details.amount": "Kwota",
+    "raiff.payments.standing.list.details.title": "Tytułem",
+    "raiff.payments.standing.list.details.frequencyDescription": "Częstotliwość",
+    "raiff.payments.standing.list.details.closestRealizationDate": "Data nabliższej realizacji",
+    "raiff.payments.standing.list.details.endDate": "Data zakończenia",
+
+
+    "raiff.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
+    "raiff.payments.new.standing.fill.custom_name": "Twoja nazwa zlecenia",
+    "raiff.payments.new.standing.fill.custom_name.placeholder": "Wpisz Twoją nazwę zlecenia",
+    "raiff.payments.new.standing.fill.custom_name.EMPTY": "TODO: illegal",
+    "raiff.payments.new.standing.fill.custom_name.ILLEGAL": "TODO: illegal",
+    "raiff.payments.new.standing.fill.sender_account": "Z rachunku",
+    "raiff.payments.new.standing.fill.accessible_assets": "Dostępne środki",
+    "raiff.payments.new.standing.fill.recipient": "Wybierz odbiorcę",
+    "raiff.payments.new.standing.fill.recipient.placeholder": "Odbiorca spoza listy",
+    "raiff.payments.new.standing.fill.recipient.clear": "Wyczyść",
+    "raiff.payments.new.standing.fill.recipient_account": "Rachunek odbiorcy",
+    "raiff.payments.new.standing.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
+    "raiff.payments.new.standing.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
+    "raiff.payments.new.standing.fill.recipient_account.INCORECT_FORMAT_ACC": "Rachunek odbiorcy musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
+    "raiff.payments.new.standing.fill.recipient_account.BNF_ACC_NOT_US": "Nie możesz wykonać przelewu, pole 'Na rachunek' jest rachunkiem Urzędu Skarbowego. Aby wykonać przelew do Urzędu Skarbowego wybierz z Menu opcję 'Przelew do US'.",
+    "raiff.payments.new.standing.fill.recipient_account.BNF_ACC_NOT_ZUS": "Nie możesz wykonać przelewu – pole 'Na rachunek' jest rachunkiem ZUS. Aby wykonać przelew do ZUS wybierz z Menu opcję 'Przelew do ZUS'.",
+    "raiff.payments.new.standing.fill.recipient_data": "Dane odbiorcy",
+    "raiff.payments.new.standing.fill.recipient_data.placeholder": "Wpisz nazwę odbiorcy",
+    "raiff.payments.new.standing.fill.recipient_data.EMPTY_BNF_DATA": "Dane odbiorcy nie mogą być puste",
+    "raiff.payments.new.standing.fill.recipient_data.EMPTY_BANK_DATA": "Dane banku nie mogą być puste",
+    "raiff.payments.new.standing.fill.recipient_data.TOO_LONG_BANK_DATA":"Dane banku nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.standing.fill.recipient_data.TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.standing.fill.bank_data.TOO_LONG_BNF_DATA": "Dane banku odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki/ - ? : ( ) . , ' + ",
+    "raiff.payments.new.standing.fill.description": "Tytułem",
+    "raiff.payments.new.standing.fill.description.placeholder": "Wpisz tytuł przelewu",
+    "raiff.payments.new.standing.fill.description.EMPTY_TITLE": "Tytuł przelewu nie może być pusty",
+    "raiff.payments.new.standing.fill.description.TOO_LONG_TITLE": "Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.standing.fill.amount": "Kwota",
+    "raiff.payments.new.standing.fill.amount.placeholder": "Wpisz kwotę przelewu",
+    "raiff.payments.new.standing.fill.amount.EMPTY_AMOUNT": "Kwota przelewu nie może być pusta",
+    "raiff.payments.new.standing.fill.amount.INCORRECT_AMOUNT": "Nieprawidłowa kwota przelewu",
+    "raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS": "Kwota przelewu przekracza środki dostępne na rachunku",
+    "raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID": "Kwota przelewu przekracza środki dostępne na rachunku",
+    "raiff.payments.new.standing.fill.amount.DAILY_LIMIT_EXCEEDED": "Przekroczony dzienny limit operacji",
+    "raiff.payments.new.standing.fill.amount.NOT_ELIXIR_PMNT": "Przelew nie może być wykonany jako płatność Elixir",
+    "raiff.payments.new.standing.fill.first_execution_date": "Data pierwszej realizacji",
+    "raiff.payments.new.standing.fill.first_execution_date.placeholder": "Wybierz datę pierwszej realizacji",
+    "raiff.payments.new.standing.fill.first_execution_date.EMPTY_EXECUTED_DATE": "TODO: Data realizacji przelewu nie może być pusta",
+    "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_EXECUTED_DATE": "TODO: Niepoprawna data realizacji przelewu",
+    "raiff.payments.new.standing.fill.first_execution_date.LATER_EXECUTED_DATE": "TODO: Data realizacji przelewu nie może być późniejsza niż ##date##",
+    "raiff.payments.new.standing.fill.first_execution_date.EARLIER_EXECUTED_DATE": "TODO: Data realizacji przelewu nie może być wcześniejsza niż data bieżąca",
+    "raiff.payments.new.standing.fill.first_execution_date.EMPTY_AUTH":"TODO: Proszę podać kod autoryzacyjny",
+    "raiff.payments.new.standing.fill.first_execution_date.EOD_ERROR":"TODO: Operacje zlecone w tych godzinach mogą zostać zrealizowane w godzinach porannych.",
+    "raiff.payments.new.standing.fill.first_execution_date.BLOCKED_SMS":"TODO: Autoryzacja hasłem SMS została zablokowana.",
+    "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_BLOCKED_SMS":"TODO: Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
+    "raiff.payments.new.standing.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
+
+    "raiff.payments.new.standing.fill.frequency": "Częstotliwość co",
+
+    "raiff.payments.new.standing.fill.frequencyType.placeholder": "Brak",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.empty": "Brak",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.1.M": "miesiąc",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.W": "tydzień",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.D": "każdego dnia roboczego",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.M": "miesiące",
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.W": "tygodnie",
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.D": "każdego dnia roboczego",
+
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.M": "miesięcy",
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.W": "tygodni",
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.D": "każdego dnia roboczego",
+
+    "raiff.payments.new.standing.fill.finish_date": "Data zakończenia",
+    "raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być pusta",
+    "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE": "Niepoprawna data pierwszej realizacji zlecenia",
+    "raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być wcześniejsza niż ##DATE##",
+    "raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##DATE##",
+
+    "raiff.payments.new.standing.fill.finish_date.INCORRECT_END_DATE": "Niepoprawna data zakończenia zlecenia",
+    "raiff.payments.new.standing.fill.finish_date.TOO_LATE_END_DATE": "Data zakończenia zlecenia nie może być wcześniejsza niż data pierwszej realizacji zlecenia",
+
+    "raiff.payments.new.standing.verify.custom_name": "Nazwa zlecenia",
+    "raiff.payments.new.standing.verify.recipient": "Odbiorca",
+
+    "raiff.payments.new.standing.verify.sender_account_name": "Z rachunku",
+    "raiff.payments.new.standing.verify.sender_data": "Właściciel",
+    "raiff.payments.new.standing.verify.recipient_account_no": "Na rachunek",
+    "raiff.payments.new.standing.verify.recipient_data": "Nazwa odbiorcy",
+    "raiff.payments.new.standing.verify.amount": "Kwota",
+    "raiff.payments.new.standing.verify.description": "Tytułem",
+    "raiff.payments.new.standing.verify.first_execution_date": "Data pierwszej realizacji",
+    "raiff.payments.new.standing.verify.finish_date": "Data zakończenia",
+    "raiff.payments.new.standing.verify.frequency": "Częstotliwość co",
+
+
+  "raiff.payments.new.standing.fill.EMPTY_ORDER_NAME": "Nazwa zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.INCORRECT_ORDER_NAME": "Nazwa zlecenia nie może przekraczać 35 znaków i powinno zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.EMPTY_BNF_DATA": "Nazwa i adres odbiorcy nie może być pusta",
+  "raiff.payments.new.standing.fill.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie może przekraczać 132 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.EMPTY_AMOUNT_SO": "Kwota zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO": "Nieprawidłowa kwota zlecenia",
+  "raiff.payments.new.standing.fill.EMPTY_TITLE_SO": "Tytuł zlecenia nie może być pusty",
+
+  "raiff.payments.new.standing.fill.TOO_LONG_TITLE_SO": "Tytuł zlecenia nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+
+  "raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY": "Częstotliwość realizacji zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY": "Częstotliwość realizacji zlecenia tygodniowego powinna być liczbą z zakresu od 1 do 9",
+  "raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY": "Częstotliwość realizacji zlecenia miesięcznego powinna być liczbą z zakresu od 1 do 99",
+
+  "raiff.payments.new.standing.fill.MSG-0599_EXECUTED_DATE_NOT_EMPTY_SO": "Dzień realizacji zlecenia nie może być pusta",
+  "raiff.payments.new.standing.fill.MSG-0600_INCORRECT_EXECUTED_DATE_SO": "Dzień realizacji zlecenia powinnien być liczbą z zakresu od 1 do 31",
+
+    "raiff.payments.new.standing.status.20": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.new.standing.status.40": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.new.standing.status.60": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.new.standing.status.100": "Zlecenie zrealizowane",
+    "raiff.payments.new.standing.status.98": "Zlecenie odrzucone",
+    "raiff.payments.new.standing.status.99": "Zlecenie odrzucone",
+    "raiff.payments.new.standing.status.error": "Zlecenie odrzucone",
+    "raiff.payments.new.standing.status.success": "Zlecnie przyjęte do realizacji ",
+
+    "raiff.payments.standing.new.btn.finalize": "Zamknij",
+
+  "EOF" : ""
 }
