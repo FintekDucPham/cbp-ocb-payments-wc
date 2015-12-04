@@ -93,7 +93,15 @@
     "raiff.payments.new.step2.row.info.costs_not_available": "Informacje o przewidywancyh kosztach zlecenia nie są obecnie dostępne. Nie wpływa to na możliwość przekazania dyspozycji do realizacji.",
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
-    "raiff.payments.new.label.header": "Przelew",
+    "raiff.payments.new.label.OWN.header": "Przelew",
+    "raiff.payments.new.label.INSURANCE.header": "Przelew",
+    "raiff.payments.new.label.INTERNAL.header": "Przelew",
+    "raiff.payments.new.label.SWIFT.header": "Przelew",
+    "raiff.payments.new.label.DOMESTIC.header": "Przelew",
+    "raiff.payments.new.label.SEPA.header": "Przelew",
+    "raiff.payments.new.label.TAX.header": "Przelew",
+    "raiff.payments.new.label.STANDING.header": "Dodawanie zlecenia stałego",
+
     "raiff.payments.new_internal.label.header": "Przelew na rachunek własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
