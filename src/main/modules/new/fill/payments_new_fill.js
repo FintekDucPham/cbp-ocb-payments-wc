@@ -8,10 +8,17 @@ angular.module('raiffeisen-payments')
                 accountId: null,
                 recipientId: null,
                 taxpayerId: null
+            },
+            resolve:{
+                CURRENT_DATE: ['utilityService', function(utilityService){
+                  return utilityService.getCurrentDate().then(function(currentDate){
+                     return currentDate;
+                  });
+                }]
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE) {
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -40,7 +47,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
-            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
+            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate), new Date(CURRENT_DATE));
             if(!!$scope.paymentForm.amount) {
                 $scope.paymentForm.amount.$validate();
             }
@@ -55,7 +62,8 @@ angular.module('raiffeisen-payments')
             angular.extend($scope.payment.meta, result);
             var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
                 minDate: new Date(),
-                maxDaysFromNow: result.maxDaysToDelayPayment
+                maxDaysFromNow: result.maxDaysToDelayPayment,
+                readDataFromServer: true
             });
             $scope.payment.meta.extraVerificationAccountList = result.extraVerificationAccountList;
             $scope.payment.meta.laterExecutedDateMsg = translate.property('raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
@@ -68,10 +76,14 @@ angular.module('raiffeisen-payments')
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
+
+        var currentDateService = resourceServiceFactory.create("current_date");
+
+
         var setRealizationDateToCurrent = function () {
-            angular.extend($scope.payment.formData, {
-                realizationDate: new Date()
-            }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+                angular.extend($scope.payment.formData, {
+                    realizationDate: CURRENT_DATE
+                }, lodash.omit($scope.payment.formData, lodash.isUndefined));
         };
 
         var requestConverter = function (formData) {

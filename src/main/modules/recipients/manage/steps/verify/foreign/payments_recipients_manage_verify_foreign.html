@@ -11,7 +11,11 @@
             {{ recipient.formData.recipientSwiftOrBic }}
         </bd-item-property>
 
-        <bd-item-property  class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.verify.bank_data.label' | translate }}">
+        <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'" class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.verify.bank_data.label' | translate }}">
+            <p  ng-bind-html="recipient.formData.recipientBankName" ></p>
+        </bd-item-property>
+
+        <bd-item-property ng-hide="recipient.operation.code !== 'REMOVE'" class="bd-item-property--text bd-item-property--text bd-item-property--disabled" label="">
             <p  ng-bind-html="recipient.formData.recipientBankName" ></p>
         </bd-item-property>
 
@@ -19,13 +23,23 @@
             {{ recipient.formData.recipientBankCountry.countryName }}
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
+        <bd-item-property ng-hide="recipient.operation.code !== 'REMOVE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.remove.recipient_account.label' | translate }}">
+            {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
+        </bd-item-property>
+        <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
             {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_name_address' | translate }}">
+        <bd-item-property ng-hide="recipient.operation.code !== 'REMOVE'" class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.remove.recipient_name_address' | translate }}">
             <p ng-bind-html="recipient.formData.recipientData" ></p>
         </bd-item-property>
+
+        <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'" class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_name_address' | translate }}">
+            <p ng-bind-html="recipient.formData.recipientData" ></p>
+        </bd-item-property>
+
+
+
 
         <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'"  class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
             {{ recipient.formData.recipientCountry.countryName }}

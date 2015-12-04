@@ -62,7 +62,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp, transferService, standingTransferService) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
@@ -133,43 +133,31 @@ angular.module('raiffeisen-payments')
         };
 
 
-        var getProperRbPaymentStepParams = function() {
-            if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
-                return {
-                    completeState: 'payments.standing.list',
-                    onClear: $scope.clearForm,
-                    cancelState: 'payments.standing.list',
-                    labels : {
-                        finalize: 'raiff.payments.standing.new.btn.finalize'
-                    }
-                };
-            }
-
-
-            return {
-                completeState: 'payments.recipients.list',
-                finalAction: $scope.saveRecipient,
-                onClear: $scope.clearForm,
-                cancelState: 'payments.recipients.list',
-                labels : {
-                    finalize: 'raiff.payments.new.btn.finalize',
-                    finalAction: 'raiff.payments.new.btn.final_action'
-                }
-            };
-        };
-
-
-        $scope.payment.rbPaymentsStepParams = getProperRbPaymentStepParams() ;
-
-
-        $scope.getProperPaymentService = function(paymentType) {
-            // unfortunatelly we have different services for different transfer types
-            if (paymentType == rbPaymentTypes.STANDING.code) {
-                return standingTransferService;
-            }
-            else {
-                return transferService;
+        $scope.payment.rbPaymentsStepParams = {
+            completeState: 'payments.recipients.list',
+            finalAction: $scope.saveRecipient,
+            footerType: 'payment',
+            onClear: $scope.clearForm,
+            cancelState: 'payments.recipients.list',
+            labels : {
+                cancel: 'config.multistepform.buttons.cancel',
+                change: 'config.multistepform.buttons.change',
+                edit: 'config.multistepform.buttons.edit',
+                clear: 'config.multistepform.buttons.clear',
+                prev: 'config.multistepform.buttons.prev',
+                next: 'config.multistepform.buttons.next',
+                accept: 'config.multistepform.buttons.accept',
+                finalize: 'raiff.payments.new.btn.finalize',
+                finalAction: 'raiff.payments.new.btn.final_action'
+            },
+            visibility:{
+                cancel: true,
+                change: true,
+                clear: true,
+                next: true,
+                accept: true,
+                finalAction: true,
+                finalize: true
             }
         };
-
     });

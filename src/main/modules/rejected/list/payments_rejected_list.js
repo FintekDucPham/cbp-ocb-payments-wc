@@ -97,6 +97,8 @@ angular.module('raiffeisen-payments')
 
             // we need to recalculate model date after changing week
             calculateModelDate();
+
+            $scope.rejectedList.filterData.periodType.model = PERIOD_TYPES.LAST;
         };
 
         $scope.onFilterLastValueChange = function() {
@@ -135,8 +137,8 @@ angular.module('raiffeisen-payments')
 
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
-            $scope.rejectedList.filterData.last.value = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
-            $scope.rejectedList.filterData.last.default = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
+            $scope.rejectedList.filterData.last.value = now.getDate(); // bo data bieżąca - data początku miesiąca + 1 to taki skomplikowany sposób na powiedzenie, że chodzi o dzień miesiąca
+            $scope.rejectedList.filterData.last.default = now.getDate();
             $scope.rejectedList.filterData.range.dateFrom = firstDayOfCurrentMonth;
 
             // hello world, tutaj weeeee ned to change something, i hope only here ;)

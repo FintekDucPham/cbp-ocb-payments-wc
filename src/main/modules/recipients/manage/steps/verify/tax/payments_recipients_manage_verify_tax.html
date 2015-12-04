@@ -38,7 +38,7 @@
             {{ !!recipient.formData.periodType ? ('raiff.payments.recipients.new.us.fill.period_type.' + recipient.formData.periodType | translate) : '-' }}
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.obligation_id' | translate }}">
+        <bd-item-property ng-if="recipient.manageAction!=='REMOVE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.obligation_id' | translate }}">
             {{ recipient.formData.obligationId || '-' }}
         </bd-item-property>
 

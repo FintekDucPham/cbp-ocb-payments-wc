@@ -11,7 +11,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
-        {{payment.formData.recipientName}}
+        <p ng-bind-html="payment.formData.recipientName | arrayToString"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">
@@ -59,7 +59,7 @@
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + insurance.key |translate}}">
                 {{ ::'raiff.payments.new.zus.verify.tmp.zus_name' | translate }}<br>
                 {{::insurance.nrb}}
-                <bd-amount amount="insurance.amount" currency="{{ insurance.currency }}" not-styled></bd-amount>
+                <bd-amount amount="insurance.amount.replace(',','.')" currency="{{ insurance.currency }}" not-styled></bd-amount>
             </bd-item-property>
         </div>
 

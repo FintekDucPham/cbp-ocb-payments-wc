@@ -35,6 +35,7 @@
                   ng-model="payment.formData.recipientName"
                   required
                   ng-pattern="taxpayerRegexp"
+                  bd-array-value
                   split-text-max-length-validators="54"
                   ng-disabled="payment.options.isFromTaxpayer"
                   class="input-field input-area--party-data"
@@ -252,7 +253,7 @@
                                    class="input-field"
                                    min="0.01"
                                    bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceType] }}"
-                                   bd-no-more-than="{ 'balance' : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
+                                   bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                                    ng-pattern="AMOUNT_PATTERN"
                                    ng-model-options="{ allowInvalid: true }"
                                    step="0.01"

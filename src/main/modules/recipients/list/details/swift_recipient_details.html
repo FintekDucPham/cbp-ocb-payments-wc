@@ -6,6 +6,10 @@
     {{ $data.customerName }}
 </bd-item-property>
 
+<bd-item-property class="eb-item-property--text"  label="">
+    {{ $data.bankName }}
+</bd-item-property>
+
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
     {{ $data.nrb | nrbIbanFilter }}
 </bd-item-property>

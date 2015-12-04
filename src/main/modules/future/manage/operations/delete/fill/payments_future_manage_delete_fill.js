@@ -7,4 +7,5 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsFutureManageDeleteFillController', function ($scope, initialState) {
+
     });

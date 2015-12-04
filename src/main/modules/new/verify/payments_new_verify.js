@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
                     $scope.payment.result.code = 'error';
                 }
                 if($scope.payment.formData.hideSaveRecipientButton){
-                    delete $scope.payment.rbPaymentsStepParams.labels.finalAction;
+                    $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
                 }
                 depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
@@ -48,7 +48,7 @@ angular.module('raiffeisen-payments')
 
                 doneFn();
             }).catch(function (error) {
-                $scope.payment.result.token_error = true;
+                 $scope.payment.result.token_error = true;
 
                 if($scope.payment.token.model && $scope.payment.token.model.$tokenRequired){
                     if(!$scope.payment.token.model.$isErrorRegardingToken(error)){
@@ -66,6 +66,27 @@ angular.module('raiffeisen-payments')
             });
         }
 
+        $scope.$watch('payment.token.model.view.name', function(newValue, oldValue){
+            var params = $scope.payment.rbPaymentsStepParams;
+           if(newValue){
+                if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                    if($scope.payment.token.model.currentToken.$backendErrors.TOKEN_AUTH_BLOCKED){
+                        params.labels.cancel = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }
+                    params.visibility.change = false;
+                }else{
+                    params.visibility.change = true;
+                    params.visibility.finalize = true;
+                    params.visibility.cancel = true;
+                    params.visibility.accept = true;
+                    params.labels.change = 'raiff.payments.new.btn.change';
+                    params.labels.finalize = 'raiff.payments.new.btn.finalize';
+                    params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                }
+           }
+        });
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
 
             if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {

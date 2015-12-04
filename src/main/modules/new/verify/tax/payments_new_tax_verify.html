@@ -13,7 +13,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.taxpayer_data'|translate}}">
-        <bd-multiline-text bd-text="payment.formData.taxpayerData"></bd-multiline-text>
+        <p ng-bind-html="payment.formData.taxpayerData | arrayToString"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id_type'|translate}}">

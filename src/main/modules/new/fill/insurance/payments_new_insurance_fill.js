@@ -219,7 +219,9 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.insuranceErrors.$validate();
             }
         };
-
+        $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
+            $scope.paymentForm.insuranceErrors.$validate();
+        });
         $scope.insurancesValidators = {
             atLeastOne: function (insurances) {
                 return getActiveInsurancesCount(insurances) > 0;
@@ -236,8 +238,7 @@ angular.module('raiffeisen-payments')
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
                         totalPayment += val ?  parseFloat(val.replace(/,/, ".")) : 0;
                     });
-
-                    return !totalPayment || totalPayment <= $scope.payment.items.senderAccount.accessibleAssets;
+                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
                     return true;
                 }
@@ -255,12 +256,24 @@ angular.module('raiffeisen-payments')
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
-            copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
-                element.amount = ("" + element.amount).replace(/,/, ".");
-                return lodash.pick(angular.extend({}, element, {
-                    insuranceDestinationType: key
-                }), ['amount', 'currency', 'insuranceDestinationType']);
-            });
+            if($scope.payment.operation.code==='EDIT'){
+                var out = null;
+                angular.forEach(copiedFormData.insurancePremiums, function(val, key){
+                    if(!out){
+                        out = angular.copy(val);
+                        out.insuranceDestinationType=key;
+                    }
+                });
+                copiedFormData.insurancePremium = out;
+            }else{
+                copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
+                    element.amount = ("" + element.amount).replace(/,/, ".");
+                    return lodash.pick(angular.extend({}, element, {
+                        insuranceDestinationType: key
+                    }), ['amount', 'currency', 'insuranceDestinationType']);
+                });
+            }
+
             return copiedFormData;
         });
 

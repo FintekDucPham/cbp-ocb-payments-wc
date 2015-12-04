@@ -57,6 +57,7 @@ angular.module('raiffeisen-payments')
             });
             data.paymentType = 'TYPE_'+data.secondIDType;
             data.secondaryIdNo = data.secondIDNo;
+            data.secondaryIdType = idTypesMap[data.secondIDType];
             data.declarationDate = data.declaration;
             data.realizationDate = new Date(data.realizationDate);
             data.recipientName = data.recipientName.join("\n");
@@ -95,25 +96,55 @@ angular.module('raiffeisen-payments')
 
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
             data.description = data.title.join("\n");
+            data.realizationDate = new Date(data.realizationDate);
             return $q.when(true);
         });
 
-
+        $scope.payment.meta.transferType = 'loading';
 
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
             data.description = data.title;
-
+            $scope.payment.meta.transferType = data.transferType;
             $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function(){
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                 $scope.payment.formData.referenceId = initialState.referenceId;
+                $scope.payment.rbPaymentsStepParams = {
+                    completeState: 'payments.recipients.list',
+                    finalAction: $scope.saveRecipient,
+                    footerType: 'payment',
+                    onClear: $scope.clearForm,
+                    cancelState: 'payments.recipients.list',
+                    labels : {
+                        cancel: 'config.multistepform.buttons.cancel',
+                        change: 'config.multistepform.buttons.change',
+                        edit: 'config.multistepform.buttons.edit',
+                        clear: 'config.multistepform.buttons.clear',
+                        prev: 'config.multistepform.buttons.prev',
+                        next: 'config.multistepform.buttons.next',
+                        accept: 'config.multistepform.buttons.accept',
+                        finalize: 'raiff.payments.new.btn.finalize',
+                        finalAction: 'raiff.payments.new.btn.final_action'
+                    },
+                    visibility:{
+                        cancel: true,
+                        change: true,
+                        clear: true,
+                        next: true,
+                        accept: true,
+                        finalAction: true,
+                        finalize: true
+                    }
+                };
             });
 
 
         });
+
+
 
         $scope.clearForm = function () {
             $scope.payment.formData = {};
