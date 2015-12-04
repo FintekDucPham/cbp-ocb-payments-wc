@@ -43,11 +43,13 @@ angular.module('raiffeisen-payments')
         },
         "OWN": {
             code: 'OWN',
-            state: 'own'
+            state: 'own',
+            parentState: 'new_internal'
         },
         "STANDING": {
             code: 'STANDING',
-            state: 'standing'
+            state: 'standing',
+            parentState: 'new'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -62,7 +64,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp, standingTransferService, transferService) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
@@ -83,9 +85,7 @@ angular.module('raiffeisen-payments')
                 fixedRecipientSelection: false
             },
             meta: {
-                paymentTypes: lodash.without(lodash.map(rbPaymentTypes, function (value) {
-                    return value;
-                }), rbPaymentTypes.INTERNAL, rbPaymentTypes.SWIFT, rbPaymentTypes.SEPA, rbPaymentTypes.OWN, rbPaymentTypes.STANDING),
+                paymentTypes: [],
                 isFuturePaymentAllowed: true,
                 dateSetByCategory: false
             },
@@ -93,6 +93,9 @@ angular.module('raiffeisen-payments')
         }), {
             formData: $stateParams.payment
         });
+
+        $scope.payment.meta.paymentTypes = lodash.where(rbPaymentTypes, {'parentState': $scope.payment.type.parentState});
+
 
         $scope.clearForm = function() {
             $scope.payment.formData = {};
@@ -134,7 +137,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.payment.rbPaymentsStepParams = {
-            completeState: 'payments.standing.list',
+            completeState: 'payments.recipients.list',
             finalAction: $scope.saveRecipient,
             footerType: 'payment',
             onClear: $scope.clearForm,
