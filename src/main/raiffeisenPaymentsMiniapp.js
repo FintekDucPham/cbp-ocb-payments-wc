@@ -79,7 +79,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.standing.list",
                     label: 'raiff.payments.standing.label',
-                    icon: "raiff-icons",
+                    icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.standing.list",
                     priority: 7
                 }
