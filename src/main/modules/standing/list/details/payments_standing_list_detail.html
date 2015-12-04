@@ -1,5 +1,4 @@
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderNo'|translate}}">
-    <!-- TODO: czy to na pewno jest to co trzeba -->
     {{ $data.id }}
 </bd-item-property>
 
@@ -8,17 +7,14 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccount'|translate}}">
-    <!-- TODO: nazwa rachunku? -->
     {{$data.debitAccount | nrbIbanFilter }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccountOwner'|translate}}">
-    <!-- czy to na pewno to co trzeba? -->
      <bd-multiline-text bd-text="$data.orderingCustomer"></bd-multiline-text>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount'|translate}}">
-    <!--. TODO: nazwa konta -->
     {{$data.creditAccount | nrbIbanFilter }}
 </bd-item-property>
 
@@ -35,18 +31,17 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.frequencyDescription'|translate}}">
-    <div ng-show="$data.frequency.periodCount <= 1 || !$data.frequency.periodCount">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $data.frequency.periodUnit | translate}}</div>
-    <div ng-show="$data.frequency.periodCount >= 2 && $data.frequency.periodCount < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $data.frequency.periodUnit | translate}}</div>
-    <div ng-show="$data.frequency.periodCount >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $data.frequency.periodUnit | translate}}</div>
+    {{ $data.frequency.periodCount }}&nbsp;
+    <span ng-show="$data.frequency.periodCount <= 1 || !$data.frequency.periodCount">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $data.frequency.periodUnit | translate}}</span>
+    <span ng-show="$data.frequency.periodCount >= 2 && $data.frequency.periodCount < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $data.frequency.periodUnit | translate}}</span>
+    <span ng-show="$data.frequency.periodCount >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $data.frequency.periodUnit | translate}}</span>
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.closestRealizationDate'|translate}}">
-    <!-- BACKEND -->
-    {{ $data.frequency.nextDate | date:'dd-MM-yyy' }}
+    {{ $data.frequency.nextDate | date:'dd-MM-yyyy' }}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.standing.list.details.endDate'|translate}}">
-    <!-- BACKEND -->
-    {{ $data.endDate | date:'dd-MM-yyy' }}
+    {{ $data.endDate | date:'dd-MM-yyyy' }}
 </bd-item-property>
 

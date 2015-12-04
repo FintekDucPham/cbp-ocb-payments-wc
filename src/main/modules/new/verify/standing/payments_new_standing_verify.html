@@ -40,6 +40,11 @@
         {{ payment.formData.frequency }} {{ "raiff.payments.new.standing.fill.frequencyType.types." + STANDING_FREQUENCY_TYPES[payment.formData.frequencyType].symbol | translate }}
     </bd-item-property>
 
+    <div ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+    <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+    <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+
+
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.finish_date'|translate}}">
         {{payment.formData.finishDate | date:'dd.MM.yyyy' }}

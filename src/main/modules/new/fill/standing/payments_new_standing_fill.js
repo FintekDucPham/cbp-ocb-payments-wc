@@ -32,6 +32,8 @@ angular.module('raiffeisen-payments')
             maxDate: $scope.firstDateMaxDate
         });
 
+        $scope.payment.formData.hideSaveRecipientButton = true;
+
         $scope.onFrequencyTypeSelect = function() {
             if ($scope.payment.formData.frequencyType == "DAILY") {
                 $scope.payment.formData.frequency = "";

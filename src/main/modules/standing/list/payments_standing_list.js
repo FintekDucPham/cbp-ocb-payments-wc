@@ -4,54 +4,6 @@ angular.module('raiffeisen-payments')
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/payments_standing_list.html",
             controller: "PaymentsStandingPaymentsListController"
-            //resolve: {
-                //parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
-                //    return $q.all({
-                //        detalOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.detal"),
-                //        microOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.micro"),
-                //        detalMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.detal"),
-                //        microMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.micro"),
-                //
-                //        customerDetails: customerService.getCustomerDetails()
-                //    }).then(function (data) {
-                //        var result = {
-                //            context: data.customerDetails.customerDetails.context
-                //        };
-                //
-                //        data.detalOffset = data.detalOffset;
-                //        data.microOffset = data.microOffset;
-                //        data.detalMaxMonthsOffset = data.detalMaxMonthsOffset;
-                //        data.microMaxMonthsOffset = data.microMaxMonthsOffset;
-                //
-                //        if (result.context === 'DETAL') {
-                //            result.offset = parseInt(data.detalOffset.value, 10);
-                //            result.maxOffsetInMonths = parseInt(data.detalMaxMonthsOffset.value, 10);
-                //            result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
-                //            result.dateFrom = new Date();
-                //            result.dateTo   = new Date();
-                //            result.period   = result.offset;
-                //
-                //            result.dateTo.setDate(result.dateTo.getDate() + result.offset);
-                //
-                //            //result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
-                //        }
-                //        // if (result.context == 'MICRO') {
-                //        // in case of unproper context we can load parameters for MICRO context
-                //        else {
-                //            result.offset = parseInt(data.detalOffset.value, 10);
-                //            result.maxOffsetInMonths = parseInt(data.microMaxMonthsOffset.value, 10);
-                //            result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
-                //            result.dateFrom = new Date();
-                //            result.dateTo   = new Date();
-                //            result.period   = result.offset;
-                //
-                //            result.dateTo = new Date(result.dateFrom.getFullYear(), result.dateFrom.getMonth()+1, 0);
-                //        }
-                //
-                //        return result;
-                //    });
-                //}]
-            //}
         });
     })
     .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
@@ -114,14 +66,11 @@ angular.module('raiffeisen-payments')
                     }
 
                     standingTransferService.search(params).then(function (response) {
-                        //_.each(response.content, function(payment, idx) {
-                        //    payment.loadDetails = function() {
-                        //        // BACKEND: pobranie szczegolow zlecenia stalego
-                        //        // payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
-                        //        //    payment.details = resp;
-                        //        // });
-                        //    };
-                        //});
+
+                        response.content = response.content.map(function(elem) {
+                            elem.frequency_nextDate = elem.frequency.nextDate;
+                            return elem;
+                        });
 
                         defer.resolve(response.content);
                         $params.pageCount = response.totalPages;
