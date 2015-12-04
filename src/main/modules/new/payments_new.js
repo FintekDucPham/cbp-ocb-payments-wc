@@ -134,7 +134,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.payment.rbPaymentsStepParams = {
-            completeState: ($scope.payment.type == rbPaymentTypes.STANDING) ? 'payments.recipients.list' : 'payments.standing.list',
+            completeState: 'payments.standing.list',
             finalAction: $scope.saveRecipient,
             footerType: 'payment',
             onClear: $scope.clearForm,
@@ -161,6 +161,11 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
+            $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
+            $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
+            $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
+        }
 
 
         $scope.getProperPaymentService = function(paymentType) {

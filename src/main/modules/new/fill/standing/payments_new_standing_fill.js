@@ -18,10 +18,7 @@ angular.module('raiffeisen-payments')
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
                                                               systemParameterService, SYSTEM_PARAMETERS) {
 
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
-        $scope.payment.rbPaymentsStepParams.labels.finalize = "raiff.payments.standing.new.btn.finalize";
 
-        // TODO: data biezaca Globus?? WTF, a data biezaca NIB
         var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30; // TODO: remove this element
 
         $scope.firstDateMinDate = new Date();
