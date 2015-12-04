@@ -280,4 +280,7 @@ angular.module('raiffeisen-payments')
                 });
             }
         }
+
+
+
     });

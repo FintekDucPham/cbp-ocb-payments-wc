@@ -1,6 +1,6 @@
 <div class="form-body" ng-controller="NewStandingPaymentVerifyController">
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.custom_name'|translate}}">
-        {{ payment.formData.customName }}
+        {{ payment.formData.shortName }}
     </bd-item-property>
 
 
@@ -37,7 +37,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.frequency'|translate}}">
-        {{ payment.formData.frequency }} {{ "raiff.payments.new.standing.fill.frequencyType.types." + payment.formData.frequencyType | translate }}
+        {{ payment.formData.frequency }} {{ "raiff.payments.new.standing.fill.frequencyType.types." + STANDING_FREQUENCY_TYPES[payment.formData.frequencyType].symbol | translate }}
     </bd-item-property>
 
 

@@ -133,16 +133,33 @@ angular.module('raiffeisen-payments')
         };
 
 
-        $scope.payment.rbPaymentsStepParams = {
-            completeState: 'payments.recipients.list',
-            finalAction: $scope.saveRecipient,
-            onClear: $scope.clearForm,
-            cancelState: 'payments.recipients.list',
-            labels : {
-                finalize: 'raiff.payments.new.btn.finalize',
-                finalAction: 'raiff.payments.new.btn.final_action'
+        var getProperRbPaymentStepParams = function() {
+            if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
+                return {
+                    completeState: 'payments.standing.list',
+                    onClear: $scope.clearForm,
+                    cancelState: 'payments.standing.list',
+                    labels : {
+                        finalize: 'raiff.payments.standing.new.btn.finalize'
+                    }
+                };
             }
+
+
+            return {
+                completeState: 'payments.recipients.list',
+                finalAction: $scope.saveRecipient,
+                onClear: $scope.clearForm,
+                cancelState: 'payments.recipients.list',
+                labels : {
+                    finalize: 'raiff.payments.new.btn.finalize',
+                    finalAction: 'raiff.payments.new.btn.final_action'
+                }
+            };
         };
+
+
+        $scope.payment.rbPaymentsStepParams = getProperRbPaymentStepParams() ;
 
 
         $scope.getProperPaymentService = function(paymentType) {
@@ -154,4 +171,5 @@ angular.module('raiffeisen-payments')
                 return transferService;
             }
         };
+
     });
