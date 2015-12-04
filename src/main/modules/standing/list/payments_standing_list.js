@@ -90,10 +90,9 @@ angular.module('raiffeisen-payments')
 
 
         $scope.onNewStandingOrderClick = function() {
-                $scope.table.tableControl.invalidate();
-            //$state.go('payments.new.fill', {
-//                paymentType: "standing"
-//            });
+            $state.go('payments.new.fill', {
+                paymentType: "standing"
+            });
         };
 
 

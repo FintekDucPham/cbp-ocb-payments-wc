@@ -10,6 +10,7 @@ angular.module('raiffeisen-payments')
 
         $scope.payment.token.params.resourceId = null;
 
+        $scope.payment.token.params.rbOperationType="TRANSFER";
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
@@ -27,7 +28,7 @@ angular.module('raiffeisen-payments')
         });
 
         function authorize(doneFn, actions) {
-            transferService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
+            $scope.getProperPaymentService($scope.payment.type.code).realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.payment.result = {
                     code: parts[1],
