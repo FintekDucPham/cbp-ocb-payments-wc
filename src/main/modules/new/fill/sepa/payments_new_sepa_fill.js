@@ -80,6 +80,23 @@ angular.module('raiffeisen-payments')
             data: null
         };
 
+        $scope.searchBankPromise = null;
+        $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
+            if(n && !angular.equals(n, o)){
+                $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
+                    $scope.payment.formData.recipientSwiftOrBic,
+                    recipientGeneralService.utils.getBankInformation.strategies.SWIFT
+                ).then(function(data){
+                        if(data !== undefined && data !== null && data !==''){
+                            $scope.recipient.formData.recipientBankName = data.institution;
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                        }else{
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                        }
+                    });
+            }
+        });
+
         $scope.countries.promise.then(function(data){
 
             if($scope.payment.formData.recipientBankCountry){
