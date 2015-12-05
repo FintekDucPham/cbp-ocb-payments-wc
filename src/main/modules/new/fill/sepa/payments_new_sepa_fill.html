@@ -114,14 +114,17 @@
 
     <!-- swift -->
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
-        <input class="input-field"
-               ng-model="payment.formData.recipientSwiftOrBic"
-               bd-matches-none-of="recipientBankSwiftCodeValidators"
-               ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-               name="swift_bic"
-               placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
+        <rb-item-property-data-preloader rb-promise="swift.promise">
+            <input class="input-field"
+                   ng-model="payment.formData.recipientSwiftOrBic"
+                   bd-matches-none-of="recipientBankSwiftCodeValidators"
+                   ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
+                   name="swift_bic"
+                   placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
+        </rb-item-property-data-preloader>
 
-        <eb-preloader ng-if="searchBankPromise" ng-show="searchBankPromise.$$state.status===0" class="eb-inline-preloader" eb-promise="searchBankPromise"></eb-preloader>
+
+
 
         <eb-validation-messages eb-name="swift_bic"><!--max 35-->
             <div eb-message-key="required" class="validation-message animate-on">
@@ -145,6 +148,7 @@
         <ui-select ng-show="countries.data"
                    ng-model="payment.formData.recipientBankCountry"
                    name="recipientBankCountry"
+                   ng-disabled="payment.formData.recipientBankName"
                    bd-matches-none-of="recipientBankCountryValidators"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">

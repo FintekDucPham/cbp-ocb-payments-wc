@@ -5,9 +5,32 @@ angular.module('raiffeisen-payments')
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.currencyList = [];
 
+        $scope.swift = {
+            promise: null,
+            data: null
+        };
+
+
         if($scope.payment.meta.customerContext==='MICRO'){
             //@TODO: o	dla kontekstu MICRO mozliwosc wyboru jedynie rachunku w  EUR
         }
+
+        $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
+            if(n && !angular.equals(n, o)){
+                $scope.swift.promise = recipientGeneralService.utils.getBankInformation.getInformation(
+                    n,
+                    recipientGeneralService.utils.getBankInformation.strategies.SWIFT
+                ).then(function(data){
+                        $scope.swift.data = data;
+                        if(data !== undefined && data !== null && data !==''){
+                            $scope.recipient.formData.recipientBankName = data.institution;
+                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                        }else{
+                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                        }
+                    });
+            }
+        });
 
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
