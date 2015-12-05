@@ -23,9 +23,10 @@ angular.module('raiffeisen-payments')
                 ).then(function(data){
                         $scope.swift.data = data;
                         if(data !== undefined && data !== null && data !==''){
-                            $scope.recipient.formData.recipientBankName = data.institution;
+                            $scope.payment.formData.recipientBankName = data.institution;
                             $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                         }else{
+                            $scope.payment.formData.recipientBankName = null;
                             $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                         }
                     });
