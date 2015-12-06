@@ -183,6 +183,7 @@ angular.module('raiffeisen-payments')
         if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
             $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
             $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
+            $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
         }
 
