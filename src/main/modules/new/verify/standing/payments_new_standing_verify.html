@@ -11,6 +11,14 @@
         {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
 
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.edit.owner' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        <textarea name="accountOwnerData"
+                  ng-model="payment.items.owner"
+                  ng-disabled="true"
+                  class="input-field input-area--party-data" ></textarea>
+
+    </bd-item-property>
+
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_data'|translate}}">
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>

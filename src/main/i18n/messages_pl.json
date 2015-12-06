@@ -94,14 +94,9 @@
     "raiff.payments.new.step2.row.info.costs_not_available": "Informacje o przewidywancyh kosztach zlecenia nie są obecnie dostępne. Nie wpływa to na możliwość przekazania dyspozycji do realizacji.",
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
-    "raiff.payments.new.label.OWN.header": "Przelew",
-    "raiff.payments.new.label.INSURANCE.header": "Przelew",
-    "raiff.payments.new.label.INTERNAL.header": "Przelew",
-    "raiff.payments.new.label.SWIFT.header": "Przelew",
-    "raiff.payments.new.label.DOMESTIC.header": "Przelew",
-    "raiff.payments.new.label.SEPA.header": "Przelew",
-    "raiff.payments.new.label.TAX.header": "Przelew",
-    "raiff.payments.new.label.STANDING.header": "Dodawanie zlecenia stałego",
+    "raiff.payments.new.label.header": "Przelew",
+    "raiff.payments.new.label.STANDING.NEW.header": "Dodawanie zlecenia stałego",
+    "raiff.payments.new.label.STANDING.EDIT.header": "Modyfikacja zlecenia stałego",
 
     "raiff.payments.new_internal.label.header": "Przelew na rachunek własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
@@ -986,6 +981,10 @@
 
 
     "raiff.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
+    "raiff.payments.new.standing.edit.order_id": "Numer zlecenia",
+
+
+
     "raiff.payments.new.standing.fill.custom_name": "Twoja nazwa zlecenia",
     "raiff.payments.new.standing.fill.custom_name.placeholder": "Wpisz Twoją nazwę zlecenia",
     "raiff.payments.new.standing.fill.custom_name.EMPTY": "TODO: illegal",
@@ -1032,6 +1031,8 @@
     "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_BLOCKED_SMS":"TODO: Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.standing.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
+    "raiff.payments.new.standing.edit.owner": "Właściciel",
+    "raiff.payments.new.standing.edit.bank_recipient_name": "Nazwa banku odbiorcy",
     "raiff.payments.new.standing.fill.frequency": "Częstotliwość co",
 
     "raiff.payments.new.standing.fill.frequencyType.placeholder": "Brak",
@@ -1100,6 +1101,10 @@
     "raiff.payments.new.standing.status.success": "Zlecnie przyjęte do realizacji ",
 
     "raiff.payments.standing.new.btn.finalize": "Zamknij",
+
+    "raiff.payments.new.standing.change": "Zmień",
+    "raiff.payments.new.standing.cancel": "Cancel",
+    "raiff.payments.new.standing.accept": "Accept",
 
   "EOF" : ""
 }

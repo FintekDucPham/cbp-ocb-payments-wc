@@ -3,7 +3,7 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.standing.manage', {
             url: "/manage",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/payments_standing_manage.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/manage/payments_standing_manage.html",
             controller: "PaymentsStandingManageController"
 
         });

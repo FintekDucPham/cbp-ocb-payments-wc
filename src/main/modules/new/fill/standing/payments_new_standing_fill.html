@@ -1,4 +1,16 @@
+<div style="position: absolute; right: 0; top: 0; width: 500px; height: 500px; overflow: scroll;">
+    <pre>{{payment|json}}</pre>
+</div>
 <div ng-controller="NewStandingPaymentFillController" class="new-standing-payment-fill">
+
+    <bd-item-property label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        <input name="orderId"
+               ng-model="payment.formData.id"
+               ng-disabled="true"
+               class="input-field"/>
+
+    </bd-item-property>
+
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.custom_name' | translate }}">
         <input name="shortName"
@@ -19,7 +31,16 @@
 
     </bd-item-property>
 
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.edit.owner' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        <textarea name="accountOwnerData"
+                  ng-model="payment.items.owner"
+                  ng-disabled="true"
+                  class="input-field input-area--party-data" ></textarea>
+
+    </bd-item-property>
+
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.sender_account' | translate }}">
+
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-account="payment.items.senderAccount"
                            bd-attr-required="true"
@@ -29,7 +50,7 @@
                            rb-on-account-select="onSenderAccountSelect()"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-remote="remote.model"
-                           rb-init-select-value = "{{ payment.items.recipient.srcAccountNo || payment.formData.accountNo || selectNrb}}"></rb-account-select>
+                           rb-init-select-value = "{{ payment.items.senderAccountNo }}"></rb-account-select>
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.remitterAccountId"
@@ -37,6 +58,16 @@
         <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
+
+    <bd-item-property label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        <input name="orderId"
+               ng-model="payment.items.bank_recipient_data"
+               ng-disabled="true"
+               class="input-field"/>
+
+    </bd-item-property>
+
+
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}">
         <rb-recipient-select rb-recipient="payment.items.recipient"

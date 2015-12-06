@@ -16,10 +16,17 @@ angular.module('raiffeisen-payments')
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
-                                                              systemParameterService, SYSTEM_PARAMETERS) {
+                                                              systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes) {
+
+        if ($scope.payment.operation.code == 'NEW') {
+            $scope.labels.headerLabel = "raiff.payments.new.label.STANDING.NEW.header";
+        }
+        else if ($scope.payment.operation.code == 'EDIT') {
+            $scope.labels.headerLabel = "raiff.payments.new.label.STANDING.EDIT.header";
+        }
 
 
-        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30; // TODO: remove this element
+        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] | 30;
 
         $scope.firstDateMinDate = new Date();
         $scope.firstDateMaxDate = new Date();
@@ -113,11 +120,7 @@ angular.module('raiffeisen-payments')
             bdFocus('recipientAccountNo');
         };
 
-        function updateRecipientsList() {
-
-        }
-
-
+        function updateRecipientsList() {}
 
         $scope.frequencyValidators = {
             frequencyTypeRequired: function() {
