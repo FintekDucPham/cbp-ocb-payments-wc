@@ -1,6 +1,3 @@
-<div style="position: absolute; right: 0; top: 0; width: 500px; height: 500px; overflow: scroll;">
-    <pre>{{payment|json}}</pre>
-</div>
 <div ng-controller="NewStandingPaymentFillController" class="new-standing-payment-fill">
 
     <bd-item-property label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
