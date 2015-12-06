@@ -1,43 +1,12 @@
 <div>
-
-    <rb-payment-recipients-verify>
-        <div ng-controller="RecipientsManageVerifyZusController">
-
-            <bd-item-property ng-if="recipient.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.micro_name' | translate }}">
-                {{ recipient.formData.microName }}
-            </bd-item-property>
-
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">
-                {{ recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName  }} {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
-            </bd-item-property>
-
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.custom_name' | translate }}">
-                {{ recipient.formData.customName }}
-            </bd-item-property>
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.recipient_account' | translate }}">
-                {{recipient.items.selectedInsurance.translatedValue}} {{ recipient.items.selectedInsurance.accountNo | nrbIbanFilter  }}
-            </bd-item-property>
-
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.taxpayer_nip' | translate }}">
-                {{ recipient.formData.nip }}
-            </bd-item-property>
-
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.taxpayer_supplementary_id_type' | translate }}">
-                {{ ::'raiff.payments.id_type.' + recipient.formData.secondaryIdType | translate }}
-            </bd-item-property>
-
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.taxpayer_supplementary_id' | translate }}">
-                {{ recipient.formData.secondaryIdNo }}
-            </bd-item-property>
-
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.payment_type' | translate }}">
-                {{ 'raiff.payments.zus.payment_type.' + recipient.formData.paymentType| translate }}
-            </bd-item-property>
-
-        </div>
-    </rb-payment-recipients-verify>
-
-    <bd-item-property class="bd-item-property--text" ng-if="recipient.token.params.resourceId" ng-show="recipient.token.model.$tokenRequired" label="{{ recipient.token.model.currentToken.label }}">
-        <rb-token-authorization rb-operation-type="{{ 'MANAGE_'+recipient.type.code+'_RECIPIENT' }}" rb-model="recipient.token.model" rb-params="recipient.token.params"></rb-token-authorization>
-    </bd-item-property>
+    <ng-include src="detailsTemplatePath"></ng-include>
 </div>
+
+<bd-item-property
+        class="bd-item-property--text"
+        ng-if="payment.token.params.resourceId"
+        ng-show="payment.token.model.$tokenRequired"
+        label="{{ payment.token.model.currentToken.label }}"
+        >
+    <rb-token-authorization rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
+</bd-item-property>

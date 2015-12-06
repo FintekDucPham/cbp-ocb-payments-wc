@@ -1103,8 +1103,9 @@
     "raiff.payments.standing.new.btn.finalize": "Zamknij",
 
     "raiff.payments.new.standing.change": "Zmień",
-    "raiff.payments.new.standing.cancel": "Cancel",
-    "raiff.payments.new.standing.accept": "Accept",
+    "raiff.payments.standing.btn.cancel": "Powrót",
+    "raiff.payments.new.standing.accept": "Zatwierdź",
 
+    "raiff.payments.standing.manage.remove.title": "Usunięcie zlecenia stałego",
   "EOF" : ""
 }

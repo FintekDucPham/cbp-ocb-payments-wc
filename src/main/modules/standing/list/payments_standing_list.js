@@ -42,19 +42,17 @@ angular.module('raiffeisen-payments')
             };
 
             if (action == 'edit') {
-                viewStateService.setInitialState('payments.new', {
-                    paymentOperationType: rbPaymentOperationTypes.EDIT
-                });
-
                 $state.go('payments.new.fill', {
                     payment: paymentFormData,
                     paymentType: "standing"
                 });
             }
             else if (action == 'delete') {
-                $state.go('payments.standing.manage.remove.verify', {
-                    payment: paymentFormData
+                viewStateService.setInitialState('payments.standing.manage.remove.verify', {
+                    payment: payment
                 });
+
+                $state.go('payments.standing.manage.remove.verify');
             }
         };
 
