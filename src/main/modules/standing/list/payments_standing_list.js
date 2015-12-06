@@ -8,11 +8,12 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
                                                                     paymentsService, $filter, pathService, viewStateService,
-                                                                    standingTransferService) {
+                                                                    standingTransferService, rbPaymentOperationTypes,
+                                                                    STANDING_FREQUENCY_TYPES) {
         $scope.dateRange = {};
 
         $scope.options = {
-            "futureDatePanelConfig": {} //parameters TODO: wlasciwe parametry z resolva uzyskac
+            "futureDatePanelConfig": {}
         };
 
         $scope.paymentDetailsTemplate = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
@@ -22,11 +23,37 @@ angular.module('raiffeisen-payments')
             $scope.table.tableControl.invalidate();
         };
 
-        $scope.onEdit = function(standingPayment) {
-            viewStateService.setInitialState('payments.standing.manage.edit', {
-                referenceId: standingPayment.id
-            });
-            $state.go('payments.future.manage.edit.fill');
+        $scope.onButtonPressed = function(action, payment) {
+            // ze wzgledu na fakt, ze inne nazwy pol dostajemy z backendu, a inne sa uzywane frontowo
+            // trzeba dane przepisac; ze wzgledu na fakt ze rozne uslugi przyjmuja inne nazwy parametrow
+            // nie mozemy rowniez tego po prostu uspojnic - trzeba przepisywac
+            var paymentFormData = {
+                "shortName": payment.shortName,
+                "recipientName": payment.beneficiary.join("\n"),
+                "recipientAccountNo": payment.creditAccount,
+                "description": payment.remarks.join("\n"),
+                "remitterAccountId": payment.debitAccountId,
+                "currency": payment.currency,
+                "firstRealizationDate": payment.startDate,
+                "finishDate": payment.endDate,
+                "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
+                "frequency": payment.frequency.periodCount,
+                "amount": payment.amount
+            };
+
+            if (action == 'edit') {
+                $state.go('payments.new.fill', {
+                    payment: paymentFormData,
+                    paymentType: "standing"
+                });
+            }
+            else if (action == 'delete') {
+                viewStateService.setInitialState('payments.standing.manage.remove.verify', {
+                    payment: payment
+                });
+
+                $state.go('payments.standing.manage.remove.verify');
+            }
         };
 
         $scope.onDelete = function(standingPayment) {

@@ -65,19 +65,27 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsNewController",
             params: {
                 paymentType: 'domestic',
-                payment: {}
+                payment: {},
+                items: {}
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp, standingTransferService, transferService) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
+                                                   pathService, translate, $stateParams, $state, lodash, validationRegexp,
+                                                   standingTransferService, transferService, initialState) {
+
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+
+        $scope.labels = {
+            headerLabel: "raiff.payments.new.label.header"
+        };
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             type: lodash.find(rbPaymentTypes, {
                 state: $stateParams.paymentType || 'domestic'
             }),
-            operation: rbPaymentOperationTypes.NEW,
+            operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
             formData: {
                 hideSaveRecipientButton: false
             },
@@ -95,13 +103,16 @@ angular.module('raiffeisen-payments')
                 dateSetByCategory: false
             },
             validation: {}
-        }), {
-            formData: $stateParams.payment
-        });
+        }, {
+            formData: $stateParams.payment,
+            items: $stateParams.items || {}
+        }));
+
+
 
         $scope.payment.meta.paymentTypes = lodash.where(rbPaymentTypes, {'parentState': $scope.payment.type.parentState});
 
-
+       // alert("X");
         $scope.clearForm = function() {
             $scope.payment.formData = {};
             $scope.payment.items = {};
