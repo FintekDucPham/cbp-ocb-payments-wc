@@ -954,7 +954,7 @@
     "raiff.payments.standing.label": "Zlecenia stałe",
     "raiff.payments.standing.list.header": "Zlecenia stałe",
 
-    "raiff.payments.standing.list.empty": "TODO: empy payment list",
+    "raiff.payments.standing.list.empty": "Nie znaleziono zleceń stałych",
     "raiff.payments.standing.button.new.label": "Nowe zlecenie",
 
     "raiff.payments.standing.list.header.name": "Twoja nazwa zlecenia",

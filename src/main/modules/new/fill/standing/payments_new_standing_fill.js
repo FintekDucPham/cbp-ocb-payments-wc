@@ -127,7 +127,7 @@ angular.module('raiffeisen-payments')
                 return !_.isEmpty($scope.payment.formData.frequencyType);
             },
             minWeeklyValue: function(val) {
-                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
                     return val >= 1;
                 }
 
