@@ -18,7 +18,7 @@ angular.module('raiffeisen-payments')
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes) {
 
-        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] | 30;
+        var maxDaysForward = SYSTEM_PARAMETERS['standing.order.max.days'];
 
         $scope.firstDateMinDate = new Date();
         $scope.firstDateMaxDate = new Date();
@@ -32,6 +32,11 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.payment.formData.hideSaveRecipientButton = true;
+
+
+        if (!$scope.payment.formData.frequencyType) {
+            $scope.payment.formData.frequencyType = STANDING_FREQUENCY_TYPES.MONTHLY.code;
+        }
 
         $scope.onFrequencyTypeSelect = function() {
             if ($scope.payment.formData.frequencyType == "DAILY") {
