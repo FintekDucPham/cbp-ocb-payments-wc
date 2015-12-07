@@ -1041,6 +1041,7 @@
 
     "raiff.payments.new.standing.edit.owner": "Właściciel",
     "raiff.payments.new.standing.edit.bank_recipient_name": "Nazwa banku odbiorcy",
+    "raiff.payments.new.standing.fill.bank_recipient_name": "Nazwa banku odbiorcy",
     "raiff.payments.new.standing.fill.frequency": "Częstotliwość co",
 
     "raiff.payments.new.standing.fill.frequencyType.placeholder": "Brak",

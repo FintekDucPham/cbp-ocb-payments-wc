@@ -21,7 +21,14 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        {{ payment.items.bankRecipientData }}
+        <rb-bank-name
+                response-value="payment.items.recipientBankName"
+                account-no="payment.formData.recipientAccountNo"
+                bank-name-promise="payment.items.bankNamePromise"
+                ng-show="payment.items.bankNamePromise.$$state.status === 1"
+                >
+            {{payment.items.recipientBankName}}
+        </rb-bank-name>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.recipient_account_no'|translate}}">
