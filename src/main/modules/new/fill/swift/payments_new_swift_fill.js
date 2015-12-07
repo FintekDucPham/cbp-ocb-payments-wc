@@ -1,11 +1,9 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService) {
+    .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, rbForeignTransferConstants) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.currencyList = [];
-
-        $scope.payment.formData.currency = 'EUR';
 
         $scope.swift = {
             promise: null,
@@ -16,6 +14,12 @@ angular.module('raiffeisen-payments')
             promise: transferService.foreignTransferTypes(),
             data: null
         };
+
+        $scope.transfer_constants = rbForeignTransferConstants;
+        $scope.payment.formData.transferCost = rbForeignTransferConstants.TRANSFER_COSTS.SHA;
+        $scope.payment.formData.paymentType = rbForeignTransferConstants.PAYMENT_TYPES.STANDARD;
+
+
         $scope.transfer_type.promise.then(function(data){
             $scope.transfer_type.data = data.content;
         });
@@ -64,7 +68,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.additionalInfo = " ";
             copiedFormData.informationProvider = " ";
             copiedFormData.phoneNumber = " ";
-            copiedFormData.costType = "SHA";
+            copiedFormData.costType = formData.transferCost;
             copiedFormData.transferType = "SEPA";
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientSwift = formData.recipientSwiftOrBic || null;
@@ -75,7 +79,7 @@ angular.module('raiffeisen-payments')
                 copiedFormData.recipientBankCountryCode = null;
             }
 
-            copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, {'currency': copiedFormData.currency})).transferType;
+            copiedFormData.paymentCategory= formData.paymentType;
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || null;
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";

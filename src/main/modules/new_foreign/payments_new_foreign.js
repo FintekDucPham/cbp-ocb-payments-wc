@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-   .config(function (pathServiceProvider, stateServiceProvider) {
+    .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_foreign', {
             url: "/new-foreign/:paymentType",
             abstract: true,
