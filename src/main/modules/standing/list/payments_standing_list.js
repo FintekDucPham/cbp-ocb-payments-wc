@@ -42,6 +42,10 @@ angular.module('raiffeisen-payments')
             };
 
             if (action == 'edit') {
+                viewStateService.setInitialState('payments.new', {
+                    paymentOperationType: rbPaymentOperationTypes.EDIT
+                });
+
                 $state.go('payments.new.fill', {
                     payment: paymentFormData,
                     paymentType: "standing"
@@ -73,7 +77,6 @@ angular.module('raiffeisen-payments')
                 paymentType: "standing"
             });
         };
-
 
 
         $scope.table = {

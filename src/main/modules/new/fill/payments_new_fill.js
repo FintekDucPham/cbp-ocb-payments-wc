@@ -141,6 +141,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
 
+
             $scope.validationErrors = [];
             var form = $scope.paymentForm;
             $scope.limitExeeded = {
