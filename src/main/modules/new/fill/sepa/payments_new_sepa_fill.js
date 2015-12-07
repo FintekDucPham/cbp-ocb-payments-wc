@@ -39,7 +39,6 @@ angular.module('raiffeisen-payments')
                                     countryCode: $scope.swift.data.countryCode
                                 });
                             }
-
                             $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                         }else{
                             $scope.payment.formData.recipientBankName = null;
@@ -56,13 +55,20 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
             $scope.payment.formData.recipientName = recipient.data.join('');
             $scope.payment.formData.description = recipient.title.join('');
+            if(recipient.details.informationProvider==='MANUAL'){
+                $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.bankCountry});
+            }else{
+                $scope.payment.formData.recipientSwiftOrBic = recipient.details.recipientSwift;
+            }
+            $scope.payment.formData.recipientCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.foreignCountryCode});
+
         };
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
             copiedFormData.additionalInfo = " ";
-            copiedFormData.informationProvider = " ";
+            copiedFormData.informationProvider = "SWIFT";
             copiedFormData.phoneNumber = " ";
             copiedFormData.costType = "SHA";
             copiedFormData.transferType = "SEPA";
@@ -74,7 +80,6 @@ angular.module('raiffeisen-payments')
             }else{
                 copiedFormData.recipientBankCountryCode = null;
             }
-
             copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, {'currency': copiedFormData.currency})).transferType;
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || null;
             copiedFormData.saveTemplate = false;
