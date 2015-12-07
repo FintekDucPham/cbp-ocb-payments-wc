@@ -34,11 +34,12 @@ angular.module('raiffeisen-payments')
                 "description": payment.remarks.join("\n"),
                 "remitterAccountId": payment.debitAccountId,
                 "currency": payment.currency,
-                "firstRealizationDate": payment.startDate,
+                "firstRealizationDate": payment.frequency.nextDate,
                 "finishDate": payment.endDate,
                 "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
                 "frequency": payment.frequency.periodCount,
-                "amount": payment.amount
+                "amount": payment.amount,
+                "id": payment.id
             };
 
             if (action == 'edit') {
@@ -73,6 +74,10 @@ angular.module('raiffeisen-payments')
 
 
         $scope.onNewStandingOrderClick = function() {
+            viewStateService.setInitialState('payments.new', {
+                paymentOperationType: rbPaymentOperationTypes.NEW
+            });
+
             $state.go('payments.new.fill', {
                 paymentType: "standing"
             });

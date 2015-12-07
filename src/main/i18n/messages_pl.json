@@ -1030,6 +1030,7 @@
     "raiff.payments.new.standing.fill.first_execution_date.BLOCKED_SMS":"TODO: Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_BLOCKED_SMS":"TODO: Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.standing.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
+    "raiff.payments.new.standing.fill.earliest_execution_date":"Data najbliższej realizacji",
 
     "raiff.payments.new.standing.edit.owner": "Właściciel",
     "raiff.payments.new.standing.edit.bank_recipient_name": "Nazwa banku odbiorcy",
