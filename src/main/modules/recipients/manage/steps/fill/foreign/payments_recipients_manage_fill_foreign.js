@@ -100,6 +100,9 @@ angular.module('raiffeisen-payments')
                 ).then(function(data){
                     if(data !== undefined && data !== null && data !==''){
                         $scope.recipient.formData.recipientBankName = data.institution;
+                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data.content,{
+                            countryCode: data.location || data.countryCode
+                        });
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                     }else{
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
