@@ -56,6 +56,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             return {
+              "standingOrderId": formData.id ? formData.id : "",
               "shortName": formData.shortName,
               "amount": formData.amount,
               "beneficiary": splitTextEveryNSign(formData.recipientName),

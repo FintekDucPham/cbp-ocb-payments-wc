@@ -1,10 +1,6 @@
 <div class="form-body" ng-controller="NewStandingPaymentVerifyController">
-    <bd-item-property label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        <input name="orderId"
-               ng-model="payment.formData.id"
-               ng-disabled="true"
-               class="input-field"/>
-
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.formData.id }}
     </bd-item-property>
 
 
@@ -24,12 +20,8 @@
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
 
-    <bd-item-property label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        <input name="bankRecipientData"
-               ng-model="payment.items.bankRecipientData"
-               ng-disabled="true"
-               disabled="true"
-               class="input-field"/>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.items.bankRecipientData }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.recipient_account_no'|translate}}">
