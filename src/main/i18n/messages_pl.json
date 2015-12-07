@@ -921,6 +921,12 @@
     "raiff.payments.future.list.details.insurance.buttons.delete": "Usuń",
     "raiff.payments.future.list.details.insurance.buttons.backToList": "Powrót",
 
+    "raiff.payments.future.list.details.foreign.swift_bic.label": "SWIFT BIC banku",
+    "raiff.payments.future.list.details.foreign.bankCountry.label": "Kraj banku",
+    "raiff.payments.future.list.details.foreign.recipientCountry.label": "Kraj odbiorcy",
+    "raiff.payments.future.list.details.foreign.commision.label": "Koszty przelewu",
+
+
     "raiff.payments.future.edit.status.error": "Operacja nie powiodła się",
     "raiff.payments.future.edit.status.success": "Dane zostały zmienione",
 
