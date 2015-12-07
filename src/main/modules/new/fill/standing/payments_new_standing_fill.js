@@ -18,14 +18,6 @@ angular.module('raiffeisen-payments')
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes) {
 
-        if ($scope.payment.operation.code == 'NEW') {
-            $scope.labels.headerLabel = "raiff.payments.new.label.STANDING.NEW.header";
-        }
-        else if ($scope.payment.operation.code == 'EDIT') {
-            $scope.labels.headerLabel = "raiff.payments.new.label.STANDING.EDIT.header";
-        }
-
-
         var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] | 30;
 
         $scope.firstDateMinDate = new Date();

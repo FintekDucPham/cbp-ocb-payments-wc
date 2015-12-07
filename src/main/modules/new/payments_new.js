@@ -76,9 +76,6 @@ angular.module('raiffeisen-payments')
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
-        $scope.labels = {
-            headerLabel: "raiff.payments.new.label.header"
-        };
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',

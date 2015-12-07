@@ -1,5 +1,7 @@
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
-    <bd-header>{{labels.headerLabel|translate}}</bd-header>
+    <bd-header ng-if="payment.type.code == 'STANDING' && payment.operation.code == 'NEW'">{{::'raiff.payments.new.label.STANDING.NEW.header'|translate}}</bd-header>
+    <bd-header ng-if="payment.type.code == 'STANDING' && payment.operation.code == 'EDIT'">{{::'raiff.payments.new.label.STANDING.EDIT.header'|translate}}</bd-header>
+    <bd-header ng-if="payment.type.code != 'STANDING'">{{::'raiff.payments.new.label.header'|translate}}</bd-header>
     <bd-form-panel>
 
         <bd-item-property
