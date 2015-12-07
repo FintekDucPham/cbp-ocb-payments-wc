@@ -233,13 +233,12 @@
             <div class="bd-item-property__value--secondary">
                 <ui-select ng-model="payment.formData.currency"
                            theme="bootstrap"
-                           ng-disabled="true"
-                           required>
-                    <ui-select-match placeholder="Waluta">
-                        {{$select.selected}}
+                           ng-required="true">
+                    <ui-select-match placeholder="">
+                        {{$select.selected.currency}}
                     </ui-select-match>
-                    <ui-select-choices repeat="currency in ['EUR'] track by $index">
-                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                    <ui-select-choices repeat="currency in currencies.data track by $index">
+                        <div ng-bind-html="currency.currency | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
             </div>

@@ -37,8 +37,8 @@
         <input id="recipientAccountNo"
                name="recipientAccountNo"
                ng-model="payment.formData.recipientAccountNo"
-               required
-               ng-pattern="BANK_NAME_VALIDATION_REGEX"
+               ng-required="true"
+               ng-pattern="FOREIGN_IBAN_VALIDATION_REGEX"
                ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
                ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                class="input-field"
