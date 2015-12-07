@@ -1,8 +1,12 @@
 <div class="form-body" ng-controller="NewStandingPaymentVerifyController">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.formData.id }}
+    </bd-item-property>
+
+
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.custom_name'|translate}}">
         {{ payment.formData.shortName }}
     </bd-item-property>
-
 
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_account_name'|translate}}">
@@ -11,8 +15,13 @@
         {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
 
+
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_data'|translate}}">
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.items.bankRecipientData }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.recipient_account_no'|translate}}">
@@ -24,17 +33,22 @@
         <p style="word-break: break-all" ng-bind-html="payment.formData.recipientName"></p>
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.amount'|translate}}">
-        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
-    </bd-item-property>
-
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.description'|translate}}">
         <p style="word-break: break-all" ng-bind-html="payment.formData.description"></p>
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.first_execution_date'|translate}}">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.amount'|translate}}">
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.first_execution_date'|translate}}" ng-if="payment.operation.code == 'NEW'">
         {{ payment.formData.firstRealizationDate | date:'dd.MM.yyyy' }}
     </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.fill.earliest_execution_date'|translate}}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.formData.firstRealizationDate | date:'dd.MM.yyyy' }}
+    </bd-item-property>
+
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.frequency'|translate}}">
         {{ payment.formData.frequency }}&nbsp;

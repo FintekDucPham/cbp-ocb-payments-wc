@@ -16,10 +16,9 @@ angular.module('raiffeisen-payments')
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
-                                                              systemParameterService, SYSTEM_PARAMETERS) {
+                                                              systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes) {
 
-
-        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] || 30; // TODO: remove this element
+        var maxDaysForward   = SYSTEM_PARAMETERS['standing.order.max.days'] | 30;
 
         $scope.firstDateMinDate = new Date();
         $scope.firstDateMaxDate = new Date();
@@ -57,6 +56,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             return {
+              "standingOrderId": formData.id ? formData.id : "",
               "shortName": formData.shortName,
               "amount": formData.amount,
               "beneficiary": splitTextEveryNSign(formData.recipientName),
@@ -113,18 +113,14 @@ angular.module('raiffeisen-payments')
             bdFocus('recipientAccountNo');
         };
 
-        function updateRecipientsList() {
-
-        }
-
-
+        function updateRecipientsList() {}
 
         $scope.frequencyValidators = {
             frequencyTypeRequired: function() {
                 return !_.isEmpty($scope.payment.formData.frequencyType);
             },
             minWeeklyValue: function(val) {
-                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
                     return val >= 1;
                 }
 

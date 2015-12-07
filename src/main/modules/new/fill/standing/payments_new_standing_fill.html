@@ -1,5 +1,10 @@
 <div ng-controller="NewStandingPaymentFillController" class="new-standing-payment-fill">
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.formData.id }}
+    </bd-item-property>
+
+
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.custom_name' | translate }}">
         <input name="shortName"
                ng-model="payment.formData.shortName"
@@ -19,7 +24,9 @@
 
     </bd-item-property>
 
+
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.sender_account' | translate }}">
+
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-account="payment.items.senderAccount"
                            bd-attr-required="true"
@@ -29,7 +36,7 @@
                            rb-on-account-select="onSenderAccountSelect()"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-remote="remote.model"
-                           rb-init-select-value = "{{ payment.items.recipient.srcAccountNo || payment.formData.accountNo || selectNrb}}"></rb-account-select>
+                           rb-init-select-value = "{{ payment.items.senderAccountNo }}"></rb-account-select>
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.remitterAccountId"
@@ -37,6 +44,16 @@
         <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_data'|translate}}" ng-if="payment.operation.code == 'EDIT'">
+        <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        {{payment.items.bankRecipientData}}
+    </bd-item-property>
+
+
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}">
         <rb-recipient-select rb-recipient="payment.items.recipient"
@@ -212,7 +229,41 @@
         </div>
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.first_execution_date' | translate }}">
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.first_execution_date' | translate }}" ng-if="payment.operation.code == 'NEW'">
+
+        <rb-datepicker
+                ng-model="payment.formData.firstRealizationDate"
+                rb-form="paymentForm"
+                rb-name="firstRealizationDate"
+                rb-datepicker-options="firstDateDatepickerOptions"
+                rb-required="true">
+        </rb-datepicker>
+
+        <eb-validation-messages eb-name="firstRealizationDate">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE'|translate}}
+            </div>
+            <div eb-message-key="date" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
+            </div>
+            <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
+            </div>
+
+            <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'dd.MM.yyyy')}}
+            </div>
+
+            <div eb-message-key="bdMaxDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'dd.MM.yyyy')}}
+            </div>
+
+
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.earliest_execution_date' | translate }}" ng-if="payment.operation.code == 'EDIT'">
 
         <rb-datepicker
                 ng-model="payment.formData.firstRealizationDate"
@@ -288,6 +339,7 @@
             </div>
         </div>
 
+
         <eb-validation-messages eb-name="frequency">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY'|translate}}
@@ -343,9 +395,6 @@
             <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.TOO_LATE_END_DATE'|translate}}
             </div>
-
-
-
 
         </eb-validation-messages>
 

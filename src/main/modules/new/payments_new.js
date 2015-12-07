@@ -75,19 +75,24 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsNewController",
             params: {
                 paymentType: 'domestic',
-                payment: {}
+                payment: {},
+                items: {}
             }
         });
     })
-    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, validationRegexp, standingTransferService, transferService) {
+    .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
+                                                   pathService, translate, $stateParams, $state, lodash, validationRegexp,
+                                                   standingTransferService, transferService, initialState) {
+
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             type: lodash.find(rbPaymentTypes, {
                 state: $stateParams.paymentType || 'domestic'
             }),
-            operation: rbPaymentOperationTypes.NEW,
+            operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
             formData: {
                 hideSaveRecipientButton: false
             },
@@ -105,13 +110,16 @@ angular.module('raiffeisen-payments')
                 dateSetByCategory: false
             },
             validation: {}
-        }), {
-            formData: $stateParams.payment
-        });
+        }, {
+            formData: $stateParams.payment,
+            items: $stateParams.items || {}
+        }));
+
+
 
         $scope.payment.meta.paymentTypes = lodash.where(rbPaymentTypes, {'parentState': $scope.payment.type.parentState});
 
-
+       // alert("X");
         $scope.clearForm = function() {
             $scope.payment.formData = {};
             $scope.payment.items = {};
@@ -182,6 +190,7 @@ angular.module('raiffeisen-payments')
         if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
             $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
             $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
+            $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
         }
 
