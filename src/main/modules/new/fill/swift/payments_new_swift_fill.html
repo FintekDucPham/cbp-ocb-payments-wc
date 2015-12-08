@@ -43,7 +43,7 @@
                ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                class="input-field"
                type="text"
-               mg-disabled="payment.formData.templateId"
+               ng-disabled="payment.options.fixedRecipientSelection"
                placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
 
         <eb-validation-messages eb-name="paymentAccountNo">
@@ -100,6 +100,7 @@
         <ui-select ng-show="countries.data" ng-model="payment.formData.recipientCountry"
                    ng-change="onRecipientCountryChange()"
                    name="recipientCountry"
+                   ng-disabled="payment.options.fixedRecipientSelection"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
                 {{ $select.selected.countryName  | uppercase}}

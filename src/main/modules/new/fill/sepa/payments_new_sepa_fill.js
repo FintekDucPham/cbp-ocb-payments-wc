@@ -99,6 +99,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientName = null;
             $scope.payment.formData.description = null;
             $scope.payment.formData.transferFromTemplate = false;
+            $scope.payment.formData.recipientCountry = null;
             bdFocus('recipientAccountNo');
         };
 
