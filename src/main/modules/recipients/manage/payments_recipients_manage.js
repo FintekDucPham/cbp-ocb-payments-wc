@@ -15,7 +15,7 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate) {
+                                                                authorizationService, dateFilter, translate, customerService) {
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
@@ -38,6 +38,10 @@ angular.module('raiffeisen-payments')
                 recipientTypes: lodash.map(rbRecipientTypes)
             },
             manageAction: ""
+        });
+
+        customerService.getCustomerDetails().then(function(customerDetails){
+            $scope.customerDetails = customerDetails.customerDetails;
         });
 
         $scope.getAccountByNrb = function (accountList, selectFn) {
