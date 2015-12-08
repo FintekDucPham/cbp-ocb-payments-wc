@@ -49,16 +49,17 @@
         </bd-item-property>
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
-            <input ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
-                   class="input-field"
-                   ng-required="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
-                   ng-model="recipient.formData.recipientSwiftOrBic"
-                   bd-matches-none-of="recipientBankSwiftCodeValidators"
-                   ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-                   name="swift_bic"
-                   placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
+            <rb-item-property-data-preloader rb-promise="searchBankPromise">
+                <input ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
+                       class="input-field"
+                       ng-required="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
+                       ng-model="recipient.formData.recipientSwiftOrBic"
+                       bd-matches-none-of="recipientBankSwiftCodeValidators"
+                       ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
+                       name="swift_bic"
+                       placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
+            </rb-item-property-data-preloader>
 
-            <eb-preloader ng-if="searchBankPromise" ng-show="searchBankPromise.$$state.status===0" class="eb-inline-preloader" eb-promise="searchBankPromise"></eb-preloader>
 
             <eb-validation-messages eb-name="swift_bic" ng-if="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"><!--max 35-->
                 <div eb-message-key="required" class="validation-message animate-on">
@@ -136,11 +137,10 @@
         <!-- account label -->
         <bd-item-property
                 label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
-            <input id="recipientAccountNo"
-                   name="recipientAccountNo"
+            <input name="recipientAccountNo"
                    ng-model="recipient.formData.recipientAccountNo"
-                   required
-                   pattern="[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16}"
+                   ng-required = "true"
+                   ng-pattern="FOREIGN_IBAN_VALIDATION_REGEX"
                    ng-maxlength = "recipient.formData.recipientBankCountry.ibanLength || null"
                    ng-minlength = "recipient.formData.recipientBankCountry.ibanLength || null"
                    class="input-field"

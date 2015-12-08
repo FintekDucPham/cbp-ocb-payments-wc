@@ -1,4 +1,4 @@
-<div ng-controller="NewSepaPaymentFillController">
+<div ng-controller="NewSwiftPaymentFillController">
 
     <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.sender_account' | translate }}">
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
@@ -37,8 +37,8 @@
         <input id="recipientAccountNo"
                name="recipientAccountNo"
                ng-model="payment.formData.recipientAccountNo"
-               ng-required="true"
-               ng-pattern="FOREIGN_IBAN_VALIDATION_REGEX"
+               required
+               ng-pattern="BANK_NAME_VALIDATION_REGEX"
                ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
                ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                class="input-field"
@@ -233,13 +233,12 @@
             <div class="bd-item-property__value--secondary">
                 <ui-select ng-model="payment.formData.currency"
                            theme="bootstrap"
-                           ng-disabled="true"
-                           required>
-                    <ui-select-match placeholder="Waluta">
-                        {{$select.selected}}
+                           ng-required="true">
+                    <ui-select-match placeholder="">
+                        {{$select.selected.currency}}
                     </ui-select-match>
-                    <ui-select-choices repeat="currency in ['EUR'] track by $index">
-                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                    <ui-select-choices repeat="currency in currencies.data track by $index">
+                        <div ng-bind-html="currency.currency | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -320,7 +319,29 @@
 
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
-        {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}}
+    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
+        <ui-select ng-model="payment.formData.transferCost"
+                   theme="bootstrap"
+                   required>
+            <ui-select-match placeholder="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
+                {{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="cost in [transfer_constants.TRANSFER_COSTS.OUR, transfer_constants.TRANSFER_COSTS.SHA]">
+                {{ cost }}
+            </ui-select-choices>
+        </ui-select>
+    </bd-item-property>
+
+    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
+        <ui-select ng-model="payment.formData.paymentType"
+                   theme="bootstrap"
+                   required>
+            <ui-select-match placeholder="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
+                {{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="cost in [transfer_constants.PAYMENT_TYPES.STANDARD, transfer_constants.PAYMENT_TYPES.EXPRESS]">
+                {{ cost }}
+            </ui-select-choices>
+        </ui-select>
     </bd-item-property>
 </div>

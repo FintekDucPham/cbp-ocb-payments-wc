@@ -57,6 +57,16 @@ angular.module('raiffeisen-payments')
             state: 'standing'
         }
     })
+    .constant("rbForeignTransferConstants", {
+        TRANSFER_COSTS:{
+            OUR: "OUR",
+            SHA: "SHA"
+        },
+        PAYMENT_TYPES:{
+            STANDARD: "STANDARD",
+            EXPRESS: "EXPRESS"
+        }
+    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new', {
             url: "/new/:paymentType",
@@ -125,7 +135,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.changePaymentType = function (type) {
-            $state.go('payments.new.fill', {
+            $state.go('payments.'+type.parentState+'.fill', {
                 paymentType: type.state
             });
         };

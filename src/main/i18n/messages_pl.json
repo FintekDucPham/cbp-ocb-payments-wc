@@ -359,6 +359,7 @@
 
     "raiff.payments.new.foreign.fill.transfer_cost.label": "Koszty przelewu",
     "raiff.payments.new.foreign.fill.transfer_cost.message": "Opłaty Raiffeisen Bank ponosi zleceniodawca - nie wystąpią koszty banków pośredniczących",
+    "raiff.payments.new.foreign.fill.payment_type.label": "Rodzaju przelewu",
 
     "raiff.payments.recipients.new.currency.fill.account_related.label": "Z rachunku",
     "raiff.payments.recipients.new.currency.fill.account_related": "Z rachunku",
@@ -920,6 +921,12 @@
     "raiff.payments.future.list.details.insurance.buttons.delete": "Usuń",
     "raiff.payments.future.list.details.insurance.buttons.backToList": "Powrót",
 
+    "raiff.payments.future.list.details.foreign.swift_bic.label": "SWIFT BIC banku",
+    "raiff.payments.future.list.details.foreign.bankCountry.label": "Kraj banku",
+    "raiff.payments.future.list.details.foreign.recipientCountry.label": "Kraj odbiorcy",
+    "raiff.payments.future.list.details.foreign.commision.label": "Koszty przelewu",
+
+
     "raiff.payments.future.edit.status.error": "Operacja nie powiodła się",
     "raiff.payments.future.edit.status.success": "Dane zostały zmienione",
 
@@ -1030,9 +1037,11 @@
     "raiff.payments.new.standing.fill.first_execution_date.BLOCKED_SMS":"TODO: Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_BLOCKED_SMS":"TODO: Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.standing.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
+    "raiff.payments.new.standing.fill.earliest_execution_date":"Data najbliższej realizacji",
 
     "raiff.payments.new.standing.edit.owner": "Właściciel",
     "raiff.payments.new.standing.edit.bank_recipient_name": "Nazwa banku odbiorcy",
+    "raiff.payments.new.standing.fill.bank_recipient_name": "Nazwa banku odbiorcy",
     "raiff.payments.new.standing.fill.frequency": "Częstotliwość co",
 
     "raiff.payments.new.standing.fill.frequencyType.placeholder": "Brak",

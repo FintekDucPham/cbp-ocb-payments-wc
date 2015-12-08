@@ -1,11 +1,9 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService) {
+    .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.currencyList = [];
-
-        $scope.payment.formData.currency = 'EUR';
 
         $scope.swift = {
             promise: null,
@@ -16,6 +14,23 @@ angular.module('raiffeisen-payments')
             promise: transferService.foreignTransferTypes(),
             data: null
         };
+
+        $scope.currencies = {
+            promise: paymentsService.getCurrencyUse(),
+            data:null,
+            init: "PLN"
+        };
+
+        $scope.currencies.promise.then(function(data){
+            $scope.currencies.data = data.content;
+            $scope.payment.formData.currency = lodash.find($scope.currencies.data, {currency: $scope.currencies.init});
+        });
+
+        $scope.transfer_constants = rbForeignTransferConstants;
+        $scope.payment.formData.transferCost = rbForeignTransferConstants.TRANSFER_COSTS.SHA;
+        $scope.payment.formData.paymentType = rbForeignTransferConstants.PAYMENT_TYPES.STANDARD;
+
+
         $scope.transfer_type.promise.then(function(data){
             $scope.transfer_type.data = data.content;
         });
@@ -39,6 +54,7 @@ angular.module('raiffeisen-payments')
                                     countryCode: $scope.swift.data.countryCode
                                 });
                             }
+
                             $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                         }else{
                             $scope.payment.formData.recipientBankName = null;
@@ -61,16 +77,16 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.recipientSwiftOrBic = recipient.details.recipientSwift;
             }
             $scope.payment.formData.recipientCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.foreignCountryCode});
-
         };
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
+            copiedFormData.currency = formData.currency.currency;
             copiedFormData.additionalInfo = " ";
-            copiedFormData.informationProvider = "SWIFT";
+            copiedFormData.informationProvider = " ";
             copiedFormData.phoneNumber = " ";
-            copiedFormData.costType = "SHA";
+            copiedFormData.costType = formData.transferCost;
             copiedFormData.transferType = "SEPA";
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientSwift = formData.recipientSwiftOrBic || null;
@@ -80,7 +96,8 @@ angular.module('raiffeisen-payments')
             }else{
                 copiedFormData.recipientBankCountryCode = null;
             }
-            copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, {'currency': copiedFormData.currency})).transferType;
+
+            copiedFormData.paymentCategory= formData.paymentType;
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || null;
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
@@ -151,7 +168,7 @@ angular.module('raiffeisen-payments')
 
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
-            $scope.payment.formData.currency = 'EUR';
+            lodash.find($scope.currencies.data, {currency: $scope.currencies.init});
             $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
             if($scope.paymentForm){
                 $scope.paymentForm.amount.$validate();

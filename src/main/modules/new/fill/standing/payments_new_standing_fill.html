@@ -1,11 +1,9 @@
 <div ng-controller="NewStandingPaymentFillController" class="new-standing-payment-fill">
 
-    <bd-item-property label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        <input name="orderId"
-               ng-model="payment.formData.id"
-               ng-disabled="true"
-               class="input-field"/>
-
+    <bd-item-property ng-if="payment.operation.code == 'EDIT'"
+                      class="bd-item-property--text bd-item-property--disabled"
+                      label="{{ :: 'raiff.payments.new.standing.edit.order_id' | translate }}" >
+        {{ payment.formData.id }}
     </bd-item-property>
 
 
@@ -28,13 +26,6 @@
 
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.standing.edit.owner' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        <textarea name="accountOwnerData"
-                  ng-model="payment.items.owner"
-                  ng-disabled="true"
-                  class="input-field input-area--party-data" ></textarea>
-
-    </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.sender_account' | translate }}">
 
@@ -56,14 +47,20 @@
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
-    <bd-item-property label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        <input name="orderId"
-               ng-model="payment.items.bank_recipient_data"
-               ng-disabled="true"
-               class="input-field"/>
-
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_data'|translate}}" ng-if="payment.operation.code == 'EDIT'">
+        <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        <rb-bank-name
+                response-value="payment.items.recipientBankName"
+                account-no="payment.formData.recipientAccountNo"
+                bank-name-promise="payment.items.bankNamePromise"
+                ng-show="payment.items.bankNamePromise.$$state.status === 1"
+                >
+            {{payment.items.recipientBankName}}
+        </rb-bank-name>
+    </bd-item-property>
 
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}">
@@ -240,7 +237,41 @@
         </div>
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.first_execution_date' | translate }}">
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.first_execution_date' | translate }}" ng-if="payment.operation.code == 'NEW'">
+
+        <rb-datepicker
+                ng-model="payment.formData.firstRealizationDate"
+                rb-form="paymentForm"
+                rb-name="firstRealizationDate"
+                rb-datepicker-options="firstDateDatepickerOptions"
+                rb-required="true">
+        </rb-datepicker>
+
+        <eb-validation-messages eb-name="firstRealizationDate">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE'|translate}}
+            </div>
+            <div eb-message-key="date" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
+            </div>
+            <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
+            </div>
+
+            <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'dd.MM.yyyy')}}
+            </div>
+
+            <div eb-message-key="bdMaxDate" class="validation-message animate-on">
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'dd.MM.yyyy')}}
+            </div>
+
+
+        </eb-validation-messages>
+
+    </bd-item-property>
+
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.earliest_execution_date' | translate }}" ng-if="payment.operation.code == 'EDIT'">
 
         <rb-datepicker
                 ng-model="payment.formData.firstRealizationDate"
@@ -372,9 +403,6 @@
             <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.TOO_LATE_END_DATE'|translate}}
             </div>
-
-
-
 
         </eb-validation-messages>
 

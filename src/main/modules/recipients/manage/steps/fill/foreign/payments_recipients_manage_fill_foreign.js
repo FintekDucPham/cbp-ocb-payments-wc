@@ -5,6 +5,8 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $timeout, $scope, recipientGeneralService, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents) {
 
+        $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
+
         $scope.onInited= function(){
             if($scope.recipient && $scope.recipient.formData && $scope.recipient.formData.recipientIdentityType){
 
