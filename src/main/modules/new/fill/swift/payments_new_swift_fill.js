@@ -84,17 +84,20 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
             copiedFormData.currency = formData.currency.currency;
             copiedFormData.additionalInfo = " ";
-            copiedFormData.informationProvider = " ";
             copiedFormData.phoneNumber = " ";
             copiedFormData.costType = formData.transferCost;
             copiedFormData.transferType = "SEPA";
             copiedFormData.transferFromTemplate = false;
-            copiedFormData.recipientSwift = formData.recipientSwiftOrBic || null;
+
             copiedFormData.recipientAddress = [""];
-            if(formData.recipientBankCountry){
-                copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.countryCode;
-            }else{
+            if(formData.recipientSwiftOrBic){
+                copiedFormData.informationProvider = "SWIFT";
+                copiedFormData.recipientSwift = formData.recipientSwiftOrBic;
                 copiedFormData.recipientBankCountryCode = null;
+            }else{
+                copiedFormData.informationProvider = "MANUAL";
+                copiedFormData.recipientSwift = null;
+                copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.countryCode;
             }
 
             copiedFormData.paymentCategory= formData.paymentType;
