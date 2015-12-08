@@ -82,11 +82,21 @@ angular.module('raiffeisen-payments')
             });
         };
 
-        $scope.onRecipientTransfer = function(data){
-            $state.go("payments.new.fill", {
-                paymentType: data.recipientType.toLowerCase(),
-                recipientId: data.recipientId
-            });
+        $scope.onRecipientTransfer = function(data) {
+            // dla przelewow do odbiorcow walutowych potrzebna osobna logika
+            if (recipientType == 'swift') {
+                $state.go('payments.new_foreign.fill', {
+                    paymentType: 'sepa',
+                    recipientId: data.recipientId
+                });
+            }
+            else {
+                $state.go("payments.new.fill", {
+                    paymentType: data.recipientType.toLowerCase(),
+                    recipientId: data.recipientId
+                });
+            }
+
         };
 
         $scope.resolveTemplateType = function (recipientType) {
