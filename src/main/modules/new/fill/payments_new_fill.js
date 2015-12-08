@@ -88,6 +88,7 @@ angular.module('raiffeisen-payments')
 
         var requestConverter = function (formData) {
             var copiedForm = angular.copy(formData);
+            formData.amount = (""+formData.amount).replace(",",".");
             copiedForm.amount = (""+formData.amount).replace(",", ".");
             copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
             copiedForm.description = splitTextEveryNSign(formData.description);
