@@ -114,9 +114,11 @@ angular.module('raiffeisen-payments')
 
         if(!angular.equals({}, $stateParams.payment)){
             lodash.assign($scope.payment.formData, $stateParams.payment);
+            $stateParams.payment = {};
         }
         if(!angular.equals({}, $stateParams.items)){
             lodash.assign($scope.payment.items,  $stateParams.items);
+            $stateParams.items = {};
         }
 
 
