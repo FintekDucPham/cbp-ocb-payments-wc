@@ -31,16 +31,15 @@
                              rb-filer-template-type="SWIFT"
                              rb-on-recipient-select="selectRecipient($recipient)"></rb-recipient-select>
     </bd-item-property>
-
     <bd-item-property
             label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
         <input id="recipientAccountNo"
                name="recipientAccountNo"
                ng-model="payment.formData.recipientAccountNo"
                ng-required="true"
-               ng-pattern="FOREIGN_IBAN_VALIDATION_REGEX"
-               ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
-               ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
+               ng-pattern="foreignIbanValidationRegex"
+               ng-maxlength = "payment.options.ibanLength || null"
+               ng-minlength = "payment.options.ibanLength || null"
                class="input-field"
                type="text"
                ng-disabled="payment.options.fixedRecipientSelection"

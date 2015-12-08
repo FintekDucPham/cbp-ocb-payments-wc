@@ -1,8 +1,9 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService) {
+    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
+        $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.currencyList = [];
 
         $scope.payment.formData.currency = 'EUR';
@@ -20,6 +21,16 @@ angular.module('raiffeisen-payments')
         $scope.transfer_type.promise.then(function(data){
             $scope.transfer_type.data = data.content;
         });
+
+        // quick fix
+        utilityService.getCurrentDate().then(function(currentDate) {
+            var realizationDate = new Date(currentDate.getTime());
+            realizationDate.setDate(realizationDate.getDate() + 1);
+            $timeout(function() {
+                $scope.payment.formData.realizationDate = realizationDate;
+            });
+        });
+
 
 
         if($scope.payment.meta.customerContext==='MICRO'){
@@ -64,7 +75,8 @@ angular.module('raiffeisen-payments')
             }
             $scope.payment.formData.recipientCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.foreignCountryCode});
 
-
+            $scope.foreignIbanValidationRegex = new RegExp('.*');
+            $scope.payment.options.ibanLength = null;
         };
 
         $scope.setRequestConverter(function(formData) {
@@ -101,6 +113,10 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.transferFromTemplate = false;
             $scope.payment.formData.recipientCountry = null;
             bdFocus('recipientAccountNo');
+
+            $scope.foreignIbanValidationRegex = $scope.FOREIGN_IBAN_VALIDATION_REGEX;
+
+            $scope.payment.options.ibanLength = $scope.payment.formData.recipientBankCountry.ibanLength;
         };
 
         function updateRecipientsList() {
@@ -236,4 +252,13 @@ angular.module('raiffeisen-payments')
                 });
             }
         }
+
+        $scope.onRecipientCountryChange = function() {
+            if (!$scope.payment.options.fixedRecipientSelection) {
+                $scope.payment.options.ibanLength = $scope.payment.formData.recipientBankCountry.ibanLength;
+            }
+            else {
+                $scope.payment.options.ibanLength = null;
+            }
+        };
     });

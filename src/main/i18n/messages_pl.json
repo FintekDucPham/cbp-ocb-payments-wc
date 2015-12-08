@@ -770,7 +770,7 @@
 
     "raiff.payments.taxpayers.manage.status.taxpayer_type": "Typ płatnika",
 
-    "raiff.payments.edit.domestic.fill.recipient.clear": "Wyczyść dane  odbiorcy",
+    "raiff.payments.edit.domestic.fill.recipient.clear": "Wyczyść",
     "raiff.payments.future.label": "Płatności zaplanowane",
     "raiff.payments.future.list.header": "Płatności zaplanowane",
     "raiff.payments.future.list.search_btn": "Szukaj",

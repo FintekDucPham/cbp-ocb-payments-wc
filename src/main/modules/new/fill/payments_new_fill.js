@@ -78,15 +78,8 @@ angular.module('raiffeisen-payments')
 
 
         var setRealizationDateToCurrent = function () {
-            var realizationDate = CURRENT_DATE;
-
-            if ($scope.payment.type.code == 'SEPA' || $scope.payment.type.code == 'SWIFT') {
-                realizationDate = new Date(CURRENT_DATE);
-                realizationDate.setDate(realizationDate.getDate() + 1);
-            }
-
             angular.extend($scope.payment.formData, {
-                realizationDate: realizationDate
+                realizationDate: CURRENT_DATE
             }, lodash.omit($scope.payment.formData, lodash.isUndefined));
         };
 

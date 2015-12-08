@@ -37,10 +37,10 @@
         <input id="recipientAccountNo"
                name="recipientAccountNo"
                ng-model="payment.formData.recipientAccountNo"
-               required
+               ng-required="true"
                ng-pattern="BANK_NAME_VALIDATION_REGEX"
-               ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
-               ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
+               ng-maxlength = "payment.options.ibanLength || null"
+               ng-minlength = "payment.options.ibanLength || null"
                class="input-field"
                type="text"
                ng-disabled="payment.options.fixedRecipientSelection"
