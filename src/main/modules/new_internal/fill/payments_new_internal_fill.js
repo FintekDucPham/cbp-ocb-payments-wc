@@ -134,6 +134,7 @@ angular.module('raiffeisen-payments')
                     }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                         $scope.payment.transferId = transfer.referenceId;
                         $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                        $scope.payment.holiday = transfer.holiday;
                         actions.proceed();
                     }).catch(function(errorReason){
                         if(errorReason.subType == 'validation'){
