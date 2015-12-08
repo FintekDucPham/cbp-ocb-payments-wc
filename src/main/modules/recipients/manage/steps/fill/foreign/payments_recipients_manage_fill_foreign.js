@@ -25,10 +25,17 @@ angular.module('raiffeisen-payments')
 
 
         $scope.$watch('recipient.formData.recipientIdentityType', function(newValue, oldValue){
-            if(newValue === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
+            if (newValue === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
                 $scope.recipient.formData.recipientBankName = undefined;
                 $scope.recipient.formData.recipientBankCountry = undefined;
             }
+
+            if (newValue === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                $scope.recipient.formData.recipientSwiftOrBic = " ";
+            }
+
+
         });
         customerService.getCustomerDetails().then(function(customerDetails){
             $scope.customerDetails = customerDetails.customerDetails;
@@ -61,6 +68,7 @@ angular.module('raiffeisen-payments')
                     }
                 });
             }
+
             if($scope.recipient.formData.recipientCountry){
                 angular.forEach(data.content, function(country){
                     if($scope.recipient.formData.recipientCountry===country.location){
@@ -95,7 +103,7 @@ angular.module('raiffeisen-payments')
         $scope.currentSearchCode = 0;
 
         $scope.$watch('recipient.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o)){
+            if(n && !angular.equals(n, o) && !_.isEmpty(_.trim(n))) {
                 $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                     $scope.recipient.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
@@ -105,9 +113,17 @@ angular.module('raiffeisen-payments')
                         $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data.content,{
                             countryCode: data.location || data.countryCode
                         });
+
+
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                     }else{
-                        $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                        if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                        }
+                        else {
+                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                        }
+
                     }
                 });
             }
