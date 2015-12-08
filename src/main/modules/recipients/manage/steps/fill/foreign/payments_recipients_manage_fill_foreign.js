@@ -131,12 +131,6 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        $scope.recipientAccountNrValidators = {
-            ibanLengthCorrect: function(ibanNr) {
-                return Math.random() > 0.5; // TODO: when we have data from backend, verify iban length is correct
-            }
-        };
-
         $scope.recipientBankNameValidators = {
             recipientBankNameNonEmpty: function(recipientBankName) {
                 if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {

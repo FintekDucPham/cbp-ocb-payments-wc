@@ -77,7 +77,7 @@ angular.module('raiffeisen-payments')
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
 
-        bdMainStepInitializer($scope, 'payment', lodash.extend({
+        bdMainStepInitializer($scope, 'payment',{
             formName: 'paymentForm',
             type: lodash.find(rbPaymentTypes, {
                 state: $stateParams.paymentType || 'domestic'
@@ -100,10 +100,14 @@ angular.module('raiffeisen-payments')
                 dateSetByCategory: false
             },
             validation: {}
-        }, {
-            formData: $stateParams.payment,
-            items: $stateParams.items || {}
-        }));
+        });
+
+        if(!angular.equals({}, $stateParams.payment)){
+            lodash.assign($scope.payment.formData, $stateParams.payment);
+        }
+        if(!angular.equals({}, $stateParams.items)){
+            lodash.assign($scope.payment.items,  $stateParams.items);
+        }
 
 
 
