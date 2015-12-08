@@ -84,7 +84,7 @@ angular.module('raiffeisen-payments')
 
         $scope.onRecipientTransfer = function(data) {
             // dla przelewow do odbiorcow walutowych potrzebna osobna logika
-            if (recipientType == 'swift') {
+            if (data.recipientType.toLowerCase() == 'swift') {
                 $state.go('payments.new_foreign.fill', {
                     paymentType: 'sepa',
                     recipientId: data.recipientId
