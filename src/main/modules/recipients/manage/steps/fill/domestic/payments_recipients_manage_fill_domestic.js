@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, $stateParams) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams) {
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -11,9 +11,6 @@ angular.module('raiffeisen-payments')
             tax: notTaxAccountGuard($scope.recipient.meta),
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
         };
-        customerService.getCustomerDetails().then(function(customerDetails){
-            $scope.customerDetails = customerDetails.customerDetails;
-        });
         $scope.accountListPromise = accountsService.search().then(function(accountList){
             $scope.accountsList = accountList.content;
         });

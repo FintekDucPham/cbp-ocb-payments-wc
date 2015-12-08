@@ -5,10 +5,6 @@ angular.module('raiffeisen-payments')
             $scope.accountsList = accountList.content;
         });
 
-        customerService.getCustomerDetails().then(function(customerDetails){
-            $scope.customerDetails = customerDetails.customerDetails;
-        });
-
         $scope.getAccountByNrb = function(accountNumber){
             return lodash.find($scope.accountsList, {
                 accountNo: accountNumber

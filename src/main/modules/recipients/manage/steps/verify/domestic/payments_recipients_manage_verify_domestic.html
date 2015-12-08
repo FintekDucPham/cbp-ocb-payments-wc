@@ -3,18 +3,6 @@
     <div ng-controller="RecipientsManageVerifyDomesticController">
         <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
-            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                {{ recipient.items.senderAccount.accountName }}&nbsp;
-
-                {{ recipient.items.senderAccount.accountNo }}
-            </section>
-            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
-            </section>
-        </bd-item-property>
-
         <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.domestic.verify.company.name' | translate }}">
             <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
                 <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
@@ -29,6 +17,19 @@
                 </div>
             </section>
         </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
+            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.items.senderAccount.accountName }}&nbsp;
+
+                {{ recipient.items.senderAccount.accountNo }}
+            </section>
+            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
+            </section>
+        </bd-item-property>
+
         <bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
             {{ recipient.formData.recipientId}}
         </bd-item-property>
