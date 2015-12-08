@@ -68,18 +68,21 @@ angular.module('raiffeisen-payments')
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
             copiedFormData.additionalInfo = " ";
-            copiedFormData.informationProvider = "SWIFT";
+
             copiedFormData.phoneNumber = " ";
             copiedFormData.costType = "SHA";
+            if(formData.recipientSwiftOrBic){
+                copiedFormData.informationProvider = "SWIFT";
+                copiedFormData.recipientSwift = formData.recipientSwiftOrBic;
+                copiedFormData.recipientBankCountryCode = null;
+            }else{
+                copiedFormData.informationProvider = "MANUAL";
+                copiedFormData.recipientSwift = null;
+                copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.countryCode;
+            }
             copiedFormData.transferType = "SEPA";
             copiedFormData.transferFromTemplate = false;
-            copiedFormData.recipientSwift = formData.recipientSwiftOrBic || null;
             copiedFormData.recipientAddress = [""];
-            if(formData.recipientBankCountry){
-                copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.countryCode;
-            }else{
-                copiedFormData.recipientBankCountryCode = null;
-            }
             copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, {'currency': copiedFormData.currency})).transferType;
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || null;
             copiedFormData.saveTemplate = false;
