@@ -77,9 +77,6 @@ angular.module('raiffeisen-payments')
         });
 
 
-        var currentDateService = resourceServiceFactory.create("current_date");
-
-
         var setRealizationDateToCurrent = function () {
                 angular.extend($scope.payment.formData, {
                     realizationDate: CURRENT_DATE
