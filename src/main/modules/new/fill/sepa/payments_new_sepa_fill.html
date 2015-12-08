@@ -19,7 +19,7 @@
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.domestic.fill.recipient' | translate }}">
+    <bd-item-property  label="{{ ::'raiff.payments.new.domestic.fill.recipient' | translate }}">
         <rb-recipient-select rb-recipient="payment.items.recipient"
                              rb-recipient-id="payment.formData.templateId"
                              rb-recipient-list="payment.meta.recipientList"
