@@ -23,11 +23,18 @@ angular.module('raiffeisen-payments')
             controller: "TaxpayersManageNewStatusController"
         });
     })
-    .controller('PaymentsTaxpayersManageNewController', function ($scope) {
+    .controller('PaymentsTaxpayersManageNewController', function ($scope, customerService, lodash) {
 
         $scope.clearForm = function () {
             $scope.$broadcast('clearForm');
         };
+        customerService.getCustomerDetails().then(function(userDetails) {
+            if(userDetails.customerDetails.context == 'MICRO') {
+                $scope.taxpayer.formData.microName = lodash.find(userDetails.customerDetails.customerContexts,{
+                    current: true
+                }).fullName;
+            }
+        });
 
     }
 );
