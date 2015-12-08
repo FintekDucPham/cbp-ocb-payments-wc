@@ -10,7 +10,14 @@ angular.module('raiffeisen-payments')
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html";
             },
-            controller: 'NewPaymentFillController'
+            controller: 'NewPaymentFillController',
+            resolve: {
+                CURRENT_DATE: ['utilityService', function(utilityService){
+                    return utilityService.getCurrentDate().then(function(currentDate){
+                        return currentDate;
+                    });
+                }]
+            }
         }).state('payments.future.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {

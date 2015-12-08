@@ -11,7 +11,7 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsFutureManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, validationRegexp,
-                                                                rbPaymentTypes) {
+                                                                rbPaymentTypes, transferService) {
 
         bdMainStepInitializer($scope, 'payment', {
             formName: 'paymentForm',
@@ -61,6 +61,10 @@ angular.module('raiffeisen-payments')
         $scope.step = 'fill';
         $scope.getInternalProxyTemplate = function(stepName){
             return "{0}/modules/new_internal/{1}/payments_new_internal_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName);
+        };
+
+        $scope.getProperPaymentService = function() {
+            return transferService;
         };
     }
 );
