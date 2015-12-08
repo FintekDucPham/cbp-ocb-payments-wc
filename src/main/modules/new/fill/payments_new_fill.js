@@ -78,9 +78,9 @@ angular.module('raiffeisen-payments')
 
 
         var setRealizationDateToCurrent = function () {
-                angular.extend($scope.payment.formData, {
-                    realizationDate: CURRENT_DATE
-                }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+            angular.extend($scope.payment.formData, {
+                realizationDate: CURRENT_DATE
+            }, lodash.omit($scope.payment.formData, lodash.isUndefined));
         };
 
         var requestConverter = function (formData) {

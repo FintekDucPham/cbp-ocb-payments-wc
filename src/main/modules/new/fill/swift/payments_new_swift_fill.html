@@ -19,7 +19,7 @@
                    currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.domestic.fill.recipient' | translate }}">
+    <bd-item-property  label="{{ ::'raiff.payments.new.domestic.fill.recipient' | translate }}">
         <rb-recipient-select rb-recipient="payment.items.recipient"
                              rb-recipient-id="payment.formData.templateId"
                              rb-recipient-list="payment.meta.recipientList"
@@ -37,13 +37,13 @@
         <input id="recipientAccountNo"
                name="recipientAccountNo"
                ng-model="payment.formData.recipientAccountNo"
-               required
+               ng-required="true"
                ng-pattern="BANK_NAME_VALIDATION_REGEX"
-               ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
-               ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
+               ng-maxlength = "payment.options.ibanLength || null"
+               ng-minlength = "payment.options.ibanLength || null"
                class="input-field"
                type="text"
-               mg-disabled="payment.formData.templateId"
+               ng-disabled="payment.options.fixedRecipientSelection"
                placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
 
         <eb-validation-messages eb-name="paymentAccountNo">
@@ -65,7 +65,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow"
-                      label="{{ ::'raiff.payments.new.domestic.fill.recipient_data' | translate }}">
+                      label="{{ ::'raiff.payments.new.foreign.fill.recipient_data' | translate }}">
     <textarea name="recipientName"
               ng-model="payment.formData.recipientName"
               ng-pattern="RECIPIENT_DATA_REGEX"
@@ -100,6 +100,7 @@
         <ui-select ng-show="countries.data" ng-model="payment.formData.recipientCountry"
                    ng-change="onRecipientCountryChange()"
                    name="recipientCountry"
+                   ng-disabled="payment.options.fixedRecipientSelection"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
                 {{ $select.selected.countryName  | uppercase}}
@@ -120,6 +121,7 @@
                    bd-matches-none-of="recipientBankSwiftCodeValidators"
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    name="swift_bic"
+                   required="true"
                    placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
         </rb-item-property-data-preloader>
 
