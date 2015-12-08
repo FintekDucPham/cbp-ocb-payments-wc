@@ -77,10 +77,17 @@ angular.module('raiffeisen-payments')
         });
 
 
-        var setRealizationDateToCurrent = function () {
-                angular.extend($scope.payment.formData, {
-                    realizationDate: CURRENT_DATE
-                }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+        $scope.setRealizationDateToCurrent = function () {
+            var realizationDate = CURRENT_DATE;
+
+            if ($scope.payment.type.code == 'SEPA' || $scope.payment.type.code == 'SWIFT') {
+                realizationDate = new Date(CURRENT_DATE);
+                realizationDate.setDate(date.getDate() + 1);
+            }
+
+            angular.extend($scope.payment.formData, {
+                realizationDate: realizationDate
+            }, lodash.omit($scope.payment.formData, lodash.isUndefined));
         };
 
         var requestConverter = function (formData) {
@@ -95,7 +102,7 @@ angular.module('raiffeisen-payments')
         var resetRealizationOnBlockedInput = function () {
             if(!$scope.payment.meta.isFuturePaymentAllowed || $scope.payment.meta.dateSetByCategory) {
                 delete $scope.payment.formData.realizationDate;
-                setRealizationDateToCurrent(true);
+                $scope.setRealizationDateToCurrent(true);
             }
         };
 
@@ -131,7 +138,7 @@ angular.module('raiffeisen-payments')
 
 
 
-        setRealizationDateToCurrent();
+        $scope.setRealizationDateToCurrent();
 
         $scope.setRequestConverter = function (converterFn) {
             requestConverter = converterFn;

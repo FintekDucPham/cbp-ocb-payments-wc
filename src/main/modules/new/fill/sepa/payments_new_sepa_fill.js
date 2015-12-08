@@ -12,6 +12,7 @@ angular.module('raiffeisen-payments')
             data: null
         };
 
+
         $scope.transfer_type = {
             promise: transferService.foreignTransferTypes(),
             data: null
@@ -19,6 +20,7 @@ angular.module('raiffeisen-payments')
         $scope.transfer_type.promise.then(function(data){
             $scope.transfer_type.data = data.content;
         });
+
 
         if($scope.payment.meta.customerContext==='MICRO'){
             //@TODO: o	dla kontekstu MICRO mozliwosc wyboru jedynie rachunku w  EUR
@@ -61,6 +63,7 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.recipientSwiftOrBic = recipient.details.recipientSwift;
             }
             $scope.payment.formData.recipientCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.foreignCountryCode});
+
 
         };
 

@@ -65,7 +65,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow"
-                      label="{{ ::'raiff.payments.new.domestic.fill.recipient_data' | translate }}">
+                      label="{{ ::'raiff.payments.new.foreign.fill.recipient_data' | translate }}">
     <textarea name="recipientName"
               ng-model="payment.formData.recipientName"
               ng-pattern="RECIPIENT_DATA_REGEX"
@@ -120,6 +120,7 @@
                    bd-matches-none-of="recipientBankSwiftCodeValidators"
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    name="swift_bic"
+                   required="true"
                    placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
         </rb-item-property-data-preloader>
 

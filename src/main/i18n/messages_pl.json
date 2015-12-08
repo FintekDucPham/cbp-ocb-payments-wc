@@ -117,6 +117,8 @@
     "raiff.payments.new.btn.finalize": "Powrót do listy",
     "raiff.payments.new.btn.final_action": "Zapisz odbiorcę",
 
+    "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
+
     "raiff.payments.new.verify.smscode": "Podaj haslo SMS dla operacji",
     "raiff.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",
 
@@ -925,6 +927,7 @@
     "raiff.payments.future.list.details.foreign.bankCountry.label": "Kraj banku",
     "raiff.payments.future.list.details.foreign.recipientCountry.label": "Kraj odbiorcy",
     "raiff.payments.future.list.details.foreign.commision.label": "Koszty przelewu",
+
 
 
     "raiff.payments.future.edit.status.error": "Operacja nie powiodła się",
