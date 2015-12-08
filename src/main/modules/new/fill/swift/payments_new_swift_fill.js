@@ -101,7 +101,7 @@ angular.module('raiffeisen-payments')
             }
 
             copiedFormData.paymentCategory= formData.paymentType;
-            copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || null;
+            copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;

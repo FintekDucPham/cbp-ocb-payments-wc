@@ -172,11 +172,12 @@
 
 
     <!-- bank name-->
-    <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}" ng-show="payment.formData.recipientBankName">
-            <textarea   ng-disabled="true"
+    <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}">
+            <textarea   ng-disabled="payment.formData.recipientSwiftOrBic"
                         class="input-field input-area--party-data"
                         ng-model="payment.formData.recipientBankName"
                         name="recipientBankName"
+                        ng-required="true"
                         ng-pattern="BANK_NAME_VALIDATION_REGEX"
                         bd-matches-none-of="recipientBankNameValidators"
                         split-text-max-length-validators="140"></textarea>

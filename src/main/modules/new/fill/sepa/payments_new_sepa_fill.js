@@ -84,7 +84,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientAddress = [""];
             copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, {'currency': copiedFormData.currency})).transferType;
-            copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || null;
+            copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
