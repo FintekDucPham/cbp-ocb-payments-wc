@@ -17,8 +17,3 @@
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
     {{ $data.transferTitle }}
 </bd-item-property>
-<bd-item-property label="{{::'raiff.payments.recipients.edit.domestic.verify.company.name'|translate}}" ng-if="customerDetails.context == 'MICRO'">
-    <div ng-repeat="owner in ownerList = (getAccountByNrb($data.debitNrb).ownersList | filter: { relationType: 'OWNER' }:true)">
-        <span>{{owner.fullName}}</span>
-    </div>
-</bd-item-property>
