@@ -33,8 +33,7 @@
     </bd-item-property>
     <bd-item-property
             label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
-        <input id="recipientAccountNo"
-               name="recipientAccountNo"
+        <input name="recipientAccountNo"
                ng-model="payment.formData.recipientAccountNo"
                ng-required="true"
                ng-pattern="foreignIbanValidationRegex"
@@ -45,12 +44,12 @@
                ng-disabled="payment.options.fixedRecipientSelection"
                placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
 
-        <eb-validation-messages eb-name="paymentAccountNo">
+        <eb-validation-messages eb-name="recipientAccountNo">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
+                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}fasd
             </div>
             <div eb-message-key="minlength" class="validation-message animate-on">
                 {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
