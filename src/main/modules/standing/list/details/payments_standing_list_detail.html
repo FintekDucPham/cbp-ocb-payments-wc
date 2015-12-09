@@ -1,48 +1,47 @@
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderNo'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.standingOrder.id }}
+    {{ $data.id }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderName'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.standingOrder.shortName }}
+    {{$data.shortName }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"   label="{{::'raiff.payments.standing.list.details.senderAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.standingOrder.debitAccount | nrbIbanFilter }}
+    {{$data.debitAccount | nrbIbanFilter }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccountOwner'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-     <bd-multiline-text bd-text="$data.standingOrder.orderingCustomer"></bd-multiline-text>
+     <bd-multiline-text bd-text="$data.orderingCustomer"></bd-multiline-text>
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.standingOrder.creditAccount | nrbIbanFilter }}
-    <br/>{{$data.bankName.fullName || $data.bankName.shortName }}
+    {{$data.creditAccount | nrbIbanFilter }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientData'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    <bd-multiline-text bd-text="$data.standingOrder.beneficiary"></bd-multiline-text>
+    <bd-multiline-text bd-text="$data.beneficiary"></bd-multiline-text>
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.amount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.standingOrder.amount }} {{ $data.standingOrder.currency }}
+    {{ $data.amount }} {{ $data.currency }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.title'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    <bd-multiline-text bd-text="$data.standingOrder.remarks"></bd-multiline-text>
+    <bd-multiline-text bd-text="$data.remarks"></bd-multiline-text>
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.frequencyDescription'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.standingOrder.frequency.periodCount }}&nbsp;
-    <span ng-show="$data.standingOrder.frequency.periodCount <= 1 || !$data.standingOrder.frequency.periodCount">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $data.standingOrder.frequency.periodUnit | translate}}</span>
-    <span ng-show="$data.standingOrder.frequency.periodCount >= 2 && $data.standingOrder.frequency.periodCount < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $data.standingOrder.frequency.periodUnit | translate}}</span>
-    <span ng-show="$data.standingOrder.frequency.periodCount >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $data.standingOrder.frequency.periodUnit | translate}}</span>
+    {{ $data.frequency.periodCount }}&nbsp;
+    <span ng-show="$data.frequency.periodCount <= 1 || !$data.frequency.periodCount">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $data.frequency.periodUnit | translate}}</span>
+    <span ng-show="$data.frequency.periodCount >= 2 && $data.frequency.periodCount < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $data.frequency.periodUnit | translate}}</span>
+    <span ng-show="$data.frequency.periodCount >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $data.frequency.periodUnit | translate}}</span>
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.closestRealizationDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.standingOrder.frequency.nextDate | date:'dd-MM-yyyy' }}
+    {{ $data.frequency.nextDate | date:'dd-MM-yyyy' }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.endDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.standingOrder.endDate | date:'dd-MM-yyyy' }}
+    {{ $data.endDate | date:'dd-MM-yyyy' }}
 </bd-item-property>
 

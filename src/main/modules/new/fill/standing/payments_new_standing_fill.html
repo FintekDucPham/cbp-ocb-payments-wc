@@ -115,7 +115,7 @@
               placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_data.placeholder' | translate }}"></textarea>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['recipientName'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{ validationErrors['recipientName'] }}
         </div>
 
         <eb-validation-messages eb-name="recipientName">
@@ -209,8 +209,6 @@
                 {{::'raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO'|translate}}
             </div>
 
-
-
             <!--<div eb-message-key="balance" class="validation-message animate-on">-->
                 <!--{{ 'raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}-->
             <!--</div>-->
@@ -282,22 +280,24 @@
         </rb-datepicker>
 
         <eb-validation-messages eb-name="firstRealizationDate">
+
             <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.FIRST_DATE'|translate}}
             </div>
+
             <div eb-message-key="date" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
             </div>
             <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
+                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.INCORRECT_FIRST_DATE'|translate}}
             </div>
 
             <div eb-message-key="bdMinDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'dd.MM.yyyy')}}
+                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'dd.MM.yyyy')}}
             </div>
 
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'dd.MM.yyyy')}}
+                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'dd.MM.yyyy')}}
             </div>
 
 
@@ -391,7 +391,6 @@
 
 
         <eb-validation-messages eb-name="finishDate">
-
             <div eb-message-key="date" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_END_DATE'|translate}}
             </div>
@@ -403,9 +402,7 @@
             <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.TOO_LATE_END_DATE'|translate}}
             </div>
-
         </eb-validation-messages>
-
     </bd-item-property>
 
 
