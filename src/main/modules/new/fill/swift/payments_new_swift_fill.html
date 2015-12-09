@@ -101,6 +101,7 @@
                    ng-change="onRecipientCountryChange()"
                    name="recipientCountry"
                    ng-disabled="payment.options.fixedRecipientSelection"
+                   ng-required="true"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
                 {{ $select.selected.countryName  | uppercase}}
@@ -110,6 +111,11 @@
                 {{ country.countryName  | uppercase}}
             </ui-select-choices>
         </ui-select>
+        <eb-validation-messages eb-name="recipientCountry">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.foreign.fill.recipient_country.error.required'|translate}}
+            </div>
+        </eb-validation-messages>
     </bd-item-property>
 
 
@@ -150,6 +156,7 @@
         <ui-select ng-show="countries.data"
                    ng-model="payment.formData.recipientBankCountry"
                    name="recipientBankCountry"
+                   ng-required="true"
                    ng-disabled="payment.formData.recipientBankName"
                    bd-matches-none-of="recipientBankCountryValidators"
                    theme="bootstrap">
