@@ -66,11 +66,12 @@ angular.module('raiffeisen-payments')
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
-            $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
+            $scope.payment.formData.recipientAccountNo = recipient.accountNo;
             $scope.payment.formData.recipientName = recipient.data.join('');
             $scope.payment.formData.description = recipient.title.join('');
             if(recipient.details.informationProvider==='MANUAL'){
                 $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.bankCountry});
+                $scope.payment.formData.recipientBankName= recipient.details.bankDetails.join('');
             }else{
                 $scope.payment.formData.recipientSwiftOrBic = recipient.details.recipientSwift;
             }

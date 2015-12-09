@@ -39,8 +39,8 @@
                ng-model="payment.formData.recipientAccountNo"
                ng-required="true"
                ng-pattern="BANK_NAME_VALIDATION_REGEX"
-               ng-maxlength = "payment.options.ibanLength || null"
-               ng-minlength = "payment.options.ibanLength || null"
+               ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
+               ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                class="input-field"
                type="text"
                ng-disabled="payment.options.fixedRecipientSelection"
@@ -116,14 +116,12 @@
         </eb-validation-messages>
     </bd-item-property>
 
-
-
     <!--information provider-->
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankData' | translate }}">
 
         <bd-radio-select bd-model="payment.formData.recipientIdentityType" ng-init="onInited()">
-            <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.swfitbic'|translate}}</bd-radio-option>
-            <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.recipientBankData'|translate}}</bd-radio-option>
+            <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC" class="row__inline-block--middle">{{::'raiff.payments.new.foreign.fill.swfitbic'|translate}}</bd-radio-option>
+            <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'raiff.payments.new.foreign.fill.recipientBankData'|translate}}</bd-radio-option>
         </bd-radio-select>
 
     </bd-item-property>
@@ -202,6 +200,7 @@
                         split-text-max-length-validators="140"></textarea>
 
     </bd-item-property>
+
 
     <!-- transfer title -->
     <bd-item-property class="bd-item-property--multirow"
