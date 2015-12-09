@@ -66,7 +66,7 @@
                       label="{{ ::'raiff.payments.new.foreign.fill.recipient_data' | translate }}">
     <textarea name="recipientName"
               ng-model="payment.formData.recipientName"
-              ng-pattern="RECIPIENT_DATA_REGEX"
+              ng-pattern="FOREIGN_DATA_REGEX"
               required
               bd-array-value
 
@@ -83,10 +83,10 @@
                 {{::'raiff.payments.new.domestic.fill.recipient_data.EMPTY_BNF_DATA'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
+                {{::'raiff.payments.new.foreign.fill.multirow_data.error.required'|translate}}
             </div>
             <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA'|translate}}
+                {{::'raiff.payments.new.foreign.fill.multirow_data.error.required'|translate}}
             </div>
         </eb-validation-messages>
 
@@ -205,7 +205,7 @@
                   required
                   bd-array-value
                   split-text-max-length-validators="140"
-                  ng-pattern="PAYMENT_DESCRIPTION_REGEX"
+                  ng-pattern="FOREIGN_DATA_REGEX"
                   placeholder="{{ ::'raiff.payments.new.domestic.fill.description.placeholder' | translate }}"></textarea>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['description'] !== undefined">
@@ -216,10 +216,10 @@
                 {{::'raiff.payments.new.domestic.fill.description.EMPTY_TITLE'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.description.TOO_LONG_TITLE'|translate}}
+                {{::'raiff.payments.new.foreign.fill.multirow_data.error.required'|translate}}
             </div>
             <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.description.TOO_LONG_TITLE'|translate}}
+                {{::'raiff.payments.new.foreign.fill.multirow_data.error.required'|translate}}
             </div>
         </eb-validation-messages>
 
