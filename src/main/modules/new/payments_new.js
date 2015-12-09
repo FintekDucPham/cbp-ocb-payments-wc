@@ -164,6 +164,10 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        // akcja dla guzka "powrot" na ekranie modyfikacji zlcenia stalego
+        $scope.onFillReturn = function() {
+            $state.go('payments.standing.list');
+        };
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',
@@ -171,6 +175,7 @@ angular.module('raiffeisen-payments')
             footerType: 'payment',
             onClear: $scope.clearForm,
             cancelState: 'payments.recipients.list',
+            onFillReturn: $scope.onFillReturn,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
                 change: 'config.multistepform.buttons.change',
@@ -183,6 +188,7 @@ angular.module('raiffeisen-payments')
                 finalAction: 'raiff.payments.new.btn.final_action'
             },
             visibility:{
+                fillReturn: false,
                 cancel: true,
                 change: true,
                 clear: true,
@@ -195,6 +201,7 @@ angular.module('raiffeisen-payments')
 
         if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
             $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
+            $scope.payment.rbPaymentsStepParams.visibility.fillReturn = true;
             $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
