@@ -308,6 +308,6 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.onInited= function(){
-            $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.recipientIdentityType);
+            //$scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.recipientIdentityType);
         };
     });

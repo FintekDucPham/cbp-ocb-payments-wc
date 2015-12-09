@@ -7,7 +7,7 @@
     </bd-item-property>
 
     <!-- swift -->
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
+    <bd-item-property ng-show="payment.formData.recipientSwiftOrBic" class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
         {{:: payment.formData.recipientSwiftOrBic}}
     </bd-item-property>
 
@@ -37,7 +37,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
-        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency.currency }}" not-styled></bd-amount>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
