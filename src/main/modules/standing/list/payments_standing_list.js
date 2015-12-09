@@ -103,7 +103,12 @@ angular.module('raiffeisen-payments')
                     standingTransferService.search(params).then(function (response) {
 
                         response.content = response.content.map(function(elem) {
-                            elem.frequency_nextDate = elem.frequency.nextDate;
+                            elem.frequency_nextDate = elem.standingOrder.frequency.nextDate;
+                            elem.shortName = elem.standingOrder.shortName;
+                            elem.amount = elem.standingOrder.amount;
+                            elem.currency = elem.standingOrder.currency;
+                            elem.beneficiary = elem.standingOrder.beneficiary;
+                            elem.creditAccount = elem.standingOrder.creditAccount;
                             return elem;
                         });
 
