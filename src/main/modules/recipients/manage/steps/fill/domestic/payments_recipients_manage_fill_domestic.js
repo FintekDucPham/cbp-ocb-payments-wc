@@ -5,7 +5,10 @@ angular.module('raiffeisen-payments')
             $scope.selectNrb = $stateParams.nrb;
         }
 
-        $scope.recipient.meta.forbiddenAccounts = [];
+        lodash.assign($scope.recipient.meta, {
+            nonEditableFields: ['debitAccountNo', 'recipientAccountNo', 'recipientId', 'remitterAccountId'],
+            forbiddenAccounts: []
+        });
 
         var recipientValidators = {
             tax: notTaxAccountGuard($scope.recipient.meta),
@@ -25,7 +28,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
-                formService.clearForm($scope.recipientForm);
+                formService.clearForm($scope.recipientForm, $scope.recipient.meta.nonEditableFields);
             }
         });
 

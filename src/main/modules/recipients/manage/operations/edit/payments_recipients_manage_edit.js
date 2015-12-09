@@ -37,7 +37,7 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.clearForm = function () {
-            $scope.recipient.formData = {};
+            $scope.recipient.formData = lodash.pick($scope.recipient.formData, $scope.recipient.meta.nonEditableFields);
             $scope.$broadcast('clearForm');
         };
 

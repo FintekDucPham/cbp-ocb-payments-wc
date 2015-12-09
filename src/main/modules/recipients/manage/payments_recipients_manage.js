@@ -35,6 +35,7 @@ angular.module('raiffeisen-payments')
                 params: {}
             },
             meta: {
+                nonEditableFields: [],
                 recipientTypes: lodash.map(rbRecipientTypes)
             },
             manageAction: ""

@@ -65,7 +65,7 @@
                    ng-model="recipient.formData.recipientAccountNo"
                    required="recipient.operation.code !=='EDIT'"
                    bban-nrb
-                   ng-disabled="recipient.operation.code === 'EDIT'"
+                   ng-readonly="recipient.operation.code === 'EDIT'"
                    bd-matches-none-of="recipientAccountValidators"
                    class="input-field"
                    type="text"
