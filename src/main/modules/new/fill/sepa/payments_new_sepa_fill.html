@@ -99,7 +99,6 @@
                    ng-change="onRecipientCountryChange()"
                    name="recipientCountry"
                    ng-required="true"
-                   ng-disabled="payment.options.fixedRecipientSelection"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
                 {{ $select.selected.countryName  | uppercase}}
@@ -159,7 +158,7 @@
                    ng-model="payment.formData.recipientBankCountry"
                    name="recipientBankCountry"
                    ng-required="true"
-                   ng-disabled="payment.formData.recipientBankName"
+                   ng-disabled="true"
                    bd-matches-none-of="recipientBankCountryValidators"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">
@@ -184,7 +183,7 @@
 
     <!-- bank name-->
     <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}">
-            <textarea   ng-disabled="payment.formData.recipientSwiftOrBic"
+            <textarea   ng-disabled="true"
                         class="input-field input-area--party-data"
                         ng-model="payment.formData.recipientBankName"
                         name="recipientBankName"
