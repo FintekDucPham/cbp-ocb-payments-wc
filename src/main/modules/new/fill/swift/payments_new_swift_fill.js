@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService, $timeout, RECIPIENT_IDENTITY_TYPES) {
+    .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService, $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -83,16 +83,24 @@ angular.module('raiffeisen-payments')
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
-            $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
+            $scope.payment.formData.recipientAccountNo = recipient.accountNo;
             $scope.payment.formData.recipientName = recipient.data.join('');
             $scope.payment.formData.description = recipient.title.join('');
-            $scope.payment.formData.informationProvider=recipient.details.informationProvider;
-            if(recipient.details.informationProvider===RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY){
-                $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.bankCountry});
+
+            if(recipient.details.informationProvider==='MANUAL'){
+                $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
+                $timeout(function(){
+                    $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.bankCountry});
+                    $scope.payment.formData.recipientBankName= recipient.details.bankDetails.join('');
+                });
             }else{
-                $scope.payment.formData.recipientSwiftOrBic = recipient.details.recipientSwift;
+                $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                $timeout(function(){
+                    $scope.payment.formData.recipientSwiftOrBic = recipient.details.recipientSwift;
+                });
             }
-            $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.informationProvider);
+            $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.recipientIdentityType);
+
             $scope.payment.formData.recipientCountry = lodash.find($scope.countries.data.content, {countryCode: recipient.details.foreignCountryCode});
 
             $scope.foreignIbanValidationRegex =  $scope.FOREIGN_IBAN_VALIDATION_REGEX;
@@ -137,6 +145,10 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.description = null;
             $scope.payment.formData.transferFromTemplate = false;
             $scope.payment.formData.recipientCountry = null;
+            $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+            $scope.payment.formData.recipientBankCountry = undefined;
+            $scope.payment.formData.recipientBankName= null;
+            $scope.payment.formData.recipientSwiftOrBic = null;
             bdFocus('recipientAccountNo');
 
             $scope.foreignIbanValidationRegex = new RegExp('.*');
@@ -296,6 +308,6 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.onInited= function(){
-            $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.recipientIdentityType);
+            //$scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.recipientIdentityType);
         };
     });

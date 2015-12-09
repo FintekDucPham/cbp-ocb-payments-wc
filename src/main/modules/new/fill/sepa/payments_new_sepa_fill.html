@@ -37,19 +37,18 @@
                ng-model="payment.formData.recipientAccountNo"
                ng-required="true"
                ng-pattern="foreignIbanValidationRegex"
-               ng-maxlength = "payment.options.ibanLength || null"
-               ng-minlength = "payment.options.ibanLength || null"
+               ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
+               ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                class="input-field"
                type="text"
                ng-disabled="payment.options.fixedRecipientSelection"
                placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
-
         <eb-validation-messages eb-name="recipientAccountNo">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
             </div>
             <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}fasd
+                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
             </div>
             <div eb-message-key="minlength" class="validation-message animate-on">
                 {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
