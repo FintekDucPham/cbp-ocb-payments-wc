@@ -29,9 +29,9 @@ angular.module('raiffeisen-payments')
             // nie mozemy rowniez tego po prostu uspojnic - trzeba przepisywac
             var paymentFormData = {
                 "shortName": payment.shortName,
-                "recipientName": payment.beneficiary.join("\n"),
+                "recipientName": payment.beneficiary ? payment.beneficiary.join("\n") : "",
                 "recipientAccountNo": payment.creditAccount,
-                "description": payment.remarks.join("\n"),
+                "description": payment.remarks ? payment.remarks.join("\n") : "",
                 "remitterAccountId": payment.debitAccountId,
                 "currency": payment.currency,
                 "firstRealizationDate": payment.frequency.nextDate,
