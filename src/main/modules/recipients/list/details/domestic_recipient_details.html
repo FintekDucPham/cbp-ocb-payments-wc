@@ -28,3 +28,4 @@
         {{ $data.debitNrb | nrbIbanFilter }}
     </bd-item-property>
 </div>
+<eb-preloader eb-promise="recipient.item.bankNamePromise" eb-rejected-message=""></eb-preloader>
