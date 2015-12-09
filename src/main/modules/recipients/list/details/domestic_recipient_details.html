@@ -1,19 +1,30 @@
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.account_related'|translate}}">
-    {{ $data.debitNrb | nrbIbanFilter }}
-</bd-item-property>
+<div ng-show="recipient.item.bankNamePromise.$$state.status === 1">
+    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
+        {{ $data.customerName }}
+    </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
-    {{ $data.customerName }}
-</bd-item-property>
+    <bd-item-property class="eb-item-property--text" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}">
+        <rb-bank-name
+                response-value="recipient.item.recipientBankName"
+                account-no="$data.nrb"
+                bank-name-promise="recipient.item.bankNamePromise">
+            {{recipient.item.recipientBankName}}
+        </rb-bank-name>
+    </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
-    {{ $data.nrb | nrbIbanFilter }}
-</bd-item-property>
+    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
+        {{ $data.nrb | nrbIbanFilter }}
+    </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
-    {{$data.recipientAddress}}
-</bd-item-property>
+    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
+        {{$data.recipientAddress}}
+    </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
-    {{ $data.transferTitle }}
-</bd-item-property>
+    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
+        {{ $data.transferTitle }}
+    </bd-item-property>
+
+    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.account_related'|translate}}" ng-hide="true">
+        {{ $data.debitNrb | nrbIbanFilter }}
+    </bd-item-property>
+</div>
