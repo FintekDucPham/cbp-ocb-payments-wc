@@ -6,6 +6,10 @@
         {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_data'|translate}}">
+        <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
+    </bd-item-property>
+
     <!-- swift -->
     <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
         {{:: payment.formData.recipientSwiftOrBic}}
