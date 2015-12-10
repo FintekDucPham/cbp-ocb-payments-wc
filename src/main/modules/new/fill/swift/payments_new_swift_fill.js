@@ -121,7 +121,7 @@ angular.module('raiffeisen-payments')
             if(formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
                 copiedFormData.informationProvider = "SWIFT";
                 copiedFormData.recipientSwift = formData.recipientSwiftOrBic;
-                copiedFormData.recipientBankCountryCode = null;
+                copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.countryCode;
             }else{
                 copiedFormData.informationProvider = "MANUAL";
                 copiedFormData.recipientSwift = null;
