@@ -1,29 +1,12 @@
 angular.module('raiffeisen-payments')
-    .controller('NewZusPaymentVerifyController', function ($scope) {
+    .controller('NewZusPaymentVerifyController', function ($scope, lodash, zusPaymentInsurances) {
 
-        $scope.sortInsurances = function (insurance) {
-            return 1;
-        };
-
-    }).filter('insurancesFilter', function (lodash, zusPaymentInsurances) {
-        return lodash.memoize(function (items) {
-            var positions = lodash.transform(items, function (result, item, key) {
-                result[key] = lodash.findIndex(zusPaymentInsurances, function (insurance) {
-                    return insurance === key;
-                });
-                return result;
-            });
-            var filtered = lodash.map(items, function(item, key) {
-                return angular.extend({}, item, {
-                    key : key
-                });
-            });
-            filtered.sort(function (a, b) {
-                return (positions[a.key] > positions[b.key] ? 1 : -1);
-            });
-            return filtered;
-
+        $scope.insurances = lodash.sortBy(lodash.forEach($scope.payment.formData.insurancePremiums, function(insurance, insurance_type) {
+            insurance.type = insurance_type;
+        }), function(insurance) {
+            return zusPaymentInsurances.indexOf(insurance.type);
         });
+
     }).filter('arrayToString', function(lodash){
         return function(items) {
             return lodash.isArray(items) ? items.join("<br />") : items ;
