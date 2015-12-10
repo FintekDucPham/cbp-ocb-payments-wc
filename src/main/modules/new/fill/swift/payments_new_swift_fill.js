@@ -29,15 +29,22 @@ angular.module('raiffeisen-payments')
             init: "PLN"
         };
 
+        if($scope.payment.formData.currency){
+            $scope.currencies.init = $scope.payment.formData.currency.currency;
+        }
+
         $scope.currencies.promise.then(function(data){
             $scope.currencies.data = data.content;
             $scope.payment.formData.currency = lodash.find($scope.currencies.data, {currency: $scope.currencies.init});
         });
 
         $scope.transfer_constants = rbForeignTransferConstants;
-        $scope.payment.formData.transferCost = rbForeignTransferConstants.TRANSFER_COSTS.SHA;
-        $scope.payment.formData.paymentType = rbForeignTransferConstants.PAYMENT_TYPES.STANDARD;
-
+        if(!$scope.payment.formData.transferCost){
+            $scope.payment.formData.transferCost = rbForeignTransferConstants.TRANSFER_COSTS.SHA;
+        }
+        if(!$scope.payment.formData.paymentType){
+            $scope.payment.formData.paymentType = rbForeignTransferConstants.PAYMENT_TYPES.STANDARD;
+        }
 
         $scope.transfer_type.promise.then(function(data){
             $scope.transfer_type.data = data.content;

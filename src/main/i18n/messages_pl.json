@@ -368,6 +368,7 @@
     "raiff.payments.new.foreign.fill.transfer_cost.label": "Koszty przelewu",
     "raiff.payments.new.foreign.fill.transfer_cost.message": "Opłaty Raiffeisen Bank ponosi zleceniodawca - nie wystąpią koszty banków pośredniczących",
     "raiff.payments.new.foreign.fill.payment_type.label": "Rodzaju przelewu",
+    "raiff.payments.new.foreign.fill.recipient_data.label": "Nazwa i adres odbiorcy",
 
     "raiff.payments.recipients.new.currency.fill.account_related.label": "Z rachunku",
     "raiff.payments.recipients.new.currency.fill.account_related": "Z rachunku",
