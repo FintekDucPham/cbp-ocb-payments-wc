@@ -787,9 +787,12 @@
     "raiff.payments.future.list.header.payment_title": "Tytułem",
     "raiff.payments.future.list.header.credit_account": "Z rachunku",
     "raiff.payments.future.list.header.amount": "Kwota",
-
     "raiff.payments.future.list.header.plannedoperationdate": "Planowana data realizacji",
     "raiff.payments.future.list.empty": "Nie znaleziono płatności spełniających kryteria wyszukiwania",
+
+    "raiff.payments.future.list.summary":"Podsumowanie",
+    "raiff.payments.future.list.summary.currency":"Podsumowanie w",
+
     "raiff.payments.future.fill.transferType.label": "Typ przelewu",
     "raiff.payments.future.fill.debit_account.label": "Z rachunku",
 
