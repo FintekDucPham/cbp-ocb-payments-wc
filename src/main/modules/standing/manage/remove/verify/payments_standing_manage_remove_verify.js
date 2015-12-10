@@ -13,8 +13,10 @@ angular.module('raiffeisen-payments')
                                                                           bdVerifyStepInitializer, viewStateService, $state) {
 
 
+
         if (initialState && initialState.payment) {
-            standingTransferService.remove($scope.$data.id).then(function(resp) {
+            $scope.$data = initialState.payment;
+            standingTransferService.remove(initialState.payment.id).then(function(resp) {
                 $scope.$data = initialState.payment;
                 $scope.payment.token.params.resourceId = resp.referenceId;
                 $scope.payment.token.params.rbOperationType = "MANAGE_STANDING_ORDER";
