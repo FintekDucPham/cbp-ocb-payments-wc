@@ -8,7 +8,10 @@ angular.module('raiffeisen-payments')
         $scope.currencyList = [];
 
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
-        $scope.payment.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+        if(!$scope.payment.formData.recipientIdentityType){
+            $scope.payment.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+        }
+
 
         $scope.swift = {
             promise: null,
@@ -219,7 +222,6 @@ angular.module('raiffeisen-payments')
             recalculateCurrency();
             updateRecipientsList();
             $scope.validateBalance();
-            recipientFilter.filter();
         };
 
         $scope.$on('clearForm', function () {
@@ -270,15 +272,6 @@ angular.module('raiffeisen-payments')
             },
             payments: true
         });
-
-        var recipientFilter = $scope.recipientFilter = {
-            doesMatch: function (recipient) {
-                return true;
-                // todo recipients should be displayed regardless of their source account
-                //var senderAccount = $scope.payment.items.senderAccount;
-                //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
-            }
-        };
 
         function splitTextEveryNSign(text, lineLength){
             if(text !== undefined && text.length > 0) {
