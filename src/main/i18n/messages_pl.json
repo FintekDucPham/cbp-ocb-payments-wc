@@ -171,6 +171,11 @@
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
 
+    "raiff.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
+    "raiff.payments.new.domestic.fill.account.warning2":" ostatnich ",
+    "raiff.payments.new.domestic.fill.account.warning3":"cyfr wklejonego numer rachunku",
+    "raiff.payments.new.domestic.fill.errorPaste":"Wartość niezgodna z wklejonym numerem rachunku, spróbuj ponownie.",
+
     "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.domestic.verify.sender_data": "Właściciel",
     "raiff.payments.new.domestic.verify.recipient_account_no": "Na rachunek",
