@@ -9,9 +9,11 @@ angular.module('raiffeisen-payments')
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getValueForCurrentContext("plannedOperationList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getValueForCurrentContext("plannedOperationList.max.offset"),
+                        currencyOrder: systemParameterService.getValueForCurrentContext("nib.accountList.currency.order"),
                         customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         var result = {
+                            currencyOrder: data.currencyOrder.split(","),
                             offset: parseInt(data.defaultOffsetInDays, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
                             dateFrom: new Date(),
@@ -170,15 +172,27 @@ angular.module('raiffeisen-payments')
         }
 
         function formSummary(sumsPerCurrency) {
-            $scope.summary = [];
+            var unsortedSummary = formCurrencyAmountArray(sumsPerCurrency);
+            $scope.summary = getSortedSummary(unsortedSummary);
+        }
+
+        function formCurrencyAmountArray(sumsPerCurrency) {
+            var summary = [];
             for (var currency in sumsPerCurrency) {
                 if (sumsPerCurrency.hasOwnProperty(currency)) {
-                    $scope.summary.push({
+                    summary.push({
                         currency: currency,
                         amount: sumsPerCurrency[currency]
                     });
                 }
             }
+            return summary;
+        }
+
+        function getSortedSummary(summary) {
+            return lodash.sortBy(summary, function(currencySum) {
+                return this.indexOf(currencySum.currency);
+            }, parameters.currencyOrder);
         }
 
     }
