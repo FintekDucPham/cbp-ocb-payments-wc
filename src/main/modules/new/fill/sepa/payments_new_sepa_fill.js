@@ -200,8 +200,15 @@ angular.module('raiffeisen-payments')
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,
-                description: $scope.payment.formData.description
+                description: $scope.payment.formData.description,
+                recipientCountry: $scope.payment.formData.recipientCountry.countryCode
             });
+
+            recipientData.recipientIdentityType = "SWIFT";
+            recipientData.recipientSwiftOrBic = $scope.payment.formData.recipientSwiftOrBic;
+            recipientData.recipientBankCountry=$scope.payment.formData.recipientBankCountry.countryCode;
+            recipientData.recipientBankName = $scope.payment.formData.recipientBankName;
+
             $scope.setRecipientDataExtractor(function() {
                 return recipientData;
             });

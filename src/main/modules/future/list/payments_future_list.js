@@ -7,42 +7,30 @@ angular.module('raiffeisen-payments')
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
                     return $q.all({
-                        detalOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.detal"),
-                        microOffset: systemParameterService.getParameterByName("plannedOperationList.default.offset.micro"),
-                        detalMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.detal"),
-                        microMaxMonthsOffset: systemParameterService.getParameterByName("plannedOperationList.max.offset.micro"),
-
+                        defaultOffsetInDays: systemParameterService.getValueForCurrentContext("plannedOperationList.default.offset"),
+                        maxOffsetInMonths: systemParameterService.getValueForCurrentContext("plannedOperationList.max.offset"),
+                        currencyOrder: systemParameterService.getValueForCurrentContext("nib.accountList.currency.order"),
                         customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         var result = {
+                            currencyOrder: data.currencyOrder.split(","),
+                            offset: parseInt(data.defaultOffsetInDays, 10),
+                            maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
+                            dateFrom: new Date(),
+                            dateTo: new Date(),
                             context: data.customerDetails.customerDetails.context
                         };
-
+                        result.period = result.offset;
                         if (result.context === 'DETAL') {
-                            result.offset = parseInt(data.detalOffset.value, 10);
-                            result.maxOffsetInMonths = parseInt(data.detalMaxMonthsOffset.value, 10);
                             result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
-                            result.dateFrom = new Date();
-                            result.dateTo   = new Date();
-                            result.period   = result.offset;
-
                             result.dateTo.setDate(result.dateTo.getDate() + result.offset);
-
-                            //result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
                         }
                         // if (result.context == 'MICRO') {
                         // in case of unproper context we can load parameters for MICRO context
                         else {
-                            result.offset = parseInt(data.detalOffset.value, 10);
-                            result.maxOffsetInMonths = parseInt(data.microMaxMonthsOffset.value, 10);
-                            result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
-                            result.dateFrom = new Date();
-                            result.dateTo   = new Date();
-                            result.period   = result.offset;
-
                             result.dateTo = new Date(result.dateFrom.getFullYear(), result.dateFrom.getMonth()+1, 0);
+                            result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
                         }
-
                         return result;
                     });
                 }],
@@ -52,7 +40,6 @@ angular.module('raiffeisen-payments')
                     });
                 }]
             }
-
         });
     })
     .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, insuranceAccountList, lodash) {
@@ -185,15 +172,27 @@ angular.module('raiffeisen-payments')
         }
 
         function formSummary(sumsPerCurrency) {
-            $scope.summary = [];
+            var unsortedSummary = formCurrencyAmountArray(sumsPerCurrency);
+            $scope.summary = getSortedSummary(unsortedSummary);
+        }
+
+        function formCurrencyAmountArray(sumsPerCurrency) {
+            var summary = [];
             for (var currency in sumsPerCurrency) {
                 if (sumsPerCurrency.hasOwnProperty(currency)) {
-                    $scope.summary.push({
+                    summary.push({
                         currency: currency,
                         amount: sumsPerCurrency[currency]
                     });
                 }
             }
+            return summary;
+        }
+
+        function getSortedSummary(summary) {
+            return lodash.sortBy(summary, function(currencySum) {
+                return this.indexOf(currencySum.currency);
+            }, parameters.currencyOrder);
         }
 
     }

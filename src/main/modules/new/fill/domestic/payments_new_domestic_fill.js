@@ -78,6 +78,7 @@ angular.module('raiffeisen-payments')
                 recipientData: $scope.payment.formData.recipientName,
                 description: $scope.payment.formData.description
             });
+
             $scope.setRecipientDataExtractor(function() {
                 return recipientData;
             });

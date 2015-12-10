@@ -9,7 +9,8 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
                                                                     paymentsService, $filter, pathService, viewStateService,
                                                                     standingTransferService, rbPaymentOperationTypes,
-                                                                    STANDING_FREQUENCY_TYPES, initialState) {
+                                                                    STANDING_FREQUENCY_TYPES, initialState, $anchorScroll,
+                                                                    $location) {
         $scope.dateRange = {};
 
         $scope.options = {
@@ -115,6 +116,7 @@ angular.module('raiffeisen-payments')
                                 if ($scope.options.returnToItem.id == elem.standingOrder.id) {
                                     $scope.options.returnToItem = null;
                                     elem.standingOrder.renderExpanded = true;
+                                    $location.hash("order_" + elem.standingOrder.id);
                                 }
                             }
 
