@@ -30,36 +30,54 @@
                              rb-filer-template-type="SWIFT"
                              rb-on-recipient-select="selectRecipient($recipient)"></rb-recipient-select>
     </bd-item-property>
-    <bd-item-property
-            label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
-        <input name="recipientAccountNo"
-               ng-model="payment.formData.recipientAccountNo"
-               ng-required="true"
-               ng-pattern="foreignIbanValidationRegex"
-               ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
-               ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
-               class="input-field"
-               type="text"
-               ng-disabled="payment.options.fixedRecipientSelection"
-               placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
-        <eb-validation-messages eb-name="recipientAccountNo">
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
-            </div>
-            <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
-            </div>
-            <div eb-message-key="minlength" class="validation-message animate-on">
-                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
-            </div>
-            <div eb-message-key="maxlength" class="validation-message animate-on">
-                {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
-            </div>
+    <rb-paste-warning>
+        <bd-item-property
+                label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
+            <input name="recipientAccountNo"
+                   ng-show="!showHide"
+                   ng-model="payment.formData.recipientAccountNo"
+                   ng-required="true"
+                   ng-pattern="foreignIbanValidationRegex"
+                   ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
+                   ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
+                   class="input-field"
+                   type="text"
+                   ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                   ng-change="unlockField()"
+                   ng-disabled="payment.options.fixedRecipientSelection  || showHide"
+                   placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
+            <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
 
-        </eb-validation-messages>
+            <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
+                <div class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
+                </div>
 
-    </bd-item-property>
+            </eb-validation-messages>
+            <eb-validation-messages eb-name="recipientAccountNo"  ng-show="!showHide && !isErrorPaste">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
+                </div>
+                <div eb-message-key="minlength" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
+                </div>
+                <div eb-message-key="maxlength" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
+                </div>
 
+            </eb-validation-messages>
+
+        </bd-item-property>
+        <p ng-show="showHide">
+            <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
+            <span style="color: deepskyblue">{{digit}}{{::'raiff.payments.new.domestic.fill.account.warning2'|translate}}</span>
+            <span>{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
+            <input type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+        </p>
+    </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.foreign.fill.recipient_data' | translate }}">
     <textarea name="recipientName"
