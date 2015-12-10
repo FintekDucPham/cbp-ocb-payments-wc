@@ -18,11 +18,6 @@ angular.module('raiffeisen-payments')
                             context: data.customerDetails.customerDetails.context
                         };
 
-                        data.detalOffset = data.detalOffset;
-                        data.microOffset = data.microOffset;
-                        data.detalMaxMonthsOffset = data.detalMaxMonthsOffset;
-                        data.microMaxMonthsOffset = data.microMaxMonthsOffset;
-
                         if (result.context === 'DETAL') {
                             result.offset = parseInt(data.detalOffset.value, 10);
                             result.maxOffsetInMonths = parseInt(data.detalMaxMonthsOffset.value, 10);
@@ -62,7 +57,6 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, insuranceAccountList, lodash) {
         $scope.dateRange = {};
-      //  $scope.listPromise = {};
 
         $scope.options = {
             "futureDatePanelConfig": parameters
@@ -132,14 +126,12 @@ angular.module('raiffeisen-payments')
             child.$emit('$collapseRows');
         };
 
-
         $scope.table = {
             tableConfig: new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.future.list.empty")
             }),
             tableData: {
                 getData: function (defer, $params) {
-                   // $scope.listPromise =
                     var params = {
                         statusPaymentCriteria: "waiting"
                     };
@@ -157,15 +149,15 @@ angular.module('raiffeisen-payments')
                         params.pageNumber = $params.currentPage;
                     }
 
+                    $scope.summary = {};
+
                     paymentsService.search(params).then(function (response) {
+                        var summary = {};
                         _.each(response.content, function(payment) {
-                            payment.loadDetails = function() {
-                                payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
-                                    payment.details = resp;
-                                    payment.details._showButtons = true;
-                                });
-                            };
+                            addPaymentAmountToSummary(payment, summary);
+                            linkDetailsLoading(payment);
                         });
+                        formSummary(summary);
                         defer.resolve(response.content);
                         $params.pageCount = response.totalPages;
                     });
@@ -174,6 +166,35 @@ angular.module('raiffeisen-payments')
             tableControl: undefined
         };
 
+        function linkDetailsLoading(payment) {
+            payment.loadDetails = function() {
+                payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
+                    payment.details = resp;
+                    payment.details._showButtons = true;
+                });
+            };
+        }
+
+        function addPaymentAmountToSummary(payment, summary) {
+            if (!!payment.currency) {
+                if (!summary[payment.currency]) {
+                    summary[payment.currency] = 0;
+                }
+                summary[payment.currency] += payment.amount;
+            }
+        }
+
+        function formSummary(sumsPerCurrency) {
+            $scope.summary = [];
+            for (var currency in sumsPerCurrency) {
+                if (sumsPerCurrency.hasOwnProperty(currency)) {
+                    $scope.summary.push({
+                        currency: currency,
+                        amount: sumsPerCurrency[currency]
+                    });
+                }
+            }
+        }
 
     }
 );

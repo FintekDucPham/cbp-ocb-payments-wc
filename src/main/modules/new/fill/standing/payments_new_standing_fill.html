@@ -272,14 +272,14 @@
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.earliest_execution_date' | translate }}" ng-if="payment.operation.code == 'EDIT'">
 
         <rb-datepicker
-                ng-model="payment.formData.firstRealizationDate"
+                ng-model="payment.formData.nextRealizationDate"
                 rb-form="paymentForm"
-                rb-name="firstRealizationDate"
-                rb-datepicker-options="firstDateDatepickerOptions"
+                rb-name="nextRealizationDate"
+                rb-datepicker-options="firstOrNextDateDatepickerOptions"
                 rb-required="true">
         </rb-datepicker>
 
-        <eb-validation-messages eb-name="firstRealizationDate">
+        <eb-validation-messages eb-name="nextRealizationDate">
 
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.edit.first_execution_date.FIRST_DATE'|translate}}

@@ -256,6 +256,7 @@ angular.module('raiffeisen-payments')
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
+            copiedFormData.decisionNo = copiedFormData.additionalInfo;
             if($scope.payment.operation.code==='EDIT'){
                 var out = null;
                 angular.forEach(copiedFormData.insurancePremiums, function(val, key){

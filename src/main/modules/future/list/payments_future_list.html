@@ -2,7 +2,6 @@
 
     <bd-header>{{::"raiff.payments.future.list.header"|translate}}</bd-header>
 
-
     <rb-future-date-panel
             date-range="dateRange"
             options="options.futureDatePanelConfig"
@@ -95,5 +94,24 @@
 
     </bd-table>
 
+    <div class="bd-list" ng-show="listPromise.$$state.status === 1">
+        <bd-list-item summary>
+            <div class="summary-item">
+                <div class="summary-item__label">
+                    {{::"raiff.payments.future.list.summary"|translate}}
+                </div>
+                <div class="summary-item__content">
+                    <div class="row border-bottom-list" ng-repeat="currencySummary in summary" style="margin: 10px;" ng-class="{'border-bottom-adding': $last == false}">
+                        <div>
+                            {{::"raiff.payments.future.list.summary.currency"|translate}}&nbsp;{{currencySummary.currency}}:
+                        </div>
+                        <div class="summary-item">
+                            <bd-amount amount="currencySummary.amount" currency="{{currencySummary.currency}}"></bd-amount>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </bd-list-item>
+    </div>
 
 </rb-content-view>

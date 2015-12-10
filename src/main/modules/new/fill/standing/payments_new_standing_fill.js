@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
         $scope.firstDateMinDate.setDate($scope.firstDateMinDate.getDate() + 2);
         $scope.firstDateMaxDate.setDate($scope.firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
 
-        $scope.firstDateDatepickerOptions = rbDatepickerOptions({
+        $scope.firstOrNextDateDatepickerOptions = rbDatepickerOptions({
             minDate: $scope.firstDateMinDate,
             maxDate: $scope.firstDateMaxDate
         });
@@ -60,21 +60,32 @@ angular.module('raiffeisen-payments')
 
 
         $scope.setRequestConverter(function(formData) {
-            return {
-              "standingOrderId": formData.id ? formData.id : "",
-              "shortName": formData.shortName,
-              "amount": formData.amount,
-              "beneficiary": splitTextEveryNSign(formData.recipientName),
-              "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
-              "remarks": splitTextEveryNSign(formData.description),
-              "debitAccountId": formData.remitterAccountId,
-              "currency": formData.currency,
-              "startDate": $filter('date')(formData.firstRealizationDate, 'yyyy-MM-dd'),
-              "endDate": $filter('date')(formData.finishDate, 'yyyy-MM-dd'),
-              "periodUnit": STANDING_FREQUENCY_TYPES[formData.frequencyType].symbol,
-              "periodCount": formData.frequency,
-              "dayOfMonth": (formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) ? formData.firstRealizationDate.getDate() : ""
+            var result = {
+                "standingOrderId": formData.id ? formData.id : "",
+                "shortName": formData.shortName,
+                "amount": formData.amount,
+                "beneficiary": splitTextEveryNSign(formData.recipientName),
+                "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
+                "remarks": splitTextEveryNSign(formData.description),
+                "debitAccountId": formData.remitterAccountId,
+                "currency": formData.currency,
+                "endDate": $filter('date')(formData.finishDate, 'yyyy-MM-dd'),
+                "periodUnit": STANDING_FREQUENCY_TYPES[formData.frequencyType].symbol,
+                "periodCount": formData.frequency,
+                "dayOfMonth": "",
+                "startDate": $filter('date')(formData.firstRealizationDate, 'yyyy-MM-dd'),
+                "nextDate": null
             };
+
+            if ($scope.payment.operation.code == 'EDIT') {
+                result.dayOfMonth = (formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) ? formData.nextRealizationDate.getDate() : "";
+                result.nextDate = $filter('date')(formData.nextRealizationDate, 'yyyy-MM-dd');
+            }
+            else { // (payment.operation.code == 'NEW')
+                result.dayOfMonth = (formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) ? formData.firstRealizationDate.getDate() : "";
+            }
+
+            return result;
         });
 
 
