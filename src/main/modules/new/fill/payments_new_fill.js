@@ -19,6 +19,9 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE) {
+        $scope.blockadesForward = angular.extend({
+            isBlock : false
+        });
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -138,6 +141,9 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            if($scope.blockadesForward.isBlock){
+                return;
+            }
             $scope.validationErrors = [];
             var form = $scope.paymentForm;
             $scope.limitExeeded = {
@@ -147,8 +153,6 @@ angular.module('raiffeisen-payments')
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-
-
                 // for standing orders we need standingTransferService
                 $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
