@@ -3,7 +3,7 @@
         {{ $data.customerName }}
     </bd-item-property>
 
-    <bd-item-property class="eb-item-property--text" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}">
+    <bd-item-property class="eb-item-property--text" label="">
         <rb-bank-name
                 response-value="recipient.item.recipientBankName"
                 account-no="$data.nrb"
@@ -24,8 +24,5 @@
         {{ $data.transferTitle }}
     </bd-item-property>
 
-    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.account_related'|translate}}" ng-hide="true">
-        {{ $data.debitNrb | nrbIbanFilter }}
-    </bd-item-property>
 </div>
 <eb-preloader eb-promise="recipient.item.bankNamePromise" eb-rejected-message=""></eb-preloader>
