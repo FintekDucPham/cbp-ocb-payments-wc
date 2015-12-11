@@ -25,17 +25,17 @@ angular.module('raiffeisen-payments')
 
 
         $scope.$watch('recipient.formData.recipientIdentityType', function(newValue, oldValue){
-            if (newValue === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
-                $scope.recipient.formData.recipientBankName = undefined;
-                $scope.recipient.formData.recipientBankCountry = undefined;
+            if (newValue && newValue != oldValue) {
+                if (newValue === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
+                    $scope.recipient.formData.recipientBankName = undefined;
+                    $scope.recipient.formData.recipientBankCountry = undefined;
+                }
+
+                if (newValue === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                    $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                    $scope.recipient.formData.recipientSwiftOrBic = " ";
+                }
             }
-
-            if (newValue === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
-                $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
-                $scope.recipient.formData.recipientSwiftOrBic = " ";
-            }
-
-
         });
         customerService.getCustomerDetails().then(function(customerDetails){
             $scope.customerDetails = customerDetails.customerDetails;
