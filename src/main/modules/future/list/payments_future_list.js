@@ -33,34 +33,24 @@ angular.module('raiffeisen-payments')
                         }
                         return result;
                     });
-                }],
-                insuranceAccountList : ['insuranceAccounts', function(insuranceAccounts){
-                    return insuranceAccounts.search().then(function(insuranceAccounts) {
-                        return insuranceAccounts.content;
-                    });
                 }]
+
             }
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, insuranceAccountList, lodash) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash) {
         $scope.dateRange = {};
 
         $scope.options = {
             "futureDatePanelConfig": parameters
         };
 
-        $scope.insuranceAccounts = insuranceAccountList;
 
         $scope.model = {
             dateRangeValidity: false
         };
 
-        $scope.getInsuranceAccountName = function(accountNo){
-            var foundElement = lodash.find($scope.insuranceAccounts, {
-                accountNo: accountNo
-            });
-            return translate.property("raiff.payments.insurances.type."+foundElement.insuranceCode);
-        };
+
         $scope.onOperationsDateSubmit = function() {
             if ($scope.model.dateRangeValidity) {
                 $scope.table.tableData.newSearch = true;

@@ -65,7 +65,7 @@
         <div ng-repeat="insurance in insurances">
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + insurance.type |translate}}">
                 {{ ::'raiff.payments.new.zus.verify.tmp.zus_name' | translate }}<br>
-                {{::insurance.nrb}}
+                {{::insurance.nrb | nrbIbanFilter}}
                 <bd-amount amount="insurance.amount.replace(',','.')" currency="{{ insurance.currency }}" not-styled></bd-amount>
             </bd-item-property>
         </div>
