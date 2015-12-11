@@ -333,4 +333,15 @@ angular.module('raiffeisen-payments')
                 });
             }
         }
+
+        $scope.enableInsurancePremium = function(insuranceType) {
+            var insurancePremium = lodash.find($scope.insuranceAccountList, function(insuranceAccount) {
+                return insuranceType == insuranceAccount.insuranceCode;
+            }) || {};
+            lodash.assign($scope.payment.formData.insurancePremiums[insuranceType], {
+                currency: "PLN",
+                nrb: insurancePremium.accountNo
+            });
+        };
+
     });
