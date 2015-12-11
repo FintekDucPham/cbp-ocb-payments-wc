@@ -10,17 +10,18 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsStandingManageRemoveVerifyController', function ($scope, bdStepStateEvents, translate, initialState,
                                                                           standingTransferService, RB_TOKEN_AUTHORIZATION_CONSTANTS,
-                                                                          bdVerifyStepInitializer) {
+                                                                          bdVerifyStepInitializer, viewStateService, $state) {
+
 
 
         if (initialState && initialState.payment) {
-            $scope.$data = (initialState && initialState.payment) || {};
-
-            standingTransferService.remove($scope.$data.id).then(function(resp) {
+            $scope.$data = initialState.payment;
+            standingTransferService.remove(initialState.payment.id).then(function(resp) {
+                $scope.$data = initialState.payment;
                 $scope.payment.token.params.resourceId = resp.referenceId;
                 $scope.payment.token.params.rbOperationType = "MANAGE_STANDING_ORDER";
             }, function(err) {
-                Math.random();
+
             });
         }
 
@@ -29,6 +30,17 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.payment
         });
 
+        $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function(event, action) {
+            viewStateService.setInitialState("payments.standing.list", {
+                returnToPage: (initialState && initialState.returnToPage) ? initialState.returnToPage : null,
+                returnToItem: (initialState && initialState.payment) ? initialState.payment : null
+            });
+
+            // bdStepPanel doesn't support moving back from 0 state to back state
+            // so we have to do it manually
+            // action.proceed();
+            $state.go('payments.standing.list');
+        });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {

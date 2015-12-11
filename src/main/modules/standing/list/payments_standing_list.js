@@ -9,11 +9,13 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
                                                                     paymentsService, $filter, pathService, viewStateService,
                                                                     standingTransferService, rbPaymentOperationTypes,
-                                                                    STANDING_FREQUENCY_TYPES) {
+                                                                    STANDING_FREQUENCY_TYPES, initialState, $anchorScroll,
+                                                                    $location) {
         $scope.dateRange = {};
 
         $scope.options = {
-            "futureDatePanelConfig": {}
+            "futureDatePanelConfig": {},
+            "returnToItem": (initialState && initialState.returnToItem) ? initialState.returnToItem : null
         };
 
         $scope.paymentDetailsTemplate = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
@@ -34,7 +36,8 @@ angular.module('raiffeisen-payments')
                 "description": payment.remarks ? payment.remarks.join("\n") : "",
                 "remitterAccountId": payment.debitAccountId,
                 "currency": payment.currency,
-                "firstRealizationDate": payment.frequency.nextDate,
+                "nextRealizationDate": payment.frequency.nextDate,
+                "firstRealizationDate": payment.startDate,
                 "finishDate": payment.endDate,
                 "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
                 "frequency": payment.frequency.periodCount,
@@ -44,7 +47,8 @@ angular.module('raiffeisen-payments')
 
             if (action == 'edit') {
                 viewStateService.setInitialState('payments.new', {
-                    paymentOperationType: rbPaymentOperationTypes.EDIT
+                    paymentOperationType: rbPaymentOperationTypes.EDIT,
+                    returnToPage: $scope.table.tableConfig.currentPage
                 });
 
                 $state.go('payments.new.fill', {
@@ -54,7 +58,8 @@ angular.module('raiffeisen-payments')
             }
             else if (action == 'delete') {
                 viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                    payment: payment
+                    payment: payment,
+                    returnToPage: $scope.table.tableConfig.currentPage
                 });
 
                 $state.go('payments.standing.manage.remove.verify');
@@ -86,7 +91,8 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig: new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.standing.list.empty")
+                placeholderText: translate.property("raiff.payments.standing.list.empty"),
+                currentPage: (initialState && initialState.returnToPage) ? initialState.returnToPage : 1
             }),
             tableData: {
                 getData: function (defer, $params) {
@@ -102,10 +108,17 @@ angular.module('raiffeisen-payments')
 
                     standingTransferService.search(params).then(function (response) {
 
-
                         response.content = response.content.map(function(elem) {
                             elem.standingOrder.bankName = elem.bankName;
                             elem.standingOrder.frequency_nextDate = elem.standingOrder.frequency.nextDate;
+
+                            if ($scope.options.returnToItem) {
+                                if ($scope.options.returnToItem.id == elem.standingOrder.id) {
+                                    $scope.options.returnToItem = null;
+                                    elem.standingOrder.renderExpanded = true;
+                                    $location.hash("order_" + elem.standingOrder.id);
+                                }
+                            }
 
                             return elem.standingOrder;
                         });

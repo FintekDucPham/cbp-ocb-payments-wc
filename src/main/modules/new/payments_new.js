@@ -82,7 +82,7 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
                                                    pathService, translate, $stateParams, $state, lodash, validationRegexp,
-                                                   standingTransferService, transferService, initialState) {
+                                                   standingTransferService, transferService, initialState, viewStateService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
@@ -148,8 +148,12 @@ angular.module('raiffeisen-payments')
 
         $scope.saveRecipient = function() {
             if($scope.resolveRecipientData) {
+                var recipientType = $scope.payment.type.state.toLowerCase();
+                if(recipientType==='swift' || recipientType==='sepa'){
+                    recipientType = 'foreign';
+                }
                 $state.go("payments.recipients.manage.new.fill", {
-                    recipientType: $scope.payment.type.state.toLowerCase(),
+                    recipientType: recipientType,
                     operation: 'new',
                     recipient: $scope.resolveRecipientData()
                 });
@@ -166,6 +170,11 @@ angular.module('raiffeisen-payments')
 
         // akcja dla guzka "powrot" na ekranie modyfikacji zlcenia stalego
         $scope.onFillReturn = function() {
+            viewStateService.setInitialState('payments.standing.list', {
+                returnToPage: (initialState && initialState.returnToPage) ? initialState.returnToPage : null,
+                returnToItem: $scope.payment.formData
+            });
+
             $state.go('payments.standing.list');
         };
 

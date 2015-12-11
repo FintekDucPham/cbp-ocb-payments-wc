@@ -237,9 +237,8 @@
         <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums">
 
             <bd-checkbox-select-option ng-repeat="insuranceType in payment.meta.zusInsuranceTypes"
-                                       bd-on-check="payment.formData.insurancePremiums[insuranceType].currency = 'PLN'"
+                                       bd-on-check="enableInsurancePremium(insuranceType)"
                                        bd-checkbox-key="{{ insuranceType }}">
-
 
                 <bd-item-property
                         label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insuranceType | translate }}">
