@@ -159,6 +159,7 @@ angular.module('raiffeisen-payments')
                 $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ? false : true;
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
+                $scope.payment.meta.dstAccountList = [];//$filter('dstAccountListFilter')($scope.payment.meta.dstAccountList, account);
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
             }
@@ -258,7 +259,20 @@ angular.module('raiffeisen-payments')
                         return account.accountId === $accountId || isSenderAccountCategoryRestricted() && lodash.contains([1101,3000,3008], account.category);
                     });
                 } else {
-                    return lodash.filter(accounts, function(account){
+                    var filteredAccounts = accounts;
+                    if($scope.payment.items.recipientAccount){
+                        var filterParams = {};
+                        if($scope.payment.items.recipientAccount.accountRestrictFlag){
+                            if($scope.payment.items.recipientAccount.destCategory){
+                                filterParams.category = $scope.payment.items.recipientAccount.destCategory;
+                            }
+                            if($scope.payment.items.recipientAccount.destSubProduct){
+                                filterParams.subProduct = $scope.payment.items.recipientAccount.destSubProduct;
+                            }
+                            filteredAccounts = lodash.filter(filteredAccounts, filterParams);
+                        }
+                    }
+                    return lodash.filter(filteredAccounts, function(account){
                        return isAccountInvestmentFulfilsRules(account);
                     });
                 }
@@ -285,4 +299,10 @@ angular.module('raiffeisen-payments')
                 return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
             });
         }
+    })
+    .filter('dstAccountListFilter', function(){
+        return function(dstAccountList, srcAccount) {
+            console.debug(dstAccountList, srcAccount);
+           return dstAccountList;
+        };
     });
