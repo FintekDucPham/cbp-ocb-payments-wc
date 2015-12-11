@@ -266,10 +266,7 @@ angular.module('raiffeisen-payments')
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                 accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
             });
-            if(angular.isDefined(recipient) && recipient !== null){
-                $scope.payment.formData.hideSaveRecipientButton = true;
-            }
-
+            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
         });
 
         function isAccountInvestmentFulfilsRules(account){
