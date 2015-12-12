@@ -50,19 +50,6 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_data'|translate}}" ng-if="payment.operation.code == 'EDIT'">
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
-
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        <rb-bank-name
-                response-value="payment.items.recipientBankName"
-                account-no="payment.formData.recipientAccountNo"
-                bank-name-promise="payment.items.bankNamePromise"
-                ng-show="payment.items.bankNamePromise.$$state.status === 1"
-                >
-            {{payment.items.recipientBankName}}
-        </rb-bank-name>
-    </bd-item-property>
-
-
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}">
         <rb-recipient-select rb-recipient="payment.items.recipient"
                              rb-recipient-id="payment.formData.templateId"
@@ -88,6 +75,14 @@
                    type="text"
                    ng-keyup="unlockField()"
                    placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_account.placeholder' | translate }}">
+            <rb-bank-name
+                    response-value="payment.items.recipientBankName"
+                    account-no="payment.formData.recipientAccountNo"
+                    bank-name-promise="payment.items.bankNamePromise"
+                    ng-show="payment.items.bankNamePromise.$$state.status === 1"
+                    >
+                {{payment.items.recipientBankName}}
+            </rb-bank-name>
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                 <div class="validation-message animate-on">

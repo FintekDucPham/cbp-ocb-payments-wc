@@ -53,7 +53,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.fill.earliest_execution_date'|translate}}" ng-if="payment.operation.code == 'EDIT'">
-        {{ payment.formData.firstRealizationDate | date:'shortDate' }}
+        {{ payment.formData.nextRealizationDate | date:'shortDate' }}
     </bd-item-property>
 
 
