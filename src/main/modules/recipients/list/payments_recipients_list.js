@@ -166,7 +166,8 @@ angular.module('raiffeisen-payments')
                                                 recipientBankCountry: template.paymentDetails.bankCountry,
                                                 recipientCountry: template.paymentDetails.foreignCountryCode,
                                                 recipientAddress: recipient.recipientAddress.join(""),
-                                                transferTitleTable: template.title.join("")
+                                                transferTitleTable: template.title.join(""),
+                                                swift_bic: template.paymentDetails.recipientSwift
                                             };
                                         case "DOMESTIC":
                                             return {
