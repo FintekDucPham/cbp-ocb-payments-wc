@@ -38,10 +38,10 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.closestRealizationDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.frequency.nextDate | date:'dd-MM-yyyy' }}
+    {{ $data.frequency.nextDate | date:'dd.MM.yyyy' }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.endDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.endDate | date:'dd-MM-yyyy' }}
+    {{ $data.endDate | date:'dd.MM.yyyy' }}
 </bd-item-property>
 
