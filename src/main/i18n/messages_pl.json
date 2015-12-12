@@ -1112,12 +1112,12 @@
   "raiff.payments.new.standing.fill.EMPTY_ORDER_NAME": "Nazwa zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.INCORRECT_ORDER_NAME": "Nazwa zlecenia nie może przekraczać 35 znaków i powinno zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
   "raiff.payments.new.standing.fill.EMPTY_BNF_DATA": "Nazwa i adres odbiorcy nie może być pusta",
-  "raiff.payments.new.standing.fill.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie może przekraczać 132 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie może przekraczać 140 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
   "raiff.payments.new.standing.fill.EMPTY_AMOUNT_SO": "Kwota zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO": "Nieprawidłowa kwota zlecenia",
   "raiff.payments.new.standing.fill.EMPTY_TITLE_SO": "Tytuł zlecenia nie może być pusty",
 
-  "raiff.payments.new.standing.fill.TOO_LONG_TITLE_SO": "Tytuł zlecenia nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.TOO_LONG_TITLE_SO": "Tytuł zlecenia nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
 
   "raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY": "Częstotliwość realizacji zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY": "Częstotliwość realizacji zlecenia tygodniowego powinna być liczbą z zakresu od 1 do 9",
