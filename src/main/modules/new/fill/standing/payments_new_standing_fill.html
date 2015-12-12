@@ -184,7 +184,7 @@
                        name="amount"
                        class="input-field"
                        ng-model="payment.formData.amount"
-                       min="0.01"
+                       ng-min="0.01"
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'elixir' : payment.meta.maxElixirAmount }"
@@ -217,7 +217,7 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.EMPTY_AMOUNT_SO'|translate}}
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
+            <div eb-message-key="ngMin" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO'|translate}}
             </div>
             <div eb-message-key="amount" class="validation-message animate-on">

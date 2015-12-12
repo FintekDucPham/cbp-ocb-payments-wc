@@ -63,7 +63,7 @@ angular.module('raiffeisen-payments')
             var result = {
                 "standingOrderId": formData.id ? formData.id : "",
                 "shortName": formData.shortName,
-                "amount": formData.amount,
+                "amount": (""+formData.amount).replace(',', '.'),
                 "beneficiary": splitTextEveryNSign(formData.recipientName),
                 "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
                 "remarks": splitTextEveryNSign(formData.description),
