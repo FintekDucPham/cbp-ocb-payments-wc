@@ -1142,5 +1142,6 @@
     "raiff.payments.new.standing.accept": "Zatwierdź",
 
     "raiff.payments.standing.manage.remove.title": "Usunięcie zlecenia stałego",
+    "raiff.standing_order.startDate.to_early":"Niepoprawna data pierwszej realizacji zlecenia",
   "EOF" : ""
 }
