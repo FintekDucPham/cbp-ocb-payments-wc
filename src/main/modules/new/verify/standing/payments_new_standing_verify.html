@@ -49,11 +49,11 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.first_execution_date'|translate}}" ng-if="payment.operation.code == 'NEW'">
-        {{ payment.formData.firstRealizationDate | date:'dd.MM.yyyy' }}
+        {{ payment.formData.firstRealizationDate | date:'shortDate' }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.fill.earliest_execution_date'|translate}}" ng-if="payment.operation.code == 'EDIT'">
-        {{ payment.formData.firstRealizationDate | date:'dd.MM.yyyy' }}
+        {{ payment.formData.firstRealizationDate | date:'shortDate' }}
     </bd-item-property>
 
 
@@ -67,7 +67,7 @@
 
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.finish_date'|translate}}">
-        {{payment.formData.finishDate | date:'dd.MM.yyyy' }}
+        {{payment.formData.finishDate | date:'shortDate' }}
     </bd-item-property>
      <span class="eb-validation-messages" ng-if="payment.holiday">
          <span class="messages">
