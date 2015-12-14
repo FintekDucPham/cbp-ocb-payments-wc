@@ -4,6 +4,9 @@ angular.module('raiffeisen-payments')
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/rejected/list/payments_rejected_list.html",
             controller: "PaymentsRejectedListController",
+            params: {
+                referenceId: null
+            },
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
@@ -31,7 +34,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $filter) {
+    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter) {
 
         var PERIOD_TYPES = {
             LAST: 'LAST',
@@ -171,31 +174,47 @@ angular.module('raiffeisen-payments')
                         params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
                         params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
                     }
-
-                    paymentsService.search(params).then(function (paymentSummary) {
-                        angular.forEach(paymentSummary.content, function (payment) {
-                            if(payment.transferType === 'OWN') {
-                                payment.transferType = 'INTERNAL';
-                            }
-
-                            angular.extend(payment, {
+                    if(angular.isDefined($stateParams.referenceId) && $stateParams.referenceId != null) {
+                        paymentsService.get($stateParams.referenceId, {}).then(function(paymentDetails){
+                            angular.extend(paymentDetails, {
                                 loadDetails: function () {
-
-                                    this.promise = paymentsService.get(this.id, {}).then(function (paymentDetails) {
-                                        payment.details = paymentDetails;
-                                        if(payment.details.transferType === 'OWN') {
-                                            payment.details.transferType = 'INTERNAL';
-                                        }
-                                    });
-
-                                    payment.loadDetails = undefined;
+                                    //this.promise = $q.defer();
+                                    paymentDetails.details = paymentDetails;
+                                    if (paymentDetails.transferType === 'OWN') {
+                                        paymentDetails.transferType = 'INTERNAL';
+                                    }
+                                    //this.promise.resolve();
+                                    paymentDetails.loadDetails = undefined;
                                 }
                             });
+                            $params.pageCount = 1;
+                            $promise.resolve([lodash.merge(paymentDetails,{renderExpanded: true})]);
                         });
-                        $params.pageCount = paymentSummary.totalPages;
+                    } else {
+                        paymentsService.search(params).then(function (paymentSummary) {
+                            angular.forEach(paymentSummary.content, function (payment) {
+                                if(payment.transferType === 'OWN') {
+                                    payment.transferType = 'INTERNAL';
+                                }
 
-                        $promise.resolve(paymentSummary.content);
-                    });
+                                angular.extend(payment, {
+                                    loadDetails: function () {
+                                        this.promise = paymentsService.get(this.id, {}).then(function (paymentDetails) {
+                                            payment.details = paymentDetails;
+                                            if(payment.details.transferType === 'OWN') {
+                                                payment.details.transferType = 'INTERNAL';
+                                            }
+                                        });
+
+                                        payment.loadDetails = undefined;
+                                    }
+                                });
+                            });
+                            $params.pageCount = paymentSummary.totalPages;
+                            $promise.resolve(paymentSummary.content);
+                        });
+                    }
+
                 }
             },
             tableControl: undefined
@@ -263,6 +282,9 @@ angular.module('raiffeisen-payments')
 
         //action
         $scope.onSubmit = function (form) {
+            if(angular.isDefined($stateParams.referenceId) && $stateParams.referenceId != null){
+                delete $stateParams.referenceId;
+            }
             if (form.$valid) {
                 $scope.table.tableControl.invalidate();
             }

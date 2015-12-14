@@ -63,7 +63,7 @@ angular.module('raiffeisen-payments')
             var result = {
                 "standingOrderId": formData.id ? formData.id : "",
                 "shortName": formData.shortName,
-                "amount": formData.amount,
+                "amount": (""+formData.amount).replace(',', '.'),
                 "beneficiary": splitTextEveryNSign(formData.recipientName),
                 "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
                 "remarks": splitTextEveryNSign(formData.description),
@@ -212,9 +212,7 @@ angular.module('raiffeisen-payments')
                 templateType: 'DOMESTIC',
                 accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
             });
-            if(angular.isDefined(recipient) && recipient !== null){
-                $scope.payment.formData.hideSaveRecipientButton = true;
-            }
+            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();

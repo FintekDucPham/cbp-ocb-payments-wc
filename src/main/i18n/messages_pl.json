@@ -998,11 +998,11 @@
     "raiff.payments.standing.list.details.senderAccount": "Z rachunku",
     "raiff.payments.standing.list.details.senderAccountOwner": "Właściciel",
     "raiff.payments.standing.list.details.recipientAccount": "Na rachunek",
-    "raiff.payments.standing.list.details.recipientData": "Dane odbiorcy",
+    "raiff.payments.standing.list.details.recipientData": "Odbiorca",
     "raiff.payments.standing.list.details.amount": "Kwota",
     "raiff.payments.standing.list.details.title": "Tytułem",
     "raiff.payments.standing.list.details.frequencyDescription": "Częstotliwość",
-    "raiff.payments.standing.list.details.closestRealizationDate": "Data nabliższej realizacji",
+    "raiff.payments.standing.list.details.closestRealizationDate": "Data najbliższej realizacji",
     "raiff.payments.standing.list.details.endDate": "Data zakończenia",
 
 
@@ -1026,7 +1026,7 @@
     "raiff.payments.new.standing.fill.recipient_account.INCORECT_FORMAT_ACC": "Rachunek odbiorcy musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
     "raiff.payments.new.standing.fill.recipient_account.BNF_ACC_NOT_US": "Nie możesz utworzyć zlecenia stałego, pole 'Na rachunek' jest rachunkiem Urzędu Skarbowego/Izby Celnej.",
     "raiff.payments.new.standing.fill.recipient_account.BNF_ACC_NOT_ZUS": "Nie możesz utworzyć zlecenia stałego, pole 'Na rachunek' jest rachunkiem ZUS.",
-    "raiff.payments.new.standing.fill.recipient_data": "Dane odbiorcy",
+    "raiff.payments.new.standing.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.standing.fill.recipient_data.placeholder": "Wpisz nazwę odbiorcy",
     "raiff.payments.new.standing.fill.recipient_data.EMPTY_BNF_DATA": "Dane odbiorcy nie mogą być puste",
     "raiff.payments.new.standing.fill.recipient_data.EMPTY_BANK_DATA": "Dane banku nie mogą być puste",
@@ -1089,7 +1089,7 @@
     "raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##DATE##",
 
     "raiff.payments.new.standing.fill.edit.first_execution_date.FIRST_DATE": "Data następnej realizacji zlecenia nie może być pusta",
-    "raiff.payments.new.standing.fill.edit.first_execution_date.INCORRECT_FIRST_DATE": "Niepoprawna data natępnej realizacji zlecenia",
+    "raiff.payments.new.standing.fill.edit.first_execution_date.INCORRECT_FIRST_DATE": "Niepoprawna data następnej realizacji zlecenia",
     "raiff.payments.new.standing.fill.edit.first_execution_date.TOO_EARLY_FIRST_DATE": "Data następnej realizacji zlecenia nie może być wcześniejsza niż ##DATE##",
     "raiff.payments.new.standing.fill.edit.first_execution_date.TOO_LATE_FIRST_DATE": "Data następnej realizacji zlecenia nie może być późniejsza niż ##DATE##",
 
@@ -1113,12 +1113,12 @@
   "raiff.payments.new.standing.fill.EMPTY_ORDER_NAME": "Nazwa zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.INCORRECT_ORDER_NAME": "Nazwa zlecenia nie może przekraczać 35 znaków i powinno zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
   "raiff.payments.new.standing.fill.EMPTY_BNF_DATA": "Nazwa i adres odbiorcy nie może być pusta",
-  "raiff.payments.new.standing.fill.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie może przekraczać 132 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie może przekraczać 140 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
   "raiff.payments.new.standing.fill.EMPTY_AMOUNT_SO": "Kwota zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO": "Nieprawidłowa kwota zlecenia",
   "raiff.payments.new.standing.fill.EMPTY_TITLE_SO": "Tytuł zlecenia nie może być pusty",
 
-  "raiff.payments.new.standing.fill.TOO_LONG_TITLE_SO": "Tytuł zlecenia nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+  "raiff.payments.new.standing.fill.TOO_LONG_TITLE_SO": "Tytuł zlecenia nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
 
   "raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY": "Częstotliwość realizacji zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY": "Częstotliwość realizacji zlecenia tygodniowego powinna być liczbą z zakresu od 1 do 9",
@@ -1143,5 +1143,6 @@
     "raiff.payments.new.standing.accept": "Zatwierdź",
 
     "raiff.payments.standing.manage.remove.title": "Usunięcie zlecenia stałego",
+    "raiff.standing_order.startDate.to_early":"Niepoprawna data pierwszej realizacji zlecenia",
   "EOF" : ""
 }

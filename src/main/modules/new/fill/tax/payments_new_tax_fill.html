@@ -79,11 +79,11 @@
             </div>
 
         </bd-item-property>
-        <p ng-show="showHide">
+        <p ng-show="isOk || showHide">
             <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
             <span style="color: deepskyblue">{{digit}}{{::'raiff.payments.new.domestic.fill.account.warning2'|translate}}</span>
             <span>{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
-            <input type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
         </p>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"

@@ -159,7 +159,6 @@ angular.module('raiffeisen-payments')
                 $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ? false : true;
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
-                $scope.payment.meta.dstAccountList = [];//$filter('dstAccountListFilter')($scope.payment.meta.dstAccountList, account);
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
             }

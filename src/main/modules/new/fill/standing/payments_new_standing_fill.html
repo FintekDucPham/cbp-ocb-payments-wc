@@ -50,19 +50,6 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_data'|translate}}" ng-if="payment.operation.code == 'EDIT'">
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
-
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'raiff.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
-        <rb-bank-name
-                response-value="payment.items.recipientBankName"
-                account-no="payment.formData.recipientAccountNo"
-                bank-name-promise="payment.items.bankNamePromise"
-                ng-show="payment.items.bankNamePromise.$$state.status === 1"
-                >
-            {{payment.items.recipientBankName}}
-        </rb-bank-name>
-    </bd-item-property>
-
-
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}">
         <rb-recipient-select rb-recipient="payment.items.recipient"
                              rb-recipient-id="payment.formData.templateId"
@@ -88,6 +75,14 @@
                    type="text"
                    ng-keyup="unlockField()"
                    placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_account.placeholder' | translate }}">
+            <rb-bank-name
+                    response-value="payment.items.recipientBankName"
+                    account-no="payment.formData.recipientAccountNo"
+                    bank-name-promise="payment.items.bankNamePromise"
+                    ng-show="payment.items.bankNamePromise.$$state.status === 1"
+                    >
+                {{payment.items.recipientBankName}}
+            </rb-bank-name>
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                 <div class="validation-message animate-on">
@@ -111,11 +106,11 @@
             </eb-validation-messages>
 
         </bd-item-property>
-        <p ng-show="showHide">
+        <p ng-show="isOk || showHide">
             <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
             <span style="color: deepskyblue">{{digit}}{{::'raiff.payments.new.domestic.fill.account.warning2'|translate}}</span>
             <span>{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
-            <input type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
         </p>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
@@ -125,7 +120,7 @@
               ng-pattern="STANDING_ORDER_BNF_REGEX"
               required
               ng-disabled="payment.options.fixedRecipientSelection"
-              split-text-max-length-validators="132"
+              split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_data.placeholder' | translate }}"></textarea>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
@@ -155,7 +150,7 @@
                   ng-disabled="payment.options.fixedRecipientSelection"
                   class="input-field input-area--payment-description"
                   required
-                  split-text-max-length-validators="132"
+                  split-text-max-length-validators="140"
                   ng-pattern="PAYMENT_DESCRIPTION_REGEX"
                   placeholder="{{ ::'raiff.payments.new.standing.fill.description.placeholder' | translate }}"></textarea>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
@@ -184,7 +179,7 @@
                        name="amount"
                        class="input-field"
                        ng-model="payment.formData.amount"
-                       min="0.01"
+                       ng-min="0.01"
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'elixir' : payment.meta.maxElixirAmount }"
@@ -205,8 +200,10 @@
                 </ui-select>
             </div>
         </div>
-
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['amount'] !== undefined">
+            {{validationErrors['amount']}}
+        </div>
         <eb-validation-messages eb-name="amount">
             <div eb-message-key="number" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO'|translate}}
@@ -217,7 +214,7 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.EMPTY_AMOUNT_SO'|translate}}
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
+            <div eb-message-key="ngMin" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.INCORRECT_AMOUNT_SO'|translate}}
             </div>
             <div eb-message-key="amount" class="validation-message animate-on">
@@ -259,7 +256,10 @@
                 rb-datepicker-options="firstDateDatepickerOptions"
                 rb-required="true">
         </rb-datepicker>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['firstRealizationDate'] !== undefined">
+            {{validationErrors['firstRealizationDate']}}
+        </div>
         <eb-validation-messages eb-name="firstRealizationDate">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE'|translate}}
@@ -272,11 +272,11 @@
             </div>
 
             <div eb-message-key="bdMinDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'dd.MM.yyyy')}}
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'shortDate')}}
             </div>
 
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'dd.MM.yyyy')}}
+                {{::'raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'shortDate')}}
             </div>
 
 
@@ -308,16 +308,15 @@
             </div>
 
             <div eb-message-key="bdMinDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'dd.MM.yyyy')}}
+                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'shortDate')}}
             </div>
 
             <div eb-message-key="bdMaxDate" class="validation-message animate-on">
-                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'dd.MM.yyyy')}}
+                {{::'raiff.payments.new.standing.fill.edit.first_execution_date.TOO_LATE_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMaxDate|date:'shortDate')}}
             </div>
 
 
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.frequency' | translate }}" class="bd-item-property--multi">
@@ -404,7 +403,10 @@
                 rb-name="finishDate">
         </rb-datepicker>
 
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['finishDate'] !== undefined">
+            {{validationErrors['finishDate']}}
+        </div>
         <eb-validation-messages eb-name="finishDate">
             <div eb-message-key="date" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_END_DATE'|translate}}

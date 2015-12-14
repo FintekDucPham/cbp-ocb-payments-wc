@@ -129,7 +129,8 @@ angular.module('raiffeisen-payments')
                         recipientIdentityType: recipient.recipientIdentityType,
                         recipientBankName: recipient.bankData,
                         recipientBankCountry: recipient.recipientBankCountry,
-                        recipientCountry: recipient.recipientCountry
+                        recipientCountry: recipient.recipientCountry,
+                        recipientSwiftOrBic: recipient.swift_bic
                     }
                 }, recipient);
             },

@@ -72,11 +72,11 @@
             </eb-validation-messages>
 
         </bd-item-property>
-        <p ng-show="showHide">
+        <p ng-show="isOk || showHide">
             <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
             <span style="color: deepskyblue">{{digit}}{{::'raiff.payments.new.domestic.fill.account.warning2'|translate}}</span>
             <span>{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
-            <input type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
         </p>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
@@ -256,7 +256,7 @@
                        name="amount"
                        class="input-field"
                        ng-model="payment.formData.amount"
-                       min="0.01"
+                       ng-min="0.01"
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'elixir' : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
@@ -286,7 +286,7 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
+            <div eb-message-key="ngMin" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
             <div eb-message-key="amount" class="validation-message animate-on">

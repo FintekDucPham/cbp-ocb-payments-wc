@@ -163,6 +163,7 @@ angular.module('raiffeisen-payments')
                     actions.proceed();
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
+                        var errorMsg = null;
                         for(var i=0; i<errorReason.errors.length; i++){
                             var currentError = errorReason.errors[i];
                             if(currentError.field == 'raiff.transfer.limit.exceeed'){
@@ -176,7 +177,12 @@ angular.module('raiffeisen-payments')
                                     messages: translate.property("raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
                                 };
                             }else{
-                                $scope.validationErrors[currentError.field] = translate.property('raiff.payments.new.error.'+currentError.codes[2]);
+                                if(currentError.codes[2]){
+                                    errorMsg = 'raiff.payments.new.error.'+currentError.codes[2];
+                                }else{
+                                    errorMsg = currentError.defaultMessage;
+                                }
+                                $scope.validationErrors[currentError.field] = translate.property(errorMsg);
                             }
                         }
                     }
