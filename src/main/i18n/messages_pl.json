@@ -173,7 +173,7 @@
 
     "raiff.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
     "raiff.payments.new.domestic.fill.account.warning2":" ostatnich ",
-    "raiff.payments.new.domestic.fill.account.warning3":"cyfr wklejonego numer rachunku",
+    "raiff.payments.new.domestic.fill.account.warning3":"cyfr wklejonego numeru rachunku",
     "raiff.payments.new.domestic.fill.errorPaste":"Wartość niezgodna z wklejonym numerem rachunku, spróbuj ponownie.",
 
     "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
