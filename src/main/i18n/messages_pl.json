@@ -507,6 +507,7 @@
 
 
     "raiff.payments.recipients.new.domestic.fill.account_related": "Z rachunku",
+    "raiff.payments.recipients.new.domestic.fill.bankName": "Nazwa banku",
     "raiff.payments.recipients.edit.domestic.verify.company.name":"Nazwa firmy",
     "raiff.payments.recipients.edit.domestic.verify.recipient.id":"Numer odbiorcy",
     "raiff.payments.recipients.new.domestic.fill.custom_name.placeholder": "Wpisz nazwę skróconą odbiorcy",

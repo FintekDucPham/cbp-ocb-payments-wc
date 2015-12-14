@@ -33,11 +33,11 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            if($scope.recipientForm.recipientAccountNo.$valid) {
+            if ($scope.recipientForm.recipientAccountNo.$valid) {
                 control.holdOn();
                 var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
-                recipientValidators.insurance.validate(recipientAccountNo, function() {
-                    recipientValidators.tax.validate(recipientAccountNo, function() {
+                recipientValidators.insurance.validate(recipientAccountNo, function () {
+                    recipientValidators.tax.validate(recipientAccountNo, function () {
                         $scope.recipientForm.recipientAccountNo.$validate();
                         control.done();
                     });

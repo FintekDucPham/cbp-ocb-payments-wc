@@ -1,3 +1,4 @@
+<div ng-show="recipient.meta.bankName.bankNamePromise.$$state.status === 1">
 <rb-payment-recipients-verify>
 
     <div ng-controller="RecipientsManageVerifyDomesticController">
@@ -18,6 +19,10 @@
             </section>
         </bd-item-property>
 
+        <bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
+            {{ recipient.formData.recipientId}}
+        </bd-item-property>
+
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
             <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
@@ -30,13 +35,24 @@
             </section>
         </bd-item-property>
 
-        <bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
-            {{ recipient.formData.recipientId}}
-        </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}" style="word-break: break-all">
             {{ recipient.formData.customName }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="">
+            <span ng-if="recipient.operation.code == 'EDIT'">
+                {{recipient.meta.bankName.recipientBankName}}
+            </span>
+            <span ng-if="recipient.operation.code == 'NEW' || recipient.operation.code == 'REMOVE'">
+                <rb-bank-name
+                        response-value="recipient.meta.bankName.recipientBankName"
+                        account-no="recipient.formData.recipientAccountNo"
+                        bank-name-promise="recipient.meta.bankName.bankNamePromise">
+                    {{recipient.meta.bankName.recipientBankName}}
+                </rb-bank-name>
+            </span>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
@@ -57,3 +73,5 @@
     </div>
 
 </rb-payment-recipients-verify>
+</div>
+<eb-preloader eb-promise="recipient.item.bankNamePromise" eb-rejected-message=""></eb-preloader>
