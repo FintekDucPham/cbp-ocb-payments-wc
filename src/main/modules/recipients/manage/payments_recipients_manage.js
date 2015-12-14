@@ -17,12 +17,12 @@ angular.module('raiffeisen-payments')
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
                                                                 authorizationService, dateFilter, translate, customerService) {
 
+
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.RECIPIENT_NAME_REGEX = validationRegexp('RECIPIENT_NAME');
         $scope.PAYMENT_TITLE_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
-
         bdMainStepInitializer($scope, 'recipient', {
             formName: 'recipientForm',
             type: rbRecipientTypes[$stateParams.recipientType.toUpperCase()],
@@ -36,7 +36,12 @@ angular.module('raiffeisen-payments')
             },
             meta: {
                 nonEditableFields: [],
-                recipientTypes: lodash.map(rbRecipientTypes)
+                recipientTypes: lodash.map(rbRecipientTypes),
+                bankName: {
+                    recipientBankName:null,
+                    bankNamePromise:null
+                },
+                operation: null
             },
             manageAction: ""
         });

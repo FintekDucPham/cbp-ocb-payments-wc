@@ -39,7 +39,7 @@
 
         </bd-item-property>
 
-        <bd-item-property ng-if="payment.formData.recipientAccountId && remote.model_from.loaded"
+        <bd-item-property ng-if="payment.formData.recipientAccountId && remote.model_from.loaded &&  payment.operation.code !='EDIT'"
                           label="{{ ::'raiff.payments.new.internal.fill.recipient_account.accessible_assets' | translate }}">
             <bd-amount amount="payment.items.recipientAccount.accessibleAssets"
                        currency="{{ payment.items.recipientAccount.currency }}"></bd-amount>
