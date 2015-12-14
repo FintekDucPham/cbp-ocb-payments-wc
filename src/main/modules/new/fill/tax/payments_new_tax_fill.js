@@ -191,6 +191,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
+            copiedFormData.amount = (""+copiedFormData.amount).replace(",",".");
             var recipient = $scope.payment.items.recipientAccount;
             formData.taxpayerDataTable = splitTextEveryNSign(formData.taxpayerData);
             return angular.extend(copiedFormData, {
