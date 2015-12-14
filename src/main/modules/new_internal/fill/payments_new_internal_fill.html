@@ -13,7 +13,7 @@
                                rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
         </bd-item-property>
 
-        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded && payment.operation.code !='EDIT'"
+        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
                           label="{{ ::'raiff.payments.new.internal.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
