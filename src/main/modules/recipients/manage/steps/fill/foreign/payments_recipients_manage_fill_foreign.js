@@ -203,7 +203,7 @@ angular.module('raiffeisen-payments')
                 beneficiary: splitTextEveryNSign(copiedFormData.recipientData),
                 remarks: splitTextEveryNSign(copiedFormData.description),
                 swift_bic: copiedFormData.recipientSwiftOrBic,
-                bankInformation: copiedFormData.recipientBankName,
+                bankInformation: splitTextEveryNSign(copiedFormData.recipientBankName),
                 bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.countryCode : null,
                 address: splitTextEveryNSign(copiedFormData.recipientData),
                 beneficiaryCountry: (copiedFormData.recipientCountry !== undefined && copiedFormData.recipientCountry !== null) ? copiedFormData.recipientCountry.countryCode : null,
