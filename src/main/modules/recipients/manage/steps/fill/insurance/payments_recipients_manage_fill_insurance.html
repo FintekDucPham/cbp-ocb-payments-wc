@@ -55,6 +55,15 @@
 
         </bd-item-property>
 
+
+        <bd-item-property
+                class="bd-item-property--text bd-item-property--disabled"
+                label="{{ ::'raiff.payments.recipients.new.zus.verify.recipient_name' | translate }}"
+                ng-show="recipient.items.selectedInsurance.insuranceCode">
+            {{"raiff.payments.insurances.type." + recipient.items.selectedInsurance.insuranceCode | translate }}
+        </bd-item-property>
+
+
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.zus.fill.taxpayer_nip' | translate }}">
             <input name="taxpayerNip"
                    ng-model="recipient.formData.nip"
