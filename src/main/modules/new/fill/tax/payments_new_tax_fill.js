@@ -111,7 +111,10 @@ angular.module('raiffeisen-payments')
                 formData.formCode = recipient.formCode;
                 $scope.payment.items.recipient = recipient;
                 var periodTypeCode = formData.periodType = recipient.periodType;
-                $scope.payment.options.customPeriod = !usPeriodTypes[periodTypeCode].values;
+                if(periodTypeCode && angular.isString(periodTypeCode) && periodTypeCode.length){
+                    $scope.payment.options.customPeriod = !usPeriodTypes[periodTypeCode].values;
+                }
+
                 $scope.payment.items.recipientAccount = {
                     officeName: recipient.recipientName.join(', '),
                     accountNo: recipient.nrb
