@@ -143,7 +143,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
             copiedFormData.amount = (""+formData.amount).replace(",",".");
-            formData.amount = (""+formData.amount).replace(",","");
+            formData.amount = (""+formData.amount).replace(",",".");
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
             return copiedFormData;
         });
