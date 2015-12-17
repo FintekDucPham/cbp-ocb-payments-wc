@@ -119,6 +119,9 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.description = null;
             $scope.payment.formData.transferFromTemplate = false;
             $scope.payment.formData.recipientCountry = null;
+            $scope.payment.formData.recipientSwiftOrBic = null;
+            $scope.payment.formData.recipientBankCountry = null;
+            $scope.payment.formData.recipientBankName = null;
             bdFocus('recipientAccountNo');
 
             $scope.foreignIbanValidationRegex = $scope.FOREIGN_IBAN_VALIDATION_REGEX;
