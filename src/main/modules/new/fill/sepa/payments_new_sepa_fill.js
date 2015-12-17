@@ -104,6 +104,8 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
+            copiedFormData.amount = (""+formData.amount).replace(",",".");
+            formData.amount = (""+formData.amount).replace(",","");
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
             return copiedFormData;
         });
@@ -193,6 +195,13 @@ angular.module('raiffeisen-payments')
             //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
             $timeout(recalculateCurrency);
         });
+        $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            var recipient = lodash.find($scope.payment.meta.recipientList, {
+                templateType: 'SWIFT',
+                accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+            });
+            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
+        });
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
@@ -212,12 +221,6 @@ angular.module('raiffeisen-payments')
             $scope.setRecipientDataExtractor(function() {
                 return recipientData;
             });
-        });
-        $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            var recipient = lodash.find($scope.payment.meta.recipientList, {
-                accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
-            });
-            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
         });
 
         function isAccountInvestmentFulfilsRules(account){

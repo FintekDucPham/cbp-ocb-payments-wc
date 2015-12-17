@@ -234,11 +234,11 @@
 
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.fill.payment_options' | translate }}">
 
-        <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums">
+        <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums" style="width: 100%">
 
             <bd-checkbox-select-option ng-repeat="insuranceType in payment.meta.zusInsuranceTypes"
                                        bd-on-check="enableInsurancePremium(insuranceType)"
-                                       bd-checkbox-key="{{ insuranceType }}">
+                                       bd-checkbox-key="{{ insuranceType }}" style="width: 100%">
 
                 <bd-item-property
                         label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insuranceType | translate }}">
@@ -300,7 +300,7 @@
         <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-show="totalPaymentAmount.length > 0">
             <div class="rb-payments-new-zus-fill__summary">
                 <div ng-repeat="summary in totalPaymentAmount" class="rb-payments-new-zus-fill__summary-entry">
-                    <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
+                    <bd-amount ng-show="summary.amount > 0" amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
                 </div>
             </div>
             <div style="color: #F4390B;font-size: 14px;font-weight: 300;"

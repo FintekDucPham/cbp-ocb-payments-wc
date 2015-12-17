@@ -36,14 +36,14 @@ angular.module('raiffeisen-payments')
                 "description": payment.remarks ? payment.remarks.join("\n") : "",
                 "remitterAccountId": payment.debitAccountId,
                 "currency": payment.currency,
-                "nextRealizationDate": payment.frequency.nextDate,
-                "firstRealizationDate": payment.startDate,
-                "finishDate": payment.endDate,
+                "nextRealizationDate": payment.frequency.nextDate ? new Date(Date.parse(payment.frequency.nextDate)) : null,
+                "firstRealizationDate": payment.startDate ? new Date(payment.startDate) : null,
+                "finishDate": payment.endDate ? new Date(payment.endDate) : null,
                 "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
                 "frequency": payment.frequency.periodCount,
                 "amount": payment.amount,
                 "id": payment.id
-            };
+            }; 
 
             if (action == 'edit') {
                 viewStateService.setInitialState('payments.new', {
