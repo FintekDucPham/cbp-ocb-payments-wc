@@ -42,10 +42,10 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="">
-            <span ng-if="recipient.operation.code == 'EDIT'">
+            <span ng-if="recipient.operation.code === 'EDIT'">
                 {{recipient.meta.bankName.recipientBankName}}
             </span>
-            <span ng-if="recipient.operation.code == 'NEW' || recipient.operation.code == 'REMOVE'">
+            <span ng-if="recipient.operation.code === 'NEW' || recipient.operation.code === 'REMOVE'">
                 <rb-bank-name
                         response-value="recipient.meta.bankName.recipientBankName"
                         account-no="recipient.formData.recipientAccountNo"

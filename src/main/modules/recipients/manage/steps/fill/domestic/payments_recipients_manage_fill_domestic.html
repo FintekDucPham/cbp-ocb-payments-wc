@@ -49,7 +49,7 @@
             </eb-validation-messages>
 
         </bd-item-property>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}" ng-if="recipient.operation.code === 'EDIT'">
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}" ng-show="recipient.meta.bankName.recipientBankName">
             <rb-bank-name
                     response-value="recipient.meta.bankName.recipientBankName"
                     account-no="recipient.formData.recipientAccountNo"
