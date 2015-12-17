@@ -74,6 +74,9 @@ angular.module('raiffeisen-payments')
                         }
                     }
                 }
+                else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                    $scope.payment.token.model.$proceed();
+                }
             }
         });
 
