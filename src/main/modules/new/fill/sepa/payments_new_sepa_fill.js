@@ -124,6 +124,7 @@ angular.module('raiffeisen-payments')
             $scope.foreignIbanValidationRegex = $scope.FOREIGN_IBAN_VALIDATION_REGEX;
 
             $scope.payment.options.ibanLength = $scope.payment.formData.recipientBankCountry.ibanLength;
+            $scope.payment.formData.recipientBankCountry.ibanLength = null;
         };
 
         function updateRecipientsList() {
