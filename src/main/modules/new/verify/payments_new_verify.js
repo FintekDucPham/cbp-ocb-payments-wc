@@ -17,6 +17,14 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.payment
         });
 
+        console.log($scope.payment);
+        transferService.getTransferCost({
+            remitterId: $scope.payment.formData.remitterAccountId
+        }).then(function(transferCostData){
+            $scope.transferCost = transferCostData;
+        });
+
+
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
             $scope.payment.result.token_error = false;
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
