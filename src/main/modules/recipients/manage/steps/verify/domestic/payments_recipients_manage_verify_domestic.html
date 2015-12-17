@@ -41,7 +41,7 @@
             {{ recipient.formData.customName }}
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="">
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
             <span ng-if="recipient.operation.code === 'EDIT'">
                 {{recipient.meta.bankName.recipientBankName}}
             </span>
