@@ -1,11 +1,10 @@
 <rb-payment-recipients-fill>
     <div ng-controller="RecipientsManageFillDomesticController">
 
-        <section ng-show="recipient.operation.code != 'EDIT'">
+        <section ng-if="recipient.operation.code != 'EDIT'">
 
             <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
                  <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
-
 
                 <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
                                    rb-account="recipient.items.senderAccount"
@@ -16,7 +15,6 @@
                                    rb-product-list-name="TRANSFER_FROM_LIST"
                                    rb-account-select-params="recipientSelectParams"
                                    rb-init-select-value = "{{selectNrb}}"></rb-account-select>
-
 
                 <eb-validation-messages eb-name="remitterAccountId">
                     <div eb-message-key="required" class="validation-message animate-on">
@@ -33,11 +31,6 @@
                 </bd-item-property>
         </section>
 
-
-      <!--<bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">-->
-            <!--{{ recipient.formData.recipientId}}-->
-          <!--{{ recipient.operation.code }}-->
-        <!--</bd-item-property>-->
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
             <input name="customName"
                    ng-model="recipient.formData.customName"

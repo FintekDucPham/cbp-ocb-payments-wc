@@ -73,6 +73,9 @@ angular.module('raiffeisen-payments')
             var copiedFormData = angular.copy(formData);
             copiedFormData.recipientData = splitTextEveryNSign(copiedFormData.recipientData);
             copiedFormData.description = splitTextEveryNSign(copiedFormData.description);
+            if (!copiedFormData.remitterAccountId) {
+                copiedFormData.remitterAccountId = findDebitAccount();
+            }
             return {
                 shortName: copiedFormData.customName,
                 debitAccount: copiedFormData.remitterAccountId,
@@ -81,6 +84,13 @@ angular.module('raiffeisen-payments')
                 remarks: copiedFormData.description
             };
         });
+
+        function findDebitAccount() {
+            var debitAccount = lodash.find($scope.accountsList, {
+                accountNo: $scope.recipient.formData.debitAccountNo
+            });
+            return !!debitAccount ? debitAccount.accountId : null;
+        }
 
         function splitTextEveryNSign(text, lineLength){
             if(text !== undefined && text.length > 0) {
