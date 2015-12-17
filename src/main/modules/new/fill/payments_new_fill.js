@@ -92,6 +92,7 @@ angular.module('raiffeisen-payments')
             copiedForm.amount = (""+formData.amount).replace(",", ".");
             copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
             copiedForm.description = splitTextEveryNSign(formData.description);
+            console.debug(copiedForm);
             return copiedForm;
         };
 
