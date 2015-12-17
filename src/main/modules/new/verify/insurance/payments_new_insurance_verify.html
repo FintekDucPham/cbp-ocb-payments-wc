@@ -45,6 +45,9 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate|date:'shortDate'}}
     </bd-item-property>
+    <bd-item-property ng-show="transferCost.link != null" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.verify.transfer_cost'|translate}}">
+        <a href="{{transferCost.link}}" target="_blank">{{transferCost.link}}</a>
+    </bd-item-property>
      <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
          <span class="messages">
              <span class="validation-message">
