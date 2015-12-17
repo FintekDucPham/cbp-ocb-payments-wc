@@ -59,46 +59,44 @@
         </bd-item-property>
         <rb-paste-warning>
             <bd-item-property
-                    label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
-                {{$scope.recipient}}
-                <input id="recipientAccountNo"
-                       ng-show="!showHide"
-                       name="recipientAccountNo"
-                       ng-model="recipient.formData.recipientAccountNo"
-                       required="recipient.operation.code !=='EDIT'"
-                       bban-nrb
-                       ng-readonly="recipient.operation.code === 'EDIT'"
-                       bd-matches-none-of="recipientAccountValidators"
-                       class="input-field"
-                       ng-paste="rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)"
-                       ng-keyup="unlockField()"
-                       type="text"
-                       placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder' | translate }}">
-                <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
-                <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
-                    <div class="validation-message animate-on">
-                        {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
-                    </div>
+                    label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}" ng-if="recipient.operation.code === 'NEW'">
+                    <input id="recipientAccountNo"
+                           ng-show="!showHide"
+                           name="recipientAccountNo"
+                           ng-model="recipient.formData.recipientAccountNo"
+                           required="recipient.operation.code !=='EDIT'"
+                           bban-nrb
+                           ng-readonly="recipient.operation.code === 'EDIT'"
+                           bd-matches-none-of="recipientAccountValidators"
+                           class="input-field"
+                           ng-paste="rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)"
+                           ng-keyup="unlockField()"
+                           type="text"
+                           placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder' | translate }}">
+                    <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
+                    <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
+                        <div class="validation-message animate-on">
+                            {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
+                        </div>
 
-                </eb-validation-messages>
-                <eb-validation-messages eb-name="recipientAccountNo"  ng-show="!showHide && !isErrorPaste">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
-                    </div>
-                    <div eb-message-key="bbanNrb" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC'|translate}}
-                    </div>
-                    <div eb-message-key="sameAccount" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
-                    </div>
-                    <div eb-message-key="notUs" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_US'|translate}}
-                    </div>
-                    <div eb-message-key="notZus" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_ZUS'|translate}}
-                    </div>
-                </eb-validation-messages>
-
+                    </eb-validation-messages>
+                    <eb-validation-messages eb-name="recipientAccountNo"  ng-show="!showHide && !isErrorPaste">
+                        <div eb-message-key="required" class="validation-message animate-on">
+                            {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
+                        </div>
+                        <div eb-message-key="bbanNrb" class="validation-message animate-on">
+                            {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC'|translate}}
+                        </div>
+                        <div eb-message-key="sameAccount" class="validation-message animate-on">
+                            {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
+                        </div>
+                        <div eb-message-key="notUs" class="validation-message animate-on">
+                            {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_US'|translate}}
+                        </div>
+                        <div eb-message-key="notZus" class="validation-message animate-on">
+                            {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_ZUS'|translate}}
+                        </div>
+                    </eb-validation-messages>
             </bd-item-property>
             <p ng-show="isOk || showHide">
                 <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
@@ -107,6 +105,11 @@
                 <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
             </p>
         </rb-paste-warning>
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}" ng-if="recipient.operation.code === 'EDIT'">
+            {{recipient.formData.recipientAccountNo | nrbIbanFilter}}
+        </bd-item-property>
+
         <bd-item-property class="bd-item-property--multirow"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
             <textarea name="recipientData"
