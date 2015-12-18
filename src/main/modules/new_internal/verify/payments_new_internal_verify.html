@@ -27,6 +27,10 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate | date:'shortDate' }}
     </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
+        {{::payment.formData.transferCost}} <a href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
+
+    </bd-item-property>
 
 </div>
 <section ng-if="payment.operation.code!=='EDIT'">
