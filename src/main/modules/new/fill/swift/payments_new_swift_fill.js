@@ -80,11 +80,11 @@ angular.module('raiffeisen-payments')
                                 });
                             }
 
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                         }else{
                             $scope.payment.formData.recipientBankName = null;
                             $scope.payment.formData.recipientBankCountry = undefined;
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                         }
                     });
             }
