@@ -49,14 +49,17 @@
             </eb-validation-messages>
 
         </bd-item-property>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}" ng-show="recipient.meta.bankName.recipientBankName">
-            <rb-bank-name
-                    response-value="recipient.meta.bankName.recipientBankName"
-                    account-no="recipient.formData.recipientAccountNo"
-                    bank-name-promise="recipient.meta.bankName.bankNamePromise">
-                {{recipient.meta.bankName.recipientBankName}}
-            </rb-bank-name>
-        </bd-item-property>
+        <span ng-if="recipient.operation.code === 'EDIT'">
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}" ng-show="recipient.meta.bankName.bankNamePromise.$$state.status === 1 && recipient.meta.bankName.recipientBankName != ''">
+                <rb-bank-name
+                        response-value="recipient.meta.bankName.recipientBankName"
+                        account-no="recipient.formData.recipientAccountNo"
+                        bank-name-promise="recipient.meta.bankName.bankNamePromise">
+                    {{recipient.meta.bankName.recipientBankName}}
+                </rb-bank-name>
+            </bd-item-property>
+            <eb-preloader eb-promise="recipient.meta.bankName.bankNamePromise"></eb-preloader>
+        </span>
         <rb-paste-warning>
             <bd-item-property
                     label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}" ng-if="recipient.operation.code === 'NEW'">
