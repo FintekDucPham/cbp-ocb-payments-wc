@@ -44,10 +44,6 @@
         <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency.currency }}" not-styled></bd-amount>
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
-        {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}}
-    </bd-item-property>
-
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
         {{::payment.formData.transferCost}}
     </bd-item-property>
