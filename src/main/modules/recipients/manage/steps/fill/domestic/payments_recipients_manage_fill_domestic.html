@@ -49,14 +49,17 @@
             </eb-validation-messages>
 
         </bd-item-property>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}" ng-show="recipient.meta.bankName.recipientBankName">
-            <rb-bank-name
-                    response-value="recipient.meta.bankName.recipientBankName"
-                    account-no="recipient.formData.recipientAccountNo"
-                    bank-name-promise="recipient.meta.bankName.bankNamePromise">
-                {{recipient.meta.bankName.recipientBankName}}
-            </rb-bank-name>
-        </bd-item-property>
+        <span ng-if="recipient.operation.code === 'EDIT'">
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}" ng-show="recipient.meta.bankName.bankNamePromise.$$state.status === 1 && recipient.meta.bankName.recipientBankName != ''">
+                <rb-bank-name
+                        response-value="recipient.meta.bankName.recipientBankName"
+                        account-no="recipient.formData.recipientAccountNo"
+                        bank-name-promise="recipient.meta.bankName.bankNamePromise">
+                    {{recipient.meta.bankName.recipientBankName}}
+                </rb-bank-name>
+            </bd-item-property>
+            <eb-preloader eb-promise="recipient.meta.bankName.bankNamePromise"></eb-preloader>
+        </span>
         <rb-paste-warning>
             <bd-item-property
                     label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}" ng-if="recipient.operation.code === 'NEW'">
@@ -98,12 +101,17 @@
                         </div>
                     </eb-validation-messages>
             </bd-item-property>
-            <p ng-show="isOk || showHide">
-                <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
-                <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
-                <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
-                <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
-            </p>
+            <span ng-show="isOk || showHide">
+            <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
+            <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
+            <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
+            <span class="" style="position: relative">
+            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+                <span class="tooltipFix__tooltip">
+                    <i style="position: absolute;font-size: 24px;left: 60px" ng-show="isOk" class="raiff-icons ok_rounded" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
+                 </span>
+            </span>
+        </span>
         </rb-paste-warning>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                 label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}" ng-if="recipient.operation.code === 'EDIT'">
