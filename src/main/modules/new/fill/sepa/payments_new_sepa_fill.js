@@ -15,7 +15,7 @@ angular.module('raiffeisen-payments')
                             else {
                                     return reject();
                             }
-                        })
+                        });
                     });
                 };
             }
