@@ -180,6 +180,7 @@
     "raiff.payments.new.domestic.fill.account.digitName3":" cyfr ",
     "raiff.payments.new.domestic.fill.account.warning3":"wklejonego numeru rachunku",
     "raiff.payments.new.domestic.fill.errorPaste":"Wartość niezgodna z wklejonym numerem rachunku, spróbuj ponownie.",
+    "raiff.payments.new.fill.tooltip":"Wpisane cyfry są zgodne z ostatnimi cyframi rachunku",
 
     "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.domestic.verify.sender_data": "Właściciel",
