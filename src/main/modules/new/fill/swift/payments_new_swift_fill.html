@@ -259,7 +259,7 @@
                        ng-min="0.01"
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
-                       bd-no-more-than="{ 'elixir' : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
+                       bd-no-more-than="{ 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
                        required
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
             </div>
@@ -294,9 +294,6 @@
             </div>
             <div eb-message-key="balance" class="validation-message animate-on">
                 {{ 'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
-            </div>
-            <div eb-message-key="elixir" class="validation-message animate-on">
-                {{ 'raiff.payments.new.domestic.fill.amount.NOT_ELIXIR_PMNT' | translate }}
             </div>
             <div eb-message-key="##todo##" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID'|translate}}
