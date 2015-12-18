@@ -45,7 +45,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
-        {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}} <a href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
+        {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}} <a ng-show="transferCost.link != null" href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
 
     </bd-item-property>
      <span class="eb-validation-messages" ng-if="payment.holiday">
