@@ -53,7 +53,8 @@
                     </rb-bank-name>
                 </span>
         </bd-item-property>
-        <eb-preloader eb-promise="recipient.item.bankNamePromise"></eb-preloader>
+        <eb-preloader class="bd-list__preloader rb-token-authorization__preloader" ng-if="recipient.meta.bankName.bankNamePromise" eb-promise="recipient.meta.bankName.bankNamePromise"></eb-preloader>
+
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
