@@ -181,7 +181,7 @@
             <span class="" style="position: relative">
             <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                 <span class="tooltipFix__tooltip">
-                    <i style="position: absolute;font-size: 24px;left: 60px; color: green" ng-show="isOk" class="raiff-icons ok_rounded" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
+                    <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
                  </span>
             </span>
         </span>
