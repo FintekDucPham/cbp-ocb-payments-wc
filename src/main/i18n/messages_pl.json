@@ -1092,6 +1092,8 @@
     "raiff.payments.new.standing.fill.first_execution_date.FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być pusta",
     "raiff.payments.new.standing.fill.first_execution_date.INCORRECT_FIRST_DATE": "Niepoprawna data pierwszej realizacji zlecenia",
     "raiff.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być wcześniejsza niż ##DATE##",
+    "raiffeisen.payments.standing_order.firstRealizationDate.to_early": "Data pierwszej realizacji zlecenia nie może być wcześniejsza niż ##0##",
+    "raiffeisen.payments.standing_order.firstRealizationDate.to_late": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##0##",
     "raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##DATE##",
 
     "raiff.payments.new.standing.fill.edit.first_execution_date.FIRST_DATE": "Data następnej realizacji zlecenia nie może być pusta",

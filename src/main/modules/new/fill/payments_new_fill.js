@@ -164,8 +164,8 @@ angular.module('raiffeisen-payments')
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
                         var errorMsg = null;
-                        for(var i=0; i<errorReason.errors.length; i++){
-                            var currentError = errorReason.errors[i];
+                        lodash.forEach(errorReason.errors, function(error){
+                            var currentError = error;
                             if(currentError.field == 'raiff.transfer.limit.exceeed'){
                                 $scope.limitExeeded = {
                                     show: true,
@@ -183,8 +183,16 @@ angular.module('raiffeisen-payments')
                                     errorMsg = currentError.defaultMessage;
                                 }
                                 $scope.validationErrors[currentError.field] = translate.property(errorMsg);
+                                var errorCodeIndex = 0;
+                                lodash.forEach(currentError.codes, function(code){
+                                    $scope.validationErrors[currentError.field] = $scope.validationErrors[currentError.field].replace("##"+errorCodeIndex+"##", code);
+                                    errorCodeIndex++;
+                                });
                             }
-                        }
+                        });
+                        /*for(var i=0; i<errorReason.errors.length; i++){
+
+                        }*/
                     }
                 });
             }
