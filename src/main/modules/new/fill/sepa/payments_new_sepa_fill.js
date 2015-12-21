@@ -53,12 +53,6 @@ angular.module('raiffeisen-payments')
             });
         });
 
-
-
-        if($scope.payment.meta.customerContext==='MICRO'){
-            //@TODO: o	dla kontekstu MICRO mozliwosc wyboru jedynie rachunku w  EUR
-        }
-
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
             if(n && !angular.equals(n, o)){
                 $scope.swift.promise = recipientGeneralService.utils.getBankInformation.getInformation(
@@ -262,9 +256,14 @@ angular.module('raiffeisen-payments')
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
-                return lodash.filter(accounts,  function(account){
-                    return account.currency == 'PLN' &&  isAccountInvestmentFulfilsRules(account);
-                });
+                if($scope.payment.meta.customerContext==='MICRO'){
+                    return lodash.filter(accounts,  function(account){
+                        return account.currency == 'EUR';
+                    });
+                }else{
+                    return accounts;
+                }
+
             },
             payments: true
         });
