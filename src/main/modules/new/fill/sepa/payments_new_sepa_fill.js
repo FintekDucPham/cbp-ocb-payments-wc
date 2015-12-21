@@ -1,27 +1,22 @@
 angular.module('raiffeisen-payments')
-    .directive('ngEuroBalanceLimit', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
+    .directive('ngSepaAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function (scope, elem, attr, ctrl) {
                 ctrl.$asyncValidators.convertedBalance = function(newValue) {
-                    return $q.all([
-                        currencyExchangeService.exchange(parseInt(scope.payment.items.senderAccount.accessibleAssets, 10), scope.payment.items.senderAccount.currency, "EUR")
-                    ]).then(function(values) {
-                        return $q(function(resolve, reject) {
-                            if (parseInt(newValue, 10) <= values[0]) {
-                                    return resolve();
-                            }
-                            else {
-                                    return reject();
-                            }
+                    return $q(function(resolve, reject) {
+                        currencyExchangeService.exchangeForValidation(newValue, "EUR", scope.payment.items.senderAccount.currency).then(function(exchanged) {
+                            return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject(); 
+                        }, function() {
+                            return reject();
                         });
                     });
                 };
             }
         };
     }])
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService) {
+    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');

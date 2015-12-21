@@ -258,7 +258,7 @@
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
-                       ng-euro-balance-limit
+                       ng-sepa-amount-validator
                        required
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
             </div>
