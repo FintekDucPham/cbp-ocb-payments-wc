@@ -3,7 +3,7 @@
         {{ $data.customerName }}
     </bd-item-property>
 
-    <bd-item-property class="eb-item-property--text" label="">
+    <bd-item-property class="eb-item-property--text" label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
         <eb-preloader class="eb-inline-preloader" ng-if="recipient.item.recipientBankNamePromise" eb-promise="recipient.item.recipientBankNamePromise"></eb-preloader>
         {{recipient.item.recipientBankName}}
     </bd-item-property>
