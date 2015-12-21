@@ -1,15 +1,11 @@
-<div ng-show="recipient.item.bankNamePromise.$$state.status === 1">
+<div ng-init="resolveBankNamePromise($data.nrb)">
     <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
         {{ $data.customerName }}
     </bd-item-property>
 
     <bd-item-property class="eb-item-property--text" label="">
-        <rb-bank-name
-                response-value="recipient.item.recipientBankName"
-                account-no="$data.nrb"
-                bank-name-promise="recipient.item.bankNamePromise">
-            {{recipient.item.recipientBankName}}
-        </rb-bank-name>
+        <eb-preloader class="eb-inline-preloader" ng-if="recipient.item.recipientBankNamePromise" eb-promise="recipient.item.recipientBankNamePromise"></eb-preloader>
+        {{recipient.item.recipientBankName}}
     </bd-item-property>
 
     <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">

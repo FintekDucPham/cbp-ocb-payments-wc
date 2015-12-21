@@ -18,8 +18,7 @@ angular.module('raiffeisen-payments')
             url: "/verify",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_verify_" + angular.lowercase($stateParams.recipientType) + ".html";
-            },
-            controller: "RecipientsManageVerifyDomesticController"
+            }
         }).state('payments.recipients.manage.edit.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/edit/status/payments_recipients_manage_edit_status.html",

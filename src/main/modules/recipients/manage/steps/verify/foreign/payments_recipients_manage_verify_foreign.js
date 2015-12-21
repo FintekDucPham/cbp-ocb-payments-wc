@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyDomesticController', function ($scope, accountsService, customerService, lodash) {
+    .controller('RecipientsManageVerifyForeignDomesticController', function ($scope, accountsService, customerService, lodash) {
 
         $scope.accountListPromise = accountsService.search().then(function(accountList){
             $scope.accountsList = accountList.content;
