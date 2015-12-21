@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService, $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents) {
+    .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService, $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -59,10 +59,11 @@ angular.module('raiffeisen-payments')
             });
         });
 
-
-        if($scope.payment.meta.customerContext==='MICRO'){
-            //@TODO: o	dla kontekstu MICRO mozliwosc wyboru jedynie rachunku w  EUR
-        }
+        $scope.$watch('payment.formData.currency', function(n, o) {
+            if ($scope.paymentForm && $scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$validate();            
+            }
+        });
 
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
             if(n && !angular.equals(n, o)){
@@ -80,11 +81,11 @@ angular.module('raiffeisen-payments')
                                 });
                             }
 
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                         }else{
                             $scope.payment.formData.recipientBankName = null;
                             $scope.payment.formData.recipientBankCountry = undefined;
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                         }
                     });
             }
@@ -289,9 +290,7 @@ angular.module('raiffeisen-payments')
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
-                return lodash.filter(accounts,  function(account){
-                    return account.currency == 'PLN' &&  isAccountInvestmentFulfilsRules(account);
-                });
+                return accounts;
             },
             payments: true
         });

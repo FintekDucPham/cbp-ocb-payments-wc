@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments').controller('PaymentsWidgetController', function($scope, paymentsService, $rootScope, $location, $timeout,$state, pathService, paymentsService, transactionService) {
+angular.module('raiffeisen-payments').controller('PaymentsWidgetController', function($scope, $rootScope, $location, $timeout,$state, pathService, paymentsService, transactionService) {
 
     $scope.params = {
         statusPaymentCriteria: "waiting",

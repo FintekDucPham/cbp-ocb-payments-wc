@@ -113,7 +113,7 @@
             <span class="" style="position: relative">
             <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                 <span class="tooltipFix__tooltip">
-                    <i style="position: absolute;font-size: 24px;left: 60px" ng-show="isOk" class="raiff-icons ok_rounded" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
+                    <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
                  </span>
             </span>
         </span>
@@ -286,7 +286,10 @@
 
 
         </eb-validation-messages>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['firstRealizationDate'] !== undefined">
+            {{validationErrors['recipientName']}}
+        </div>
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.earliest_execution_date' | translate }}" ng-if="payment.operation.code == 'EDIT'">
@@ -322,6 +325,10 @@
 
 
         </eb-validation-messages>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['nextRealizationDate'] !== undefined">
+            {{validationErrors['recipientName']}}
+        </div>
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.frequency' | translate }}" class="bd-item-property--multi">
@@ -394,7 +401,10 @@
                 {{::'raiff.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY'|translate}}
             </div>
         </eb-validation-messages>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['frequency'] !== undefined">
+            {{validationErrors['recipientName']}}
+        </div>
 
 
     </bd-item-property>
@@ -425,6 +435,10 @@
                 {{::'raiff.payments.new.standing.fill.finish_date.TOO_LATE_END_DATE'|translate}}
             </div>
         </eb-validation-messages>
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['finishDate'] !== undefined">
+            {{validationErrors['recipientName']}}
+        </div>
     </bd-item-property>
 
 

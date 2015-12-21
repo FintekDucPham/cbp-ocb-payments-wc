@@ -1,13 +1,12 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService) {
-
+    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
         $scope.currencyList = [];
 
-        $scope.payment.formData.currency = 'EUR';
+        $scope.payment.formData.currency = {currency: 'EUR'};
 
         $scope.swift = {
             promise: null,
@@ -32,12 +31,6 @@ angular.module('raiffeisen-payments')
             });
         });
 
-
-
-        if($scope.payment.meta.customerContext==='MICRO'){
-            //@TODO: o	dla kontekstu MICRO mozliwosc wyboru jedynie rachunku w  EUR
-        }
-
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
             if(n && !angular.equals(n, o)){
                 $scope.swift.promise = recipientGeneralService.utils.getBankInformation.getInformation(
@@ -53,11 +46,11 @@ angular.module('raiffeisen-payments')
                                     countryCode: $scope.swift.data.countryCode
                                 });
                             }
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                         }else{
                             $scope.payment.formData.recipientBankName = null;
                             $scope.payment.formData.recipientBankCountry = undefined;
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                         }
                     });
             }
@@ -100,7 +93,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.transferType = "SEPA";
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientAddress = [""];
-            copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, {'currency': copiedFormData.currency})).transferType;
+            copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, copiedFormData.currency)).transferType;
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
@@ -182,7 +175,7 @@ angular.module('raiffeisen-payments')
 
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
-            $scope.payment.formData.currency = 'EUR';
+            $scope.payment.formData.currency = {currency: 'EUR'};
             $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
             if($scope.paymentForm){
                 $scope.paymentForm.amount.$validate();
@@ -241,9 +234,14 @@ angular.module('raiffeisen-payments')
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
-                return lodash.filter(accounts,  function(account){
-                    return account.currency == 'PLN' &&  isAccountInvestmentFulfilsRules(account);
-                });
+                if($scope.payment.meta.customerContext==='MICRO'){
+                    return lodash.filter(accounts,  function(account){
+                        return account.currency == 'EUR';
+                    });
+                }else{
+                    return accounts;
+                }
+
             },
             payments: true
         });

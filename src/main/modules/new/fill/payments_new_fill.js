@@ -164,8 +164,8 @@ angular.module('raiffeisen-payments')
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
                         var errorMsg = null;
-                        for(var i=0; i<errorReason.errors.length; i++){
-                            var currentError = errorReason.errors[i];
+                        lodash.forEach(errorReason.errors, function(error){
+                            var currentError = error;
                             if(currentError.field == 'raiff.transfer.limit.exceeed'){
                                 $scope.limitExeeded = {
                                     show: true,
@@ -183,8 +183,16 @@ angular.module('raiffeisen-payments')
                                     errorMsg = currentError.defaultMessage;
                                 }
                                 $scope.validationErrors[currentError.field] = translate.property(errorMsg);
+                                var errorCodeIndex = 0;
+                                lodash.forEach(currentError.codes, function(code){
+                                    $scope.validationErrors[currentError.field] = $scope.validationErrors[currentError.field].replace("##"+errorCodeIndex+"##", code);
+                                    errorCodeIndex++;
+                                });
                             }
-                        }
+                        });
+                        /*for(var i=0; i<errorReason.errors.length; i++){
+
+                        }*/
                     }
                 });
             }
@@ -220,4 +228,21 @@ angular.module('raiffeisen-payments')
                 });
             }
         }
-    });
+    })
+    .directive('ngForeignAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, elem, attr, ctrl) {
+                ctrl.$asyncValidators.convertedBalance = function(newValue) {
+                    return $q(function(resolve, reject) {
+                        currencyExchangeService.exchangeForValidation(newValue, scope.payment.formData.currency.currency, scope.payment.items.senderAccount.currency).then(function(exchanged) {
+                            return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject();
+                        }, function() {
+                            return reject();
+                        });
+                    });
+                };
+            }
+        };
+    }]);

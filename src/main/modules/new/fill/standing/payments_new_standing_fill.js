@@ -208,10 +208,13 @@ angular.module('raiffeisen-payments')
             });
         });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            $scope.payment.formData.amount = (""+$scope.payment.formData.amount).replace(",", ".");
+            if ($scope.payment.formData.amount) {
+                $scope.payment.formData.amount = (""+$scope.payment.formData.amount).replace(",", ".");
+            }
+
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                 templateType: 'DOMESTIC',
-                accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+                accountNo: $scope.payment.formData.recipientAccountNo ? $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "") : $scope.payment.formData.recipientAccountNo
             });
             $scope.payment.formData.hideSaveRecipientButton = !!recipient;
 
@@ -293,7 +296,4 @@ angular.module('raiffeisen-payments')
                 });
             }
         }
-
-
-
     });
