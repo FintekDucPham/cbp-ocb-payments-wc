@@ -5,7 +5,7 @@
 
     <bd-item-property class="eb-item-property--text" label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
         <eb-preloader class="eb-inline-preloader" ng-if="recipient.item.recipientBankNamePromise" eb-promise="recipient.item.recipientBankNamePromise"></eb-preloader>
-        {{recipient.item.recipientBankName}}
+        <span ng-show="recipient.item.recipientBankNamePromise.$$state.status !== 0">{{recipient.item.recipientBankName}}</span>
     </bd-item-property>
 
     <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
