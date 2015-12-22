@@ -10,33 +10,6 @@
       "version": "0.2.0"
     }
   ],
-  "interfaces": [
-    {
-      "resource": "cards",
-      "relation": "search_card",
-      "actionType": "QUERY"
-    },
-    {
-      "resource": "account",
-      "relation": "account_details",
-      "actionType": "QUERY"
-    },
-    {
-      "resource": "account",
-      "relation": "search_transaction",
-      "actionType": "QUERY"
-    },
-    {
-      "resource": "account",
-      "relation": "search_blockade",
-      "actionType": "QUERY"
-    },
-    {
-      "resource": "transaction",
-      "relation": "transaction_details",
-      "actionType": "QUERY"
-    }
-  ],
   "main": "raiffeisenPaymentsMiniapp.js",
   "namespace": "raiffeisen"
 }
