@@ -6,11 +6,16 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentVerifyController"
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService,depositsService, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService,depositsService, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, rbPaymentTypes) {
 
         $scope.payment.token.params.resourceId = null;
 
-        $scope.payment.token.params.rbOperationType="TRANSFER";
+        if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
+            $scope.payment.token.params.rbOperationType = "MANAGE_STANDING_ORDER";
+        }
+        else {
+            $scope.payment.token.params.rbOperationType="TRANSFER";
+        }
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
