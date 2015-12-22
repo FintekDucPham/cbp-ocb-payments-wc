@@ -109,6 +109,7 @@
     "raiff.payments.new.types.INSURANCE": "Przelew do ZUS",
     "raiff.payments.new.types.SWIFT": "Przelew zagraniczny",
     "raiff.payments.new.types.SEPA": "Przelew euroregulowany",
+    "raiff.payments.new.types.STANDING": "Zlecenie stałe",
     "raiff.payments.new.btn.change": "Popraw",
     "raiff.payments.new.btn.cancel": "Anuluj",
     "raiff.payments.new.btn.accept": "Zatwierdź",
@@ -776,7 +777,7 @@
     "raiff.payments.taxpayers.verify.taxpayer_type": "Typ płatnika",
     "raiff.payments.taxpayers.verify.taxpayer_type.INSURANCE": "ZUS",
     "raiff.payments.taxpayers.verify.taxpayer_type.TAX": "US/IC",
-    "raiff.payments.taxpayers.verify.taxpayer_data": "Nazwa płatnika",
+    "raiff.payments.taxpayers.verify.taxpayer_data": "Dane płatnika",
     "raiff.payments.taxpayers.verify.taxpayer_nip": "NIP płatnika",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id_type": "Typ identyfikatora uzupełniającego",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id": "Numer identyfikatora uzupełniającego",
@@ -949,6 +950,8 @@
     "raiff.payments.future.list.details.foreign.bankCountry.label": "Kraj banku",
     "raiff.payments.future.list.details.foreign.recipientCountry.label": "Kraj odbiorcy",
     "raiff.payments.future.list.details.foreign.commision.label": "Koszty przelewu",
+
+    "raiff.payments.future.list.details.standing_order.name": "Nazwa zlecenia stałego",
 
 
 
