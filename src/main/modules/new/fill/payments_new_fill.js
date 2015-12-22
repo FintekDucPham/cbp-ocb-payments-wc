@@ -228,4 +228,27 @@ angular.module('raiffeisen-payments')
                 });
             }
         }
-    });
+    })
+    .directive('ngForeignAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, elem, attr, ctrl) {
+                ctrl.$asyncValidators.convertedBalance = function(newValue) {
+                    return $q(function(resolve, reject) {
+                        // dla przyszlych platnosci, nie walidujemy dostepnych srodkow
+                        if (scope.payment.options.futureRealizationDate) {
+                            resolve();
+                            return;
+                        }
+
+                        currencyExchangeService.exchangeForValidation(newValue, scope.payment.formData.currency.currency, scope.payment.items.senderAccount.currency).then(function(exchanged) {
+                            return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject();
+                        }, function() {
+                            return reject();
+                        });
+                    });
+                };
+            }
+        };
+    }]);

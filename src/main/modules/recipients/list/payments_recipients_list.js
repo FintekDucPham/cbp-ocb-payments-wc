@@ -7,7 +7,7 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService) {
 
 
 
@@ -55,6 +55,7 @@ angular.module('raiffeisen-payments')
 
         $scope.onRecipientEdit = function(data){
             var recipientType = data.recipientType.toLowerCase();
+            data.bankName = $scope.recipient.item.recipientBankName;
             if(recipientType==='swift'){
                 recipientType='foreign';
             }
@@ -66,6 +67,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onRecipientRemove = function(data){
+            data.bankName = $scope.recipient.item.recipientBankName;
             angular.extend(data, {
                 recipientData: data.recipientName,
                 description: data.transferTitle
@@ -112,6 +114,16 @@ angular.module('raiffeisen-payments')
         $scope.trimTable = lodash.memoize(function(table) {
             return lodash.without(table, null);
         });
+
+        $scope.resolveBankNamePromise = function(account){
+            $scope.recipient.item.recipientBankNamePromise = paymentsService.getBankName(account).then(function(bankName){
+                if(bankName) {
+                    $scope.recipient.item.recipientBankName = bankName.fullName || bankName.shortName;
+                }
+            });
+        };
+
+
 
         $scope.table = {
             tableConfig : new bdTableConfig({

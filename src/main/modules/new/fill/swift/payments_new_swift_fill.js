@@ -59,6 +59,12 @@ angular.module('raiffeisen-payments')
             });
         });
 
+        $scope.$watch('payment.formData.currency', function(n, o) {
+            if ($scope.paymentForm && $scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$validate();            
+            }
+        });
+
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
             if(n && !angular.equals(n, o)){
                 $scope.swift.promise = recipientGeneralService.utils.getBankInformation.getInformation(

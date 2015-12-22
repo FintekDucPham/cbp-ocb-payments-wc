@@ -15,7 +15,7 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService) {
 
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
@@ -98,6 +98,12 @@ angular.module('raiffeisen-payments')
                 });
         };
 
+        $scope.getBankName = function(account){
+            return paymentsService.getBankName(account).then(function (response) {
+                return response;
+            });
+        };
+
     }
 ).factory('recipientManager', function (lodash) {
 
@@ -117,7 +123,8 @@ angular.module('raiffeisen-payments')
                 return wrapWithCommonData({
                     formData: {
                         recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join("") : recipient.recipientAddress,
-                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join("") : recipient.transferTitleTable
+                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join("") : recipient.transferTitleTable,
+                        bankName: recipient.bankName
                     }
                 }, recipient);
             },

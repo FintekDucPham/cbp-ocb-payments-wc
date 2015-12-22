@@ -1,21 +1,4 @@
 angular.module('raiffeisen-payments')
-    .directive('ngSepaAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            link: function (scope, elem, attr, ctrl) {
-                ctrl.$asyncValidators.convertedBalance = function(newValue) {
-                    return $q(function(resolve, reject) {
-                        currencyExchangeService.exchangeForValidation(newValue, "EUR", scope.payment.items.senderAccount.currency).then(function(exchanged) {
-                            return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject(); 
-                        }, function() {
-                            return reject();
-                        });
-                    });
-                };
-            }
-        };
-    }])
     .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -23,7 +6,7 @@ angular.module('raiffeisen-payments')
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
         $scope.currencyList = [];
 
-        $scope.payment.formData.currency = 'EUR';
+        $scope.payment.formData.currency = {currency: 'EUR'};
 
         $scope.swift = {
             promise: null,
@@ -110,7 +93,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.transferType = "SEPA";
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientAddress = [""];
-            copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, {'currency': copiedFormData.currency})).transferType;
+            copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, copiedFormData.currency)).transferType;
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
@@ -192,7 +175,7 @@ angular.module('raiffeisen-payments')
 
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
-            $scope.payment.formData.currency = 'EUR';
+            $scope.payment.formData.currency = {currency: 'EUR'};
             $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
             if($scope.paymentForm){
                 $scope.paymentForm.amount.$validate();
