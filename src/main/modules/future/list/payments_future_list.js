@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes) {
         $scope.dateRange = {};
 
         $scope.options = {
@@ -63,11 +63,41 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onEdit = function(payment) {
-            viewStateService.setInitialState('payments.future.manage.edit', {
-                referenceId: payment.id
-            });
-            $state.go('payments.future.manage.edit.fill');
+            if (payment.transferType == rbPaymentTypes.STANDING.code) {
+                var paymentFormData = {
+                    "shortName": payment.details.shortName,
+                    "recipientName": payment.details.beneficiary ? payment.details.beneficiary.join("\n") : "",
+                    "recipientAccountNo": payment.details.creditAccount,
+                    "description": payment.details.remarks ? payment.details.remarks.join("\n") : "",
+                    "remitterAccountId": payment.details.debitAccountId,
+                    "currency": payment.details.currency,
+                    "nextRealizationDate": payment.details.frequency.nextDate ? new Date(Date.parse(payment.details.frequency.nextDate)) : null,
+                    "firstRealizationDate": payment.details.startDate ? new Date(payment.details.startDate) : null,
+                    "finishDate": payment.details.endDate ? new Date(payment.details.endDate) : null,
+                    "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.details.frequency.periodUnit)).code,
+                    "frequency": payment.details.frequency.periodCount,
+                    "amount": payment.details.amount,
+                    "id": payment.id
+                };
+
+                viewStateService.setInitialState('payments.new', {
+                    paymentOperationType: rbPaymentOperationTypes.EDIT,
+                    returnToPage: $scope.table.tableConfig.currentPage
+                });
+
+                $state.go('payments.new.fill', {
+                    payment: paymentFormData,
+                    paymentType: "standing"
+                });
+            }
+            else {
+                viewStateService.setInitialState('payments.future.manage.edit', {
+                    referenceId: payment.id
+                });
+                $state.go('payments.future.manage.edit.fill');
+            }
         };
+
         var parseDataByTransfer = function (details) {
             var responseObject = {
                 transferType: details.transferType,
@@ -84,9 +114,18 @@ angular.module('raiffeisen-payments')
             responseObject.description = details.recipientName;
             return responseObject;
         };
+
         $scope.onDelete = function(payment) {
-            var responseObject = parseDataByTransfer(payment);
-                console.debug(payment, responseObject);
+            if (payment.transferType == rbPaymentTypes.STANDING.code) {
+                viewStateService.setInitialState('payments.standing.manage.remove.verify', {
+                    payment: payment.details,
+                    returnToPage: $scope.table.tableConfig.currentPage
+                });
+
+                $state.go('payments.standing.manage.remove.verify');
+            }
+            else {
+                var responseObject = parseDataByTransfer(payment);
                 paymentsService.remove(responseObject).then(function(resp) {
                     var responseJson = angular.fromJson(resp.content);
                     var referenceId = responseJson.referenceId;
@@ -97,6 +136,7 @@ angular.module('raiffeisen-payments')
                     });
                     $state.go('payments.future.manage.delete.fill');
                 });
+            }
         };
 
         $scope.onBack = function(child) {
@@ -131,6 +171,9 @@ angular.module('raiffeisen-payments')
                     paymentsService.search(params).then(function (response) {
                         var summary = {};
                         _.each(response.content, function(payment) {
+                            if (payment.transferType == 'STANDING_ORDER') {
+                                payment.transferType = rbPaymentTypes.STANDING.code;
+                            }
                             addPaymentAmountToSummary(payment, summary);
                             linkDetailsLoading(payment);
                         });
@@ -145,10 +188,18 @@ angular.module('raiffeisen-payments')
 
         function linkDetailsLoading(payment) {
             payment.loadDetails = function() {
-                payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
-                    payment.details = resp;
-                    payment.details._showButtons = true;
-                });
+                // unfortunatelly for standing orders we have different service
+                if (payment.transferType == rbPaymentTypes.STANDING.code) {
+                    payment.promise = standingTransferService.get(payment.id).then(function(resp) {
+                        payment.details = resp;
+                        payment.details.transferType = rbPaymentTypes.STANDING.code;
+                    });
+                }
+                else {
+                    payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
+                        payment.details = resp;
+                    });
+                }
             };
         }
 
