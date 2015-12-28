@@ -125,7 +125,7 @@
     "raiff.payments.new.foreign.fill.multirow_title.error.required": "Pole Tytuł  nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.swfitbic":"podaj SWIFT/BIC",
     "raiff.payments.new.foreign.fill.recipientBankData":"wprowadź dane banku odbiorcy",
-
+    "raiff.payments.new.currency.fill.recipient_account.INCORRECT_IBAN": "Długość rachunku jest nieprawidłowa dla wybranego kraju",
     "raiff.payments.new.verify.smscode": "Podaj haslo SMS dla operacji",
     "raiff.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",
 
