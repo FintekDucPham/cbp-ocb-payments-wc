@@ -1,9 +1,11 @@
 <div class="form-body">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
-        <span>{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>&nbsp;<!-- | nazwa -->
-        |
-        {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+        <span style="display: inline-block; word-break: break-all;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>
+        <span style="display: inline-block;">
+            <span class="hidden-md hidden-lg">{{ payment.items.senderAccount.accountNo | nrbAccountSelectIbanShortFilter }}</span>
+        </span>
+        <span style="display:block;" class="hidden-xs hidden-sm"> {{ payment.items.senderAccount.accountNo | nrbIbanFilter }}</span>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_data'|translate}}">
@@ -11,9 +13,12 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.recipient_account_name'|translate}}">
-        {{payment.items.recipientAccount.accountName}}&nbsp;<!-- | nazwa -->
-        |
-        {{payment.items.recipientAccount.accountNo | nrbIbanFilter}} <!-- | numer -->
+        <span style="display: inline-block; word-break: break-all;">{{ payment.items.recipientAccount.accountName }}</span>
+        <span style="display: inline-block;">
+            <span class="hidden-md hidden-lg">{{ payment.items.recipientAccount.accountNo | nrbAccountSelectIbanShortFilter }}</span>
+        </span>
+        <span style="display:block;" class="hidden-xs hidden-sm"> {{ payment.items.recipientAccount.accountNo | nrbIbanFilter }}</span>
+
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.amount'|translate}}">
