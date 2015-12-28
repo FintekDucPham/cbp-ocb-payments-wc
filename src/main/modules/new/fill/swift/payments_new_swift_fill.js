@@ -264,6 +264,8 @@ angular.module('raiffeisen-payments')
             }
 
             $scope.setRecipientDataExtractor(function() {
+                recipientData.description = recipientData.description.join('\n');
+                recipientData.recipientData = recipientData.recipientData.join('\n');
                 return recipientData;
             });
         });
