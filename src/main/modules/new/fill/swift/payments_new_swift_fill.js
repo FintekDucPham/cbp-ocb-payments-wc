@@ -59,6 +59,42 @@ angular.module('raiffeisen-payments')
             });
         });
 
+        $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
+            "83101010230000261395100000",
+            "78101010230000261395200000",
+            "73101010230000261395300000",
+            "68101010230000261395400000"
+        ], function (val) {
+            return {
+                code: 'notZus',
+                value: val
+            };
+        }));
+
+
+        $scope.recipientAccountValidators = {
+            notUs: function (accountNo) {
+                if (accountNo) {
+                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
+                        code: 'notUs',
+                        value: accountNo.replace(/ /g, '')
+                    });
+                } else {
+                    return false;
+                }
+            },
+            notZus: function (accountNo) {
+                if (accountNo) {
+                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
+                        code: 'notZus',
+                        value: accountNo.replace(/ /g, '')
+                    });
+                } else {
+                    return false;
+                }
+            }
+        };
+
         $scope.$watch('payment.formData.currency', function(n, o) {
             if ($scope.paymentForm && $scope.paymentForm.amount) {
                 $scope.paymentForm.amount.$validate();            
@@ -276,6 +312,21 @@ angular.module('raiffeisen-payments')
                 accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
             });
             $scope.payment.formData.hideSaveRecipientButton = !!recipient;
+
+            if($scope.payment.formData.recipientAccountNo) {
+                control.holdOn();
+                taxOffices.search({
+                    accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
+                }).then(function (result) {
+                    if (result.length > 0) {
+                        $scope.payment.meta.recipientForbiddenAccounts.push({
+                            code: 'notUs',
+                            value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
+                        });
+                        $scope.paymentForm.recipientAccountNo.$validate();
+                    }
+                }).finally(control.done);
+            }
         });
 
         function isAccountInvestmentFulfilsRules(account){
