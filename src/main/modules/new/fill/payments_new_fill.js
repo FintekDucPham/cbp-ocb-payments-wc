@@ -229,20 +229,24 @@ angular.module('raiffeisen-payments')
             }
         }
     })
-    .directive('ngForeignAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
+    .directive('rbForeignAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function (scope, elem, attr, ctrl) {
                 ctrl.$asyncValidators.convertedBalance = function(newValue) {
                     return $q(function(resolve, reject) {
+                        var sourceAccountCurrency = scope.$eval(attr.rbSourceAccountCurrency),
+                            transactionCurrency = scope.$eval(attr.rbTransactionCurrency);
+
                         // dla przyszlych platnosci, nie walidujemy dostepnych srodkow
                         if (scope.payment.options.futureRealizationDate) {
                             resolve();
                             return;
                         }
 
-                        currencyExchangeService.exchangeForValidation(newValue, scope.payment.formData.currency.currency, scope.payment.items.senderAccount.currency).then(function(exchanged) {
+                        //currencyExchangeService.exchangeForValidation(newValue, scope.payment.formData.currency.currency, scope.payment.items.senderAccount.currency).then(function(exchanged) {
+                        currencyExchangeService.exchangeForValidation(newValue, transactionCurrency, sourceAccountCurrency).then(function(exchanged) {
                             return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject();
                         }, function() {
                             return reject();
