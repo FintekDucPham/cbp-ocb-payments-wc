@@ -45,6 +45,7 @@
                    ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    ng-change="unlockField()"
                    ng-disabled="payment.options.fixedRecipientSelection  || showHide"
+                   bd-matches-none-of="recipientAccountValidators"
                    placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
 
@@ -52,7 +53,6 @@
                 <div class="validation-message animate-on">
                     {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
                 </div>
-
             </eb-validation-messages>
             <eb-validation-messages eb-name="recipientAccountNo"  ng-show="!showHide && !isErrorPaste">
                 <div eb-message-key="required" class="validation-message animate-on">
@@ -68,6 +68,14 @@
                     {{::'raiff.payments.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
                 </div>
 
+
+
+                <div eb-message-key="notUs" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_US'|translate}}
+                </div>
+                <div eb-message-key="notZus" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
+                </div>
             </eb-validation-messages>
 
         </bd-item-property>
