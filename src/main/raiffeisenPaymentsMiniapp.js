@@ -42,11 +42,18 @@ angular.module('raiffeisen-payments', [
                     priority: 1
                 },
                 {
+                    id: "payments.new_foreign.fill",
+                    label: 'payments.submenu.options.new_foreign.header',
+                    icon: "raiff-icons raiff_przelew",
+                    action: "payments.new_foreign.fill({ paymentType: 'sepa' })",
+                    priority: 2
+                },
+                {
                     id: "payments.new_internal.fill",
                     label: 'payments.submenu.options.new_internal.header',
                     icon: "raiff-icons raiff_przelew",
                     action: "payments.new_internal.fill",
-                    priority: 2
+                    priority: 1
                 },
                 {
                     id: "payments.recipients.list",
@@ -63,11 +70,25 @@ angular.module('raiffeisen-payments', [
                     priority: 4
                 },
                 {
+                    id: "payments.future.list",
+                    label: 'raiff.payments.future.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.future.list",
+                    priority: 5
+                },
+                {
                     id: "payments.rejected.list",
                     label: 'raiff.payments.rejected.label',
                     icon: "raiff-icons raiff_operacje_odrzucone",
                     action: "payments.rejected.list",
-                    priority: 5
+                    priority: 6
+                },
+                {
+                    id: "payments.standing.list",
+                    label: 'raiff.payments.standing.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.standing.list",
+                    priority: 7
                 }
             ]
         });

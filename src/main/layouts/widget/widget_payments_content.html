@@ -4,7 +4,7 @@
 		{{ item.recipientName[0] }}
 	</bd-item-property>
 	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.realization_date' | translate }}">
-		{{ item.realizationDate | date : 'dd.MM.yyyy' }}
+		{{ item.realizationDate | date : 'shortDate' }}
 	</bd-item-property>
 	<bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.amount' | translate }}">
 		<bd-amount style="float: right;" amount="item.amount" currency="{{ item.currency }}"></bd-amount>

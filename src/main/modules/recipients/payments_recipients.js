@@ -26,9 +26,9 @@ angular.module('raiffeisen-payments')
             code: 'TAX',
             state: 'tax'
         },
-        "CURRENCY": {
-            code: 'CURRENCY',
-            state: 'currency'
+        "FOREIGN": {
+            code: 'FOREIGN',
+            state: 'foreign'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {

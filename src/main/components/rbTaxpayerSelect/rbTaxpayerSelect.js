@@ -61,7 +61,8 @@ angular.module('raiffeisen-payments')
                 });
 
                 var waitForTaxpayers = taxpayersService.search({
-                    filerTemplateType: $scope.taxpayerType
+                    filerTemplateType: $scope.taxpayerType,
+                    pageSize: 1000
                 }).then(function(data) {
                     $scope.taxpayerList = lodash.union([ nullOption ], lodash.map(data.content, function(data) {
                         return {

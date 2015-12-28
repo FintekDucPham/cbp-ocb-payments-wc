@@ -1,12 +1,8 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyDomesticController', function ($scope, accountsService, customerService, lodash) {
+    .controller('RecipientsManageVerifyDomesticController', function ($scope, accountsService, customerService, lodash, bdStepStateEvents) {
 
         $scope.accountListPromise = accountsService.search().then(function(accountList){
             $scope.accountsList = accountList.content;
-        });
-
-        customerService.getCustomerDetails().then(function(customerDetails){
-            $scope.customerDetails = customerDetails.customerDetails;
         });
 
         $scope.getAccountByNrb = function(accountNumber){
@@ -14,6 +10,7 @@ angular.module('raiffeisen-payments')
                 accountNo: accountNumber
             });
         };
+
         $scope.formatTextBox = function(array) {
             array = array || [];
             if (array.length < 4) {

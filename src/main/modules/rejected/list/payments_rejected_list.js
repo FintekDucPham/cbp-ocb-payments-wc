@@ -4,6 +4,9 @@ angular.module('raiffeisen-payments')
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/rejected/list/payments_rejected_list.html",
             controller: "PaymentsRejectedListController",
+            params: {
+                referenceId: null
+            },
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
@@ -31,7 +34,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $filter) {
+    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter) {
 
         var PERIOD_TYPES = {
             LAST: 'LAST',
@@ -50,21 +53,61 @@ angular.module('raiffeisen-payments')
         var oneDayMilisecs = 1000 * 60 * 60 * 24;
 
 
-        //calculate lasts
-        var calculateDateFromLast = function () {
-
-
-            var value = parseInt($scope.rejectedList.filterData.last.value);
-            var factor = 1; //days
-            if ($scope.rejectedList.filterData.last.type.selected === LAST_TYPES.WEEKS) {
-                factor = 7;
-            }
-            if ($scope.rejectedList.filterData.last.type.selected === LAST_TYPES.MONTH) {
-                $scope.rejectedList.filterData.last.dateFrom = new Date((new Date()).setMonth(now.getMonth() - value));
-            } else {
-                $scope.rejectedList.filterData.last.dateFrom = new Date(now.getTime() - value * factor * oneDayMilisecs);
-            }
+        $scope.onBack = function(child) {
+            child.$emit('$collapseRows');
         };
+
+        var calculateModelDate = function() {
+            var lastMiliseconds = $scope.rejectedList.filterData.last.value * 24 * 3600 * 1000;
+
+            switch($scope.rejectedList.filterData.last.type.selected) {
+                case LAST_TYPES.WEEKS: {
+                    lastMiliseconds *= 7;
+                    break;
+                }
+                case LAST_TYPES.MONTH: {
+                    lastMiliseconds *= 30;
+                    break;
+                }
+            }
+
+            $scope.rejectedList.filterData.last.dateFrom = new Date((+new Date()) - lastMiliseconds);
+        };
+
+        $scope.onFilterLastTypeChange = function() {
+            calculateModelDate();
+
+            var modelDate = $scope.rejectedList.filterData.last.dateFrom,
+                minDate   = $scope.rejectedList.minDate,
+                diffMS    = now.getTime() - minDate.getTime();
+
+            // if value is incorrect (too big)
+            if (modelDate.getTime() < minDate.getTime()) {
+                switch ($scope.rejectedList.filterData.last.type.selected) {
+                    case LAST_TYPES.WEEKS:
+                    {
+                        $scope.rejectedList.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 7));
+                        break;
+                    }
+                    case LAST_TYPES.MONTH:
+                    {
+                        $scope.rejectedList.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 31));
+                        break;
+                    }
+                }
+            }
+
+
+            // we need to recalculate model date after changing week
+            calculateModelDate();
+
+            $scope.rejectedList.filterData.periodType.model = PERIOD_TYPES.LAST;
+        };
+
+        $scope.onFilterLastValueChange = function() {
+           calculateModelDate();
+        };
+
 
         //scope object
         $scope.rejectedList = {
@@ -79,6 +122,7 @@ angular.module('raiffeisen-payments')
                 },
                 last: {
                     value: parameters.detal.default,
+                    default: parameters.detal.default,
                     dateFrom: null,
                     type: {
                         selected: LAST_TYPES.DAYS,
@@ -92,24 +136,17 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.$watch('rejectedList.filterData.last.type.selected', calculateDateFromLast);
-        $scope.$watch('rejectedList.filterData.last.value', function(n,o){
-            if(n!=o){
-                if(!n){
-                    n=0;
-                }
-                if(String(n).length>3){
-                    $scope.rejectedList.filterData.last.value = o;
-                }else{
-                    calculateDateFromLast();
-                }
-            }
-        });
+        $scope.onFilterLastValueChange();
+
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
-            $scope.rejectedList.filterData.last.value = Math.ceil((now.getTime() - firstDayOfCurrentMonth.getTime() + oneDayMilisecs) / oneDayMilisecs);
+            $scope.rejectedList.filterData.last.value = now.getDate(); // bo data bieżąca - data początku miesiąca + 1 to taki skomplikowany sposób na powiedzenie, że chodzi o dzień miesiąca
+            $scope.rejectedList.filterData.last.default = now.getDate();
             $scope.rejectedList.filterData.range.dateFrom = firstDayOfCurrentMonth;
+
+            // hello world, tutaj weeeee ned to change something, i hope only here ;)
             $scope.rejectedList.minDate = new Date((new Date()).setMonth(now.getMonth() - parameters.micro.max));
+
             $scope.rejectedList.maxOffset = parameters.micro.max;
         }
 
@@ -124,45 +161,60 @@ angular.module('raiffeisen-payments')
             tableConfig: $scope.tableConfig,
             tableData: {
                 getData: function ($promise, $params) {
-
                     var params = {
                         statusPaymentCriteria: "rejected",
                         realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
                         realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
                     };
 
-                    params.pageSize = $params.pageSize;
+                    params.pageSize   = $params.pageSize;
                     params.pageNumber = $params.currentPage;
 
                     if ($params.model.filterData.periodType.model === PERIOD_TYPES.LAST) {
-                        params.realizationDateTo = $filter('date')(now.getTime(), "yyyy-MM-dd");
+                        params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
                         params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
                     }
-
-                    paymentsService.search(params).then(function (paymentSummary) {
-                        angular.forEach(paymentSummary.content, function (payment) {
-                            if(payment.transferType === 'OWN') {
-                                payment.transferType = 'INTERNAL';
-                            }
-
-                            angular.extend(payment, {
+                    if(angular.isDefined($stateParams.referenceId) && $stateParams.referenceId != null) {
+                        paymentsService.get($stateParams.referenceId, {}).then(function(paymentDetails){
+                            angular.extend(paymentDetails, {
                                 loadDetails: function () {
-
-                                    this.promise = paymentsService.get(this.id, {}).then(function (paymentDetails) {
-                                        payment.details = paymentDetails;
-                                        if(payment.details.transferType === 'OWN') {
-                                            payment.details.transferType = 'INTERNAL';
-                                        }
-                                    });
-
-                                    payment.loadDetails = undefined;
+                                    //this.promise = $q.defer();
+                                    paymentDetails.details = paymentDetails;
+                                    if (paymentDetails.transferType === 'OWN') {
+                                        paymentDetails.transferType = 'INTERNAL';
+                                    }
+                                    //this.promise.resolve();
+                                    paymentDetails.loadDetails = undefined;
                                 }
                             });
+                            $params.pageCount = 1;
+                            $promise.resolve([lodash.merge(paymentDetails,{renderExpanded: true})]);
                         });
-                        $params.pageCount = paymentSummary.totalPages;
+                    } else {
+                        paymentsService.search(params).then(function (paymentSummary) {
+                            angular.forEach(paymentSummary.content, function (payment) {
+                                if(payment.transferType === 'OWN') {
+                                    payment.transferType = 'INTERNAL';
+                                }
 
-                        $promise.resolve(paymentSummary.content);
-                    });
+                                angular.extend(payment, {
+                                    loadDetails: function () {
+                                        this.promise = paymentsService.get(this.id, {}).then(function (paymentDetails) {
+                                            payment.details = paymentDetails;
+                                            if(payment.details.transferType === 'OWN') {
+                                                payment.details.transferType = 'INTERNAL';
+                                            }
+                                        });
+
+                                        payment.loadDetails = undefined;
+                                    }
+                                });
+                            });
+                            $params.pageCount = paymentSummary.totalPages;
+                            $promise.resolve(paymentSummary.content);
+                        });
+                    }
+
                 }
             },
             tableControl: undefined
@@ -230,6 +282,9 @@ angular.module('raiffeisen-payments')
 
         //action
         $scope.onSubmit = function (form) {
+            if(angular.isDefined($stateParams.referenceId) && $stateParams.referenceId != null){
+                delete $stateParams.referenceId;
+            }
             if (form.$valid) {
                 $scope.table.tableControl.invalidate();
             }

@@ -8,13 +8,15 @@
                                rb-product-list-name="TRANSFER_OWN_FROM_LIST"
                                rb-account-select-params="senderSelectParams"
                                rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                               rb-on-account-select="recipientSelectParams.update($accountId)"></rb-account-select>
+                               rb-on-account-select="recipientSelectParams.update($accountId)"
+                               rb-remote="remote.model_from"
+                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
         </bd-item-property>
 
-        <bd-item-property ng-if="payment.formData.remitterAccountId"
+        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
                           label="{{ ::'raiff.payments.new.internal.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <bd-amount amount="payment.items.senderAccount.accessibleAssets"
-                       currency="{{ payment.items.senderAccount.currency }}"></bd-amount>
+                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
 
         <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}">
@@ -25,7 +27,9 @@
                     rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                     rb-product-list-name="TRANSFER_OWN_TO_LIST"
                     bd-attr-name="recipientAccountId"
-                    bd-attr-required></rb-account-select>
+                    bd-attr-required
+                    rb-remote="remote.model_to"
+                    rb-init-select-value = "{{payment.formData.recipientAccountNo}}"></rb-account-select>
 
             <eb-validation-messages eb-name="recipientAccountId">
                 <div eb-message-key="required" class="validation-message animate-on">
@@ -35,7 +39,7 @@
 
         </bd-item-property>
 
-        <bd-item-property ng-if="payment.formData.recipientAccountId"
+        <bd-item-property ng-if="payment.formData.recipientAccountId && remote.model_from.loaded &&  payment.operation.code !='EDIT'"
                           label="{{ ::'raiff.payments.new.internal.fill.recipient_account.accessible_assets' | translate }}">
             <bd-amount amount="payment.items.recipientAccount.accessibleAssets"
                        currency="{{ payment.items.recipientAccount.currency }}"></bd-amount>
@@ -46,12 +50,12 @@
 
             <div class="bd-item-property--multi__values">
                 <div class="bd-item-property__value--primary">
-                    <input type="number"
+                    <input type="text"
                            name="amount"
                            class="input-field"
                            min="0.01"
                            step="0.01"
-                           bd-amount
+                           ng-pattern="AMOUNT_PATTERN"
                            bd-no-more-than="{ 'balance' : { 'payment.meta.convertedAssets' : !payment.options.futureRealizationDate } }"
                            ng-model="payment.formData.amount"
                            required
@@ -76,6 +80,9 @@
                 <div eb-message-key="number" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
                 <div eb-message-key="min" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
@@ -89,7 +96,10 @@
                     {{ 'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
                 </div>
             </eb-validation-messages>
-
+            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+                 ng-if="limitExeeded !== undefined && limitExeeded.show">
+                {{limitExeeded.messages}}
+            </div>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
@@ -97,8 +107,7 @@
     <textarea name="description"
               ng-model="payment.formData.description"
               ng-pattern="PAYMENT_DESCRIPTION_REGEX"
-              bd-split-text
-              bd-split-text-length="132"
+              split-text-max-length-validators="140"
               required
               class="input-area input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
@@ -110,13 +119,12 @@
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
-                <div eb-message-key="splitTextLength" class="validation-message animate-on">
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
             </eb-validation-messages>
 
         </bd-item-property>
-
         <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.execution_date' | translate }}">
 
             <rb-datepicker rb-form="paymentForm"

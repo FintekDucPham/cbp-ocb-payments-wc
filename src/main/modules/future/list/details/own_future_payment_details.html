@@ -1,0 +1,34 @@
+<div ng-class="{'form-body' :  $data.operationType === 'DELETE'}">
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferType'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
+        {{ ::'raiff.payments.future.list.details.domestic.transferTypes.' + $data.details.transferType | translate}}
+    </bd-item-property>
+    
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.status'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
+        {{ ::'raiff.payments.future.delete.status.label.status.' + $data.operationStatus | translate }}
+    </bd-item-property>
+    
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
+        {{ $data.details.accountName }} <br/>
+        {{ $data.details.accountNo | nrbIbanFilter }}
+    </bd-item-property>
+    
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
+        {{ $data.details.recipientAccountName }} <br ng-if="$data.details.recipientAccountName && $data.details.recipientAccountName.length > 0"/>
+        {{ $data.details.recipientAccountNo | nrbIbanFilter }}
+    </bd-item-property>
+    
+    
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.tax.insurance.amount'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
+        {{ $data.details.amount }} {{ $data.details.currency }}
+    </bd-item-property>
+    
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferTitle'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
+        <bd-multiline-text bd-text="$data.details.title"></bd-multiline-text>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.own.deliveryDate'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
+        {{ $data.deliveryDate | date:'shortDate' }}
+    </bd-item-property>
+</div>    
+
+

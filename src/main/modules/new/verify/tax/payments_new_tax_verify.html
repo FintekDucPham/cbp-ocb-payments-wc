@@ -1,7 +1,7 @@
 <div class="form-body" ng-controller="NewUsPaymentVerifyController">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.sender_account_name'|translate}}">
-        {{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}&nbsp;<!-- | nazwa -->
+        <span style="word-break: break-word;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>&nbsp;<!-- | nazwa -->
 
         {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
 
@@ -13,7 +13,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.taxpayer_data'|translate}}">
-        <p style="white-space: pre;" ng-bind-html="payment.formData.taxpayerData.join('\n')"></p>
+        <p style="word-break: break-all" ng-bind-html="payment.formData.taxpayerDataTable | arrayToString"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id_type'|translate}}">
@@ -45,16 +45,26 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.amount'|translate}}">
-        {{payment.formData.amount}}&nbsp;{{payment.formData.currency}} <!-- | nrb -->
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.execution_date'|translate}}">
-        {{payment.formData.realizationDate | date:'dd.MM.yyyy' }}
+        {{payment.formData.realizationDate | date:'shortDate' }}
+    </bd-item-property>
+    <bd-item-property ng-show="transferCost.link != null" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.verify.transfer_cost'|translate}}">
+        <a ng-show="transferCost.link != null" href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
     </bd-item-property>
      <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
          <span class="messages">
              <span class="validation-message">
                  {{::'raiff.payments.new.domestic.fill.execution_date.EOD_ERROR'|translate}}
+             </span>
+         </span>
+    </span>
+     <span class="eb-validation-messages" ng-if="payment.holiday">
+         <span class="messages">
+             <span class="validation-message">
+                 {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
              </span>
          </span>
     </span>

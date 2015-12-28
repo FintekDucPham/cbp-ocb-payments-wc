@@ -1,0 +1,19 @@
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
+    {{ $data.customerName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
+    {{ $data.bankName }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
+    {{ $data.nrb | nrbIbanFilter }}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
+    {{$data.recipientAddress}}
+</bd-item-property>
+
+<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
+    {{ $data.transferTitle }}
+</bd-item-property>

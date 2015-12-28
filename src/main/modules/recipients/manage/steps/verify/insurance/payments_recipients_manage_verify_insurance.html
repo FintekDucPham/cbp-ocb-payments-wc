@@ -1,8 +1,10 @@
 <rb-payment-recipients-verify>
     <div ng-controller="RecipientsManageVerifyZusController">
-
-        <bd-item-property ng-if="recipient.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.micro_name' | translate }}">
-            {{ recipient.formData.customName }}
+        <bd-item-property label="{{::'raiff.payments.recipients.new.zus.verify.micro_name'|translate}}" class="bd-item-property--text bd-item-property--disabled" ng-if="customerDetails.context == 'MICRO'">
+            <div ng-repeat="owner in ownerList = (recipient.items.senderAccount.ownersList | filter: { relationType: 'OWNER' }:true)">
+                <span ng-if="owner != null">{{owner.fullName}}</span>
+                <span ng-if="owner == null">-</span>
+            </div>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">
@@ -12,9 +14,8 @@
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.custom_name' | translate }}">
             {{ recipient.formData.customName }}
         </bd-item-property>
-
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.recipient_account' | translate }}">
-            {{ recipient.items.selectedInsurance.accountNo | nrbIbanFilter  }}
+            {{recipient.items.selectedInsurance.translatedValue}} {{ recipient.items.selectedInsurance.accountNo | nrbIbanFilter  }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.taxpayer_nip' | translate }}">

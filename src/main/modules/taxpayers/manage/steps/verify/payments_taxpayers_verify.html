@@ -1,7 +1,7 @@
 <div>
 
     <bd-item-property ng-if="taxpayer.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.micro_name' | translate }}">
-        {{ taxpayer.formData.customName }}
+        {{ taxpayer.formData.microName }}
     </bd-item-property>
     
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.custom_name' | translate }}">
@@ -13,7 +13,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.taxpayers.verify.taxpayer_data'|translate}}">
-        <p style="white-space: pre;" ng-bind-html="taxpayer.formData.taxpayerData.join('\n')"></p>
+        <p style="word-break: break-all" ng-bind-html="taxpayer.formData.taxpayerData.join('')"></p>
     </bd-item-property>
 
     <bd-item-property ng-if="taxpayer.formData.taxpayerType === 'INSURANCE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_nip' | translate }}">
@@ -28,7 +28,7 @@
         {{ taxpayer.formData.secondaryIdNo }}
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text" ng-if="taxpayerAuthForm.params.resourceId" label="{{ taxpayerAuthForm.model.currentToken.label }}">
+    <bd-item-property class="bd-item-property--text" ng-if="taxpayerAuthForm.params.resourceId" ng-show="taxpayerAuthForm.model.$tokenRequired" label="{{ taxpayerAuthForm.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="MANAGE_PAYER" rb-model="taxpayerAuthForm.model" rb-params="taxpayerAuthForm.params"></rb-token-authorization>
     </bd-item-property>
 

@@ -10,12 +10,17 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, pathService, translate, $stateParams, $state, lodash) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash) {
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             options: {
                 fixedAccountSelection: false
+            },
+            operation: rbPaymentOperationTypes.NEW,
+            token: {
+                model: null,
+                params: {}
             }
         }), {
             formData: $stateParams.payment
@@ -35,4 +40,19 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.payment.rbMultistepParams = {
+            completeState: 'payments.recipients.list',
+            onClear: $scope.clearForm,
+            cancelState: 'payments.recipients.list',
+            labels : {
+                change: 'config.multistepform.buttons.change',
+                edit: 'config.multistepform.buttons.edit',
+                clear: 'config.multistepform.buttons.clear',
+                prev: 'config.multistepform.buttons.prev',
+                next: 'config.multistepform.buttons.next',
+                accept: 'config.multistepform.buttons.accept',
+                finalAction: 'raiff.payments.new.btn.final_action',
+                finalize: 'raiff.payments.new.btn.finalize'
+            }
+        };
     });

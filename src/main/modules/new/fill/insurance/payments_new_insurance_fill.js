@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams) {
+    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents) {
 
         angular.extend($scope.payment.meta, {
             zusInsuranceTypes: zusPaymentInsurances,
@@ -10,6 +10,12 @@ angular.module('raiffeisen-payments')
             zusPaymentTypes: zusPaymentTypes
         });
 
+        if($scope.payment.formData.insurancePremiums==null){
+            $scope.payment.formData.insurancePremiums = [];
+            lodash.forEach(zusPaymentInsurances, function (value) {
+                $scope.payment.formData.insurancePremiums[value] = {};
+            });
+        }
 
         var insuranceAccountsPromise = insuranceAccounts.search().then(function(insuranceAccounts) {
             $scope.insuranceAccountList = insuranceAccounts.content;
@@ -53,7 +59,7 @@ angular.module('raiffeisen-payments')
             return lodash.map(lodash.groupBy($scope.payment.formData.insurancePremiums, 'currency'), function (values) {
                 var totalAmount = 0;
                 lodash.forEach(values, function (value) {
-                    totalAmount += parseFloat(value.amount) || 0;
+                    totalAmount += value.amount ? parseFloat((""+value.amount).replace( /,/, '.')) : 0;
                 });
                 return {
                     currency: values[0].currency,
@@ -83,7 +89,7 @@ angular.module('raiffeisen-payments')
             return lodash.size(lodash.keys(insurances));
         }
 
-        $scope.$watch('payment.formData.insurancePremiums', function (newInsurances, oldInsurances) {
+        var insurenePremiumsWatch = function (newInsurances, oldInsurances) {
             $scope.payment.meta.amountSummary = $scope.totalPaymentAmount = calculateInsurancesAmount();
             lodash.forEach(lodash.difference(lodash.keys(oldInsurances), lodash.keys(newInsurances)), function(insurance) {
                 var formElement = $scope.paymentForm[insurance + 'Amount'];
@@ -91,7 +97,11 @@ angular.module('raiffeisen-payments')
                 formElement.$setUntouched();
                 formElement.$render();
             });
-        }, true);
+        };
+        $scope.$watch('payment.formData.insurancePremiums',insurenePremiumsWatch , true);
+        if($scope.payment.formData.insurancePremiums){
+            insurenePremiumsWatch($scope.payment.formData.insurancePremiums, $scope.payment.formData.insurancePremiums);
+        }
 
         $scope.clearRecipient = function () {
             if($scope.payment.options.isFromRecipient) {
@@ -107,16 +117,42 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.$watch('payment.formData.insuranceAccount', function(newValue){
+           if(newValue){
+               insuranceAccountsPromise.then(function() {
+                  lodash.forEach($scope.insuranceAccountList, function(item){
+                      if(item.accountNo === newValue){
+                          $scope.payment.formData.insurancePremiums[item.insuranceCode] = {
+                                currency: "PLN",
+                                amount: $scope.payment.formData.amount
+                          };
+                      }
+                   });
+                   calculateInsurancesAmount();
+
+                  /* $scope.payment.formData.insurancePremiums[lodash.find($scope.insuranceAccountList, {
+                       accountNo : newValue
+                   }).insuranceCode] = {
+                       currency: 'PLN'
+                   };*/
+               });
+           }
+        });
         $scope.selectRecipient = function (recipient) {
             $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
+            $scope.payment.items.recipient = recipient;
+
             insuranceAccountsPromise.then(function() {
-                $scope.payment.formData.insurancePremiums[lodash.find($scope.insuranceAccountList, {
+                var insuranceAccountType = lodash.find($scope.insuranceAccountList, {
                     accountNo : recipient.nrb
-                }).insuranceCode] = {
-                    currency: 'PLN'
-                };
+                }).insuranceCode;
+                if(angular.isUndefined($scope.payment.formData.insurancePremiums[insuranceAccountType])){
+                    $scope.payment.formData.insurancePremiums[insuranceAccountType] = {
+                        currency: 'PLN'
+                    };
+                }
             });
             if(!$scope.payment.options.isFromTaxpayer) {
                 $scope.payment.formData.nip = recipient.nip;
@@ -138,41 +174,68 @@ angular.module('raiffeisen-payments')
                 $scope.payment.options.isFromTaxpayer = false;
             }
         };
-
+       /* $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            console.debug($scope.insuranceAccountList);
+            for(var k in $scope.payment.formData.insurancePremiums){
+                console.debug(k);
+            }
+            /!*var recipient = lodash.find($scope.payment.meta.recipientList, {
+                templateType: 'INSURANCE',
+                nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+            });
+            if(angular.isDefined(recipient) && recipient !== null){
+                delete $scope.payment.rbPaymentsStepParams.finalAction;
+            }*!/
+        });*/
         $scope.selectTaxpayer = function (taxpayer) {
             var formData = $scope.payment.formData;
             formData.secondaryIdType = taxpayer.secondaryIdType;
             formData.secondaryIdNo = taxpayer.secondaryId;
             formData.nip = taxpayer.nip;
-            formData.recipientName = taxpayer.data;
+            formData.recipientName = taxpayer.data.join('');
             $scope.payment.options.isFromTaxpayer = true;
         };
 
         $scope.onAccountSelected = function (account, oldAccount) {
             if (account && oldAccount) {
                 var oldOwnerCustId = oldAccount.ownersList[0].customerId;
-                var newOwnerCustId = oldAccount.ownersList[0].customerId;
+                var newOwnerCustId = account.ownersList[0].customerId;
                 if (oldOwnerCustId !== newOwnerCustId) {
                     $scope.clearRecipient();
                 }
             }
-        };
 
+            if ($scope.paymentForm) {
+
+                _.forEach(zusPaymentInsurances, function(val, key) {
+                    if ($scope.paymentForm[val + 'Amount']) {
+                        $scope.paymentForm[val + 'Amount'].$validate();
+                    }
+                });
+
+                $scope.paymentForm.insuranceErrors.$validate();
+            }
+        };
+        $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
+            $scope.paymentForm.insuranceErrors.$validate();
+        });
         $scope.insurancesValidators = {
             atLeastOne: function (insurances) {
                 return getActiveInsurancesCount(insurances) > 0;
             },
             validSelection: function() {
                 return lodash.isEmpty(lodash.filter($scope.payment.formData.insurancePremiums, function(premiumValue, premiumType) {
-                   return !$scope.paymentForm[premiumType + 'Amount'].$valid || !$scope.paymentForm[premiumType + 'Currency'].$valid;
+                   return !$scope.paymentForm[premiumType + 'Amount'].$valid;
                 }));
             },
             amountExceedingFunds: function (insurances) {
-                if($scope.payment.items.senderAccount) {
-                    var totalPayment = lodash.reduce(lodash.pluck(lodash.values(insurances), 'amount'), function(total, next) {
-                        return total + next;
+                if($scope.payment.items.senderAccount && insurances) {
+                    var totalPayment = 0;
+
+                    _.each(_.pluck(_.values(insurances), "amount"), function(val) {
+                        totalPayment += val ?  parseFloat(val.replace(/,/, ".")) : 0;
                     });
-                    return !totalPayment || totalPayment <= $scope.payment.items.senderAccount.accessibleAssets;
+                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
                     return true;
                 }
@@ -189,11 +252,26 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
-                return lodash.pick(angular.extend({}, element, {
-                    insuranceDestinationType: key
-                }), ['amount', 'currency', 'insuranceDestinationType']);
-            });
+            copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
+            copiedFormData.decisionNo = copiedFormData.additionalInfo;
+            if($scope.payment.operation.code==='EDIT'){
+                var out = null;
+                angular.forEach(copiedFormData.insurancePremiums, function(val, key){
+                    if(!out){
+                        out = angular.copy(val);
+                        out.insuranceDestinationType=key;
+                    }
+                });
+                copiedFormData.insurancePremium = out;
+            }else{
+                copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
+                    element.amount = ("" + element.amount).replace(/,/, ".");
+                    return lodash.pick(angular.extend({}, element, {
+                        insuranceDestinationType: key
+                    }), ['amount', 'currency', 'insuranceDestinationType']);
+                });
+            }
+
             return copiedFormData;
         });
 
@@ -215,8 +293,22 @@ angular.module('raiffeisen-payments')
             $scope.paymentForm.taxpayerSupplementaryId.$validate();
         };
 
-        $scope.setRecipientDataExtractor(function() {
-
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = $scope.payment;
+            var recipientData2 = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                nip: $scope.payment.formData.nip,
+                secondaryIdType:  $scope.payment.formData.secondaryIdType,
+                secondaryIdNo: $scope.payment.formData.secondaryIdNo,
+                paymentType: $scope.payment.formData.paymentType
+            });
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData2;
+            });
+        });
+       /* $scope.setRecipientDataExtractor(function() {
+            var recipientData = $scope.payment;
             return {
                 customName: "Nowy odbiorca",
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
@@ -227,6 +319,26 @@ angular.module('raiffeisen-payments')
                 paymentType: $scope.payment.formData.paymentType
             };
 
-        });
+        });*/
+
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
+
+        $scope.enableInsurancePremium = function(insuranceType) {
+            var insurancePremium = lodash.find($scope.insuranceAccountList, function(insuranceAccount) {
+                return insuranceType == insuranceAccount.insuranceCode;
+            }) || {};
+            lodash.assign($scope.payment.formData.insurancePremiums[insuranceType], {
+                currency: "PLN",
+                nrb: insurancePremium.accountNo
+            });
+        };
 
     });

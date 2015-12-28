@@ -1,19 +1,7 @@
 <rb-payment-recipients-verify>
-
     <div ng-controller="RecipientsManageVerifyDomesticController">
         <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
-            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                {{ recipient.items.senderAccount.accountName }}&nbsp;
-
-                {{ recipient.items.senderAccount.accountNo }}
-            </section>
-            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
-            </section>
-        </bd-item-property>
+        <span class="payments-recipients__domestic-verify">
 
         <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.edit.domestic.verify.company.name' | translate }}">
             <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
@@ -29,14 +17,45 @@
                 </div>
             </section>
         </bd-item-property>
-        <bd-item-property ng-if="(recipient.operation.code == 'REMOVE' || recipient.operation.code == 'EDIT')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
+
+        <bd-item-property ng-if="(recipient.operation.code == 'REMOVE')" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">
             {{ recipient.formData.recipientId}}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.account_related' | translate }}">
+            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
+            </section>
+            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
+            </section>
+        </bd-item-property>
+
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'raiff.payments.recipients.new.domestic.fill.custom_name.label' | translate }}" style="word-wrap: break-word">
             {{ recipient.formData.customName }}
         </bd-item-property>
+        <span ng-if="recipient.operation.code != 'NEW'">
+            <bd-item-property ng-show="recipient.formData.bankName" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
+                {{recipient.formData.bankName}}
+            </bd-item-property>
+        </span>
+        <span ng-if="recipient.operation.code == 'NEW'" class="payments-recipients__domestic-verify__bankName-preloader-section">
+            <bd-item-property ng-show="recipient.formData.bankName" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
+                <rb-bank-name
+                        response-value="recipient.formData.bankName"
+                        account-no="recipient.formData.recipientAccountNo"
+                        bank-name-promise="recipient.meta.bankName.bankNamePromise">
+                    {{recipient.formData.bankName}}
+                </rb-bank-name>
+            </bd-item-property>
+             <bd-item-property  class="bd-item-property--text" label="" ng-show="recipient.meta.bankName.bankNamePromise.$$state.status === 0">
+                 <eb-preloader class="eb-inline-preloader" ng-if="recipient.meta.bankName.bankNamePromise" eb-promise="recipient.meta.bankName.bankNamePromise"></eb-preloader>
+             </bd-item-property>
+
+        </span>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
@@ -45,14 +64,13 @@
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
-            <p style="white-space: pre;" ng-bind-html="formatTextBox(recipient.formData.recipientData)"></p>
+            <p style="word-wrap: break-word" ng-bind-html="recipient.formData.recipientData"></p>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'raiff.payments.recipients.new.domestic.fill.description.label' | translate }}">
-            <p style="white-space: pre;" ng-bind-html="formatTextBox(recipient.formData.description)"></p>
+            <p style="word-wrap: break-word" ng-bind-html="recipient.formData.description"></p>
         </bd-item-property>
-
+    </span>
     </div>
-
 </rb-payment-recipients-verify>

@@ -11,11 +11,21 @@
                             {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
-                            <input bd-type="number" class="input-field" ng-model="rejectedList.filterData.last.value" name="last_value" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST" min-date="rejectedList.minDate" model-date="rejectedList.filterData.last.dateFrom" ng-pattern="/^\d+$/"/>
+                            <input
+                                    bd-type="number"
+                                    class="input-field"
+                                    ng-model="rejectedList.filterData.last.value"
+                                    name="last_value"
+                                    ng-change="onFilterLastValueChange()"
+                                    ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST"
+                                    min-date="rejectedList.minDate"
+                                    model-date="rejectedList.filterData.last.dateFrom"
+                                    ng-pattern="/^\d+$/"/>
                         </div>
                         <div class="row__inline-block--middle" style="width:100px;">
                             <ui-select ng-model="rejectedList.filterData.last.type.selected"
                                        theme="bootstrap"
+                                       ng-change="onFilterLastTypeChange()"
                                        reset-search-input="false"
                                        required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
                                 <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
@@ -123,7 +133,13 @@
               bd-table-control="table.tableControl"
               bd-table-data="table.tableData"
               bd-table-promise="recipientListPromise"
-              bd-table-data="tableData" bd-table-meta="{'first':{'title':'##raiff.payments.rejected.list.header.realizationDate.label','data':'realizationDate'},'second':{'title':'##raiff.payments.rejected.list.header.paymentType.label','data':'transferType'},'third':{'title':'##raiff.payments.rejected.list.header.accountNo.label','data':'accountNo'},'fourth':{'title':'##raiff.payments.rejected.list.header.senderName.label', 'data':'recipientName'},'fifth':{'title':'##raiff.payments.rejected.list.header.title.label','data':'title'},'sixth':{'title':'##raiff.payments.rejected.list.header.amount.label','data':['amount','currency']}}">
+              bd-table-data="tableData"
+              bd-table-meta="{'first':{'title':'##raiff.payments.rejected.list.header.realizationDate.label','data':'realizationDate'},
+                                                        'second':{'title':'##raiff.payments.rejected.list.header.paymentType.label','data':'transferType'},
+                                                        'third':{'title':'##raiff.payments.rejected.list.header.accountNo.label','data':'accountNo'},
+                                                        'fourth':{'title':'##raiff.payments.rejected.list.header.senderName.label', 'data':'recipientName'},
+                                                        'fifth':{'title':'##raiff.payments.rejected.list.header.title.label','data':'title'},
+                                                        'sixth':{'title':'##raiff.payments.rejected.list.header.amount.label','data':['amount','currency']}}">
 
 
         <bd-details-section bd-table-row-details>
@@ -133,11 +149,11 @@
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.transferType' | translate }}">
                     {{ 'raiff.payments.new.types.'+$data.details.transferType | translate }}
                 </bd-item-property>
-                <bd-item-property  label="">
+                <bd-item-property  label="{{::'raiff.payments.rejected.operation.status.label'|translate}}">
                     {{ :: 'raiff.payments.rejected.opration_type.rejected' | translate }}
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.registrationDate' | translate }}">
-                    {{ $data.details.realizationDate | date : 'dd.MM.yyyy' }} <!-- cannot resolve registration date from the bus -->
+                    {{ $data.details.realizationDate | date : 'shortDate' }} <!-- cannot resolve registration date from the bus -->
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.accountNo' | translate }}">
                     {{ $data.details.accountName }} <br/>
@@ -157,7 +173,7 @@
                     {{ $data.details.title[0] }}
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.realizationDate' | translate }}">
-                    {{ $data.details.realizationDate | date : 'dd.MM.yyyy' }}
+                    {{ $data.details.realizationDate | date : 'shortDate' }}
                 </bd-item-property>
 
             </section>
@@ -165,6 +181,7 @@
             <bd-details-action-section>
                 <div class="row">
                     <div class="col-sm-12 col-md-12" style="text-align:right;">
+                        <bd-button ng-click="onBack(this)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.rejected.list.details.back' | translate}}</bd-button>
                         <bd-button ng-click="renew($data)" class="bd-button bd-button__primary">{{::'raiff.payments.rejected.list.details.renew.button' | translate}}</bd-button>
                     </div>
                 </div>

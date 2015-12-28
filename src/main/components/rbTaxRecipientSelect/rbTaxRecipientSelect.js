@@ -63,7 +63,8 @@ angular.module('raiffeisen-payments')
                 });
 
                 $scope.searchRecipientsPromise = recipientsService.search({
-                    filerTemplateType: 'TAX'
+                    filerTemplateType: 'TAX',
+                    pageSize: 1000
                 }).then(function(data) {
                     $scope.recipientList = lodash.union([ nullOption ], lodash.map(data.content, function(data) {
                         var template = data.paymentTemplates[0];

@@ -1,0 +1,7 @@
+<rb-content-view class="form">
+    <bd-header>{{::"raiff.payments.future.manage.delete.header"|translate}}</bd-header>
+    <eb-preloader class="rb-content-view__preloader--main" eb-promise="paymentDetailsPromise"></eb-preloader>
+    <bd-form-panel>
+        <div ng-if="paymentDetailsPromise.$$state.status!==0" ui-view></div>
+    </bd-form-panel>
+</rb-content-view>

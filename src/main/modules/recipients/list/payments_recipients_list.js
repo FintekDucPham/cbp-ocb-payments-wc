@@ -7,8 +7,13 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService) {
 
+
+
+        $scope.recipient = {
+            item: {}
+        };
 
         accountsService.search().then(function(accountList){
             $scope.accountList = accountList.content;
@@ -17,13 +22,16 @@ angular.module('raiffeisen-payments')
             $scope.customerDetails = customerDetails.customerDetails;
         });
 
-
         $scope.getAccountByNrb = function(accountNrb){
             return lodash.find($scope.accountList, {
                 accountNo: accountNrb
             });
         };
 
+        $scope.searchRecipient = function(){
+            $scope.table.tableData.newSearch = true;
+            $scope.table.tableControl.invalidate();
+        };
         var recipientFilterType = angular.extend({}, rbRecipientTypes, {
             ALL : {
                 code: 'ALL'
@@ -31,7 +39,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.types = {
-            currentType: recipientFilterType.ALL,
+            currentType: recipientFilterType.DOMESTIC,
             availableTypes: recipientFilterType,
             availableTypesList: lodash.map(recipientFilterType)
         };
@@ -46,16 +54,30 @@ angular.module('raiffeisen-payments')
         $scope.recipientListPromise = {};
 
         $scope.onRecipientEdit = function(data){
+            var recipientType = data.recipientType.toLowerCase();
+            data.bankName = $scope.recipient.item.recipientBankName;
+            if(recipientType==='swift'){
+                recipientType='foreign';
+            }
             $state.go("payments.recipients.manage.edit.fill", {
-                recipientType: data.recipientType.toLowerCase(),
+                recipientType: recipientType,
                 operation: 'edit',
                 recipient: angular.copy(data)
             });
         };
 
         $scope.onRecipientRemove = function(data){
+            data.bankName = $scope.recipient.item.recipientBankName;
+            angular.extend(data, {
+                recipientData: data.recipientName,
+                description: data.transferTitle
+            });
+            var recipientType = data.recipientType.toLowerCase();
+            if(recipientType==='swift'){
+                recipientType='foreign';
+            }
             $state.go("payments.recipients.manage.remove.verify", {
-                recipientType: data.recipientType.toLowerCase(),
+                recipientType: recipientType,
                 operation: 'remove',
                 recipient: angular.copy(data)
             });
@@ -68,11 +90,21 @@ angular.module('raiffeisen-payments')
             });
         };
 
-        $scope.onRecipientTransfer = function(data){
-            $state.go("payments.new.fill", {
-                paymentType: data.recipientType.toLowerCase(),
-                recipientId: data.recipientId
-            });
+        $scope.onRecipientTransfer = function(data) {
+            // dla przelewow do odbiorcow walutowych potrzebna osobna logika
+            if (data.recipientType.toLowerCase() == 'swift') {
+                $state.go('payments.new_foreign.fill', {
+                    paymentType: 'sepa',
+                    recipientId: data.recipientId
+                });
+            }
+            else {
+                $state.go("payments.new.fill", {
+                    paymentType: data.recipientType.toLowerCase(),
+                    recipientId: data.recipientId
+                });
+            }
+
         };
 
         $scope.resolveTemplateType = function (recipientType) {
@@ -82,6 +114,16 @@ angular.module('raiffeisen-payments')
         $scope.trimTable = lodash.memoize(function(table) {
             return lodash.without(table, null);
         });
+
+        $scope.resolveBankNamePromise = function(account){
+            $scope.recipient.item.recipientBankNamePromise = paymentsService.getBankName(account).then(function(bankName){
+                if(bankName) {
+                    $scope.recipient.item.recipientBankName = bankName.fullName || bankName.shortName;
+                }
+            });
+        };
+
+
 
         $scope.table = {
             tableConfig : new bdTableConfig({
@@ -94,11 +136,20 @@ angular.module('raiffeisen-payments')
                             queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
                         };
 
-                        params.pageSize = $params.pageSize;
-                        params.pageNumber = $params.currentPage;
+                        if($scope.table.tableData.newSearch){
+                            params.pageNumber = 1;
+                            $scope.table.tableData.newSearch = false;
+                        }else{
+                            params.pageSize = $params.pageSize;
+                            params.pageNumber = $params.currentPage;
+                        }
 
                         if($scope.types.currentType !== recipientFilterType.ALL){
                             params.filerTemplateType = $scope.types.currentType.code;
+                        }
+
+                        if(params.filerTemplateType==='FOREIGN'){
+                            params.filerTemplateType = 'SWIFT';
                         }
 
                         $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
@@ -118,11 +169,23 @@ angular.module('raiffeisen-payments')
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
+                                        case "SWIFT":
+                                            return {
+                                                transferTitle: template.title.join(" "),
+                                                bankName: template.paymentDetails.bankDetails[0],
+                                                bankData:template.paymentDetails.bankDetails.join(""),
+                                                recipientIdentityType: template.paymentDetails.informationProvider,
+                                                recipientBankCountry: template.paymentDetails.bankCountry,
+                                                recipientCountry: template.paymentDetails.foreignCountryCode,
+                                                recipientAddress: recipient.recipientAddress.join(""),
+                                                transferTitleTable: template.title.join(""),
+                                                swift_bic: template.paymentDetails.recipientSwift
+                                            };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: template.title.join(" "),
-                                                recipientAddress: recipient.recipientAddress,
-                                                transferTitleTable: template.title
+                                                recipientAddress: recipient.recipientAddress.join(""),
+                                                transferTitleTable: template.title.join("")
                                             };
                                         case "INSURANCE":
                                             return {
@@ -154,7 +217,6 @@ angular.module('raiffeisen-payments')
             },
             tableControl: undefined
         };
-
 
     }
 );

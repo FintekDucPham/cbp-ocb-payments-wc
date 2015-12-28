@@ -1,0 +1,60 @@
+<rb-content-view class="rb-content-view--solid">
+    <bd-header>{{::"raiff.payments.standing.list.header"|translate}}</bd-header>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-2 ">
+            <bd-button ng-click="onNewStandingOrderClick()" class="bd-button__primary bd-md-button-margin">{{::'raiff.payments.standing.button.new.label'|translate}}</bd-button>
+        </div>
+    </div>
+
+    <bd-table bd-type="typeZ"
+              bd-table-params="table.tableConfig"
+              bd-table-control="table.tableControl"
+              bd-table-data="table.tableData"
+              bd-table-promise="listPromise"
+              bd-table-meta="{
+                    'first': {
+                        'title': '##raiff.payments.standing.list.header.name',
+                        'data': 'shortName'
+                    },
+                    'second': {
+                        'title': '##raiff.payments.standing.list.header.realizationDate',
+                        'data': 'frequency_nextDate'
+                    },
+                    'third': {
+                        'title': '##raiff.payments.standing.list.header.amount',
+                        'data': [
+                            'amount',
+                            'currency'
+                        ]
+                    },
+                    'fourth': {
+                        'title': '##raiff.payments.standing.list.header.recipientData',
+                        'data': 'beneficiary'
+                    },
+                    'fifth': {
+                        'title': '##raiff.payments.standing.list.header.recipientAccount',
+                        'data': 'creditAccount'
+                    }
+                }">
+
+        <bd-details-section bd-table-row-details>
+            <div ng-if="$data">
+                <ng-include src="::paymentDetailsTemplate"></ng-include>
+
+                <bd-details-action-section>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12" style="text-align:right;">
+                            <bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'raiff.payments.standing.list.details.insurance.buttons.edit' | translate}}</bd-button>
+                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm">{{::'raiff.payments.standing.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                            <!--<bd-button ng-click="onBack(this)" class="bd-button bd-button__primary">{{::'raiff.payments.standing.list.details.insurance.buttons.backToList' | translate}}</bd-button>-->
+                        </div>
+                    </div>
+                </bd-details-action-section>
+
+            </div>
+
+        </bd-details-section>
+    </bd-table>
+
+</rb-content-view>

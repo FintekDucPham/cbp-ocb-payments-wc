@@ -1,11 +1,14 @@
 <rb-payment-recipients-verify>
     <div ng-controller="RecipientsManageVerifyTaxController">
 
-        <bd-item-property ng-if="recipient.formData.microName" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.micro_name' | translate }}">
-            {{ recipient.formData.customName }}
+        <bd-item-property label="{{::'raiff.payments.recipients.new.zus.verify.micro_name'|translate}}" class="bd-item-property--text bd-item-property--disabled" ng-if="customerDetails.context == 'MICRO'">
+            <div ng-repeat="owner in ownerList = (recipient.items.senderAccount.ownersList | filter: { relationType: 'OWNER' }:true)">
+                <span ng-if="owner != null">{{owner.fullName}}</span>
+                <span ng-if="owner == null">-</span>
+            </div>
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.remitter_account' | translate }}">
+        <bd-item-property ng-if="recipient.manageAction!=='REMOVE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.remitter_account' | translate }}">
             {{ recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName  }} {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
         </bd-item-property>
 
@@ -38,7 +41,7 @@
             {{ !!recipient.formData.periodType ? ('raiff.payments.recipients.new.us.fill.period_type.' + recipient.formData.periodType | translate) : '-' }}
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.obligation_id' | translate }}">
+        <bd-item-property ng-if="recipient.manageAction!=='REMOVE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.verify.us.obligation_id' | translate }}">
             {{ recipient.formData.obligationId || '-' }}
         </bd-item-property>
 

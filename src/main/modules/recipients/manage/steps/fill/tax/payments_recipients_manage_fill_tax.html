@@ -34,31 +34,51 @@
             </eb-validation-messages>
 
         </bd-item-property>
+        <rb-paste-warning>
+            <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.recipient_account' | translate }}">
+                <div ng-paste="rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)" ng-keyup="unlockField()">
+                    <rb-tax-account-select ng-show="!showHide"
+                                            rb-tax-office="recipient.items.recipientAccount"
+                                           rb-tax-office-id="recipient.formData.selectedTaxOfficeId"
+                                           rb-tax-office-params="{ searchText: 'raiff.payments.recipients.new.us.fill.recipient_account.search', clearText: 'raiff.payments.recipients.new.us.fill.recipient_account.clear' }">
+                    </rb-tax-account-select>
+                    <div ng-show="showHide">
+                        <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-if="showHide" class="input-field">
+                    </div>
+                    <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
+                        <div class="validation-message animate-on">
+                            {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
+                        </div>
+                    </eb-validation-messages>
 
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.recipient_account' | translate }}">
-
-            <rb-tax-account-select rb-tax-office="recipient.items.recipientAccount"
-                                   rb-tax-office-id="recipient.formData.selectedTaxOfficeId"
-                                   rb-tax-office-params="{ searchText: 'raiff.payments.recipients.new.us.fill.recipient_account.search', clearText: 'raiff.payments.recipients.new.us.fill.recipient_account.clear' }">
-            </rb-tax-account-select>
-
-            <eb-validation-messages eb-name="recipientAccountNo">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC'|translate}}
+                    <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && !isErrorPaste">
+                        <div eb-message-key="required" class="validation-message animate-on">
+                            {{::'raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC'|translate}}
+                        </div>
+                        <div eb-message-key="bbanNrb" class="validation-message animate-on">
+                            {{::'raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US'|translate}}
+                        </div>
+                        <div eb-message-key="usNotFound" class="validation-message animate-on">
+                            {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                        </div>
+                        <div eb-message-key="notFromList" class="validation-message animate-on">
+                            {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
+                        </div>
+                    </eb-validation-messages>
                 </div>
-                <div eb-message-key="bbanNrb" class="validation-message animate-on">
-                    {{::'raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US'|translate}}
-                </div>
-                <div eb-message-key="usNotFound" class="validation-message animate-on">
-                    {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
-                </div>
-                <div eb-message-key="notFromList" class="validation-message animate-on">
-                    {{::'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC'|translate}}
-                </div>
-            </eb-validation-messages>
-
-        </bd-item-property>
-
+            </bd-item-property>
+            <span ng-show="isOk || showHide">
+            <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
+            <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
+            <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
+            <span class="" style="position: relative">
+            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+                <span class="tooltipFix__tooltip">
+                    <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
+                 </span>
+            </span>
+        </span>
+        </rb-paste-warning>
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.taxpayer_supplementary_id_type' | translate }}">
             <ui-select ng-model="recipient.formData.secondaryIdType"

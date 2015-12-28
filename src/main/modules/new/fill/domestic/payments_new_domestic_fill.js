@@ -1,14 +1,15 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams) {
+    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp) {
 
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
 
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
             $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
-            $scope.payment.formData.recipientName = recipient.data;
-            $scope.payment.formData.description = recipient.title;
+            $scope.payment.formData.recipientName = recipient.data.join('');
+            $scope.payment.formData.description = recipient.title.join('');
         };
 
         $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
@@ -34,29 +35,10 @@ angular.module('raiffeisen-payments')
             bdFocus('recipientAccountNo');
         };
 
-        $scope.getAccountByNrb = function(accountList, selectFn){
-
-            function select(recipient) {
-                selectFn(lodash.findWhere(accountList, {
-                    accountNo: recipient.srcAccountNo
-                }));
-            }
-
-            if($scope.payment.items.recipient) {
-                select($scope.payment.items.recipient);
-            } else {
-                var callOff = $scope.$on('payment.items.recipient', function(recipient) {
-                    if(recipient) {
-                        select(recipient);
-                        callOff();
-                    }
-                });
-            }
-        };
-
         function updateRecipientsList() {
 
         }
+
 
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {
@@ -71,12 +53,15 @@ angular.module('raiffeisen-payments')
             var senderAccount = $scope.payment.items.senderAccount;
             $scope.payment.formData.currency = 'PLN';
             $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
-            $scope.paymentForm.amount.$validate();
+            if($scope.paymentForm){
+                $scope.paymentForm.amount.$validate();
+            }
         }
 
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
             updateRecipientsList();
+            $scope.validateBalance();
             recipientFilter.filter();
         };
 
@@ -85,7 +70,26 @@ angular.module('raiffeisen-payments')
             $timeout(recalculateCurrency);
         });
 
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+            var recipientData = angular.copy({
+                customName: "Nowy odbiorca",
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
+                recipientData: $scope.payment.formData.recipientName,
+                description: $scope.payment.formData.description
+            });
+
+            $scope.setRecipientDataExtractor(function() {
+                return recipientData;
+            });
+        });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            var recipient = lodash.find($scope.payment.meta.recipientList, {
+                templateType: 'DOMESTIC',
+                accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+            });
+            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
+
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
                 taxOffices.search({
@@ -102,11 +106,22 @@ angular.module('raiffeisen-payments')
             }
         });
 
+        function isAccountInvestmentFulfilsRules(account){
+            if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
+                if(account.actions.indexOf('create_domestic_transfer')>-1){
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
-                return lodash.filter(accounts, {
-                    currency: 'PLN'
+                return lodash.filter(accounts,  function(account){
+                    return account.currency == 'PLN' &&  isAccountInvestmentFulfilsRules(account);
                 });
             },
             payments: true
@@ -143,15 +158,4 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
-
-        $scope.setRecipientDataExtractor(function() {
-            return {
-                customName: "Nowy odbiorca",
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
-                recipientAccountNo: $scope.payment.formData.recipientAccountNo,
-                recipientData: $scope.payment.formData.recipientName,
-                description: $scope.payment.formData.description
-            };
-        });
-
     });

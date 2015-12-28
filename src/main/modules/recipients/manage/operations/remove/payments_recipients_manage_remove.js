@@ -52,6 +52,8 @@ angular.module('raiffeisen-payments')
                 dataConverted: true
             });
         };
+
+        $scope.recipient.manageAction = "REMOVE";
     }
 
 );
