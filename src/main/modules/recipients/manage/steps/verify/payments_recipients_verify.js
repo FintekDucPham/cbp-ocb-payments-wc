@@ -58,11 +58,6 @@ angular.module('raiffeisen-payments')
                                         if(!$scope.recipient.token.model.$isErrorRegardingToken(e)) {
                                             actions.proceed();
                                         }
-                                        else {
-                                            $scope.recipient.result.code = "SMS_AUTH_BLOCKED";
-                                            actions.proceed();
-                                        }
-
                                     }
                                     else {
                                         actions.proceed();
