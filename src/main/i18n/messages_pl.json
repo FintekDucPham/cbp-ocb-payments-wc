@@ -117,6 +117,11 @@
     "raiff.payments.new.btn.next": "Dalej",
     "raiff.payments.new.btn.finalize": "Powrót do listy",
     "raiff.payments.new.btn.final_action": "Zapisz odbiorcę",
+    "raiff.payments.new.realization_type_sorbnet.label": "Realizacja poprzez SORBNET",
+    "raiff.payments.new.realization_type_sorbnet.verify.label": "Tryb realizacji",
+    "raiff.payments.new.realization_type_sorbnet.option.elixir": "ELIXIR – przelew standardowy",
+    "raiff.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – przelew SORBNET",
+    "raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Rachunek odbiorcy jest prowadzony przez Raiffeisen Bank Polska S.A.–nie może być zrealizowany jako SORBNET, zostanie zrealizowany w rozliczeniu wewnętrznym",
 
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",

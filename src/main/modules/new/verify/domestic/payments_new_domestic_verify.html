@@ -11,57 +11,63 @@
             <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
         </rb-cut-off-time>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
 
-            <span style="display: inline-block; word-break: break-all;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>
-            <span style="display: inline-block;">
-                <span class="hidden-md hidden-lg">{{ payment.items.senderAccount.accountNo | nrbAccountSelectIbanShortFilter }}</span>
-            </span>
-            <span style="display:block;" class="hidden-xs hidden-sm"> {{ payment.items.senderAccount.accountNo | nrbIbanFilter }}</span>
-
-        </bd-item-property>
-
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_data'|translate}}">
-            <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
-        </bd-item-property>
-
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
-            {{payment.formData.recipientAccountNo | nrbIbanFilter }} <!-- | nrb -->
-            <br ng-if="payment.formData.recipientAccountName"/>{{payment.formData.recipientAccountName}}
-        </bd-item-property>
-
-        <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
-            <p style="word-break: break-all" ng-bind-html="payment.formData.recipientName | arrayToHtml"></p>
-        </bd-item-property>
-
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
-            <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
-        </bd-item-property>
-
-        <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
-            <p style="word-break: break-all" ng-bind-html="payment.formData.description | arrayToHtml"></p>
-        </bd-item-property>
-
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
-            {{payment.formData.realizationDate | date:'shortDate' }}
-        </bd-item-property>
-        <bd-item-property ng-show="transferCost.link != null" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.verify.transfer_cost'|translate}}">
-            <a href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
-        </bd-item-property>
-         <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
-             <span class="messages">
-                 <span class="validation-message">
-                     {{::'raiff.payments.new.domestic.fill.execution_date.EOD_ERROR'|translate}}
-                 </span>
-             </span>
+        <span style="display: inline-block; word-break: break-all;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>
+        <span style="display: inline-block;">
+            <span class="hidden-md hidden-lg">{{ payment.items.senderAccount.accountNo | nrbAccountSelectIbanShortFilter }}</span>
         </span>
-         <span class="eb-validation-messages" ng-if="payment.holiday">
-             <span class="messages">
-                 <span class="validation-message">
-                     {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
-                 </span>
+        <span style="display:block;" class="hidden-xs hidden-sm"> {{ payment.items.senderAccount.accountNo | nrbIbanFilter }}</span>
+
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_data'|translate}}">
+        <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
+        {{payment.formData.recipientAccountNo | nrbIbanFilter }} <!-- | nrb -->
+        <br ng-if="payment.formData.recipientAccountName"/>{{payment.formData.recipientAccountName}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
+        <p style="word-break: break-all" ng-bind-html="payment.formData.recipientName | arrayToHtml"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
+        <p style="word-break: break-all" ng-bind-html="payment.formData.description | arrayToHtml"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
+        {{payment.formData.realizationDate | date:'shortDate' }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.realization_type_sorbnet.verify.label'|translate}}">
+        <span ng-hide="payment.formData.sendBySorbnet">{{::'raiff.payments.new.realization_type_sorbnet.option.elixir'|translate }}</span>
+        <span ng-show="payment.formData.sendBySorbnet">{{::'raiff.payments.new.realization_type_sorbnet.option.sorbnet'|translate }}</span>
+    </bd-item-property>
+
+    <bd-item-property ng-show="transferCost.link != null" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.verify.transfer_cost'|translate}}">
+        <a href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
+    </bd-item-property>
+     <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
+         <span class="messages">
+             <span class="validation-message">
+                 {{::'raiff.payments.new.domestic.fill.execution_date.EOD_ERROR'|translate}}
              </span>
-        </span>
+         </span>
+    </span>
+     <span class="eb-validation-messages" ng-if="payment.holiday">
+         <span class="messages">
+             <span class="validation-message">
+                 {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
+             </span>
+         </span>
+    </span>
     </span>
     <eb-preloader class="eb-list-preloader" eb-promise="meta.cutOffTimePromise"></eb-preloader>
 </div>

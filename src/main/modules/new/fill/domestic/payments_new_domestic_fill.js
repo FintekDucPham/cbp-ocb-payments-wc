@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp) {
+    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, systemParameterService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
@@ -23,6 +23,8 @@ angular.module('raiffeisen-payments')
                 value: val
             };
         }));
+
+
 
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
@@ -68,6 +70,17 @@ angular.module('raiffeisen-payments')
         $scope.$on('clearForm', function () {
             //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
             $timeout(recalculateCurrency);
+        });
+
+        $scope.setRequestConverter(function(formData) {
+            var copiedForm = angular.copy(formData);
+            formData.amount = (""+formData.amount).replace(",",".");
+            copiedForm.amount = (""+formData.amount).replace(",", ".");
+            copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
+            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.sendBySorbnet = formData.sendBySorbnet;
+            copiedForm.toSendSorbnet = formData.sendBySorbnet;
+            return copiedForm;
         });
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
@@ -158,4 +171,20 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
+
+        $scope.$watch('payment.formData.sendBySorbnet', function(n, o){
+            if(n===true && o===false){//to sorbnet
+                $scope.payment.formData.realizationDate = new Date();
+            }
+        });
+
+        function splitTextEveryNSign(text, lineLength){
+            if(text !== undefined && text.length > 0) {
+                text = ("" + text).replace(/(\n)+/g, '');
+                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
+                return lodash.filter(text.split(regexp), function (val) {
+                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
+                });
+            }
+        }
     });
