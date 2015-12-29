@@ -94,7 +94,8 @@ angular.module('raiffeisen-payments')
             }),
             operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
             formData: {
-                hideSaveRecipientButton: false
+                hideSaveRecipientButton: false,
+                sendBySorbnet: false
             },
             token: {
                 model: null,
