@@ -34,6 +34,12 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate | date:'shortDate' }}
     </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.realization_type_sorbnet.verify.label'|translate}}">
+        <span ng-hide="payment.formData.sendBySorbnet">{{::'raiff.payments.new.realization_type_sorbnet.option.elixir'|translate }}</span>
+        <span ng-show="payment.formData.sendBySorbnet">{{::'raiff.payments.new.realization_type_sorbnet.option.sorbnet'|translate }}</span>
+    </bd-item-property>
+
     <bd-item-property ng-show="transferCost.link != null" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.verify.transfer_cost'|translate}}">
         <a href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
     </bd-item-property>

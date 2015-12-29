@@ -99,6 +99,10 @@ angular.module('raiffeisen-payments', [
     registerBaseState();
     registerNavigation();
 
-}).run(function () {
-
+}).run(function (SORBNET_CONSTANTS, systemParameterService) {
+    systemParameterService.getParameterByName("account.bank.prefix.rbpl").then(function(data){
+        SORBNET_CONSTANTS.insternal_prefix = data.value.split(',');
+    });
+}).value('SORBNET_CONSTANTS', {
+    insternal_prefix: null
 });
