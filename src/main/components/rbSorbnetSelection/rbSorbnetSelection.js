@@ -20,7 +20,7 @@ angular.module('raiffeisen-payments')
                 var startsWithPrefix = function(string, prefixArray){
                     var match = false;
                     if(string.length>5){
-                        var orginPrefix = string.substr(2,4);
+                        var orginPrefix = string.replace(" ","").substr(2,4);
                         if(prefixArray && prefixArray.length) {
                             angular.forEach(prefixArray, function (val) {
                                 if(angular.equals(orginPrefix,val)){
