@@ -1,5 +1,15 @@
 <div class="form-body" ng-controller="NewDomesticPaymentVerifyController">
-
+    <span ng-show="meta.cutOffTimePromise.$$state.status  !== 0">
+    <rb-cut-off-time
+            response-value="meta.responseCutOffTime"
+            account-no="payment.formData.recipientAccountNo"
+            transfer-kind="payment.type.code"
+            transfer-type="{{payment.formData.sendBySorbnet?'SORBNET':'ELIXIR'}}"
+            realization-date="payment.formData.realizationDate"
+            cut-off-time-promise="meta.cutOffTimePromise"
+            is-holiday="payment.holiday">
+        <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
+    </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
 
         <section class="hidden-xs hidden-sm">
@@ -59,4 +69,6 @@
              </span>
          </span>
     </span>
+    </span>
+    <eb-preloader class="eb-list-preloader" eb-promise="meta.cutOffTimePromise"></eb-preloader>
 </div>

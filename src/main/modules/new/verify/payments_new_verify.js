@@ -19,7 +19,11 @@ angular.module('raiffeisen-payments')
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
-            dataObject: $scope.payment
+            dataObject: $scope.payment,
+            meta: {
+                cutOffTimePromise: null,
+                responseCutOffTime: null
+            }
         });
 
         transferService.getTransferCost({
