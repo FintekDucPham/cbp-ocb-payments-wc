@@ -154,9 +154,16 @@ angular.module('raiffeisen-payments')
                 formService.dirtyFields(form);
             } else {
                 // for standing orders we need standingTransferService
+                var templateParameters = {};
+                if($scope.payment.items.recipient){
+                    templateParameters.transferFromTemplate = true;
+                    templateParameters.templateId = $scope.payment.items.recipient.recipientId;
+                }
+
+
                 $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
-                }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
+                }, requestConverter($scope.payment.formData), templateParameters), $scope.payment.operation.link || false ).then(function (transfer) {
                     $scope.payment.transferId = transfer.referenceId;
                     $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                     $scope.payment.holiday = transfer.holiday;
