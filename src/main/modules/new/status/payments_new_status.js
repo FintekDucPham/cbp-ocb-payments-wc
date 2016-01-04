@@ -7,8 +7,13 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer) {
-
+        
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && $scope.payment.meta.transferType !== "OWN";
+
+        // TODO: if domestic && if elixir -> then show adequate button
+        $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
+
+
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
