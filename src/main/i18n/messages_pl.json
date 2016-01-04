@@ -117,6 +117,7 @@
     "raiff.payments.new.btn.next": "Dalej",
     "raiff.payments.new.btn.finalize": "Powrót do listy",
     "raiff.payments.new.btn.final_action": "Zapisz odbiorcę",
+    "raiff.payments.new.btn.add_as_standing_order": "Dodaj jako zlecenie stałe",
     "raiff.payments.new.realization_type_sorbnet.label": "Realizacja poprzez SORBNET",
     "raiff.payments.new.realization_type_sorbnet.verify.label": "Tryb realizacji",
     "raiff.payments.new.realization_type_sorbnet.option.elixir": "ELIXIR – przelew standardowy",

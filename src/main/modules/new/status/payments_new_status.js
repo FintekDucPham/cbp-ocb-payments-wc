@@ -6,12 +6,19 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer) {
+    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state) {
 
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.formData.hideSaveRecipientButton;
+
+        // TODO: if domestic && if elixir -> then show adequate button
+        $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
+
+
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
+
+        
 
     });

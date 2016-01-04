@@ -179,6 +179,17 @@ angular.module('raiffeisen-payments')
             $state.go('payments.standing.list');
         };
 
+        $scope.addAsStandingOrder = function() {
+            // TODO: set proper initial values for new standing order
+            viewStateService.setInitialState('payments.new', {
+                paymentOperationType: rbPaymentOperationTypes.NEW
+            });
+
+            $state.go('payments.new.fill', {
+                paymentType: "standing"
+            });
+        };
+
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',
             finalAction: $scope.saveRecipient,
@@ -186,6 +197,7 @@ angular.module('raiffeisen-payments')
             onClear: $scope.clearForm,
             cancelState: 'payments.recipients.list',
             onFillReturn: $scope.onFillReturn,
+            addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
                 change: 'config.multistepform.buttons.change',
@@ -195,7 +207,8 @@ angular.module('raiffeisen-payments')
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
                 finalize: 'raiff.payments.new.btn.finalize',
-                finalAction: 'raiff.payments.new.btn.final_action'
+                finalAction: 'raiff.payments.new.btn.final_action',
+                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
             },
             visibility:{
                 fillReturn: false,
@@ -205,7 +218,8 @@ angular.module('raiffeisen-payments')
                 next: true,
                 accept: true,
                 finalAction: true,
-                finalize: true
+                finalize: true,
+                addAsStandingOrder: true
             }
         };
 
@@ -227,5 +241,7 @@ angular.module('raiffeisen-payments')
                 return transferService;
             }
         };
+
+
 
     });
