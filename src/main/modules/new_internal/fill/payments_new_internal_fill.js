@@ -260,22 +260,41 @@ angular.module('raiffeisen-payments')
             useFirstByDefault: true,
             alwaysSelected: false,
             accountFilter: function (accounts, $accountId) {
+                var filteredAccounts = accounts;
+                var filterParams = [];
                 if (!!$accountId) {
-                    return lodash.reject(accounts, function(account) {
+                    filteredAccounts =  lodash.reject(accounts, function(account) {
                         return account.accountId === $accountId || isSenderAccountCategoryRestricted() && lodash.contains([1101,3000,3008], account.category);
                     });
+                    if($scope.payment.items.senderAccount){
+                        if($scope.payment.items.senderAccount.accountRestrictFlag){
+                            filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
+                            filteredAccounts = lodash.filter(filteredAccounts, function (account) {
+                                return lodash.filter(filterParams, function(params) {
+                                   var accountOk = true;
+                                    if (params.destSubCategory) {
+                                        accountOk = account.subProduct === params.destSubCategory;
+                                    }
+                                    return accountOk && account.category === params.destCategory;
+                                }).length > 0;
+                            });
+                        }
+                    }
+                    return filteredAccounts;
                 } else {
-                    var filteredAccounts = accounts;
-                    if($scope.payment.items.recipientAccount){
-                        var filterParams = {};
-                        if($scope.payment.items.recipientAccount.accountRestrictFlag){
-                            if($scope.payment.items.recipientAccount.destCategory){
-                                filterParams.category = $scope.payment.items.recipientAccount.destCategory;
-                            }
-                            if($scope.payment.items.recipientAccount.destSubProduct){
-                                filterParams.subProduct = $scope.payment.items.recipientAccount.destSubProduct;
-                            }
-                            filteredAccounts = lodash.filter(filteredAccounts, filterParams);
+                    filteredAccounts = accounts;
+                    if($scope.payment.items.senderAccount){
+                        if($scope.payment.items.senderAccount.accountRestrictFlag){
+                            filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
+                            filteredAccounts = lodash.filter(filteredAccounts, function (account) {
+                                return lodash.filter(filterParams, function(params) {
+                                    var accountOk = true;
+                                    if (params.destSubCategory) {
+                                        accountOk = account.subProduct === params.destSubCategory;
+                                    }
+                                    return accountOk && account.category === params.destCategory;
+                                }).length > 0;
+                            });
                         }
                     }
                     return lodash.filter(filteredAccounts, function(account){
