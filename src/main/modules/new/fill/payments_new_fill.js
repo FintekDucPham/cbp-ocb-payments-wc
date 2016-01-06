@@ -116,7 +116,7 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.validateBalance = function() {
-            if($scope.payment.type && $scope.payment.type.code!='INSURANCE'){
+            if($scope.payment.type && $scope.payment.type.code!='INSURANCE' && $scope.payment.type.code != 'STANDING'){
                 if($scope.paymentForm.amount){
                     $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
                 }
