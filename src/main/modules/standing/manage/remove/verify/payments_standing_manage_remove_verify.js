@@ -45,8 +45,8 @@ angular.module('raiffeisen-payments')
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if($scope.payment.token.model.input.$isValid()) {
-                    standingTransferService.realize($scope.payment.token.params.resourceId, $scope.payment.token.model.input.model).then(function() {actions.proceed();
-                        var parts = resultCode.split('|');
+                    standingTransferService.realize($scope.payment.token.params.resourceId, $scope.payment.token.model.input.model).then(function(response) {
+                        var parts = response.split('|');
                         $scope.payment.result = {
                             code: parts[1],
                             type: parts[0] === 'OK' ? "success" : "error"
