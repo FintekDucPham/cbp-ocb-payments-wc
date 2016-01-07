@@ -117,6 +117,7 @@
     "raiff.payments.new.btn.next": "Dalej",
     "raiff.payments.new.btn.finalize": "Powrót do listy",
     "raiff.payments.new.btn.final_action": "Zapisz odbiorcę",
+    "raiff.payments.new.btn.add_as_standing_order": "Dodaj jako zlecenie stałe",
     "raiff.payments.new.realization_type_sorbnet.label": "Realizacja poprzez SORBNET",
     "raiff.payments.new.realization_type_sorbnet.verify.label": "Tryb realizacji",
     "raiff.payments.new.realization_type_sorbnet.option.elixir": "ELIXIR – przelew standardowy",
@@ -125,7 +126,7 @@
 
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",
-    "raiff.payments.new.foreign.fill.sepa.recipient_country.error.required": "Pole Kraj odbiorcy nie może byc puste",
+    "raiff.payments.new.foreign.fill.sepa.recipient_country.error.required": "Pole Kraj odbiorcy nie może być puste",
     "raiff.payments.new.foreign.fill.multirow_data.error.required": "Pole Dane odbiorcy  nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.multirow_title.error.required": "Pole Tytuł  nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.swfitbic":"podaj SWIFT/BIC",

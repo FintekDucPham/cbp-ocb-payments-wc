@@ -156,7 +156,7 @@
                     {{ $data.details.realizationDate | date : 'shortDate' }} <!-- cannot resolve registration date from the bus -->
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.accountNo' | translate }}">
-                    <span style=" word-break: break-all;">{{ $data.details.accountName }}</span><br/>
+                    <div style=" word-break: break-all;">{{ $data.details.accountName }}</div>
                     {{ $data.details.accountNo | nrbIbanFilter }} <br/>
                     {{ $data.details.owner }}
                 </bd-item-property>

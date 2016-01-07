@@ -75,9 +75,19 @@ angular.module('raiffeisen-payments')
         $scope.recipientAccountValidators = {
             notUs: function (accountNo) {
                 if (accountNo) {
-                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
+                    accountNo = accountNo.replace(/ /g, '');
+
+                    var countryPrefix = accountNo.substr(0,2).toUpperCase();
+
+                    // jesli PL to walidujemy tylko dalsza czesc numeru
+                    // jesli nie PL lub brak prefixu, walidujemy calosc
+                    if (countryPrefix == 'PL') {
+                        accountNo = accountNo.substr(2);
+                    }
+
+                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
                         code: 'notUs',
-                        value: accountNo.replace(/ /g, '')
+                        value: accountNo
                     });
                 } else {
                     return false;
@@ -85,9 +95,19 @@ angular.module('raiffeisen-payments')
             },
             notZus: function (accountNo) {
                 if (accountNo) {
-                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
+                    accountNo = accountNo.replace(/ /g, '');
+
+                    var countryPrefix = accountNo.substr(0,2).toUpperCase();
+
+                    // jesli PL to walidujemy tylko dalsza czesc numeru
+                    // jesli nie PL lub brak prefixu, walidujemy calosc
+                    if (countryPrefix == 'PL') {
+                        accountNo = accountNo.substr(2);
+                    }
+
+                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
                         code: 'notZus',
-                        value: accountNo.replace(/ /g, '')
+                        value: accountNo
                     });
                 } else {
                     return false;
@@ -308,20 +328,30 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             var recipient = lodash.find($scope.payment.meta.recipientList, {
-                templateType: 'SWIFT',
-                accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
-            });
+                    templateType: 'SWIFT',
+                    accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+                }),
+                accountNo = $scope.payment.formData.recipientAccountNo.replace(/ */g, ''),
+                countryPrefix = accountNo.substr(0,2).toUpperCase();
+
+
+            // jesli PL to walidujemy tylko dalsza czesc numeru
+            // jesli nie PL lub brak prefixu, walidujemy calosc
+            if (countryPrefix == 'PL') {
+                accountNo = accountNo.substr(2);
+            }
+
             $scope.payment.formData.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
                 taxOffices.search({
-                    accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
+                    accountNo: accountNo
                 }).then(function (result) {
                     if (result.length > 0) {
                         $scope.payment.meta.recipientForbiddenAccounts.push({
                             code: 'notUs',
-                            value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
+                            value: accountNo
                         });
                         $scope.paymentForm.recipientAccountNo.$validate();
                     }

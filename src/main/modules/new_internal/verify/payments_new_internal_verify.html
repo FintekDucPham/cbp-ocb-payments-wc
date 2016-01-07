@@ -1,14 +1,8 @@
 <div class="form-body">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
-        <section class="hidden-xs hidden-sm">
-            <span style="word-wrap: break-word;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>
-            <span style="display:block;"> {{ payment.items.senderAccount.accountNo | nrbIbanFilter }}</span>
-        </section>
-        <section class="hidden-md hidden-lg">
-            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
-        </section>
-
+        <div style="word-break: break-all;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div><!-- | nazwa -->
+        {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_data'|translate}}">
@@ -16,14 +10,8 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.recipient_account_name'|translate}}">
-        <section class="hidden-xs hidden-sm">
-            <span style="word-wrap: break-word;">{{ payment.items.recipientAccount.accountName }}</span>
-            <span style="display:block;"> {{ payment.items.recipientAccount.accountNo | nrbIbanFilter }}</span>
-        </section>
-        <section class="hidden-md hidden-lg">
-            <rb-account-responsive-line rb-account-name="payment.items.recipientAccount.accountName" rb-account-nrb="payment.items.recipientAccount.accountNo"></rb-account-responsive-line>
-        </section>
-
+        <div style="word-break: break-all;">{{payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName}}</div><!-- | nazwa -->
+        {{payment.items.recipientAccount.accountNo | nrbIbanFilter}} <!-- | numer -->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.amount'|translate}}">
