@@ -74,7 +74,8 @@ angular.module('raiffeisen-payments')
             if($scope.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if($scope.token.model.input.$isValid()) {
                     transferService.realize( $scope.tokenParams.resourceId, $scope.token.model.input.model).then(function (resultCode) {
-                       proceedAction(resultCode.code);
+                        var parts = resultCode.split("|");
+                       proceedAction(parts[1]);
 
                     }).catch(function (error) {
                         if($scope.token.model && $scope.token.model.$tokenRequired){
