@@ -120,7 +120,7 @@
 
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",
-    "raiff.payments.new.foreign.fill.sepa.recipient_country.error.required": "Pole Kraj odbiorcy nie może byc puste",
+    "raiff.payments.new.foreign.fill.sepa.recipient_country.error.required": "Pole Kraj odbiorcy nie może być puste",
     "raiff.payments.new.foreign.fill.multirow_data.error.required": "Pole Dane odbiorcy  nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.multirow_title.error.required": "Pole Tytuł  nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.swfitbic":"podaj SWIFT/BIC",
