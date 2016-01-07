@@ -6,12 +6,11 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer) {
-        
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && $scope.payment.meta.transferType !== "OWN";
+    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes) {
 
-        // TODO: if domestic && if elixir -> then show adequate button
-        if (!$scope.payment.formData.sendBySorbnet) {
+        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.formData.hideSaveRecipientButton;
+
+        if ($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code && !$scope.payment.formData.sendBySorbnet) {
             $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
         }
 
@@ -19,5 +18,7 @@ angular.module('raiffeisen-payments')
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
+
+        
 
     });
