@@ -6,12 +6,11 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state) {
+    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes) {
 
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.formData.hideSaveRecipientButton;
 
-        // TODO: if domestic && if elixir -> then show adequate button
-        if (!$scope.payment.formData.sendBySorbnet) {
+        if ($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code && !$scope.payment.formData.sendBySorbnet) {
             $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
         }
 

@@ -180,14 +180,21 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.addAsStandingOrder = function() {
-            // TODO: set proper initial values for new standing order
-            viewStateService.setInitialState('payments.new', {
-                paymentOperationType: rbPaymentOperationTypes.NEW
-            });
+            
+           viewStateService.setInitialState('payments.new', {
+               paymentOperationType: rbPaymentOperationTypes.NEW
+           });
 
-            $state.go('payments.new.fill', {
-                paymentType: "standing"
-            });
+           $state.transitionTo('payments.new.fill', {
+               paymentType: 'standing',
+               payment: $scope.payment.standingOrderData
+           }, {reload: true}).finally(function() {
+               // workaround for paymentType parameter and state reloading problems
+               $state.go('payments.new.fill', {
+                    paymentType: 'standing',
+                    payment: $scope.payment.standingOrderData
+               });   
+           });
         };
 
         $scope.payment.rbPaymentsStepParams = {
