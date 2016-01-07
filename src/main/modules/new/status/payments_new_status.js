@@ -11,8 +11,9 @@ angular.module('raiffeisen-payments')
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && $scope.payment.meta.transferType !== "OWN";
 
         // TODO: if domestic && if elixir -> then show adequate button
-        $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
-
+        if (!$scope.payment.formData.sendBySorbnet) {
+            $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
+        }
 
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
