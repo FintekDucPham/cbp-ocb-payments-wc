@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
             maxDate: $scope.firstDateMaxDate
         });
 
-        $scope.payment.formData.hideSaveRecipientButton = true;
+        $scope.payment.meta.hideSaveRecipientButton = true;
 
 
         if (!$scope.payment.formData.frequencyType) {
@@ -216,7 +216,7 @@ angular.module('raiffeisen-payments')
                 templateType: 'DOMESTIC',
                 accountNo: $scope.payment.formData.recipientAccountNo ? $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "") : $scope.payment.formData.recipientAccountNo
             });
-            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
+            $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();

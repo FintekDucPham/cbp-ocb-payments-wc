@@ -341,7 +341,7 @@ angular.module('raiffeisen-payments')
                 accountNo = accountNo.substr(2);
             }
 
-            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
+            $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();

@@ -10,7 +10,7 @@
         <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
     </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_account_name'|translate}}">
-        <span style="display: inline-block; word-break: break-all;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>
+        <span style="display: inline-block; word-break: break-word;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</span>
         <span style="display: inline-block;">
             <span class="hidden-md hidden-lg">{{ payment.items.senderAccount.accountNo | nrbAccountSelectIbanShortFilter }}</span>
         </span>
