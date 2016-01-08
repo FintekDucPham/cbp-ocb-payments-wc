@@ -21,6 +21,9 @@
         <div class="col-xs-12 col-sm-12" ng-show="model.sendBySorbnet && nrbPrefixMatch">
             <bd-msg-panel bd-msg-type="warning">{{ :: 'raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET' | translate }}</bd-msg-panel>
         </div>
+        <div class="col-xs-12 col-sm-12" ng-show="!model.sendBySorbnet && nrbPrefixMatch">
+            <bd-msg-panel bd-msg-type="warning">{{ :: 'raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO' | translate }}</bd-msg-panel>
+        </div>
     </div>
 
 </div>
