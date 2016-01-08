@@ -94,7 +94,6 @@ angular.module('raiffeisen-payments')
             }),
             operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
             formData: {
-                hideSaveRecipientButton: false
             },
             token: {
                 model: null,
@@ -107,7 +106,8 @@ angular.module('raiffeisen-payments')
             meta: {
                 paymentTypes: [],
                 isFuturePaymentAllowed: true,
-                dateSetByCategory: false
+                dateSetByCategory: false,
+                hideSaveRecipientButton: false
             },
             validation: {}
         });
