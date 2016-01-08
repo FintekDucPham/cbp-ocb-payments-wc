@@ -19,6 +19,4 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.payment
         });
 
-        
-
     });
