@@ -108,7 +108,8 @@ angular.module('raiffeisen-payments')
             meta: {
                 paymentTypes: [],
                 isFuturePaymentAllowed: true,
-                dateSetByCategory: false
+                dateSetByCategory: false,
+                hideSaveRecipientButton: false
             },
             validation: {}
         });
