@@ -92,6 +92,9 @@
                         <div eb-message-key="notZus" class="validation-message animate-on">
                             {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_ZUS'|translate}}
                         </div>
+                        <div eb-message-key="recipientExist" class="validation-message animate-on">
+                            {{::'raiff.payments.recipient.new.error.exist'|translate}}
+                        </div>
                     </eb-validation-messages>
             </bd-item-property>
             <span ng-show="isOk || showHide">

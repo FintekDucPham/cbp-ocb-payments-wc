@@ -15,8 +15,10 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService, paymentsService) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService) {
 
+
+        $scope.actualRecipientList = null;
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
@@ -42,6 +44,22 @@ angular.module('raiffeisen-payments')
                     bankNamePromise:null
                 },
                 operation: null
+            },
+            items:{
+                actualRecipientList: recipientsService.search({pageSize: 2000}).then(function(recipientList){
+                    return lodash.map(recipientList.content, function(entry) {
+                        var paymentTemplate = entry.paymentTemplates[0];
+                        return {
+                            recipientId: entry.recipientId,
+                            templateType: paymentTemplate.templateType,
+                            name: entry.recipientName.join(' '),
+                            accountNo: paymentTemplate.beneficiaryAccountNo,
+                            srcAccountNo: paymentTemplate.remitterAccountNo,
+                            details: paymentTemplate.paymentDetails || null
+
+                        };
+                    });
+                })
             },
             manageAction: ""
         });

@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams, rbRecipientOperationType) {
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -51,7 +51,19 @@ angular.module('raiffeisen-payments')
                 return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(/ /g, '');
             },
             notUs: recipientValidators.tax.getValidator(),
-            notZus: recipientValidators.insurance.getValidator()
+            notZus: recipientValidators.insurance.getValidator(),
+            recipientExist: function(accountNo){
+                if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code){
+                    var recipient = lodash.find($scope.recipient.items.actualRecipientList.$$state.value, {
+                        templateType: 'DOMESTIC',
+                        accountNo: accountNo.replace(/\s+/g, "")
+                    });
+                    if(recipient){
+                        return false;
+                    }
+                }
+                return true;
+            }
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
