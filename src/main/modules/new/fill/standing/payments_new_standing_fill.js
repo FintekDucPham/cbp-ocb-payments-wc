@@ -23,6 +23,8 @@ angular.module('raiffeisen-payments')
         $scope.firstDateMinDate = new Date();
         $scope.firstDateMaxDate = new Date();
 
+        $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
+
         $scope.firstDateMinDate.setDate($scope.firstDateMinDate.getDate() + 2);
         $scope.firstDateMaxDate.setDate($scope.firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
 
