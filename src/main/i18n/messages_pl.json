@@ -470,7 +470,7 @@
     "raiff.payments.new.status.99": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.98": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.error": "Przelew został odrzucony",
-    "raiff.payments.new.status.success": "Przelew/transakcja przyjęta do realizacji",
+    "raiff.payments.new.status.success": "Przelew/transakcja zrealizowana",
 
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
