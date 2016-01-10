@@ -8,8 +8,6 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes) {
 
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
-
         if ($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code && !$scope.payment.formData.sendBySorbnet) {
             $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
         }
