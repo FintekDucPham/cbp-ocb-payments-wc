@@ -92,9 +92,6 @@
                         <div eb-message-key="notZus" class="validation-message animate-on">
                             {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_ZUS'|translate}}
                         </div>
-                        <div eb-message-key="recipientExist" class="validation-message animate-on">
-                            {{::'raiff.payments.recipient.new.error.exist'|translate}}
-                        </div>
                     </eb-validation-messages>
             </bd-item-property>
             <span ng-show="isOk || showHide">
@@ -162,5 +159,6 @@
             </eb-validation-messages>
 
         </bd-item-property>
+        <bd-msg-panel ng-if="recipient.meta.showRecipientExistInfo" bd-msg-type="warning">{{::'raiff.payments.recipient.new.error.MSG-0660_SAME_BNF'|translate}}</bd-msg-panel>
         </div>
 </rb-payment-recipients-fill>

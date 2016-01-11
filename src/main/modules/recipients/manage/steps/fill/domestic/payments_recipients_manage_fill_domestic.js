@@ -51,19 +51,7 @@ angular.module('raiffeisen-payments')
                 return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(/ /g, '');
             },
             notUs: recipientValidators.tax.getValidator(),
-            notZus: recipientValidators.insurance.getValidator(),
-            recipientExist: function(accountNo){
-                if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code){
-                    var recipient = lodash.find($scope.recipient.items.actualRecipientList.$$state.value, {
-                        templateType: 'DOMESTIC',
-                        accountNo: accountNo.replace(/\s+/g, "")
-                    });
-                    if(recipient){
-                        return false;
-                    }
-                }
-                return true;
-            }
+            notZus: recipientValidators.insurance.getValidator()
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
