@@ -23,6 +23,8 @@ angular.module('raiffeisen-payments')
             isBlock : false
         });
 
+        $scope.CURRENT_DATE = CURRENT_DATE;
+
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
         }
