@@ -7,18 +7,11 @@ angular.module('raiffeisen-payments')
             params: {
                 accountId: null,
                 recipientId: null
-            },
-            resolve:{
-                CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDate().then(function(currentDate){
-                        return currentDate;
-                    });
-                }]
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes,CURRENT_DATE) {
-
+    .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
+        var CURRENT_DATE = $scope.CURRENT_DATE;
         $scope.remote = {
             model_from:{},
             model_to:{}

@@ -7,10 +7,19 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsNewInternalController",
             params: {
                 payment: {}
+            },
+            resolve:{
+                CURRENT_DATE: ['utilityService', function(utilityService){
+                    return utilityService.getCurrentDate().then(function(currentDate){
+                        return currentDate;
+                    });
+                }]
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE) {
+
+        $scope.CURRENT_DATE = CURRENT_DATE;
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
