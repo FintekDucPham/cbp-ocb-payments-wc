@@ -180,6 +180,7 @@
     "raiff.payments.new.domestic.fill.execution_date.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
+    "raiff.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Raiffeisen Polbank jest możliwy tylko jako przelew własny.",
 
     "raiff.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
     "raiff.payments.new.domestic.fill.account.last1":" ostatnią ",

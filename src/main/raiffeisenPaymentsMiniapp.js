@@ -99,10 +99,10 @@ angular.module('raiffeisen-payments', [
     registerBaseState();
     registerNavigation();
 
-}).run(function (SORBNET_CONSTANTS, systemParameterService) {
+}).run(function (RAIFF_NRB_CONSTANTS, systemParameterService) {
     systemParameterService.getParameterByName("account.bank.prefix.rbpl").then(function(data){
-        SORBNET_CONSTANTS.insternal_prefix = data.value.split(',');
+        RAIFF_NRB_CONSTANTS.insternal_prefix = data.value.split(',');/*przy mergu poprawna nazwa to RAIFF_NRB_CONSTANTS*/
     });
-}).value('SORBNET_CONSTANTS', {
+}).value('RAIFF_NRB_CONSTANTS', {
     insternal_prefix: null
 });

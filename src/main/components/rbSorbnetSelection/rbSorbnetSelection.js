@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .directive('rbSorbnetSelection', function (pathService, lodash, SORBNET_CONSTANTS) {
+    .directive('rbSorbnetSelection', function (pathService, lodash, rbAccountOwnNrbService) {
         return {
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbSorbnetSelection/rbSorbnetSelection.html",
@@ -63,7 +63,7 @@ angular.module('raiffeisen-payments')
                 s.nrbPrefixMatch= false;
                 s.$watch('destinationNrb', function(n,o){
                     if(n!==o && angular.isString(n)){
-                        s.nrbPrefixMatch = startsWithPrefix(n, SORBNET_CONSTANTS.insternal_prefix);
+                        s.nrbPrefixMatch = rbAccountOwnNrbService.startsWithPrefix(n);
                         postSelectionCheck();
                     }
 
