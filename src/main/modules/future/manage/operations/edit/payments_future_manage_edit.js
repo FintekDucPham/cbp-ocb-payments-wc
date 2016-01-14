@@ -112,6 +112,21 @@ angular.module('raiffeisen-payments')
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
+        $scope.payment.rbPaymentsStepParams = {
+            completeState: 'payments.future.list',
+            finalAction: $scope.saveRecipient,
+            footerType: 'payment',
+            onClear: $scope.clearForm,
+            cancelState: 'payments.future.list',
+            labels : {
+            },
+            visibility:{
+                next: true,
+                fillReturn: false,
+                finalize: true
+            }
+        };
+
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
             data.description = data.title;
             $scope.payment.meta.transferType = data.transferType;
@@ -119,33 +134,8 @@ angular.module('raiffeisen-payments')
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                 $scope.payment.formData.referenceId = initialState.referenceId;
-                $scope.payment.rbPaymentsStepParams = {
-                    completeState: 'payments.recipients.list',
-                    finalAction: $scope.saveRecipient,
-                    footerType: 'payment',
-                    onClear: $scope.clearForm,
-                    cancelState: 'payments.recipients.list',
-                    labels : {
-                        cancel: 'config.multistepform.buttons.cancel',
-                        change: 'config.multistepform.buttons.change',
-                        edit: 'config.multistepform.buttons.edit',
-                        clear: 'config.multistepform.buttons.clear',
-                        prev: 'config.multistepform.buttons.prev',
-                        next: 'config.multistepform.buttons.next',
-                        accept: 'config.multistepform.buttons.accept',
-                        finalize: 'raiff.payments.new.btn.finalize',
-                        finalAction: 'raiff.payments.new.btn.final_action'
-                    },
-                    visibility:{
-                        cancel: true,
-                        change: true,
-                        clear: true,
-                        next: true,
-                        accept: true,
-                        finalAction: true,
-                        finalize: true
-                    }
-                };
+
+                
             });
 
 

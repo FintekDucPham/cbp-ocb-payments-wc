@@ -6,7 +6,8 @@
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.payment_type'|translate}}">
             {{ 'raiff.payments.new.types.'+ payment.meta.transferType | translate }}
         </bd-item-property>
-        <rb-multistep-form bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.future.list', onClear: clearForm, cancelState: 'payments.future.list' }">
+
+        <rb-multistep-form bd-active-step="activeStep" rb-step-params="payment.rbPaymentsStepParams">
             <div ui-view></div>
         </rb-multistep-form>
 
