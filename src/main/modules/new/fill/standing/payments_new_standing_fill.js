@@ -32,6 +32,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.payment.meta.hideSaveRecipientButton = true;
+        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !!recipient;
 
 
         if (!$scope.payment.formData.frequencyType) {
