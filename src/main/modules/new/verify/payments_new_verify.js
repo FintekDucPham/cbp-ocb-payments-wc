@@ -49,7 +49,7 @@ angular.module('raiffeisen-payments')
                 if (parts[0] !== 'OK' && !parts[1]) {
                     $scope.payment.result.code = 'error';
                 }
-                $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.formData.hideSaveRecipientButton;
+                $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
                 depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
                 $scope.payment.formData = {};

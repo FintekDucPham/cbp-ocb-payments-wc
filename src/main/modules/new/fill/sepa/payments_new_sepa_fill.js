@@ -2,6 +2,7 @@ angular.module('raiffeisen-payments')
     .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
+        $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
         $scope.currencyList = [];
@@ -84,6 +85,12 @@ angular.module('raiffeisen-payments')
                 } else {
                     return false;
                 }
+            },
+            simpleIncorrectIban: function(accountNo) {
+                if (accountNo) {
+                    return $scope.SIMPLE_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
+                }
+                return false;
             }
         };
 
@@ -263,7 +270,7 @@ angular.module('raiffeisen-payments')
                 accountNo = accountNo.substr(2);
             }
 
-            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
+            $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();

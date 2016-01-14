@@ -13,11 +13,11 @@
     </bd-item-property>
 
     <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
-        {{$data.recipientAddress}}
+        <div style="word-break: break-all;">{{$data.recipientAddress}}</div>
     </bd-item-property>
 
     <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.description.label'|translate}}">
-        {{ $data.transferTitle }}
+        <div style="word-break: break-all;">{{ $data.transferTitle }}</div>
     </bd-item-property>
 
 </div>

@@ -113,11 +113,11 @@
                        bd-matches-none-of="recipientBankCountryValidators"
                        theme="bootstrap">
                 <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">
-                    {{ $select.selected.countryName | uppercase}}
+                    {{ $select.selected.name | uppercase}}
                 </ui-select-match>
 
-                <ui-select-choices repeat="country in countries.data.content | filter: {countryName : '!null'} | filter: $select.search | orderBy: 'countryName'">
-                    {{ country.countryName  | uppercase}}
+                <ui-select-choices repeat="country in countries.data | filter: {name : '!null'} | filter: $select.search | plOrderBy: 'name'">
+                    {{ country.name  | uppercase}}
                 </ui-select-choices>
             </ui-select>
 
@@ -219,11 +219,11 @@
                        name="recipientCountry"
                        theme="bootstrap">
                 <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
-                    {{ $select.selected.countryName  | uppercase}}
+                    {{ $select.selected.name  | uppercase}}
                 </ui-select-match>
 
-                <ui-select-choices repeat="country in countries.data.content | filter: {countryName : '!null'} | filter: $select.search | orderBy: 'countryName'">
-                    {{ country.countryName  | uppercase}}
+                <ui-select-choices repeat="country in countries.data | filter: {name : '!null'} | filter: $select.search | plOrderBy: 'name'">
+                    {{ country.name  | uppercase}}
                 </ui-select-choices>
             </ui-select>
         </bd-item-property>

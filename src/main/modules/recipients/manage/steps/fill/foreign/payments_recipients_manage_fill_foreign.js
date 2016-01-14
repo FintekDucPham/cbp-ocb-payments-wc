@@ -3,7 +3,10 @@ angular.module('raiffeisen-payments')
         "SWIFT_OR_BIC": "SWIFT_OR_BIC",
         "NAME_AND_COUNTRY": "NAME_AND_COUNTRY"
     })
-    .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $timeout, $scope, recipientGeneralService, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents) {
+    .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $timeout, $scope, recipientGeneralService, notInsuranceAccountGuard,
+                                                                            notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams,
+                                                                            translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES,
+                                                                            bdRadioSelectEvents, countriesService) {
 
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
 
@@ -55,23 +58,23 @@ angular.module('raiffeisen-payments')
 
         // TODO: change to promise when you have properly working service
         $scope.countries = {
-            promise: recipientGeneralService.utils.getCountries(),
+            promise: countriesService.search(),
             data: null
         };
 
         $scope.countries.promise.then(function(data){
 
             if($scope.recipient.formData.recipientBankCountry){
-                angular.forEach(data.content, function(country){
-                    if($scope.recipient.formData.recipientBankCountry===country.countryCode){
+                angular.forEach(data, function(country){
+                    if($scope.recipient.formData.recipientBankCountry===country.code){
                         $scope.recipient.formData.recipientBankCountry=angular.copy(country);
                     }
                 });
             }
 
             if($scope.recipient.formData.recipientCountry){
-                angular.forEach(data.content, function(country){
-                    if($scope.recipient.formData.recipientCountry===country.countryCode){
+                angular.forEach(data, function(country){
+                    if($scope.recipient.formData.recipientCountry===country.code){
                         $scope.recipient.formData.recipientCountry=angular.copy(country);
                     }
                 });
@@ -110,8 +113,8 @@ angular.module('raiffeisen-payments')
                 ).then(function(data){
                     if(data !== undefined && data !== null && data !==''){
                         $scope.recipient.formData.recipientBankName = data.institution;
-                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data.content,{
-                            countryCode: data.location || data.countryCode
+                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data,{
+                            code: data.location || data.code
                         });
 
 
@@ -204,9 +207,9 @@ angular.module('raiffeisen-payments')
                 remarks: splitTextEveryNSign(copiedFormData.description),
                 swift_bic: copiedFormData.recipientSwiftOrBic,
                 bankInformation: splitTextEveryNSign(copiedFormData.recipientBankName),
-                bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.countryCode : null,
+                bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.code : null,
                 address: splitTextEveryNSign(copiedFormData.recipientData),
-                beneficiaryCountry: (copiedFormData.recipientCountry !== undefined && copiedFormData.recipientCountry !== null) ? copiedFormData.recipientCountry.countryCode : null,
+                beneficiaryCountry: (copiedFormData.recipientCountry !== undefined && copiedFormData.recipientCountry !== null) ? copiedFormData.recipientCountry.code : null,
                 debitAccount: copiedFormData.remitterAccountId,
                 informationProvider: copiedFormData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 'SWIFT' : 'MANUAL'
             };
