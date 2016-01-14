@@ -117,6 +117,7 @@
     "raiff.payments.new.btn.next": "Dalej",
     "raiff.payments.new.btn.finalize": "Powrót do listy",
     "raiff.payments.new.btn.final_action": "Zapisz odbiorcę",
+    "raiff.payments.new.btn.add_as_standing_order": "Dodaj jako zlecenie stałe",
 
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",
