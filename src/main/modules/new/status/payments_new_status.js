@@ -12,6 +12,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
         }
         
+        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
