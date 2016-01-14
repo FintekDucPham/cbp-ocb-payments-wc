@@ -11,7 +11,8 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsFutureManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, validationRegexp,
-                                                                rbPaymentTypes, transferService, $state) {
+                                                                rbPaymentTypes, transferService, $state,
+                                                                viewStateService, rbPaymentOperationTypes) {
 
         bdMainStepInitializer($scope, 'payment', {
             formName: 'paymentForm',
@@ -81,6 +82,24 @@ angular.module('raiffeisen-payments')
                     recipient: $scope.resolveRecipientData()
                 });
             }
+        };
+
+
+        $scope.addAsStandingOrder = function() {
+            viewStateService.setInitialState('payments.new', {
+                paymentOperationType: rbPaymentOperationTypes.NEW
+            });
+
+            $state.transitionTo('payments.new.fill', {
+                paymentType: 'standing',
+                payment: $scope.payment.standingOrderData
+            }, {reload: true}).finally(function() {
+                // workaround for paymentType parameter and state reloading problems
+                $state.go('payments.new.fill', {
+                    paymentType: 'standing',
+                    payment: $scope.payment.standingOrderData
+                });
+            });
         };
     }
 );

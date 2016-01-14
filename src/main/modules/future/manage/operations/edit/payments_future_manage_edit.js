@@ -118,27 +118,26 @@ angular.module('raiffeisen-payments')
             footerType: 'payment',
             onClear: $scope.clearForm,
             cancelState: 'payments.future.list',
+            addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
+                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
             },
             visibility:{
                 next: true,
                 fillReturn: false,
                 finalize: true
-            }
+            } 
         };
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
             data.description = data.title;
+            $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = data.transferType == 'OWN' || data.transferType == 'DOMESTIC';
             $scope.payment.meta.transferType = data.transferType;
             $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function(){
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                 $scope.payment.formData.referenceId = initialState.referenceId;
-
-                
             });
-
-
         });
 
 
