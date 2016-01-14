@@ -16,26 +16,20 @@ angular.module('raiffeisen-payments')
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
-                                                              systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes, standingTransferService) {
+                                                              systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes) {
 
         var maxDaysForward = SYSTEM_PARAMETERS['standing.order.max.days'];
 
-        $scope.firstDateMinDate= null;
+        $scope.firstDateMinDate = new Date();
         $scope.firstDateMaxDate = new Date();
+
+        $scope.firstDateMinDate.setDate($scope.firstDateMinDate.getDate() + 2);
         $scope.firstDateMaxDate.setDate($scope.firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
-        standingTransferService.standingOrderRules().then(function(response){
-            $scope.firstDateMinDate = new Date(response.standingOrderMinDate);
-            $scope.firstOrNextDateDatepickerOptions = rbDatepickerOptions({
-                minDate: $scope.firstDateMinDate,
-                maxDate: $scope.firstDateMaxDate
-            });
+
+        $scope.firstOrNextDateDatepickerOptions = rbDatepickerOptions({
+            minDate: $scope.firstDateMinDate,
+            maxDate: $scope.firstDateMaxDate
         });
-
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
-
-
-
-
 
         $scope.payment.formData.hideSaveRecipientButton = true;
 

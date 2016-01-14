@@ -32,10 +32,9 @@ angular.module('raiffeisen-payments')
 
          $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             var recipient = lodash.find($scope.payment.meta.recipientList, {
-                 nrb: $scope.payment.items.recipientAccount.accountNo.replace(/\s+/g, "")
+                 nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
              });
-             $scope.payment.formData.hideSaveRecipientButton = !!recipient;
-             $scope.payment.rbPaymentsStepParams.visibility.finalAction = !!recipient;
+             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
          });
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({

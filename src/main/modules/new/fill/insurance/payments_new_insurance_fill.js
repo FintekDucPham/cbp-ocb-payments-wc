@@ -294,8 +294,17 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
-            var recipientData = $scope.payment;
+            var recipientAccountNo = null;
+            _.each($scope.payment.meta.zusInsuranceTypes, function(insuranceType) {
+                if ($scope.payment.formData.insurancePremiums[insuranceType]) {
+                    if (!recipientAccountNo) {
+                        recipientAccountNo = $scope.payment.formData.insurancePremiums[insuranceType].nrb;        
+                    }
+                }
+            });
+
             var recipientData2 = angular.copy({
+                selectedInsuranceId: recipientAccountNo,
                 customName: "Nowy odbiorca",
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 nip: $scope.payment.formData.nip,

@@ -35,14 +35,17 @@ angular.module('raiffeisen-payments')
             bdFocus('recipientAccountNo');
         };
 
+        function updateRecipientsList() {
+
+        }
+
+
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {
-                /*
                 updateRecipientsList();
                 if (!!$scope.payment.items.recipient) {
-                    //$scope.clearRecipient();
+                    $scope.clearRecipient();
                 }
-                */
             }
         });
 
@@ -85,8 +88,7 @@ angular.module('raiffeisen-payments')
                 templateType: 'DOMESTIC',
                 accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
             });
-            $scope.payment.formData.hideSaveRecipientButton = !!recipient;
-            $scope.payment.rbPaymentsStepParams.visibility.finalAction = !!recipient;
+            $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
