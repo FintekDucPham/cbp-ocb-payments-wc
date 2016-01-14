@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.payment.meta.hideSaveRecipientButton = true;
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !!recipient;
+        $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
 
 
         if (!$scope.payment.formData.frequencyType) {
