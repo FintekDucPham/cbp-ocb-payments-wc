@@ -35,7 +35,7 @@ angular.module('raiffeisen-payments')
                 "recipientAccountNo": payment.creditAccount,
                 "description": payment.remarks ? payment.remarks.join("\n") : "",
                 "remitterAccountId": payment.debitAccountId,
-                "debitAccountNo": "55175000120000000007149565",//payment.debitAccount,
+                "debitAccountNo": payment.debitAccount,
                 "currency": payment.currency,
                 "nextRealizationDate": payment.frequency.nextDate ? new Date(Date.parse(payment.frequency.nextDate)) : null,
                 "firstRealizationDate": payment.startDate ? new Date(payment.startDate) : null,
