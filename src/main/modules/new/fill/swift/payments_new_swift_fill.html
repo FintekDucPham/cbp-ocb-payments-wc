@@ -128,11 +128,11 @@
                    ng-required="true"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
-                {{ $select.selected.countryName  | uppercase}}
+                {{ $select.selected.name | uppercase }}
             </ui-select-match>
 
-            <ui-select-choices repeat="country in countries.data.content | filter: {countryName : '!null', ueCountry: true} | filter: $select.search | orderBy: 'countryName'">
-                {{ country.countryName  | uppercase}}
+            <ui-select-choices repeat="country in countries.data | filter: $select.search | plOrderBy: 'name'">
+                {{ country.name | uppercase }}
             </ui-select-choices>
         </ui-select>
         <eb-validation-messages eb-name="recipientCountry">
@@ -165,9 +165,6 @@
                    placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
         </rb-item-property-data-preloader>
 
-
-
-
         <eb-validation-messages eb-name="swift_bic"><!--max 35-->
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.recipients.new.currency.fill.MSG-0609_EMPTY_SWIFT' |translate}}
@@ -195,10 +192,10 @@
                    bd-matches-none-of="recipientBankCountryValidators"
                    theme="bootstrap">
             <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">
-                {{ $select.selected.countryName | uppercase}}
+                {{ $select.selected.name | uppercase}}
             </ui-select-match>
-            <ui-select-choices repeat="country in countries.data.content | filter: {countryName : '!null', ueCountry: true} | filter: $select.search | orderBy: 'countryName'">
-                {{ country.countryName  | uppercase}}
+            <ui-select-choices repeat="country in countries.data | filter: {name : '!null'} | filter: $select.search | plOrderBy: 'name'">
+                {{ country.name  | uppercase}}
             </ui-select-choices>
         </ui-select>
 
@@ -213,7 +210,6 @@
 
     </bd-item-property>
 
-
     <!-- bank name-->
     <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}">
             <textarea   class="input-field input-area--party-data"
@@ -226,7 +222,6 @@
                         split-text-max-length-validators="140"></textarea>
 
     </bd-item-property>
-
 
     <!-- transfer title -->
     <bd-item-property class="bd-item-property--multirow"

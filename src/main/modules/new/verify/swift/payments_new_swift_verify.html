@@ -28,7 +28,7 @@
 
     <!-- bank country -->
     <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.bankCountry' | translate }}">
-        {{:: payment.formData.recipientBankCountry.countryName }}
+        {{:: payment.formData.recipientBankCountry.name }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}" ng-show="payment.formData.recipientBankName">
@@ -44,7 +44,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
-        {{:: payment.formData.recipientCountry.countryName }}
+        {{:: payment.formData.recipientCountry.name }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.fill.description'|translate}}">
