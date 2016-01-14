@@ -991,7 +991,7 @@
     "raiff.payments.future.delete.status.label.status.100": "Zlecenie zrealizowane",
     "raiff.payments.future.delete.status.label.status.99": "Zlecenie odrzucone",
     "raiff.payments.future.delete.status.label.status.98": "Zlecenie odrzucone",
-
+    "raiff.payments.future.delete.status.label.status.": "Zlecenie odrzucone",
 
     "raiff.payments.standing.label": "Zlecenia stałe",
     "raiff.payments.standing.list.header": "Zlecenia stałe",
