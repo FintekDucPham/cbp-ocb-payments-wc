@@ -62,6 +62,9 @@ angular.module('raiffeisen-payments')
                 accept: 'config.multistepform.buttons.accept',
                 finalAction: 'raiff.payments.new.btn.final_action',
                 finalize: 'raiff.payments.new.btn.finalize'
+            },
+            visibility: {
+                hideSaveRecipientButton: true
             }
         };
     });
