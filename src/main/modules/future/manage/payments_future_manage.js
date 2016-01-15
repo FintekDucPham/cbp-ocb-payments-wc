@@ -11,7 +11,8 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsFutureManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, validationRegexp,
-                                                                rbPaymentTypes, transferService) {
+                                                                rbPaymentTypes, transferService, $state,
+                                                                viewStateService, rbPaymentOperationTypes) {
 
         bdMainStepInitializer($scope, 'payment', {
             formName: 'paymentForm',
@@ -65,6 +66,40 @@ angular.module('raiffeisen-payments')
 
         $scope.getProperPaymentService = function() {
             return transferService;
+        };
+
+        $scope.resolveRecipientData = null;
+
+        $scope.saveRecipient = function() {
+            if($scope.resolveRecipientData) {
+                var recipientType = $scope.payment.type.state.toLowerCase();
+                if(recipientType==='swift' || recipientType==='sepa'){
+                    recipientType = 'foreign';
+                }
+                $state.go("payments.recipients.manage.new.fill", {
+                    recipientType: recipientType,
+                    operation: 'new',
+                    recipient: $scope.resolveRecipientData()
+                });
+            }
+        };
+
+
+        $scope.addAsStandingOrder = function() {
+            viewStateService.setInitialState('payments.new', {
+                paymentOperationType: rbPaymentOperationTypes.NEW
+            });
+
+            $state.transitionTo('payments.new.fill', {
+                paymentType: 'standing',
+                payment: $scope.payment.standingOrderData
+            }, {reload: true}).finally(function() {
+                // workaround for paymentType parameter and state reloading problems
+                $state.go('payments.new.fill', {
+                    paymentType: 'standing',
+                    payment: $scope.payment.standingOrderData
+                });
+            });
         };
     }
 );
