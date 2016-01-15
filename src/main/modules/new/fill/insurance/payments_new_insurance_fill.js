@@ -145,12 +145,14 @@ angular.module('raiffeisen-payments')
             $scope.payment.items.recipient = recipient;
 
             insuranceAccountsPromise.then(function() {
-                var insuranceAccountType = lodash.find($scope.insuranceAccountList, {
+                var insuranceAccount = lodash.find($scope.insuranceAccountList, {
                     accountNo : recipient.nrb
-                }).insuranceCode;
+                });
+                var insuranceAccountType = insuranceAccount.insuranceCode;
                 if(angular.isUndefined($scope.payment.formData.insurancePremiums[insuranceAccountType])){
                     $scope.payment.formData.insurancePremiums[insuranceAccountType] = {
-                        currency: 'PLN'
+                        currency: 'PLN',
+                        nrb: insuranceAccount.accountNo
                     };
                 }
             });
@@ -174,19 +176,17 @@ angular.module('raiffeisen-payments')
                 $scope.payment.options.isFromTaxpayer = false;
             }
         };
-       /* $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            console.debug($scope.insuranceAccountList);
-            for(var k in $scope.payment.formData.insurancePremiums){
-                console.debug(k);
-            }
-            /!*var recipient = lodash.find($scope.payment.meta.recipientList, {
-                templateType: 'INSURANCE',
-                nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
-            });
-            if(angular.isDefined(recipient) && recipient !== null){
-                delete $scope.payment.rbPaymentsStepParams.finalAction;
-            }*!/
-        });*/
+
+        $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            var insuranceNrbs = _.pluck($scope.payment.formData.insurancePremiums, 'nrb');
+            var recipientsNrbs = _.pluck($scope.payment.meta.recipientList, 'nrb');
+
+            var nonAddedAccounts = _.difference(insuranceNrbs, recipientsNrbs);
+
+            $scope.payment.meta.hideSaveRecipientButton = nonAddedAccounts.length <= 0;
+            $scope.payment.rbPaymentsStepParams.visibility.finalAction = nonAddedAccounts.length <= 0;
+        });
+
         $scope.selectTaxpayer = function (taxpayer) {
             var formData = $scope.payment.formData;
             formData.secondaryIdType = taxpayer.secondaryIdType;
