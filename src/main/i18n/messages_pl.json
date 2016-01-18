@@ -642,6 +642,7 @@
     "raiff.payments.recipients.verify.us.obligation_id": "Identyfikacja zobowiązania",
 
     "raiff.payments.recipients.manage.status.taxpayer_type": "Typ odbiorcy",
+    "raiff.payments.recipients.manage.status.recipient_shortname": "Nazwa skrócona odbiorcy",
 
     "raiff.payments.recipients.manage.remove.title": "Usuń odbiorcę",
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
