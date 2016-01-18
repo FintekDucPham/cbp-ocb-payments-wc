@@ -180,7 +180,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.additionalInfo = " ";
             copiedFormData.phoneNumber = " ";
             copiedFormData.costType = formData.transferCost;
-            copiedFormData.transferType = "SEPA";
+            copiedFormData.transferType = "SWIFT";
             copiedFormData.transferFromTemplate = false;
 
             copiedFormData.recipientAddress = [""];
