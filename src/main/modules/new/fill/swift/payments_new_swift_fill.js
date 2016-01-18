@@ -133,10 +133,9 @@ angular.module('raiffeisen-payments')
                             //search and set bank country
                             if($scope.countries.data){
                                 $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {
-                                    code: $scope.swift.data.code
+                                    code: $scope.swift.data.countryCode
                                 });
                             }
-
                             $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                         }else{
                             $scope.payment.formData.recipientBankName = null;
@@ -251,16 +250,21 @@ angular.module('raiffeisen-payments')
             }
         });
 
+        function findCountryByCode(countries, code) {
+            return lodash.find(countries, function(country) {
+                return code === country.code;
+            });
+        }
+
         $scope.countries.promise.then(function(data){
+            var countryCode;
             if($scope.payment.formData.recipientBankCountry){
-                $scope.payment.formData.recipientBankCountry = lodash.find(data, function(country) {
-                    return $scope.payment.formData.recipientBankCountry === country.code;
-                });
+                countryCode = $scope.payment.formData.recipientBankCountry.code || $scope.payment.formData.recipientBankCountry;
+                $scope.payment.formData.recipientBankCountry = findCountryByCode(data, countryCode);
             }
             if($scope.payment.formData.recipientCountry){
-                $scope.payment.formData.recipientCountry = lodash.find(data, function(country) {
-                    return $scope.payment.formData.recipientCountry === country.code;
-                });
+                countryCode = $scope.payment.formData.recipientCountry.code || $scope.payment.formData.recipientCountry;
+                $scope.payment.formData.recipientCountry = findCountryByCode(data, countryCode);
             }
             $scope.countries.data = data;
         }).catch(function(error){

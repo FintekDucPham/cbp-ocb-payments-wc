@@ -12,7 +12,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onInited= function(){
             if($scope.recipient && $scope.recipient.formData && $scope.recipient.formData.recipientIdentityType){
-
                 if($scope.recipient.formData.recipientIdentityType==='MANUAL'){
                     $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
                 }else if($scope.recipient.formData.recipientIdentityType==='SWIFT'){
@@ -25,7 +24,6 @@ angular.module('raiffeisen-payments')
                 $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
             }
         };
-
 
         $scope.$watch('recipient.formData.recipientIdentityType', function(newValue, oldValue){
             if (newValue && newValue != oldValue) {
@@ -62,26 +60,23 @@ angular.module('raiffeisen-payments')
             data: null
         };
 
+        function findCountryByCode(countries, code) {
+            return lodash.find(countries, function(country) {
+                return code === country.code;
+            });
+        }
+
         $scope.countries.promise.then(function(data){
-
+            var countryCode;
             if($scope.recipient.formData.recipientBankCountry){
-                angular.forEach(data, function(country){
-                    if($scope.recipient.formData.recipientBankCountry===country.code){
-                        $scope.recipient.formData.recipientBankCountry=angular.copy(country);
-                    }
-                });
+                countryCode = $scope.recipient.formData.recipientBankCountry.code || $scope.recipient.formData.recipientBankCountry;
+                $scope.recipient.formData.recipientBankCountry = angular.copy(findCountryByCode(data, countryCode));
             }
-
             if($scope.recipient.formData.recipientCountry){
-                angular.forEach(data, function(country){
-                    if($scope.recipient.formData.recipientCountry===country.code){
-                        $scope.recipient.formData.recipientCountry=angular.copy(country);
-                    }
-                });
+                countryCode = $scope.recipient.formData.recipientCountry.code || $scope.recipient.formData.recipientCountry;
+                $scope.recipient.formData.recipientCountry = angular.copy(findCountryByCode(data, countryCode));
             }
-
             $scope.countries.data = data;
-
         }).catch(function(error){
             $scope.countries.data = error;
         });
@@ -117,7 +112,6 @@ angular.module('raiffeisen-payments')
                             code: data.location || data.code
                         });
 
-
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                     }else{
                         if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
@@ -145,7 +139,6 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-
             if($scope.recipientForm.recipientAccountNo.$valid) {
                 control.holdOn();
                 control.done();
