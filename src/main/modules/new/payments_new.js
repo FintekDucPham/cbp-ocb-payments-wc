@@ -87,40 +87,54 @@ angular.module('raiffeisen-payments')
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
 
-        bdMainStepInitializer($scope, 'payment',{
-            formName: 'paymentForm',
-            type: lodash.find(rbPaymentTypes, {
-                state: $stateParams.paymentType || 'domestic'
-            }),
-            operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
-            formData: {
-                hideSaveRecipientButton: false,
-                sendBySorbnet: false
-            },
-            token: {
-                model: null,
-                params: {}
-            },
-            options: {
-                fixedAccountSelection: false,
-                fixedRecipientSelection: false
-            },
-            meta: {
-                paymentTypes: [],
-                isFuturePaymentAllowed: true,
-                dateSetByCategory: false,
-                hideSaveRecipientButton: false
-            },
-            validation: {}
-        });
+
+            bdMainStepInitializer($scope, 'payment',{
+                formName: 'paymentForm',
+                type: lodash.find(rbPaymentTypes, {
+                    state: $stateParams.paymentType || 'domestic'
+                }),
+                operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
+                formData: {
+                    hideSaveRecipientButton: false,
+                    sendBySorbnet: false
+                },
+                token: {
+                    model: null,
+                    params: {}
+                },
+                options: {
+                    fixedAccountSelection: false,
+                    fixedRecipientSelection: false
+                },
+                meta: {
+                    paymentTypes: [],
+                    isFuturePaymentAllowed: true,
+                    dateSetByCategory: false,
+                    hideSaveRecipientButton: false
+                },
+                validation: {}
+            });
+
 
         if(!angular.equals({}, $stateParams.payment)){
-            lodash.assign($scope.payment.formData, $stateParams.payment);
+            $scope.payment.formData = angular.copy($stateParams.payment);
+            if($stateParams.payment.paymentId){
+                $scope.payment.transferId = $stateParams.payment.paymentId;
+                $scope.payment.token.params.resourceId = $scope.payment.transferId;
+            }
             $stateParams.payment = {};
         }
         if(!angular.equals({}, $stateParams.items)){
             lodash.assign($scope.payment.items,  $stateParams.items);
             $stateParams.items = {};
+        }
+        if(!angular.equals({}, $stateParams.meta)){
+            lodash.assign($scope.payment.meta,  $stateParams.meta);
+            $stateParams.meta = {};
+        }
+        if(!angular.equals({}, $stateParams.options)){
+            lodash.assign($scope.payment.options,  $stateParams.options);
+            $stateParams.options = {};
         }
 
 
