@@ -903,6 +903,7 @@
     "raiff.payments.future.list.details.tax.periodTypes.K": "kwartał",
     "raiff.payments.future.list.details.tax.periodTypes.P": "półrocze",
     "raiff.payments.future.list.details.tax.periodTypes.R": "rok",
+    "raiff.payments.future.list.details.tax.periodTypes.null": " ",
 
     "raiff.payments.future.list.details.tax.periodNumber": "Numer okresu",
     "raiff.payments.future.list.details.tax.periodYear": "Rok okresu",
