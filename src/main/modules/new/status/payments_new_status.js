@@ -23,9 +23,4 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.payment
         });
 
-        if ($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code && !$scope.payment.formData.sendBySorbnet) {
-            $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
-        }
-
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && $scope.payment.meta.transferType !== "OWN";
     });
