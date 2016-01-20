@@ -30,6 +30,7 @@
     "raiff.payments.widget.new": "Nowa płatność",
     "raiff.payments.widget.details": "Szczegóły",
     "raiff.payments.widget.cancel": "Anuluj",
+    "raiff.payments.widget.pending_operations": "Płatności zaplanowane",
     "raiff.payments.widget.no_content": "Brak zaplanowanych płatności",
     "raiff.payments.widget.error": "Wystapił nieoczekiwany błąd. Spróbuj ponownie później.",
     "raiff.payments.recipients.label.empty_list": "Nie znaleziono odbiorców",
