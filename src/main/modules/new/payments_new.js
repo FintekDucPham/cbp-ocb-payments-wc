@@ -241,7 +241,7 @@ angular.module('raiffeisen-payments')
                 accept: true,
                 finalAction: true,
                 finalize: true,
-                addAsStandingOrder: true
+                addAsStandingOrder: false
             }
         };
 
