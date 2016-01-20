@@ -196,12 +196,12 @@ angular.module('raiffeisen-payments')
             return {
                 shortName: copiedFormData.customName,
                 creditAccount: copiedFormData.recipientAccountNo,
-                beneficiary: splitTextEveryNSign(copiedFormData.recipientData),
-                remarks: splitTextEveryNSign(copiedFormData.description),
+                beneficiary: splitTextEveryNSign(angular.isArray(copiedFormData.recipientData) ? copiedFormData.recipientData.join(' ') : copiedFormData.recipientData),
+                remarks: splitTextEveryNSign(angular.isArray(copiedFormData.description) ? copiedFormData.description.join(' ') : copiedFormData.description),
                 swift_bic: copiedFormData.recipientSwiftOrBic,
                 bankInformation: splitTextEveryNSign(copiedFormData.recipientBankName),
                 bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.code : null,
-                address: splitTextEveryNSign(copiedFormData.recipientData),
+                address: splitTextEveryNSign(angular.isArray(copiedFormData.recipientData) ? copiedFormData.recipientData.join(' ') : copiedFormData.recipientData),
                 beneficiaryCountry: (copiedFormData.recipientCountry !== undefined && copiedFormData.recipientCountry !== null) ? copiedFormData.recipientCountry.code : null,
                 debitAccount: copiedFormData.remitterAccountId,
                 informationProvider: copiedFormData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 'SWIFT' : 'MANUAL'
