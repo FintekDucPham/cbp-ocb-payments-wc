@@ -82,8 +82,13 @@ angular.module('raiffeisen-payments')
             var params = $scope.payment.rbPaymentsStepParams;
            if(newValue){
                 if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
-                    if($scope.payment.token.model.currentToken.$backendErrors.TOKEN_AUTH_BLOCKED){
+                    var backendErrors = $scope.payment.token.model.currentToken.$backendErrors;
+                    if(backendErrors.TOKEN_AUTH_BLOCKED){
                         params.labels.cancel = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }else if(backendErrors.TOKEN_NOT_SEND){
+                        params.labels.cancel = 'raiff.payments.new.btn.cancel';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }
