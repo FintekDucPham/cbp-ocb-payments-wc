@@ -119,6 +119,11 @@
     "raiff.payments.new.btn.finalize": "Powrót do listy",
     "raiff.payments.new.btn.final_action": "Zapisz odbiorcę",
     "raiff.payments.new.btn.add_as_standing_order": "Dodaj jako zlecenie stałe",
+    "raiff.payments.new.realization_type_sorbnet.label": "Realizacja poprzez SORBNET",
+    "raiff.payments.new.realization_type_sorbnet.verify.label": "Tryb realizacji",
+    "raiff.payments.new.realization_type_sorbnet.option.elixir": "ELIXIR – przelew standardowy",
+    "raiff.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – przelew SORBNET",
+    "raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Rachunek odbiorcy jest prowadzony przez Raiffeisen Bank Polska S.A.–nie może być zrealizowany jako SORBNET, zostanie zrealizowany w rozliczeniu wewnętrznym",
 
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",
@@ -174,7 +179,6 @@
     "raiff.payments.new.domestic.fill.execution_date.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
-    "raiff.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Raiffeisen Polbank jest możliwy tylko jako przelew własny.",
 
     "raiff.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
     "raiff.payments.new.domestic.fill.account.last1":" ostatnią ",
@@ -417,7 +421,6 @@
     "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK": "Musisz wybrać kraj banku odbiorcy",
     "raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS": "Rachunek odbiorcy nie może być rachunkiem ZUS.",
     "raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_US": "Rachunek odbiorcy nie może być rachunkiem Urzędu Skarbowego/Izby Celnej.",
-    "raiff.payments.recipients.new.currency.fill.recipient_account.SIMPLE_INCORRECT_IBAN": "Rachunek odbiorcy nie jest zgodny z formatem IBAN.",
 
 
     "raiff.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT": "Kod SWIFT banku nie może być pusty",
@@ -456,10 +459,10 @@
     "raiff.payments.MSG-0518_BLOCKED_SMS": "Autoryzacja hasłem SMS została zablokowana",
     "raiff.payments.MSG-0519_SMS_AGAIN": "Nie udało się wysłać kodu SMS. Naciśnij przycisk Potwierdź nowym hasłem SMS aby ponownie wysłać hasło SMS",
 
-    "raiff.payments.new.status.0": "Przelew/transakcja zrealizowana",
-    "raiff.payments.new.status.00": "Przelew/transakcja zrealizowana",
-    "raiff.payments.new.status.000": "Przelew/transakcja zrealizowana",
-    "raiff.payments.new.status.0000": "Przelew/transakcja zrealizowana",
+    "raiff.payments.new.status.0": "Przelew/transakcja przyjęta do realizacji",
+    "raiff.payments.new.status.00": "Przelew/transakcja przyjęta do realizacji",
+    "raiff.payments.new.status.000": "Przelew/transakcja przyjęta do realizacji",
+    "raiff.payments.new.status.0000": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.20": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.40": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.60": "Przelew/transakcja przyjęta do realizacji",
@@ -467,8 +470,7 @@
     "raiff.payments.new.status.99": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.98": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.error": "Przelew został odrzucony",
-    "raiff.payments.new.status.success": "Przelew/transakcja zrealizowana",
-    "raiff.payments.new.status.":"Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.success": "Przelew/transakcja przyjęta do realizacji",
 
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
@@ -643,7 +645,6 @@
     "raiff.payments.recipients.verify.us.obligation_id": "Identyfikacja zobowiązania",
 
     "raiff.payments.recipients.manage.status.taxpayer_type": "Typ odbiorcy",
-    "raiff.payments.recipients.manage.status.recipient_shortname": "Nazwa skrócona odbiorcy",
 
     "raiff.payments.recipients.manage.remove.title": "Usuń odbiorcę",
     "raiff.payments.recipients.authorization.fail":"Brak możliwości autoryzacji danej operacji",
@@ -897,7 +898,6 @@
     "raiff.payments.future.list.details.tax.periodTypes.K": "kwartał",
     "raiff.payments.future.list.details.tax.periodTypes.P": "półrocze",
     "raiff.payments.future.list.details.tax.periodTypes.R": "rok",
-    "raiff.payments.future.list.details.tax.periodTypes.null": " ",
 
     "raiff.payments.future.list.details.tax.periodNumber": "Numer okresu",
     "raiff.payments.future.list.details.tax.periodYear": "Rok okresu",
@@ -996,7 +996,7 @@
     "raiff.payments.future.delete.status.label.status.100": "Zlecenie zrealizowane",
     "raiff.payments.future.delete.status.label.status.99": "Zlecenie odrzucone",
     "raiff.payments.future.delete.status.label.status.98": "Zlecenie odrzucone",
-    "raiff.payments.future.delete.status.label.status.": "Zlecenie odrzucone",
+
 
     "raiff.payments.standing.label": "Zlecenia stałe",
     "raiff.payments.standing.list.header": "Zlecenia stałe",
@@ -1066,7 +1066,6 @@
     "raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID": "Kwota przelewu przekracza środki dostępne na rachunku",
     "raiff.payments.new.standing.fill.amount.DAILY_LIMIT_EXCEEDED": "Przekroczony dzienny limit operacji",
     "raiff.payments.new.standing.fill.amount.NOT_ELIXIR_PMNT": "Przelew nie może być wykonany jako płatność Elixir",
-    "raiff.payments.new.standing.fill.amount.MSG-0601_INCORRECT_DIFFERENCE_AMNT_SO":"Przekroczony dzienny limit operacji",
     "raiff.payments.new.standing.fill.first_execution_date": "Data pierwszej realizacji",
     "raiff.payments.new.standing.fill.first_execution_date.placeholder": "Wybierz datę pierwszej realizacji",
     "raiff.payments.new.standing.fill.first_execution_date.EMPTY_EXECUTED_DATE": "TODO: Data realizacji przelewu nie może być pusta",
@@ -1170,5 +1169,9 @@
     "raiff.standing_order.startDate.to_early":"Niepoprawna data pierwszej realizacji zlecenia",
   "EOF" : "",
     "raiff.payments.new.verify.transfer_cost": "Koszt przelewu",
-    "raiff.payments.new.verify.transfer_cost.info" : "Informacja o koszcie przelewu"
+    "raiff.payments.new.verify.transfer_cost.info" : "Informacja o koszcie przelewu",
+
+  "raiff.payments.cut.off.time.MSG-0662": "Sesja księgowania Twojej transakcji jeszcze nie została rozpoczęta. W momencie jej rozpoczęcia, Twoja transakcja zostanie zrealizowana.",
+  "raiff.payments.cut.off.time.MSG-0659": "Nie gwarantujemy, że dyspozycja zostanie zrealizowana dzisiaj."
+
 }
