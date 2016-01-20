@@ -1,50 +1,29 @@
 <div ng-controller="PaymentsWidgetController">
-    <eb-slide-widget eb-context="context" ng-show="!context.options.detailsShown || paymentSummary.content.length === 0"
-                     eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"
-                     eb-items-promise="paymentsPromise" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
-
-    <div ng-if="context.options.detailsShown && paymentSummary.content.length  > 0" class="payment-widget__payment">
-        <div ng-mouseleave="context.options.detailsShown = false" class="payment-widget__hide-cover"></div>
-        <div class="payment-widget__details" ng-include="widgetContent"></div>
-        <bd-button-panel>
-            <div class="bd-button-panel__button">
-                <bd-button ui-sref="payments.new.fill" style="line-height: 14px;">
-                    {{::'raiff.payments.widget.new'|translate}}
-                </bd-button>
+    <section ng-hide="paymentSummary.content.length === 0">
+        <eb-slide-widget eb-context="context"
+                         eb-modes="paymentsWidgetMode"
+                         eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"
+                         eb-items-promise="paymentsPromise" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
+    </section>
+    <section>
+        <div ng-if="paymentsPromise.$$state.status === 1 && paymentSummary.content.length == 0">
+            <div class="widget-content-inner info-text">
+                {{::'raiff.payments.widget.no_content'|translate}}
             </div>
-            <div class="bd-button-panel__button">
-                <bd-button style="line-height: 14px;">{{::'raiff.payments.widget.details'|translate}}</bd-button>
-            </div>
-            <div class="bd-button-panel__button">
-                <bd-button style="line-height: 14px;">{{::'raiff.payments.widget.cancel'|translate}}</bd-button>
-            </div>
-        </bd-button-panel>
-    </div>
-
-    <div ng-if="paymentsPromise.$$state.status === 1 && paymentSummary.content.length == 0"
-         class="payment-widget__no-content-placeholder">
-        <div class="payment-widget__no-content">
-            {{::'raiff.payments.widget.no_content'|translate}}
         </div>
-    </div>
-
-    <div ng-if="paymentsPromise.$$state.status === 2"
-         class="payment-widget__no-content-placeholder">
-        <div class="payment-widget__no-content">
-            {{::'raiff.payments.widget.error'|translate}}
-        </div>
-    </div>
-
-    <div ng-if="!context.options.detailsShown && paymentSummary.content.length == 0">
-
-        <bd-button-panel>
-            <div class="bd-button-panel__button">
-                <bd-button ui-sref="payments.new.fill" style="line-height: 14px;">
-                    {{::'raiff.payments.widget.new'|translate}}
-                </bd-button>
+        <div ng-if="paymentsPromise.$$state.status === 2">
+            <div class="widget-content-inner info-text">
+                {{::'raiff.payments.widget.error'|translate}}
             </div>
-        </bd-button-panel>
-
-    </div>
-
+        </div>
+        <div ng-if="!paymentsWidgetMode.fullMode && paymentSummary.content.length == 0">
+            <bd-button-panel>
+                <div class="bd-button-panel__button">
+                    <bd-button ui-sref="payments.new.fill" style="line-height: 14px;">
+                        {{::'raiff.payments.widget.new'|translate}}
+                    </bd-button>
+                </div>
+            </bd-button-panel>
+        </div>
+    </section>
 </div>

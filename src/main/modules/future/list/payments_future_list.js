@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, viewStateService) {
         $scope.dateRange = {};
 
         $scope.options = {
@@ -168,19 +168,41 @@ angular.module('raiffeisen-payments')
 
                     $scope.summary = {};
 
-                    paymentsService.search(params).then(function (response) {
+
+
+                    var paymentFutureInitialState = viewStateService.getInitialState('payments.future.list');
+                    if(paymentFutureInitialState && paymentFutureInitialState.relation === 'DETAILS_FROM_WIDGET'){
+                        var selectedPayment = angular.copy(paymentFutureInitialState.paymentDetails);
+                        selectedPayment.renderExpanded = true;
+                        $params.renderExpanded = true;
                         var summary = {};
-                        _.each(response.content, function(payment) {
-                            if (payment.transferType == 'STANDING_ORDER') {
-                                payment.transferType = rbPaymentTypes.STANDING.code;
-                            }
-                            addPaymentAmountToSummary(payment, summary);
-                            linkDetailsLoading(payment);
-                        });
+                        addPaymentAmountToSummary(selectedPayment, summary);
+                        viewStateService.resetInitialState('payments.future.list',{});
                         formSummary(summary);
-                        defer.resolve(response.content);
-                        $params.pageCount = response.totalPages;
-                    });
+                        selectedPayment.loadDetails = function(){
+                            selectedPayment.promise = $q.when(selectedPayment).then(function(response){
+                                selectedPayment.details = response;
+                            });
+                        };
+                        //linkDetailsLoading(selectedPayment);
+                        defer.resolve([selectedPayment]);
+                        $params.pageCount = 1;
+                    }else{
+                        paymentsService.search(params).then(function (response) {
+                            var summary = {};
+                            _.each(response.content, function(payment) {
+                                if (payment.transferType == 'STANDING_ORDER') {
+                                    payment.transferType = rbPaymentTypes.STANDING.code;
+                                }
+                                addPaymentAmountToSummary(payment, summary);
+                                linkDetailsLoading(payment);
+                            });
+                            formSummary(summary);
+                            defer.resolve(response.content);
+                            $params.pageCount = response.totalPages;
+                        });
+                    }
+
                 }
             },
             tableControl: undefined
