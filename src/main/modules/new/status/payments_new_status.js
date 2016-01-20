@@ -8,6 +8,15 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes, $stateParams) {
 
+        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
+
+        // dodaj jako zlecenie stale tylko dla krajowego / wlasnego
+        // pod warunkiem, ze to nie sorbnet
+        if ($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code || $scope.payment.type.code == rbPaymentTypes.OWN.code) {
+            if (!$scope.payment.formData.sendBySorbnet) {
+                $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
+            }
+        }
 
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
