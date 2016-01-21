@@ -103,6 +103,10 @@ angular.module('raiffeisen-payments')
                         params.labels.cancel = 'raiff.payments.new.btn.cancel';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
+                    }else if(backendErrors.TOKEN_EXPIRED){
+                        params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
                     }
                     params.visibility.change = false;
                 }else{
