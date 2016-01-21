@@ -90,7 +90,6 @@
               ng-pattern="RECIPIENT_DATA_REGEX"
               required
               bd-array-value
-              ng-disabled="payment.options.fixedRecipientSelection"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -118,7 +117,6 @@
 
         <textarea name="description"
                   ng-model="payment.formData.description"
-                  ng-disabled="payment.options.fixedRecipientSelection"
                   class="input-field input-area--payment-description"
                   required
                   bd-array-value
