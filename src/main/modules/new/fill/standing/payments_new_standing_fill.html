@@ -124,7 +124,6 @@
               ng-model="payment.formData.recipientName"
               ng-pattern="STANDING_ORDER_BNF_REGEX"
               required
-              ng-disabled="payment.options.fixedRecipientSelection"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -152,7 +151,6 @@
 
         <textarea name="description"
                   ng-model="payment.formData.description"
-                  ng-disabled="payment.options.fixedRecipientSelection"
                   class="input-field input-area--payment-description"
                   required
                   split-text-max-length-validators="140"
