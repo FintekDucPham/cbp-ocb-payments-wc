@@ -43,9 +43,11 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {
                 updateRecipientsList();
+                /*
                 if (!!$scope.payment.items.recipient) {
                     $scope.clearRecipient();
                 }
+                */
             }
         });
 

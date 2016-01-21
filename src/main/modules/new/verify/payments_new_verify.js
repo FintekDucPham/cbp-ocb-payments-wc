@@ -52,6 +52,7 @@ angular.module('raiffeisen-payments')
                 $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
                 depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
+                // we need to have form data to create new standing order based on this transaction
                 $scope.payment.standingOrderData = $scope.payment.formData;
                 $scope.payment.formData = {};
                 $scope.payment.items = {};
@@ -81,8 +82,13 @@ angular.module('raiffeisen-payments')
             var params = $scope.payment.rbPaymentsStepParams;
            if(newValue){
                 if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
-                    if($scope.payment.token.model.currentToken.$backendErrors.TOKEN_AUTH_BLOCKED){
+                    var backendErrors = $scope.payment.token.model.currentToken.$backendErrors;
+                    if(backendErrors.TOKEN_AUTH_BLOCKED){
                         params.labels.cancel = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }else if(backendErrors.TOKEN_NOT_SEND){
+                        params.labels.cancel = 'raiff.payments.new.btn.cancel';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }

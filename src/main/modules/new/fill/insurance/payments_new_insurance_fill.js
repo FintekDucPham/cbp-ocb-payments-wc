@@ -184,7 +184,7 @@ angular.module('raiffeisen-payments')
             var nonAddedAccounts = _.difference(insuranceNrbs, recipientsNrbs);
 
             $scope.payment.meta.hideSaveRecipientButton = nonAddedAccounts.length <= 0;
-            $scope.payment.rbPaymentsStepParams.visibility.finalAction = nonAddedAccounts.length <= 0;
+            $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
         });
 
         $scope.selectTaxpayer = function (taxpayer) {
@@ -295,13 +295,15 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientAccountNo = null;
-            _.each($scope.payment.meta.zusInsuranceTypes, function(insuranceType) {
-                if ($scope.payment.formData.insurancePremiums[insuranceType]) {
-                    if (!recipientAccountNo) {
-                        recipientAccountNo = $scope.payment.formData.insurancePremiums[insuranceType].nrb;        
-                    }
-                }
-            });
+
+            var insuranceNrbs = _.pluck($scope.payment.formData.insurancePremiums, 'nrb');
+            var recipientsNrbs = _.pluck($scope.payment.meta.recipientList, 'nrb');
+
+            var nonAddedAccounts = _.difference(insuranceNrbs, recipientsNrbs);
+
+            if (nonAddedAccounts.length > 0) {
+                recipientAccountNo = nonAddedAccounts[0];
+            }
 
             var recipientData2 = angular.copy({
                 selectedInsuranceId: recipientAccountNo,
@@ -312,6 +314,7 @@ angular.module('raiffeisen-payments')
                 secondaryIdNo: $scope.payment.formData.secondaryIdNo,
                 paymentType: $scope.payment.formData.paymentType
             });
+
             $scope.setRecipientDataExtractor(function() {
                 return recipientData2;
             });

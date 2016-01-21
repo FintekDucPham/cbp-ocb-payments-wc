@@ -178,6 +178,24 @@ angular.module('raiffeisen-payments')
             $state.go('payments.standing.list');
         };
 
+        $scope.addAsStandingOrder = function() {
+            
+           viewStateService.setInitialState('payments.new', {
+               paymentOperationType: rbPaymentOperationTypes.NEW
+           });
+
+           $state.transitionTo('payments.new.fill', {
+               paymentType: 'standing',
+               payment: $scope.payment.standingOrderData
+           }, {reload: true}).finally(function() {
+               // workaround for paymentType parameter and state reloading problems
+               $state.go('payments.new.fill', {
+                    paymentType: 'standing',
+                    payment: $scope.payment.standingOrderData
+               });   
+           });
+        };
+
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',
             finalAction: $scope.saveRecipient,
@@ -185,6 +203,7 @@ angular.module('raiffeisen-payments')
             onClear: $scope.clearForm,
             cancelState: 'payments.recipients.list',
             onFillReturn: $scope.onFillReturn,
+            addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
                 change: 'config.multistepform.buttons.change',
@@ -194,7 +213,8 @@ angular.module('raiffeisen-payments')
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
                 finalize: 'raiff.payments.new.btn.finalize',
-                finalAction: 'raiff.payments.new.btn.final_action'
+                finalAction: 'raiff.payments.new.btn.final_action',
+                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
             },
             visibility:{
                 fillReturn: false,
@@ -204,7 +224,8 @@ angular.module('raiffeisen-payments')
                 next: true,
                 accept: true,
                 finalAction: true,
-                finalize: true
+                finalize: true,
+                addAsStandingOrder: false
             }
         };
 
@@ -226,5 +247,7 @@ angular.module('raiffeisen-payments')
                 return transferService;
             }
         };
+
+
 
     });

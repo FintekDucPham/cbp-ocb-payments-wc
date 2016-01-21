@@ -20,7 +20,7 @@
         </bd-item-property>
 
         <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'"  class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.bankCountry' | translate }}">
-            {{ recipient.formData.recipientBankCountry.countryName }}
+            {{ recipient.formData.recipientBankCountry.name }}
         </bd-item-property>
 
         <bd-item-property ng-hide="recipient.operation.code !== 'REMOVE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.remove.recipient_account.label' | translate }}">
@@ -38,11 +38,8 @@
             <p ng-bind-html="recipient.formData.recipientData" ></p>
         </bd-item-property>
 
-
-
-
         <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'"  class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
-            {{ recipient.formData.recipientCountry.countryName }}
+            {{ recipient.formData.recipientCountry.name }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.description.label' | translate }}">
