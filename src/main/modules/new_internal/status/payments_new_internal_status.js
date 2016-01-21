@@ -13,6 +13,9 @@ angular.module('raiffeisen-payments')
             dataObject: $scope.payment
         });
 
+        $scope.payment.standingOrderData = $scope.payment.formData;
+        $scope.payment.standingOrderData.recipientAccountNo = $scope.payment.items.recipientAccount.accountNo;
+
         $scope.payment.formData = {};
 
     });
