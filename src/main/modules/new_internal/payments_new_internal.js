@@ -17,7 +17,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService) {
 
         $scope.CURRENT_DATE = CURRENT_DATE;
 
@@ -49,22 +49,55 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.addAsStandingOrder = function() {
+
+            viewStateService.setInitialState('payments.new', {
+                paymentOperationType: rbPaymentOperationTypes.NEW
+            });
+
+            $state.transitionTo('payments.new.fill', {
+                paymentType: 'standing',
+                payment: $scope.payment.standingOrderData
+            }, {reload: true}).finally(function() {
+                // workaround for paymentType parameter and state reloading problems
+                $state.go('payments.new.fill', {
+                    paymentType: 'standing',
+                    payment: $scope.payment.standingOrderData
+                });
+            });
+        };
+
+
+
         $scope.payment.rbMultistepParams = {
             completeState: 'payments.recipients.list',
+            footerType: 'payment',
             onClear: $scope.clearForm,
             cancelState: 'payments.recipients.list',
+            addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
+                cancel: 'config.multistepform.buttons.cancel',
                 change: 'config.multistepform.buttons.change',
                 edit: 'config.multistepform.buttons.edit',
                 clear: 'config.multistepform.buttons.clear',
                 prev: 'config.multistepform.buttons.prev',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
+                finalize: 'raiff.payments.new.btn.finalize',
                 finalAction: 'raiff.payments.new.btn.final_action',
-                finalize: 'raiff.payments.new.btn.finalize'
+                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
             },
-            visibility: {
-                hideSaveRecipientButton: true
+            visibility:{
+                fillReturn: false,
+                cancel: true,
+                change: true,
+                clear: true,
+                next: true,
+                accept: true,
+                finalAction: false,
+                finalize: true,
+                hideSaveRecipientButton: true,
+                addAsStandingOrder: true
             }
         };
     });
