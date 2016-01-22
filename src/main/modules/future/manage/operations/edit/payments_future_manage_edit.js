@@ -120,13 +120,14 @@ angular.module('raiffeisen-payments')
             cancelState: 'payments.future.list',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
+                finalAction: 'raiff.payments.new.btn.final_action',
                 addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
             },
             visibility:{
                 next: true,
                 fillReturn: false,
                 finalize: true
-            } 
+            }
         };
 
         $scope.payment.initData.promise = paymentsService.get(initialState.referenceId, {}).then(function(data){
@@ -137,6 +138,12 @@ angular.module('raiffeisen-payments')
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                 $scope.payment.formData.referenceId = initialState.referenceId;
+
+                // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
+                if ($scope.payment.type.code == 'OWN') {
+                    $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;        
+                }
+
             });
         });
 

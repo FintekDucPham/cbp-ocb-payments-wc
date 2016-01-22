@@ -92,12 +92,12 @@ angular.module('raiffeisen-payments')
 
             $state.transitionTo('payments.new.fill', {
                 paymentType: 'standing',
-                payment: $scope.payment.standingOrderData
+                payment: $scope.payment.formData
             }, {reload: true}).finally(function() {
                 // workaround for paymentType parameter and state reloading problems
                 $state.go('payments.new.fill', {
                     paymentType: 'standing',
-                    payment: $scope.payment.standingOrderData
+                    payment: $scope.payment.formData
                 });
             });
         };
