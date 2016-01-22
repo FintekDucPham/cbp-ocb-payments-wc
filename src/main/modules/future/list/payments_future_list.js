@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, viewStateService) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState) {
         $scope.dateRange = {};
 
         $scope.options = {
@@ -170,9 +170,8 @@ angular.module('raiffeisen-payments')
 
 
 
-                    var paymentFutureInitialState = viewStateService.getInitialState('payments.future.list');
-                    if(paymentFutureInitialState && paymentFutureInitialState.relation === 'DETAILS_FROM_WIDGET'){
-                        var selectedPayment = angular.copy(paymentFutureInitialState.paymentDetails);
+                    if(initialState && initialState.relation === 'DETAILS_FROM_WIDGET'){
+                        var selectedPayment = angular.copy(initialState.paymentDetails);
                         selectedPayment.renderExpanded = true;
                         $params.renderExpanded = true;
                         var summary = {};
