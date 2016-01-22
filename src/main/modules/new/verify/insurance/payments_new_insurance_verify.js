@@ -3,6 +3,9 @@ angular.module('raiffeisen-payments')
 
         $scope.insurances = lodash.sortBy(lodash.forEach($scope.payment.formData.insurancePremiums, function(insurance, insurance_type) {
             insurance.type = insurance_type;
+            if(typeof insurance.amount == 'number'){
+                insurance.amount = insurance.amount.toString();
+            }
         }), function(insurance) {
             return zusPaymentInsurances.indexOf(insurance.type);
         });

@@ -66,8 +66,7 @@
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.verify.payment_data' | translate }}">
 
         <div ng-repeat="insurance in insurances">
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.payment.' + insurance.type |translate}}">
-                {{ ::'raiff.payments.new.zus.verify.tmp.zus_name' | translate }}<br>
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insurance.type | translate }}">
                 {{::insurance.nrb | nrbIbanFilter}}
                 <bd-amount amount="insurance.amount.replace(',','.')" currency="{{ insurance.currency }}" not-styled></bd-amount>
             </bd-item-property>

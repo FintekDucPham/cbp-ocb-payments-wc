@@ -233,40 +233,44 @@
     </bd-item-property>
 
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.fill.payment_options' | translate }}">
-
         <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums" style="width: 100%">
 
-            <bd-checkbox-select-option ng-repeat="insuranceType in payment.meta.zusInsuranceTypes"
-                                       bd-on-check="enableInsurancePremium(insuranceType)"
-                                       bd-checkbox-key="{{ insuranceType }}" style="width: 100%">
+            <bd-checkbox-select-option ng-repeat="insuranceItem in insuranceAccountList"
+                                       bd-on-check="enableInsurancePremium(insuranceItem.insuranceCode)"
+                                       bd-checkbox-key="{{ insuranceItem.insuranceCode }}" style="width: 100%">
+
 
                 <bd-item-property
-                        label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insuranceType | translate }}">
-
-                    <div class="bd-pair">
-                        <div class="bd-pair__value">
-                            <input ng-model="payment.formData.insurancePremiums[insuranceType].amount"
-                                   ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
-                                   ng-init="bindInsuranceAccount(insuranceType)"
-                                   type="text"
-                                   class="input-field"
-                                   min="0.01"
-                                   bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceType] }}"
-                                   bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
-                                   ng-pattern="AMOUNT_PATTERN"
-                                   ng-model-options="{ allowInvalid: true }"
-                                   step="0.01"
-                                   required
-                                   name="{{ insuranceType }}Amount"/>
+                        label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insuranceItem.insuranceCode | translate }}">
+                    <div>
+                        <div class="nrb-field">
+                            {{ insuranceItem.accountNo | nrbIbanFilter }}
                         </div>
-                        <div class="bd-pair__value">
-                            <input class="input-field input-field--currency" value="PLN"
-                                   ng-disabled="!payment.formData.insurancePremiums[insuranceType]"
-                                   ng-readonly="payment.formData.insurancePremiums[insuranceType]">
+                        <div class="bd-pair">
+                            <div class="bd-pair__value">
+                                <input ng-model="payment.formData.insurancePremiums[insuranceItem.insuranceCode].amount"
+                                       ng-disabled="!payment.formData.insurancePremiums[insuranceItem.insuranceCode]"
+                                       ng-init="bindInsuranceAccount(insuranceItem.insuranceCode)"
+                                       type="text"
+                                       class="input-field"
+                                       min="0.01"
+                                       bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceItem.insuranceCode] }}"
+                                       bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
+                                       ng-pattern="AMOUNT_PATTERN"
+                                       ng-model-options="{ allowInvalid: true }"
+                                       step="0.01"
+                                       required
+                                       name="{{ insuranceItem.insuranceCode }}Amount"/>
+                            </div>
+                            <div class="bd-pair__value">
+                                <input class="input-field input-field--currency" value="PLN"
+                                       ng-disabled="!payment.formData.insurancePremiums[insuranceItem.insuranceCode]"
+                                       ng-readonly="payment.formData.insurancePremiums[insuranceItem.insuranceCode]">
+                            </div>
                         </div>
                     </div>
 
-                    <eb-validation-messages eb-name="{{ insuranceType }}Amount">
+                    <eb-validation-messages eb-name="{{ insuranceItem.insuranceCode }}Amount">
                         <div eb-message-key="required" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.INVALID_NUMBER_AMOUNT' | translate }}
                         </div>
@@ -300,7 +304,7 @@
         <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-show="totalPaymentAmount.length > 0">
             <div class="rb-payments-new-zus-fill__summary">
                 <div ng-repeat="summary in totalPaymentAmount" class="rb-payments-new-zus-fill__summary-entry">
-                    <bd-amount ng-show="summary.amount > 0" amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
+                    <bd-amount amount="summary.amount" currency="{{ summary.currency }}"></bd-amount>
                 </div>
             </div>
             <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
