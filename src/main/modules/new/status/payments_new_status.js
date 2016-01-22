@@ -8,7 +8,7 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes, $stateParams) {
 
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
+        $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && ($scope.payment.type.code != rbPaymentTypes.OWN.code);
 
         // dodaj jako zlecenie stale tylko dla krajowego / wlasnego
         // pod warunkiem, ze to nie sorbnet
