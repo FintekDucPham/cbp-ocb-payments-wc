@@ -126,6 +126,7 @@
     "raiff.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – przelew SORBNET",
     "raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Rachunek odbiorcy jest prowadzony przez Raiffeisen Bank Polska S.A.–nie może być zrealizowany jako SORBNET, zostanie zrealizowany w rozliczeniu wewnętrznym",
     "raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO": "Rachunek odbiorcy jest prowadzony przez Raiffeisen Bank Polska S.A. – zostanie zrealizowany w rozliczeniu wewnętrznym",
+    "raiff.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Raiffeisen Polbank. jest możliwy tylko jako przelew własny",
 
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",
