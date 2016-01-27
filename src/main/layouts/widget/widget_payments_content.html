@@ -9,15 +9,15 @@
 
                 <div class="row widget-tile__button">
                     <div class="col-xs-4 text-left">
-                        <bd-button ui-sref="payments.recipients.list" style="line-height: 14px;">{{::'raiff.payments.widget.new'|translate}}</bd-button>
+                        <bd-button ui-sref="payments.recipients.list">{{::'raiff.payments.widget.new'|translate}}</bd-button>
                     </div>
 
                     <div class="col-xs-4 text-center">
-                        <bd-button ng-click="goToDetails($event, item)" style="line-height: 14px;">{{::'raiff.payments.widget.details'|translate}}</bd-button>
+                        <bd-button ng-click="goToDetails($event, item)">{{::'raiff.payments.widget.details'|translate}}</bd-button>
                     </div>
 
                     <div class="col-xs-4 text-right">
-                        <bd-button ui-sref="payments.future.list" style="line-height: 14px; font-size: 10px">{{::'raiff.payments.widget.pending_operations'|translate}}</bd-button>
+                        <bd-button ui-sref="payments.future.list">{{::'raiff.payments.widget.pending_operations'|translate}}</bd-button>
                     </div>
                 </div>
 
