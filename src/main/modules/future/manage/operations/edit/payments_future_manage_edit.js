@@ -30,7 +30,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances) {
+    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances) {
 
         var idTypesMap = {
             "P": "PESEL",
@@ -112,6 +112,11 @@ angular.module('raiffeisen-payments')
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
+        $scope.clearForm = function () {
+            $scope.payment.formData = {};
+            $scope.$broadcast('clearForm');
+        };
+
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.future.list',
             finalAction: $scope.saveRecipient,
@@ -147,12 +152,6 @@ angular.module('raiffeisen-payments')
             });
         });
 
-
-
-        $scope.clearForm = function () {
-            $scope.payment.formData = {};
-            $scope.$broadcast('clearForm');
-        };
 
         $scope.prepareOperation = $scope.create;
 
