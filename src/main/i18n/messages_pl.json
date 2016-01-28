@@ -996,6 +996,7 @@
     "raiff.payments.future.delete.buttons.proceed": "Usuń",
     "raiff.payments.future.bad_token.buttons.proceed": "Zatwierdź",
     "raiff.payments.future.delete.buttons.cancel": "Anuluj",
+    "raiff.payments.future.delete.buttons.returnToList": "Powrót do listy",
 
     "raiff.payments.future.manage.delete.header": "Usuń przelew zaplanowany",
 
