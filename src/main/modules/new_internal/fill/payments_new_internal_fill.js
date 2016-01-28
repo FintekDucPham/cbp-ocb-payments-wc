@@ -226,8 +226,12 @@ angular.module('raiffeisen-payments')
             $scope.payment.meta.customerContext = data.customerDetails.context;
         });
 
-        function isSenderAccountCategoryRestricted() {
-            return $scope.payment.meta.customerContext === 'DETAL' ? $scope.payment.items.senderAccount.category === 1005 : $scope.payment.items.senderAccount.category === 1016;
+        function isSenderAccountCategoryRestricted(account) {
+            if ($scope.payment.meta.customerContext === 'DETAL') {
+                return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
+            } else {
+                return $scope.payment.items.senderAccount.category === 1016 && !'PLN' === account.currency && !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category);
+            };
         }
 
         function isAccountInvestmentFulfilsRules(account){
@@ -255,10 +259,10 @@ angular.module('raiffeisen-payments')
             accountFilter: function (accounts, $accountId) {
                 var filteredAccounts = accounts;
                 var filterParams = [];
+                filteredAccounts =  lodash.reject(accounts, function(account) {
+                    return account.accountId === $accountId || isSenderAccountCategoryRestricted(account);
+                });
                 if (!!$accountId) {
-                    filteredAccounts =  lodash.reject(accounts, function(account) {
-                        return account.accountId === $accountId || isSenderAccountCategoryRestricted() && lodash.contains([1101,3000,3008], account.category);
-                    });
                     if($scope.payment.items.senderAccount){
                         if($scope.payment.items.senderAccount.accountRestrictFlag){
                             filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
@@ -275,7 +279,6 @@ angular.module('raiffeisen-payments')
                     }
                     return filteredAccounts;
                 } else {
-                    filteredAccounts = accounts;
                     if($scope.payment.items.senderAccount){
                         if($scope.payment.items.senderAccount.accountRestrictFlag){
                             filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
