@@ -427,6 +427,7 @@
 
     "raiff.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT": "Kod SWIFT banku nie może być pusty",
     "raiff.payments.recipients.new.currency.fill.swift_bic.INCORRECT_SWIFT": "Niepoprawny kod SWIFT banku",
+    "raiff.payments.recipients.new.currency.fill.swift.recipentAccount.INCORRECT_CHARACTER_ACC": "Pole Rachunek odbiorcy nie może być dłuższe niż 34 znaki i powinno zawierać tylko: litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.description.EMPTY":"Tytuł przelewu nie może być pusty",
     "raiff.payments.recipients.edit.currency.verify.company.name":"Nazwa firmy",
     "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",

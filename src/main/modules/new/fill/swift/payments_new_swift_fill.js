@@ -7,6 +7,7 @@ angular.module('raiffeisen-payments')
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
+        $scope.SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP = validationRegexp('SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP');
         $scope.currencyList = [];
 
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
