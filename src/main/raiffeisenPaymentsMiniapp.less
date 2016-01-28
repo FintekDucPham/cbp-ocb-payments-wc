@@ -185,8 +185,10 @@
 .accounts {
   .bd-table {
     &__cell-content-wrapper {
-      word-break: break-all;
-      word-wrap: break-word;
+      span {
+        word-wrap: break-word;
+        display: block;
+      }
     }
   }
 
