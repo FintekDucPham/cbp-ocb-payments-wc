@@ -46,15 +46,6 @@ angular.module('raiffeisen-payments')
             model: null
         };
 
-        var idTypesMap = {
-            "P": "PESEL",
-            "N": "NIP",
-            "R": "REGON",
-            "1": "ID_CARD",
-            "2": "PASSPORT",
-            "3": "OTHER"
-        };
-
         function proceedAction(responseCode){
             viewStateService.setInitialState('payments.future.manage.delete.status', {
                 status: {
@@ -70,8 +61,8 @@ angular.module('raiffeisen-payments')
                 if($scope.token.model.input.$isValid()) {
                     transferService.realize( $scope.tokenParams.resourceId, $scope.token.model.input.model).then(function (resultCode) {
                         var parts = resultCode.split("|");
-                       proceedAction(parts[1]);
-
+                        var code = parts[1] || "99";
+                        proceedAction(code);
                     }).catch(function (error) {
                         if($scope.token.model && $scope.token.model.$tokenRequired){
                             if(!$scope.token.model.$isErrorRegardingToken(error)){
@@ -80,7 +71,6 @@ angular.module('raiffeisen-payments')
                         }else{
                             proceedAction("99");
                         }
-
                     });
 /*
                     paymentsService.remove(responseObject, {
@@ -100,22 +90,10 @@ angular.module('raiffeisen-payments')
             }else if($scope.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
                 $scope.token.model.$proceed();
             }
-
-
         };
 
         $scope.onCancelButtonClick = function() {
             $state.go('payments.future.list');
         };
 
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
     });
