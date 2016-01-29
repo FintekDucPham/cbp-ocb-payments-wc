@@ -7,6 +7,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"   label="{{::'raiff.payments.standing.list.details.senderAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+    {{$data.debitAccountName}}<br/>
     {{$data.debitAccount | nrbIbanFilter }}
 </bd-item-property>
 
@@ -15,6 +16,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+    {{$data.creditAccountBankName}}<br/>
     {{$data.creditAccount | nrbIbanFilter }}
 </bd-item-property>
 
