@@ -55,7 +55,7 @@ angular.module('raiffeisen-payments')
         // quick fix
         utilityService.getCurrentDate().then(function(currentDate) {
             var realizationDate = new Date(currentDate.getTime());
-            realizationDate.setDate(realizationDate.getDate() + 1);
+            realizationDate.setDate(realizationDate.getDate());
             $timeout(function() {
                 $scope.payment.formData.realizationDate = realizationDate;
             });
