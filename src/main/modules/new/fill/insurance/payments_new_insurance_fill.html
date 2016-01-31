@@ -188,7 +188,7 @@
                bd-novalidate-when="{{ 'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) >= 0 }}"
                ng-disabled="'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) >= 0"
                ng-pattern="additionalInfoRegexp"
-               placeholder="{{ ::'raiff.payments.new.zus.fill.additional_info.placeholder' | translate }}"/>
+               placeholder="{{ 'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) < 0 ? ('raiff.payments.new.zus.fill.additional_info.placeholder' | translate) : '' }}"/>
 
         <eb-validation-messages eb-name="additionalInfo">
             <div eb-message-key="required" class="validation-message animate-on">
