@@ -199,7 +199,7 @@ angular.module('raiffeisen-payments')
             var recipient = $scope.payment.items.recipientAccount;
             formData.taxpayerDataTable = splitTextEveryNSign(formData.taxpayerData);
             return angular.extend(copiedFormData, {
-                recipientName: 'Krakow',//recipient.officeName,
+                recipientName: recipient.officeName,
                 recipientNameTable: splitTextEveryNSign(recipient.officeName),
                 recipientAccountNo: recipient.accountNo
             });
