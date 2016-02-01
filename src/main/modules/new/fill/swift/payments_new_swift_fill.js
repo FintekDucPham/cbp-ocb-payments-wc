@@ -1,9 +1,13 @@
 angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
-                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService) {
+                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, language) {
 
-        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+        if(language.get()==='pl'){
+            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+        }else{
+            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN_EN');
+        }
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
@@ -199,8 +203,12 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
-            copiedFormData.amount = (""+formData.amount).replace(",",".");
-            formData.amount = (""+formData.amount).replace(",",".");
+            if(language.get()==='pl'){
+                copiedFormData.amount = (""+formData.amount).replace(",",".");
+                formData.amount = (""+formData.amount).replace(",",".");
+            }else{
+                copiedFormData.amount = (""+formData.amount).split(",").join('');
+            }
             copiedFormData.recipientCountry = formData.recipientCountry.code;
             return copiedFormData;
         });
