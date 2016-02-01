@@ -10,10 +10,21 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
+    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
         var CURRENT_DATE = $scope.CURRENT_DATE;
+
+
+        var senderAccountInitDefer = $q.defer();
+
         $scope.remote = {
-            model_from:{},
+            model_from:{
+                initLoadingDefer:senderAccountInitDefer,
+                initLoadingPromise: senderAccountInitDefer.promise,
+                loading:true,
+                onAccountsLoaded: function(){
+                    this.initLoadingDefer.resolve();
+                }
+            },
             model_to:{}
         };
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
