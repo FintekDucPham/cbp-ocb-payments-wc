@@ -17,7 +17,7 @@
         {{ :: $data.paymentDetails.recipientSwift }}
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text" label="" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+    <bd-item-property class="bd-item-property--text" label="" ng-show="$data.paymentDetails.bankDetails > 0" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
         <bd-multiline-text bd-text="$data.paymentDetails.bankDetails"></bd-multiline-text>
     </bd-item-property>
 

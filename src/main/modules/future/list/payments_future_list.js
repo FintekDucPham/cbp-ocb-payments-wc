@@ -180,6 +180,8 @@ angular.module('raiffeisen-payments')
                         formSummary(summary);
                         selectedPayment.loadDetails = function(){
                             selectedPayment.promise = $q.when(selectedPayment).then(function(response){
+
+
                                 selectedPayment.details = response;
                             });
                         };
@@ -219,6 +221,9 @@ angular.module('raiffeisen-payments')
                 else {
                     payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
                         payment.details = resp;
+                        var list = lodash.reject(payment.details.paymentDetails.bankDetails, lodash.isEmpty);
+                        payment.details.paymentDetails.bankDetails = list;
+
                     });
                 }
             };
