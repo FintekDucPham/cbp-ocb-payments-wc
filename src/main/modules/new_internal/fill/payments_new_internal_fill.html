@@ -19,7 +19,7 @@
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}">
+        <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}" ng-if="payment.formData.remitterAccountId">
             <rb-account-select
                     rb-account="payment.items.recipientAccount"
                     rb-account-id="payment.formData.beneficiaryAccountId"
