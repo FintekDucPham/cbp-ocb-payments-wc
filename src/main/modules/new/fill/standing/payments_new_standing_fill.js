@@ -228,7 +228,6 @@ angular.module('raiffeisen-payments')
                 templateType: 'DOMESTIC',
                 accountNo: $scope.payment.formData.recipientAccountNo ? $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "") : $scope.payment.formData.recipientAccountNo
             });
-            $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
