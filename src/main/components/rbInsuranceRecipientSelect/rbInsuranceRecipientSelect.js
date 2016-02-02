@@ -72,7 +72,8 @@ angular.module('raiffeisen-payments')
                             nip: paymentDetails.nip,
                             secondaryIdType: paymentDetails.secondIDType,
                             secondaryId: paymentDetails.secondIDNo,
-                            paymentType: paymentDetails.paymentType
+                            paymentType: paymentDetails.paymentType,
+                            recipientId: data.recipientId
                         };
                     }));
                 });
