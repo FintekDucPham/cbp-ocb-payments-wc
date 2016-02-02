@@ -30,7 +30,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances) {
+    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES) {
 
         var idTypesMap = {
             "P": "PESEL",
@@ -104,6 +104,21 @@ angular.module('raiffeisen-payments')
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
             data.description = data.title.join("\n");
             data.realizationDate = new Date(data.realizationDate);
+            return $q.when(true);
+        });
+
+        paymentDataResolveStrategy(rbPaymentTypes.SWIFT.code, function(data){
+            if(data.paymentDetails.recipientSwift == null){
+                data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
+                data.recipientBankName = data.paymentDetails.bankName.join('');
+                data.recipientBankCountry = data.paymentDetails.bankCountry;
+            }else {
+                data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                data.recipientSwiftOrBic =  data.paymentDetails.recipientSwift;
+            }
+            data.recipientCountry = data.paymentDetails.foreignCountryCode;
+            data.remitterAccountId = data.accountId;
+
             return $q.when(true);
         });
 
