@@ -99,6 +99,7 @@ angular.module('raiffeisen-payments')
                 delete $scope.payment.formData.formCode;
                 delete $scope.payment.formData.periodType;
                 delete $scope.payment.items.recipientAccount;
+                delete $scope.payment.items.recipient;
                 $scope.payment.options.isFromRecipient = false;
             }
         };
@@ -133,6 +134,7 @@ angular.module('raiffeisen-payments')
                     delete $scope.payment.formData.idNumber;
                 }
                 delete $scope.payment.formData.taxpayerData;
+                delete $scope.payment.items.taxPayer;
                 $scope.payment.options.isFromTaxpayer = false;
             }
         };
@@ -142,6 +144,7 @@ angular.module('raiffeisen-payments')
             formData.idType = taxpayer.secondaryIdType;
             formData.idNumber = taxpayer.secondaryId;
             formData.taxpayerData = taxpayer.data.join('');
+            $scope.payment.items.taxPayer = taxpayer;
             $scope.payment.options.isFromTaxpayer = true;
         };
 

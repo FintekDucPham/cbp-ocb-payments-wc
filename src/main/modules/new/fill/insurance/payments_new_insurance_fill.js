@@ -107,6 +107,7 @@ angular.module('raiffeisen-payments')
             if($scope.payment.options.isFromRecipient) {
                 delete $scope.payment.formData.templateId;
                 delete $scope.payment.formData.taxpayer;
+                delete $scope.payment.items.recipient ;
                 delete $scope.payment.formData.paymentType;
                 if(!$scope.payment.options.isFromTaxpayer) {
                     delete $scope.payment.formData.nip;
@@ -139,10 +140,10 @@ angular.module('raiffeisen-payments')
            }
         });
         $scope.selectRecipient = function (recipient) {
+            $scope.payment.items.recipient = recipient;
             $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
-            $scope.payment.items.recipient = recipient;
 
             insuranceAccountsPromise.then(function() {
                 var insuranceAccount = lodash.find($scope.insuranceAccountList, {
@@ -173,6 +174,7 @@ angular.module('raiffeisen-payments')
                     delete $scope.payment.formData.nip;
                 }
                 delete $scope.payment.formData.recipientName;
+                delete $scope.payment.items.taxPayer;
                 $scope.payment.options.isFromTaxpayer = false;
             }
         };
@@ -194,6 +196,7 @@ angular.module('raiffeisen-payments')
             formData.nip = taxpayer.nip;
             formData.recipientName = taxpayer.data.join('');
             $scope.payment.options.isFromTaxpayer = true;
+            $scope.payment.items.taxPayer = taxpayer;
         };
 
         $scope.onAccountSelected = function (account, oldAccount) {
