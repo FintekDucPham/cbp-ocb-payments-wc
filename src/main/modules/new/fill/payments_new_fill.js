@@ -161,6 +161,10 @@ angular.module('raiffeisen-payments')
                     templateParameters.transferFromTemplate = true;
                     templateParameters.templateId = $scope.payment.items.recipient.recipientId;
                 }
+                if($scope.payment.items.taxPayer){
+                    templateParameters.payerFromTemplate = true;
+                    templateParameters.payerId = $scope.payment.items.taxPayer.taxpayerId;
+                }
 
 
                 $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
