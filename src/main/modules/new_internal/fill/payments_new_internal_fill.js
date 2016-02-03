@@ -241,7 +241,7 @@ angular.module('raiffeisen-payments')
             if ($scope.payment.meta.customerContext === 'DETAL') {
                 return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
             } else {
-                return $scope.payment.items.senderAccount.category === 1016 && ('PLN' !== account.currency) && !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category);
+                return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
             }
         }
 
