@@ -47,7 +47,7 @@
     </div>
 
     <div class="rb-tax-account-select__name">
-        {{ model.taxOffice.officeName }}, {{model.taxOffice.officeAddress}}
+        {{ model.taxOffice.officeName }}<span ng-if="model.taxOffice.officeAddress">, {{model.taxOffice.officeAddress}}</span>
     </div>
 
 
