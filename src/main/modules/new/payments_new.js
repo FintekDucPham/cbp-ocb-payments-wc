@@ -141,10 +141,19 @@ angular.module('raiffeisen-payments')
 
         $scope.payment.meta.paymentTypes = lodash.where(rbPaymentTypes, {'parentState': $scope.payment.type.parentState});
 
+
+        $scope.clearFormFunction = null;
+        $scope.setClearFormFunction = function(fn){
+            $scope.clearFormFunction = fn;
+        };
        // alert("X");
         $scope.clearForm = function() {
-            $scope.payment.formData = {};
-            $scope.payment.items = {};
+            if(!$scope.clearFormFunction){
+                $scope.payment.formData = {};
+                $scope.payment.items = {};
+            }else{
+                $scope.clearFormFunction();
+            }
             $scope.$broadcast('clearForm');
         };
 
