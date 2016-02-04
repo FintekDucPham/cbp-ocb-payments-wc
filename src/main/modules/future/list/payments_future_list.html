@@ -62,7 +62,7 @@
                 <bd-details-action-section>
                     <div class="row">
                         <div class="col-sm-12 col-md-12" style="text-align:right;">
-                            <bd-button ng-click="onEdit($data)" ng-if="$data.details.transferType!=='sepa' && $data.details.transferType!=='swift'"  class="bd-button">{{::'raiff.payments.future.list.details.insurance.buttons.edit' | translate}}</bd-button>
+                            <bd-button ng-click="onEdit($data)" ng-if="$data.details.transferType.toUpperCase()!=='SEPA' && $data.details.transferType.toUpperCase()!=='SWIFT'"  class="bd-button">{{::'raiff.payments.future.list.details.insurance.buttons.edit' | translate}}</bd-button>
                             <bd-button ng-click="onDelete($data)" class="bd-button">{{::'raiff.payments.future.list.details.insurance.buttons.delete' | translate}}</bd-button>
                             <bd-button ng-click="onBack(this)"    class="bd-button bd-button__primary">{{::'raiff.payments.future.list.details.insurance.buttons.backToList' | translate}}</bd-button>
                         </div>
