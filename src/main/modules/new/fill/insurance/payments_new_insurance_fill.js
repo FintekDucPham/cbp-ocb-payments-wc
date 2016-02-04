@@ -4,6 +4,8 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
     .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents) {
 
+        $scope.accountSelectorRemote = {};
+
         angular.extend($scope.payment.meta, {
             zusInsuranceTypes: zusPaymentInsurances,
             zusSuplementaryIds: zusSuplementaryIds,
@@ -43,9 +45,7 @@ angular.module('raiffeisen-payments')
             $scope.supplementaryIdType = val;
         });
 
-        $scope.$on('clearForm', function () {
-            $scope.payment.formData.insurancePremiums = null;
-        });
+
 
         function calculateInsurancesAmount() {
             var summary = calculateInsurancesSummary();
@@ -278,6 +278,17 @@ angular.module('raiffeisen-payments')
             return copiedFormData;
         });
 
+        $scope.setClearFormFunction(function(){
+            $scope.payment.formData = {};
+            $scope.payment.formData.realizationDate = new Date();
+            $scope.payment.formData.secondaryIdType = 'PESEL';
+            $scope.payment.formData.paymentType = 'TYPE_S';
+            $scope.payment.formData.insurancePremiums = {};
+            $scope.accountSelectorRemote.resetToDefault();
+
+
+        });
+
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
@@ -290,6 +301,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setDefaultValues({
             secondaryIdType: 'PESEL'
+
         });
 
         $scope.onSecondaryIdTypeChanged = function() {
