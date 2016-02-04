@@ -8,14 +8,14 @@
 
     <section>
 
-        <div ng-show="paymentsPromise.$$state.status === 1 && paymentSummary.content.length == 0">
-            <div class="widget-content-inner info-text">
+        <div ng-show="paymentsPromise.$$state.status === 1 && paymentSummary.content.length == 0" style="height: 100px;">
+            <div class="widget-content-inner info-text" style="margin: 100px auto; text-align: center;">
                 {{::'raiff.payments.widget.no_content'|translate}}
             </div>
         </div>
 
-        <div ng-show="paymentsPromise.$$state.status === 2">
-            <div class="widget-content-inner info-text">
+        <div ng-show="paymentsPromise.$$state.status === 2" style="height: 100px;">
+            <div class="widget-content-inner info-text" style="margin: 100px auto; text-align: center;">
                 {{::'raiff.payments.widget.error'|translate}}
             </div>
         </div>
