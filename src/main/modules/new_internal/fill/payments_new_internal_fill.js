@@ -20,10 +20,10 @@ angular.module('raiffeisen-payments')
             model_from:{
                 initLoadingDefer:senderAccountInitDefer,
                 initLoadingPromise: senderAccountInitDefer.promise,
-                loading:true,
+                loading:true/*,
                 onAccountsLoaded: function(){
                     this.initLoadingDefer.resolve();
-                }
+                }*/
             },
             model_to:{}
         };
@@ -133,8 +133,11 @@ angular.module('raiffeisen-payments')
                     show: false
                 };
 
-                if (!$scope.payment.items.recipientAccount || $scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
-                    return false;
+                if(!$scope.payment.items.recipientAccount){
+                    form.recipientAcc.$setValidity('required', false);
+                }
+                if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                    form.recipientAcc.$setValidity('sameAccounts', false);
                 }
 
                 if (form.$invalid) {
@@ -265,7 +268,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            useFirstByDefault: true,
+            useFirstByDefault: false,
             alwaysSelected: false,
             accountFilter: function (accounts, $accountId) {
                 var filteredAccounts = accounts;
