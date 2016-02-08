@@ -54,6 +54,10 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.$on("filterFormSymbols", function(e, taxAccountType) {
+                    if(taxAccountType == null){
+                        $scope.formSymbolList = $scope.allFormSymbols;
+                        return;
+                    }
                     $scope.formSymbolList = lodash.filter($scope.allFormSymbols, function(formSymbol) {
                        return formSymbol.accountType === taxAccountType;
                     });
