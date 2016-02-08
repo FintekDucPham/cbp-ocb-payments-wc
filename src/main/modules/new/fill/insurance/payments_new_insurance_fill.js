@@ -236,7 +236,7 @@ angular.module('raiffeisen-payments')
                     var totalPayment = 0;
 
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
-                        totalPayment += val ?  parseFloat(val.replace(/,/, ".")) : 0;
+                        totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
                     return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
