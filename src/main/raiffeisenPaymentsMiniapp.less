@@ -29,6 +29,9 @@
 
 }
 
+
+
+
 .break-force{
   word-break: break-all;
   word-break: break-word;
@@ -107,6 +110,7 @@
 
 }
 .accesibleAssetsInline{
+
   @media (max-width: @screenSmallMax) {
     .bd-item-property__label-placeholder{
       display:table-cell !important;
@@ -193,6 +197,18 @@
 
 
 .accounts {
+  .bd-table__row-details {
+    .bd-item-property__value {
+      & > div {
+        word-break: break-all;
+        @media (min-width: @screenMediumMin) {
+          padding-right: 20px;
+        }
+      }
+
+    }
+  }
+
   .bd-table {
     &__cell-content-wrapper {
       span {
@@ -200,6 +216,8 @@
         display: block;
       }
     }
+
+
   }
 
   & .wide-button {
@@ -211,3 +229,6 @@
     width: 35% !important;
   }
 }
+
+
+
