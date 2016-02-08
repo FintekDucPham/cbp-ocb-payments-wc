@@ -1,6 +1,6 @@
 <div ng-init="resolveBankNamePromise($data.nrb)">
     <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
-        {{ $data.customerName }}
+        <div>{{ $data.customerName }}</div>
     </bd-item-property>
 
     <bd-item-property class="eb-item-property--text" label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
