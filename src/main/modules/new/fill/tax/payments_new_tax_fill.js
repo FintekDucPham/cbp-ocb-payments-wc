@@ -192,7 +192,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.selectTaxAccount = function(office) {
-            $scope.$broadcast("filterFormSymbols", office.taxAccountType);
+            $scope.$broadcast("filterFormSymbols", office?office.taxAccountType:null);
         };
 
         $scope.setRequestConverter(function(formData) {

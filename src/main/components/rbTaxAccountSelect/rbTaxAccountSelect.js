@@ -61,6 +61,10 @@ angular.module('raiffeisen-payments')
                 $scope.$watch('model.searchQuery', function (query, oldQuery) {
                     if (query && query.replace(/ /g, '').length == 26 && query !== oldQuery) {
                         $scope.searchForOffice(query);
+                    }else {
+                        $scope.onAccountSelect({
+                            $office: null
+                        });
                     }
                 });
 
@@ -87,10 +91,16 @@ angular.module('raiffeisen-payments')
                     })(selectedInput)).then(function (result) {
                         if (result.length < 1) {
                             $scope.notFoundList = lodash.union($scope.notFoundList, [$scope.model.searchQuery]);
+                            $scope.onAccountSelect({
+                                $office: null
+                            });
                         } else {
                             $scope.taxAccounts = result;
                             $scope.isFromList = true;
                             $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
+                            $scope.onAccountSelect({
+                                $office: $scope.taxOffice
+                            });
                         }
                     });
                 };
