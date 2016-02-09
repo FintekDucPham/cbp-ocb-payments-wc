@@ -90,6 +90,10 @@ angular.module('raiffeisen-payments')
             };
         }));
 
+        $scope.setDefaultValues({
+            realizationDate: $scope.CURRENT_DATE
+        });
+
         $scope.clearRecipient = function () {
             if($scope.payment.options.isFromRecipient) {
                 delete $scope.payment.formData.templateId;
