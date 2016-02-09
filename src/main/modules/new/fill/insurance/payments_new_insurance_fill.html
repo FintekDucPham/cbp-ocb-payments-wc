@@ -133,7 +133,7 @@
                    theme="bootstrap"
                    ng-disabled="payment.options.isFromRecipient"
                    placeholder="{{ ::'raiff.payments.new.zus.fill.payment_type.placeholder' | translate }}"
-                   ng-init="payment.formData.paymentType = payment.meta.zusPaymentTypes[0]"
+                   ng-init="initPaymentType()"
                    required>
             <ui-select-match>
                 {{ 'raiff.payments.zus.payment_type.' + $select.selected | translate}}

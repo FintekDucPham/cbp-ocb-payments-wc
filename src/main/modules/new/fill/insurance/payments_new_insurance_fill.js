@@ -23,6 +23,12 @@ angular.module('raiffeisen-payments')
             $scope.insuranceAccountList = insuranceAccounts.content;
         });
 
+        $scope.initPaymentType = function(){
+            if(!$scope.payment.formData.paymentType){
+                $scope.payment.formData.paymentType = payment.meta.zusPaymentTypes[0];
+            }
+        };
+
         $scope.taxpayerRegexp = validationRegexp('ZUS_TAXPAYER_DATA_REGEX');
         $scope.nipRegexp = validationRegexp('NIP_REGEX');
         $scope.declarationDateRegexp = validationRegexp('ZUS_DECLARATION_DATE');
