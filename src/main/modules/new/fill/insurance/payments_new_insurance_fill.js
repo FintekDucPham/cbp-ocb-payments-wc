@@ -25,7 +25,7 @@ angular.module('raiffeisen-payments')
 
         $scope.initPaymentType = function(){
             if(!$scope.payment.formData.paymentType){
-                $scope.payment.formData.paymentType = payment.meta.zusPaymentTypes[0];
+                $scope.payment.formData.paymentType = $scope.payment.meta.zusPaymentTypes[0];
             }
         };
 
@@ -306,8 +306,8 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.setDefaultValues({
-            secondaryIdType: 'PESEL'
-
+            secondaryIdType: 'PESEL',
+            realizationDate: $scope.CURRENT_DATE
         });
 
         $scope.onSecondaryIdTypeChanged = function() {
