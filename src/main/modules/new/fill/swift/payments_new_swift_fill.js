@@ -4,7 +4,7 @@ angular.module('raiffeisen-payments')
                                                            $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, language) {
 
         if(language.get()==='pl'){
-            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN_PL');
         }else{
             $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN_EN');
         }
@@ -204,8 +204,8 @@ angular.module('raiffeisen-payments')
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
             if(language.get()==='pl'){
-                copiedFormData.amount = (""+formData.amount).replace(",",".");
-                formData.amount = (""+formData.amount).replace(",",".");
+                copiedFormData.amount = (""+formData.amount).split(" ").join("").replace(",",".");
+                formData.amount = (""+formData.amount).split(" ").join("").replace(",",".");
             }else{
                 copiedFormData.amount = (""+formData.amount).split(",").join('');
             }
