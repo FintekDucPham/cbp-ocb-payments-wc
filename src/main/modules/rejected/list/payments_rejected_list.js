@@ -8,13 +8,14 @@ angular.module('raiffeisen-payments')
                 referenceId: null
             },
             resolve: {
-                parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
+                parameters: ["$q", "customerService", "systemParameterService", 'insuranceAccounts', function ($q, customerService, systemParameterService, insuranceAccounts) {
                     return $q.all({
                         detalOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.detal"),
                         microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
                         detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
                         microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
-                        customerDetails: customerService.getCustomerDetails()
+                        customerDetails: customerService.getCustomerDetails(),
+                        insuranceAccounts: insuranceAccounts.search()
                     }).then(function (data) {
                         return {
                             micro: {
@@ -27,7 +28,8 @@ angular.module('raiffeisen-payments')
                             },
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
-                            }
+                            },
+                            insuranceAccounts: data.insuranceAccounts.content
                         };
                     });
                 }]
@@ -36,6 +38,14 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter) {
 
+        var TYPE_ID_MAPPER = {
+            P: "PESEL",
+            N: "NIP",
+            R: "REGON",
+            1: "ID_CARD",
+            2: "PASSPORT",
+            3: "OTHER"
+        };
         var PERIOD_TYPES = {
             LAST: 'LAST',
             RANGE: 'RANGE'
@@ -234,15 +244,24 @@ angular.module('raiffeisen-payments')
                 }, (function() {
                     switch(paymentType) {
                         case 'insurance':
+                            var selectedInsurance = lodash.find(parameters.insuranceAccounts, {
+                                accountNo: details.recipientAccountNo
+                            });
+                            var insurancePremium = [];
+                            insurancePremium[selectedInsurance.insuranceCode] = {
+                                amount: details.amount,
+                                nrb: details.recipientAccountNo,
+                                currency: "PLN"
+                            };
                             return {
-                                nip: details.nip,
-                                secondaryIdType: details.secondIDType,
-                                secondaryIdNo: details.secondIDNo,
+                                nip: details.paymentDetails.nip,
+                                secondaryIdType: TYPE_ID_MAPPER[details.paymentDetails.secondIDType],
+                                secondaryIdNo: details.paymentDetails.secondIDNo,
                                 paymentType: details.paymentType,
-                                declarationDate: details.declaration,
-                                declarationNo: details.declarationNo,
-                                additionalInfo: details.decisionNo,
-                                insurancePremiums: null // todo cannot resolve
+                                declarationDate: details.paymentDetails.declaration,
+                                declarationNo: details.paymentDetails.declarationNo,
+                                additionalInfo: details.paymentDetails.decisionNo,
+                                insurancePremiums: insurancePremium
                             };
                         case 'domestic':
                             return {
@@ -256,20 +275,21 @@ angular.module('raiffeisen-payments')
                             return {
                                 beneficiaryAccountId: details.recipientAccountId,
                                 amount: details.amount,
+                                recipientAccountNo: details.recipientAccountNo,
                                 currency: details.currency,
                                 description: details.title
                             };
                         case 'tax':
                             return {
                                 recipientAccountNo: details.recipientAccountNo,
-                                taxpayerData: copiedData.senderName,
-                                idType: details.iDType,
-                                idNumber: details.iDNumber,
-                                formCode: details.formCode,
-                                periodType: details.periodType,
-                                periodNo: details.periodNo,
-                                periodYear: details.periodYear,
-                                obligationId: details.obligationId,
+                                taxpayerData: details.senderName,
+                                idType: TYPE_ID_MAPPER[details.paymentDetails.idtype],
+                                idNumber: details.paymentDetails.idnumber,
+                                formCode: details.paymentDetails.formCode,
+                                periodType: details.paymentDetails.periodType,
+                                periodNo: details.paymentDetails.periodNumber,
+                                periodYear: details.paymentDetails.periodYear,
+                                obligationId: details.paymentDetails.obligationId,
                                 amount: details.amount,
                                 currency: details.currency
                             };
