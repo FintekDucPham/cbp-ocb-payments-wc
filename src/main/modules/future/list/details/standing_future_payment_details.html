@@ -9,12 +9,13 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.accountName'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        {{$data.customName || $data.accountName}}<br/>
         {{ $data.details.debitAccount | nrbIbanFilter }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientAccountNo'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        {{ $data.details.creditAccount | nrbIbanFilter }}<br ng-if="$data.details.recipientBankName && $data.details.recipientBankName.length > 0"/>
-        {{ $data.details.recipientBankName }}
+        {{ $data.details.creditAccount | nrbIbanFilter }}<br ng-if="$data.paymentDetails.recipientBankName && $data.paymentDetails.recipientBankName.length > 0"/>
+        {{ $data.paymentDetails.recipientBankName }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientName'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
