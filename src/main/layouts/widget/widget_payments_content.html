@@ -1,33 +1,33 @@
 <div ng-controller="PaymentsWidgetContentController">
-	<div ng-show="paymentsWidgetMode.fullMode" ng-mouseleave="enterFullMode(false)" ng-click="openCloseActionList($event, false)"  class="hover_background" style="padding-top: 5px;">
-		<div>
-			<div class="col-xs-1">
-				&nbsp;
-			</div>
-			<div class="col-xs-10">
-				<div ng-include="paymentItemContent"></div>
-			</div>
-			<div class="col-xs-1">
-				&nbsp;
-			</div>
-			<div class="hover_background" style="position: absolute; top: 66%;">
-				<bd-button-panel>
-					<div class="bd-button-panel__button">
-						<bd-button ui-sref="payments.recipients.list" style="line-height: 14px;">
-							{{::'raiff.payments.widget.new'|translate}}
-						</bd-button>
-					</div>
-					<div class="bd-button-panel__button" ng-click="goToDetails($event, item)">
-						<bd-button style="line-height: 14px;">{{::'raiff.payments.widget.details'|translate}}</bd-button>
-					</div>
-					<div class="bd-button-panel__button" ui-sref="payments.future.list">
-						<bd-button style="line-height: 14px; font-size: 10px">{{::'raiff.payments.widget.pending_operations'|translate}}</bd-button>
-					</div>
-				</bd-button-panel>
-			</div>
-		</div>
-	</div>
-	<div ng-hide="paymentsWidgetMode.fullMode" style="padding-top: 5px;" ng-mouseenter="enterFullMode(true)" ng-click="openCloseActionList($event, true)">
-		<div ng-include="paymentItemContent"></div>
-	</div>
+
+    <div ng-show="paymentsWidgetMode.fullMode" ng-mouseleave="enterFullMode(false)" ng-click="openCloseActionList($event, false)"  class="hover_background" >
+        <div class="row">
+            <div class="col-xs-1">&nbsp;</div>
+
+            <div class="col-xs-10">
+                <div ng-include="paymentItemContent"></div>
+
+                <div class="row widget-tile__button">
+                    <div class="col-xs-4 text-left">
+                        <bd-button ui-sref="payments.recipients.list">{{::'raiff.payments.widget.new'|translate}}</bd-button>
+                    </div>
+
+                    <div class="col-xs-4 text-center">
+                        <bd-button ng-click="goToDetails($event, item)">{{::'raiff.payments.widget.details'|translate}}</bd-button>
+                    </div>
+
+                    <div class="col-xs-4 text-right">
+                        <bd-button ui-sref="payments.future.list">{{::'raiff.payments.widget.pending_operations'|translate}}</bd-button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-1">&nbsp;</div>
+        </div>
+    </div>
+
+    <div ng-hide="paymentsWidgetMode.fullMode"  ng-mouseenter="enterFullMode(true)" ng-click="openCloseActionList($event, true)">
+        <div ng-include="paymentItemContent"></div>
+    </div>
 </div>

@@ -79,6 +79,9 @@
                 <div eb-message-key="notZus" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
                 </div>
+                <div eb-message-key="bankAndSwiftCountryNotTheSame" class="validation-message animate-on">
+                    {{::'raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT'|translate}}
+                </div>
             </eb-validation-messages>
 
         </bd-item-property>
@@ -340,7 +343,6 @@
                 ng-model="payment.formData.realizationDate"
                 rb-form="paymentForm"
                 rb-name="realizationDate"
-                rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory"
                 rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                 rb-required="true">
 

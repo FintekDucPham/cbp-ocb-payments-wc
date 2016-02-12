@@ -33,7 +33,7 @@
 
             <div ng-switch-when="true">
                 <input class="input-field" disabled value="{{ payment.items.recipientAccount.accountNo | nrbIbanFilter }}" />
-                {{ payment.items.recipientAccount.officeName }}
+                {{ payment.items.recipientAccount.officeName }}<span ng-if="payment.items.recipientAccount.officeAddress.length > 0">, {{ payment.items.recipientAccount.officeAddress}}</span>
             </div>
 
             <div ng-switch-when="false">

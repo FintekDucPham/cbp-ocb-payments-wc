@@ -29,7 +29,7 @@
                     </ui-select-match>
                     <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'">
                         <div ng-bind-html="taxOffice.accountNo | nrbIbanFilter | highlight: $select.search"></div>
-                        <div ng-bind-html="taxOffice.officeName"></div>
+                        <div ng-bind-html="taxOffice.officeName+', '+taxOffice.officeAddress"></div>
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="rb-tax-account-select__name">
-        {{ model.taxOffice.officeName }}
+        {{ model.taxOffice.officeName }}<span ng-if="model.taxOffice.officeAddress">, {{model.taxOffice.officeAddress}}</span>
     </div>
 
 

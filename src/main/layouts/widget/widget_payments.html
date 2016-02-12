@@ -5,18 +5,22 @@
                          eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"
                          eb-items-promise="paymentsPromise" eb-update="submit(ctx, params, rel)"></eb-slide-widget>
     </section>
+
     <section>
-        <div ng-if="paymentsPromise.$$state.status === 1 && paymentSummary.content.length == 0">
-            <div class="widget-content-inner info-text">
+
+        <div ng-show="paymentsPromise.$$state.status === 1 && paymentSummary.content.length == 0" style="height: 100px;">
+            <div class="widget-content-inner info-text" style="margin: 100px auto; text-align: center;">
                 {{::'raiff.payments.widget.no_content'|translate}}
             </div>
         </div>
-        <div ng-if="paymentsPromise.$$state.status === 2">
-            <div class="widget-content-inner info-text">
+
+        <div ng-show="paymentsPromise.$$state.status === 2" style="height: 100px;">
+            <div class="widget-content-inner info-text" style="margin: 100px auto; text-align: center;">
                 {{::'raiff.payments.widget.error'|translate}}
             </div>
         </div>
-        <div ng-if="!paymentsWidgetMode.fullMode && paymentSummary.content.length == 0">
+
+        <div ng-show="!paymentsWidgetMode.fullMode && paymentSummary.content.length == 0">
             <bd-button-panel>
                 <div class="bd-button-panel__button">
                     <bd-button ui-sref="payments.recipients.list" style="line-height: 14px;">
@@ -25,5 +29,6 @@
                 </div>
             </bd-button-panel>
         </div>
+
     </section>
 </div>

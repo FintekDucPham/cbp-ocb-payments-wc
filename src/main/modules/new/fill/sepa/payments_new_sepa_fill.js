@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
         // quick fix
         utilityService.getCurrentDate().then(function(currentDate) {
             var realizationDate = new Date(currentDate.getTime());
-            realizationDate.setDate(realizationDate.getDate() + 1);
+            realizationDate.setDate(realizationDate.getDate());
             $timeout(function() {
                 $scope.payment.formData.realizationDate = realizationDate;
             });
@@ -44,6 +44,16 @@ angular.module('raiffeisen-payments')
             };
         }));
 
+        function validateSwiftAndAccountNo(accountNo){
+            if(accountNo && $scope.payment.formData.recipientSwiftOrBic){
+                var  countryFromAccountNo = accountNo.substring(0,2).toLowerCase();
+                var countryFromSwift = $scope.payment.formData.recipientSwiftOrBic.substring(4,6).toLowerCase();
+                if(countryFromAccountNo !== countryFromSwift){
+                    return false;
+                }
+            }
+            return true;
+        }
 
         $scope.recipientAccountValidators = {
             notUs: function (accountNo) {
@@ -91,8 +101,12 @@ angular.module('raiffeisen-payments')
                     return $scope.SIMPLE_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
                 }
                 return false;
+            },
+            bankAndSwiftCountryNotTheSame: function(accountNo){
+               return validateSwiftAndAccountNo(accountNo);
             }
         };
+
 
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
             if(n && !angular.equals(n, o)){
@@ -106,10 +120,20 @@ angular.module('raiffeisen-payments')
                             //search and set bank country
                             if($scope.countries.data){
                                 $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data.content, {
-                                    countryCode: $scope.swift.data.countryCode
+                                    countryCode: $scope.swift.data.countryCode,
+                                    ueCountry: true
                                 });
                             }
-                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                            if(!$scope.payment.formData.recipientBankCountry){
+                                $scope.payment.formData.recipientBankName = null;
+                                $scope.payment.formData.recipientBankCountry = undefined;
+                                $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                            }else{
+                                if($scope.payment.formData.recipientAccountNo && $scope.payment.formData.recipientSwiftOrBic){
+                                    $scope.paymentForm.recipientAccountNo.$setValidity('bankAndSwiftCountryNotTheSame', validateSwiftAndAccountNo($scope.payment.formData.recipientAccountNo));
+                                }
+                                $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                            }
                         }else{
                             $scope.payment.formData.recipientBankName = null;
                             $scope.payment.formData.recipientBankCountry = undefined;

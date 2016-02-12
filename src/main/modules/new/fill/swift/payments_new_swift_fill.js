@@ -1,12 +1,17 @@
 angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
-                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService) {
+                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, language) {
 
-        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
+        if(language.get()==='pl'){
+            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN_PL');
+        }else{
+            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN_EN');
+        }
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
+        $scope.SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP = validationRegexp('SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP');
         $scope.currencyList = [];
 
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
@@ -54,7 +59,7 @@ angular.module('raiffeisen-payments')
         // quick fix
         utilityService.getCurrentDate().then(function(currentDate) {
             var realizationDate = new Date(currentDate.getTime());
-            realizationDate.setDate(realizationDate.getDate() + 1);
+            realizationDate.setDate(realizationDate.getDate());
             $timeout(function() {
                 $scope.payment.formData.realizationDate = realizationDate;
             });
@@ -198,8 +203,12 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
-            copiedFormData.amount = (""+formData.amount).replace(",",".");
-            formData.amount = (""+formData.amount).replace(",",".");
+            if(language.get()==='pl'){
+                copiedFormData.amount = (""+formData.amount).split(" ").join("").replace(",",".");
+                formData.amount = (""+formData.amount).split(" ").join("").replace(",",".");
+            }else{
+                copiedFormData.amount = (""+formData.amount).split(",").join('');
+            }
             copiedFormData.recipientCountry = formData.recipientCountry.code;
             return copiedFormData;
         });

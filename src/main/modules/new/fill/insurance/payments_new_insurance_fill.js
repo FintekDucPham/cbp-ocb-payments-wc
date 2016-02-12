@@ -4,6 +4,8 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
     .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents) {
 
+        $scope.accountSelectorRemote = {};
+
         angular.extend($scope.payment.meta, {
             zusInsuranceTypes: zusPaymentInsurances,
             zusSuplementaryIds: zusSuplementaryIds,
@@ -20,6 +22,12 @@ angular.module('raiffeisen-payments')
         var insuranceAccountsPromise = insuranceAccounts.search().then(function(insuranceAccounts) {
             $scope.insuranceAccountList = insuranceAccounts.content;
         });
+
+        $scope.initPaymentType = function(){
+            if(!$scope.payment.formData.paymentType){
+                $scope.payment.formData.paymentType = $scope.payment.meta.zusPaymentTypes[0];
+            }
+        };
 
         $scope.taxpayerRegexp = validationRegexp('ZUS_TAXPAYER_DATA_REGEX');
         $scope.nipRegexp = validationRegexp('NIP_REGEX');
@@ -43,9 +51,7 @@ angular.module('raiffeisen-payments')
             $scope.supplementaryIdType = val;
         });
 
-        $scope.$on('clearForm', function () {
-            $scope.payment.formData.insurancePremiums = null;
-        });
+
 
         function calculateInsurancesAmount() {
             var summary = calculateInsurancesSummary();
@@ -107,6 +113,7 @@ angular.module('raiffeisen-payments')
             if($scope.payment.options.isFromRecipient) {
                 delete $scope.payment.formData.templateId;
                 delete $scope.payment.formData.taxpayer;
+                delete $scope.payment.items.recipient ;
                 delete $scope.payment.formData.paymentType;
                 if(!$scope.payment.options.isFromTaxpayer) {
                     delete $scope.payment.formData.nip;
@@ -139,10 +146,10 @@ angular.module('raiffeisen-payments')
            }
         });
         $scope.selectRecipient = function (recipient) {
+            $scope.payment.items.recipient = recipient;
             $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
-            $scope.payment.items.recipient = recipient;
 
             insuranceAccountsPromise.then(function() {
                 var insuranceAccount = lodash.find($scope.insuranceAccountList, {
@@ -173,6 +180,7 @@ angular.module('raiffeisen-payments')
                     delete $scope.payment.formData.nip;
                 }
                 delete $scope.payment.formData.recipientName;
+                delete $scope.payment.items.taxPayer;
                 $scope.payment.options.isFromTaxpayer = false;
             }
         };
@@ -194,6 +202,7 @@ angular.module('raiffeisen-payments')
             formData.nip = taxpayer.nip;
             formData.recipientName = taxpayer.data.join('');
             $scope.payment.options.isFromTaxpayer = true;
+            $scope.payment.items.taxPayer = taxpayer;
         };
 
         $scope.onAccountSelected = function (account, oldAccount) {
@@ -233,7 +242,7 @@ angular.module('raiffeisen-payments')
                     var totalPayment = 0;
 
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
-                        totalPayment += val ?  parseFloat(val.replace(/,/, ".")) : 0;
+                        totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
                     return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
@@ -275,6 +284,17 @@ angular.module('raiffeisen-payments')
             return copiedFormData;
         });
 
+        $scope.setClearFormFunction(function(){
+            $scope.payment.formData = {};
+            $scope.payment.formData.realizationDate = new Date();
+            $scope.payment.formData.secondaryIdType = 'PESEL';
+            $scope.payment.formData.paymentType = 'TYPE_S';
+            $scope.payment.formData.insurancePremiums = {};
+            $scope.accountSelectorRemote.resetToDefault();
+
+
+        });
+
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
@@ -286,7 +306,8 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.setDefaultValues({
-            secondaryIdType: 'PESEL'
+            secondaryIdType: 'PESEL',
+            realizationDate: $scope.CURRENT_DATE
         });
 
         $scope.onSecondaryIdTypeChanged = function() {

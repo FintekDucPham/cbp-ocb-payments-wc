@@ -10,10 +10,21 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
+    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
         var CURRENT_DATE = $scope.CURRENT_DATE;
+
+
+        var senderAccountInitDefer = $q.defer();
+
         $scope.remote = {
-            model_from:{},
+            model_from:{
+                initLoadingDefer:senderAccountInitDefer,
+                initLoadingPromise: senderAccountInitDefer.promise,
+                loading:true/*,
+                onAccountsLoaded: function(){
+                    this.initLoadingDefer.resolve();
+                }*/
+            },
             model_to:{}
         };
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
@@ -122,8 +133,11 @@ angular.module('raiffeisen-payments')
                     show: false
                 };
 
-                if (!$scope.payment.items.recipientAccount || $scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
-                    return false;
+                if(!$scope.payment.items.recipientAccount){
+                    form.recipientAcc.$setValidity('required', false);
+                }
+                if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                    form.recipientAcc.$setValidity('sameAccounts', false);
                 }
 
                 if (form.$invalid) {
@@ -226,8 +240,12 @@ angular.module('raiffeisen-payments')
             $scope.payment.meta.customerContext = data.customerDetails.context;
         });
 
-        function isSenderAccountCategoryRestricted() {
-            return $scope.payment.meta.customerContext === 'DETAL' ? $scope.payment.items.senderAccount.category === 1005 : $scope.payment.items.senderAccount.category === 1016;
+        function isSenderAccountCategoryRestricted(account) {
+            if ($scope.payment.meta.customerContext === 'DETAL') {
+                return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
+            } else {
+                return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
+            }
         }
 
         function isAccountInvestmentFulfilsRules(account){
@@ -250,15 +268,15 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            useFirstByDefault: true,
+            useFirstByDefault: false,
             alwaysSelected: false,
             accountFilter: function (accounts, $accountId) {
                 var filteredAccounts = accounts;
                 var filterParams = [];
+                filteredAccounts =  lodash.reject(accounts, function(account) {
+                    return account.accountId === $accountId || isSenderAccountCategoryRestricted(account);
+                });
                 if (!!$accountId) {
-                    filteredAccounts =  lodash.reject(accounts, function(account) {
-                        return account.accountId === $accountId || isSenderAccountCategoryRestricted() && lodash.contains([1101,3000,3008], account.category);
-                    });
                     if($scope.payment.items.senderAccount){
                         if($scope.payment.items.senderAccount.accountRestrictFlag){
                             filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
@@ -275,7 +293,6 @@ angular.module('raiffeisen-payments')
                     }
                     return filteredAccounts;
                 } else {
-                    filteredAccounts = accounts;
                     if($scope.payment.items.senderAccount){
                         if($scope.payment.items.senderAccount.accountRestrictFlag){
                             filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;

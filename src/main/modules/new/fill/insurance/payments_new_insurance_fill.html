@@ -7,8 +7,8 @@
                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                            rb-product-list-name="TRANSFER_ZUS_FROM_LIST"
                            rb-account-select-params="remitterAccountSelectParams"
-                           rb-init-select-fn="getAccountByNrb($accountList, $select)"
                            rb-account-no="payment.items.recipient.debitNrb"
+                           rb-remote="accountSelectorRemote"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -133,7 +133,7 @@
                    theme="bootstrap"
                    ng-disabled="payment.options.isFromRecipient"
                    placeholder="{{ ::'raiff.payments.new.zus.fill.payment_type.placeholder' | translate }}"
-                   ng-init="payment.formData.paymentType = payment.meta.zusPaymentTypes[0]"
+                   ng-init="initPaymentType()"
                    required>
             <ui-select-match>
                 {{ 'raiff.payments.zus.payment_type.' + $select.selected | translate}}
@@ -188,7 +188,7 @@
                bd-novalidate-when="{{ 'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) >= 0 }}"
                ng-disabled="'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) >= 0"
                ng-pattern="additionalInfoRegexp"
-               placeholder="{{ ::'raiff.payments.new.zus.fill.additional_info.placeholder' | translate }}"/>
+               placeholder="{{ 'TYPE_S TYPE_M'.indexOf(payment.formData.paymentType) < 0 ? ('raiff.payments.new.zus.fill.additional_info.placeholder' | translate) : '' }}"/>
 
         <eb-validation-messages eb-name="additionalInfo">
             <div eb-message-key="required" class="validation-message animate-on">
@@ -233,6 +233,7 @@
     </bd-item-property>
 
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.fill.payment_options' | translate }}">
+
         <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums" style="width: 100%">
 
             <bd-checkbox-select-option ng-repeat="insuranceItem in insuranceAccountList"

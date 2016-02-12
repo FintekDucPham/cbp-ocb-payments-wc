@@ -16,6 +16,9 @@ angular.module('raiffeisen-payments')
                     return utilityService.getCurrentDate().then(function(currentDate){
                         return currentDate;
                     });
+                }],
+                paymentRulesResolved: ['paymentRules', function(paymentRules){
+                    return paymentRules.search();
                 }]
             }
         }).state('payments.future.manage.edit.verify', {
@@ -30,7 +33,7 @@ angular.module('raiffeisen-payments')
             controller: "NewPaymentStatusController"
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances) {
+    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES) {
 
         var idTypesMap = {
             "P": "PESEL",
@@ -62,7 +65,7 @@ angular.module('raiffeisen-payments')
             angular.forEach(data.paymentDetails, function(val, key){
                 data[key] = val;
             });
-            data.paymentType = 'TYPE_'+data.secondIDType;
+            data.paymentType = 'TYPE_'+data.paymentType;
             data.secondaryIdNo = data.secondIDNo;
             data.secondaryIdType = idTypesMap[data.secondIDType];
             data.declarationDate = data.declaration;
@@ -107,10 +110,30 @@ angular.module('raiffeisen-payments')
             return $q.when(true);
         });
 
+        paymentDataResolveStrategy(rbPaymentTypes.SWIFT.code, function(data){
+            if(data.paymentDetails.recipientSwift == null){
+                data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
+                data.recipientBankName = data.paymentDetails.bankName.join('');
+                data.recipientBankCountry = data.paymentDetails.bankCountry;
+            }else {
+                data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                data.recipientSwiftOrBic =  data.paymentDetails.recipientSwift;
+            }
+            data.recipientCountry = data.paymentDetails.foreignCountryCode;
+            data.remitterAccountId = data.accountId;
+
+            return $q.when(true);
+        });
+
         $scope.payment.meta.transferType = 'loading';
 
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
+
+        $scope.clearForm = function () {
+            $scope.payment.formData = {};
+            $scope.$broadcast('clearForm');
+        };
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.future.list',
@@ -147,12 +170,6 @@ angular.module('raiffeisen-payments')
             });
         });
 
-
-
-        $scope.clearForm = function () {
-            $scope.payment.formData = {};
-            $scope.$broadcast('clearForm');
-        };
 
         $scope.prepareOperation = $scope.create;
 

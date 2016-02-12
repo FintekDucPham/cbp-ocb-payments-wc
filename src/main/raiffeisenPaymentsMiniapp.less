@@ -29,6 +29,14 @@
 
 }
 
+
+
+
+.break-force{
+  word-break: break-all;
+  word-break: break-word;
+}
+
 .payment-widget {
 
   &__title {
@@ -75,17 +83,7 @@
 
 }
 
-.hover_background {
-  background-color: #017EAA;
-  height: 250px;
-  > * {
-    color: white !important;
-  }
 
-  .bd-item-property__label, .bd-amount__value, .bd-amount__currency {
-    color: white !important;
-  }
-}
 .authorization-blocked {
   text-align: center;
   font-size: 1.2em;
@@ -112,6 +110,7 @@
 
 }
 .accesibleAssetsInline{
+
   @media (max-width: @screenSmallMax) {
     .bd-item-property__label-placeholder{
       display:table-cell !important;
@@ -188,14 +187,38 @@
 
 
 .accounts {
+  .bd-table__row-details {
+    .bd-item-property__value {
+      & > div {
+        word-break: break-all;
+        @media (min-width: @screenMediumMin) {
+          padding-right: 20px;
+        }
+      }
+
+    }
+  }
+
   .bd-table {
     &__cell-content-wrapper {
-      word-break: break-all;
-      word-wrap: break-word;
+      span {
+        word-wrap: break-word;
+        display: block;
+      }
     }
+
+
   }
 
   & .wide-button {
     width: auto;
   }
 }
+.accounts .bd-table .bd-table__cell--sm-7{
+  @media only screen and (max-width: 411px) {
+    width: 35% !important;
+  }
+}
+
+
+

@@ -14,11 +14,14 @@ angular.module('raiffeisen-payments')
                   return utilityService.getCurrentDate().then(function(currentDate){
                      return currentDate;
                   });
+                }],
+                paymentRulesResolved: ['paymentRules', function(paymentRules){
+                    return paymentRules.search();
                 }]
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE) {
         $scope.blockadesForward = angular.extend({
             isBlock : false
         });
@@ -56,6 +59,10 @@ angular.module('raiffeisen-payments')
             if(!!$scope.paymentForm.amount) {
                 $scope.paymentForm.amount.$validate();
             }
+        if(realizationDate && !$scope.payment.options.futureRealizationDate) {
+            setRealizationDateToCurrent();
+        }
+
         });
 
 
@@ -63,17 +70,18 @@ angular.module('raiffeisen-payments')
             recipientForbiddenAccounts: []
         });
 
-        paymentRules.search().then(function (result) {
-            angular.extend($scope.payment.meta, result);
-            var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
-                minDate: new Date(),
-                maxDaysFromNow: result.maxDaysToDelayPayment,
-                readDataFromServer: true
-            });
-            $scope.payment.meta.extraVerificationAccountList = result.extraVerificationAccountList;
-            $scope.payment.meta.laterExecutedDateMsg = translate.property('raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
-        });
 
+        //paymentRulesResolved
+        angular.extend($scope.payment.meta, paymentRulesResolved);
+        var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
+            minDate: new Date(),
+            maxDaysFromNow: paymentRulesResolved.maxDaysToDelayPayment,
+            readDataFromServer: false
+        });
+        $scope.payment.meta.extraVerificationAccountList = paymentRulesResolved.extraVerificationAccountList;
+        $scope.payment.meta.laterExecutedDateMsg = translate.property('raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
+
+        //validation regexp
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
 
@@ -100,7 +108,9 @@ angular.module('raiffeisen-payments')
         var resetRealizationOnBlockedInput = function () {
             if(!$scope.payment.meta.isFuturePaymentAllowed || $scope.payment.meta.dateSetByCategory) {
                 delete $scope.payment.formData.realizationDate;
-                setRealizationDateToCurrent(true);
+                if(!$scope.payment.options.futureRealizationDate) {
+                    setRealizationDateToCurrent(true);
+                }
             }
         };
 
@@ -136,7 +146,6 @@ angular.module('raiffeisen-payments')
 
 
 
-        setRealizationDateToCurrent();
 
         $scope.setRequestConverter = function (converterFn) {
             requestConverter = converterFn;
@@ -160,6 +169,10 @@ angular.module('raiffeisen-payments')
                 if($scope.payment.items.recipient){
                     templateParameters.transferFromTemplate = true;
                     templateParameters.templateId = $scope.payment.items.recipient.recipientId;
+                }
+                if($scope.payment.items.taxPayer){
+                    templateParameters.payerFromTemplate = true;
+                    templateParameters.payerId = $scope.payment.items.taxPayer.taxpayerId;
                 }
 
 
