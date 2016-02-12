@@ -1001,6 +1001,7 @@
     "raiff.payments.future.manage.delete.header": "Usuń przelew zaplanowany",
 
 
+    "raiff.payments.future.delete.status.label.status.1": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.20": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.40": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.60": "Zlecenie przyjęte do realizacji ",
