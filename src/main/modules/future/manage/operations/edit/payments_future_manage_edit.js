@@ -65,7 +65,7 @@ angular.module('raiffeisen-payments')
             angular.forEach(data.paymentDetails, function(val, key){
                 data[key] = val;
             });
-            data.paymentType = 'TYPE_'+data.secondIDType;
+            data.paymentType = 'TYPE_'+data.paymentType;
             data.secondaryIdNo = data.secondIDNo;
             data.secondaryIdType = idTypesMap[data.secondIDType];
             data.declarationDate = data.declaration;
