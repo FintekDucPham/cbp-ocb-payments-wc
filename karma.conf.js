@@ -29,10 +29,9 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: ([]).concat(shared_vendor_files, shared_platform_minimalistic_files, [        
-        'src/main/raiffeisenAccountsMiniapp.js',
-        'src/main/modules/accounts_list.js',
-        'src/main/modules/transactions/transactions_list.js',
+    files: [].concat(shared_vendor_files, shared_platform_minimalistic_files, [
+        'src/main/raiffeisenPaymentsMiniapp.js',
+        'src/main/**/*.js'
             ],
         shared_data.bootapp,
             [
