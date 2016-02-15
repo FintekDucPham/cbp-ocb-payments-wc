@@ -1,0 +1,8 @@
+[
+  {
+	"name":"MESSAGES_BANNER",
+	"type":"BANNER",
+    "miniApplication":"MESSAGES",
+    "linksAllowed":true
+  }
+]
