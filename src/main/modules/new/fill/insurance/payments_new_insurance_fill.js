@@ -23,6 +23,12 @@ angular.module('raiffeisen-payments')
             $scope.insuranceAccountList = insuranceAccounts.content;
         });
 
+        $scope.initPaymentType = function(){
+            if(!$scope.payment.formData.paymentType){
+                $scope.payment.formData.paymentType = $scope.payment.meta.zusPaymentTypes[0];
+            }
+        };
+
         $scope.taxpayerRegexp = validationRegexp('ZUS_TAXPAYER_DATA_REGEX');
         $scope.nipRegexp = validationRegexp('NIP_REGEX');
         $scope.declarationDateRegexp = validationRegexp('ZUS_DECLARATION_DATE');
@@ -236,7 +242,7 @@ angular.module('raiffeisen-payments')
                     var totalPayment = 0;
 
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
-                        totalPayment += val ?  parseFloat(val.replace(/,/, ".")) : 0;
+                        totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
                     return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
@@ -300,8 +306,8 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.setDefaultValues({
-            secondaryIdType: 'PESEL'
-
+            secondaryIdType: 'PESEL',
+            realizationDate: $scope.CURRENT_DATE
         });
 
         $scope.onSecondaryIdTypeChanged = function() {

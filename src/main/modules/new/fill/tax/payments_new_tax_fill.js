@@ -91,6 +91,10 @@ angular.module('raiffeisen-payments')
             };
         }));
 
+        $scope.setDefaultValues({
+            realizationDate: $scope.CURRENT_DATE
+        });
+
         $scope.clearRecipient = function () {
             if($scope.payment.options.isFromRecipient) {
                 delete $scope.payment.formData.templateId;
@@ -193,7 +197,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.selectTaxAccount = function(office) {
-            $scope.$broadcast("filterFormSymbols", office.taxAccountType);
+            $scope.$broadcast("filterFormSymbols", office?office.taxAccountType:null);
         };
 
         $scope.setRequestConverter(function(formData) {
@@ -203,6 +207,7 @@ angular.module('raiffeisen-payments')
             var recipient = $scope.payment.items.recipientAccount;
             formData.taxpayerDataTable = splitTextEveryNSign(formData.taxpayerData);
             return angular.extend(copiedFormData, {
+                taxPayerData: splitTextEveryNSign(copiedFormData.taxpayerData),
                 recipientName: recipient.officeName,
                 recipientNameTable: splitTextEveryNSign(recipient.officeName),
                 recipientAccountNo: recipient.accountNo

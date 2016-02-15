@@ -1001,6 +1001,7 @@
     "raiff.payments.future.manage.delete.header": "Usuń przelew zaplanowany",
 
 
+    "raiff.payments.future.delete.status.label.status.1": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.20": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.40": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.60": "Zlecenie przyjęte do realizacji ",
@@ -1186,6 +1187,7 @@
   "raiff.payments.cut.off.time.MSG-0662": "Sesja księgowania Twojej transakcji jeszcze nie została rozpoczęta. W momencie jej rozpoczęcia, Twoja transakcja zostanie zrealizowana.",
   "raiff.payments.cut.off.time.MSG-0659": "Nie gwarantujemy, że dyspozycja zostanie zrealizowana dzisiaj.",
     "raiff.payments.recipient.new.error.MSG-0660_SAME_BNF":"Dla podanej pary rachunków istnieje już zdefiniowany Odbiorca. Jeśli chcesz kontynuować, wybierz \"Dalej\"",
-"raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT":"Kraj banku odbiorcy nie jest zgodny z podanym kodem SWIFT banku odbiorcy."
+"raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT":"Kraj banku odbiorcy nie jest zgodny z podanym kodem SWIFT banku odbiorcy.",
+    "raiff.payments.swift.validation.error.incorrect_country_code":"Kraj banku jest niezgodny z numerem rachunku"
 
 }

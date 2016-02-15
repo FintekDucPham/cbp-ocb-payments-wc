@@ -16,6 +16,9 @@ angular.module('raiffeisen-payments')
     })
     .controller("PaymentsFutureController", function($scope, translate, insuranceAccountList) {
         $scope.insuranceAccounts = insuranceAccountList;
+        $scope.setClearFormFunction = function(fn){
+            $scope.clearFormFunction = fn;
+        };
         $scope.getInsuranceAccountName = function(accountNo){
             var foundElement = _.find($scope.insuranceAccounts, {
                 accountNo: accountNo

@@ -33,6 +33,38 @@ angular.module('raiffeisen-payments')
                 //    delete $scope.recipient.transferId;
                 //});
 
+                $scope.$watch('recipient.token.model.view.name', function(newValue, oldValue){
+                    var params = $scope.recipient.multiStepParams;
+                    if(newValue){
+                        if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                            var backendErrors = $scope.recipient.token.model.currentToken.$backendErrors;
+                            if(backendErrors.TOKEN_AUTH_BLOCKED){
+                                params.labels.cancel = 'raiff.payments.new.btn.finalize';
+                                params.visibility.finalize = false;
+                                params.visibility.accept = false;
+                            }else if(backendErrors.TOKEN_NOT_SEND){
+                                params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                                params.visibility.finalize = false;
+                                params.visibility.accept = false;
+                            }else if(backendErrors.TOKEN_EXPIRED){
+                                params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                                params.visibility.finalize = false;
+                                params.visibility.accept = false;
+                            }
+                            params.visibility.change = false;
+                        }else{
+                            if($scope.recipient.manageAction === "REMOVE"){
+                                params.visibility.clear = false;
+                            }
+                            params.visibility.finalize = true;
+                            params.visibility.cancel = true;
+                            params.visibility.accept = true;
+                            params.labels.finalize = 'raiff.payments.new.btn.finalize';
+                            params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                        }
+                    }
+                });
+
                 $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
 
                     if($scope.recipient.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
@@ -53,13 +85,15 @@ angular.module('raiffeisen-payments')
                                     }
                                     actions.proceed();
                                 }).catch(function (e) {
-                                    $scope.recipient.result.type = 'error';
+                                    $scope.recipient.result.token_error = true;
                                     if($scope.recipient.token.model && $scope.recipient.token.model.$tokenRequired){
                                         if(!$scope.recipient.token.model.$isErrorRegardingToken(e)) {
+                                            $scope.recipient.result.type = 'error';
                                             actions.proceed();
                                         }
                                     }
                                     else {
+                                        $scope.recipient.result.type = 'error';
                                         actions.proceed();
                                     }
                                 });
