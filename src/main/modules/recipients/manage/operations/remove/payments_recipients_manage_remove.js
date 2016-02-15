@@ -54,6 +54,8 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipient.manageAction = "REMOVE";
+        $scope.recipient.multiStepParams.labels.accept = 'raiff.payments.recipients.list.details.remove';
+        $scope.recipient.multiStepParams.visibility.clear = false;
     }
 
 );
