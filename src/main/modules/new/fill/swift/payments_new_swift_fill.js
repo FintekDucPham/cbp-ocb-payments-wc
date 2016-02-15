@@ -205,7 +205,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.templateName = " ";
             if(language.get()==='pl'){
                 copiedFormData.amount = (""+formData.amount).split(" ").join("").replace(",",".");
-                formData.amount = (""+formData.amount).split(" ").join("").replace(",",".");
+                formData.amount = (""+formData.amount).split(" ").join("");
             }else{
                 copiedFormData.amount = (""+formData.amount).split(",").join('');
             }
