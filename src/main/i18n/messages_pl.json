@@ -1103,17 +1103,17 @@
 
     "raiff.payments.new.standing.fill.frequencyType.types.1.M": "miesiąc",
     "raiff.payments.new.standing.fill.frequencyType.types.1.W": "tydzień",
-    "raiff.payments.new.standing.fill.frequencyType.types.1.D": "każdego dnia roboczego",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.1.": "",
 
     "raiff.payments.new.standing.fill.frequencyType.types.2-4.M": "miesiące",
     "raiff.payments.new.standing.fill.frequencyType.types.2-4.W": "tygodnie",
-    "raiff.payments.new.standing.fill.frequencyType.types.2-4.D": "każdego dnia roboczego",
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.2-4.": "",
 
     "raiff.payments.new.standing.fill.frequencyType.types.5more.M": "miesięcy",
     "raiff.payments.new.standing.fill.frequencyType.types.5more.W": "tygodni",
-    "raiff.payments.new.standing.fill.frequencyType.types.5more.D": "każdego dnia roboczego",
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.5more.": "",
 
     "raiff.payments.new.standing.fill.finish_date": "Data zakończenia",
