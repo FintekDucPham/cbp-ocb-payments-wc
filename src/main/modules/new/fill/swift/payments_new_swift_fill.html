@@ -79,7 +79,6 @@
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
                 </div>
             </eb-validation-messages>
-
         </bd-item-property>
         <span ng-show="isOk || showHide">
             <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
@@ -209,7 +208,10 @@
                 {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
             </div>
         </eb-validation-messages>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['recipientBankCountry'] !== undefined">
+            {{validationErrors['recipientBankCountry']}}
+        </div>
     </bd-item-property>
 
     <!-- bank name-->
