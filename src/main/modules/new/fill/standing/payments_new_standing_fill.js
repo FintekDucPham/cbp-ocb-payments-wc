@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('STANDING_FREQUENCY_TYPES', {
         "DAILY": {
             code: "DAILY",
-            symbol: "D"
+            symbol: "B"
         },
         "WEEKLY": {
             code: "WEEKLY",
