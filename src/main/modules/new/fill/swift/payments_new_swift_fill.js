@@ -387,12 +387,12 @@ angular.module('raiffeisen-payments')
                 return lodash.filter(text.split(regexp), function (val) {
                     return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
                 });
-            }
-        }
+            } 
+        } 
 
         $scope.onRecipientCountryChange = function() {
             if (!$scope.payment.options.fixedRecipientSelection) {
-                $scope.payment.options.ibanLength = null;
+                $scope.payment.options.ibanLength = null; 
             }
             else {
                 $scope.payment.options.ibanLength =  $scope.payment.formData.recipientBankCountry.ibanLength;
@@ -400,11 +400,24 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$watch('payment.formData.recipientIdentityType', function(n,o){
-            if(!angular.equals(n,o)){
+            if(!angular.equals(n,o)){ 
+
+                if ($scope.payment.formData && $scope.payment.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                    if ($scope.paymentForm && $scope.paymentForm.swift_bic) {
+                        $scope.paymentForm.swift_bic.$setValidity('recipientBankIncorrectSwift', true);
+                        $scope.paymentForm.swift_bic.$setValidity('recipientBankSwiftOrBicNonEmpty', true);
+                        $scope.paymentForm.swift_bic.$setValidity('required', true);
+                        $scope.paymentForm.swift_bic.$setUntouched();
+                        $scope.paymentForm.swift_bic.$setPristine();    
+                    }                    
+                }
+
                 $scope.payment.formData.recipientSwiftOrBic = null;
                 $scope.payment.formData.recipientBankCountry = undefined;
                 $scope.payment.formData.recipientBankName = null;
-            }
+            
+                
+            }  
         });
 
         $scope.onInited= function(){
