@@ -369,6 +369,7 @@
     "raiff.payments.recipients.list.header.customName.label": "Your name for recipient",
     "raiff.payments.recipients.list.header.recipient.label": "Recipient",
     "raiff.payments.recipients.list.header.nrb.label": "Account No.",
+    "raiff.payments.recipients.list.header.type.label": "Type",
     "raiff.payments.recipients.list.details.edit": "Edit",
     "raiff.payments.recipients.list.details.remove": "Remove",
     "raiff.payments.recipients.list.details.transfer": "Transfer",
