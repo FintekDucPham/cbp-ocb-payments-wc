@@ -37,7 +37,7 @@
             </div>
 
             <div ng-switch-when="false">
-                <div ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)" ng-keyup="unlockField()">
+                <div ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)" ng-keyup="unlockField()" ng-if="payment.items.formSymbolList">
                     <rb-tax-account-select ng-show="!showHide"
                                            rb-tax-office="payment.items.recipientAccount"
                                            rb-tax-office-id="payment.formData.recipientAccountNo"
@@ -182,6 +182,7 @@
         <rb-us-form-symbol-select
                 rb-form-symbol-id="payment.formData.formCode"
                 rb-form-symbol="payment.items.formSymbol"
+                rb-form-symbol-list="payment.items.formSymbolList"
                 rb-on-select="selectSymbol()"
                 bd-attr-name="formSymbol"
                 bd-attr-required
