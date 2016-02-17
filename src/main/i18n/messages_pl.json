@@ -100,11 +100,11 @@
     "raiff.payments.new.label.STANDING.EDIT.header": "Modyfikacja zlecenia stałego",
 
     "raiff.payments.recipient.new.error.exist":"Odbiorca o takim numerze rachunku znajduje się na liście.",
-    "raiff.payments.new_internal.label.header": "Przelew na rachunek własny",
+    "raiff.payments.new_internal.label.header": "Przelew własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
     "raiff.payments.new.types.loading": "",
-    "raiff.payments.new.types.INTERNAL": "Przelew własny",
+    "raiff.payments.new.types.INTERNAL": "Przelew na rachunek własny",
     "raiff.payments.new.types.OWN": "Przelew własny",
     "raiff.payments.new.types.DOMESTIC": "Przelew krajowy w PLN",
     "raiff.payments.new.types.TAX": "Przelew do US/IC",
@@ -184,6 +184,7 @@
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
     "raiff.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Raiffeisen Polbank jest możliwy tylko jako przelew własny.",
+    "raiff.payments.new.internal.fill.choose":"Wybierz",
 
     "raiff.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
     "raiff.payments.new.domestic.fill.account.last1":" ostatnią ",

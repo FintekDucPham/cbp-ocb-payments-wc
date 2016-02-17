@@ -28,7 +28,8 @@
                     rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                     rb-product-list-name="TRANSFER_OWN_TO_LIST"
                     rb-remote="remote.model_to"
-                    rb-init-select-value = "{{payment.formData.recipientAccountNo}}"></rb-account-select>
+                    rb-init-select-value = "{{payment.formData.recipientAccountNo}}"
+                    placeholder-value="{{ ::'raiff.payments.new.internal.fill.choose' | translate }}"></rb-account-select>
 
             <eb-validation-messages eb-name="recipientAcc">
                 <div eb-message-key="sameAccounts" class="validation-message animate-on">
@@ -60,7 +61,7 @@
                            ng-pattern="AMOUNT_PATTERN"
                            ng-model="payment.formData.amount"
                            required
-                           placeholder="{{ ::'raiff.payments.new.internal.fill.amount_placeholder' | translate }}"
+                           placeholder=""
 
                            rb-foreign-amount-validator
                            rb-source-account-currency="payment.items.senderAccount.currency"
