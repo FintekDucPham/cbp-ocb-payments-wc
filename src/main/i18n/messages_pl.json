@@ -323,7 +323,7 @@
     "raiff.payments.new.us.fill.recipient_account": "Rachunek Urzędu Skarbowego/Izby Celnej",
     "raiff.payments.new.us.fill.recipient_account.placeholder": "Wpisz rachunek Urzędu Skarbowego/Izby Celnej",
     "raiff.payments.new.us.fill.recipient_account.search": "Wyszukaj Urząd/Izbę",
-    "raiff.payments.new.us.fill.recipient_account.clear": "Wyczyść dane",
+    "raiff.payments.new.us.fill.recipient_account.clear": "Wyczyść dane Urzędu/Izby",
     "raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC": "Rachunek Urzędu Skarbowego/Izby Celnej nie może być pusty",
     "raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US": "Rachunek Urzędu Skarbowego/Izby Celnej musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
     "raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC": "Nie znaleziono Urzędu Skarbowego/Izby Celnej o podanym numerze rachunku",
