@@ -178,6 +178,7 @@ angular.module('raiffeisen-payments')
                 copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.countryCode;
             }
             copiedFormData.transferType = "SEPA";
+            copiedFormData.description = splitTextEveryNSign(formData.description, 35);
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientAddress = [""];
             copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, copiedFormData.currency)).transferType;

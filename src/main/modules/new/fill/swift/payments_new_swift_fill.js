@@ -184,6 +184,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.currency = formData.currency.currency;
             copiedFormData.additionalInfo = " ";
             copiedFormData.phoneNumber = " ";
+            copiedFormData.description = splitTextEveryNSign(formData.description, 35);
             copiedFormData.costType = formData.transferCost;
             copiedFormData.transferType = "SWIFT";
             copiedFormData.transferFromTemplate = false;
