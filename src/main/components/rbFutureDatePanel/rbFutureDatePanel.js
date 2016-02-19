@@ -123,7 +123,7 @@ angular.module('raiffeisen-payments')
                         $scope.futureDatePanelForm.period.$setValidity("TOO_LATE_END_DATE", tmp.getTime() <= maxDate.getTime());
                     }
                     else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
-                        $scope.futureDatePanelForm.period.$setValidity("period", true);
+                        $scope.futureDatePanelForm.period.$setValidity("TOO_LATE_END_DATE", true);
                     }
 
                     $scope.valid = $scope.futureDatePanelForm.$valid;
