@@ -29,10 +29,10 @@ angular.module('raiffeisen-payments', [
     function registerNavigation() {
         menuServiceProvider.registerMenu({
             id: 'raiffeisen-payments',
-            priority: 300,
+            priority: 200,
             showMain: true,
             baseItem: "payments.recipients.list",
-            title: 'payments.title',
+            title: 'raiff.menu.transfer',
             items:[
                 {
                     id: "payments.new.fill",
