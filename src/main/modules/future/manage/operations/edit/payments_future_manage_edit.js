@@ -71,6 +71,7 @@ angular.module('raiffeisen-payments')
             data.declarationDate = data.declaration;
             data.realizationDate = new Date(data.realizationDate);
             data.recipientName = data.recipientName.join("\n");
+            data.remitterAccountId = data.accountId;
             return insuranceAccounts.search().then(function(accounts){
                 var matchedInsurance = lodash.find(accounts.content, {'accountNo': data.recipientAccountNo});
                 if(matchedInsurance){
