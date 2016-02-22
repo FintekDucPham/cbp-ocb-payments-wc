@@ -43,9 +43,6 @@ angular.module('raiffeisen-payments')
                 "onSubmit": "&?",
                 "valid": "=?"
             },
-            link: function($scope, $element, $attrs, $controller, $transcludeFn) {
-
-            },
             controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, translate) {
                 // max date, based on now and business parameter
                 var now     = new Date(),
@@ -134,6 +131,14 @@ angular.module('raiffeisen-payments')
 
                 var validateRange = function() {
                     var dateFrom, dateTo;
+
+                    if ($scope.futureDatePanelForm.dateFromInput) {
+                        $scope.futureDatePanelForm.dateFromInput.$validate();
+                    }
+                    if ($scope.futureDatePanelForm.dateToInput) {
+                        $scope.futureDatePanelForm.dateToInput.$validate();
+                    }
+
                     if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
                         if ($scope.futureDatePanelForm.dateFromInput && $scope.futureDatePanelForm.dateToInput) {
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', true);
@@ -210,12 +215,48 @@ angular.module('raiffeisen-payments')
 
                 // change date select mode between range and period
                 $scope.$watch('inputData.selectedMode', function(selectedMode) {
-                    validatePeriod();
+
+
                     if (selectedMode == FUTURE_DATE_TYPES.PERIOD) {
-                        $scope.futureDatePanelForm.period.$setValidity("period", true);
+                        $scope.futureDatePanelForm.period.$setDirty();
+
+                        if ($scope.futureDatePanelForm.dateFromInput) {
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('required', true);
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('date', true);
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('rbDatepickerFormat', true);
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('parse', true);
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', true);
+
+                            $scope.futureDatePanelForm.dateFromInput.$setPristine();
+                            $scope.futureDatePanelForm.dateFromInput.$setUntouched();
+                        }
+
+                        if ($scope.futureDatePanelForm.dateToInput) {
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('required', true);
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('date', true);
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('rbDatepickerFormat', true);
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('parse', true);
+                            $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', true);
+
+                            $scope.futureDatePanelForm.dateToInput.$setPristine();
+                            $scope.futureDatePanelForm.dateToInput.$setUntouched();
+                        }
+
+                        validatePeriod();
                     }
                     else if(selectedMode == FUTURE_DATE_TYPES.RANGE) {
+                        $scope.futureDatePanelForm.dateFromInput.$setDirty();
+                        $scope.futureDatePanelForm.dateToInput.$setDirty();
 
+                        $scope.futureDatePanelForm.period.$setValidity("required", true);
+                        $scope.futureDatePanelForm.period.$setValidity("pattern", true);
+                        $scope.futureDatePanelForm.period.$setValidity("INCORRECT_END_DATE", true);
+                        $scope.futureDatePanelForm.period.$setValidity("TOO_LATE_END_DATE", true);
+
+                        $scope.futureDatePanelForm.period.$setPristine();
+                        $scope.futureDatePanelForm.period.$setUntouched();
+
+                        validateRange();
                     }
                 });
 
