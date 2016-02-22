@@ -11,7 +11,7 @@
 </form>
 
 <bd-form-footer style="text-align: right;">
-    <bd-button class="bd-button__primary"
+    <bd-button class="bd-button__primary delete-future"
                ng-click="onProceedButtonClick()">
         <span ng-hide="token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION">
             {{::'raiff.payments.future.delete.buttons.proceed' | translate}}
@@ -22,7 +22,7 @@
         </span>
     </bd-button>
 
-    <bd-button class="bd-button"
+    <bd-button class="bd-button cancel-delete-future"
                ng-click="onCancelButtonClick()">{{::'raiff.payments.future.delete.buttons.cancel' | translate}}
     </bd-button>
 
