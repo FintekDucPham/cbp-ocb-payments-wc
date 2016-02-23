@@ -112,6 +112,9 @@ angular.module('raiffeisen-payments')
             responseObject.beneficiaryAccountId = details.recipientAccountNo;
             responseObject.recipientName = details.recipientName;
             responseObject.description = details.recipientName;
+            if(details.transferType === 'TAX'){
+                responseObject.taxForm = details.paymentDetails.formCode;
+            }
             return responseObject;
         };
 
