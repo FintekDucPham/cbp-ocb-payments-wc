@@ -258,6 +258,7 @@
                                        bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceItem.insuranceCode] }}"
                                        bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                                        ng-pattern="AMOUNT_PATTERN"
+                                       rb-number-type-input
                                        ng-model-options="{ allowInvalid: true }"
                                        step="0.01"
                                        required
