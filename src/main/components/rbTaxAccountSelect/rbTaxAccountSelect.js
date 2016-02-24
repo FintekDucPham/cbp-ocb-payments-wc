@@ -77,6 +77,8 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.searchForOffice = function(selectedInput) {
+                    selectedInput = encodeURIComponent(selectedInput);
+
                     return taxOffices.search((function (selectedInput) {
                         var regexp = new RegExp('^[0-9 ]+$');
                         if (regexp.test(selectedInput)) {
