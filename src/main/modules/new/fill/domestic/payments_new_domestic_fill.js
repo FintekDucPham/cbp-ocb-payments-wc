@@ -183,8 +183,15 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.sendBySorbnet', function(n, o){
             if(n===true && o===false){//to sorbnet
-                $scope.payment.formData.realizationDate = new Date();
+                if ($scope.payment.options.futureRealizationDate) {
+                    $scope.payment.formData.realizationDate = new Date();
+                }
             }
+
+            // quick fix - OZK224542
+            $timeout(function() {
+                $scope.paymentForm.amount.$validate();
+            });
         });
 
         function splitTextEveryNSign(text, lineLength){
