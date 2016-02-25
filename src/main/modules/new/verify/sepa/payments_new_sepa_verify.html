@@ -29,7 +29,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.recipient_data.label'|translate}}">
-        <p style="word-break: break-all" ng-bind-html="payment.formData.recipientName | arrayToHtml"></p>
+        <p style="word-break: break-all">{{payment.formData.recipientName.join('')}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
@@ -37,7 +37,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.fill.description'|translate}}">
-        <p style="word-break: break-all" ng-bind-html="payment.formData.description | arrayToHtml"></p>
+        <p style="word-break: break-all" >{{payment.formData.description.join('')}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
