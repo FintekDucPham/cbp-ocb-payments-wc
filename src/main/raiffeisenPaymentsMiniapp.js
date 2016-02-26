@@ -65,14 +65,14 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.taxpayers.list",
                     label: 'raiff.payments.taxpayers.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    icon: "raiff-icons raiff_lista_kart",
                     action: "payments.taxpayers.list",
                     priority: 4
                 },
                 {
                     id: "payments.future.list",
                     label: 'raiff.payments.future.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    icon: "raiff-icons payments_waiting",
                     action: "payments.future.list",
                     priority: 5
                 },
@@ -86,7 +86,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.standing.list",
                     label: 'raiff.payments.standing.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    icon: "raiff-icons raiff_zlecenie_stale",
                     action: "payments.standing.list",
                     priority: 7
                 }
