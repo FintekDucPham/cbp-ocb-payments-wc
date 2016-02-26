@@ -116,7 +116,12 @@ angular.module('raiffeisen-payments')
 
 
         function isCurrentDateSelected() {
-            return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
+            if($scope.payment.formData.realizationDate && $scope.payment.formData.setHours){
+                return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
+            }else{
+                return false;
+            }
+
         }
 
         function isAmountOverBalance() {
