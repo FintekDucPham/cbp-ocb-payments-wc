@@ -14,6 +14,7 @@ angular.module('raiffeisen-payments')
         };
     $scope.paymentsPromise = paymentsService.search($scope.params).then(function(paymentSummary) {
         $scope.paymentSummary = paymentSummary;
+        $scope.paymentSummary.totalElements = paymentSummary.numberOfElements;
     });
 
 
