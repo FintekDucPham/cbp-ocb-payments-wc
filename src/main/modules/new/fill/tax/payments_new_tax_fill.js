@@ -18,6 +18,8 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents) {
 
+        $scope.accountSelectorRemote = {};
+
         angular.extend($scope.payment.formData, {
             idType: "NIP"
         }, lodash.omit($scope.payment.formData, lodash.isUndefined));
@@ -89,6 +91,15 @@ angular.module('raiffeisen-payments')
                 value: val
             };
         }));
+
+        $scope.setClearFormFunction(function(){
+            $scope.payment.formData = {};
+            $scope.payment.formData.realizationDate = new Date();
+            $scope.payment.formData.idType = "NIP";
+            $scope.accountSelectorRemote.resetToDefault();
+
+
+        });
 
         $scope.setDefaultValues({
             realizationDate: $scope.CURRENT_DATE
