@@ -15,7 +15,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
-        <p class="break-force">{{payment.formData.recipientName.join('')}}</p>
+        <p class="break-force">{{payment.formData.recipientName}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
@@ -23,7 +23,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
-        <p style="word-break: break-all">{{payment.formData.description.join('')}}</p>
+        <p style="word-break: break-all">{{payment.formData.description}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
