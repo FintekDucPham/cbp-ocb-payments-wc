@@ -89,6 +89,13 @@ angular.module('raiffeisen-payments', [
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.standing.list",
                     priority: 7
+                },
+                {
+                    id: "payments.multisign",
+                    label: 'raiff.payments.future.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.multisign",
+                    priority: 8
                 }
             ]
         });
