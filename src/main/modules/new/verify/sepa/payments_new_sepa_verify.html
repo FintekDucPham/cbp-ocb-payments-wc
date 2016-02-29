@@ -40,7 +40,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.recipient_data.label'|translate}}">
-        <p style="word-break: break-all">{{payment.formData.recipientName}}</p>
+        <p style="word-break: break-all">{{payment.formData.recipientName.join('')}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
