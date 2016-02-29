@@ -46,6 +46,13 @@ angular.module('raiffeisen-payments')
         };
 
 
+        $scope.canEdit = function($data){
+            return $data.details.transferType.toUpperCase()!=='SEPA' && $data.details.transferType.toUpperCase()!=='SWIFT' && parseFloat($data.operationStatus) < 60;
+        };
+
+        $scope.canDelete = function($data){
+            return parseFloat($data.operationStatus) < 60;
+        };
         $scope.model = {
             dateRangeValidity: false
         };
