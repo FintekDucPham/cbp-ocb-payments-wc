@@ -4,7 +4,10 @@ angular.module('raiffeisen-payments')
             url: "/edit",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/payments_future_manage_edit.html",
-            controller: "PaymentsFutureManageEditController"
+            controller: "PaymentsFutureManageEditController",
+            data: {
+                analyticsTitle: "raiff.payments.future.edit.label"
+            }
         }).state('payments.future.manage.edit.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
@@ -20,17 +23,26 @@ angular.module('raiffeisen-payments')
                 paymentRulesResolved: ['paymentRules', function(paymentRules){
                     return paymentRules.search();
                 }]
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         }).state('payments.future.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/payments_new_verify.html";
             },
-            controller: 'NewPaymentVerifyController'
+            controller: 'NewPaymentVerifyController',
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
+            }
         }).state('payments.future.manage.edit.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/status/payments_future_manage_edit_status.html",
-            controller: "NewPaymentStatusController"
+            controller: "NewPaymentStatusController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step3"
+            }
         });
     })
     .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES) {

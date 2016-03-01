@@ -22,7 +22,10 @@ angular.module('raiffeisen-payments', [
                 url: "/payments",
                 abstract: true,
                 templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/layouts/fullscreen/fullscreen_payments.html",
-                controller: "PaymentsViewController"
+                controller: "PaymentsViewController",
+                data: {
+                    analyticsTitle: "raiff.menu.transfer"
+                }
             });
     }
 

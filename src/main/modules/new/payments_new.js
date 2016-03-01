@@ -77,6 +77,11 @@ angular.module('raiffeisen-payments')
                 paymentType: 'domestic',
                 payment: {},
                 items: {}
+            },
+            data: {
+                analyticsTitle: ["$stateParams", function($stateParams) {
+                    return "raiff.payments.new.types." + $stateParams.paymentType.toUpperCase();
+                }]
             }
         });
     })

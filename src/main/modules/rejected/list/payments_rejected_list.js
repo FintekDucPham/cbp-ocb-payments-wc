@@ -33,6 +33,9 @@ angular.module('raiffeisen-payments')
                         };
                     });
                 }]
+            },
+            data: {
+                analyticsTitle: "raiff.payments.rejected.label"
             }
         });
     })

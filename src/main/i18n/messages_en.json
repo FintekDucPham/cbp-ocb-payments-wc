@@ -41,6 +41,8 @@
     "payments.submenu.open_text": "Open",
     "payments.submenu.options.list.header": "List of payments",
     "payments.submenu.options.new.header": "Transfer in PLN",
+    "payments.submenu.options.new_foreign.header": "Foreign transfer",
+    "payments.submenu.options.new_internal.header": "Own transfer",
 
     "raiff.payments.widget.view.new_payment": "New payment",
     "raiff.payments.widget.content.total_payments": "Total payments",
@@ -89,13 +91,20 @@
     "raiff.payments.new.step2.row.info.costs_not_available": "Information on estimated order costs is currently unavailable. This does not affect the possibility of submitting the order for execution.",
     "raiff.payments.new.step2.row.charges": "Fees",
 
+    "raiff.payments.new.confirmation.text": "New payment confirmation",
+
     "raiff.payments.new.label.header": "Transfer",
     "raiff.payments.new.payment_type": "Transfer type",
     "raiff.payments.new.payment_type.select": "Select transfer type",
     "raiff.payments.new.types.INTERNAL": "Own transfer",
     "raiff.payments.new.types.DOMESTIC": "Domestic transfer in PLN",
+    "raiff.payments.new.types.TAX": "Tax transfer",
+    "raiff.payments.new.types.INSURANCE": "Insurance transfer",
     "raiff.payments.new.types.US": "Transfer to the Revenue Office/Customs Chamber",
     "raiff.payments.new.types.ZUS": "Transfer to the Social Insurance Institution [ZUS]",
+    "raiff.payments.new.types.SWIFT": "SWIFT transfer",
+    "raiff.payments.new.types.SEPA": "SEPA transfer",
+    "raiff.payments.new.types.STANDING": "Standing order",
     "raiff.payments.new.btn.change": "Change",
     "raiff.payments.new.btn.cancel": "Cancel",
     "raiff.payments.new.btn.accept": "Accept",
@@ -364,6 +373,8 @@
     "raiff.payments.recipients.type.label": "Recipient type",
     "raiff.payments.recipients.search.label": "Search recipients",
     "raiff.payments.recipients.new.button": "New recipient",
+    "raiff.payments.recipients.new.label": "New recipient",
+    "raiff.payments.recipients.edit.label": "Edit recipient",
     "raiff.payments.recipients.select.filter.button.action": "search",
     "raiff.payments.recipients.select.filter.text.label": "Search recipients",
     "raiff.payments.recipients.list.header.customName.label": "Your name for recipient",
@@ -380,6 +391,7 @@
     "raiff.payments.recipients.select.type.US": "Revenue Office",
     "raiff.payments.recipients.select.type.INSURANCE": "Social Insurance Institution (ZUS)",
     "raiff.payments.recipients.select.type.TAX": "Revenue Office",
+    "raiff.payments.recipients.select.type.FOREIGN": "Foreign",
     "raiff.payments.recipients.select.type.CURRENCY": "Foreign currency",
 
     "raiff.payments.recipients.new.type.select.placeholder": "Select recipient type",
@@ -707,5 +719,20 @@
     "raiff.payments.new.step1.row.end_date.validate.past": "Data nie może być wcześniejsza niż data bieżąca_en",
 
     "raiff.payments.recipients.select.type.all": "All",
-    "raiff.payments.recipients.select.type.domestic": "Domestic"
+    "raiff.payments.recipients.select.type.domestic": "Domestic",
+
+    "raiff.payments.taxpayers.label": "Taxpayers",
+    "raiff.payments.taxpayers.new.label": "Taxpayers data",
+    "raiff.payments.taxpayers.edit.label": "Edit taxpayers",
+    "raiff.payments.taxpayers.manage.remove.title": "Usuń płatnika",
+
+    "raiff.payments.future.label": "Future payments",
+
+    "raiff.payments.future.edit.label": "Edit future payments",
+    "raiff.payments.future.remove.label": "Remove future payments",
+
+    "raiff.payments.rejected.label": "rejected payments",
+
+    "raiff.payments.standing.label": "Standing order",
+    "raiff.payments.standing.manage.remove.title": "Remove standing order"
 }

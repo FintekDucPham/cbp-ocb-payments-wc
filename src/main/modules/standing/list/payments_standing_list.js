@@ -3,7 +3,10 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.standing.list', {
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/payments_standing_list.html",
-            controller: "PaymentsStandingPaymentsListController"
+            controller: "PaymentsStandingPaymentsListController",
+            data: {
+                analyticsTitle: "raiff.payments.standing.label"
+            }
         });
     })
     .controller('PaymentsStandingPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,

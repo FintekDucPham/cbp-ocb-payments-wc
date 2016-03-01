@@ -7,6 +7,9 @@ angular.module('raiffeisen-payments')
             params: {
                 accountId: null,
                 recipientId: null
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         });
     })

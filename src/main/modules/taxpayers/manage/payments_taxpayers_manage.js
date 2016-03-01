@@ -8,6 +8,9 @@ angular.module('raiffeisen-payments')
             params: {
                 taxpayerType: 'zus',
                 operation: 'new'
+            },
+            data: {
+                analyticsTitle: "raiff.payments.taxpayers.label"
             }
         });
     })
