@@ -3,12 +3,26 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.multisign', {
             url: "/multisign",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/payments_multisign.html",
-            controller: "MultisignController"
+            controller: "PaymentsMultisignController",
+            abstract: true,
+            resolve: {
+                insuranceAccountList : ['insuranceAccounts', function(insuranceAccounts){
+                    return insuranceAccounts.search().then(function(insuranceAccounts) {
+                        return insuranceAccounts.content;
+                    });
+                }]
+            }
         });
     })
-    .controller("MultisignController", function($scope, translate, multisignService) {
-        multisignService.getPaymentsToSign().then(function(payments){
-            $scope.payments = payments;
-        });
-
+    .controller("PaymentsMultisignController", function($scope, translate, insuranceAccountList) {
+        $scope.insuranceAccounts = insuranceAccountList;
+        $scope.setClearFormFunction = function(fn){
+            $scope.clearFormFunction = fn;
+        };
+        $scope.getInsuranceAccountName = function(accountNo){
+            var foundElement = _.find($scope.insuranceAccounts, {
+                accountNo: accountNo
+            });
+            return translate.property("raiff.payments.insurances.type."+foundElement.insuranceCode);
+        };
     });

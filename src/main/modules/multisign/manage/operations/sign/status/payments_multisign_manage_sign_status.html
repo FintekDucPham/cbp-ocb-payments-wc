@@ -1,0 +1,10 @@
+<bd-msg-panel bd-msg-type="{{status.icon}}">
+    {{::'raiff.payments.future.delete.status.label.status.' + status.code |translate}}
+</bd-msg-panel>
+
+
+<bd-form-footer>
+    <bd-button class="bd-form-footer__button--positive"
+               ui-sref="payments.future.list">{{::'raiff.payments.future.delete.buttons.returnToList' | translate}}
+    </bd-button>
+</bd-form-footer>
