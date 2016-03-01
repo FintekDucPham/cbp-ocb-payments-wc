@@ -115,12 +115,14 @@ angular.module('raiffeisen-payments')
                 validation: {}
             });
 
-
         if(!angular.equals({}, $stateParams.payment)){
             $scope.payment.formData = angular.copy($stateParams.payment);
             if($stateParams.payment.paymentId){
                 $scope.payment.transferId = $stateParams.payment.paymentId;
                 $scope.payment.token.params.resourceId = $scope.payment.transferId;
+            }
+            if($stateParams.payment.fromMyPayment){
+                $scope.payment.meta.hideSaveRecipientButton = true;
             }
             $stateParams.payment = {};
         }
