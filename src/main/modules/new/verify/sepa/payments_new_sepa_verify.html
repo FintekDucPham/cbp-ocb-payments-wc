@@ -40,7 +40,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.recipient_data.label'|translate}}">
-        <p style="word-break: break-all">{{payment.formData.recipientName.join('')}}</p>
+        <p style="word-break: break-all">{{payment.formData.recipientName | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
@@ -48,7 +48,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.fill.description'|translate}}">
-        <p style="word-break: break-all" >{{payment.formData.description.join('')}}</p>
+        <p style="word-break: break-all" >{{payment.formData.description | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
