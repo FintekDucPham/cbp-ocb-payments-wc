@@ -105,4 +105,8 @@ angular.module('raiffeisen-payments', [
     });
 }).value('RAIFF_NRB_CONSTANTS', {
     insternal_prefix: null
+}).filter('arrayFilter', function(){
+    return function(items){
+        return angular.isArray(items) ? items.join("") : items;
+    };
 });

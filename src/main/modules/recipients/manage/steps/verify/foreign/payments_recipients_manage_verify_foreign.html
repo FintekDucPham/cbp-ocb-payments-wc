@@ -31,11 +31,11 @@
         </bd-item-property>
 
         <bd-item-property ng-hide="recipient.operation.code !== 'REMOVE'" class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.remove.recipient_name_address' | translate }}">
-            <p>{{recipient.formData.recipientData}}</p>
+            <p>{{recipient.formData.recipientData | arrayFilter}}</p>
         </bd-item-property>
 
         <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'" class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_name_address' | translate }}">
-            <p>{{recipient.formData.recipientData}}</p>
+            <p>{{recipient.formData.recipientData | arrayFilter}}</p>
         </bd-item-property>
 
         <bd-item-property ng-hide="recipient.operation.code === 'REMOVE'"  class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
@@ -43,7 +43,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.description.label' | translate }}">
-            <p>{{recipient.formData.description}}</p>
+            <p>{{recipient.formData.description | arrayFilter}}</p>
         </bd-item-property>
 
     </div>
