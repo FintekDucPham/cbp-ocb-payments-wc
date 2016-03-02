@@ -372,4 +372,8 @@
     <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
         {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}}
     </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow rb-own-account" ng-show="isOwnAccount">
+        <bd-msg-panel bd-msg-type="warning">{{ :: 'raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO' | translate }}</bd-msg-panel>
+    </bd-item-property>
 </div>
