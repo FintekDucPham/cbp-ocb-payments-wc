@@ -232,4 +232,23 @@
 }
 
 
+.desktop-only-payments {
+    @media only screen and  (max-width: @screenSmallMax) {
+      display: none;
+    }
+}
+.mobile-only-payments {
+  @media only screen and  (min-width: @screenMediumMin) {
+    display: none;
+  }
+  white-space: nowrap;
+  display: inline-flex;
+}
+.ellipsis-account {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 155px;
+}
+
+
 
