@@ -40,6 +40,7 @@
                     <rb-tax-account-select ng-show="!showHide"
                                             rb-tax-office="recipient.items.recipientAccount"
                                            rb-tax-office-id="recipient.formData.selectedTaxOfficeId"
+                                           rb-on-tax-account-select="selectTaxAccount($office)"
                                            rb-tax-office-params="{ searchText: 'raiff.payments.recipients.new.us.fill.recipient_account.search', clearText: 'raiff.payments.recipients.new.us.fill.recipient_account.clear' }">
                     </rb-tax-account-select>
                     <div ng-show="showHide">
