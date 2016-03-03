@@ -1,8 +1,8 @@
 [
   {
-	"name":"MESSAGES_BANNER",
+	"name":"PAYMENT_BANNER",
 	"type":"BANNER",
-    "miniApplication":"MESSAGES",
+    "miniApplication":"PAYMENTS",
     "linksAllowed":true
   }
 ]
