@@ -4,7 +4,10 @@ angular.module('raiffeisen-payments')
             url: "/delete",
 //            abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/delete/payments_future_manage_delete.html",
-            controller: "PaymentsFutureManageDeleteController"
+            controller: "PaymentsFutureManageDeleteController",
+            data: {
+                analyticsTitle: "raiff.payments.future.remove.label"
+            }
         });
     })
     .constant('CODE_TO_ICONS', {

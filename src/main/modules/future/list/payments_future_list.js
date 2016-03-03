@@ -35,6 +35,9 @@ angular.module('raiffeisen-payments')
                     });
                 }]
 
+            },
+            data: {
+                analyticsTitle: "raiff.payments.future.label"
             }
         });
     })

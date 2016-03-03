@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates) {
+    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates, rbAccountOwnNrbService) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION_REGEX');
@@ -377,4 +377,10 @@ angular.module('raiffeisen-payments')
                 $scope.payment.options.ibanLength = null;
             }
         };
+        $scope.$watch('payment.formData.recipientAccountNo', function(n,o){
+            if(n!==o && angular.isString(n)){
+                $scope.isOwnAccount = rbAccountOwnNrbService.startsWithPrefix(n.substring(2));
+            }
+        });
+
     });

@@ -11,6 +11,9 @@ angular.module('raiffeisen-payments')
                         return insuranceAccounts.content;
                     });
                 }]
+            },
+            data: {
+                analyticsTitle: null
             }
         });
     })

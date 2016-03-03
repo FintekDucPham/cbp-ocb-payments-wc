@@ -26,6 +26,9 @@ angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers', {
             url: "/taxpayers",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/payments_taxpayers.html"
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/payments_taxpayers.html",
+            data: {
+                analyticsTitle: null
+            }
         });
     });

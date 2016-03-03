@@ -95,6 +95,8 @@
     "raiff.payments.new.step2.row.info.costs_not_available": "Informacje o przewidywancyh kosztach zlecenia nie są obecnie dostępne. Nie wpływa to na możliwość przekazania dyspozycji do realizacji.",
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
+    "raiff.payments.new.confirmation.text": "Potwierdzenie dodania nowego przelewu",
+
     "raiff.payments.new.label.header": "Przelew",
     "raiff.payments.new.label.STANDING.NEW.header": "Dodawanie zlecenia stałego",
     "raiff.payments.new.label.STANDING.EDIT.header": "Modyfikacja zlecenia stałego",
@@ -487,6 +489,8 @@
     "raiff.payments.recipients.type.label": "Typ odbiorcy",
     "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.new.button": "Nowy odbiorca",
+    "raiff.payments.recipients.new.label": "Nowy odbiorca",
+    "raiff.payments.recipients.edit.label": "Edycja odbiorcy",
     "raiff.payments.recipients.select.filter.button.action": "szukaj",
     "raiff.payments.recipients.select.filter.text.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.list.header.customName.label": "Twoja nazwa odbiorcy",
@@ -744,6 +748,9 @@
     "raiff.payments.taxpayers.select.filter.text.label": "Szukaj płatnika",
     "raiff.payments.taxpayers.select.filter.button.action": "Szukaj",
 
+    "raiff.payments.taxpayers.new.label": "Dane płatnika",
+    "raiff.payments.taxpayers.edit.label": "Edycja płatnika",
+
     "raiff.payments.taxpayers.type.label": "Płatnicy",
 
     "raiff.payments.taxpayers.details.name.label": "Nazwa płatnika",
@@ -831,6 +838,9 @@
 
     "raiff.payments.future.fill.transferType.label": "Typ przelewu",
     "raiff.payments.future.fill.debit_account.label": "Z rachunku",
+
+    "raiff.payments.future.edit.label": "Edycja płatności zaplanowanej",
+    "raiff.payments.future.remove.label": "Usunięcie płatności zaplanowanej",
 
     "raiff.payments.components.futureDatePanel.dateRanges.DAYS": "dni",
     "raiff.payments.components.futureDatePanel.dateRanges.WEEKS": "tygodni",

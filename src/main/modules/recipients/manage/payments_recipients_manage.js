@@ -8,6 +8,9 @@ angular.module('raiffeisen-payments')
             params: {
                 recipientType: 'domestic',
                 operation: 'new'
+            },
+            data: {
+                analyticsTitle: "raiff.payments.recipients.label"
             }
         });
     })

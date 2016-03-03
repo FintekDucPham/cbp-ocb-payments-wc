@@ -7,21 +7,38 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsManageNewController",
             params: {
                 recipient: null
+            },
+            data: {
+                analyticsTitle: ["$stateParams", function($stateParams) {
+                    var keys = [];
+                    keys.push("raiff.payments.recipients.new.label");
+                    keys.push("raiff.payments.recipients.select.type." + $stateParams.recipientType.toUpperCase());
+                    return keys;
+                }]
             }
         }).state('payments.recipients.manage.new.fill', {
             url: "/fill/:nrb",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/fill/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_fill_" + angular.lowercase($stateParams.recipientType) + ".html";
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         }).state('payments.recipients.manage.new.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_verify_" + angular.lowercase($stateParams.recipientType) + ".html";
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
             }
         }).state('payments.recipients.manage.new.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/new/status/payments_recipients_manage_new_status.html",
-            controller: "RecipientsManageNewStatusController"
+            controller: "RecipientsManageNewStatusController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step3"
+            }
         });
     })
     .controller('PaymentsRecipientsManageNewController', function ($scope, $state, recipientGeneralService, authorizationService, rbRecipientOperationType, $stateParams, lodash) {
