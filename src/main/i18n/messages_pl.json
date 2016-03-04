@@ -429,6 +429,7 @@
     "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK": "Musisz wybrać kraj banku odbiorcy",
     "raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS": "Rachunek odbiorcy nie może być rachunkiem ZUS.",
     "raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_US": "Rachunek odbiorcy nie może być rachunkiem Urzędu Skarbowego/Izby Celnej.",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.US_PMNT_ONLY_EURO": "Przelew walutowy na rachunek US/IC może być zrealizowany jedynie w walucie EUR",
     "raiff.payments.recipients.new.currency.fill.recipient_account.SIMPLE_INCORRECT_IBAN": "Rachunek odbiorcy nie jest zgodny z formatem IBAN.",
 
 

@@ -74,7 +74,7 @@ angular.module('raiffeisen-payments')
         }));
 
         $scope.recipientAccountValidators = {
-            notUs: function (accountNo) {
+            usPmntOnlyEuro: function (accountNo) {
                 if (accountNo) {
                     accountNo = accountNo.replace(/ /g, '');
 
@@ -86,10 +86,19 @@ angular.module('raiffeisen-payments')
                         accountNo = accountNo.substr(2);
                     }
 
-                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
+                    var usAccount = lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
                         code: 'notUs',
                         value: accountNo
                     });
+
+                    if (usAccount) {
+                        return $scope.payment.formData.currency.currency == "EUR";
+                    }
+                    else {
+                        return true;
+                    }
+
+
                 } else {
                     return false;
                 }
@@ -118,7 +127,8 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.currency', function(n, o) {
             if ($scope.paymentForm && $scope.paymentForm.amount) {
-                $scope.paymentForm.amount.$validate();
+                $scope.paymentForm.amount.$validate(); 
+                $scope.paymentForm.recipientAccountNo.$validate();
             }
         });
 
