@@ -13,9 +13,15 @@ angular.module('raiffeisen-payments')
         // dodaj jako zlecenie stale tylko dla krajowego / wlasnego
         // pod warunkiem, ze to nie sorbnet
         if ($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code || $scope.payment.type.code == rbPaymentTypes.OWN.code) {
-            if (!$scope.payment.formData.sendBySorbnet) {
+            if (!$scope.payment.sendBySorbnet) {
                 $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = true;
             }
+            else {
+                $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = false;
+            }
+        }
+        else { 
+            $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = false;
         }
 
         bdStatusStepInitializer($scope, {

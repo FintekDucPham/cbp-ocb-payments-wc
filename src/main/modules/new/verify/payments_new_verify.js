@@ -54,6 +54,7 @@ angular.module('raiffeisen-payments')
                 $scope.payment.result.token_error = false;
                 // we need to have form data to create new standing order based on this transaction
                 $scope.payment.standingOrderData = $scope.payment.formData;
+                $scope.payment.sendBySorbnet     = $scope.payment.formData.sendBySorbnet;
                 $scope.payment.formData = {};
                 $scope.payment.items = {};
                 $scope.payment.options = {};
