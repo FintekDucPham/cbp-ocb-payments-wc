@@ -56,26 +56,6 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.recipientAccountValidators = {
-            notUs: function (accountNo) {
-                if (accountNo) {
-                    accountNo = accountNo.replace(/ /g, '');
-
-                    var countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-                    // jesli PL to walidujemy tylko dalsza czesc numeru
-                    // jesli nie PL lub brak prefixu, walidujemy calosc
-                    if (countryPrefix == 'PL') {
-                        accountNo = accountNo.substr(2);
-                    }
-               
-                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notUs',
-                        value: accountNo
-                    });
-                } else {
-                    return false;
-                }
-            },
             notZus: function (accountNo) {
                 if (accountNo) {
                     accountNo = accountNo.replace(/ /g, '');
