@@ -62,7 +62,7 @@ angular.module('raiffeisen-payments')
             $state.go("payments.recipients.manage.edit.fill", {
                 recipientType: recipientType,
                 operation: 'edit',
-                recipient: angular.copy(data)
+                recipient: angular.extend(angular.copy(data), {debitAccountNo: data.debitNrb})
             });
         };
 
