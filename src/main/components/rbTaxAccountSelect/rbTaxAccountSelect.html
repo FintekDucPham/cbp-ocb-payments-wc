@@ -15,9 +15,10 @@
                        type="text"
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
             </div>
+
             <div ng-show="isFromList">
                 <ui-select ng-model="model.taxOffice"
-                           search-enabled="false"
+                           search-enabled="true"
                            on-select="select($item)"
                            theme="bootstrap"
                            placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
