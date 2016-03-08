@@ -480,8 +480,7 @@
     "raiff.payments.new.status.error": "Przelew został odrzucony",
     "raiff.payments.new.status.success": "Przelew/transakcja zrealizowana",
     "raiff.payments.new.status.":"Przelew/transakcja odrzucona",
-    "raiff.payments.new.status.SIGNED_REQUIRED":"Przelew/transakcja wymaga dodatkowych podpisów",
-    
+
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
     "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
@@ -1192,7 +1191,26 @@
 "raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT":"Kraj banku odbiorcy nie jest zgodny z podanym kodem SWIFT banku odbiorcy.",
     "raiff.payments.swift.validation.error.incorrect_country_code":"Kraj banku jest niezgodny z numerem rachunku",
 
-  "raiff.payments.multisign.submit.button":"Złóż podpis"
+  "raiff.payments.multisign.submit.button":"Złóż podpis",
+  "raiff.payments.multisign.manage.sign.header": "Podpisz przelew",
+  "raiff.payments.multisign.label": "Płatności do podpisu",
+  "raiff.payments.multisign.list.header": "Koszyk płatności",
+  "raiff.payments.multisign.sign.buttons.proceed": "Podpisz",
+  "raiff.payments.multisign.status.SIGNED_REQUIRED":"Przelew/transakcja wymaga dodatkowych podpisów",
+  "raiff.payments.multisign.sign.buttons.returnToList":"Powrót do listy",
+  "raiff.payments.multisign.search.accountName":"Rachunek",
+
+  "raiff.payments.multisign.list.header.operation_date":"Planowana data realizacji",
+  "raiff.payments.multisign.list.header.operation_type":"Typ przelewu",
+  "raiff.payments.multisign.list.header.recipient_name":"Nazwa odbiorcy",
+  "raiff.payments.multisign.list.header.operation_title":"Tytułem",
+  "raiff.payments.multisign.list.header.operation_amount":"Kwota i waluta przelewu",
+  "raiff.payments.multisign.list.summary.chose":"Podsumowanie wybrane",
+  "raiff.payments.multisign.list.summary.all":"Podsumowanie wszytskie"
+
+
+
+
 
 
 }

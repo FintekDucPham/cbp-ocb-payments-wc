@@ -1,113 +1,177 @@
 <rb-content-view class="rb-content-view--solid">
+    <div class="basket-vew">
+        <bd-header>{{::"raiff.payments.multisign.list.header"|translate}}</bd-header>
 
-    <bd-header>{{::"raiff.payments.future.list.header"|translate}}</bd-header>
+        <form novalidate="novalidate" name="searchForm" class="transaction-filter-form">
+            <bd-item-property label="{{::'account.statement.select.label'|translate}}">
+                <ui-select ng-model="table.tableConfig.selectedAccount"
+                           theme="bootstrap"
+                           reset-search-input="false"
+                           ng-disabled="fixedAccountSelection"
+                           on-select=""
+                           required>
+                    <ui-select-match placeholder="{{::'account.statement.select.placeholder'|translate}}">
+                        <div class="select-account__row">
+                            <div class="select-account__row__cell"><img ng-if="$select.selected.customerData.icon >= 0"
+                                                                        ng-src="{{getIcon($select.selected.customerData.icon)}}"
+                                                                        class="select-account__icon"/></div>
+                            <div class="select-account__row__cell">{{$select.selected.customerData.name ||
+                                $select.selected.accountName}}<span class="bd-show-md">&nbsp;</span><br
+                                        class="bd-hide-md"/>{{$select.selected.accountNo | nrbIbanFilter}}
+                            </div>
+                        </div>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in accountList track by $index">
+                        <div class="select-account__row">
+                            <div class="select-account__row__cell" ng-if="getIcon(item.accountId)">
+                                <img ng-if="item.customerData.icon >= 0" ng-src="{{getIcon(item.customerData.icon)}}"
+                                     class="select-account__icon"/>
+                            </div>
+                            <div class="select-account__row__cell">
+                                {{((item.customerData.name || item.accountName)) + ' '}}<br class="bd-hide-md"/>{{(item.accountNo
+                                | nrbIbanFilter) | highlight: $select.search}}
+                            </div>
+                        </div>
+                    </ui-select-choices>
+                </ui-select>
+            </bd-item-property>
+            <div rb-transaction-filter ng-model="models" table="table" advanced-search="advancedSearch"
+                 filter-criteria="multisignFilterCriteria" last-error-max="lastMax" max-length="140"></div>
+        </form>
 
-    <rb-future-date-panel
-            date-range="dateRange"
-            options="options.futureDatePanelConfig"
-            on-submit="onOperationsDateSubmit()"
-            valid="model.dateRangeValidity"
-            ></rb-future-date-panel>
-
-    <bd-table bd-type="typeV"
-              bd-table-params="table.tableConfig"
-              bd-table-control="table.tableControl"
-              bd-table-data="table.tableData"
-              bd-table-promise="listPromise"
-              bd-table-meta="{
+        <bd-table bd-type="typeGG"
+                  bd-table-params="table.tableConfig"
+                  bd-table-control="table.tableControl"
+                  bd-table-data="table.tableData"
+                  bd-table-promise="listPromise"
+                  bd-table-meta="{
                     'first': {
-                        'title': '##raiff.payments.future.list.header.operation_date',
+                        'title': '##raiff.payments.multisign.list.header.operation_date',
                         'data': 'realizationDate'
                     },
                     'second': {
-                        'title': '##raiff.payments.future.list.header.credit_account',
-                        'data': 'accountNo'
-                    },
-                    'third': {
-                        'title': '##raiff.payments.future.list.header.payment_type',
+                        'title': '##raiff.payments.multisign.list.header.operation_type',
                         'data': 'transferType'
                     },
-                    'fourth': {
-                        'title': '##raiff.payments.future.list.header.recipient_data',
+                    'third': {
+                        'title': '##raiff.payments.multisign.list.header.recipient_name',
                         'data': 'recipientName'
                     },
-                    'fifth': {
-                        'title': '##raiff.payments.future.list.header.payment_title',
+                    'fourth': {
+                        'title': '##raiff.payments.multisign.list.header.operation_title',
                         'data': 'title'
                     },
-                    'sixth': {
-                        'title': '##raiff.payments.future.list.header.debit_account',
-                        'data': 'recipientAccountNo'
-                    },
-                    'seventh': {
-                        'title': '##raiff.payments.future.list.header.amount',
+                    'fifth': {
+                        'title': '##raiff.payments.multisign.list.header.operation_amount',
                         'data': [
                             'amount',
                             'currency'
                         ]
-                    },
-                    'eight': {
-                        'title': '##raiff.payments.future.list.header.plannedoperationdate',
-                        'data': 'deliveryDate'
                     }
                 }">
 
-        <bd-details-section bd-table-row-details>
-            <div ng-if="$data.details">
-                <ng-include src="::resolveTemplateType($data.details.transferType)"></ng-include>
+            <bd-details-section bd-table-row-details>
+                <div ng-if="$data">
+                    <!--    <ng-include src="::resolveTemplateType($data.transferType)"></ng-include>-->
 
-                <bd-details-action-section>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12" style="text-align:right;">
-                            <bd-button ng-click="onSign($data)" class="bd-button" >{{::'raiff.payments.multisign.submit.button' | translate}}</bd-button>
-                            <bd-button ng-click="onBack(this)"    class="bd-button bd-button__primary">{{::'raiff.payments.future.list.details.insurance.buttons.backToList' | translate}}</bd-button>
+                    <bd-details-action-section>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12" style="text-align:right;">
+                                <bd-button ng-click="onSign($data)" class="bd-button">
+                                    {{::'raiff.payments.multisign.submit.button' | translate}}
+                                </bd-button>
+                                <bd-button ng-click="onBack(this)" class="bd-button bd-button__primary">
+                                    {{::'raiff.payments.future.list.details.insurance.buttons.backToList' | translate}}
+                                </bd-button>
+                            </div>
                         </div>
-                    </div>
-                </bd-details-action-section>
+                    </bd-details-action-section>
 
+                </div>
+
+                <!--<bd-details-action-section>-->
+
+                <!--<div class="bd-grid">-->
+                <!--<div class="bd-grid__row">-->
+                <!--<div class="bd-grid__col&#45;&#45;sm-12">-->
+                <!--<bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.edit' | translate}}</bd-button>-->
+                <!--</div>-->
+                <!--<div class="bd-grid__col&#45;&#45;sm-4">-->
+                <!--<bd-button ng-click="onRecipientTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm bd-float-right">{{::'raiff.payments.recipients.list.details.transfer' | translate}}</bd-button>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <!--</bd-details-action-section>-->
+
+            </bd-details-section>
+
+            <div bd-table-footer>
+                <bd-table-pagination></bd-table-pagination>
             </div>
 
-            <!--<bd-details-action-section>-->
+        </bd-table>
 
-            <!--<div class="bd-grid">-->
-            <!--<div class="bd-grid__row">-->
-            <!--<div class="bd-grid__col&#45;&#45;sm-12">-->
-            <!--<bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.edit' | translate}}</bd-button>-->
-            <!--</div>-->
-            <!--<div class="bd-grid__col&#45;&#45;sm-4">-->
-            <!--<bd-button ng-click="onRecipientTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm bd-float-right">{{::'raiff.payments.recipients.list.details.transfer' | translate}}</bd-button>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--</bd-details-action-section>-->
-
-        </bd-details-section>
-
-        <div bd-table-footer>
-            <bd-table-pagination></bd-table-pagination>
+        <div class="bd-list basket-vew__summary" ng-show="listPromise.$$state.status === 1">
+            <bd-list-item summary>
+                <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
+                    <div class="bd-table bd-table__fixed">
+                        <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                            <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                <div class="summary-item__label" style="border-bottom: 0px;">
+                                    {{::"raiff.payments.multisign.list.summary.chose"|translate}}
+                                </div>
+                            </div>
+                            <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-11">
+                                <div ng-repeat="currencySummary in summaryItem">
+                                    <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                        <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-8">
+                                            <div>
+                                                {{::"raiff.payments.future.list.summary.currency"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
+                                            </div>
+                                        </div>
+                                        <div bd-table-cell="first"
+                                             class="bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
+                                            <bd-amount amount="currencySummary.sum"
+                                                       currency="{{currencySummary.currency}}"></bd-amount>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </bd-list-item>
+            <bd-list-item summary>
+                <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
+                    <div class="bd-table bd-table__fixed">
+                        <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                            <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                <div class="summary-item__label" style="border-bottom: 0px;">
+                                    {{::"raiff.payments.multisign.list.summary.all"|translate}}
+                                </div>
+                            </div>
+                            <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-11">
+                                <div ng-repeat="currencySummary in summaryAll">
+                                    <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                        <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-8">
+                                            <div>
+                                                {{::"raiff.payments.future.list.summary.currency"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
+                                            </div>
+                                        </div>
+                                        <div bd-table-cell="first"
+                                             class="bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
+                                            <bd-amount amount="currencySummary.sum"
+                                                       currency="{{currencySummary.currency}}"></bd-amount>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </bd-list-item>
         </div>
-
-    </bd-table>
-
-    <div class="bd-list" ng-show="listPromise.$$state.status === 1 && summary.length > 0">
-        <bd-list-item summary>
-            <div class="summary-item">
-                <div class="summary-item__label">
-                    {{::"raiff.payments.future.list.summary"|translate}}
-                </div>
-                <div class="summary-item__content">
-                    <div class="row border-bottom-list" ng-repeat="currencySummary in summary" style="margin: 10px;" ng-class="{'border-bottom-adding': $last == false}">
-                        <div>
-                            {{::"raiff.payments.future.list.summary.currency"|translate}}&nbsp;{{currencySummary.currency}}:
-                        </div>
-                        <div class="summary-item">
-                            <bd-amount amount="currencySummary.amount" currency="{{currencySummary.currency}}"></bd-amount>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </bd-list-item>
     </div>
 
 </rb-content-view>

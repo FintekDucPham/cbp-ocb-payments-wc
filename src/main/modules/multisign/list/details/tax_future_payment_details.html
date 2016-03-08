@@ -1,6 +1,6 @@
 <div  ng-class="{'form-body': $data.operationType === 'DELETE'}">
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferType'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{ ::'raiff.payments.future.list.details.domestic.transferTypes.' + $data.details.transferType | translate}}
+        {{ ::'raiff.payments.future.list.details.domestic.transferTypes.' + $data.transferType | translate}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.status'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
@@ -8,53 +8,53 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{ $data.details.accountName }} <br/>
-        {{ $data.details.accountNo | nrbIbanFilter }}<br/>
+        {{ $data.accountName }} <br/>
+        {{ $data.accountNo | nrbIbanFilter }}<br/>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
-        {{ $data.details.recipientAccountNo | nrbIbanFilter}}
+        <bd-multiline-text bd-text="$data.recipientName"></bd-multiline-text>
+        {{ $data.recipientAccountNo | nrbIbanFilter}}
     </bd-item-property>
 
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.payerName'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{ $data.details.senderName.join('') }}
+        {{ $data.senderName.join('') }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.additionalIdType'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{::'raiff.payments.future.list.details.tax.additionalIdTypes.' + $data.details.paymentDetails.idtype | translate}}
+        {{::'raiff.payments.future.list.details.tax.additionalIdTypes.' + $data.paymentDetails.idtype | translate}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.additionalIdNumer'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{$data.details.paymentDetails.idnumber}}
+        {{$data.paymentDetails.idnumber}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.formSymbol'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{$data.details.paymentDetails.formCode}}
+        {{$data.paymentDetails.formCode}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodType'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{::'raiff.payments.future.list.details.tax.periodTypes.' + $data.details.paymentDetails.periodType | translate}}
+        {{::'raiff.payments.future.list.details.tax.periodTypes.' + $data.paymentDetails.periodType | translate}}
     </bd-item-property>
 
 
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodNumber'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{$data.details.paymentDetails.periodNumber}}
+        {{$data.paymentDetails.periodNumber}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodYear'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        <span>20{{$data.details.paymentDetails.periodYear}}</span>
+        <span>20{{$data.paymentDetails.periodYear}}</span>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.obligationId'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{$data.details.paymentDetails.obligationId}}
+        {{$data.paymentDetails.obligationId}}
     </bd-item-property>
 
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.tax.insurance.amount'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{ $data.details.amount | number: 2}} {{ $data.details.currency }}
+        {{ $data.amount | number: 2}} {{ $data.currency }}
     </bd-item-property>
 
 

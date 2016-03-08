@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
         lodash.extend($scope.$data, {
             operationType: 'DELETE'
         });
-        $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/list/details/"+$scope.$data.details.transferType.toLowerCase()+"_future_payment_details.html";
+        $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/list/details/"+$scope.$data.transferType.toLowerCase()+"_future_payment_details.html";
         $scope.payment = {
             formData: {},
             meta: {}
@@ -93,7 +93,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onCancelButtonClick = function() {
-            $state.go('payments.future.list');
+            $state.go('payments.multisign.list');
         };
 
     });

@@ -92,7 +92,7 @@ angular.module('raiffeisen-payments', [
                 },
                 {
                     id: "payments.multisign.list",
-                    label: 'raiff.payments.future.label',
+                    label: 'raiff.payments.multisign.label',
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.multisign.list",
                     priority: 8
