@@ -8,7 +8,7 @@
                 {{$select.selected.customerName}}
             </ui-select-match>
             <ui-select-choices repeat="recipientItem in recipientList track by $index" null-option="nullOption">
-                <div ng-bind-html="recipientItem.customerName | highlight: $select.search"></div>
+                <div ng-bind="recipientItem.customerName"></div>
             </ui-select-choices>
         </ui-select>
     </div>

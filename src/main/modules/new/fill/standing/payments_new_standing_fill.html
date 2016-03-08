@@ -198,7 +198,7 @@
                         {{$select.selected}}
                     </ui-select-match>
                     <ui-select-choices repeat="currency in ['PLN'] track by $index">
-                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                        <div ng-bind="currency"></div>
                     </ui-select-choices>
                 </ui-select>
             </div>
