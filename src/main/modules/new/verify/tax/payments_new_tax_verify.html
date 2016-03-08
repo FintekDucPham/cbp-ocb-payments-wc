@@ -10,9 +10,13 @@
         <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
     </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.sender_account_name'|translate}}">
-        <div style="word-break: break-word">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div><!-- | nazwa -->
-
-        {{ payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+       <span class="desktop-only-payments">
+        <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+        {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+        </span>
+        <div class="mobile-only-payments">
+            <span class="ellipsis-account" >{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}  </span>&nbsp; {{payment.items.senderAccount.accountNo | nrbIbanShortFilter }}
+        </div>
 
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
@@ -22,7 +26,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.taxpayer_data'|translate}}">
-        <p style="word-break: break-all" ng-bind-html="payment.formData.taxpayerDataTable | arrayToString"></p>
+        <p style="word-break: break-all">{{payment.formData.taxpayerDataTable | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.supplementary_id_type'|translate}}">
@@ -54,7 +58,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.amount'|translate}}">
-        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled show-dash></bd-amount>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.execution_date'|translate}}">

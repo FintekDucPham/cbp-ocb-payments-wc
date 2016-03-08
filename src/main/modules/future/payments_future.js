@@ -11,11 +11,17 @@ angular.module('raiffeisen-payments')
                         return insuranceAccounts.content;
                     });
                 }]
+            },
+            data: {
+                analyticsTitle: null
             }
         });
     })
     .controller("PaymentsFutureController", function($scope, translate, insuranceAccountList) {
         $scope.insuranceAccounts = insuranceAccountList;
+        $scope.setClearFormFunction = function(fn){
+            $scope.clearFormFunction = fn;
+        };
         $scope.getInsuranceAccountName = function(accountNo){
             var foundElement = _.find($scope.insuranceAccounts, {
                 accountNo: accountNo

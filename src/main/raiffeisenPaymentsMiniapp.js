@@ -22,17 +22,20 @@ angular.module('raiffeisen-payments', [
                 url: "/payments",
                 abstract: true,
                 templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/layouts/fullscreen/fullscreen_payments.html",
-                controller: "PaymentsViewController"
+                controller: "PaymentsViewController",
+                data: {
+                    analyticsTitle: "raiff.menu.transfer"
+                }
             });
     }
 
     function registerNavigation() {
         menuServiceProvider.registerMenu({
             id: 'raiffeisen-payments',
-            priority: 300,
+            priority: 200,
             showMain: true,
             baseItem: "payments.recipients.list",
-            title: 'payments.title',
+            title: 'raiff.menu.transfer',
             items:[
                 {
                     id: "payments.new.fill",
@@ -65,14 +68,14 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.taxpayers.list",
                     label: 'raiff.payments.taxpayers.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    icon: "raiff-icons raiff_lista_kart",
                     action: "payments.taxpayers.list",
                     priority: 4
                 },
                 {
                     id: "payments.future.list",
                     label: 'raiff.payments.future.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    icon: "raiff-icons payments_waiting",
                     action: "payments.future.list",
                     priority: 5
                 },
@@ -86,7 +89,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.standing.list",
                     label: 'raiff.payments.standing.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    icon: "raiff-icons raiff_zlecenie_stale",
                     action: "payments.standing.list",
                     priority: 7
                 }
@@ -105,4 +108,8 @@ angular.module('raiffeisen-payments', [
     });
 }).value('RAIFF_NRB_CONSTANTS', {
     insternal_prefix: null
+}).filter('arrayFilter', function(){
+    return function(items){
+        return angular.isArray(items) ? items.join("") : items;
+    };
 });

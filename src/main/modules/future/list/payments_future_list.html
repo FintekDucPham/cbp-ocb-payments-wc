@@ -62,8 +62,8 @@
                 <bd-details-action-section>
                     <div class="row">
                         <div class="col-sm-12 col-md-12" style="text-align:right;">
-                            <bd-button ng-click="onEdit($data)"   class="bd-button">{{::'raiff.payments.future.list.details.insurance.buttons.edit' | translate}}</bd-button>
-                            <bd-button ng-click="onDelete($data)" class="bd-button">{{::'raiff.payments.future.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                            <bd-button ng-click="onEdit($data)" ng-if="::canEdit($data)"  class="bd-button">{{::'raiff.payments.future.list.details.insurance.buttons.edit' | translate}}</bd-button>
+                            <bd-button ng-click="onDelete($data)" ng-if="::canDelete($data)" class="bd-button" >{{::'raiff.payments.future.list.details.insurance.buttons.delete' | translate}}</bd-button>
                             <bd-button ng-click="onBack(this)"    class="bd-button bd-button__primary">{{::'raiff.payments.future.list.details.insurance.buttons.backToList' | translate}}</bd-button>
                         </div>
                     </div>
@@ -93,8 +93,8 @@
         </div>
 
     </bd-table>
-
-    <div class="bd-list" ng-show="listPromise.$$state.status === 1">
+    
+    <div class="bd-list" ng-show="listPromise.$$state.status === 1 && summary.length > 0">
         <bd-list-item summary>
             <div class="summary-item">
                 <div class="summary-item__label">

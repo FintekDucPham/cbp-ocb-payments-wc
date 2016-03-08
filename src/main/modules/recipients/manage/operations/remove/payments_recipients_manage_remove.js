@@ -8,17 +8,31 @@ angular.module('raiffeisen-payments')
                 dataConverted: false
             },
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/remove/payments_recipients_manage_remove.html",
-            controller: "PaymentsRecipientsManageRemoveController"
+            controller: "PaymentsRecipientsManageRemoveController",
+            data: {
+                analyticsTitle: ["$stateParams", function($stateParams) {
+                    var keys = [];
+                    keys.push("raiff.payments.recipients.manage.remove.title");
+                    keys.push("raiff.payments.recipients.select.type." + $stateParams.recipientType.toUpperCase());
+                    return keys;
+                }]
+            }
         }).state('payments.recipients.manage.remove.verify', {
             url: "/verify",
             templateUrl: function($stateParams){
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/"+angular.lowercase($stateParams.recipientType)+"/payments_recipients_manage_verify_"+angular.lowercase($stateParams.recipientType)+".html";
             },
-            controller: "RecipientsManageVerifyDomesticController"
+            controller: "RecipientsManageVerifyDomesticController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
+            }
         }).state('payments.recipients.manage.remove.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/remove/status/payments_recipients_manage_remove_status.html",
-            controller: "RecipientsManageRemoveStatusController"
+            controller: "RecipientsManageRemoveStatusController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step3"
+            }
         });
     })
     .controller('PaymentsRecipientsManageRemoveController', function ($scope, initialState, $stateParams, recipientManager, recipientGeneralService, viewStateService, $state, lodash) {
@@ -54,6 +68,8 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipient.manageAction = "REMOVE";
+        $scope.recipient.multiStepParams.labels.accept = 'raiff.payments.recipients.list.details.remove';
+        $scope.recipient.multiStepParams.visibility.clear = false;
     }
 
 );

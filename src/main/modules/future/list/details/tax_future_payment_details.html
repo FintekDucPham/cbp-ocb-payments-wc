@@ -45,7 +45,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.periodYear'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        <span>20{{$data.details.paymentDetails.periodYear}}</span>
+        <span ng-if="$data.details.paymentDetails.periodYear">20{{$data.details.paymentDetails.periodYear}}</span>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.tax.obligationId'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">

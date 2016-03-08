@@ -16,17 +16,19 @@ angular.module('raiffeisen-payments')
                 $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                     if($scope.blockadesForward.isBlock){return;}
                     var form = $scope.recipientForm;
-                    if (form.recipientAccountNo.$valid && $scope.recipient.type.code === 'DOMESTIC') {
-                        var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
-                        if(!$scope.recipient.meta.showRecipientExistInfo){
-                            if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code){
-                                var recipient = lodash.find($scope.recipient.items.actualRecipientList.$$state.value, {
-                                    templateType: 'DOMESTIC',
-                                    accountNo: recipientAccountNo.replace(/\s+/g, "")
-                                });
-                                if(recipient){
-                                    $scope.recipient.meta.showRecipientExistInfo = true;
-                                    return;
+                    if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code && $scope.recipient.type.code === 'DOMESTIC'){
+                        if (form.recipientAccountNo.$valid) {
+                            var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
+                            if(!$scope.recipient.meta.showRecipientExistInfo){
+                                if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code){
+                                    var recipient = lodash.find($scope.recipient.items.actualRecipientList.$$state.value, {
+                                        templateType: 'DOMESTIC',
+                                        accountNo: recipientAccountNo.replace(/\s+/g, "")
+                                    });
+                                    if(recipient){
+                                        $scope.recipient.meta.showRecipientExistInfo = true;
+                                        return;
+                                    }
                                 }
                             }
                         }

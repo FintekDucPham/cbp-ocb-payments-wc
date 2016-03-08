@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, systemParameterService) {
+    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, systemParameterService, translate) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
@@ -11,6 +11,11 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientName = recipient.data.join('');
             $scope.payment.formData.description = recipient.title.join('');
         };
+
+        $scope.setDefaultValues({
+            description: translate.property('raiff.payments.new.internal.fill.default_description'),
+            realizationDate: $scope.CURRENT_DATE
+        });
 
         $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
             "83101010230000261395100000",
@@ -34,6 +39,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientName = null;
             $scope.payment.formData.description = null;
             $scope.payment.formData.transferFromTemplate = false;
+            $scope.payment.formData.recipientAccountName=null;
             bdFocus('recipientAccountNo');
         };
 
@@ -177,8 +183,15 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.sendBySorbnet', function(n, o){
             if(n===true && o===false){//to sorbnet
-                $scope.payment.formData.realizationDate = new Date();
+                if ($scope.payment.options.futureRealizationDate) {
+                    $scope.payment.formData.realizationDate = new Date();
+                }
             }
+
+            // quick fix - OZK224542
+            $timeout(function() {
+                $scope.paymentForm.amount.$validate();
+            });
         });
 
         function splitTextEveryNSign(text, lineLength){

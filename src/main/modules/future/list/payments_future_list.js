@@ -35,6 +35,9 @@ angular.module('raiffeisen-payments')
                     });
                 }]
 
+            },
+            data: {
+                analyticsTitle: "raiff.payments.future.label"
             }
         });
     })
@@ -46,6 +49,13 @@ angular.module('raiffeisen-payments')
         };
 
 
+        $scope.canEdit = function($data){
+            return $data.details.transferType.toUpperCase()!=='SEPA' && $data.details.transferType.toUpperCase()!=='SWIFT' && parseFloat($data.operationStatus) < 60;
+        };
+
+        $scope.canDelete = function($data){
+            return parseFloat($data.operationStatus) < 60;
+        };
         $scope.model = {
             dateRangeValidity: false
         };
@@ -112,6 +122,9 @@ angular.module('raiffeisen-payments')
             responseObject.beneficiaryAccountId = details.recipientAccountNo;
             responseObject.recipientName = details.recipientName;
             responseObject.description = details.recipientName;
+            if(details.transferType === 'TAX'){
+                responseObject.taxForm = details.paymentDetails.formCode;
+            }
             return responseObject;
         };
 

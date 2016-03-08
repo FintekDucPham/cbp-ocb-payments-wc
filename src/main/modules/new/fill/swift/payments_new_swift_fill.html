@@ -72,14 +72,16 @@
                 <div eb-message-key="recipientAccountNo.recipientAccountNo.incorrect_IBAN_length" class="validation-message animate-on">
                     {{::'raiff.payments.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
                 </div>
-                <div eb-message-key="notUs" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_US'|translate}}
+                <!--<div eb-message-key="notUs" class="validation-message animate-on">-->
+                    <!--{{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_US'|translate}}-->
+                <!--</div>-->
+                <div eb-message-key="usPmntOnlyEuro" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.US_PMNT_ONLY_EURO'|translate}}
                 </div>
                 <div eb-message-key="notZus" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
                 </div>
             </eb-validation-messages>
-
         </bd-item-property>
         <span ng-show="isOk || showHide">
             <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
@@ -209,7 +211,10 @@
                 {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
             </div>
         </eb-validation-messages>
-
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['recipientBankCountry'] !== undefined">
+            {{validationErrors['recipientBankCountry']}}
+        </div>
     </bd-item-property>
 
     <!-- bank name-->
@@ -267,7 +272,7 @@
                        ng-min="0.01"
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
-
+                       rb-number-type-input
                        rb-foreign-amount-validator
                        rb-source-account-currency="payment.items.senderAccount.currency"
                        rb-transaction-currency="payment.formData.currency.currency"

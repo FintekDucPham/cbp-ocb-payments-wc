@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('STANDING_FREQUENCY_TYPES', {
         "DAILY": {
             code: "DAILY",
-            symbol: "D"
+            symbol: "B"
         },
         "WEEKLY": {
             code: "WEEKLY",
@@ -177,14 +177,14 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
+        /*$scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
             if (newId !== oldId && oldId) {
                 updateRecipientsList();
                 if (!!$scope.payment.items.recipient) {
                     $scope.clearRecipient();
                 }
             }
-        });
+        });*/
 
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;

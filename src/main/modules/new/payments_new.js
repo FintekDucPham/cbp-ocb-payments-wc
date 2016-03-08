@@ -77,6 +77,11 @@ angular.module('raiffeisen-payments')
                 paymentType: 'domestic',
                 payment: {},
                 items: {}
+            },
+            data: {
+                analyticsTitle: ["$stateParams", function($stateParams) {
+                    return "raiff.payments.new.types." + $stateParams.paymentType.toUpperCase();
+                }]
             }
         });
     })
@@ -115,12 +120,14 @@ angular.module('raiffeisen-payments')
                 validation: {}
             });
 
-
         if(!angular.equals({}, $stateParams.payment)){
             $scope.payment.formData = angular.copy($stateParams.payment);
             if($stateParams.payment.paymentId){
                 $scope.payment.transferId = $stateParams.payment.paymentId;
                 $scope.payment.token.params.resourceId = $scope.payment.transferId;
+            }
+            if($stateParams.payment.fromMyPayment){
+                $scope.payment.meta.hideSaveRecipientButton = true;
             }
             $stateParams.payment = {};
         }
@@ -141,10 +148,19 @@ angular.module('raiffeisen-payments')
 
         $scope.payment.meta.paymentTypes = lodash.where(rbPaymentTypes, {'parentState': $scope.payment.type.parentState});
 
+
+        $scope.clearFormFunction = null;
+        $scope.setClearFormFunction = function(fn){
+            $scope.clearFormFunction = fn;
+        };
        // alert("X");
         $scope.clearForm = function() {
-            $scope.payment.formData = {};
-            $scope.payment.items = {};
+            if(!$scope.clearFormFunction){
+                $scope.payment.formData = {};
+                $scope.payment.items = {};
+            }else{
+                $scope.clearFormFunction();
+            }
             $scope.$broadcast('clearForm');
         };
 
@@ -247,7 +263,7 @@ angular.module('raiffeisen-payments')
 
         if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
             $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
-            $scope.payment.rbPaymentsStepParams.visibility.fillReturn = true;
+            $scope.payment.rbPaymentsStepParams.visibility.fillReturn = false;
             $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';

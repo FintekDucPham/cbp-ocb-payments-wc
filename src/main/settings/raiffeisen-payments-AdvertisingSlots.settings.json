@@ -1,0 +1,8 @@
+[
+  {
+	"name":"PAYMENT_BANNER",
+	"type":"BANNER",
+    "miniApplication":"PAYMENTS",
+    "linksAllowed":true
+  }
+]

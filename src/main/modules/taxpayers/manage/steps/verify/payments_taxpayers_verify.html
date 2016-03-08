@@ -13,7 +13,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.taxpayers.verify.taxpayer_data'|translate}}">
-        <p style="word-break: break-all" ng-bind-html="taxpayer.formData.taxpayerData.join('')"></p>
+        <p style="word-break: break-all">{{taxpayer.formData.taxpayerData | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property ng-if="taxpayer.formData.taxpayerType === 'INSURANCE'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.taxpayers.verify.taxpayer_nip' | translate }}">

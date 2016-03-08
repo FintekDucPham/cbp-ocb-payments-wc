@@ -10,16 +10,6 @@ for (var file in window.__karma__.files) {
 requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/src',
-    /*
-    paths: {
-        'jquery': 'app/vendor/jquery/jquery.js'
-    },
-    */
-    shim: {
-        'underscore': {
-            exports: '_'
-        }
-    },
 
     // ask Require.js to load these files (all our tests)
     deps: tests,

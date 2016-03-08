@@ -19,6 +19,7 @@
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
 
+        <input name="recipientAcc" hidden ng-model="payment.formData.beneficiaryAccountId" required/>
         <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}" ng-if="payment.formData.remitterAccountId">
             <rb-account-select
                     rb-account="payment.items.recipientAccount"
@@ -26,12 +27,14 @@
                     rb-account-select-params="recipientSelectParams"
                     rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
                     rb-product-list-name="TRANSFER_OWN_TO_LIST"
-                    bd-attr-name="recipientAccountId"
-                    bd-attr-required
                     rb-remote="remote.model_to"
-                    rb-init-select-value = "{{payment.formData.recipientAccountNo}}"></rb-account-select>
+                    rb-init-select-value = "{{payment.formData.recipientAccountNo}}"
+                    placeholder-value="{{ ::'raiff.payments.new.internal.fill.choose' | translate }}"></rb-account-select>
 
-            <eb-validation-messages eb-name="recipientAccountId">
+            <eb-validation-messages eb-name="recipientAcc">
+                <div eb-message-key="sameAccounts" class="validation-message animate-on">
+                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
+                </div>
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.recipient_account.required'|translate}}
                 </div>
@@ -56,9 +59,10 @@
                            min="0.01"
                            step="0.01"
                            ng-pattern="AMOUNT_PATTERN"
+                           rb-number-type-input
                            ng-model="payment.formData.amount"
                            required
-                           placeholder="{{ ::'raiff.payments.new.internal.fill.amount_placeholder' | translate }}"
+                           placeholder=""
 
                            rb-foreign-amount-validator
                            rb-source-account-currency="payment.items.senderAccount.currency"

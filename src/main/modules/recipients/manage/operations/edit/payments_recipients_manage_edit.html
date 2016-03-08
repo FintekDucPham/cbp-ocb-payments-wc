@@ -1,9 +1,9 @@
 <rb-content-view class="rb-content-view--framed form">
-    <bd-header>Edycja odbiorcy</bd-header>
+    <bd-header>{{::'raiff.payments.recipients.edit.label'|translate}}</bd-header>
 
     <bd-form-panel>
 
-        <rb-multistep-form bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.recipients.list', onClear: clearForm, cancelState: 'payments.recipients.list' }">
+        <rb-multistep-form bd-active-step="activeStep" rb-step-params="recipient.multiStepParams">
             <div ui-view></div>
         </rb-multistep-form>
 

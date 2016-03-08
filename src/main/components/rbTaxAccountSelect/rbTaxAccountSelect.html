@@ -40,14 +40,13 @@
             <bd-button type="button" ng-show="!isFromList" ng-click="onSearched(model.searchQuery)">{{ ::params.searchText |
                 translate }}
             </bd-button>
-            <bd-button type="button" ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate
-                }}
+            <bd-button type="button" ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate}}
             </bd-button>
         </div>
     </div>
 
     <div class="rb-tax-account-select__name">
-        {{ model.taxOffice.officeName }}, {{model.taxOffice.officeAddress}}
+        {{ model.taxOffice.officeName }}<span ng-if="model.taxOffice.officeAddress.length > 0">, {{model.taxOffice.officeAddress}}</span>
     </div>
 
 

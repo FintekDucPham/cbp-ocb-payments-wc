@@ -14,7 +14,13 @@ angular.module('raiffeisen-payments')
                     return utilityService.getCurrentDate().then(function(currentDate){
                         return currentDate;
                     });
+                }],
+                paymentRulesResolved: ['paymentRules', function(paymentRules){
+                    return paymentRules.search();
                 }]
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         });
     });

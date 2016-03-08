@@ -3,11 +3,7 @@ angular.module('raiffeisen-payments')
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
                                                            $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, language) {
 
-        if(language.get()==='pl'){
-            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
-        }else{
-            $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN_EN');
-        }
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
@@ -54,8 +50,8 @@ angular.module('raiffeisen-payments')
 
         $scope.transfer_type.promise.then(function(data){
             $scope.transfer_type.data = data.content;
-        }); 
-  
+        });
+
         // quick fix
         utilityService.getCurrentDate().then(function(currentDate) {
             var realizationDate = new Date(currentDate.getTime());
@@ -78,7 +74,7 @@ angular.module('raiffeisen-payments')
         }));
 
         $scope.recipientAccountValidators = {
-            notUs: function (accountNo) {
+            usPmntOnlyEuro: function (accountNo) {
                 if (accountNo) {
                     accountNo = accountNo.replace(/ /g, '');
 
@@ -90,10 +86,19 @@ angular.module('raiffeisen-payments')
                         accountNo = accountNo.substr(2);
                     }
 
-                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
+                    var usAccount = lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
                         code: 'notUs',
                         value: accountNo
                     });
+
+                    if (usAccount) {
+                        return $scope.payment.formData.currency.currency == "EUR";
+                    }
+                    else {
+                        return true;
+                    }
+
+
                 } else {
                     return false;
                 }
@@ -122,7 +127,8 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.currency', function(n, o) {
             if ($scope.paymentForm && $scope.paymentForm.amount) {
-                $scope.paymentForm.amount.$validate();            
+                $scope.paymentForm.amount.$validate(); 
+                $scope.paymentForm.recipientAccountNo.$validate();
             }
         });
 
@@ -184,6 +190,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.currency = formData.currency.currency;
             copiedFormData.additionalInfo = " ";
             copiedFormData.phoneNumber = " ";
+            copiedFormData.description = splitTextEveryNSign(formData.description, 35);
             copiedFormData.costType = formData.transferCost;
             copiedFormData.transferType = "SWIFT";
             copiedFormData.transferFromTemplate = false;
@@ -203,12 +210,8 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
-            if(language.get()==='pl'){
-                copiedFormData.amount = (""+formData.amount).replace(",",".");
-                formData.amount = (""+formData.amount).replace(",",".");
-            }else{
-                copiedFormData.amount = (""+formData.amount).split(",").join('');
-            }
+            copiedFormData.amount = (""+formData.amount).replace(",",".");
+            formData.amount = (""+formData.amount).replace(",",".");
             copiedFormData.recipientCountry = formData.recipientCountry.code;
             return copiedFormData;
         });
@@ -401,9 +404,22 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.recipientIdentityType', function(n,o){
             if(!angular.equals(n,o)){
+
+                if ($scope.payment.formData && $scope.payment.formData.recipientIdentityType == RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                    if ($scope.paymentForm && $scope.paymentForm.swift_bic) {
+                        $scope.paymentForm.swift_bic.$setValidity('recipientBankIncorrectSwift', true);
+                        $scope.paymentForm.swift_bic.$setValidity('recipientBankSwiftOrBicNonEmpty', true);
+                        $scope.paymentForm.swift_bic.$setValidity('required', true);
+                        $scope.paymentForm.swift_bic.$setUntouched();
+                        $scope.paymentForm.swift_bic.$setPristine();
+                    }
+                }
+
                 $scope.payment.formData.recipientSwiftOrBic = null;
                 $scope.payment.formData.recipientBankCountry = undefined;
                 $scope.payment.formData.recipientBankName = null;
+
+
             }
         });
 

@@ -14,6 +14,9 @@ angular.module('raiffeisen-payments')
                         return currentDate;
                     });
                 }]
+            },
+            data: {
+                analyticsTitle: "payments.submenu.options.new_internal.header"
             }
         });
     })
@@ -32,9 +35,13 @@ angular.module('raiffeisen-payments')
                 params: {}
             }
         }), {
-            formData: $stateParams.payment
+            formData: {}
         });
 
+        if(!angular.equals({}, $stateParams.payment)){
+            lodash.assign($scope.payment.formData, $stateParams.payment);
+            $stateParams.payment = {};
+        }
         $scope.clearForm = function () {
             $scope.payment.formData = {};
             $scope.payment.items = {};

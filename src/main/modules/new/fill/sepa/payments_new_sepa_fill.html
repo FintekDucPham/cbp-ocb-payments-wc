@@ -71,13 +71,11 @@
                     {{::'raiff.payments.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
                 </div>
 
-
-
-                <div eb-message-key="notUs" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_US'|translate}}
-                </div>
                 <div eb-message-key="notZus" class="validation-message animate-on">
                     {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
+                </div>
+                <div eb-message-key="bankAndSwiftCountryNotTheSame" class="validation-message animate-on">
+                    {{::'raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT'|translate}}
                 </div>
             </eb-validation-messages>
 
@@ -264,6 +262,7 @@
                 <input type="text"
                        name="amount"
                        class="input-field"
+                       rb-number-type-input
                        ng-model="payment.formData.amount"
                        ng-min="0.01"
                        step="0.01"
@@ -367,5 +366,9 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
         {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow rb-own-account" ng-show="isOwnAccount">
+        <bd-msg-panel bd-msg-type="warning">{{ :: 'raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO' | translate }}</bd-msg-panel>
     </bd-item-property>
 </div>

@@ -1,0 +1,9 @@
+{
+  "rights": [{ 
+    "permission": "read",
+    "roles": ["CUSTOMER", "EMPLOYEE"]
+  },{ 
+    "permission": "write",
+    "roles": ["CUSTOMER", "EMPLOYEE"]
+  }]
+}

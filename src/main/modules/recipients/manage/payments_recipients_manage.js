@@ -8,6 +8,9 @@ angular.module('raiffeisen-payments')
             params: {
                 recipientType: 'domestic',
                 operation: 'new'
+            },
+            data: {
+                analyticsTitle: "raiff.payments.recipients.label"
             }
         });
     })
@@ -60,6 +63,25 @@ angular.module('raiffeisen-payments')
                         };
                     });
                 })
+            },
+            multiStepParams:{
+                completeState: 'payments.recipients.list',
+                onClear: $scope.clearForm,
+                footerType: 'recipient',
+                cancelState: 'payments.recipients.list',
+                labels:{
+                    cancel:'raiff.payments.new.btn.cancel',
+                    clear:'raiff.payments.new.btn.clear',
+                    next: 'raiff.payments.new.btn.next',
+                    change:'raiff.payments.new.btn.change',
+                    accept:'raiff.payments.new.btn.accept',
+                    finalize:'raiff.payments.new.btn.finalize'
+                },
+                visibility:{
+                    cancel: true,
+                    change: true,
+                    accept: true
+                }
             },
             manageAction: ""
         });

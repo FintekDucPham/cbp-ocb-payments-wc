@@ -5,7 +5,10 @@ angular.module('raiffeisen-payments')
             templateUrl: function($stateParams){
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/manage/remove/verify/payments_standing_manage_remove_verify.html";
             },
-            controller: "PaymentsStandingManageRemoveVerifyController"
+            controller: "PaymentsStandingManageRemoveVerifyController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
+            }
         });
     })
     .controller('PaymentsStandingManageRemoveVerifyController', function ($scope, bdStepStateEvents, translate, initialState,

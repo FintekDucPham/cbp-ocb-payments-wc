@@ -7,6 +7,9 @@ angular.module('raiffeisen-payments')
             params: {
                 accountId: null,
                 recipientId: null
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         });
     })
@@ -20,10 +23,10 @@ angular.module('raiffeisen-payments')
             model_from:{
                 initLoadingDefer:senderAccountInitDefer,
                 initLoadingPromise: senderAccountInitDefer.promise,
-                loading:true,
+                loading:true/*,
                 onAccountsLoaded: function(){
                     this.initLoadingDefer.resolve();
-                }
+                }*/
             },
             model_to:{}
         };
@@ -133,8 +136,11 @@ angular.module('raiffeisen-payments')
                     show: false
                 };
 
-                if (!$scope.payment.items.recipientAccount || $scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
-                    return false;
+                if(!$scope.payment.items.recipientAccount){
+                    form.recipientAcc.$setValidity('required', false);
+                }
+                if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                    form.recipientAcc.$setValidity('sameAccounts', false);
                 }
 
                 if (form.$invalid) {
@@ -241,7 +247,7 @@ angular.module('raiffeisen-payments')
             if ($scope.payment.meta.customerContext === 'DETAL') {
                 return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
             } else {
-                return $scope.payment.items.senderAccount.category === 1016 && ('PLN' !== account.currency) && !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category);
+                return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
             }
         }
 
@@ -265,7 +271,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            useFirstByDefault: true,
+            useFirstByDefault: false,
             alwaysSelected: false,
             accountFilter: function (accounts, $accountId) {
                 var filteredAccounts = accounts;

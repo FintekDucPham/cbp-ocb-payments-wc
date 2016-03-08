@@ -1,8 +1,13 @@
 <div class="form-body">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
-        <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div><!-- | nazwa -->
-        {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+        <span class="desktop-only-payments">
+        <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+        {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+        </span>
+         <div class="mobile-only-payments">
+        <span class="ellipsis-account" >{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}  </span>&nbsp; {{payment.items.senderAccount.accountNo | nrbIbanShortFilter }}
+        </div>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_data'|translate}}">
@@ -10,8 +15,13 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.recipient_account_name'|translate}}">
-        <div class="break-force">{{payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName}}</div><!-- | nazwa -->
-        {{payment.items.recipientAccount.accountNo | nrbIbanFilter}} <!-- | numer -->
+        <span class="desktop-only-payments">
+        <div class="break-force">{{ payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName }}</div>
+        {{payment.items.recipientAccount.accountNo | nrbIbanFilter }}
+        </span>
+        <div class="mobile-only-payments">
+            <span class="ellipsis-account" >{{ payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName }}  </span>&nbsp; {{payment.items.recipientAccount.accountNo | nrbIbanShortFilter }}
+        </div>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.amount'|translate}}">
@@ -19,7 +29,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.description'|translate}}">
-        <p class="break-force" ng-bind-html="payment.formData.description.split('\n').join('<br>')"></p>
+        <p class="break-force">{{payment.formData.description | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">

@@ -5,15 +5,25 @@ angular.module('raiffeisen-payments')
 
     $scope.params = {
         statusPaymentCriteria: "waiting",
-        paymentSummaryScopeType: "all"
+        paymentSummaryScopeType: "all",
+        pageSize: 10,
+        pageNumber: 1
     };
         $scope.paymentsWidgetMode = paymentsWidgetMode;
 
         $scope.enterFullMode = function(mode){
             paymentsWidgetMode.fullMode = mode;
         };
+    $scope.paymentSummaryList =  function(items){
+            var summary = angular.copy(items);
+            summary.totalElements = summary.content.length;
+            summary.totalPages = 1;
+            summary.lastPage = true;
+            summary._links.next = undefined;
+            return summary;
+        };
     $scope.paymentsPromise = paymentsService.search($scope.params).then(function(paymentSummary) {
-        $scope.paymentSummary = paymentSummary;
+        $scope.paymentSummary = $scope.paymentSummaryList(paymentSummary);
     });
 
 

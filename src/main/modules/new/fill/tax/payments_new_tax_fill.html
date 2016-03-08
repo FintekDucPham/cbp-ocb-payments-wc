@@ -8,6 +8,7 @@
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-on-account-select="onRemitterAccountSelect()"
                            rb-account-no="payment.items.recipient.debitNrb"
+                           rb-remote="accountSelectorRemote"
                            rb-account="payment.items.senderAccount"></rb-account-select>
     </bd-item-property>
 
@@ -37,7 +38,7 @@
             </div>
 
             <div ng-switch-when="false">
-                <div ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)" ng-keyup="unlockField()">
+                <div ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)" ng-keyup="unlockField()" ng-if="payment.items.formSymbolList">
                     <rb-tax-account-select ng-show="!showHide"
                                            rb-tax-office="payment.items.recipientAccount"
                                            rb-tax-office-id="payment.formData.recipientAccountNo"
@@ -182,6 +183,7 @@
         <rb-us-form-symbol-select
                 rb-form-symbol-id="payment.formData.formCode"
                 rb-form-symbol="payment.items.formSymbol"
+                rb-form-symbol-list="payment.items.formSymbolList"
                 rb-on-select="selectSymbol()"
                 bd-attr-name="formSymbol"
                 bd-attr-required
@@ -297,6 +299,7 @@
                ng-pattern="patterns.usCommitmentId"
                class="input-field"
                type="text"
+               ng-trim="false"
                placeholder="{{ ::'raiff.payments.new.us.fill.commitment_id.placeholder' | translate }}">
 
         <eb-validation-messages eb-name="commitmentId">
@@ -318,6 +321,7 @@
                        min="0.01"
                        step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
+                       rb-number-type-input
                        bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                        required
                        placeholder="{{ ::'raiff.payments.new.us.fill.amount.placeholder' | translate }}"/>

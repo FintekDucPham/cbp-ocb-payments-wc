@@ -95,16 +95,18 @@
     "raiff.payments.new.step2.row.info.costs_not_available": "Informacje o przewidywancyh kosztach zlecenia nie są obecnie dostępne. Nie wpływa to na możliwość przekazania dyspozycji do realizacji.",
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
+    "raiff.payments.new.confirmation.text": "Potwierdzenie dodania nowego przelewu",
+
     "raiff.payments.new.label.header": "Przelew",
     "raiff.payments.new.label.STANDING.NEW.header": "Dodawanie zlecenia stałego",
     "raiff.payments.new.label.STANDING.EDIT.header": "Modyfikacja zlecenia stałego",
 
     "raiff.payments.recipient.new.error.exist":"Odbiorca o takim numerze rachunku znajduje się na liście.",
-    "raiff.payments.new_internal.label.header": "Przelew na rachunek własny",
+    "raiff.payments.new_internal.label.header": "Przelew własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
     "raiff.payments.new.types.loading": "",
-    "raiff.payments.new.types.INTERNAL": "Przelew własny",
+    "raiff.payments.new.types.INTERNAL": "Przelew na rachunek własny",
     "raiff.payments.new.types.OWN": "Przelew własny",
     "raiff.payments.new.types.DOMESTIC": "Przelew krajowy w PLN",
     "raiff.payments.new.types.TAX": "Przelew do US/IC",
@@ -184,6 +186,7 @@
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
     "raiff.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Raiffeisen Polbank jest możliwy tylko jako przelew własny.",
+    "raiff.payments.new.internal.fill.choose":"Wybierz",
 
     "raiff.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
     "raiff.payments.new.domestic.fill.account.last1":" ostatnią ",
@@ -322,7 +325,7 @@
     "raiff.payments.new.us.fill.recipient_account": "Rachunek Urzędu Skarbowego/Izby Celnej",
     "raiff.payments.new.us.fill.recipient_account.placeholder": "Wpisz rachunek Urzędu Skarbowego/Izby Celnej",
     "raiff.payments.new.us.fill.recipient_account.search": "Wyszukaj Urząd/Izbę",
-    "raiff.payments.new.us.fill.recipient_account.clear": "Wyczyść dane",
+    "raiff.payments.new.us.fill.recipient_account.clear": "Wyczyść",
     "raiff.payments.new.us.fill.recipient_account.EMPTY_US_ACC": "Rachunek Urzędu Skarbowego/Izby Celnej nie może być pusty",
     "raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US": "Rachunek Urzędu Skarbowego/Izby Celnej musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
     "raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC": "Nie znaleziono Urzędu Skarbowego/Izby Celnej o podanym numerze rachunku",
@@ -426,6 +429,7 @@
     "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK": "Musisz wybrać kraj banku odbiorcy",
     "raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS": "Rachunek odbiorcy nie może być rachunkiem ZUS.",
     "raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_US": "Rachunek odbiorcy nie może być rachunkiem Urzędu Skarbowego/Izby Celnej.",
+    "raiff.payments.recipients.new.currency.fill.recipient_account.US_PMNT_ONLY_EURO": "Przelew walutowy na rachunek US/IC może być zrealizowany jedynie w walucie EUR",
     "raiff.payments.recipients.new.currency.fill.recipient_account.SIMPLE_INCORRECT_IBAN": "Rachunek odbiorcy nie jest zgodny z formatem IBAN.",
 
 
@@ -479,13 +483,15 @@
     "raiff.payments.new.status.error": "Przelew został odrzucony",
     "raiff.payments.new.status.success": "Przelew/transakcja zrealizowana",
     "raiff.payments.new.status.":"Przelew/transakcja odrzucona",
-    "raiff.payments.new.status.": "Przelew/transakcja odrzucona",
+    
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
     "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
     "raiff.payments.recipients.type.label": "Typ odbiorcy",
     "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.new.button": "Nowy odbiorca",
+    "raiff.payments.recipients.new.label": "Nowy odbiorca",
+    "raiff.payments.recipients.edit.label": "Edycja odbiorcy",
     "raiff.payments.recipients.select.filter.button.action": "szukaj",
     "raiff.payments.recipients.select.filter.text.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.list.header.customName.label": "Twoja nazwa odbiorcy",
@@ -743,6 +749,9 @@
     "raiff.payments.taxpayers.select.filter.text.label": "Szukaj płatnika",
     "raiff.payments.taxpayers.select.filter.button.action": "Szukaj",
 
+    "raiff.payments.taxpayers.new.label": "Dane płatnika",
+    "raiff.payments.taxpayers.edit.label": "Edycja płatnika",
+
     "raiff.payments.taxpayers.type.label": "Płatnicy",
 
     "raiff.payments.taxpayers.details.name.label": "Nazwa płatnika",
@@ -830,6 +839,9 @@
 
     "raiff.payments.future.fill.transferType.label": "Typ przelewu",
     "raiff.payments.future.fill.debit_account.label": "Z rachunku",
+
+    "raiff.payments.future.edit.label": "Edycja płatności zaplanowanej",
+    "raiff.payments.future.remove.label": "Usunięcie płatności zaplanowanej",
 
     "raiff.payments.components.futureDatePanel.dateRanges.DAYS": "dni",
     "raiff.payments.components.futureDatePanel.dateRanges.WEEKS": "tygodni",
@@ -1001,6 +1013,7 @@
     "raiff.payments.future.manage.delete.header": "Usuń przelew zaplanowany",
 
 
+    "raiff.payments.future.delete.status.label.status.1": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.20": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.40": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.60": "Zlecenie przyjęte do realizacji ",
@@ -1102,17 +1115,17 @@
 
     "raiff.payments.new.standing.fill.frequencyType.types.1.M": "miesiąc",
     "raiff.payments.new.standing.fill.frequencyType.types.1.W": "tydzień",
-    "raiff.payments.new.standing.fill.frequencyType.types.1.D": "każdego dnia roboczego",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.1.": "",
 
     "raiff.payments.new.standing.fill.frequencyType.types.2-4.M": "miesiące",
     "raiff.payments.new.standing.fill.frequencyType.types.2-4.W": "tygodnie",
-    "raiff.payments.new.standing.fill.frequencyType.types.2-4.D": "każdego dnia roboczego",
+    "raiff.payments.new.standing.fill.frequencyType.types.2-4.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.2-4.": "",
 
     "raiff.payments.new.standing.fill.frequencyType.types.5more.M": "miesięcy",
     "raiff.payments.new.standing.fill.frequencyType.types.5more.W": "tygodni",
-    "raiff.payments.new.standing.fill.frequencyType.types.5more.D": "każdego dnia roboczego",
+    "raiff.payments.new.standing.fill.frequencyType.types.5more.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.5more.": "",
 
     "raiff.payments.new.standing.fill.finish_date": "Data zakończenia",
@@ -1185,6 +1198,8 @@
 
   "raiff.payments.cut.off.time.MSG-0662": "Sesja księgowania Twojej transakcji jeszcze nie została rozpoczęta. W momencie jej rozpoczęcia, Twoja transakcja zostanie zrealizowana.",
   "raiff.payments.cut.off.time.MSG-0659": "Nie gwarantujemy, że dyspozycja zostanie zrealizowana dzisiaj.",
-    "raiff.payments.recipient.new.error.MSG-0660_SAME_BNF":"Dla podanej pary rachunków istnieje już zdefiniowany Odbiorca. Jeśli chcesz kontynuować, wybierz \"Dalej\""
+    "raiff.payments.recipient.new.error.MSG-0660_SAME_BNF":"Dla podanej pary rachunków istnieje już zdefiniowany Odbiorca. Jeśli chcesz kontynuować, wybierz \"Dalej\"",
+"raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT":"Kraj banku odbiorcy nie jest zgodny z podanym kodem SWIFT banku odbiorcy.",
+    "raiff.payments.swift.validation.error.incorrect_country_code":"Kraj banku jest niezgodny z numerem rachunku"
 
 }
