@@ -8,9 +8,8 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">
-            {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
+            {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
         </bd-item-property>
-
 
 
         <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled"-->
