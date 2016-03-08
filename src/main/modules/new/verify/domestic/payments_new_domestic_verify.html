@@ -40,7 +40,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
-        <p style="word-break: break-all" ng-bind-html="payment.formData.description | arrayToHtml"></p>
+        <p style="word-break: break-all" ng-bind="payment.formData.description"></p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
