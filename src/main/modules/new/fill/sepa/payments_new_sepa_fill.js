@@ -308,6 +308,14 @@ angular.module('raiffeisen-payments')
             recipientData.recipientBankCountry=$scope.payment.formData.recipientBankCountry.countryCode;
             recipientData.recipientBankName = $scope.payment.formData.recipientBankName;
 
+            if (angular.isArray(recipientData.recipientData)) {
+                recipientData.recipientData = recipientData.recipientData.join('\n');
+            }
+
+            if (angular.isArray(recipientData.description)) {
+                recipientData.description = recipientData.description.join('\n');
+            }
+
             $scope.setRecipientDataExtractor(function() {
                 return recipientData;
             });
