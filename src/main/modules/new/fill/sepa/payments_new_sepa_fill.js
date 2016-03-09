@@ -33,8 +33,6 @@ angular.module('raiffeisen-payments')
             });
         });
 
-        $scope.payment.meta.recipientForbiddenAccounts = $scope.payment.meta.recipientForbiddenAccounts || [];
-
         function validateSwiftAndAccountNo(accountNo){
             if(accountNo && $scope.payment.formData.recipientSwiftOrBic){
                 var  countryFromAccountNo = accountNo.substring(0,2).toLowerCase();
@@ -234,30 +232,8 @@ angular.module('raiffeisen-payments')
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
-                }),
-                accountNo = $scope.payment.formData.recipientAccountNo.replace(/ */g, ''),
-                countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-            if (countryPrefix == 'PL') {
-                accountNo = accountNo.substr(2);
-            }
-
+                });
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
-
-            if($scope.payment.formData.recipientAccountNo) {
-                control.holdOn();
-                taxOffices.search({
-                    accountNo: accountNo
-                }).then(function (result) {
-                    if (result.length > 0) {
-                        $scope.payment.meta.recipientForbiddenAccounts.push({
-                            code: 'notUs',
-                            value: accountNo
-                        });
-                        $scope.paymentForm.recipientAccountNo.$validate();
-                    }
-                }).finally(control.done);
-            }
         });
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
