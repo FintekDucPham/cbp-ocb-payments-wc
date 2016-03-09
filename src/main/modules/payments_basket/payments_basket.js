@@ -1,9 +1,9 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.multisign', {
-            url: "/multisign",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/payments_multisign.html",
-            controller: "PaymentsMultisignController",
+        stateServiceProvider.state('payments.basket', {
+            url: "/basket",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/payments_basket.html",
+            controller: "PaymentsBasketController",
             abstract: true,
             resolve: {
                 insuranceAccountList : ['insuranceAccounts', function(insuranceAccounts){
@@ -14,7 +14,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller("PaymentsMultisignController", function($scope, translate, insuranceAccountList) {
+    .controller("PaymentsBasketController", function($scope, translate, insuranceAccountList) {
         $scope.insuranceAccounts = insuranceAccountList;
         $scope.setClearFormFunction = function(fn){
             $scope.clearFormFunction = fn;

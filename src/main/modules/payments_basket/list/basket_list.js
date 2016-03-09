@@ -1,9 +1,9 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.multisign.list', {
+        stateServiceProvider.state('payments.basket.list', {
             url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/list/multisign_list.html",
-            controller: "PaymentsMultisignListController",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/list/basket_list.html",
+            controller: "PaymentsBasketListController",
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
                     return $q.all({
@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsMultisignListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, multisignService, multisignFilterCriteria, accountsService, customerService, dateFilter, dateParser, systemParameterService, downloadService, customerProductService) {
+    .controller('PaymentsBasketListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, paymentsBasketService, paymentsBasketFilterCriteria, accountsService, customerService, dateFilter, dateParser, systemParameterService, downloadService, customerProductService) {
         $scope.dateRange = {};
         $scope.summaryItemMap = {};
 
@@ -63,12 +63,12 @@ angular.module('raiffeisen-payments')
 
         $scope.getIcon = downloadService.downloadIconImage;
 
-        $scope.multisignFilterCriteria = multisignFilterCriteria;
+        $scope.multisignFilterCriteria = paymentsBasketFilterCriteria;
 
         $scope.models = {
-            query : multisignFilterCriteria.getTransactionFilterInitValues(),
-            sent : multisignFilterCriteria.getTransactionFilterInitViewValues(),
-            view : multisignFilterCriteria.getTransactionFilterInitViewValues()
+            query : paymentsBasketFilterCriteria.getTransactionFilterInitValues(),
+            sent : paymentsBasketFilterCriteria.getTransactionFilterInitViewValues(),
+            view : paymentsBasketFilterCriteria.getTransactionFilterInitViewValues()
         };
 
 
@@ -82,8 +82,8 @@ angular.module('raiffeisen-payments')
 
 
         $scope.clearFilter = function() {
-            $scope.models.query = multisignFilterCriteria.getTransactionFilterInitValues();
-            $scope.models.view = multisignFilterCriteria.getTransactionFilterInitViewValues();
+            $scope.models.query = paymentsBasketFilterCriteria.getTransactionFilterInitValues();
+            $scope.models.view = paymentsBasketFilterCriteria.getTransactionFilterInitViewValues();
             $scope.models.view.ready.then(function(defaults) {
                 $scope.models.query.dateFrom = defaults.defaultDateFrom;
                 $scope.models.view.dateFrom = defaults.defaultDateFrom;
@@ -144,7 +144,7 @@ angular.module('raiffeisen-payments')
                             query.operationAmountFrom = assureNumber(view.amountRange.min);
                             query.operationAmountTo = assureNumber(view.amountRange.max);
                         } else {
-                            query = $scope.models.query = multisignFilterCriteria.getTransactionFilterInitValues();
+                            query = $scope.models.query = paymentsBasketFilterCriteria.getTransactionFilterInitValues();
                             $scope.models.query.dateFrom = defaults.defaultDateFrom;
                             query.operationAmountFrom = defaults.defaultAmountFrom;
                             query.operationAmountTo = defaults.defaultAmountTo;
@@ -159,7 +159,7 @@ angular.module('raiffeisen-payments')
                         listQuery.pageSize = $params.pageSize;
                         listQuery.pageNumber = $params.currentPage;
                         $scope.models.sent = angular.extend($scope.models.sent, view, query);
-                        $scope.transactionList = multisignService.search({}).then(function (data) {
+                        $scope.transactionList = paymentsBasketService.search({}).then(function (data) {
                                 var summary = {};
                                 _.each(data.content, function(group) {
                                         accountsService.get(group.accountId).then(function(accountDetails) {
@@ -259,7 +259,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.resolveTemplateType = function (transferType) {
-            return "{0}/modules/multisign/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
+            return "{0}/modules/payments_basket/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
         };
 
 

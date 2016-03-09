@@ -1,10 +1,10 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.multisign.manage.sign', {
+        stateServiceProvider.state('payments.basket.manage.sign', {
             url: "/sign",
 //            abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/manage/operations/sign/payments_multisign_manage_sign.html",
-            controller: "PaymentsMultisignManageSignController"
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/manage/operations/sign/payments_basket_manage_sign.html",
+            controller: "PaymentsBasketManageSignController"
         });
     })
     .constant('CODE_TO_ICONS', {
@@ -13,7 +13,7 @@ angular.module('raiffeisen-payments')
         "98": "error",
         "default": "warning"
     })
-    .controller('PaymentsMultisignManageSignController', function ($scope, paymentsService, pathService, $state, gate, viewStateService, RB_TOKEN_AUTHORIZATION_CONSTANTS, CODE_TO_ICONS, initialState, rbPaymentTypes, $q, lodash, transferService) {
+    .controller('PaymentsBasketManageSignController', function ($scope, paymentsService, pathService, $state, gate, viewStateService, RB_TOKEN_AUTHORIZATION_CONSTANTS, CODE_TO_ICONS, initialState, rbPaymentTypes, $q, lodash, transferService) {
         // TODO: ideka from initialState wyciagnac
         //$scope.paymentDetailsPromise = paymentsService.get(initialState.paymentId, {});
 
@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
         lodash.extend($scope.$data, {
             operationType: 'DELETE'
         });
-        $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/list/details/"+$scope.$data.transferType.toLowerCase()+"_future_payment_details.html";
+        $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/list/details/"+$scope.$data.transferType.toLowerCase()+"_future_payment_details.html";
         $scope.payment = {
             formData: {},
             meta: {}
@@ -47,13 +47,13 @@ angular.module('raiffeisen-payments')
         };
 
         function proceedAction(responseCode){
-            viewStateService.setInitialState('payments.multisign.manage.sign.status', {
+            viewStateService.setInitialState('payments.basket.manage.sign.status', {
                 status: {
                     code: responseCode,
                     icon: CODE_TO_ICONS.hasOwnProperty(responseCode) ? CODE_TO_ICONS[responseCode] : CODE_TO_ICONS['default']
                 }
             });
-            $state.go('payments.multisign.manage.sign.status');
+            $state.go('payments.basket.manage.sign.status');
         }
         $scope.onProceedButtonClick = function() {
 
@@ -93,7 +93,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onCancelButtonClick = function() {
-            $state.go('payments.multisign.list');
+            $state.go('payments.basket.list');
         };
 
     });

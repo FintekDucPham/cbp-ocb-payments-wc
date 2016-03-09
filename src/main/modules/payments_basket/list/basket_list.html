@@ -1,6 +1,6 @@
 <rb-content-view class="rb-content-view--solid">
     <div class="basket-vew">
-        <bd-header>{{::"raiff.payments.multisign.list.header"|translate}}</bd-header>
+        <bd-header>{{::"raiff.payments.basket.list.header"|translate}}</bd-header>
 
         <form novalidate="novalidate" name="searchForm" class="transaction-filter-form">
             <bd-item-property label="{{::'account.statement.select.label'|translate}}">
@@ -46,23 +46,23 @@
                   bd-table-promise="listPromise"
                   bd-table-meta="{
                     'first': {
-                        'title': '##raiff.payments.multisign.list.header.operation_date',
+                        'title': '##raiff.payments.basket.list.header.operation_date',
                         'data': 'realizationDate'
                     },
                     'second': {
-                        'title': '##raiff.payments.multisign.list.header.operation_type',
+                        'title': '##raiff.payments.basket.list.header.operation_type',
                         'data': 'transferType'
                     },
                     'third': {
-                        'title': '##raiff.payments.multisign.list.header.recipient_name',
+                        'title': '##raiff.payments.basket.list.header.recipient_name',
                         'data': 'recipientName'
                     },
                     'fourth': {
-                        'title': '##raiff.payments.multisign.list.header.operation_title',
+                        'title': '##raiff.payments.basket.list.header.operation_title',
                         'data': 'title'
                     },
                     'fifth': {
-                        'title': '##raiff.payments.multisign.list.header.operation_amount',
+                        'title': '##raiff.payments.basket.list.header.operation_amount',
                         'data': [
                             'amount',
                             'currency'
@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-12" style="text-align:right;">
                                 <bd-button ng-click="onSign($data)" class="bd-button">
-                                    {{::'raiff.payments.multisign.submit.button' | translate}}
+                                    {{::'raiff.payments.basket.submit.button' | translate}}
                                 </bd-button>
                                 <bd-button ng-click="onBack(this)" class="bd-button bd-button__primary">
                                     {{::'raiff.payments.future.list.details.insurance.buttons.backToList' | translate}}
@@ -119,7 +119,7 @@
                         <div class="bd-table__row-line bd-table__row-line--sm-tight">
                             <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
                                 <div class="summary-item__label" style="border-bottom: 0px;">
-                                    {{::"raiff.payments.multisign.list.summary.chose"|translate}}
+                                    {{::"raiff.payments.basket.list.summary.chose"|translate}}
                                 </div>
                             </div>
                             <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-11">
@@ -148,7 +148,7 @@
                         <div class="bd-table__row-line bd-table__row-line--sm-tight">
                             <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
                                 <div class="summary-item__label" style="border-bottom: 0px;">
-                                    {{::"raiff.payments.multisign.list.summary.all"|translate}}
+                                    {{::"raiff.payments.basket.list.summary.all"|translate}}
                                 </div>
                             </div>
                             <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-11">

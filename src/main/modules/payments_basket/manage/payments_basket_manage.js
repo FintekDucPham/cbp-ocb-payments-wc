@@ -1,14 +1,14 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.multisign.manage', {
+        stateServiceProvider.state('payments.basket.manage', {
             url: "/manage",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/multisign/manage/payments_multisign_manage.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/manage/payments_basket_manage.html",
             controller: "PaymentsMultisignManageController"
 
         });
     })
-    .controller('PaymentsMultisignManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,
+    .controller('PaymentsBasketManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,
                                                             pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                             bdMainStepInitializer, validationRegexp,
                                                             rbPaymentTypes, transferService, $state,
