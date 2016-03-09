@@ -1,5 +1,7 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates, rbAccountOwnNrbService) {
+    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
+                                                          validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService,
+                                                          exchangeRates, rbAccountOwnNrbService, forbiddenAccounts) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION_REGEX');
@@ -31,17 +33,7 @@ angular.module('raiffeisen-payments')
             });
         });
 
-        $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
-            "83101010230000261395100000",
-            "78101010230000261395200000",
-            "73101010230000261395300000",
-            "68101010230000261395400000"
-        ], function (val) {
-            return {
-                code: 'notZus',
-                value: val
-            };
-        }));
+        $scope.payment.meta.recipientForbiddenAccounts = $scope.payment.meta.recipientForbiddenAccounts || [];
 
         function validateSwiftAndAccountNo(accountNo){
             if(accountNo && $scope.payment.formData.recipientSwiftOrBic){
@@ -56,24 +48,7 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientAccountValidators = {
             notZus: function (accountNo) {
-                if (accountNo) {
-                    accountNo = accountNo.replace(/ /g, '');
-
-                    var countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-                    // jesli PL to walidujemy tylko dalsza czesc numeru
-                    // jesli nie PL lub brak prefixu, walidujemy calosc
-                    if (countryPrefix == 'PL') {
-                        accountNo = accountNo.substr(2);
-                    }
-
-                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notZus',
-                        value: accountNo
-                    });
-                } else {
-                    return false;
-                }
+                return !forbiddenAccounts.isZusAccount(accountNo);
             },
             simpleIncorrectIban: function(accountNo) {
                 if (accountNo) {

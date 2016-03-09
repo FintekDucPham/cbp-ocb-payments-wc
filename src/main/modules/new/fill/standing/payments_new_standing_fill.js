@@ -16,7 +16,8 @@ angular.module('raiffeisen-payments')
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
-                                                              systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes, standingTransferService) {
+                                                              systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
+                                                              standingTransferService, forbiddenAccounts) {
 
         var maxDaysForward = SYSTEM_PARAMETERS['standing.order.max.days'];
 
@@ -36,15 +37,8 @@ angular.module('raiffeisen-payments')
             maxDate: $scope.firstDateMaxDate
         });
 
-        $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
-
-
-
-
-
         $scope.payment.meta.hideSaveRecipientButton = true;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
-
 
         if (!$scope.payment.formData.frequencyType) {
             $scope.payment.formData.frequencyType = STANDING_FREQUENCY_TYPES.MONTHLY.code;
@@ -54,7 +48,6 @@ angular.module('raiffeisen-payments')
             if ($scope.payment.formData.frequencyType == "DAILY") {
                 $scope.payment.formData.frequency = "";
             }
-
             if ($scope.paymentForm.frequency) {
                 $scope.paymentForm.frequency.$validate();
             }
@@ -69,7 +62,6 @@ angular.module('raiffeisen-payments')
                 }
             }
         });
-
 
         $scope.setRequestConverter(function(formData) {
             var result = {
@@ -100,7 +92,6 @@ angular.module('raiffeisen-payments')
             return result;
         });
 
-
         $scope.STANDING_FREQUENCY_TYPES_LIST = _.pluck(STANDING_FREQUENCY_TYPES, 'code');
         $scope.STANDING_FREQUENCY_TYPES = STANDING_FREQUENCY_TYPES;
 
@@ -118,17 +109,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.description = recipient.title.join('');
         };
 
-        $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
-            "83101010230000261395100000",
-            "78101010230000261395200000",
-            "73101010230000261395300000",
-            "68101010230000261395400000"
-        ], function (val) {
-            return {
-                code: 'notZus',
-                value: val
-            };
-        }));
+        $scope.payment.meta.recipientForbiddenAccounts = $scope.payment.meta.recipientForbiddenAccounts || [];
 
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
@@ -141,8 +122,6 @@ angular.module('raiffeisen-payments')
             bdFocus('recipientAccountNo');
         };
 
-        function updateRecipientsList() {}
-
         $scope.frequencyValidators = {
             frequencyTypeRequired: function() {
                 return !_.isEmpty($scope.payment.formData.frequencyType);
@@ -151,40 +130,27 @@ angular.module('raiffeisen-payments')
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
                     return val >= 1;
                 }
-
                 return true;
             },
             minMonthlyValue: function(val) {
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
                     return val >= 1;
                 }
-
                 return true;
             },
             maxWeeklyValue: function(val) {
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
                     return val <= 9;
                 }
-
                 return true;
             },
             maxMonthlyValue: function(val) {
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
                     return val <= 99;
                 }
-
                 return true;
             }
         };
-
-        /*$scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
-            if (newId !== oldId && oldId) {
-                updateRecipientsList();
-                if (!!$scope.payment.items.recipient) {
-                    $scope.clearRecipient();
-                }
-            }
-        });*/
 
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
@@ -197,7 +163,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
-            updateRecipientsList();
             $scope.validateBalance();
             recipientFilter.filter();
         };
@@ -247,11 +212,7 @@ angular.module('raiffeisen-payments')
 
         function isAccountInvestmentFulfilsRules(account){
             if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
-                if(account.actions.indexOf('create_domestic_transfer')>-1){
-                    return true;
-                }else {
-                    return false;
-                }
+                return account.actions.indexOf('create_domestic_transfer') > -1;
             }
             return true;
         }
@@ -278,14 +239,7 @@ angular.module('raiffeisen-payments')
                 }
             },
             notZus: function (accountNo) {
-                if (accountNo) {
-                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notZus',
-                        value: accountNo.replace(/ /g, '')
-                    });
-                } else {
-                    return false;
-                }
+                return !forbiddenAccounts.isZusAccount(accountNo);
             }
         };
 

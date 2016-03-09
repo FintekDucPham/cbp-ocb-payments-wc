@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
-                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, language) {
+                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -61,17 +61,7 @@ angular.module('raiffeisen-payments')
             });
         });
 
-        $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
-            "83101010230000261395100000",
-            "78101010230000261395200000",
-            "73101010230000261395300000",
-            "68101010230000261395400000"
-        ], function (val) {
-            return {
-                code: 'notZus',
-                value: val
-            };
-        }));
+        $scope.payment.meta.recipientForbiddenAccounts = $scope.payment.meta.recipientForbiddenAccounts || [];
 
         $scope.recipientAccountValidators = {
             usPmntOnlyEuro: function (accountNo) {
@@ -97,24 +87,7 @@ angular.module('raiffeisen-payments')
                 }
             },
             notZus: function (accountNo) {
-                if (accountNo) {
-                    accountNo = accountNo.replace(/ /g, '');
-
-                    var countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-                    // jesli PL to walidujemy tylko dalsza czesc numeru
-                    // jesli nie PL lub brak prefixu, walidujemy calosc
-                    if (countryPrefix == 'PL') {
-                        accountNo = accountNo.substr(2);
-                    }
-
-                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notZus',
-                        value: accountNo
-                    });
-                } else {
-                    return false;
-                }
+                return !forbiddenAccounts.isZusAccount(accountNo);
             }
         };
 
