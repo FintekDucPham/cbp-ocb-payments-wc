@@ -91,14 +91,7 @@ angular.module('raiffeisen-payments')
                         value: accountNo
                     });
 
-                    if (usAccount) {
-                        return $scope.payment.formData.currency.currency == "EUR";
-                    }
-                    else {
-                        return true;
-                    }
-
-
+                    return !usAccount || $scope.payment.formData.currency.currency == "EUR";
                 } else {
                     return false;
                 }
@@ -237,9 +230,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientBankCountry.ibanLength = null;
         };
 
-        function updateRecipientsList() {
-        }
-
         $scope.countries = {
             promise: countriesService.search(),
             data: null
@@ -294,7 +284,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
-            updateRecipientsList();
             $scope.validateBalance();
         };
 
@@ -364,17 +353,6 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        function isAccountInvestmentFulfilsRules(account){
-            if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
-                if(account.actions.indexOf('create_domestic_transfer')>-1){
-                    return true;
-                }else {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
             accountFilter: function (accounts) {
@@ -418,8 +396,6 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.recipientSwiftOrBic = null;
                 $scope.payment.formData.recipientBankCountry = undefined;
                 $scope.payment.formData.recipientBankName = null;
-
-
             }
         });
 
