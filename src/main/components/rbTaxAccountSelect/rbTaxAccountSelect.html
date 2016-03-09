@@ -25,7 +25,8 @@
                            ui-select-popup-trigger="taxAccountSearched"
                            required>
                     <ui-select-match>
-                        {{ $select.selected.accountNo | nrbIbanFilter }}
+                        <span class="visible-xs">{{ $select.selected.accountNo | nrbIbanShortFilter }}</span>
+                        <span class="hidden-xs">{{ $select.selected.accountNo | nrbIbanFilter }}</span>
                     </ui-select-match>
                     <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'">
                         <div ng-bind-html="taxOffice.accountNo | nrbIbanFilter | highlight: $select.search"></div>
