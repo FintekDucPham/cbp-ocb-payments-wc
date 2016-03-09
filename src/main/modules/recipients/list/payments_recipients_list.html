@@ -11,7 +11,7 @@
                         <ui-select ng-model="types.currentType"
                                    theme="bootstrap"
                                    reset-search-input="false"
-                                   on-select="table.tableControl.invalidate()"
+                                   on-select="table.tableData.newSearch = true; table.tableControl.invalidate()"
                                    required>
                             <ui-select-match placeholder="{{:: 'raiff.payments.recipients.select.type.placeholder' | translate }}">
                                 {{ 'raiff.payments.recipients.select.type.' + $select.selected.code | translate }}

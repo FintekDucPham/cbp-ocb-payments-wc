@@ -35,6 +35,7 @@ angular.module('raiffeisen-payments')
             $scope.table.tableData.newSearch = true;
             $scope.table.tableControl.invalidate();
         };
+
         var recipientFilterType = angular.extend({}, rbRecipientTypes, {
             ALL : {
                 code: 'ALL'
@@ -129,8 +130,6 @@ angular.module('raiffeisen-payments')
                 $scope.recipient.item.recipientBankName = null;
             });
         };
-
-
 
         $scope.table = {
             tableConfig : new bdTableConfig({
