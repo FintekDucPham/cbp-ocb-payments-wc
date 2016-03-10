@@ -1,6 +1,6 @@
 angular.module('raiffeisen-payments')
     .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
-                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet) {
+                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet, $q) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
