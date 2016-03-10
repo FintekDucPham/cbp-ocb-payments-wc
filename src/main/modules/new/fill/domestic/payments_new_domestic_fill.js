@@ -1,6 +1,6 @@
 angular.module('raiffeisen-payments')
     .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
-                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts) {
+                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
@@ -17,8 +17,6 @@ angular.module('raiffeisen-payments')
             description: translate.property('raiff.payments.new.internal.fill.default_description'),
             realizationDate: $scope.CURRENT_DATE
         });
-
-        $scope.payment.meta.recipientForbiddenAccounts = $scope.payment.meta.recipientForbiddenAccounts || [];
 
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
@@ -86,17 +84,7 @@ angular.module('raiffeisen-payments')
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
-                taxOffices.search({
-                    accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-                }).then(function (result) {
-                    if (result.length > 0) {
-                        $scope.payment.meta.recipientForbiddenAccounts.push({
-                            code: 'notUs',
-                            value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-                        });
-                        $scope.paymentForm.recipientAccountNo.$validate();
-                    }
-                }).finally(control.done);
+                $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
             }
         });
 
@@ -119,14 +107,17 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientAccountValidators = {
             notUs: function (accountNo) {
-                if (accountNo) {
-                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notUs',
-                        value: accountNo.replace(/ /g, '')
-                    });
-                } else {
-                    return false;
+                if (!accountNo) {
+                    return true;
                 }
+                accountNo = accountNo.replace(/ /g, '');
+                return promiseSet.getResult({
+                    set: 'usValidation',
+                    key: accountNo,
+                    expected: true,
+                    promise: forbiddenAccounts.isUsAccount(accountNo),
+                    callback: $scope.paymentForm.recipientAccountNo.$validate
+                });
             },
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);

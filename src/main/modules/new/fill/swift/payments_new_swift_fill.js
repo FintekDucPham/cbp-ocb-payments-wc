@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
-                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts) {
+                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -61,30 +61,20 @@ angular.module('raiffeisen-payments')
             });
         });
 
-        $scope.payment.meta.recipientForbiddenAccounts = $scope.payment.meta.recipientForbiddenAccounts || [];
-
         $scope.recipientAccountValidators = {
             usPmntOnlyEuro: function (accountNo) {
-                if (accountNo) {
-                    accountNo = accountNo.replace(/ /g, '');
-
-                    var countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-                    // jesli PL to walidujemy tylko dalsza czesc numeru
-                    // jesli nie PL lub brak prefixu, walidujemy calosc
-                    if (countryPrefix == 'PL') {
-                        accountNo = accountNo.substr(2);
-                    }
-
-                    var usAccount = lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notUs',
-                        value: accountNo
-                    });
-
-                    return !usAccount || $scope.payment.formData.currency.currency == "EUR";
-                } else {
+                if (!accountNo) {
                     return false;
                 }
+                accountNo = accountNo.replace(/ /g, '');
+                var usAccount = promiseSet.getResult({
+                    set: 'usValidation',
+                    key: accountNo,
+                    expected: false,
+                    promise: forbiddenAccounts.isUsAccount(accountNo),
+                    callback: $scope.paymentForm.recipientAccountNo.$validate
+                });
+                return !usAccount || $scope.payment.formData.currency.currency == "EUR";
             },
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);
@@ -298,31 +288,13 @@ angular.module('raiffeisen-payments')
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
-                }),
-                accountNo = $scope.payment.formData.recipientAccountNo.replace(/ */g, ''),
-                countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-            // jesli PL to walidujemy tylko dalsza czesc numeru
-            // jesli nie PL lub brak prefixu, walidujemy calosc
-            if (countryPrefix == 'PL') {
-                accountNo = accountNo.substr(2);
-            }
+                });
 
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
-                taxOffices.search({
-                    accountNo: accountNo
-                }).then(function (result) {
-                    if (result.length > 0) {
-                        $scope.payment.meta.recipientForbiddenAccounts.push({
-                            code: 'notUs',
-                            value: accountNo
-                        });
-                        $scope.paymentForm.recipientAccountNo.$validate();
-                    }
-                }).finally(control.done);
+                $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
             }
         });
 

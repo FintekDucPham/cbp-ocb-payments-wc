@@ -17,7 +17,7 @@ angular.module('raiffeisen-payments')
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
-                                                              standingTransferService, forbiddenAccounts) {
+                                                              standingTransferService, forbiddenAccounts, promiseSet) {
 
         var maxDaysForward = SYSTEM_PARAMETERS['standing.order.max.days'];
 
@@ -109,8 +109,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.description = recipient.title.join('');
         };
 
-        $scope.payment.meta.recipientForbiddenAccounts = $scope.payment.meta.recipientForbiddenAccounts || [];
-
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
             $scope.payment.items.recipient = null;
@@ -189,24 +187,9 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.amount = (""+$scope.payment.formData.amount).replace(",", ".");
             }
 
-            var recipient = lodash.find($scope.payment.meta.recipientList, {
-                templateType: 'DOMESTIC',
-                accountNo: $scope.payment.formData.recipientAccountNo ? $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "") : $scope.payment.formData.recipientAccountNo
-            });
-
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
-                taxOffices.search({
-                    accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-                }).then(function (result) {
-                    if (result.length > 0) {
-                        $scope.payment.meta.recipientForbiddenAccounts.push({
-                            code: 'notUs',
-                            value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-                        });
-                        $scope.paymentForm.recipientAccountNo.$validate();
-                    }
-                }).finally(control.done);
+                $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
             }
         });
 
@@ -229,14 +212,17 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientAccountValidators = {
             notUs: function (accountNo) {
-                if (accountNo) {
-                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notUs',
-                        value: accountNo.replace(/ /g, '')
-                    });
-                } else {
-                    return false;
+                if (!accountNo) {
+                    return true;
                 }
+                accountNo = accountNo.replace(/ /g, '');
+                return promiseSet.getResult({
+                    set: 'usValidation',
+                    key: accountNo,
+                    expected: true,
+                    promise: forbiddenAccounts.isUsAccount(accountNo),
+                    callback: $scope.paymentForm.recipientAccountNo.$validate
+                });
             },
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);

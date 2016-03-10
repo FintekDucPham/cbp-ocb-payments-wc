@@ -68,12 +68,6 @@ angular.module('raiffeisen-payments')
 
         });
 
-
-        angular.extend($scope.payment.meta, {
-            recipientForbiddenAccounts: []
-        });
-
-
         //paymentRulesResolved
         angular.extend($scope.payment.meta, paymentRulesResolved);
         var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
@@ -91,7 +85,6 @@ angular.module('raiffeisen-payments')
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
         });
-
 
         var setRealizationDateToCurrent = function () {
             angular.extend($scope.payment.formData, {
@@ -117,14 +110,12 @@ angular.module('raiffeisen-payments')
             }
         };
 
-
         function isCurrentDateSelected() {
             if($scope.payment.formData.realizationDate && $scope.payment.formData.setHours){
                 return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
             }else{
                 return false;
             }
-
         }
 
         function isAmountOverBalance() {
@@ -150,10 +141,6 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.formData.realizationDate',function(newVal){
             $scope.validateBalance();
         });
-
-
-
-
 
         $scope.setRequestConverter = function (converterFn) {
             requestConverter = converterFn;
