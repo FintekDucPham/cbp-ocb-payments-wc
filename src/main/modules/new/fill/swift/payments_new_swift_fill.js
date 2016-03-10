@@ -71,7 +71,9 @@ angular.module('raiffeisen-payments')
                     set: 'usValidation',
                     key: accountNo,
                     expected: false,
-                    promise: forbiddenAccounts.isUsAccount(accountNo),
+                    promise: function() {
+                        forbiddenAccounts.isUsAccount(accountNo);
+                    },
                     callback: $scope.paymentForm.recipientAccountNo.$validate
                 });
                 return !usAccount || $scope.payment.formData.currency.currency == "EUR";

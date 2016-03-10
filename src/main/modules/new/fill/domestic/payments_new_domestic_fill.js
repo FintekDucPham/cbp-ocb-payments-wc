@@ -111,13 +111,16 @@ angular.module('raiffeisen-payments')
                     return true;
                 }
                 accountNo = accountNo.replace(/ /g, '');
-                return promiseSet.getResult({
+                var usAccount = promiseSet.getResult({
                     set: 'usValidation',
                     key: accountNo,
-                    expected: true,
-                    promise: forbiddenAccounts.isUsAccount(accountNo),
+                    expected: false,
+                    promise: function() {
+                        return forbiddenAccounts.isUsAccount(accountNo);
+                    },
                     callback: $scope.paymentForm.recipientAccountNo.$validate
                 });
+                return !usAccount;
             },
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);
