@@ -14,9 +14,13 @@
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccountOwner'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
      <bd-multiline-text bd-text="$data.orderingCustomer"></bd-multiline-text>
 </bd-item-property>
-
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.creditAccountBankName}}<br/>
+    <rb-bank-name account-no="$data.creditAccount"
+                  response-value="bankName"
+                  bank-name-promise="standingBankNamePromise">
+        {{bankName}}
+    </rb-bank-name>
+    <br/>
     {{$data.creditAccount | nrbIbanFilter }}
 </bd-item-property>
 
