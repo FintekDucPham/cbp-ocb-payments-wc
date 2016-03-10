@@ -1,5 +1,6 @@
 angular.module('raiffeisen-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, systemParameterService, translate) {
+    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
+                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
@@ -17,20 +18,6 @@ angular.module('raiffeisen-payments')
             realizationDate: $scope.CURRENT_DATE
         });
 
-        $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
-            "83101010230000261395100000",
-            "78101010230000261395200000",
-            "73101010230000261395300000",
-            "68101010230000261395400000"
-        ], function (val) {
-            return {
-                code: 'notZus',
-                value: val
-            };
-        }));
-
-
-
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
             $scope.payment.items.recipient = null;
@@ -43,22 +30,6 @@ angular.module('raiffeisen-payments')
             bdFocus('recipientAccountNo');
         };
 
-        function updateRecipientsList() {
-
-        }
-
-
-        $scope.$watch('payment.formData.remitterAccountId', function (newId, oldId) {
-            if (newId !== oldId && oldId) {
-                updateRecipientsList();
-                /*
-                if (!!$scope.payment.items.recipient) {
-                    $scope.clearRecipient();
-                }
-                */
-            }
-        });
-
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
             $scope.payment.formData.currency = 'PLN';
@@ -70,7 +41,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
-            updateRecipientsList();
             $scope.validateBalance();
             recipientFilter.filter();
         };
@@ -114,27 +84,13 @@ angular.module('raiffeisen-payments')
 
             if($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
-                taxOffices.search({
-                    accountNo: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-                }).then(function (result) {
-                    if (result.length > 0) {
-                        $scope.payment.meta.recipientForbiddenAccounts.push({
-                            code: 'notUs',
-                            value: $scope.payment.formData.recipientAccountNo.replace(/ */g, '')
-                        });
-                        $scope.paymentForm.recipientAccountNo.$validate();
-                    }
-                }).finally(control.done);
+                $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
             }
         });
 
         function isAccountInvestmentFulfilsRules(account){
             if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
-                if(account.actions.indexOf('create_domestic_transfer')>-1){
-                    return true;
-                }else {
-                    return false;
-                }
+                return account.actions.indexOf('create_domestic_transfer') > -1;
             }
             return true;
         }
@@ -151,24 +107,20 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientAccountValidators = {
             notUs: function (accountNo) {
-                if (accountNo) {
-                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notUs',
-                        value: accountNo.replace(/ /g, '')
-                    });
-                } else {
-                    return false;
+                if (!accountNo) {
+                    return true;
                 }
+                accountNo = accountNo.replace(/ /g, '');
+                return promiseSet.getResult({
+                    set: 'usValidation',
+                    key: accountNo,
+                    expected: true,
+                    promise: forbiddenAccounts.isUsAccount(accountNo),
+                    callback: $scope.paymentForm.recipientAccountNo.$validate
+                });
             },
             notZus: function (accountNo) {
-                if (accountNo) {
-                    return !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notZus',
-                        value: accountNo.replace(/ /g, '')
-                    });
-                } else {
-                    return false;
-                }
+                return !forbiddenAccounts.isZusAccount(accountNo);
             }
         };
 

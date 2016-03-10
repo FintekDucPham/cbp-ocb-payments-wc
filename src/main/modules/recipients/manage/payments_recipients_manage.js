@@ -20,7 +20,6 @@ angular.module('raiffeisen-payments')
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
                                                                 authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService) {
 
-
         $scope.actualRecipientList = null;
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
@@ -99,7 +98,6 @@ angular.module('raiffeisen-payments')
             }
         };
 
-
         /**
          * This should be used to convert form data into format expected for the particular payment type.
          * @param formData
@@ -108,7 +106,6 @@ angular.module('raiffeisen-payments')
         $scope.requestConverter = function (formData) {
             return formData;
         };
-
 
         $scope.setRequestConverter = function (converterFn) {
             $scope.requestConverter = converterFn;

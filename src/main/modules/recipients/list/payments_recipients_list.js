@@ -123,6 +123,8 @@ angular.module('raiffeisen-payments')
             $scope.recipient.item.recipientBankNamePromise = paymentsService.getBankName(account).then(function(bankName){
                 if(bankName) {
                     $scope.recipient.item.recipientBankName = bankName.fullName || bankName.shortName;
+                    $scope.recipient.item.recipientBankName += ", " + bankName.address+ ", "+ bankName.town;
+
                 }else {
                     $scope.recipient.item.recipientBankName = null;
                 }

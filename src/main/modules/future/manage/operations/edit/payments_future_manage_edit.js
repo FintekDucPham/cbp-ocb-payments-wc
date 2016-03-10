@@ -108,6 +108,7 @@ angular.module('raiffeisen-payments')
             data.periodYear = data.paymentDetails.periodYear;
             data.obligationId = data.paymentDetails.obligationId;
             data.realizationDate = new Date(data.realizationDate);
+            data.remitterAccountId = data.accountId;
             return $q.when(true);
         });
 
