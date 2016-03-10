@@ -264,7 +264,9 @@ angular.module('raiffeisen-payments')
                                 declarationDate: details.paymentDetails.declaration,
                                 declarationNo: details.paymentDetails.declarationNo,
                                 additionalInfo: details.paymentDetails.decisionNo,
-                                insurancePremiums: insurancePremium
+                                insurancePremiums: insurancePremium,
+                                amount: details.amount,
+                                insuranceAccount: details.recipientAccountNo
                             };
                         case 'domestic':
                             return {
