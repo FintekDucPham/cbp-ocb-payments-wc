@@ -98,8 +98,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.realizationDate = new Date();
             $scope.payment.formData.idType = "NIP";
             $scope.accountSelectorRemote.resetToDefault();
-
-
         });
 
         $scope.setDefaultValues({

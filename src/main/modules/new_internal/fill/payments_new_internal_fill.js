@@ -60,10 +60,6 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        angular.extend($scope.payment.meta, {
-            recipientForbiddenAccounts: []
-        });
-
         paymentRules.search().then(function (result) {
             angular.extend($scope.payment.meta, result);
             var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({

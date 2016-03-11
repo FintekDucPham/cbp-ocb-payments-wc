@@ -96,7 +96,7 @@
                     translate }}
                 </ui-select-match>
                 <ui-select-choices repeat="supplementaryId in recipient.meta.zusSuplementaryIds track by $index">
-                    <div g-bind-html="::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate | highlight: $select.search"></div>
+                    <div ng-bind="::'raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id_type.' + supplementaryId | translate"></div>
                 </ui-select-choices>
             </ui-select>
 
