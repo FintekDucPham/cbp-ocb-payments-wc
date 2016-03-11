@@ -35,9 +35,9 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate | date:'shortDate' }}
     </bd-item-property>
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
-        {{::payment.formData.transferCost}} <a ng-show="transferCost.link != null" href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}" ng-if="transferCost.link">
+        {{::payment.formData.transferCost}} <a ng-href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
     </bd-item-property>
 
 </div>
