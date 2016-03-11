@@ -68,7 +68,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.taxpayers.list",
                     label: 'raiff.payments.taxpayers.label',
-                    icon: "raiff-icons raiff_lista_kart",
+                    icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.taxpayers.list",
                     priority: 4
                 },
