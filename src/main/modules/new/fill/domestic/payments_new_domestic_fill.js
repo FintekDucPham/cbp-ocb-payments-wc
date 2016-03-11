@@ -115,9 +115,7 @@ angular.module('raiffeisen-payments')
                     set: 'usValidation',
                     key: accountNo,
                     expected: false,
-                    promise: function() {
-                        return forbiddenAccounts.isUsAccount(accountNo);
-                    },
+                    promise: forbiddenAccounts.isUsAccount(accountNo),
                     callback: $scope.paymentForm.recipientAccountNo.$validate
                 });
                 return !usAccount;
