@@ -166,6 +166,9 @@ angular.module('raiffeisen-payments')
                 show: false
             };
 
+
+            // ZD01287983
+            $scope.paymentForm.amount.$validate();
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
