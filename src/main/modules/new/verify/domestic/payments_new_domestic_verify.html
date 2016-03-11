@@ -26,7 +26,8 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
         {{payment.formData.recipientAccountNo | nrbIbanFilter }} <!-- | nrb -->
-        <br ng-if="payment.formData.recipientAccountName"/>{{payment.formData.recipientAccountName}}
+        <br>
+        <rb-bank-name account-no="payment.formData.recipientAccountNo" bank-name-promise="payment.formData.recipientBankNamePromise"></rb-bank-name>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">

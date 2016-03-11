@@ -47,7 +47,7 @@
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
-             <rb-bank-name account-no="payment.formData.recipientAccountNo" response-value="payment.formData.recipientAccountName" bank-name-promise="payment.formData.recipientBankNamePromise">{{payment.formData.recipientAccountName}}</rb-bank-name>
+             <rb-bank-name account-no="payment.formData.recipientAccountNo" bank-name-promise="payment.formData.recipientBankNamePromise"></rb-bank-name>
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                 <div class="validation-message animate-on">
                     {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
