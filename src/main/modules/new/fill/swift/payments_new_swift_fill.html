@@ -48,6 +48,7 @@
                    ng-disabled="payment.options.fixedRecipientSelection || showHide"
                    bd-matches-none-of="recipientAccountValidators"
                    ng-change="unlockField()"
+                   ng-blur="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo)"
                    placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">

@@ -62,25 +62,27 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.recipientAccountValidators = {
-            usPmntOnlyEuro: function (accountNo) {
-                if (!accountNo) {
-                    return false;
-                }
+            notZus: function (accountNo) {
+                return !forbiddenAccounts.isZusAccount(accountNo);
+            }
+        };
+
+        $scope.checkUsPmntOnlyEuro = function(accountNo) {
+            var valid = true;
+            if (!!accountNo && $scope.paymentForm.recipientAccountNo.$validators.pattern(accountNo)) {
                 accountNo = accountNo.replace(/ /g, '');
                 var usAccount = promiseSet.getResult({
                     set: 'usValidation',
                     key: accountNo,
                     expected: false,
                     promise: function() {
-                        forbiddenAccounts.isUsAccount(accountNo);
+                        return forbiddenAccounts.isUsAccount(accountNo);
                     },
                     callback: $scope.paymentForm.recipientAccountNo.$validate
                 });
-                return !usAccount || $scope.payment.formData.currency.currency == "EUR";
-            },
-            notZus: function (accountNo) {
-                return !forbiddenAccounts.isZusAccount(accountNo);
+                valid = !usAccount || $scope.payment.formData.currency.currency == "EUR";
             }
+            $scope.paymentForm.recipientAccountNo.$setValidity("usPmntOnlyEuro", valid);
         };
 
         $scope.$watch('payment.formData.currency', function(n, o) {

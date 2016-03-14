@@ -212,7 +212,7 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientAccountValidators = {
             notUs: function (accountNo) {
-                if (!accountNo) {
+                if (!accountNo || !$scope.paymentForm.recipientAccountNo.$validators.bbanNrb(accountNo)) {
                     return true;
                 }
                 accountNo = accountNo.replace(/ /g, '');
@@ -221,7 +221,7 @@ angular.module('raiffeisen-payments')
                     key: accountNo,
                     expected: false,
                     promise: function() {
-                        forbiddenAccounts.isUsAccount(accountNo);
+                        return forbiddenAccounts.isUsAccount(accountNo);
                     },
                     callback: $scope.paymentForm.recipientAccountNo.$validate
                 });
