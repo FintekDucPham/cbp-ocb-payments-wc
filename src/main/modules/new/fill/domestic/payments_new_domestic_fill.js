@@ -122,6 +122,13 @@ angular.module('raiffeisen-payments')
             },
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);
+            },
+            sameSourceAccount: function(accountNo){
+                if(!$scope.payment.items.senderAccount || !accountNo){
+                    return true;
+                }
+                accountNo = accountNo.replace(/ /g, '');
+                return $scope.payment.items.senderAccount.accountNo !== accountNo;
             }
         };
 

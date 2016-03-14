@@ -1004,6 +1004,7 @@
     "raiff.INCORRECT_NIP": "Niepoprawny numer NIP płatnika",
     "raiff.change_me.EMPTY_SECONDARY_ID_TYPE": "Typ drugiego identyfikatora musi zostać wybrany",
     "raiff.change_me.EMPTY_PAYMENT_TYPE": "Typ wpłaty musi zostać wybrany",
+    "raiff.validation.sameSourceAccount":"Rachunek odbiorcy musi być różny od rachunku źródłowego",
 
     "raiff.payments.future.delete.buttons.proceed": "Usuń",
     "raiff.payments.future.bad_token.buttons.proceed": "Zatwierdź",
