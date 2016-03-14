@@ -154,24 +154,21 @@ angular.module('raiffeisen-payments')
             copiedFormData.costType = formData.transferCost;
             copiedFormData.transferType = "SWIFT";
             copiedFormData.transferFromTemplate = false;
-
             copiedFormData.recipientAddress = [""];
             if(formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
                 copiedFormData.informationProvider = "SWIFT";
                 copiedFormData.recipientSwift = formData.recipientSwiftOrBic;
-                copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.code;
             }else{
                 copiedFormData.informationProvider = "MANUAL";
                 copiedFormData.recipientSwift = null;
-                copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.code;
             }
-
+            copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.code;
             copiedFormData.paymentCategory= formData.paymentType;
             copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
             copiedFormData.amount = (""+formData.amount).replace(",",".");
-            formData.amount = (""+formData.amount).replace(",",".");
+            formData.amount = copiedFormData.amount;
             copiedFormData.recipientCountry = formData.recipientCountry.code;
             return copiedFormData;
         });
