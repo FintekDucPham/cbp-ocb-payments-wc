@@ -185,20 +185,18 @@ angular.module('raiffeisen-payments')
 
                     if(initialState && initialState.relation === 'DETAILS_FROM_WIDGET'){
                         var selectedPayment = angular.copy(initialState.paymentDetails);
+                        
+                        if (selectedPayment.transferType == 'STANDING_ORDER') {
+                            selectedPayment.transferType = rbPaymentTypes.STANDING.code;
+                        }
+
                         selectedPayment.renderExpanded = true;
                         $params.renderExpanded = true;
                         var summary = {};
                         addPaymentAmountToSummary(selectedPayment, summary);
                         viewStateService.resetInitialState('payments.future.list',{});
                         formSummary(summary);
-                        selectedPayment.loadDetails = function(){
-                            selectedPayment.promise = $q.when(selectedPayment).then(function(response){
-
-
-                                selectedPayment.details = response;
-                            });
-                        };
-                        //linkDetailsLoading(selectedPayment);
+                        linkDetailsLoading(selectedPayment);
                         defer.resolve([selectedPayment]);
                         $params.pageCount = 1;
                     }else{
