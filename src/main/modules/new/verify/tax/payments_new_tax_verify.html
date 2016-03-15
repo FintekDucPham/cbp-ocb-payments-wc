@@ -10,14 +10,18 @@
         <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
     </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.sender_account_name'|translate}}">
-       <span class="desktop-only-payments">
-        <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
-        {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
-        </span>
-        <div class="mobile-only-payments">
-            <span class="ellipsis-account" >{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}  </span>&nbsp; {{payment.items.senderAccount.accountNo | nrbIbanShortFilter }}
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+            <div>
+                {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+            </div>
         </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
+        </div>
+    </bd-item-property>
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_data'|translate}}">
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
 
