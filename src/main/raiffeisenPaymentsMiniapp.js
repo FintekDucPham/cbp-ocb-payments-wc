@@ -96,6 +96,13 @@ angular.module('raiffeisen-payments', [
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.basket.list",
                     priority: 8
+                },
+                {
+                    id: "payments.multisign.list",
+                    label: 'raiff.payments.basket.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.multisign.list",
+                    priority: 8
                 }
             ]
         });
