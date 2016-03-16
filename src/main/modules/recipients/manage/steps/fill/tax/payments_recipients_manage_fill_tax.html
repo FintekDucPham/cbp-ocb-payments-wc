@@ -7,6 +7,8 @@
                                bd-attr-name="remitterAccountId"
                                rb-account="recipient.items.senderAccount"
                                rb-account-list="recipient.items.accountList"
+                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                               rb-product-list-name="TRANSFER_US_FROM_LIST"
                                rb-on-account-select="onSenderAccountSelect()"
                                rb-account-select-params="recipientSelectParams"></rb-account-select>
             <eb-validation-messages eb-name="remitterAccountId">

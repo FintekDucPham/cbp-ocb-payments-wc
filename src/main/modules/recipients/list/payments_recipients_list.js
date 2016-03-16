@@ -72,6 +72,7 @@ angular.module('raiffeisen-payments')
 
         $scope.onRecipientRemove = function(data){
             data.bankName = $scope.recipient.item.recipientBankName;
+            var items = {};
             angular.extend(data, {
                 recipientData: data.recipientName,
                 description: data.transferTitle
@@ -80,9 +81,16 @@ angular.module('raiffeisen-payments')
             if(recipientType==='swift'){
                 recipientType='foreign';
             }
+            if(recipientType === 'insurance'){
+                var senderAccount = $scope.getAccountByNrb(data.debitNrb);
+                items = {
+                    senderAccount: senderAccount
+                };
+            }
             $state.go("payments.recipients.manage.remove.verify", {
                 recipientType: recipientType,
                 operation: 'remove',
+                items: angular.copy(items),
                 recipient: angular.copy(data)
             });
         };
