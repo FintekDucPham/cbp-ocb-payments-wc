@@ -1,9 +1,9 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.basket.list', {
-            url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/list/basket_list.html",
-            controller: "PaymentsBasketListController",
+        stateServiceProvider.state('payments.basket.new.fill', {
+            url: "/fill",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/basket_fill.html",
+            controller: "PaymentsBasketFillController",
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
                     return $q.all({
@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsBasketListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, paymentsBasketService, paymentsBasketFilterCriteria, accountsService, customerService, dateFilter, dateParser, systemParameterService, downloadService, customerProductService) {
+    .controller('PaymentsBasketFillController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, bdStepStateEvents, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, paymentsBasketService, paymentsBasketFilterCriteria, accountsService, customerService, dateFilter, dateParser, customerProductService) {
         $scope.dateRange = {};
         $scope.summaryItemMap = {};
 
@@ -51,17 +51,8 @@ angular.module('raiffeisen-payments')
             dateRangeValidity: false
         };
 
+        $scope.searchForm = {};
 
-        $scope.systemParameterDefinedName = {};
-        systemParameterService.search().then(function(systemParams){
-            for(var i=0; i<systemParams.length;i++){
-                if(systemParams[i].parameterName == 'nib.access.account.own.name.visible') {
-                    $scope.systemParameterDefinedName = systemParams[i];
-                }
-            }
-        });
-
-        $scope.getIcon = downloadService.downloadIconImage;
 
         $scope.multisignFilterCriteria = paymentsBasketFilterCriteria;
 
@@ -119,7 +110,7 @@ angular.module('raiffeisen-payments')
         var postInit = function($promise, $params) {
             var showDetails = false;
             $timeout(function () {
-                if($scope.$$childHead.searchForm.$invalid) {
+                if($scope.searchForm.$invalid) {
                     $scope.showSummary = false;
                     $scope.showTable = false;
                     $promise.resolve([]);
@@ -177,7 +168,7 @@ angular.module('raiffeisen-payments')
                                 $scope.summaryAll = formSummary(summary);
                                 $params.pageCount = data.totalPages;
 
-                                $scope.paymentsList = data.content;
+                                $scope.basket.payments = data.content;
                                 data.content.paymentsList =  data.content;
                                 data.content.updateSummaryForItem = $scope.updateSummaryForItem;
                                 data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
@@ -259,7 +250,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.resolveTemplateType = function (transferType) {
-            return "{0}/modules/payments_basket/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
+            return "{0}/modules/payments_basket/basket/fill/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
         };
 
 
@@ -409,6 +400,31 @@ angular.module('raiffeisen-payments')
                 return this.indexOf(currencySum.currency);
             }, parameters.currencyOrder);
         }
+
+        function getCheckedPaymentsIdListAndSetViewGroupFlag(groupPaymentsList){
+            var checkedPaymentsId = [];
+            _.each(groupPaymentsList, function(group) {
+                _.each(group.multiSignPaymentInfos, function(multiSignPayment) {
+                    var payment = multiSignPayment.payment;
+                    if(payment.checked){
+                        checkedPaymentsId.push(payment.id);
+                        group.showGroup = true;
+                    }
+                });
+            });
+            return checkedPaymentsId;
+        }
+
+
+
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            var checkedPaymentsId = {};
+            checkedPaymentsId.transfersId = getCheckedPaymentsIdListAndSetViewGroupFlag($scope.basket.payments);
+            paymentsBasketService.create(checkedPaymentsId).then(function(data){
+                $scope.basket.transferId = data;
+                actions.proceed();
+            });
+        });
 
     }
 );

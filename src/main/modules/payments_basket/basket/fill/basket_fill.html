@@ -1,9 +1,7 @@
-<rb-content-view class="rb-content-view--solid">
-    <div class="basket-vew">
-        <bd-header>{{::"raiff.payments.basket.list.header"|translate}}</bd-header>
-
-        <form novalidate="novalidate" name="searchForm" class="transaction-filter-form">
+<div>
+<form novalidate="novalidate"  name="searchForm" class="transaction-filter-form">
             <bd-item-property label="{{::'account.statement.select.label'|translate}}">
+
                 <ui-select ng-model="table.tableConfig.selectedAccount"
                            theme="bootstrap"
                            reset-search-input="false"
@@ -37,7 +35,8 @@
             </bd-item-property>
             <div rb-transaction-filter ng-model="models" table="table" advanced-search="advancedSearch"
                  filter-criteria="multisignFilterCriteria" last-error-max="lastMax" max-length="140"></div>
-        </form>
+
+    </form>
 
         <bd-table bd-type="typeGG"
                   bd-table-params="table.tableConfig"
@@ -172,6 +171,4 @@
                 </div>
             </bd-list-item>
         </div>
-    </div>
-
-</rb-content-view>
+</div>

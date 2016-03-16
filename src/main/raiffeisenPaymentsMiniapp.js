@@ -91,10 +91,10 @@ angular.module('raiffeisen-payments', [
                     priority: 7
                 },
                 {
-                    id: "payments.basket.list",
+                    id: "payments.basket.fill",
                     label: 'raiff.payments.basket.label',
                     icon: "raiff-icons raiff_odbiorcy",
-                    action: "payments.basket.list",
+                    action: "payments.basket.new.fill",
                     priority: 8
                 },
                 {

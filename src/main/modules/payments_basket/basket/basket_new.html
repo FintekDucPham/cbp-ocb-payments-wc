@@ -1,0 +1,10 @@
+<rb-content-view class="rb-content-view--solid">
+    <bd-header>{{::"raiff.payments.basket.list.header"|translate}}</bd-header>
+        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="basket.rbBasketStepParams" rb-hide-step-panel="true">
+            <form novalidate="novalidate" name="basketForm" class="transaction-filter-form">
+                <div class="basket-vew">
+                    <div ui-view></div>
+                </div>
+            </form>
+        </rb-multistep-form>
+</rb-content-view>

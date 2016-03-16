@@ -1,0 +1,85 @@
+<div class="tableGG">
+    <div ng-repeat = "group in basket.payments track by $index">
+        <div ng-show="group.showGroup">
+            <div class="tableGG__account-section">
+                <div class="bd-list-item__identification-cell">
+                    <div class="product-name">
+                        <div style="word-break: break-all" ng-if="systemParameterDefinedName.value == 'T'">
+                            <img ng-if="group.accountDetails.customerData.icon > 0" ng-src="{{getIcon(group.accountDetails.customerData.icon)}}" style="margin-top: -5px;"/>
+                            {{group.accountDetails.customerData.name || group.accountDetails.accountName}}
+                        </div>
+                        <div  style="word-break: break-all;" ng-if="systemParameterDefinedName.value == 'N'">
+                            {{group.accountDetails.accountName}}
+                        </div>
+                    </div>
+                    <div class="product-details-primary">
+                        {{group.accountDetails.accountNo | nrbIbanFilter}}
+                    </div>
+                </div>
+                <div class="bd-list-item__properties-group-cell">
+                    <div class="bd-list-item__properties-group-cell__item">
+                        <label>{{::"accounts.label.available_funds"|translate}}</label>
+                    </div>
+                    <div class="bd-list-item__properties-group-cell__item">
+                        <bd-amount class="assets" amount="group.accountDetails.workingAvailableFunds" currency="{{group.accountDetails.currency}}" highlight-negative></bd-amount>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tableGG__table-section">
+                <div class="bd-table bd-table__fixed">
+                    <div bd-table-header>
+                        <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_date"|translate}}</div>
+                        <div bd-table-heading="second" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_type"|translate}}</div>
+                        <div bd-table-heading="third" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-5">{{::"raiff.payments.basket.list.header.operation_title"|translate}}</div>
+                        <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-3">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
+                    </div>
+
+
+                    <div bd-table-row
+                         ng-repeat="item in group.multiSignPaymentInfos track by $index">
+
+                        <div class="bd-table__row-entry" ng-hide="!item.payment.checked">
+                            <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-sm">
+                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-2 bd-table__cell--md-4">
+                                    {{ item.payment.realizationDate | date:'shortDate'}}
+                                </div>
+                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-4">
+                                    {{ ::'raiff.payments.new.types.'+item.payment.transferType | translate}}
+                                </div>
+                                <div bd-table-cell="third" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                    {{item.payment.title.join('') }}
+                                </div>
+                                <div bd-table-cell="fourth" class="bd-table__cell--sm-2 bd-table__cell--md-3 text-right">
+                                    {{ item.payment.amount | number: 2}} {{ item.payment.currency }}
+                                </div>
+                            </div>
+                            <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-sm">
+                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
+                                    {{::"raiff.payments.basket.list.sourceAccount"|translate}}
+                                </div>
+                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-8">
+                                  <div>{{item.payment.accountNo | nrbIbanFilter}}</div>
+                                  <div>{{item.payment.owner}}</div>
+                                </div>
+                            </div>
+                            <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-sm">
+                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
+                                    {{::"raiff.payments.basket.list.targetAccount"|translate}}
+                                </div>
+                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-8">
+                                    <div>{{item.payment.recipientAccountNo | nrbIbanFilter}}</div>
+                                    <div>{{item.payment.recipientName.join('') }}</div>
+                                    <div>{{item.payment.recipientAddress.join('') }}</div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <bd-item-property class="bd-item-property--text" ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
+        <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
+    </bd-item-property>
+</div>
