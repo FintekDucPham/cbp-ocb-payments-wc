@@ -1,6 +1,6 @@
 angular.module('raiffeisen-payments')
     .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
-                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet, $q) {
+                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet, $q, utilityService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
@@ -54,8 +54,8 @@ angular.module('raiffeisen-payments')
             var copiedForm = angular.copy(formData);
             formData.amount = (""+formData.amount).replace(",",".");
             copiedForm.amount = (""+formData.amount).replace(",", ".");
-            copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
-            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName);
+            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             copiedForm.sendBySorbnet = formData.sendBySorbnet;
             copiedForm.toSendSorbnet = formData.sendBySorbnet;
             return copiedForm;
@@ -155,14 +155,4 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.amount.$validate();
             });
         });
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
     });

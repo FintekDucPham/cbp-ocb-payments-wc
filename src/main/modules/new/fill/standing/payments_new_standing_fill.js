@@ -17,7 +17,7 @@ angular.module('raiffeisen-payments')
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
-                                                              standingTransferService, forbiddenAccounts, promiseSet) {
+                                                              standingTransferService, forbiddenAccounts, promiseSet, utilityService) {
 
         var maxDaysForward = SYSTEM_PARAMETERS['standing.order.max.days'];
 
@@ -68,9 +68,9 @@ angular.module('raiffeisen-payments')
                 "standingOrderId": formData.id ? formData.id : "",
                 "shortName": formData.shortName,
                 "amount": (""+formData.amount).replace(',', '.'),
-                "beneficiary": splitTextEveryNSign(formData.recipientName),
+                "beneficiary": utilityService.splitTextEveryNSigns(formData.recipientName),
                 "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
-                "remarks": splitTextEveryNSign(formData.description),
+                "remarks": utilityService.splitTextEveryNSigns(formData.description),
                 "debitAccountId": formData.remitterAccountId,
                 "currency": formData.currency,
                 "endDate": $filter('date')(formData.finishDate, 'yyyy-MM-dd'),
@@ -240,14 +240,4 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
     });

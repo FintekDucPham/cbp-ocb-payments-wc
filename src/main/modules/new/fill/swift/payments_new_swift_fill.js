@@ -146,11 +146,11 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
+            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 27);
             copiedFormData.currency = formData.currency.currency;
             copiedFormData.additionalInfo = " ";
             copiedFormData.phoneNumber = " ";
-            copiedFormData.description = splitTextEveryNSign(formData.description, 35);
+            copiedFormData.description = utilityService.splitTextEveryNSigns(formData.description, 35);
             copiedFormData.costType = formData.transferCost;
             copiedFormData.transferType = "SWIFT";
             copiedFormData.transferFromTemplate = false;
@@ -164,7 +164,7 @@ angular.module('raiffeisen-payments')
             }
             copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.code;
             copiedFormData.paymentCategory= formData.paymentType;
-            copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
+            copiedFormData.recipientBankName=utilityService.splitTextEveryNSigns(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
             copiedFormData.amount = (""+formData.amount).replace(",",".");
@@ -306,16 +306,6 @@ angular.module('raiffeisen-payments')
             },
             payments: true
         });
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
 
         $scope.onRecipientCountryChange = function() {
             if (!$scope.payment.options.fixedRecipientSelection) {

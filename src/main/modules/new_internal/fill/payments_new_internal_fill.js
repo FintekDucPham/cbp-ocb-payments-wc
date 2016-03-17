@@ -13,7 +13,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
+    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService) {
         var CURRENT_DATE = $scope.CURRENT_DATE;
 
 
@@ -78,7 +78,7 @@ angular.module('raiffeisen-payments')
 
         var requestConverter = function (formData) {
             var copiedForm = angular.copy(formData);
-            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             copiedForm.amount = (""+formData.amount).replace(",", ".");
             return copiedForm;
         };
@@ -322,17 +322,6 @@ angular.module('raiffeisen-payments')
             recalculateCurrencies();
         }, true);
 
-
-        function splitTextEveryNSign(text, lineLength){
-            if(angular.isArray(text)){
-                text = angular.copy(text).join("\n");
-            }
-            text = text.replace(/(\n)+/g, '');
-            var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-            return lodash.filter(text.split(regexp), function(val) {
-                return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-            });
-        }
     })
     .filter('dstAccountListFilter', function(){
         return function(dstAccountList, srcAccount) {

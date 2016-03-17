@@ -24,7 +24,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE, utilityService) {
         $scope.blockadesForward = angular.extend({
             isBlock : false
         });
@@ -96,8 +96,8 @@ angular.module('raiffeisen-payments')
             var copiedForm = angular.copy(formData);
             formData.amount = (""+formData.amount).replace(",",".");
             copiedForm.amount = (""+formData.amount).replace(",", ".");
-            copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
-            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName);
+            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             return copiedForm;
         };
 
@@ -241,16 +241,6 @@ angular.module('raiffeisen-payments')
         customerService.getCustomerDetails().then(function(data) {
             $scope.payment.meta.customerContext = data.customerDetails.context;
         });
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
     })
     .directive('rbForeignAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
         return {

@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $timeout, $scope, recipientGeneralService, notInsuranceAccountGuard,
                                                                             notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams,
                                                                             translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES,
-                                                                            bdRadioSelectEvents, countriesService) {
+                                                                            bdRadioSelectEvents, countriesService, utilityService) {
 
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
 
@@ -196,24 +196,15 @@ angular.module('raiffeisen-payments')
             return {
                 shortName: copiedFormData.customName,
                 creditAccount: copiedFormData.recipientAccountNo,
-                beneficiary: splitTextEveryNSign(angular.isArray(copiedFormData.recipientData) ? copiedFormData.recipientData.join(' ') : copiedFormData.recipientData),
-                remarks: splitTextEveryNSign(angular.isArray(copiedFormData.description) ? copiedFormData.description.join(' ') : copiedFormData.description),
+                beneficiary: utilityService.splitTextEveryNSigns(angular.isArray(copiedFormData.recipientData) ? copiedFormData.recipientData.join(' ') : copiedFormData.recipientData),
+                remarks: utilityService.splitTextEveryNSigns(angular.isArray(copiedFormData.description) ? copiedFormData.description.join(' ') : copiedFormData.description),
                 swift_bic: copiedFormData.recipientSwiftOrBic,
-                bankInformation: splitTextEveryNSign(copiedFormData.recipientBankName),
+                bankInformation: utilityService.splitTextEveryNSigns(copiedFormData.recipientBankName),
                 bankCountry: (copiedFormData.recipientBankCountry !== undefined && copiedFormData.recipientBankCountry !== null) ? copiedFormData.recipientBankCountry.code : null,
-                address: splitTextEveryNSign(angular.isArray(copiedFormData.recipientData) ? copiedFormData.recipientData.join(' ') : copiedFormData.recipientData),
+                address: utilityService.splitTextEveryNSigns(angular.isArray(copiedFormData.recipientData) ? copiedFormData.recipientData.join(' ') : copiedFormData.recipientData),
                 beneficiaryCountry: (copiedFormData.recipientCountry !== undefined && copiedFormData.recipientCountry !== null) ? copiedFormData.recipientCountry.code : null,
                 debitAccount: copiedFormData.remitterAccountId,
                 informationProvider: copiedFormData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 'SWIFT' : 'MANUAL'
             };
         });
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && !angular.isArray(text) && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
     });
