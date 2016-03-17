@@ -151,10 +151,9 @@
                 <input type="text"
                        name="amount"
                        rb-number-type-input
+                       ng-min="0.01"
                        class="input-field"
                        ng-model="payment.formData.amount"
-                       min="0.01"
-                       step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'elixir' : payment.formData.sendBySorbnet ? 99999999999999999 : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
                        required
@@ -184,7 +183,7 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
+            <div eb-message-key="ngMin" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
             <div eb-message-key="amount" class="validation-message animate-on">
