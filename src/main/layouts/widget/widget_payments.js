@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
     $scope.params = {
         statusPaymentCriteria: "waiting",
         paymentSummaryScopeType: "all",
-        pageSize: 10,
+        pageSize: 1000,
         pageNumber: 1
     };
         $scope.paymentsWidgetMode = paymentsWidgetMode;
@@ -26,12 +26,10 @@ angular.module('raiffeisen-payments')
         $scope.paymentSummary = $scope.paymentSummaryList(paymentSummary);
     });
 
-
     $scope.widgetContent = pathService.generateTemplatePath("raiffeisen-payments") + '/layouts/widget/widget_payments_content.html';
     $scope.context = {};
     $scope.context.options = {
         detailsShown: false
     };
-
 
 });
