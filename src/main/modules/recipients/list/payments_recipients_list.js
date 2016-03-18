@@ -189,19 +189,19 @@ angular.module('raiffeisen-payments')
                                             return {
                                                 transferTitle: template.title.join(" "),
                                                 bankName: template.paymentDetails.bankDetails[0],
-                                                bankData:template.paymentDetails.bankDetails.join(""),
+                                                bankData:template.paymentDetails.bankDetails.join(" "),
                                                 recipientIdentityType: template.paymentDetails.informationProvider,
                                                 recipientBankCountry: template.paymentDetails.bankCountry,
                                                 recipientCountry: template.paymentDetails.foreignCountryCode,
-                                                recipientAddress: recipient.recipientAddress.join(""),
-                                                transferTitleTable: template.title.join(""),
+                                                recipientAddress: recipient.recipientAddress.join(" "),
+                                                transferTitleTable: template.title.join(" "),
                                                 swift_bic: template.paymentDetails.recipientSwift
                                             };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: template.title.join(" "),
-                                                recipientAddress: recipient.recipientAddress.join(""),
-                                                transferTitleTable: template.title.join("")
+                                                recipientAddress: recipient.recipientAddress.join(" "),
+                                                transferTitleTable: template.title.join(" ")
                                             };
                                         case "INSURANCE":
                                             return {

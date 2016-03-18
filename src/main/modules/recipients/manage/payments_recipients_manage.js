@@ -159,8 +159,8 @@ angular.module('raiffeisen-payments')
             domestic: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
-                        recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join("") : recipient.recipientAddress,
-                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join("") : recipient.transferTitleTable,
+                        recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join(" ") : recipient.recipientAddress,
+                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join( "") : recipient.transferTitleTable,
                         bankName: recipient.bankName
                     }
                 }, recipient);
