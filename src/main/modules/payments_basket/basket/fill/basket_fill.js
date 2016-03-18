@@ -157,8 +157,8 @@ angular.module('raiffeisen-payments')
                                             customerProductService.setCustomerData(accountDetails, 'ACCOUNT', 'accountId');
                                             group.accountDetails = accountDetails;
                                         });
-                                        _.each(group.multiSignPaymentInfos, function(multiSignPayment) {
-                                            var payment = multiSignPayment.payment;
+                                        _.each(group.basketTransfers, function(basketTransfer) {
+                                            var payment = basketTransfer.payment;
                                             addPaymentAmountToSummary(payment, summary);
                                         });
                                 });
@@ -200,17 +200,17 @@ angular.module('raiffeisen-payments')
 
         $scope.updateSummaryForGroup = function (group){
             if(group.check){
-                _.each(group.multiSignPaymentInfos, function(multisignPayment) {
-                    if(!multisignPayment.payment.checked){
-                        multisignPayment.payment.checked = true;
-                        addPaymentAmountToSummary(multisignPayment.payment, $scope.summaryItemMap);
+                _.each(group.basketTransfers, function(basketTransfer) {
+                    if(!basketTransfer.payment.checked){
+                        basketTransfer.payment.checked = true;
+                        addPaymentAmountToSummary(basketTransfer.payment, $scope.summaryItemMap);
                     }
                 });
             }else {
-                _.each(group.multiSignPaymentInfos, function(multisignPayment) {
-                    if(multisignPayment.payment.checked){
-                        multisignPayment.payment.checked = false;
-                        deletePaymentAmountFromSummary(multisignPayment.payment, $scope.summaryItemMap);
+                _.each(group.basketTransfers, function(basketTransfer) {
+                    if(basketTransfer.payment.checked){
+                        basketTransfer.payment.checked = false;
+                        deletePaymentAmountFromSummary(basketTransfer.payment, $scope.summaryItemMap);
                     }
                 });
             }
@@ -404,8 +404,8 @@ angular.module('raiffeisen-payments')
         function getCheckedPaymentsIdListAndSetViewGroupFlag(groupPaymentsList){
             var checkedPaymentsId = [];
             _.each(groupPaymentsList, function(group) {
-                _.each(group.multiSignPaymentInfos, function(multiSignPayment) {
-                    var payment = multiSignPayment.payment;
+                _.each(group.basketTransfers, function(basketTransfer) {
+                    var payment = basketTransfer.payment;
                     if(payment.checked){
                         checkedPaymentsId.push(payment.id);
                         group.showGroup = true;

@@ -1199,7 +1199,6 @@
   "raiff.payments.basket.status.SIGNED_REQUIRED":"Przelew/transakcja wymaga dodatkowych podpisów",
   "raiff.payments.basket.sign.buttons.returnToList":"Powrót do listy",
   "raiff.payments.basket.search.accountName":"Rachunek",
-
   "raiff.payments.basket.list.header.operation_date":"Planowana data realizacji",
   "raiff.payments.basket.list.header.operation_type":"Typ przelewu",
   "raiff.payments.basket.list.header.recipient_name":"Nazwa odbiorcy",
@@ -1209,7 +1208,8 @@
   "raiff.payments.basket.list.targetAccount":"Na rachunek",
   "raiff.payments.basket.list.summary.chose":"Podsumowanie wybrane",
   "raiff.payments.basket.list.summary.all":"Podsumowanie wszytskie",
-  "raiff.payments.basket.multistepform.buttons.delete":"Usuń"
+  "raiff.payments.basket.multistepform.buttons.delete":"Usuń",
+  "raiff.payments.basket.checkbox.label":"Dodaj do koszyka"
 
 
 

@@ -250,6 +250,10 @@
         <rb-sorbnet-selection rb-model="payment.formData.sendBySorbnet" rb-destination-nrb="payment.formData.recipientAccountNo"></rb-sorbnet-selection>
     </bd-item-property>
 
+    <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.basket.checkbox.label' | translate }}">
+        <bd-checkbox ng-model="payment.formData.addToBasket"></bd-checkbox>
+    </bd-item-property>
+
     <bd-item-property class="bd-item-property--multirow">
         <rb-info-account-investment rb-source-choose="payment.items.senderAccount.category" rb-destination-nrb="payment.formData.recipientAccountNo"></rb-info-account-investment>
     </bd-item-property>
