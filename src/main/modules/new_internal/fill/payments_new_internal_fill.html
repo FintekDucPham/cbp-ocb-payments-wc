@@ -56,14 +56,12 @@
                     <input type="text"
                            name="amount"
                            class="input-field"
-                           min="0.01"
-                           step="0.01"
+                           ng-min="0.01"
                            ng-pattern="AMOUNT_PATTERN"
                            rb-number-type-input
                            ng-model="payment.formData.amount"
                            required
                            placeholder=""
-
                            rb-foreign-amount-validator
                            rb-source-account-currency="payment.items.senderAccount.currency"
                            rb-transaction-currency="payment.formData.currency"
@@ -96,7 +94,7 @@
                 <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
-                <div eb-message-key="min" class="validation-message animate-on">
+                <div eb-message-key="ngMin" class="validation-message animate-on">
                     {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
                 <div eb-message-key="amount" class="validation-message animate-on">
