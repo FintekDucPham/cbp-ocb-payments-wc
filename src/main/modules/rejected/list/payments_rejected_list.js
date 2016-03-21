@@ -243,7 +243,7 @@ angular.module('raiffeisen-payments')
                 payment: lodash.extend({
                     remitterAccountId : details.accountId,
                     recipientName : details.recipientName,
-                    realizationDate: new Date(details.realizationDate)
+                    realizationDate: new Date()
                 }, (function() {
                     switch(paymentType) {
                         case 'insurance':
