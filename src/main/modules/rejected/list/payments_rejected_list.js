@@ -233,6 +233,11 @@ angular.module('raiffeisen-payments')
             tableControl: undefined
         };
 
+        function dateTodayOrInFuture(paymentDate) {
+            paymentDate = new Date(paymentDate);
+            return now.getTime() > paymentDate.getTime() ? now : paymentDate;
+        }
+
         //renew
         $scope.renew = function (data) {
             var copiedData = angular.copy(data);
@@ -243,7 +248,7 @@ angular.module('raiffeisen-payments')
                 payment: lodash.extend({
                     remitterAccountId : details.accountId,
                     recipientName : details.recipientName,
-                    realizationDate: new Date()
+                    realizationDate: dateTodayOrInFuture(details.realizationDate)
                 }, (function() {
                     switch(paymentType) {
                         case 'insurance':
