@@ -9,17 +9,6 @@ angular.module('raiffeisen-payments')
             paymentsWidgetMode.fullMode = mode;
         };
 
-        $scope.params = {
-            statusPaymentCriteria: "waiting",
-            paymentSummaryScopeType: "all"
-        };
-
-        $scope.paymentsPromise = paymentsService.search($scope.params).then(function(paymentSummary) {
-            $scope.paymentSummary = paymentSummary;
-        });
-
-
-        $scope.widgetContent = pathService.generateTemplatePath("raiffeisen-payments") + '/layouts/widget/widget_payments_content.html';
         $scope.context = {};
         $scope.context.options = {
             detailsShown: false
@@ -75,6 +64,7 @@ angular.module('raiffeisen-payments')
 
         $scope.goToDetails = function(evt, payment){
             evt.stopPropagation();
+            evt.preventDefault();
             var selectedPayment = parsePaymentData(payment);
             viewStateService.setInitialState('payments.future.list',{
                 relation: "DETAILS_FROM_WIDGET",

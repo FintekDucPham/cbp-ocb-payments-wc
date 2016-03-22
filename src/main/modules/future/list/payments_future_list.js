@@ -35,6 +35,9 @@ angular.module('raiffeisen-payments')
                     });
                 }]
 
+            },
+            data: {
+                analyticsTitle: "raiff.payments.future.label"
             }
         });
     })
@@ -84,7 +87,7 @@ angular.module('raiffeisen-payments')
                     "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.details.frequency.periodUnit)).code,
                     "frequency": payment.details.frequency.periodCount,
                     "amount": payment.details.amount,
-                    "id": payment.id
+                    "id": payment.details.id
                 };
 
                 viewStateService.setInitialState('payments.new', {
@@ -182,20 +185,18 @@ angular.module('raiffeisen-payments')
 
                     if(initialState && initialState.relation === 'DETAILS_FROM_WIDGET'){
                         var selectedPayment = angular.copy(initialState.paymentDetails);
+                        
+                        if (selectedPayment.transferType == 'STANDING_ORDER') {
+                            selectedPayment.transferType = rbPaymentTypes.STANDING.code;
+                        }
+
                         selectedPayment.renderExpanded = true;
                         $params.renderExpanded = true;
                         var summary = {};
                         addPaymentAmountToSummary(selectedPayment, summary);
                         viewStateService.resetInitialState('payments.future.list',{});
                         formSummary(summary);
-                        selectedPayment.loadDetails = function(){
-                            selectedPayment.promise = $q.when(selectedPayment).then(function(response){
-
-
-                                selectedPayment.details = response;
-                            });
-                        };
-                        //linkDetailsLoading(selectedPayment);
+                        linkDetailsLoading(selectedPayment);
                         defer.resolve([selectedPayment]);
                         $params.pageCount = 1;
                     }else{

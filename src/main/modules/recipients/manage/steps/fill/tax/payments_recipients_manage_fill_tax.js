@@ -15,6 +15,10 @@ angular.module('raiffeisen-payments')
             delete $scope.recipient.formData.periodType;
         };
 
+        $scope.selectTaxAccount = function(office) {
+            $scope.$broadcast("filterFormSymbols", office?office.taxAccountType:null);
+        };
+
         $scope.setRequestConverter(function (formData) {
             var copiedFormData = angular.copy(JSON.parse(JSON.stringify(formData)));
             return {

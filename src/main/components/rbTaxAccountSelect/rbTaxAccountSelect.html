@@ -15,9 +15,10 @@
                        type="text"
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
             </div>
+
             <div ng-show="isFromList">
                 <ui-select ng-model="model.taxOffice"
-                           search-enabled="false"
+                           search-enabled="true"
                            on-select="select($item)"
                            theme="bootstrap"
                            placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
@@ -25,7 +26,8 @@
                            ui-select-popup-trigger="taxAccountSearched"
                            required>
                     <ui-select-match>
-                        {{ $select.selected.accountNo | nrbIbanFilter }}
+                        <span class="visible-xs">{{ $select.selected.accountNo | nrbIbanShortFilter }}</span>
+                        <span class="hidden-xs">{{ $select.selected.accountNo | nrbIbanFilter }}</span>
                     </ui-select-match>
                     <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'">
                         <div ng-bind-html="taxOffice.accountNo | nrbIbanFilter | highlight: $select.search"></div>

@@ -22,7 +22,10 @@ angular.module('raiffeisen-payments', [
                 url: "/payments",
                 abstract: true,
                 templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/layouts/fullscreen/fullscreen_payments.html",
-                controller: "PaymentsViewController"
+                controller: "PaymentsViewController",
+                data: {
+                    analyticsTitle: "raiff.menu.transfer"
+                }
             });
     }
 
@@ -65,7 +68,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.taxpayers.list",
                     label: 'raiff.payments.taxpayers.label',
-                    icon: "raiff-icons raiff_lista_kart",
+                    icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.taxpayers.list",
                     priority: 4
                 },
@@ -119,4 +122,8 @@ angular.module('raiffeisen-payments', [
     });
 }).value('RAIFF_NRB_CONSTANTS', {
     insternal_prefix: null
+}).filter('arrayFilter', function(){
+    return function(items){
+        return angular.isArray(items) ? items.join("") : items;
+    };
 });

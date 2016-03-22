@@ -8,6 +8,9 @@ angular.module('raiffeisen-payments')
             params: {
                 recipientType: 'domestic',
                 operation: 'new'
+            },
+            data: {
+                analyticsTitle: "raiff.payments.recipients.label"
             }
         });
     })
@@ -16,7 +19,6 @@ angular.module('raiffeisen-payments')
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
                                                                 authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService) {
-
 
         $scope.actualRecipientList = null;
 
@@ -96,7 +98,6 @@ angular.module('raiffeisen-payments')
             }
         };
 
-
         /**
          * This should be used to convert form data into format expected for the particular payment type.
          * @param formData
@@ -105,7 +106,6 @@ angular.module('raiffeisen-payments')
         $scope.requestConverter = function (formData) {
             return formData;
         };
-
 
         $scope.setRequestConverter = function (converterFn) {
             $scope.requestConverter = converterFn;
@@ -159,8 +159,8 @@ angular.module('raiffeisen-payments')
             domestic: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
-                        recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join("") : recipient.recipientAddress,
-                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join("") : recipient.transferTitleTable,
+                        recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join(" ") : recipient.recipientAddress,
+                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join( "") : recipient.transferTitleTable,
                         bankName: recipient.bankName
                     }
                 }, recipient);

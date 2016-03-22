@@ -3,7 +3,10 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.new_internal.verify', {
             url: "/verify",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/verify/payments_new_internal_verify.html",
-            controller: "NewPaymentInternalVerifyController"
+            controller: "NewPaymentInternalVerifyController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
+            }
         });
     })
     .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS ) {

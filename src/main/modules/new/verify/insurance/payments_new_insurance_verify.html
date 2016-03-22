@@ -10,9 +10,15 @@
         <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
     </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_account_name'|translate}}">
-        <div style="word-break: break-word;">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div><!-- | nazwa -->
-
-        {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+            <div>
+                {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+            </div>
+        </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
+        </div>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.sender_data'|translate}}">
@@ -20,7 +26,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_data'|translate}}">
-        <p>{{payment.formData.recipientName.join('')}}</p>
+        <p>{{payment.formData.recipientName | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.zus.verify.taxpayer_nip'|translate}}">

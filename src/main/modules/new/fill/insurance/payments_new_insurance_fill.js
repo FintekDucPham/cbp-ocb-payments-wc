@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents) {
+    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents, utilityService) {
 
         $scope.accountSelectorRemote = {};
 
@@ -261,7 +261,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
+            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 27);
             copiedFormData.decisionNo = copiedFormData.additionalInfo;
             if($scope.payment.operation.code==='EDIT'){
                 var out = null;
@@ -340,29 +340,6 @@ angular.module('raiffeisen-payments')
                 return recipientData2;
             });
         });
-       /* $scope.setRecipientDataExtractor(function() {
-            var recipientData = $scope.payment;
-            return {
-                customName: "Nowy odbiorca",
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
-                selectedInsuranceId: $scope.payment.items.recipient.nrb,
-                nip: $scope.payment.formData.nip,
-                secondaryIdType:  $scope.payment.formData.secondaryIdType,
-                secondaryIdNo: $scope.payment.formData.secondaryIdNo,
-                paymentType: $scope.payment.formData.paymentType
-            };
-
-        });*/
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
 
         $scope.enableInsurancePremium = function(insuranceType) {
             var insurancePremium = lodash.find($scope.insuranceAccountList, function(insuranceAccount) {

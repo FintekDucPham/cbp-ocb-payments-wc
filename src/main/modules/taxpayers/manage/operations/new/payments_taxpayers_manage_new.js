@@ -4,23 +4,35 @@ angular.module('raiffeisen-payments')
             url: "/new",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/new/payments_taxpayers_manage_new.html",
-            controller: "PaymentsTaxpayersManageNewController"
+            controller: "PaymentsTaxpayersManageNewController",
+            data: {
+                analyticsTitle: "raiff.payments.taxpayers.new.label"
+            }
         }).state('payments.taxpayers.manage.new.fill', {
             url: "/fill",
             templateUrl: function () {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/fill/payments_taxpayers_fill.html";
             },
-            controller: 'paymentTaxpayersFillController'
+            controller: 'paymentTaxpayersFillController',
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
+            }
         }).state('payments.taxpayers.manage.new.verify', {
             url: "/verify",
             templateUrl: function () {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
             },
-            controller: 'TaxpayersManageVerifyController'
+            controller: 'TaxpayersManageVerifyController',
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
+            }
         }).state('payments.taxpayers.manage.new.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/new/status/payments_taxpayers_manage_new_status.html",
-            controller: "TaxpayersManageNewStatusController"
+            controller: "TaxpayersManageNewStatusController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step3"
+            }
         });
     })
     .controller('PaymentsTaxpayersManageNewController', function ($scope, customerService, lodash) {

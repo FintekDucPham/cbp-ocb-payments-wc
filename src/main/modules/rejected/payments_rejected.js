@@ -4,7 +4,10 @@ angular.module('raiffeisen-payments')
             url: "/rejected",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/rejected/payments_rejected.html",
-            controller: "PaymentsRejectedController"
+            controller: "PaymentsRejectedController",
+            data: {
+                analyticsTitle: null
+            }
         });
     })
     .controller('PaymentsRejectedController', function ($scope) {

@@ -4,7 +4,10 @@ angular.module('raiffeisen-payments')
             url: "/remove",
             abstract:true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/manage/remove/payments_standing_manage_remove.html",
-            controller: "PaymentsStandingManageRemoveController"
+            controller: "PaymentsStandingManageRemoveController",
+            data: {
+                analyticsTitle: "raiff.payments.standing.manage.remove.title"
+            }
         });
     })
     .controller('PaymentsStandingManageRemoveController', function ($scope, initialState, $stateParams, viewStateService,

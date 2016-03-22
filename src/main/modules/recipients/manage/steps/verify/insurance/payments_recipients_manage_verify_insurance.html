@@ -8,8 +8,30 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">
-            {{ recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName  }} {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
+            <div class="hidden-sm hidden-xs hidden-md">
+                <div class="break-force">{{ recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName }}</div>
+                <div>
+                    {{recipient.items.senderAccount.accountNo | nrbIbanFilter }}
+                </div>
+            </div>
+            <div class="hidden-lg">
+                <rb-account-responsive-line rb-account-name="recipient.items.senderAccount.customName || recipient.items.senderAccount.accountName" rb-account-nrb="recipient.items.senderAccount.accountNo"></rb-account-responsive-line>
+            </div>
         </bd-item-property>
+
+
+        <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled"-->
+                                          <!--label="{{ ::'raiff.payments.recipients.new.zus.verify.remitter_account' | translate }}">-->
+        <!--<section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">-->
+            <!--{{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}-->
+        <!--</section>-->
+        <!--<section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">-->
+            <!--{{ recipient.formData.debitAccountNo | nrbIbanFilter }}-->
+        <!--</section>-->
+    <!--</bd-item-property>-->
+
+
+
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.custom_name' | translate }}">
             {{ recipient.formData.customName }}

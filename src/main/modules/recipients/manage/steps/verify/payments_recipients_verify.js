@@ -132,11 +132,25 @@ angular.module('raiffeisen-payments')
                     $scope.recipientAuthForm = form;
                 };
 
+                function getProperTransferList(code) {
+                    if(code === 'INSURANCE'){
+                        return "TRANSFER_ZUS_FROM_LIST";
+                    }else if(code === 'TAX'){
+                        return "TRANSFER_US_FROM_LIST";
+                    }else if(code === 'FOREIGN'){
+                        return "TRANSFER_FOREIGN_FROM_LIST";
+                    }
+                    return "TRANSFER_FROM_LIST";
+                }
+
                 function fillSenderAccount() {
                     if (!$scope.recipient.items.senderAccount) {
-                        transferService.getTransferAccounts().then(function (data) {
+                        transferService.getTransferAccounts({
+                            productList: getProperTransferList($scope.recipient.type.code),
+                            restrictions: 'ACCOUNT_RESTRICTION_DEBIT'
+                        }).then(function (data) {
                             $scope.recipient.items.senderAccount = lodash.find(data.content, {
-                                accountNo: $scope.recipient.formData.debitAccountNo
+                                accountNo: $scope.recipient.formData.debitAccountNo || $scope.recipient.formData.debitNrb
                             });
                         });
                     }

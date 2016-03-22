@@ -18,10 +18,13 @@ angular.module('raiffeisen-payments')
                 paymentRulesResolved: ['paymentRules', function(paymentRules){
                     return paymentRules.search();
                 }]
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE, utilityService) {
         $scope.blockadesForward = angular.extend({
             isBlock : false
         });
@@ -65,12 +68,6 @@ angular.module('raiffeisen-payments')
 
         });
 
-
-        angular.extend($scope.payment.meta, {
-            recipientForbiddenAccounts: []
-        });
-
-
         //paymentRulesResolved
         angular.extend($scope.payment.meta, paymentRulesResolved);
         var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
@@ -89,7 +86,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
-
         var setRealizationDateToCurrent = function () {
             angular.extend($scope.payment.formData, {
                 realizationDate: CURRENT_DATE
@@ -100,13 +96,13 @@ angular.module('raiffeisen-payments')
             var copiedForm = angular.copy(formData);
             formData.amount = (""+formData.amount).replace(",",".");
             copiedForm.amount = (""+formData.amount).replace(",", ".");
-            copiedForm.recipientName = splitTextEveryNSign(formData.recipientName);
-            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName);
+            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             return copiedForm;
         };
 
         var resetRealizationOnBlockedInput = function () {
-            if(!$scope.payment.meta.isFuturePaymentAllowed || $scope.payment.meta.dateSetByCategory) {
+            if($scope.payment.meta.isFuturePaymentAllowed === false || $scope.payment.meta.dateSetByCategory) {
                 delete $scope.payment.formData.realizationDate;
                 if(!$scope.payment.options.futureRealizationDate) {
                     setRealizationDateToCurrent(true);
@@ -114,14 +110,12 @@ angular.module('raiffeisen-payments')
             }
         };
 
-
         function isCurrentDateSelected() {
             if($scope.payment.formData.realizationDate && $scope.payment.formData.setHours){
                 return $scope.payment.formData.realizationDate.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
             }else{
                 return false;
             }
-
         }
 
         function isAmountOverBalance() {
@@ -148,10 +142,6 @@ angular.module('raiffeisen-payments')
             $scope.validateBalance();
         });
 
-
-
-
-
         $scope.setRequestConverter = function (converterFn) {
             requestConverter = converterFn;
         };
@@ -165,6 +155,12 @@ angular.module('raiffeisen-payments')
             $scope.limitExeeded = {
                 show: false
             };
+
+
+            // ZD01287983
+            if ($scope.paymentForm && $scope.paymentForm.amount) { // przelew do zus
+                $scope.paymentForm.amount.$validate();
+            }
 
             if (form.$invalid) {
                 formService.dirtyFields(form);
@@ -245,16 +241,6 @@ angular.module('raiffeisen-payments')
         customerService.getCustomerDetails().then(function(data) {
             $scope.payment.meta.customerContext = data.customerDetails.context;
         });
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
     })
     .directive('rbForeignAmountValidator', ['currencyExchangeService', '$q', function (currencyExchangeService, $q) {
         return {

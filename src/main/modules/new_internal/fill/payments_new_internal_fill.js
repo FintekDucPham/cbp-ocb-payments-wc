@@ -7,10 +7,13 @@ angular.module('raiffeisen-payments')
             params: {
                 accountId: null,
                 recipientId: null
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes) {
+    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService) {
         var CURRENT_DATE = $scope.CURRENT_DATE;
 
 
@@ -57,10 +60,6 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        angular.extend($scope.payment.meta, {
-            recipientForbiddenAccounts: []
-        });
-
         paymentRules.search().then(function (result) {
             angular.extend($scope.payment.meta, result);
             var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
@@ -79,7 +78,7 @@ angular.module('raiffeisen-payments')
 
         var requestConverter = function (formData) {
             var copiedForm = angular.copy(formData);
-            copiedForm.description = splitTextEveryNSign(formData.description);
+            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             copiedForm.amount = (""+formData.amount).replace(",", ".");
             return copiedForm;
         };
@@ -95,7 +94,7 @@ angular.module('raiffeisen-payments')
         };
 
         var resetRealizationOnBlockedInput = function () {
-            if(!$scope.payment.meta.isFuturePaymentAllowed || $scope.payment.meta.dateSetByCategory) {
+            if($scope.payment.meta.isFuturePaymentAllowed === false || $scope.payment.meta.dateSetByCategory) {
                 delete $scope.payment.formData.realizationDate;
                 setRealizationDateToCurrent(true);
             }
@@ -241,10 +240,12 @@ angular.module('raiffeisen-payments')
         });
 
         function isSenderAccountCategoryRestricted(account) {
-            if ($scope.payment.meta.customerContext === 'DETAL') {
-                return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
-            } else {
-                return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
+            if($scope.payment.items.senderAccount){
+                if ($scope.payment.meta.customerContext === 'DETAL') {
+                    return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
+                } else {
+                    return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
+                }
             }
         }
 
@@ -323,17 +324,6 @@ angular.module('raiffeisen-payments')
             recalculateCurrencies();
         }, true);
 
-
-        function splitTextEveryNSign(text, lineLength){
-            if(angular.isArray(text)){
-                text = angular.copy(text).join("\n");
-            }
-            text = text.replace(/(\n)+/g, '');
-            var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-            return lodash.filter(text.split(regexp), function(val) {
-                return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-            });
-        }
     })
     .filter('dstAccountListFilter', function(){
         return function(dstAccountList, srcAccount) {

@@ -1,0 +1,76 @@
+{
+    "scenarios": [{
+        "url": "/index.html#/payments/new/domestic/fill//",
+        "clickSelectors": [".bd-button__primary"]
+    },{
+        "url": "/index.html#/payments/new/tax/fill//",
+        "clickSelectors": [".bd-button__primary"]
+    },{
+        "url": "/index.html#/payments/new/insurance/fill//",
+        "clickSelectors": [".bd-button__primary"]
+    },{
+        "url": "/index.html#/payments/new-internal/fill//",
+        "clickSelectors": [".bd-button__primary"]
+    },{
+        "url": "/index.html#/payments/new-foreign/sepa/fill//",
+        "clickSelectors": [".bd-button__primary"]
+    },{
+        "url": "/index.html#/payments/new-foreign/swift/fill//",
+        "clickSelectors": [".bd-button__primary"]
+    },{
+        "url": "/index.html#/payments/recipients/list",
+        "clickSelectors": [".bd-table__row-entry"]
+    },{
+        "url": "/index.html#/payments/recipients/list",
+        "clickSelectors": [".bd-button__primary"],
+        "label": "form.step1"
+    },{
+        "url": "/index.html#/payments/recipients/list",
+        "clickSelectors": [".bd-button__primary", ".bd-button__primary"],
+        "label": "form.step2"
+    },{
+        "url": "/index.html#/payments/recipients/list",
+        "clickSelectors": [".bd-table__row-entry", ".bd-details-section .bd-button"],
+        "label": "form.modify.step1"
+    },{
+        "url": "/index.html#/payments/recipients/list",
+        "clickSelectors": [".bd-table__row-entry", ".bd-details-section .bd-button", ".bd-button__primary"],
+        "label": "form.modify.step2"
+    },{
+        "url": "/index.html#/payments/recipients/list",
+        "clickSelectors": [".bd-table__row-entry", ".bd-details-section .bd-button + .bd-button"],
+        "label": "form.remove.step1"
+    },{
+        "url": "/index.html#/payments/recipients/list",
+        "clickSelectors": [".bd-table__row-entry", ".bd-details-section .bd-button__primary"],
+        "label": "form.transfer"
+    },{
+    	"url": "/index.html#/payments/taxpayers/list",
+    	"clickSelectors": [".taxpayers-view .ui-select-toggle"]
+    },{
+    	"url": "/index.html#/payments/taxpayers/manage/new/fill",
+    	"clickSelectors": [".bd-button__primary"]
+    },{
+        "url": "/index.html#/payments/future/list",
+        "clickSelectors": [".bd-table__row-entry"]
+    },{
+        "url": "/index.html#/payments/rejected/list"
+    },{
+        "url": "/index.html#/payments/standing/list",
+        "clickSelectors": [".bd-table__row-entry"]
+    },{
+    	"url": "/index.html#/payments/new/standing/fill//",
+    	"clickSelectors": [".calendar-button"]
+    },{
+        "url": "/index.html#/payments/standing/list",
+        "clickSelectors": [".bd-table__row-entry", ".bd-details-section .bd-button"],
+        "label": "form.modify.step1"
+    },{
+        "url": "/index.html#/payments/standing/list",
+        "clickSelectors": [".bd-table__row-entry", ".bd-details-section .bd-button + .bd-button"],
+        "label": "form.remove.step1"
+    },{
+        "url": "/index.html#/payments/prepaid/new/fill",
+        "clickSelectors": [".bd-button__primary"]
+    }]
+}

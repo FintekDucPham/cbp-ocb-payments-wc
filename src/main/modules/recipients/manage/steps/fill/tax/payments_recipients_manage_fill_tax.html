@@ -7,6 +7,8 @@
                                bd-attr-name="remitterAccountId"
                                rb-account="recipient.items.senderAccount"
                                rb-account-list="recipient.items.accountList"
+                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                               rb-product-list-name="TRANSFER_US_FROM_LIST"
                                rb-on-account-select="onSenderAccountSelect()"
                                rb-account-select-params="recipientSelectParams"></rb-account-select>
             <eb-validation-messages eb-name="remitterAccountId">
@@ -36,10 +38,11 @@
         </bd-item-property>
         <rb-paste-warning>
             <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.recipient_account' | translate }}">
-                <div ng-paste="rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)" ng-keyup="unlockField()">
+                <div ng-paste="rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)" ng-keyup="unlockField()" ng-if="recipient.items.formSymbolList">
                     <rb-tax-account-select ng-show="!showHide"
                                             rb-tax-office="recipient.items.recipientAccount"
                                            rb-tax-office-id="recipient.formData.selectedTaxOfficeId"
+                                           rb-on-tax-account-select="selectTaxAccount($office)"
                                            rb-tax-office-params="{ searchText: 'raiff.payments.recipients.new.us.fill.recipient_account.search', clearText: 'raiff.payments.recipients.new.us.fill.recipient_account.clear' }">
                     </rb-tax-account-select>
                     <div ng-show="showHide">
@@ -143,6 +146,7 @@
             <rb-us-form-symbol-select
                     rb-form-symbol-id="recipient.formData.formCode"
                     rb-form-symbol="recipient.items.formSymbol"
+                    rb-form-symbol-list="recipient.items.formSymbolList"
                     rb-on-select="selectSymbol()"
                     bd-attr-name="formSymbol"
                     bd-attr-required

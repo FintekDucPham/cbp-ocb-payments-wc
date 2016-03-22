@@ -8,6 +8,14 @@ angular.module('raiffeisen-payments')
             params: {
                 paymentType: 'sepa',
                 payment: {}
+            },
+            data: {
+                analyticsTitle: ["$stateParams", function($stateParams) {
+                    var keys = [];
+                    keys.push("payments.submenu.options.new_foreign.header");
+                    keys.push("raiff.payments.new.types." + $stateParams.paymentType.toUpperCase());
+                    return keys;
+                }]
             }
         });
     });

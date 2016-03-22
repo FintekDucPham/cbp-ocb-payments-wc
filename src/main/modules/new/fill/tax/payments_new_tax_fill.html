@@ -299,6 +299,7 @@
                ng-pattern="patterns.usCommitmentId"
                class="input-field"
                type="text"
+               ng-trim="false"
                placeholder="{{ ::'raiff.payments.new.us.fill.commitment_id.placeholder' | translate }}">
 
         <eb-validation-messages eb-name="commitmentId">
@@ -317,8 +318,7 @@
                        name="amount"
                        class="input-field"
                        ng-model="payment.formData.amount"
-                       min="0.01"
-                       step="0.01"
+                       ng-min="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        rb-number-type-input
                        bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
@@ -351,7 +351,7 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
+            <div eb-message-key="ngMin" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
             <div eb-message-key="amount" class="validation-message animate-on">

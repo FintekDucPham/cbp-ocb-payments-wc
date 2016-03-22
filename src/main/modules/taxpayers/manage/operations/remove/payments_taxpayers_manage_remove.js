@@ -7,17 +7,26 @@ angular.module('raiffeisen-payments')
                 taxpayer: null
             },
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/remove/payments_taxpayers_manage_remove.html",
-            controller: "PaymentsTaxpayersManageRemoveController"
+            controller: "PaymentsTaxpayersManageRemoveController",
+            data: {
+                analyticsTitle: "raiff.payments.taxpayers.manage.remove.title"
+            }
         }).state('payments.taxpayers.manage.remove.verify', {
             url: "/verify",
             templateUrl: function () {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
             },
-            controller: "TaxpayersManageVerifyController"
+            controller: "TaxpayersManageVerifyController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
+            }
         }).state('payments.taxpayers.manage.remove.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/remove/status/payments_taxpayers_manage_remove_status.html",
-            controller: "TaxpayersManageRemoveStatusController"
+            controller: "TaxpayersManageRemoveStatusController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step3"
+            }
         });
     })
     .controller('PaymentsTaxpayersManageRemoveController', function ($scope, $stateParams, $state, lodash, bdStepStateEvents) {

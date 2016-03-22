@@ -47,7 +47,7 @@
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
-             <rb-bank-name account-no="payment.formData.recipientAccountNo" response-value="payment.formData.recipientAccountName" bank-name-promise="payment.formData.recipientBankNamePromise">{{payment.formData.recipientAccountName}}</rb-bank-name>
+             <rb-bank-name account-no="payment.formData.recipientAccountNo" bank-name-promise="payment.formData.recipientBankNamePromise"></rb-bank-name>
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                 <div class="validation-message animate-on">
                     {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
@@ -66,6 +66,9 @@
                 </div>
                 <div eb-message-key="notZus" class="validation-message animate-on">
                     {{::'raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
+                </div>
+                <div eb-message-key="sameSourceAccount" class="validation-message animate-on">
+                    {{::'raiff.validation.sameSourceAccount' | translate}}
                 </div>
             </eb-validation-messages>
 
@@ -148,10 +151,9 @@
                 <input type="text"
                        name="amount"
                        rb-number-type-input
+                       ng-min="0.01"
                        class="input-field"
                        ng-model="payment.formData.amount"
-                       min="0.01"
-                       step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'elixir' : payment.formData.sendBySorbnet ? 99999999999999999 : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
                        required
@@ -181,7 +183,7 @@
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
             </div>
-            <div eb-message-key="min" class="validation-message animate-on">
+            <div eb-message-key="ngMin" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
             </div>
             <div eb-message-key="amount" class="validation-message animate-on">

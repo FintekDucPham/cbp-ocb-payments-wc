@@ -16,7 +16,9 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.creditAccountBankName}}<br/>
+    <rb-bank-name account-no="$data.creditAccount"
+                  bank-name-promise="standingBankNamePromise">
+    </rb-bank-name>
     {{$data.creditAccount | nrbIbanFilter }}
 </bd-item-property>
 

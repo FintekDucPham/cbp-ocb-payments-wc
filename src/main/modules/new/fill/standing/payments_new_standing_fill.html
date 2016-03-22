@@ -76,12 +76,10 @@
                    ng-keyup="unlockField()"
                    placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_account.placeholder' | translate }}">
             <rb-bank-name
-                    response-value="payment.items.recipientBankName"
                     account-no="payment.formData.recipientAccountNo"
                     bank-name-promise="payment.items.bankNamePromise"
                     ng-show="payment.items.bankNamePromise.$$state.status === 1"
                     >
-                {{payment.items.recipientBankName}}
             </rb-bank-name>
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
@@ -184,7 +182,6 @@
                        class="input-field"
                        ng-model="payment.formData.amount"
                        ng-min="0.01"
-                       step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        required
                        placeholder="{{ ::'raiff.payments.new.standing.fill.amount.placeholder' | translate }}"/>
@@ -198,7 +195,7 @@
                         {{$select.selected}}
                     </ui-select-match>
                     <ui-select-choices repeat="currency in ['PLN'] track by $index">
-                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                        <div ng-bind="currency"></div>
                     </ui-select-choices>
                 </ui-select>
             </div>

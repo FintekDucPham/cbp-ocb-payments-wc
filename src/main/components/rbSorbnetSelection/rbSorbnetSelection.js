@@ -47,7 +47,6 @@ angular.module('raiffeisen-payments')
                         }
                         postSelectionCheck();
                     }
-
                 });
 
                 s.$watch('model.sendBySorbnet', function(n,o){
@@ -68,6 +67,11 @@ angular.module('raiffeisen-payments')
                     }
 
                 });
+
+                if (s.destinationNrb) {
+                    s.nrbPrefixMatch = rbAccountOwnNrbService.startsWithPrefix(s.destinationNrb);
+                    postSelectionCheck();
+                }
 
             }
         };

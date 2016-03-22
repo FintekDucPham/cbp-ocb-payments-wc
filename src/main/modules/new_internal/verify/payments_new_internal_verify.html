@@ -1,8 +1,15 @@
 <div class="form-body">
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
-        <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div><!-- | nazwa -->
-        {{payment.items.senderAccount.accountNo | nrbIbanFilter }} <!-- | numer -->
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+            <div>
+                {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+            </div>
+        </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
+        </div>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_data'|translate}}">
@@ -10,8 +17,13 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.recipient_account_name'|translate}}">
-        <div class="break-force">{{payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName}}</div><!-- | nazwa -->
-        {{payment.items.recipientAccount.accountNo | nrbIbanFilter}} <!-- | numer -->
+        <span class="desktop-only-payments">
+        <div class="break-force">{{ payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName }}</div>
+        {{payment.items.recipientAccount.accountNo | nrbIbanFilter }}
+        </span>
+        <div class="mobile-only-payments">
+            <span class="ellipsis-account" >{{ payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName }}  </span>&nbsp; {{payment.items.recipientAccount.accountNo | nrbIbanShortFilter }}
+        </div>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.amount'|translate}}">
@@ -19,15 +31,15 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.description'|translate}}">
-        <p class="break-force">{{payment.formData.description.join('')}}</p>
+        <p class="break-force">{{payment.formData.description | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate | date:'shortDate' }}
     </bd-item-property>
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
-        {{::payment.formData.transferCost}} <a ng-show="transferCost.link != null" href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}" ng-if="transferCost.link">
+        {{::payment.formData.transferCost}} <a ng-href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
     </bd-item-property>
 
 </div>
