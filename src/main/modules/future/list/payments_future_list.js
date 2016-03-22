@@ -87,7 +87,7 @@ angular.module('raiffeisen-payments')
                     "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.details.frequency.periodUnit)).code,
                     "frequency": payment.details.frequency.periodCount,
                     "amount": payment.details.amount,
-                    "id": payment.id
+                    "id": payment.details.id
                 };
 
                 viewStateService.setInitialState('payments.new', {
