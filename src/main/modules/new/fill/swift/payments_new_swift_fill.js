@@ -78,7 +78,9 @@ angular.module('raiffeisen-payments')
                     promise: function() {
                         return forbiddenAccounts.isUsAccount(accountNo);
                     },
-                    callback: $scope.paymentForm.recipientAccountNo.$validate
+                    callback: function() {
+                        $scope.checkUsPmntOnlyEuro($scope.payment.formData.recipientAccountNo);
+                    }
                 });
                 valid = !usAccount || $scope.payment.formData.currency.currency == "EUR";
             }

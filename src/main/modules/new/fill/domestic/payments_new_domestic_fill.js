@@ -43,6 +43,9 @@ angular.module('raiffeisen-payments')
             recalculateCurrency();
             $scope.validateBalance();
             recipientFilter.filter();
+            if($scope.paymentForm){
+                $scope.paymentForm.amount.$validate();
+            }
         };
 
         $scope.$on('clearForm', function () {

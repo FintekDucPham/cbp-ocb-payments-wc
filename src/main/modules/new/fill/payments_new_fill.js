@@ -102,7 +102,7 @@ angular.module('raiffeisen-payments')
         };
 
         var resetRealizationOnBlockedInput = function () {
-            if(!$scope.payment.meta.isFuturePaymentAllowed || $scope.payment.meta.dateSetByCategory) {
+            if($scope.payment.meta.isFuturePaymentAllowed === false || $scope.payment.meta.dateSetByCategory) {
                 delete $scope.payment.formData.realizationDate;
                 if(!$scope.payment.options.futureRealizationDate) {
                     setRealizationDateToCurrent(true);

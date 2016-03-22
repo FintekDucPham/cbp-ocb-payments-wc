@@ -233,6 +233,11 @@ angular.module('raiffeisen-payments')
             tableControl: undefined
         };
 
+        function dateTodayOrInFuture(paymentDate) {
+            paymentDate = new Date(paymentDate);
+            return now.getTime() > paymentDate.getTime() ? now : paymentDate;
+        }
+
         //renew
         $scope.renew = function (data) {
             var copiedData = angular.copy(data);
@@ -243,7 +248,7 @@ angular.module('raiffeisen-payments')
                 payment: lodash.extend({
                     remitterAccountId : details.accountId,
                     recipientName : details.recipientName,
-                    realizationDate: new Date(details.realizationDate)
+                    realizationDate: dateTodayOrInFuture(details.realizationDate)
                 }, (function() {
                     switch(paymentType) {
                         case 'insurance':
@@ -272,7 +277,7 @@ angular.module('raiffeisen-payments')
                             return {
                                 recipientAccountNo: details.accountNo,
                                 recipientName: details.recipientName,
-                                description: details.title,
+                                description: cropArray(details.title),
                                 amount: details.amount,
                                 currency: details.currency
                             };
@@ -282,7 +287,7 @@ angular.module('raiffeisen-payments')
                                 amount: details.amount,
                                 recipientAccountNo: details.recipientAccountNo,
                                 currency: details.currency,
-                                description: details.title
+                                description: cropArray(details.title)
                             };
                         case 'tax':
                             return {
@@ -304,6 +309,15 @@ angular.module('raiffeisen-payments')
                 })())
             });
         };
+
+        function cropArray(array) {
+            array = array || [];
+            for (var i = array.length - 1; i >= 0; i--) {
+                if (!!array[i]) {
+                    return array.splice(0, i + 1);
+                }
+            }
+        }
 
         //action
         $scope.onSubmit = function (form) {
