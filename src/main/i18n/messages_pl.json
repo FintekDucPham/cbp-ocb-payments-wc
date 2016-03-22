@@ -1193,7 +1193,7 @@
 
   "raiff.payments.basket.submit.button":"Złóż podpis",
   "raiff.payments.basket.manage.sign.header": "Podpisz przelew",
-  "raiff.payments.basket.label": "Płatności do podpisu",
+  "raiff.payments.basket.label": "Koszyk płatności",
   "raiff.payments.basket.list.header": "Koszyk płatności",
   "raiff.payments.basket.sign.buttons.proceed": "Podpisz",
   "raiff.payments.basket.status.SIGNED_REQUIRED":"Przelew/transakcja wymaga dodatkowych podpisów",
@@ -1209,8 +1209,11 @@
   "raiff.payments.basket.list.summary.chose":"Podsumowanie wybrane",
   "raiff.payments.basket.list.summary.all":"Podsumowanie wszytskie",
   "raiff.payments.basket.multistepform.buttons.delete":"Usuń",
-  "raiff.payments.basket.checkbox.label":"Dodaj do koszyka"
-
+  "raiff.payments.basket.checkbox.label":"Dodaj do koszyka",
+  "raiff.payments.basket.accepted":"Przyjęto do realizacji",
+  "raiff.payments.basket.add.verify":"Przelew zostanie dodany do Twojego koszyka płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego potwierdzenia w koszyku płatności",
+  "raiff.payments.new.status.ADDED_TO_BASKET":"Przelew pomyślnie został dodany do koszyka i oczekuje na dalsze decyzje",
+  "raiff.payments.basket.list.empty":"Nie znaleziono płatności do potwierdzenia spełniających kryteria wyszukiwania"
 
 
 

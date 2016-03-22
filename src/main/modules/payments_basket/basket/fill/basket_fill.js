@@ -325,7 +325,7 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig : new bdTableConfig({
-                placeholderText: translate.property("account.transactions.list.empty"),
+                placeholderText: translate.property("raiff.payments.basket.list.empty"),
                 dateRange : {dateFrom : $scope.models.sent.dateFrom, dateTo : $scope.models.sent.dateTo}
             }),
             tableData : {

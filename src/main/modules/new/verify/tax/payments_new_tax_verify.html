@@ -69,6 +69,11 @@
                  {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
              </span>
          </span>
+         <span class="messages" ng-if="payment.formData.addToBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.add.verify'|translate}}
+             </span>
+         </span>
     </span>
     </span>
     <eb-preloader class="eb-list-preloader" eb-promise="meta.cutOffTimePromise"></eb-preloader>

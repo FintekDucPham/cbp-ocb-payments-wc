@@ -63,6 +63,11 @@
                  {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
              </span>
          </span>
+         <span class="messages" ng-if="payment.formData.addToBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.add.verify'|translate}}
+             </span>
+         </span>
     </span>
 
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.verify.payment_data' | translate }}">

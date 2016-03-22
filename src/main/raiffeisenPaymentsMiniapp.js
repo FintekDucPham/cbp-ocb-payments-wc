@@ -102,7 +102,7 @@ angular.module('raiffeisen-payments', [
                     label: 'raiff.payments.basket.label',
                     icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.multisign.list",
-                    priority: 8
+                    priority: 9
                 }
             ]
         });
