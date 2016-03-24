@@ -117,8 +117,14 @@ angular.module('raiffeisen-payments')
                     dateSetByCategory: false,
                     hideSaveRecipientButton: false
                 },
-                validation: {}
+                validation: {},
+                items: {
+                    senderAccount: {
+                        accessibleAssets: null
+                    }
+                }
             });
+
 
         if(!angular.equals({}, $stateParams.payment)){
             $scope.payment.formData = angular.copy($stateParams.payment);

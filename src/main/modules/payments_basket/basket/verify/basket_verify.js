@@ -12,6 +12,7 @@ angular.module('raiffeisen-payments')
 
         function authorize(doneFn, actions) {
             paymentsBasketService.realize($scope.basket.transferId, $scope.basket.token.model.input.model).then(function(data){
+                $scope.basket.item.result = data;
                 doneFn();
             });
         }

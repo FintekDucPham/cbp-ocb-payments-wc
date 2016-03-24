@@ -18,7 +18,8 @@ angular.module('raiffeisen-payments')
                 params: {}
             },
             validation: {},
-            payments: {}
+            payments: {},
+            item: {}
         });
 
         $scope.getIcon = downloadService.downloadIconImage;
