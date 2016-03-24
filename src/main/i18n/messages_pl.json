@@ -1225,8 +1225,10 @@
   "raiff.payments.basket.checkbox.label":"Dodaj do koszyka",
   "raiff.payments.basket.accepted":"Przyjęto do realizacji",
   "raiff.payments.basket.add.verify":"Przelew zostanie dodany do Twojego koszyka płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego potwierdzenia w koszyku płatności",
-  "raiff.payments.new.status.ADDED_TO_BASKET":"Przelew pomyślnie został dodany do koszyka i oczekuje na dalsze decyzje",
-  "raiff.payments.basket.list.empty":"Nie znaleziono płatności do potwierdzenia spełniających kryteria wyszukiwania"
+  "raiff.payments.new.status.ADDED_TO_BASKET":"Przelew pomyślnie został dodany do koszyka i oczekuje na dalsze decyzje.",
+  "raiff.payments.basket.list.empty":"Nie znaleziono płatności do potwierdzenia spełniających kryteria wyszukiwania",
+  "raiff.payments.new.status.SIGNED_REQUIRED":"Zlecenie oczekuje na brakujące podpisy wymagane w schemacie akceptacji."
+
 
 
 
