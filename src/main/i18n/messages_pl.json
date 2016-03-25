@@ -1194,6 +1194,7 @@
 
     "raiff.payments.standing.manage.remove.title": "Usunięcie zlecenia stałego",
     "raiff.standing_order.startDate.to_early":"Niepoprawna data pierwszej realizacji zlecenia",
+    "raiff.standing_order.endDate.to_early":"Niepoprawna data zakończenia zlecenia",
   "EOF" : "",
     "raiff.payments.new.verify.transfer_cost": "Koszt przelewu",
     "raiff.payments.new.verify.transfer_cost.info" : "Informacja o koszcie przelewu",
