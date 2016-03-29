@@ -20,8 +20,8 @@
     "raiff.payments.id_type.PESEL": "P - PESEL",
     "raiff.payments.id_type.NIP": "N - NIP",
     "raiff.payments.id_type.REGON": "R - REGON",
-    "raiff.payments.id_type.ID_CARD": "1 - dowód osobisty",
-    "raiff.payments.id_type.PASSPORT": "2 - paszport",
+    "raiff.payments.id_type.ID_CARD": "1 - Dowód osobisty",
+    "raiff.payments.id_type.PASSPORT": "2 - Paszport",
     "raiff.payments.id_type.OTHER": "3 - Inny dokument tożsamości",
 
     "raiff.payments.widget.recipient_name": "Odbiorca",
