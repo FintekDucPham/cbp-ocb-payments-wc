@@ -244,7 +244,7 @@ angular.module('raiffeisen-payments')
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
                         totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
-                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
+                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate || $scope.payment.formData.addToBasket ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
                     return true;
                 }

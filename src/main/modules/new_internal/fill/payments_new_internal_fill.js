@@ -102,7 +102,7 @@ angular.module('raiffeisen-payments')
 
         function validateBalance() {
             if($scope.paymentForm.amount){
-                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+                $scope.paymentForm.amount.$setValidity('balance',  ($scope.payment.formData.addToBasket || !(isCurrentDateSelected() && isAmountOverBalance())));
             }
         }
 
@@ -120,6 +120,13 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$watch('payment.formData.realizationDate',function(newVal){
+            validateBalance();
+        });
+
+        $scope.$watch('payment.formData.addToBasket',function(newVal){
+            if(!!$scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$validate();
+            }
             validateBalance();
         });
 

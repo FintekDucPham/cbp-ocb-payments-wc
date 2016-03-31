@@ -41,6 +41,13 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}" ng-if="transferCost.link">
         {{::payment.formData.transferCost}} <a ng-href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
     </bd-item-property>
+     <span class="eb-validation-messages">
+        <span class="messages" ng-if="payment.formData.addToBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.add.verify'|translate}}
+             </span>
+         </span>
+     </span>
 
 </div>
 <section ng-if="payment.operation.code!=='EDIT'">

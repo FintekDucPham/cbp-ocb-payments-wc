@@ -1,3 +1,6 @@
-<!--
-<bd-msg-panel bd-msg-type="success">{{ ::'raiff.payments.basket.accepted'| translate }}</bd-msg-panel>-->
-<pre>{{basket.item.result}}</pre>
+<span ng-if="basket.item.result.notAcceptedTransactions > 0">
+    <bd-msg-panel bd-msg-type="warning">{{notAcceptedTransactionMsg}}</bd-msg-panel>
+</span>
+<span ng-if="basket.item.result.message != 'CORRECT'">
+    <bd-msg-panel bd-msg-type="error">{{validationMsg}}</bd-msg-panel>
+</span>

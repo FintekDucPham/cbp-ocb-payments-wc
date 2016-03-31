@@ -68,6 +68,12 @@ angular.module('raiffeisen-payments')
 
         });
 
+        $scope.$watch('payment.formData.addToBasket',function(newVal){
+            if(!!$scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$validate();
+            }
+        });
+
         //paymentRulesResolved
         angular.extend($scope.payment.meta, paymentRulesResolved);
         var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
@@ -251,6 +257,12 @@ angular.module('raiffeisen-payments')
                     return $q(function(resolve, reject) {
                         var sourceAccountCurrency = scope.$eval(attr.rbSourceAccountCurrency),
                             transactionCurrency = scope.$eval(attr.rbTransactionCurrency);
+
+                        //dla zaznaczonej opcji dodad do koszyka nie walidujemy dostepnych srodkow
+                        if (scope.payment.formData.addToBasket) {
+                            resolve();
+                            return;
+                        }
 
                         // dla przyszlych platnosci, nie walidujemy dostepnych srodkow
                         if (scope.payment.options.futureRealizationDate) {

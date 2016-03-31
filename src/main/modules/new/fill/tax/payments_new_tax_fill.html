@@ -321,7 +321,7 @@
                        ng-min="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        rb-number-type-input
-                       bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
+                       bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate || payment.formData.addToBasket  ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                        required
                        placeholder="{{ ::'raiff.payments.new.us.fill.amount.placeholder' | translate }}"/>
             </div>
