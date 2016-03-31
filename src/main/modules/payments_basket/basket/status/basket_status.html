@@ -1,6 +1,12 @@
-<span ng-if="basket.item.result.notAcceptedTransactions > 0">
-    <bd-msg-panel bd-msg-type="warning">{{notAcceptedTransactionMsg}}</bd-msg-panel>
+<span ng-if="notAcceptedTransactionMsg.show">
+    <bd-msg-panel bd-msg-type="warning">{{notAcceptedTransactionMsg.message}}</bd-msg-panel>
 </span>
-<span ng-if="basket.item.result.message != 'CORRECT'">
-    <bd-msg-panel bd-msg-type="error">{{validationMsg}}</bd-msg-panel>
+<span ng-if="validationMsg.show">
+    <bd-msg-panel bd-msg-type="error">{{validationMsg.message}}</bd-msg-panel>
+</span>
+<span ng-if="realizationDateExceeded.show">
+    <bd-msg-panel bd-msg-type="warning">{{realizationDateExceeded.message}}</bd-msg-panel>
+</span>
+<span ng-if="transactionsSubmited.show">
+    <bd-msg-panel bd-msg-type="warning">{{transactionsSubmited.message}}</bd-msg-panel>
 </span>

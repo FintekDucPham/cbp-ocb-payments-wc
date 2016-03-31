@@ -1230,8 +1230,9 @@
   "raiff.payments.new.status.SIGNED_REQUIRED":"Zlecenie oczekuje na brakujące podpisy wymagane w schemacie akceptacji.",
   "raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS":"Dla {0} z {1} przelewów gotowych go przekazania do realizacji łączna kwota przelewów przekracza wysokość dostępnych środków. Realizacja przelewów nie jest możliwa.",
   "raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED":"Dla {0} z {1} przelewów gotowych do przekazania do realizacji przekroczony został dzienny limit przelewów. Wartość limitu oraz pozostałą do wykorzystania kwotę znajdziesz w menu \"Ustawienia - Bankowość internetowa - Limity dzienne\".",
-  "raiff.payments.basket.status.NOT_ACCEPTED_TRANSACTIONS":"{0} z {1} przelewów oczekuje w Koszyku płatności na brakujące akceptacje wynikające z konfiguracji schematów akceptacji."
-
+  "raiff.payments.basket.status.NOT_ACCEPTED_TRANSACTIONS":"{0} z {1} przelewów oczekuje w Koszyku płatności na brakujące akceptacje wynikające z konfiguracji schematów akceptacji.",
+  "raiff.payments.basket.status.REALIZATION_DATE_EXCEEDED":"Przelewy, dla których planowana data realizacji minęła zostaną zrealizowana z datą bieżącą.",
+  "raiff.payments.basket.status.TRANSACTIONS_SUBMITED":"{0} z {1} przelewów zostało przekazanych do realizacji."
 
 
 
