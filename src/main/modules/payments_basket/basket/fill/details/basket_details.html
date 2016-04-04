@@ -1,0 +1,36 @@
+<div class="basket-vew__details">
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_date'|translate}}">
+        {{$data.payment.realizationDate| date:'shortDate' }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.addedToBasketDate'|translate}}">
+        {{$data.addedToBasketDate| date:'shortDate' }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.status'|translate}}">
+        {{$data.signedStatus}}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_type'|translate}}">
+        {{ ::'raiff.payments.new.types.'+$data.payment.transferType| translate}}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.recipient_name'|translate}}">
+        {{ $data.payment.recipientName.join('') }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_title'|translate}}">
+        {{ $data.payment.title.join('') }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_amount'|translate}}">
+        {{ $data.payment.amount | number: 2}} {{ $data.payment.currency }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.sourceAccount'|translate}}">
+        <div>{{$data.payment.accountNo| nrbIbanFilter }}</div>
+        <div>{{$data.payment.owner}}</div>
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.targetAccount'|translate}}">
+        {{$data.payment.recipientAccountNo| nrbIbanFilter }}
+        <div>{{$data.payment.recipientName.join('') }}</div>
+        <div>{{$data.payment.recipientAddress.join('') }}</div>
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.historyAction'|translate}}">
+
+    </bd-item-property>
+
+</div>

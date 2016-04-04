@@ -39,6 +39,7 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsBasketFillController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, bdStepStateEvents, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, paymentsBasketService, paymentsBasketFilterCriteria, accountsService, customerService, dateFilter, dateParser, customerProductService) {
+        $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
         $scope.dateRange = {};
         $scope.summaryItemMap = {};
 
@@ -293,6 +294,91 @@ angular.module('raiffeisen-payments')
                 responseObject.taxForm = details.paymentDetails.formCode;
             }
             return responseObject;
+        };
+
+        function dateTodayOrInFuture(paymentDate) {
+            paymentDate = new Date(paymentDate);
+            return now.getTime() > paymentDate.getTime() ? now : paymentDate;
+        }
+
+        function cropArray(array) {
+            array = array || [];
+            for (var i = array.length - 1; i >= 0; i--) {
+                if (!!array[i]) {
+                    return array.splice(0, i + 1);
+                }
+            }
+        }
+
+        $scope.onModify = function(payment){
+            var copiedData = angular.copy(payment);
+            var details = copiedData.payment;
+            var paymentType = angular.lowercase(details.transferType);
+            $state.go(paymentType === 'internal' ? "payments.new_internal.fill" : "payments.new.fill", {
+                paymentType: paymentType,
+                payment: lodash.extend({
+                    remitterAccountId : details.accountId,
+                    recipientName : details.recipientName,
+                    realizationDate: details.realizationDate
+                }, (function() {
+                    switch(paymentType) {
+                        case 'insurance':
+                         /*   var selectedInsurance = lodash.find(parameters.insuranceAccounts, {
+                                accountNo: details.recipientAccountNo
+                            });
+                            var insurancePremium = [];
+                            insurancePremium[selectedInsurance.insuranceCode] = {
+                                amount: details.amount,
+                                nrb: details.recipientAccountNo,
+                                currency: "PLN"
+                            };
+                            return {
+                                nip: details.paymentDetails.nip,
+                                secondaryIdType: TYPE_ID_MAPPER[details.paymentDetails.secondIDType],
+                                secondaryIdNo: details.paymentDetails.secondIDNo,
+                                paymentType: details.paymentType,
+                                declarationDate: details.paymentDetails.declaration,
+                                declarationNo: details.paymentDetails.declarationNo,
+                                additionalInfo: details.paymentDetails.decisionNo,
+                                insurancePremiums: insurancePremium,
+                                amount: details.amount,
+                                insuranceAccount: details.recipientAccountNo
+                            };*/
+                        case 'domestic':
+                            return {
+                                recipientAccountNo: details.accountNo,
+                                recipientName: details.recipientName,
+                                description: cropArray(details.title),
+                                amount: details.amount,
+                                currency: details.currency
+                            };
+                        case 'internal':
+                            return {
+                                beneficiaryAccountId: details.recipientAccountId,
+                                amount: details.amount,
+                                recipientAccountNo: details.recipientAccountNo,
+                                currency: details.currency,
+                                description: cropArray(details.title)
+                            };
+                        case 'tax':
+                            return {
+                                recipientAccountNo: details.recipientAccountNo,
+                                taxpayerData: details.senderName,
+                                idType: TYPE_ID_MAPPER[details.paymentDetails.idtype],
+                                idNumber: details.paymentDetails.idnumber,
+                                formCode: details.paymentDetails.formCode,
+                                periodType: details.paymentDetails.periodType,
+                                periodNo: details.paymentDetails.periodNumber,
+                                periodYear: details.paymentDetails.periodYear,
+                                obligationId: details.paymentDetails.obligationId,
+                                amount: details.amount,
+                                currency: details.currency
+                            };
+                        default:
+                            throw "Payment type {0} not supported.".format(paymentType);
+                    }
+                })())
+            });
         };
 
         $scope.onDelete = function(payment) {

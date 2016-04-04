@@ -49,18 +49,26 @@
                         'data': 'realizationDate'
                     },
                     'second': {
+                        'title': '##raiff.payments.basket.list.header.status',
+                        'data': 'signedStatus'
+                    },
+                    'third': {
                         'title': '##raiff.payments.basket.list.header.operation_type',
                         'data': 'transferType'
                     },
-                    'third': {
+                    'fourth': {
                         'title': '##raiff.payments.basket.list.header.recipient_name',
                         'data': 'recipientName'
                     },
-                    'fourth': {
+                    'fifth': {
                         'title': '##raiff.payments.basket.list.header.operation_title',
                         'data': 'title'
                     },
-                    'fifth': {
+                    'sixth': {
+                        'title': '##raiff.payments.basket.list.header.targetAccount',
+                        'data': 'recipientAccountNo'
+                    },
+                    'seventh': {
                         'title': '##raiff.payments.basket.list.header.operation_amount',
                         'data': [
                             'amount',
@@ -71,16 +79,15 @@
 
             <bd-details-section bd-table-row-details>
                 <div ng-if="$data">
-                    <!--    <ng-include src="::resolveTemplateType($data.transferType)"></ng-include>-->
-
+                    <ng-include src="templateDetails"></ng-include>
                     <bd-details-action-section>
                         <div class="row">
                             <div class="col-sm-12 col-md-12" style="text-align:right;">
-                                <bd-button ng-click="onSign($data)" class="bd-button">
-                                    {{::'raiff.payments.basket.submit.button' | translate}}
+                                <bd-button ng-click="onDelete($data)" class="bd-button">
+                                    {{::'raiff.payments.basket.list.details.buttons.delete' | translate}}
                                 </bd-button>
-                                <bd-button ng-click="onBack(this)" class="bd-button bd-button__primary">
-                                    {{::'raiff.payments.future.list.details.insurance.buttons.backToList' | translate}}
+                                <bd-button ng-click="onModify($data)" class="bd-button">
+                                    {{::'raiff.payments.basket.list.details.buttons.modify' | translate}}
                                 </bd-button>
                             </div>
                         </div>
