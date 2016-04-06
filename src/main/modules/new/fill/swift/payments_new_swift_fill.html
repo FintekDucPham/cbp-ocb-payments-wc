@@ -392,8 +392,7 @@
     </bd-item-property>
 
 
-    <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.basket.checkbox.label' | translate }}">
-        <bd-checkbox ng-model="payment.formData.addToBasket"></bd-checkbox>
-    </bd-item-property>
+    <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-basket-select>
+
 
 </div>

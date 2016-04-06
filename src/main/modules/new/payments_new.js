@@ -69,7 +69,7 @@ angular.module('raiffeisen-payments')
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new', {
-            url: "/new/:paymentType",
+            url: "/new/:paymentType/:referenceId",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/payments_new.html",
             controller: "PaymentsNewController",
@@ -87,7 +87,7 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
                                                    pathService, translate, $stateParams, $state, lodash, validationRegexp,
-                                                   standingTransferService, transferService, initialState, viewStateService) {
+                                                   standingTransferService, transferService, initialState, viewStateService, rbPaymentInitFactory) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
@@ -101,7 +101,8 @@ angular.module('raiffeisen-payments')
                 operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
                 formData: {
                     hideSaveRecipientButton: false,
-                    sendBySorbnet: false
+                    sendBySorbnet: false,
+                    addToBasket: false
                 },
                 token: {
                     model: null,
@@ -121,7 +122,10 @@ angular.module('raiffeisen-payments')
                 items: {
                     senderAccount: {
                         accessibleAssets: null
-                    }
+                    },
+                    modifyFromBasket : false
+                },
+                initData: {
                 }
             });
 
@@ -285,6 +289,9 @@ angular.module('raiffeisen-payments')
                 return transferService;
             }
         };
+
+
+        rbPaymentInitFactory($scope);
 
 
 

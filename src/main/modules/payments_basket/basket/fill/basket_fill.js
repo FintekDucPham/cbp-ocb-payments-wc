@@ -40,6 +40,16 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsBasketFillController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, bdStepStateEvents, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, paymentsBasketService, paymentsBasketFilterCriteria, accountsService, customerService, dateFilter, dateParser, customerProductService) {
         $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
+
+        var TYPE_ID_MAPPER = {
+            P: "PESEL",
+            N: "NIP",
+            R: "REGON",
+            1: "ID_CARD",
+            2: "PASSPORT",
+            3: "OTHER"
+        };
+
         $scope.dateRange = {};
         $scope.summaryItemMap = {};
 
@@ -310,20 +320,21 @@ angular.module('raiffeisen-payments')
             }
         }
 
-        $scope.onModify = function(payment){
-            var copiedData = angular.copy(payment);
-            var details = copiedData.payment;
-            var paymentType = angular.lowercase(details.transferType);
-            $state.go(paymentType === 'internal' ? "payments.new_internal.fill" : "payments.new.fill", {
-                paymentType: paymentType,
-                payment: lodash.extend({
+        $scope.onEdit = function (data) {
+            var copiedData = angular.copy(data);
+            var paymentType = angular.lowercase(copiedData.payment.transferType);
+            $state.go(paymentType === 'own' ? "payments.new_internal.fill" : "payments.new.fill", {
+                referenceId: copiedData.payment.id,
+                paymentType: paymentType
+              /*  payment: lodash.extend({
                     remitterAccountId : details.accountId,
                     recipientName : details.recipientName,
-                    realizationDate: details.realizationDate
+                    realizationDate: details.realizationDate,
+                    referenceId: details.id
                 }, (function() {
                     switch(paymentType) {
-                        case 'insurance':
-                         /*   var selectedInsurance = lodash.find(parameters.insuranceAccounts, {
+                       *//* case 'insurance':
+                            var selectedInsurance = lodash.find(parameters.insuranceAccounts, {
                                 accountNo: details.recipientAccountNo
                             });
                             var insurancePremium = [];
@@ -343,16 +354,16 @@ angular.module('raiffeisen-payments')
                                 insurancePremiums: insurancePremium,
                                 amount: details.amount,
                                 insuranceAccount: details.recipientAccountNo
-                            };*/
+                            };*//*
                         case 'domestic':
                             return {
-                                recipientAccountNo: details.accountNo,
+                                recipientAccountNo: details.recipientAccountNo,
                                 recipientName: details.recipientName,
                                 description: cropArray(details.title),
                                 amount: details.amount,
                                 currency: details.currency
                             };
-                        case 'internal':
+                        case 'own':
                             return {
                                 beneficiaryAccountId: details.recipientAccountId,
                                 amount: details.amount,
@@ -377,7 +388,7 @@ angular.module('raiffeisen-payments')
                         default:
                             throw "Payment type {0} not supported.".format(paymentType);
                     }
-                })())
+                })())*/
             });
         };
 

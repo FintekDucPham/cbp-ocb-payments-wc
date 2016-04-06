@@ -29,7 +29,9 @@
         </bd-item-property>
 
         <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
-            <div ui-view></div>
+            <div ng-if="payment.initData.promise.$$state.status!==0">
+                <div ui-view></div>
+            </div>
         </rb-multistep-form>
 
     </bd-form-panel>
