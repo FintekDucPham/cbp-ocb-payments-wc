@@ -1054,6 +1054,7 @@
 
 
     "raiff.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
+    "raiff.payments.new.error.description.NotNull":"Tytuł przelewu nie może być pusty",
     "raiff.payments.new.standing.edit.order_id": "Numer zlecenia",
 
 
