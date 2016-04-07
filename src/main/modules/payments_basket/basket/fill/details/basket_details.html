@@ -30,7 +30,14 @@
         <div>{{$data.payment.recipientAddress.join('') }}</div>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.historyAction'|translate}}">
-
+        <div class="basket-vew__details__action-history">
+            <div ng-repeat="item in $data.actionHistoryList track by $index">
+                <span>{{item.date|date:'short'}}</span>
+                <span>{{::'raiff.payments.basket.history.action.'+item.action| translate}}</span>
+                <span>-</span>
+                <span>{{item.firstName}} {{item.lastName}}</span>
+            </div>
+        </div>
     </bd-item-property>
 
 </div>

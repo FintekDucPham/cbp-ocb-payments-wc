@@ -1241,7 +1241,11 @@
   "raiff.payments.basket.multistepform.buttons.delete":"Usuń",
   "raiff.payments.basket.modify.verify":"Przelew zostanie zmodyfikowany w Twoim koszyku płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego akceptacji w koszyku płatności. Edycja przelewu powoduje usunięcie wszystkich wcześniej złożonych akceptacji.",
   "raiff.payments.basket.modify.signRemove.verify":"Edycja przelewu powoduje, że wszystkie akceptację złożone pod zleceniem zostaną anulowane.",
-  "raiff.payments.new.status.MODIFY_FROM_BASKET":"Przelew został zmodyfikowany."
+  "raiff.payments.new.status.MODIFY_FROM_BASKET":"Przelew został zmodyfikowany.",
+  "raiff.payments.basket.history.action.CREATED":"Utworzenie przelewu",
+  "raiff.payments.basket.history.action.MODIFIED":"Edycja przelewu",
+  "raiff.payments.basket.history.action.SUBMITED":"Przekazanie do realizacji",
+  "raiff.payments.basket.history.action.SIGNED":"Akceptacja przelewu"
 
 
 
