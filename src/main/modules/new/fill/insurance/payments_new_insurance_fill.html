@@ -237,9 +237,9 @@
         <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums" style="width: 100%">
 
             <bd-checkbox-select-option ng-repeat="insuranceItem in insuranceAccountList"
+                                       bd-disabled="payment.operation.code==='EDIT' && isInsuranceDisabled(insuranceItem.insuranceCode)"
                                        bd-on-check="enableInsurancePremium(insuranceItem.insuranceCode)"
-                                       bd-checkbox-key="{{ insuranceItem.insuranceCode }}" style="width: 100%">
-
+                                       bd-checkbox-key="{{ insuranceItem.insuranceCode }}" style="width: 100%; position:relative;">
 
                 <bd-item-property
                         label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insuranceItem.insuranceCode | translate }}">
