@@ -378,16 +378,21 @@
         </ui-select>
     </bd-item-property>
 
-    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
-        <ui-select ng-model="payment.formData.paymentType"
-                   theme="bootstrap"
-                   required>
-            <ui-select-match placeholder="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
-                {{$select.selected}}
-            </ui-select-match>
-            <ui-select-choices repeat="cost in [transfer_constants.PAYMENT_TYPES.STANDARD, transfer_constants.PAYMENT_TYPES.EXPRESS]">
-                {{ cost }}
-            </ui-select-choices>
-        </ui-select>
+    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.payment_trybe.label'|translate}}" ng-if="transfer_type.data">
+        <rb-payment-trybe rb-trybes="payment.items.paymentTrybes"
+                          rb-model="payment.formData.paymentType"
+                          rb-destination-nrb="payment.formData.recipientAccountNo"
+                          currency="payment.formData.currency"
+                          transfer-type="transfer_type.data"
+                          swift="swift"
+                          costs="payment.formData.transferCost"
+                            ></rb-payment-trybe>
+
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['noTargetMethodAvailable'] !== undefined">
+            NoTargetMethodAv
+        </div>
+
+
     </bd-item-property>
 </div>
