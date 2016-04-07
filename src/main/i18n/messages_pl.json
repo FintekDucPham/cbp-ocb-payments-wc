@@ -1245,7 +1245,13 @@
   "raiff.payments.basket.history.action.CREATED":"Utworzenie przelewu",
   "raiff.payments.basket.history.action.MODIFIED":"Edycja przelewu",
   "raiff.payments.basket.history.action.SUBMITED":"Przekazanie do realizacji",
-  "raiff.payments.basket.history.action.SIGNED":"Akceptacja przelewu"
+  "raiff.payments.basket.history.action.SIGNED":"Akceptacja przelewu",
+  "raiff.payments.basket.transaction.status.NEW":"Nowa",
+  "raiff.payments.basket.transaction.status.READY":"Gotowa do przekazania",
+  "raiff.payments.basket.transaction.status.TO_ACCEPT":"Do akceptacji",
+  "raiff.payments.basket.transaction.status.IN_PROCESSING":"W akceptacji",
+  "raiff.payments.basket.transaction.status.SUBMITTED":"Przekazana do realizacji",
+  "raiff.payments.basket.transaction.status.DELETED":"Usunięta"
 
 
 
