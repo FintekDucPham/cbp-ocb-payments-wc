@@ -137,7 +137,6 @@ angular.module('raiffeisen-payments')
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
             copiedFormData.amount = (""+formData.amount).replace(",",".");
-            formData.amount = (""+formData.amount).replace(",",".");
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
             if(angular.isObject(copiedFormData.currency) && copiedFormData.currency.currency){
                 copiedFormData.currency = copiedFormData.currency.currency;

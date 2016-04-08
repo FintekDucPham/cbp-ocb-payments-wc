@@ -285,7 +285,7 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['firstRealizationDate'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['firstRealizationDate']}}
         </div>
     </bd-item-property>
 
@@ -324,7 +324,7 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['nextRealizationDate'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['nextRealizationDate']}}
         </div>
     </bd-item-property>
 
@@ -400,7 +400,7 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['frequency'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['frequency']}}
         </div>
 
 
@@ -415,10 +415,6 @@
                 rb-name="finishDate">
         </rb-datepicker>
 
-        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
-             ng-if="validationErrors['finishDate'] !== undefined">
-            {{validationErrors['finishDate']}}
-        </div>
         <eb-validation-messages eb-name="finishDate">
             <div eb-message-key="date" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_END_DATE'|translate}}
@@ -434,7 +430,7 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['finishDate'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['finishDate']}}
         </div>
     </bd-item-property>
 

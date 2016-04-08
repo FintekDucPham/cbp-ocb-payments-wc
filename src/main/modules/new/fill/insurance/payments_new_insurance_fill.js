@@ -351,4 +351,16 @@ angular.module('raiffeisen-payments')
             });
         };
 
+        $scope.editedInsuranceCode = null;
+        $scope.isInsuranceDisabled = function(insuranceCode){
+            if(!$scope.editedInsuranceCode){
+                if($scope.payment.formData.insurancePremiums && $scope.payment.formData.insurancePremiums[insuranceCode]){
+                    $scope.editedInsuranceCode = insuranceCode;
+                }else{
+                    return false;
+                }
+            }
+            return (insuranceCode!==$scope.editedInsuranceCode);
+        };
+
     });

@@ -207,7 +207,7 @@ angular.module('raiffeisen-payments')
                                 };
                             }else{
                                 if(currentError.codes[2]){
-                                    errorMsg = 'raiff.payments.new.error.'+currentError.codes[2];
+                                    errorMsg = 'raiff.payments.new.error.'+currentError.field+"."+currentError.codes[2];
                                 }else{
                                     errorMsg = currentError.defaultMessage;
                                 }

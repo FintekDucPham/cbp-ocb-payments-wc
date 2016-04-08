@@ -20,8 +20,8 @@
     "raiff.payments.id_type.PESEL": "P - PESEL",
     "raiff.payments.id_type.NIP": "N - NIP",
     "raiff.payments.id_type.REGON": "R - REGON",
-    "raiff.payments.id_type.ID_CARD": "1 - dowód osobisty",
-    "raiff.payments.id_type.PASSPORT": "2 - paszport",
+    "raiff.payments.id_type.ID_CARD": "1 - Dowód osobisty",
+    "raiff.payments.id_type.PASSPORT": "2 - Paszport",
     "raiff.payments.id_type.OTHER": "3 - Inny dokument tożsamości",
 
     "raiff.payments.widget.recipient_name": "Odbiorca",
@@ -1054,6 +1054,7 @@
 
 
     "raiff.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
+    "raiff.payments.new.error.description.NotNull":"Tytuł przelewu nie może być pusty",
     "raiff.payments.new.standing.edit.order_id": "Numer zlecenia",
 
 
@@ -1138,6 +1139,8 @@
     "raiffeisen.payments.standing_order.firstRealizationDate.to_late": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##0##",
     "raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##DATE##",
 
+    "raiffeisen.payments.standing_order.nextRealizationDate.to_early": "Data następnej realizacji zlecenia nie może być wcześniejsza niż ##0##",
+    "raiffeisen.payments.standing_order.nextRealizationDate.to_late": "Data następnej realizacji zlecenia nie może być późniejsza niż ##0##",
     "raiff.payments.new.standing.fill.edit.first_execution_date.FIRST_DATE": "Data następnej realizacji zlecenia nie może być pusta",
     "raiff.payments.new.standing.fill.edit.first_execution_date.INCORRECT_FIRST_DATE": "Niepoprawna data następnej realizacji zlecenia",
     "raiff.payments.new.standing.fill.edit.first_execution_date.TOO_EARLY_FIRST_DATE": "Data następnej realizacji zlecenia nie może być wcześniejsza niż ##DATE##",
@@ -1194,6 +1197,7 @@
 
     "raiff.payments.standing.manage.remove.title": "Usunięcie zlecenia stałego",
     "raiff.standing_order.startDate.to_early":"Niepoprawna data pierwszej realizacji zlecenia",
+    "raiff.standing_order.endDate.to_early":"Niepoprawna data zakończenia zlecenia",
   "EOF" : "",
     "raiff.payments.new.verify.transfer_cost": "Koszt przelewu",
     "raiff.payments.new.verify.transfer_cost.info" : "Informacja o koszcie przelewu",

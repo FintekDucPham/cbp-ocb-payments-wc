@@ -82,7 +82,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.rejected.list",
                     label: 'raiff.payments.rejected.label',
-                    icon: "raiff-icons raiff_operacje_odrzucone",
+                    icon: "raiff-icons operation_rejected",
                     action: "payments.rejected.list",
                     priority: 6
                 },
