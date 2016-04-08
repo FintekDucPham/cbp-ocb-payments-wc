@@ -86,7 +86,7 @@
                                 <bd-button ng-click="onDelete($data)" class="bd-button">
                                     {{::'raiff.payments.basket.list.details.buttons.delete' | translate}}
                                 </bd-button>
-                                <bd-button ng-click="onEdit($data)" class="bd-button">
+                                <bd-button ng-if="$data.actions.indexOf('BASKET_TRANSFER_EDIT_ACCESS') >-1" ng-click="onEdit($data)" class="bd-button">
                                     {{::'raiff.payments.basket.list.details.buttons.modify' | translate}}
                                 </bd-button>
                             </div>
