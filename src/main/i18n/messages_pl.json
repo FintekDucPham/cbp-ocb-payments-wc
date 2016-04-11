@@ -1255,8 +1255,8 @@
   "raiff.payments.basket.transaction.status.TO_ACCEPT":"Do akceptacji",
   "raiff.payments.basket.transaction.status.IN_PROCESSING":"W akceptacji",
   "raiff.payments.basket.transaction.status.SUBMITTED":"Przekazana do realizacji",
-  "raiff.payments.basket.transaction.status.DELETED":"Usunięta"
-
+  "raiff.payments.basket.transaction.status.DELETED":"Usunięta",
+  "raiff.payments.basket.list.account.zus.ZUS_ACCOUNTS":"RACHUNKI ZUS"
 
 
 }

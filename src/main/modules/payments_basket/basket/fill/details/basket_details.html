@@ -25,7 +25,12 @@
         <div>{{$data.payment.owner}}</div>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.targetAccount'|translate}}">
-        {{$data.payment.recipientAccountNo| nrbIbanFilter }}
+        <span ng-if="$data.payment.recipientAccountNo=='ZUS_ACCOUNTS'">
+             {{'raiff.payments.basket.list.account.zus.ZUS_ACCOUNTS' | translate}}
+        </span>
+        <span ng-if="$data.payment.recipientAccountNo!='ZUS_ACCOUNTS'">
+            {{$data.payment.recipientAccountNo| nrbIbanFilter }}
+        </span>
         <div>{{$data.payment.recipientName.join('') }}</div>
         <div>{{$data.payment.recipientAddress.join('') }}</div>
     </bd-item-property>

@@ -1,16 +1,7 @@
 angular.module('raiffeisen-payments')
-    .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES) {
+    .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES, paymentsBasketService) {
         'use strict';
         var paymentDataResolveStrategyStrategies = {};
-
-        var idTypesMap = {
-            "P": "PESEL",
-            "N": "NIP",
-            "R": "REGON",
-            "1": "ID_CARD",
-            "2": "PASSPORT",
-            "3": "OTHER"
-        };
 
         var sorbnetSelection = {
             'ELIXIR': false,
@@ -42,25 +33,28 @@ angular.module('raiffeisen-payments')
                     angular.forEach(data.paymentDetails, function (val, key) {
                         data[key] = val;
                     });
-                    data.paymentType = 'TYPE_' + data.paymentType;
+                    data.paymentType = data.paymentType;
                     data.secondaryIdNo = data.secondIDNo;
-                    data.secondaryIdType = idTypesMap[data.secondIDType];
+                    data.secondaryIdType = data.secondIDType;
                     data.declarationDate = data.declaration;
                     data.realizationDate = new Date(data.realizationDate);
                     data.recipientName = data.recipientName.join("\n");
                     data.remitterAccountId = data.accountId;
-                    return insuranceAccounts.search().then(function (accounts) {
-                        var matchedInsurance = lodash.find(accounts.content, {'accountNo': data.recipientAccountNo});
-                        if (matchedInsurance) {
-                            data.insurancePremiums = {};
-                            data.insurancePremiums[matchedInsurance.insuranceCode] = {
-                                currency: data.currency,
-                                amount: data.amount
-                            };
-                        }
-                        return true;
+                    return $q.all({
+                        insuranceAccounts : insuranceAccounts.search(),
+                        zusAccounts : paymentsBasketService.getEditZusFromBasketAdditionalInfo($state.params.referenceId)
+                    }).then(function(dataZusInfo){
+                        data.insurancePremiums = {};
+                        lodash.forEach(dataZusInfo.zusAccounts.zusAccountsInfoList, function(accountInfo){
+                            var matchedInsurance = lodash.find(dataZusInfo.insuranceAccounts.content, {'accountNo': accountInfo.accountNr});
+                            if (matchedInsurance) {
+                                data.insurancePremiums[matchedInsurance.insuranceCode] = {
+                                    currency: accountInfo.currency,
+                                    amount: accountInfo.amount
+                                };
+                            }
+                        });
                     });
-
                 });
 
                 paymentDataResolveStrategy(rbPaymentTypes.TAX.code, function (data) {
@@ -98,9 +92,32 @@ angular.module('raiffeisen-payments')
                     } else {
                         data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
                         data.recipientSwiftOrBic = data.paymentDetails.recipientSwift;
+                        data.recipientBankCountry = data.paymentDetails.bankCountry;
                     }
                     data.recipientCountry = data.paymentDetails.foreignCountryCode;
                     data.remitterAccountId = data.accountId;
+                    data.currency = {
+                        currency : data.currency
+                    };
+
+                    return $q.when(true);
+                });
+
+                paymentDataResolveStrategy(rbPaymentTypes.SEPA.code, function (data) {
+                    if (data.paymentDetails.recipientSwift == null) {
+                        data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
+                        data.recipientBankName = data.paymentDetails.bankName.join('');
+                        data.recipientBankCountry = data.paymentDetails.bankCountry;
+                    } else {
+                        data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                        data.recipientSwiftOrBic = data.paymentDetails.recipientSwift;
+                        data.recipientBankCountry = data.paymentDetails.bankCountry;
+                    }
+                    data.recipientCountry = data.paymentDetails.foreignCountryCode;
+                    data.remitterAccountId = data.accountId;
+                    data.currency = {
+                        currency : data.currency
+                    };
 
                     return $q.when(true);
                 });
