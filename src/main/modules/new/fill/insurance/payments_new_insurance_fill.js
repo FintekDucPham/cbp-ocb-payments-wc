@@ -269,6 +269,7 @@ angular.module('raiffeisen-payments')
                     if(!out){
                         out = angular.copy(val);
                         out.insuranceDestinationType=key;
+                        out.amount = ("" + out.amount).replace(/,/, ".");
                     }
                 });
                 copiedFormData.insurancePremium = out;
