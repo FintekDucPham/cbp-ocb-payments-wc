@@ -362,7 +362,7 @@ angular.module('raiffeisen-payments')
                     return false;
                 }
             }
-            return (insuranceCode!==$scope.editedInsuranceCode);
+            return true;//(insuranceCode!==$scope.editedInsuranceCode);
         };
 
     });
