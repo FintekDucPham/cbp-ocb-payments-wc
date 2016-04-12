@@ -148,6 +148,9 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            if($scope.payment.showCotWarning && !$scope.sorbnetCotConfirmed){
+                $scope.sorbnetCotConfirmed = true;
+            }
             if($scope.blockadesForward.isBlock){
                 return;
             }
@@ -181,10 +184,18 @@ angular.module('raiffeisen-payments')
                 $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
                 }, requestConverter($scope.payment.formData), templateParameters), $scope.payment.operation.link || false ).then(function (transfer) {
-                    $scope.payment.transferId = transfer.referenceId;
-                    $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                    $scope.payment.holiday = transfer.holiday;
-                    actions.proceed();
+                    if(transfer.showCotWarning && !$scope.sorbnetCotConfirmed){
+                        $scope.payment.showCotWarning = transfer.showCotWarning;
+                        var cotTime = new Date(transfer.cotTime);
+                        $scope.payment.showCotWarningMsg = translate.property("raiff.payments.cut.off.time.MSG-0657_COT_SORBNET", [$filter('date')(cotTime, 'HH:mm')]);
+                        return;
+                    }else{
+                        $scope.payment.transferId = transfer.referenceId;
+                        $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                        $scope.payment.holiday = transfer.holiday;
+                        $scope.sorbnetCotConfirmed = false;
+                        actions.proceed();
+                    }
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
                         var errorMsg = null;
