@@ -291,9 +291,11 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.paymentType = 'TYPE_S';
             $scope.payment.formData.insurancePremiums = {};
             $scope.accountSelectorRemote.resetToDefault();
-
-
         });
+
+        $scope.setFieldsToOmitOnFormClear(lodash.map(zusPaymentInsurances, function(type) {
+            return type + 'Amount';
+        }));
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
