@@ -18,6 +18,9 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-xs-12 col-sm-12" ng-show="model.sendBySorbnet && sorbnetHours">
+            <bd-msg-panel bd-msg-type="warning">{{  'raiff.payments.new.realization_type_sorbnet.sorbnet_hours' | translate : [sorbnetHours.start, sorbnetHours.end] }}</bd-msg-panel>
+        </div>
         <div class="col-xs-12 col-sm-12" ng-show="model.sendBySorbnet && nrbPrefixMatch">
             <bd-msg-panel bd-msg-type="warning">{{ :: 'raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET' | translate }}</bd-msg-panel>
         </div>
