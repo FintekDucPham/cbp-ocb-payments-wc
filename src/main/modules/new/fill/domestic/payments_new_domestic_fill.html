@@ -93,6 +93,7 @@
               ng-pattern="RECIPIENT_DATA_REGEX"
               required
               bd-array-value
+              ng-change="validationErrors.recipientName = undefined"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -122,6 +123,7 @@
                   ng-model="payment.formData.description"
                   class="input-field input-area--payment-description"
                   required
+                  ng-change="validationErrors.description = undefined"
                   bd-array-value
                   split-text-max-length-validators="140"
                   ng-pattern="PAYMENT_DESCRIPTION_REGEX"
