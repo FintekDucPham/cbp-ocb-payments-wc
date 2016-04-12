@@ -212,9 +212,11 @@ angular.module('raiffeisen-payments')
         $scope.updateSummaryForGroup = function (group){
             if(group.check){
                 _.each(group.basketTransfers, function(basketTransfer) {
-                    if(!basketTransfer.payment.checked){
-                        basketTransfer.payment.checked = true;
-                        addPaymentAmountToSummary(basketTransfer.payment, $scope.summaryItemMap);
+                    if(basketTransfer.actions.indexOf('BASKET_TRANSFER_ACCEPT_ACCESS') >-1){
+                        if(!basketTransfer.payment.checked){
+                            basketTransfer.payment.checked = true;
+                            addPaymentAmountToSummary(basketTransfer.payment, $scope.summaryItemMap);
+                        }
                     }
                 });
             }else {

@@ -15,7 +15,12 @@
         {{ $data.payment.recipientName.join('') }}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_title'|translate}}">
-        {{ $data.payment.title.join('') }}
+        <span ng-if="$data.payment.title.join('')=='ZUSPayment'">
+             {{'raiff.payments.basket.list.description.zus.ZUSPayment' | translate}}
+        </span>
+        <span ng-if="$data.payment.title.join('')!='ZUSPayment'">
+            {{ $data.payment.title.join('') }}
+        </span>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_amount'|translate}}">
         {{ $data.payment.amount | number: 2}} {{ $data.payment.currency }}
