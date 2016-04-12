@@ -13,6 +13,7 @@
                         </div>
                     </div>
                     <div class="product-details-primary">
+
                         {{group.accountDetails.accountNo | nrbIbanFilter}}
                     </div>
                 </div>
@@ -79,7 +80,57 @@
         </div>
         </div>
     </div>
+    </bd-list-item>
+    <bd-list-item summary>
+        <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
+            <div class="bd-table bd-table__fixed">
+                <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-16">
+
+                    <div class="summary-item__label" style="border-bottom: 0px;">
+                    {{::"raiff.payments.basket.list.verify.summary"|translate}}
+                    </div>
+                </div>
+
+                </div>
+
+
+                        <div ng-repeat="currencySummary in summaryItem">
+                            <div class="bd-table__row-line bd-table__row-line--sm-tight">
+
+                                <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                    <div>
+                                        {{::"raiff.payments.basket.list.verify.summary.currency"|translate}} &nbsp;{{currencySummary.currency}}:
+                                    </div>
+                                </div>
+                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-5 text-right">
+                                    <div>
+                                        {{::"raiff.payments.basket.list.verify.summary.currency.transactions"|translate}} &nbsp;{{currencySummary.currency}}
+                                    </div>
+                                    <div>
+                                        &nbsp;{{currencySummary.amount}}
+                                    </div>
+                                </div>
+                                <div bd-table-cell="third"
+                                     class="bd-table__cell--sm-2 bd-table__cell--md-6 text-right">
+                                    <div>{{::"raiff.payments.basket.list.verify.summary.currency.transactions.amount"|translate}}</div>
+
+                                    <div>
+                                    <bd-amount amount="currencySummary.sum"
+                                               currency="{{currencySummary.currency}}"></bd-amount>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </bd-list-item>
     <bd-item-property class="bd-item-property--text" ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired" label="{{ basket.token.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
     </bd-item-property>
+
+
+
 </div>

@@ -1222,7 +1222,7 @@
   "raiff.payments.basket.list.sourceAccount":"Z rachunku",
   "raiff.payments.basket.list.targetAccount":"Na rachunek",
   "raiff.payments.basket.list.summary.chose":"Podsumowanie wybrane",
-  "raiff.payments.basket.list.summary.all":"Podsumowanie wszytskie",
+  "raiff.payments.basket.list.summary.all":"Podsumowanie wszystkie",
   "raiff.payments.basket.list.details.buttons.delete":"Usuń",
   "raiff.payments.basket.list.details.buttons.modify":"Edytuj",
   "raiff.payments.basket.checkbox.label":"Dodaj do koszyka",
@@ -1247,7 +1247,11 @@
   "raiff.payments.basket.transaction.status.TO_ACCEPT":"Do akceptacji",
   "raiff.payments.basket.transaction.status.IN_PROCESSING":"W akceptacji",
   "raiff.payments.basket.transaction.status.SUBMITTED":"Przekazana do realizacji",
-  "raiff.payments.basket.transaction.status.DELETED":"Usunięta"
+  "raiff.payments.basket.transaction.status.DELETED":"Usunięta",
+  "raiff.payments.basket.list.verify.summary":"Podsumowanie",
+  "raiff.payments.basket.list.verify.summary.currency": "Suma na rachunkach w",
+  "raiff.payments.basket.list.verify.summary.currency.transactions": "LICZBA TRANSAKCJI W",
+  "raiff.payments.basket.list.verify.summary.currency.transactions.amount": "SUMA"
 
 
 
