@@ -50,14 +50,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
 
-        $scope.$on('clearForm', function () {
-            if($scope.paymentForm) {
-                formService.clearForm($scope.paymentForm);
-            }
-        });
-
-
-
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate), new Date(CURRENT_DATE));
             if(!!$scope.paymentForm.amount) {
@@ -83,7 +75,14 @@ angular.module('raiffeisen-payments')
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
 
+        $scope.setFieldsToOmitOnFormClear = function(fields) {
+            $scope.fieldsToOmitOnFormClear = fields;
+        };
+
         $scope.$on('clearForm', function () {
+            if($scope.paymentForm) {
+                formService.clearForm($scope.paymentForm, $scope.fieldsToOmitOnFormClear);
+            }
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
@@ -121,10 +120,6 @@ angular.module('raiffeisen-payments')
 
         function isAmountOverBalance() {
             return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
-        }
-
-        function isZUSAmountOverBalance() {
-            return   $scope.payment.meta.amountSummary[0].amount > $scope.payment.meta.convertedAssets;
         }
 
         $scope.validateBalance = function() {
