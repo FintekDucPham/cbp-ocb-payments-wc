@@ -269,9 +269,11 @@ angular.module('raiffeisen-payments')
                     if(!out){
                         out = angular.copy(val);
                         out.insuranceDestinationType=key;
+                        out.amount = ("" + out.amount).replace(/,/, ".");
                     }
                 });
                 copiedFormData.insurancePremium = out;
+                
             }else{
                 copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
                     element.amount = ("" + element.amount).replace(/,/, ".");
@@ -362,7 +364,7 @@ angular.module('raiffeisen-payments')
                     return false;
                 }
             }
-            return (insuranceCode!==$scope.editedInsuranceCode);
+            return true;//(insuranceCode!==$scope.editedInsuranceCode);
         };
 
     });
