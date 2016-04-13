@@ -273,7 +273,7 @@ angular.module('raiffeisen-payments')
                     }
                 });
                 copiedFormData.insurancePremium = out;
-                
+
             }else{
                 copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
                     element.amount = ("" + element.amount).replace(/,/, ".");

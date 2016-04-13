@@ -86,7 +86,7 @@
                            ng-keyup="unlockField()"
                            type="text"
                            placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder' | translate }}">
-                    <rb-bank-name account-no="recipient.formData.recipientAccountNo" bank-name-promise="recipient.formData.recipientBankNamePromise"></rb-bank-name>
+                    <rb-bank-name ng-show="recipient.formData.recipientAccountNo" account-no="recipient.formData.recipientAccountNo" bank-name-promise="recipient.formData.recipientBankNamePromise"></rb-bank-name>
                     <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
                     <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                         <div class="validation-message animate-on">
