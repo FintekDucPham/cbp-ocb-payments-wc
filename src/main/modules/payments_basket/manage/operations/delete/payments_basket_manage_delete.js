@@ -5,10 +5,6 @@ angular.module('raiffeisen-payments')
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/manage/operations/delete/payments_basket_manage_delete.html",
             controller: "PaymentsBasketManageDeleteController",
-            params: {
-                paymentType: 'domestic',
-                referenceId: null
-            },
             data: {
                 analyticsTitle: "raiff.payments.future.edit.label"
             }
@@ -19,7 +15,13 @@ angular.module('raiffeisen-payments')
                 analyticsTitle: "raiff.payments.future.edit.label"
             }
         });
-    }).controller('PaymentsBasketManageDeleteController', function($scope, rbPaymentInitFactory, accountsService){
-        rbPaymentInitFactory($scope);
+    }).controller('PaymentsBasketManageDeleteController', function($scope, accountsService, $stateParams, bdMainStepInitializer){
+        bdMainStepInitializer($scope, 'payment', {
+            operationType : $stateParams.operationType,
+            basketItem : null
+        });
+
+
+        $scope.payment.basketItem = $stateParams.basketItem;
 
     });

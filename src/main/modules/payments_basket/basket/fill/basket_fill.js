@@ -395,10 +395,9 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onDelete = function(data) {
-           /* $state.go('payments.basket.manage.delete.verify', {
-                referenceId: data.payment.id,
-                paymentType: data.payment.transferType
-            });*/
+           $state.go('payments.basket.manage.delete.verify', {
+                basketItem: data
+            });
         };
 
         $scope.onBack = function(child) {
