@@ -93,6 +93,7 @@
               ng-pattern="RECIPIENT_DATA_REGEX"
               required
               bd-array-value
+              ng-change="validationErrors.recipientName = undefined"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -122,6 +123,7 @@
                   ng-model="payment.formData.description"
                   class="input-field input-area--payment-description"
                   required
+                  ng-change="validationErrors.description = undefined"
                   bd-array-value
                   split-text-max-length-validators="140"
                   ng-pattern="PAYMENT_DESCRIPTION_REGEX"
@@ -249,6 +251,11 @@
     </bd-item-property>
     <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.realization_type_sorbnet.label' | translate }}">
         <rb-sorbnet-selection rb-model="payment.formData.sendBySorbnet" rb-destination-nrb="payment.formData.recipientAccountNo"></rb-sorbnet-selection>
+        <div class="row" ng-show="payment.showCotWarning">
+            <div class="col-xs-12 col-sm-12">
+                <bd-msg-panel bd-msg-type="warning">{{payment.showCotWarningMsg}}</bd-msg-panel>
+            </div>
+        </div>
     </bd-item-property>
 
     <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-basket-select>
