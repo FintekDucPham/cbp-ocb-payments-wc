@@ -394,28 +394,11 @@ angular.module('raiffeisen-payments')
             });
         };
 
-        $scope.onDelete = function(payment) {
-            if (payment.transferType == rbPaymentTypes.STANDING.code) {
-                viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                    payment: payment.details,
-                    returnToPage: $scope.table.tableConfig.currentPage
-                });
-
-                $state.go('payments.standing.manage.remove.verify');
-            }
-            else {
-                var responseObject = parseDataByTransfer(payment);
-                paymentsService.remove(responseObject).then(function(resp) {
-                    var responseJson = angular.fromJson(resp.content);
-                    var referenceId = responseJson.referenceId;
-                    viewStateService.setInitialState('payments.future.manage.delete', {
-                        paymentId: payment.id,
-                        referenceId: referenceId,
-                        paymentDetails: payment
-                    });
-                    $state.go('payments.future.manage.delete.fill');
-                });
-            }
+        $scope.onDelete = function(data) {
+           /* $state.go('payments.basket.manage.delete.verify', {
+                referenceId: data.payment.id,
+                paymentType: data.payment.transferType
+            });*/
         };
 
         $scope.onBack = function(child) {
