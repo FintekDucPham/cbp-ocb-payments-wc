@@ -38,7 +38,7 @@
         </bd-item-property>
         <rb-paste-warning>
             <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.recipient_account' | translate }}">
-                <div ng-paste="rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)" ng-keyup="unlockField()" ng-if="recipient.items.formSymbolList">
+                <div ng-paste="recipient.formData.nrbCheck = ''; recicpientForm.nrbCheck = ''; rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)" ng-keyup="unlockField()" ng-if="recipient.items.formSymbolList">
                     <rb-tax-account-select ng-show="!showHide"
                                             rb-tax-office="recipient.items.recipientAccount"
                                            rb-tax-office-id="recipient.formData.selectedTaxOfficeId"
@@ -71,16 +71,21 @@
                 </div>
             </bd-item-property>
             <span ng-show="isOk || showHide">
-            <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
-            <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
-            <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
-            <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
-                <span class="tooltipFix__tooltip">
-                    <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
-                 </span>
+                <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
+                <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
+                <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
+                <span class="" style="position: relative">
+                <input id="maskNumer"  name="nrbCheck" ng-required="isOk || showHide" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+                    <span class="tooltipFix__tooltip">
+                        <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
+                     </span>
+                </span>
             </span>
-        </span>
+            <eb-validation-messages eb-name="nrbCheck">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+                </div>
+            </eb-validation-messages>
         </rb-paste-warning>
 
         <bd-item-property label="{{ ::'raiff.payments.recipients.new.us.fill.taxpayer_supplementary_id_type' | translate }}">

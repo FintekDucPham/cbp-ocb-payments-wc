@@ -43,7 +43,7 @@
                    ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
                    ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                    class="input-field"
-                   ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                   ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    type="text"
                    ng-disabled="payment.options.fixedRecipientSelection || showHide"
                    bd-matches-none-of="recipientAccountValidators"
@@ -86,11 +86,16 @@
             <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
             <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
             <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer"  name="nrbCheck" ng-required="isOk || showHide" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                 <span class="tooltipFix__tooltip">
                     <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>                 </span>
             </span>
         </span>
+        <eb-validation-messages eb-name="nrbCheck">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+            </div>
+        </eb-validation-messages>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.foreign.fill.recipient_data' | translate }}">
