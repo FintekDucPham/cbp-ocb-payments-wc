@@ -395,6 +395,9 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onDelete = function(data) {
+            viewStateService.setInitialState('payments.basket.manage.delete.verify', {
+                basketItem: data
+            });
            $state.go('payments.basket.manage.delete.verify', {
                 basketItem: data
             });

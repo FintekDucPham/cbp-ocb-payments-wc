@@ -1252,6 +1252,7 @@
   "raiff.payments.basket.history.action.MODIFIED":"Edycja przelewu",
   "raiff.payments.basket.history.action.SUBMITED":"Przekazanie do realizacji",
   "raiff.payments.basket.history.action.SIGNED":"Akceptacja przelewu",
+  "raiff.payments.basket.history.action.DELETED":"Usunięcie przelewu",
   "raiff.payments.basket.transaction.status.NEW":"Nowa",
   "raiff.payments.basket.transaction.status.READY":"Gotowa do przekazania",
   "raiff.payments.basket.transaction.status.TO_ACCEPT":"Do akceptacji",
@@ -1259,7 +1260,9 @@
   "raiff.payments.basket.transaction.status.SUBMITTED":"Przekazana do realizacji",
   "raiff.payments.basket.transaction.status.DELETED":"Usunięta",
   "raiff.payments.basket.list.account.zus.ZUS_ACCOUNTS":"RACHUNKI ZUS",
-  "raiff.payments.basket.list.description.zus.ZUSPayment":"Przelew do ZUS"
+  "raiff.payments.basket.list.description.zus.ZUSPayment":"Przelew do ZUS",
+  "raiff.payments.basket.delete.status.messages.TRANFER_REMOVED":"Zlecenie zostało usunięte z koszyka",
+  "raiff.payments.basket.delete.status.messages.error":"Wystąpił nieoczekiwany błąd"
 
 
 }

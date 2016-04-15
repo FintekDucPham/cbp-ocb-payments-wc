@@ -5,10 +5,6 @@ angular.module('raiffeisen-payments')
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/manage/payments_basket_manage.html",
             controller: "PaymentsBasketManageController",
-            params: {
-                basketItem: null,
-                operationType: 'DELETE'
-            },
             data: {
                 analyticsTitle: "raiff.payments.future.label"
             }

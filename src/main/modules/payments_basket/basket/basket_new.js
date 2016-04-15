@@ -43,9 +43,7 @@ angular.module('raiffeisen-payments')
         $scope.basket.rbBasketStepParams = {
             completeState: 'payments.basket.new.fill',
             footerType: 'basket',
-            onDeleteSelected: $scope.deleteSelected,
             labels : {
-                delete: 'raiff.payments.basket.multistepform.buttons.delete',
                 prev: 'config.multistepform.buttons.change',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',

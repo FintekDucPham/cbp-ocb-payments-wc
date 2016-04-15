@@ -2,6 +2,9 @@
     <bd-header>{{::"raiff.payments.basket.list.header"|translate}}</bd-header>
 
     <bd-form-panel>
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.payment_type'|translate}}">
+            {{ 'raiff.payments.new.types.'+ payment.meta.transferType | translate }}
+        </bd-item-property>
         <rb-multistep-form bd-active-step="activeStep" rb-step-params="rbPaymentsStepParams" rb-two-step="true">
             <div ui-view></div>
         </rb-multistep-form>
