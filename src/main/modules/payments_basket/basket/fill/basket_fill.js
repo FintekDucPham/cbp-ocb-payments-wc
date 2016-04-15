@@ -183,6 +183,7 @@ angular.module('raiffeisen-payments')
                                 data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
                                 data.content.systemParameterDefinedName =  $scope.systemParameterDefinedName;
                                 data.content.getIcon = $scope.getIcon;
+                                data.content.isDateExceeded= $scope.isDateExceeded;
                                 return data.content;
                             },
                             function (reason) {
@@ -484,6 +485,33 @@ angular.module('raiffeisen-payments')
                 actions.proceed();
             });
         });
+        $scope.isDateExceeded= function( transferDateMilliSec){
+
+            //get today's date in string
+            var todayDate = new Date();
+            //need to add one to get current month as it is start with 0
+
+            var todayMonth = todayDate.getMonth() + 1;
+            var todayDay = todayDate.getDate();
+            var todayYear = todayDate.getFullYear();
+            var todayDateText =  todayYear + "-" +  todayMonth + "-" + todayDay;
+            //
+
+            var transferDate= new Date(transferDateMilliSec);
+            var transferDateMonth=  transferDate.getMonth() +1;
+            var transferDateDay= transferDate.getDate();
+            var transferDateYear= transferDate.getFullYear();
+            var transferDateText=   transferDateYear + "-" + transferDateMonth + "-" + transferDateDay;
+
+            //Convert both input to date type
+            var inputToDate = new Date ( transferDateText);
+            var todayToDate = new Date( todayDateText);
+            //
+
+            //compare dates
+            if (inputToDate < todayToDate) { return true;}
+            else { return false;}
+        };
 
     }
 );
