@@ -21,11 +21,11 @@ angular.module('raiffeisen-payments')
         function authorize(doneFn, actions) {
             paymentsBasketService.realize($scope.payment.token.params.resourceId, $scope.payment.token.model.input.model).then(function(data){
                 $scope.payment.item.result.messages = data.messages[0];
-                $scope.payment.item.result.type = 'success'
+                $scope.payment.item.result.type = 'success';
                 doneFn();
             }).catch(function(error){
                 $scope.payment.item.result.messages = 'error';
-                $scope.payment.item.result.type = 'error'
+                $scope.payment.item.result.type = 'error';
                 if (!$scope.payment.token.model || !$scope.payment.token.model.$tokenRequired || !$scope.payment.token.model.$isErrorRegardingToken(error)) {
                     doneFn();
                 }

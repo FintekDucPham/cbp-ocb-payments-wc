@@ -178,4 +178,11 @@
                 </div>
             </bd-list-item>
         </div>
+        <span class="eb-validation-messages">
+             <span class="messages"  ng-if="limitBasketExeeded !== undefined && limitBasketExeeded.show">
+                 <span class="validation-message">
+                    {{limitBasketExeeded.messages}}
+                 </span>
+             </span>
+        </span>
 </div>

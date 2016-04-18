@@ -165,6 +165,11 @@ angular.module('raiffeisen-payments')
                                         show: true,
                                         messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
                                     };
+                                }else if(currentError.field == 'raiff.basket.transfers.limit.exceeed') {
+                                    $scope.limitBasketExeeded = {
+                                        show: true,
+                                        messages: translate.property("raiff.payments.basket.add.validation.amount_exceeded")
+                                    };
                                 }
                             }
                         }

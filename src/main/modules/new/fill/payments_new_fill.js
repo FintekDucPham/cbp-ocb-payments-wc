@@ -212,6 +212,11 @@ angular.module('raiffeisen-payments')
                                     show: true,
                                     messages: translate.property("raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
                                 };
+                            }else if(currentError.field == 'raiff.basket.transfers.limit.exceeed'){
+                                $scope.limitBasketExeeded = {
+                                    show: true,
+                                    messages: translate.property("raiff.payments.basket.add.validation.amount_exceeded")
+                                };
                             }else{
                                 if(currentError.codes[2]){
                                     errorMsg = 'raiff.payments.new.error.'+currentError.field+"."+currentError.codes[2];

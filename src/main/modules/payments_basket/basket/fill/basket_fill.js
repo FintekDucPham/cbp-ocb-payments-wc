@@ -507,6 +507,18 @@ angular.module('raiffeisen-payments')
             paymentsBasketService.create(checkedPaymentsId).then(function(data){
                 $scope.basket.transferId = data;
                 actions.proceed();
+            }).catch(function(errorReason){
+                if(errorReason.subType == 'validation'){
+                    for(var i=0; i<=errorReason.errors.length; i++){
+                        var currentError = errorReason.errors[i];
+                        if(currentError.field == 'raiff.basket.transfers.proceed.limit.exceed') {
+                            $scope.limitBasketExeeded = {
+                                show: true,
+                                messages: translate.property("raiff.payments.basket.process.validation.amount_exceeded", [currentError.code])
+                            };
+                        }
+                    }
+                }
             });
         });
 
