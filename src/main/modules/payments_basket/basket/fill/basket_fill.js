@@ -183,7 +183,7 @@ angular.module('raiffeisen-payments')
                                 data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
                                 data.content.systemParameterDefinedName =  $scope.systemParameterDefinedName;
                                 data.content.getIcon = $scope.getIcon;
-                                data.content.isDateExceeded= $scope.isDateExceeded;
+                                data.content.isRealizationDateExceededForTransfer= $scope.isRealizationDateExceededForTransfer;
                                 return data.content;
                             },
                             function (reason) {
@@ -485,7 +485,16 @@ angular.module('raiffeisen-payments')
                 actions.proceed();
             });
         });
-        $scope.isDateExceeded= function( transferDateMilliSec){
+
+        $scope.isRealizationDateExceededForTransfer= function( transferDateMilliSec, transferStatus ){
+
+            if (transferStatus!=="SUBMITTED" && transferStatus!== "DELETED" && isDateExceeded( transferDateMilliSec))
+               {return true;}
+            else { return false;}
+
+        };
+
+        function isDateExceeded( transferDateMilliSec){
 
             //get today's date in string
             var todayDate = new Date();
