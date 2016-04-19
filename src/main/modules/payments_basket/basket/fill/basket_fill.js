@@ -9,11 +9,9 @@ angular.module('raiffeisen-payments')
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getValueForCurrentContext("plannedOperationList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getValueForCurrentContext("plannedOperationList.max.offset"),
-                        currencyOrder: systemParameterService.getValueForCurrentContext("nib.accountList.currency.order"),
                         customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         var result = {
-                            currencyOrder: data.currencyOrder.split(","),
                             offset: parseInt(data.defaultOffsetInDays, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
                             dateFrom: new Date(),
@@ -170,13 +168,13 @@ angular.module('raiffeisen-payments')
                                         });
                                         _.each(group.basketTransfers, function(basketTransfer) {
                                             var payment = basketTransfer.payment;
-                                            addPaymentAmountToSummary(payment, summary);
+                                            $scope.addPaymentAmountToSummary(payment, summary);
                                         });
                                 });
                                 $params.pageCount = data.totalPages;
                                 $scope.showSummary = data.content.length > 0;
                                 $scope.showTable = data.content.length > 0;
-                                $scope.summaryAll = formSummary(summary);
+                                $scope.summaryAll = $scope.formSummary(summary);
                                 $params.pageCount = data.totalPages;
 
                                 $scope.basket.payments = data.content;
@@ -185,6 +183,7 @@ angular.module('raiffeisen-payments')
                                 data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
                                 data.content.systemParameterDefinedName =  $scope.systemParameterDefinedName;
                                 data.content.getIcon = $scope.getIcon;
+                                data.content.isRealizationDateExceededForTransfer= $scope.isRealizationDateExceededForTransfer;
                                 return data.content;
                             },
                             function (reason) {
@@ -202,11 +201,11 @@ angular.module('raiffeisen-payments')
 
         $scope.updateSummaryForItem = function (payment){
             if(payment.payment.checked){
-                addPaymentAmountToSummary(payment.payment, $scope.summaryItemMap);
+                $scope.addPaymentAmountToSummary(payment.payment, $scope.summaryItemMap);
             }else {
                 deletePaymentAmountFromSummary(payment.payment, $scope.summaryItemMap);
             }
-            $scope.summaryItem = formSummary($scope.summaryItemMap);
+            $scope.summaryItem = $scope.formSummary($scope.summaryItemMap);
         };
 
         $scope.updateSummaryForGroup = function (group){
@@ -215,7 +214,7 @@ angular.module('raiffeisen-payments')
                     if(basketTransfer.actions.indexOf('BASKET_TRANSFER_ACCEPT_ACCESS') >-1){
                         if(!basketTransfer.payment.checked){
                             basketTransfer.payment.checked = true;
-                            addPaymentAmountToSummary(basketTransfer.payment, $scope.summaryItemMap);
+                            $scope.addPaymentAmountToSummary(basketTransfer.payment, $scope.summaryItemMap);
                         }
                     }
                 });
@@ -227,7 +226,7 @@ angular.module('raiffeisen-payments')
                     }
                 });
             }
-            $scope.summaryItem = formSummary($scope.summaryItemMap);
+            $scope.summaryItem = $scope.formSummary($scope.summaryItemMap);
         };
 
 
@@ -435,18 +434,6 @@ angular.module('raiffeisen-payments')
             };
         }
 
-        function addPaymentAmountToSummary(payment, summary) {
-            if (!!payment.currency) {
-                if (!summary[payment.currency]) {
-                    summary[payment.currency] = {
-                        sum: 0,
-                        amount: 0
-                    };
-                }
-                summary[payment.currency].sum += payment.amount;
-                summary[payment.currency].amount += 1;
-            }
-        }
 
         function deletePaymentAmountFromSummary(payment, summary) {
             if (!!payment.currency) {
@@ -460,30 +447,6 @@ angular.module('raiffeisen-payments')
             }
         }
 
-        function formSummary(sumsPerCurrency) {
-            var unsortedSummary = formCurrencyAmountArray(sumsPerCurrency);
-            return getSortedSummary(unsortedSummary);
-        }
-
-        function formCurrencyAmountArray(sumsPerCurrency) {
-            var summary = [];
-            for (var currency in sumsPerCurrency) {
-                if (sumsPerCurrency.hasOwnProperty(currency)) {
-                    summary.push({
-                        currency: currency,
-                        sum: sumsPerCurrency[currency].sum,
-                        amount: sumsPerCurrency[currency].amount
-                    });
-                }
-            }
-            return summary;
-        }
-
-        function getSortedSummary(summary) {
-            return lodash.sortBy(summary, function(currencySum) {
-                return this.indexOf(currencySum.currency);
-            }, parameters.currencyOrder);
-        }
 
         function getCheckedPaymentsIdListAndSetViewGroupFlag(groupPaymentsList){
             var checkedPaymentsId = [];
@@ -521,6 +484,42 @@ angular.module('raiffeisen-payments')
                 }
             });
         });
+
+        $scope.isRealizationDateExceededForTransfer= function( transferDateMilliSec, transferStatus ){
+
+            if (transferStatus!=="SUBMITTED" && transferStatus!== "DELETED" && isDateExceeded( transferDateMilliSec))
+               {return true;}
+            else { return false;}
+
+        };
+
+        function isDateExceeded( transferDateMilliSec){
+
+            //get today's date in string
+            var todayDate = new Date();
+            //need to add one to get current month as it is start with 0
+
+            var todayMonth = todayDate.getMonth() + 1;
+            var todayDay = todayDate.getDate();
+            var todayYear = todayDate.getFullYear();
+            var todayDateText =  todayYear + "-" +  todayMonth + "-" + todayDay;
+            //
+
+            var transferDate= new Date(transferDateMilliSec);
+            var transferDateMonth=  transferDate.getMonth() +1;
+            var transferDateDay= transferDate.getDate();
+            var transferDateYear= transferDate.getFullYear();
+            var transferDateText=   transferDateYear + "-" + transferDateMonth + "-" + transferDateDay;
+
+            //Convert both input to date type
+            var inputToDate = new Date ( transferDateText);
+            var todayToDate = new Date( todayDateText);
+            //
+
+            //compare dates
+            if (inputToDate < todayToDate) { return true;}
+            else { return false;}
+        };
 
     }
 );
