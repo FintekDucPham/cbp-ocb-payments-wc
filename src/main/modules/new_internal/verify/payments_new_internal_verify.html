@@ -1,5 +1,9 @@
 <div class="form-body">
-
+    <div class="row" ng-show="payment.endOfDayWarning">
+        <div class="col-xs-12 col-sm-12">
+            <bd-msg-panel bd-msg-type="warning">{{::'raiff.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>
+        </div>
+    </div>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.internal.verify.sender_account_name'|translate}}">
         <div class="hidden-sm hidden-xs hidden-md">
             <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
