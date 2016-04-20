@@ -98,6 +98,8 @@ angular.module('raiffeisen-payments')
                     });
 
                 });
+
+
                 $scope.PAYMENT_BASKET_STATUS = PAYMENT_BASKET_STATUS;
                 $scope.PAYMENT_BASKET_STATUS_LIST = Object.keys(PAYMENT_BASKET_STATUS);
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;

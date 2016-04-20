@@ -183,7 +183,7 @@ angular.module('raiffeisen-payments')
                         params.realizationDateFrom = $filter('date')($scope.data.dateRange.fromDate.getTime(), "yyyy-MM-dd");
                         params.realizationDateTo   = $filter('date')($scope.data.dateRange.toDate.getTime(), "yyyy-MM-dd");
                     }
-                    if($scope.data.account && $scope.data.status){
+                    if($scope.data.status){
                         params.accountId = $scope.data.account.accountId=='ALL' ? null : $scope.data.account.accountId;
                         params.statuses = $scope.data.status.join(";");
                     }
@@ -198,10 +198,10 @@ angular.module('raiffeisen-payments')
                                 });
                                 _.each(group.basketTransfers, function (basketTransfer) {
                                     var payment = basketTransfer.payment;
-                                    addPaymentAmountToSummary(payment, summary);
+                                    $scope.addPaymentAmountToSummary(payment, summary);
                                 });
                             });
-                            $scope.summaryAll = formSummary(summary);
+                            $scope.summaryAll = $scope.formSummary(summary);
                             $scope.basket.payments = data.content;
                             data.content.paymentsList = data.content;
                             data.content.updateSummaryForItem = $scope.updateSummaryForItem;
@@ -323,7 +323,7 @@ angular.module('raiffeisen-payments')
             //compare dates
             if (inputToDate < todayToDate) { return true;}
             else { return false;}
-        };
+        }
 
     }
 );
