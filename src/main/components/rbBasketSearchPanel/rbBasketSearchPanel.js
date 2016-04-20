@@ -86,18 +86,14 @@ angular.module('raiffeisen-payments')
                     $scope.data.account = $scope.inputData.selectedAccount;
                 };
 
-                accountsService.search({pageSize: 10000}).then(function(data) {
-                    $scope.accountList = data.content;
+                var getSelectedAccount = function(accountList){
+                    $scope.accountList = accountList;
                     accountsService.loadAccountIcons($scope.accountList);
                     account = {};
                     account.accountId = "ALL";
                     $scope.accountList.unshift(account);
-                    $scope.inputData.selectedAccount = $scope.accountList[0];
-                    customerService.getCustomerDetails().then(function(userDetails) {
-                        $scope.customerDetails = userDetails.customerDetails;
-                    });
-
-                });
+                    return $scope.accountList[0];
+                };
 
 
                 $scope.PAYMENT_BASKET_STATUS = PAYMENT_BASKET_STATUS;
@@ -122,8 +118,11 @@ angular.module('raiffeisen-payments')
                     period: options.period,
                     dateFrom: options.dateFrom,
                     dateTo: options.dateTo,
-                    status: [PAYMENT_BASKET_STATUS.NEW, PAYMENT_BASKET_STATUS.TO_ACCEPT, PAYMENT_BASKET_STATUS.READY]
+                    status: [PAYMENT_BASKET_STATUS.NEW, PAYMENT_BASKET_STATUS.TO_ACCEPT, PAYMENT_BASKET_STATUS.READY],
+                    selectedAccount: getSelectedAccount(options.account)
                 };
+
+
 
 
                 var calculateCurrentPeriodBaseDate = function() {

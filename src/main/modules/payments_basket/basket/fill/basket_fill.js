@@ -5,18 +5,20 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/basket_fill.html",
             controller: "PaymentsBasketFillController",
             resolve: {
-                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
+                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "accountsService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, accountsService) {
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getParameterByName("basketList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getParameterByName("basketList.max.offset"),
-                        customerDetails: customerService.getCustomerDetails()
+                        customerDetails: customerService.getCustomerDetails(),
+                        account: accountsService.search({pageSize: 10000})
                     }).then(function (data) {
                         var result = {
                             offset: parseInt(data.defaultOffsetInDays.value, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths.value, 10),
                             dateFrom: new Date(),
                             dateTo: new Date(),
-                            context: data.customerDetails.customerDetails.context
+                            context: data.customerDetails.customerDetails.context,
+                            account: data.account.content
                         };
                         result.period = result.offset;
                         if (result.context === 'DETAL') {
@@ -57,6 +59,7 @@ angular.module('raiffeisen-payments')
         $scope.model = {
             dataValidity: false
         };
+
 
 
         $scope.onOperationsDateSubmit = function() {
