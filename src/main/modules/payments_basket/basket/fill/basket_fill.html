@@ -1,7 +1,5 @@
 <div>
-<form novalidate="novalidate"  name="searchForm" class="transaction-filter-form">
-            <bd-item-property label="{{::'account.statement.select.label'|translate}}">
-
+           <!-- <bd-item-property label="{{::'account.statement.select.label'|translate}}">
                 <ui-select ng-model="table.tableConfig.selectedAccount"
                            theme="bootstrap"
                            reset-search-input="false"
@@ -10,6 +8,11 @@
                            required>
                     <ui-select-match placeholder="{{::'account.statement.select.placeholder'|translate}}">
                         <div class="select-account__row">
+                            <div ng-if="$select.selected.id=='ALL'">
+                                <div class="select-account__row__cell">
+                                    Wszystkie
+                                </div>
+                            </div>
                             <div class="select-account__row__cell"><img ng-if="$select.selected.customerData.icon >= 0"
                                                                         ng-src="{{getIcon($select.selected.customerData.icon)}}"
                                                                         class="select-account__icon"/></div>
@@ -20,6 +23,11 @@
                         </div>
                     </ui-select-match>
                     <ui-select-choices repeat="item in accountList track by $index">
+                        <div ng-if="item.id=='ALL'">
+                            <div class="select-account__row__cell">
+                              Wszystkie
+                            </div>
+                        </div>
                         <div class="select-account__row">
                             <div class="select-account__row__cell" ng-if="getIcon(item.accountId)">
                                 <img ng-if="item.customerData.icon >= 0" ng-src="{{getIcon(item.customerData.icon)}}"
@@ -33,10 +41,18 @@
                     </ui-select-choices>
                 </ui-select>
             </bd-item-property>
-            <div rb-transaction-filter ng-model="models" table="table" advanced-search="advancedSearch"
-                 filter-criteria="multisignFilterCriteria" last-error-max="lastMax" max-length="140"></div>
+            <rb-future-date-panel
+                    date-range="dateRange"
+                    options="options.futureDatePanelConfig"
+                    on-submit="onOperationsDateSubmit()"
+                    valid="model.dateRangeValidity"
+                    ></rb-future-date-panel>-->
 
-    </form>
+    <rb-basket-search-panel
+            data="data"
+            options="options.futureDatePanelConfig"
+            on-submit="onOperationsDateSubmit()"
+            valid="model.dataValidity"></rb-basket-search-panel>
 
         <bd-table bd-type="typeGG"
                   bd-table-params="table.tableConfig"

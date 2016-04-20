@@ -7,15 +7,15 @@ angular.module('raiffeisen-payments')
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
                     return $q.all({
-                        defaultOffsetInDays: systemParameterService.getValueForCurrentContext("plannedOperationList.default.offset"),
-                        maxOffsetInMonths: systemParameterService.getValueForCurrentContext("plannedOperationList.max.offset"),
+                        defaultOffsetInDays: systemParameterService.getParameterByName("basketList.default.offset"),
+                        maxOffsetInMonths: systemParameterService.getParameterByName("basketList.max.offset"),
                         currencyOrder: systemParameterService.getValueForCurrentContext("nib.accountList.currency.order"),
                         customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         var result = {
                             currencyOrder: data.currencyOrder.split(","),
-                            offset: parseInt(data.defaultOffsetInDays, 10),
-                            maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
+                            offset: parseInt(data.defaultOffsetInDays.value, 10),
+                            maxOffsetInMonths: parseInt(data.maxOffsetInMonths.value, 10),
                             dateFrom: new Date(),
                             dateTo: new Date(),
                             context: data.customerDetails.customerDetails.context
@@ -25,10 +25,8 @@ angular.module('raiffeisen-payments')
                             result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
                             result.dateTo.setDate(result.dateTo.getDate() + result.offset);
                         }
-                        // if (result.context == 'MICRO') {
-                        // in case of unproper context we can load parameters for MICRO context
                         else {
-                            result.dateTo = new Date(result.dateFrom.getFullYear(), result.dateFrom.getMonth()+1, 0);
+                            result.dateTo.setDate(result.dateTo.getDate() + result.offset);
                             result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
                         }
                         return result;
@@ -50,7 +48,7 @@ angular.module('raiffeisen-payments')
             3: "OTHER"
         };
 
-        $scope.dateRange = {};
+        $scope.data = {};
         $scope.summaryItemMap = {};
 
         $scope.options = {
@@ -59,146 +57,17 @@ angular.module('raiffeisen-payments')
 
 
         $scope.model = {
-            dateRangeValidity: false
-        };
-
-        $scope.searchForm = {};
-
-
-        $scope.multisignFilterCriteria = paymentsBasketFilterCriteria;
-
-        $scope.models = {
-            query : paymentsBasketFilterCriteria.getTransactionFilterInitValues(),
-            sent : paymentsBasketFilterCriteria.getTransactionFilterInitViewValues(),
-            view : paymentsBasketFilterCriteria.getTransactionFilterInitViewValues()
+            dataValidity: false
         };
 
 
-        $scope.advancedSearch = true;
-        $scope.showAdvanced = function(){
-            $scope.advancedSearch = !$scope.advancedSearch;
-        };
-        $scope.hideAdvanced = function(){
-            $scope.advancedSearch = !$scope.advancedSearch;
-        };
-
-
-        $scope.clearFilter = function() {
-            $scope.models.query = paymentsBasketFilterCriteria.getTransactionFilterInitValues();
-            $scope.models.view = paymentsBasketFilterCriteria.getTransactionFilterInitViewValues();
-            $scope.models.view.ready.then(function(defaults) {
-                $scope.models.query.dateFrom = defaults.defaultDateFrom;
-                $scope.models.view.dateFrom = defaults.defaultDateFrom;
-                $scope.models.view.last = defaults.defaultDays;
-                $scope.models.view.lastType = defaults.defaultLastType;
-                $scope.models.view.periodType = defaults.defaultPeriodType;
-                $scope.table.tableConfig.dateRange.dateFrom = dateFilter($scope.models.view.dateFrom, 'dd.MM.yyyy');
-                $scope.table.tableConfig.dateRange.dateTo = dateFilter($scope.models.view.dateTo, 'dd.MM.yyyy');
-            });
+        $scope.onOperationsDateSubmit = function() {
+            if ($scope.model.dataValidity) {
+                $scope.table.tableData.newSearch = true;
+                $scope.table.tableControl.invalidate();
+            }
         };
 
-
-
-
-
-        var preInit = function($promise, $params) {
-            $scope.clearFilter();
-            accountsService.search({productList: 'ACCOUNT_HISTORY_FROM_LIST'}).then(function(data) {
-                $scope.accountList = data.content;
-                $scope.table.tableConfig.selectedAccount = $scope.accountList[0];
-                accountsService.loadAccountIcons($scope.accountList);
-                $timeout(function() {
-                    customerService.getCustomerDetails().then(function(userDetails) {
-                        $scope.customerDetails = userDetails.customerDetails;
-                        postInit($promise, $params);
-                    });
-                });
-            });
-        };
-
-
-
-        var postInit = function($promise, $params) {
-            var showDetails = false;
-            $timeout(function () {
-                if($scope.searchForm.$invalid) {
-                    $scope.showSummary = false;
-                    $scope.showTable = false;
-                    $promise.resolve([]);
-                } else {
-                    $scope.showSummary = false;
-                    $scope.showTable = true;
-                    var query = $scope.models.query;
-                    var view = $scope.models.view;
-                    view.ready.then(function (defaults) {
-                        if ($scope.$$childHead.advancedSearch) {
-                            if ('last' === view.periodType) {
-                                query.dateTo = new Date();
-                                if ('months' === view.lastType) {
-                                    query.dateFrom = new Date((new Date()).setMonth(query.dateTo.getMonth() - view.last));
-                                } else {
-                                    query.dateFrom = new Date((new Date()).setDate(query.dateTo.getDate() - view.last));
-                                }
-                            } else {
-                                query.dateFrom = $scope.table.tableConfig.dateRange.dateFrom;
-                                query.dateTo = $scope.table.tableConfig.dateRange.dateTo;
-                            }
-                            query.operationAmountFrom = assureNumber(view.amountRange.min);
-                            query.operationAmountTo = assureNumber(view.amountRange.max);
-                        } else {
-                            query = $scope.models.query = paymentsBasketFilterCriteria.getTransactionFilterInitValues();
-                            $scope.models.query.dateFrom = defaults.defaultDateFrom;
-                            query.operationAmountFrom = defaults.defaultAmountFrom;
-                            query.operationAmountTo = defaults.defaultAmountTo;
-                        }
-                        query.operationType = view.operationType.value;
-
-                        query.dateFrom = dateFilter(dateParser.parse(query.dateFrom, 'dd.MM.yyyy'), 'yyyy-MM-dd');
-                        query.dateTo = dateFilter(dateParser.parse(query.dateTo, 'dd.MM.yyyy'), 'yyyy-MM-dd');
-                        query.accountId = $scope.table.tableConfig.selectedAccount.accountId;
-                        query.operationTitle = view.operationTitle ? encodeURIComponent(view.operationTitle) : view.operationTitle;
-                        var listQuery = angular.extend({}, query);
-                        listQuery.pageSize = $params.pageSize;
-                        listQuery.pageNumber = $params.currentPage;
-                        $scope.models.sent = angular.extend($scope.models.sent, view, query);
-                        $scope.transactionList = paymentsBasketService.search({}).then(function (data) {
-                                var summary = {};
-                                _.each(data.content, function(group) {
-                                        accountsService.get(group.accountId).then(function(accountDetails) {
-                                            customerProductService.setCustomerData(accountDetails, 'ACCOUNT', 'accountId');
-                                            group.accountDetails = accountDetails;
-                                        });
-                                        _.each(group.basketTransfers, function(basketTransfer) {
-                                            var payment = basketTransfer.payment;
-                                            addPaymentAmountToSummary(payment, summary);
-                                        });
-                                });
-                                $params.pageCount = data.totalPages;
-                                $scope.showSummary = data.content.length > 0;
-                                $scope.showTable = data.content.length > 0;
-                                $scope.summaryAll = formSummary(summary);
-                                $params.pageCount = data.totalPages;
-
-                                $scope.basket.payments = data.content;
-                                data.content.paymentsList =  data.content;
-                                data.content.updateSummaryForItem = $scope.updateSummaryForItem;
-                                data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
-                                data.content.systemParameterDefinedName =  $scope.systemParameterDefinedName;
-                                data.content.getIcon = $scope.getIcon;
-                                return data.content;
-                            },
-                            function (reason) {
-                                $scope.showSummary = false;
-                                $scope.showTable = false;
-                                $params.pageCount = 0;
-                                return [];
-                            });
-                        $scope.table.promise = $scope.transactionList;
-                        $promise.resolve($scope.transactionList);
-                    });
-                }
-            }, 10);
-        };
 
         $scope.updateSummaryForItem = function (payment){
             if(payment.payment.checked){
@@ -237,13 +106,6 @@ angular.module('raiffeisen-payments')
             $scope.table.tableData.getData = postInit;
         };
 
-
-        $scope.onOperationsDateSubmit = function() {
-            if ($scope.model.dateRangeValidity) {
-                $scope.table.tableData.newSearch = true;
-                $scope.table.tableControl.invalidate();
-            }
-        };
 
         function assureNumber(value) {
             if (hasComma(value)) {
@@ -288,109 +150,12 @@ angular.module('raiffeisen-payments')
         };
 
 
-        var parseDataByTransfer = function (details) {
-            var responseObject = {
-                transferType: details.transferType,
-                id: details.id,
-                transactionId: details.transactionId,
-                remitterAccountId: details.accountId,
-                currency: details.currency,
-                amount: details.amount,
-                realizationDate: details.realizationDate
-            };
-            responseObject.beneficiaryAccountNo = details.recipientAccountNo;
-            responseObject.beneficiaryAccountId = details.recipientAccountNo;
-            responseObject.recipientName = details.recipientName;
-            responseObject.description = details.recipientName;
-            if(details.transferType === 'TAX'){
-                responseObject.taxForm = details.paymentDetails.formCode;
-            }
-            return responseObject;
-        };
-
-        function dateTodayOrInFuture(paymentDate) {
-            paymentDate = new Date(paymentDate);
-            return now.getTime() > paymentDate.getTime() ? now : paymentDate;
-        }
-
-        function cropArray(array) {
-            array = array || [];
-            for (var i = array.length - 1; i >= 0; i--) {
-                if (!!array[i]) {
-                    return array.splice(0, i + 1);
-                }
-            }
-        }
-
         $scope.onEdit = function (data) {
             var copiedData = angular.copy(data);
             var paymentType = angular.lowercase(copiedData.payment.transferType);
             $state.go(paymentType === 'own' ? "payments.new_internal.fill" : "payments.new.fill", {
                 referenceId: copiedData.payment.id,
                 paymentType: paymentType
-              /*  payment: lodash.extend({
-                    remitterAccountId : details.accountId,
-                    recipientName : details.recipientName,
-                    realizationDate: details.realizationDate,
-                    referenceId: details.id
-                }, (function() {
-                    switch(paymentType) {
-                       *//* case 'insurance':
-                            var selectedInsurance = lodash.find(parameters.insuranceAccounts, {
-                                accountNo: details.recipientAccountNo
-                            });
-                            var insurancePremium = [];
-                            insurancePremium[selectedInsurance.insuranceCode] = {
-                                amount: details.amount,
-                                nrb: details.recipientAccountNo,
-                                currency: "PLN"
-                            };
-                            return {
-                                nip: details.paymentDetails.nip,
-                                secondaryIdType: TYPE_ID_MAPPER[details.paymentDetails.secondIDType],
-                                secondaryIdNo: details.paymentDetails.secondIDNo,
-                                paymentType: details.paymentType,
-                                declarationDate: details.paymentDetails.declaration,
-                                declarationNo: details.paymentDetails.declarationNo,
-                                additionalInfo: details.paymentDetails.decisionNo,
-                                insurancePremiums: insurancePremium,
-                                amount: details.amount,
-                                insuranceAccount: details.recipientAccountNo
-                            };*//*
-                        case 'domestic':
-                            return {
-                                recipientAccountNo: details.recipientAccountNo,
-                                recipientName: details.recipientName,
-                                description: cropArray(details.title),
-                                amount: details.amount,
-                                currency: details.currency
-                            };
-                        case 'own':
-                            return {
-                                beneficiaryAccountId: details.recipientAccountId,
-                                amount: details.amount,
-                                recipientAccountNo: details.recipientAccountNo,
-                                currency: details.currency,
-                                description: cropArray(details.title)
-                            };
-                        case 'tax':
-                            return {
-                                recipientAccountNo: details.recipientAccountNo,
-                                taxpayerData: details.senderName,
-                                idType: TYPE_ID_MAPPER[details.paymentDetails.idtype],
-                                idNumber: details.paymentDetails.idnumber,
-                                formCode: details.paymentDetails.formCode,
-                                periodType: details.paymentDetails.periodType,
-                                periodNo: details.paymentDetails.periodNumber,
-                                periodYear: details.paymentDetails.periodYear,
-                                obligationId: details.paymentDetails.obligationId,
-                                amount: details.amount,
-                                currency: details.currency
-                            };
-                        default:
-                            throw "Payment type {0} not supported.".format(paymentType);
-                    }
-                })())*/
             });
         };
 
@@ -407,16 +172,56 @@ angular.module('raiffeisen-payments')
             child.$emit('$collapseRows');
         };
 
+
+
         $scope.table = {
             tableConfig : new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.basket.list.empty"),
-                dateRange : {dateFrom : $scope.models.sent.dateFrom, dateTo : $scope.models.sent.dateTo}
+                placeholderText: translate.property("raiff.payments.basket.list.empty")
             }),
             tableData : {
-                getData: $scope.paymentsData
+                getData: function (defer, $params) {
+                    var params = {};
+                    if ($scope.data.dateRange.fromDate && $scope.data.dateRange.toDate) {
+                        params.realizationDateFrom = $filter('date')($scope.data.dateRange.fromDate.getTime(), "yyyy-MM-dd");
+                        params.realizationDateTo   = $filter('date')($scope.data.dateRange.toDate.getTime(), "yyyy-MM-dd");
+                    }
+                    if($scope.data.account && $scope.data.status){
+                        params.accountId = $scope.data.account.accountId=='ALL' ? null : $scope.data.account.accountId;
+                        params.statuses = $scope.data.status.join(";");
+                    }
+
+
+                    $scope.transactionList = paymentsBasketService.search(params).then(function (data) {
+                            var summary = {};
+                            _.each(data.content, function (group) {
+                                accountsService.get(group.accountId).then(function (accountDetails) {
+                                    customerProductService.setCustomerData(accountDetails, 'ACCOUNT', 'accountId');
+                                    group.accountDetails = accountDetails;
+                                });
+                                _.each(group.basketTransfers, function (basketTransfer) {
+                                    var payment = basketTransfer.payment;
+                                    addPaymentAmountToSummary(payment, summary);
+                                });
+                            });
+                            $scope.summaryAll = formSummary(summary);
+                            $scope.basket.payments = data.content;
+                            data.content.paymentsList = data.content;
+                            data.content.updateSummaryForItem = $scope.updateSummaryForItem;
+                            data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
+                            data.content.systemParameterDefinedName = $scope.systemParameterDefinedName;
+                            data.content.getIcon = $scope.getIcon;
+                            return data.content;
+                        },
+                        function (reason) {
+                            return [];
+                        });
+                    $scope.table.promise = $scope.transactionList;
+                    defer.resolve($scope.transactionList);
+                }
             },
             tableControl: undefined
         };
+
 
         function linkDetailsLoading(payment) {
             payment.loadDetails = function() {
