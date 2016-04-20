@@ -6,13 +6,37 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsBasketVerifyController"
         });
     })
-    .controller('PaymentsBasketVerifyController', function ($scope, $state, $timeout, $q, translate, $filter, bdStepStateEvents, bdVerifyStepInitializer, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService) {
+.controller('PaymentsBasketVerifyController', function ($scope, $state, $timeout, $q, translate, $filter, bdStepStateEvents, bdVerifyStepInitializer, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService) {
+
+        console.log( $scope.basket.payments.paymentsList);
+
+        if ( $scope.basket.payments.paymentsList === null || typeof $scope.basket.payments.paymentsList === 'undefined') {
+                $state.go( 'payments.basket.new.fill');
+        }
 
         $scope.basket.token.params.rbOperationType="PAYMENTS_BASKET";
+
+        $scope.summaryItemMap = {};
+
+        _.each( $scope.basket.payments, function(account) {
+
+
+
+            _.each( account.basketTransfers, function( basketTransfer){
+
+            var payment = basketTransfer.payment;
+                if (payment.checked){
+                $scope.addPaymentAmountToSummary(payment, $scope.summaryItemMap);
+                }
+            });
+        });
+
+        $scope.summaryItem =  $scope.formSummary($scope.summaryItemMap);
 
         function authorize(doneFn, actions) {
             paymentsBasketService.realize($scope.basket.transferId, $scope.basket.token.model.input.model).then(function(data){
                 $scope.basket.item.result = data;
+
                 doneFn();
             });
         }
