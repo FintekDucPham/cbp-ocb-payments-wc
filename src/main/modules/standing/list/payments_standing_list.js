@@ -61,12 +61,16 @@ angular.module('raiffeisen-payments')
                 });
             }
             else if (action == 'delete') {
-                viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                    payment: payment,
-                    returnToPage: $scope.table.tableConfig.currentPage
-                });
+                if (payment.alreadyDeleted) {
+                    $state.go('payments.standing.error');
+                } else {
+                    viewStateService.setInitialState('payments.standing.manage.remove.verify', {
+                        payment: payment,
+                        returnToPage: $scope.table.tableConfig.currentPage
+                    });
 
-                $state.go('payments.standing.manage.remove.verify');
+                    $state.go('payments.standing.manage.remove.verify');
+                }
             }
         };
 
