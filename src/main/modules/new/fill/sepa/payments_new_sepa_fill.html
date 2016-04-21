@@ -192,7 +192,7 @@
         <ui-select ng-show="countries.data"
                    ng-model="payment.formData.recipientBankCountry"
                    name="recipientBankCountry"
-                   ng-required="true"
+                   ng-required="!!swift_bic"
                    ng-disabled="true"
                    bd-matches-none-of="recipientBankCountryValidators"
                    theme="bootstrap">
@@ -222,7 +222,7 @@
                         class="input-field input-area--party-data"
                         ng-model="payment.formData.recipientBankName"
                         name="recipientBankName"
-                        ng-required="true"
+                        ng-required="!!swift_bic"
                         ng-pattern="BANK_NAME_VALIDATION_REGEX"
                         bd-matches-none-of="recipientBankNameValidators"
                         split-text-max-length-validators="140"></textarea>

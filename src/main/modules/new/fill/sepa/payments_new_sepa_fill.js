@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
                                                           validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService,
-                                                          exchangeRates, rbAccountOwnNrbService, forbiddenAccounts) {
+                                                          exchangeRates, rbAccountOwnNrbService, forbiddenAccounts, formService) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION_REGEX');
@@ -228,12 +228,22 @@ angular.module('raiffeisen-payments')
             $timeout(recalculateCurrency);
         });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            if ($scope.paymentForm.$invalid) {
+                markInvalidFieldsAndStopForwardMove(control);
+                return;
+            }
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
                 });
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
         });
+
+        function markInvalidFieldsAndStopForwardMove(remote) {
+            formService.dirtyFields($scope.paymentForm);
+            remote.holdOn();
+            remote.deferred.reject();
+        }
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
@@ -278,7 +288,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.onRecipientCountryChange = function() {
-            if (!$scope.payment.options.fixedRecipientSelection) {
+            if (!$scope.payment.options.fixedRecipientSelection && $scope.payment.formData.recipientBankCountry) {
                 $scope.payment.options.ibanLength = $scope.payment.formData.recipientBankCountry.ibanLength;
             }
             else {
