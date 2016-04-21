@@ -61,14 +61,18 @@
         <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency.currency }}" not-styled></bd-amount>
     </bd-item-property>
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
+        {{payment.formData.realizationDate | localDate}}
+    </bd-item-property>
+
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
         {{::payment.formData.transferCost}} <a ng-show="transferCost.link != null" href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
-
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
         {{::payment.formData.paymentType}}
     </bd-item-property>
+
      <span class="eb-validation-messages" ng-if="payment.holiday">
          <span class="messages">
              <span class="validation-message">
