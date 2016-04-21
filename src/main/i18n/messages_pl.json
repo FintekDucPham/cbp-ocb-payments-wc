@@ -1198,6 +1198,7 @@
     "raiff.payments.new.standing.accept": "Zatwierdź",
 
     "raiff.payments.standing.manage.remove.title": "Usunięcie zlecenia stałego",
+    "raiff.payments.remove.standing.error.already_deleted": "Nie można usunąć wybranego zlecenia stałego. Usunięcie tego zlecenia oczekuje na wykonanie.",
     "raiff.standing_order.startDate.to_early":"Niepoprawna data pierwszej realizacji zlecenia",
     "raiff.standing_order.endDate.to_early":"Niepoprawna data zakończenia zlecenia",
   "EOF" : "",
