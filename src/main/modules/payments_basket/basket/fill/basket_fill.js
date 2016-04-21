@@ -186,7 +186,7 @@ angular.module('raiffeisen-payments')
                         params.realizationDateFrom = $filter('date')($scope.data.dateRange.fromDate.getTime(), "yyyy-MM-dd");
                         params.realizationDateTo   = $filter('date')($scope.data.dateRange.toDate.getTime(), "yyyy-MM-dd");
                     }
-                    if($scope.data.status){
+                    if($scope.data.status && $scope.data.account){
                         params.accountId = $scope.data.account.accountId=='ALL' ? null : $scope.data.account.accountId;
                         params.statuses = $scope.data.status.join(";");
                     }
