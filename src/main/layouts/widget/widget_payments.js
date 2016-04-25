@@ -31,5 +31,5 @@ angular.module('raiffeisen-payments')
     $scope.context.options = {
         detailsShown: false
     };
-
+    $scope.widget.modes = paymentsWidgetMode;
 });
