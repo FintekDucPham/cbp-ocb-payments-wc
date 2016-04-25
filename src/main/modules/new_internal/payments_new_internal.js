@@ -1,12 +1,13 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_internal', {
-            url: "/new-internal",
+            url: "/new-internal/:referenceId",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/payments_new_internal.html",
             controller: "PaymentsNewInternalController",
             params: {
-                payment: {}
+                payment: {},
+                items: {}
             },
             resolve:{
                 CURRENT_DATE: ['utilityService', function(utilityService){
@@ -20,7 +21,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService, rbPaymentInitFactory) {
 
         $scope.CURRENT_DATE = CURRENT_DATE;
 
@@ -33,14 +34,25 @@ angular.module('raiffeisen-payments')
             token: {
                 model: null,
                 params: {}
+            },
+            initData: {
+            },
+            items: {
+                modifyFromBasket : false
             }
         }), {
-            formData: {}
+            formData: {
+                addToBasket: false
+            }
         });
 
         if(!angular.equals({}, $stateParams.payment)){
             lodash.assign($scope.payment.formData, $stateParams.payment);
             $stateParams.payment = {};
+        }
+        if(!angular.equals({}, $stateParams.items)){
+            lodash.assign($scope.payment.items,  $stateParams.items);
+            $stateParams.items = {};
         }
         $scope.clearForm = function () {
             $scope.payment.formData = {};
@@ -76,7 +88,7 @@ angular.module('raiffeisen-payments')
 
 
 
-        $scope.payment.rbMultistepParams = {
+        $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',
             footerType: 'payment',
             onClear: $scope.clearForm,
@@ -107,4 +119,6 @@ angular.module('raiffeisen-payments')
                 addAsStandingOrder: true
             }
         };
+
+        rbPaymentInitFactory($scope);
     });

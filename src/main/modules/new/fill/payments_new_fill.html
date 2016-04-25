@@ -1,3 +1,10 @@
 <form name="paymentForm" novalidate>
     <div ng-include="getTemplateName('fill')"></div>
+    <span class="eb-validation-messages">
+         <span class="messages"  ng-if="limitBasketExeeded !== undefined && limitBasketExeeded.show">
+             <span class="validation-message">
+                {{limitBasketExeeded.messages}}
+             </span>
+         </span>
+    </span>
 </form>

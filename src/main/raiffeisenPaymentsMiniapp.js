@@ -92,6 +92,13 @@ angular.module('raiffeisen-payments', [
                     icon: "raiff-icons raiff_zlecenie_stale",
                     action: "payments.standing.list",
                     priority: 7
+                },
+                {
+                    id: "payments.basket.fill",
+                    label: 'raiff.payments.basket.label',
+                    icon: "raiff-icons raiff_odbiorcy",
+                    action: "payments.basket.new.fill",
+                    priority: 8
                 }
             ]
         });

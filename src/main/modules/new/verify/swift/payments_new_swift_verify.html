@@ -69,10 +69,25 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
         {{::payment.formData.paymentType}}
     </bd-item-property>
-     <span class="eb-validation-messages" ng-if="payment.holiday">
-         <span class="messages">
+     <span class="eb-validation-messages">
+         <span class="messages" ng-if="payment.holiday">
              <span class="validation-message">
                  {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
+             </span>
+         </span>
+        <span class="messages" ng-if="payment.formData.addToBasket && !payment.items.modifyFromBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.add.verify'|translate}}
+             </span>
+         </span>
+          <span class="messages" ng-if="payment.items.modifyFromBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.modify.verify'|translate}}
+             </span>
+         </span>
+         <span class="messages" ng-if="payment.items.modifyFromBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.modify.signRemove.verify'|translate}}
              </span>
          </span>
     </span>

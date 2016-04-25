@@ -29,6 +29,7 @@ angular.module('raiffeisen-payments')
             isBlock : false
         });
 
+        $scope.validationErrors = [];
         $scope.CURRENT_DATE = CURRENT_DATE;
 
         if($stateParams.nrb) {
@@ -49,14 +50,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
 
-        $scope.$on('clearForm', function () {
-            if($scope.paymentForm) {
-                formService.clearForm($scope.paymentForm);
-            }
-        });
-
-
-
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate), new Date(CURRENT_DATE));
             if(!!$scope.paymentForm.amount) {
@@ -66,6 +59,12 @@ angular.module('raiffeisen-payments')
             setRealizationDateToCurrent();
         }
 
+        });
+
+        $scope.$watch('payment.formData.addToBasket',function(newVal){
+            if(!!$scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$validate();
+            }
         });
 
         //paymentRulesResolved
@@ -82,7 +81,14 @@ angular.module('raiffeisen-payments')
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
 
+        $scope.setFieldsToOmitOnFormClear = function(fields) {
+            $scope.fieldsToOmitOnFormClear = fields;
+        };
+
         $scope.$on('clearForm', function () {
+            if($scope.paymentForm) {
+                formService.clearForm($scope.paymentForm, $scope.fieldsToOmitOnFormClear);
+            }
             $scope.payment.options.fixedRecipientSelection = false;
         });
 
@@ -122,10 +128,6 @@ angular.module('raiffeisen-payments')
             return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
         }
 
-        function isZUSAmountOverBalance() {
-            return   $scope.payment.meta.amountSummary[0].amount > $scope.payment.meta.convertedAssets;
-        }
-
         $scope.validateBalance = function() {
             if($scope.payment.type && $scope.payment.type.code!='INSURANCE' && $scope.payment.type.code != 'STANDING'){
                 if($scope.paymentForm.amount){
@@ -147,6 +149,9 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            if($scope.payment.showCotWarning && !$scope.sorbnetCotConfirmed){
+                $scope.sorbnetCotConfirmed = true;
+            }
             if($scope.blockadesForward.isBlock){
                 return;
             }
@@ -180,10 +185,18 @@ angular.module('raiffeisen-payments')
                 $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
                     "remitterId": 0
                 }, requestConverter($scope.payment.formData), templateParameters), $scope.payment.operation.link || false ).then(function (transfer) {
-                    $scope.payment.transferId = transfer.referenceId;
-                    $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                    $scope.payment.holiday = transfer.holiday;
-                    actions.proceed();
+                    if(transfer.showCotWarning && !$scope.sorbnetCotConfirmed){
+                        $scope.payment.showCotWarning = transfer.showCotWarning;
+                        var cotTime = new Date(transfer.cotTime);
+                        $scope.payment.showCotWarningMsg = translate.property("raiff.payments.cut.off.time.MSG-0657_COT_SORBNET", [$filter('date')(cotTime, 'HH:mm')]);
+                        return;
+                    }else{
+                        $scope.payment.transferId = transfer.referenceId;
+                        $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                        $scope.payment.holiday = transfer.holiday;
+                        $scope.sorbnetCotConfirmed = false;
+                        actions.proceed();
+                    }
                 }).catch(function(errorReason){
                     if(errorReason.subType == 'validation'){
                         var errorMsg = null;
@@ -198,6 +211,11 @@ angular.module('raiffeisen-payments')
                                 $scope.limitNonResExeeded = {
                                     show: true,
                                     messages: translate.property("raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
+                                };
+                            }else if(currentError.field == 'raiff.basket.transfers.limit.exceeed'){
+                                $scope.limitBasketExeeded = {
+                                    show: true,
+                                    messages: translate.property("raiff.payments.basket.add.validation.amount_exceeded")
                                 };
                             }else{
                                 if(currentError.codes[2]){
@@ -251,6 +269,12 @@ angular.module('raiffeisen-payments')
                     return $q(function(resolve, reject) {
                         var sourceAccountCurrency = scope.$eval(attr.rbSourceAccountCurrency),
                             transactionCurrency = scope.$eval(attr.rbTransactionCurrency);
+
+                        //dla zaznaczonej opcji dodad do koszyka nie walidujemy dostepnych srodkow
+                        if (scope.payment.formData.addToBasket) {
+                            resolve();
+                            return;
+                        }
 
                         // dla przyszlych platnosci, nie walidujemy dostepnych srodkow
                         if (scope.payment.options.futureRealizationDate) {

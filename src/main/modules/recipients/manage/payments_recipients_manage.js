@@ -22,6 +22,15 @@ angular.module('raiffeisen-payments')
 
         $scope.actualRecipientList = null;
 
+        $scope.clearForm = function () {
+            $scope.recipient.formData = {};
+            $scope.recipient.meta.bankName = {
+                recipientBankName:null,
+                bankNamePromise:null
+            };
+            $scope.$broadcast('clearForm');
+        };
+
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');

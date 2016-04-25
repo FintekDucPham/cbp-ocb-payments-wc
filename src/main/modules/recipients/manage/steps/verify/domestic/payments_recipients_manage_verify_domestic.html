@@ -46,7 +46,7 @@
         <span ng-if="recipient.operation.code == 'NEW'" class="payments-recipients__domestic-verify__bankName-preloader-section">
 
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.recipients.new.domestic.fill.bankName'|translate}}">
-                <rb-bank-name account-no="recipient.formData.recipientAccountNo" bank-name-promise="recipient.formData.recipientBankNamePromise"></rb-bank-name>
+                <rb-bank-name ng-show="recipient.formData.recipientAccountNo" account-no="recipient.formData.recipientAccountNo" bank-name-promise="recipient.formData.recipientBankNamePromise"></rb-bank-name>
             </bd-item-property>
 
         </span>

@@ -244,7 +244,7 @@ angular.module('raiffeisen-payments')
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
                         totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
-                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
+                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate || $scope.payment.formData.addToBasket ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
                     return true;
                 }
@@ -269,9 +269,11 @@ angular.module('raiffeisen-payments')
                     if(!out){
                         out = angular.copy(val);
                         out.insuranceDestinationType=key;
+                        out.amount = ("" + out.amount).replace(/,/, ".");
                     }
                 });
                 copiedFormData.insurancePremium = out;
+
             }else{
                 copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
                     element.amount = ("" + element.amount).replace(/,/, ".");
@@ -291,9 +293,11 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.paymentType = 'TYPE_S';
             $scope.payment.formData.insurancePremiums = {};
             $scope.accountSelectorRemote.resetToDefault();
-
-
         });
+
+        $scope.setFieldsToOmitOnFormClear(lodash.map(zusPaymentInsurances, function(type) {
+            return type + 'Amount';
+        }));
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
@@ -349,6 +353,18 @@ angular.module('raiffeisen-payments')
                 currency: "PLN",
                 nrb: insurancePremium.accountNo
             });
+        };
+
+        $scope.editedInsuranceCode = null;
+        $scope.isInsuranceDisabled = function(insuranceCode){
+            if(!$scope.editedInsuranceCode){
+                if($scope.payment.formData.insurancePremiums && $scope.payment.formData.insurancePremiums[insuranceCode]){
+                    $scope.editedInsuranceCode = insuranceCode;
+                }else{
+                    return false;
+                }
+            }
+            return true;//(insuranceCode!==$scope.editedInsuranceCode);
         };
 
     });

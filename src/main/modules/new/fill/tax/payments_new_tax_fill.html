@@ -38,7 +38,7 @@
             </div>
 
             <div ng-switch-when="false">
-                <div ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)" ng-keyup="unlockField()" ng-if="payment.items.formSymbolList">
+                <div ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)" ng-keyup="unlockField()" ng-if="payment.items.formSymbolList">
                     <rb-tax-account-select ng-show="!showHide"
                                            rb-tax-office="payment.items.recipientAccount"
                                            rb-tax-office-id="payment.formData.recipientAccountNo"
@@ -85,12 +85,17 @@
             <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
             <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
             <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer"  name="nrbCheck" ng-required="isOk || showHide" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                 <span class="tooltipFix__tooltip">
                     <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
                  </span>
             </span>
         </span>
+        <eb-validation-messages eb-name="nrbCheck">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+            </div>
+        </eb-validation-messages>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.us.fill.taxpayer_data' | translate }}">
@@ -321,7 +326,7 @@
                        ng-min="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        rb-number-type-input
-                       bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
+                       bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate || payment.formData.addToBasket  ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                        required
                        placeholder="{{ ::'raiff.payments.new.us.fill.amount.placeholder' | translate }}"/>
             </div>
@@ -409,5 +414,9 @@
         </eb-validation-messages>
 
     </bd-item-property>
+
+
+    <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-basket-select>
+
 
 </div>
