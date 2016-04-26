@@ -1,0 +1,205 @@
+<div>
+           <!-- <bd-item-property label="{{::'account.statement.select.label'|translate}}">
+                <ui-select ng-model="table.tableConfig.selectedAccount"
+                           theme="bootstrap"
+                           reset-search-input="false"
+                           ng-disabled="fixedAccountSelection"
+                           on-select=""
+                           required>
+                    <ui-select-match placeholder="{{::'account.statement.select.placeholder'|translate}}">
+                        <div class="select-account__row">
+                            <div ng-if="$select.selected.id=='ALL'">
+                                <div class="select-account__row__cell">
+                                    Wszystkie
+                                </div>
+                            </div>
+                            <div class="select-account__row__cell"><img ng-if="$select.selected.customerData.icon >= 0"
+                                                                        ng-src="{{getIcon($select.selected.customerData.icon)}}"
+                                                                        class="select-account__icon"/></div>
+                            <div class="select-account__row__cell">{{$select.selected.customerData.name ||
+                                $select.selected.accountName}}<span class="bd-show-md">&nbsp;</span><br
+                                        class="bd-hide-md"/>{{$select.selected.accountNo | nrbIbanFilter}}
+                            </div>
+                        </div>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in accountList track by $index">
+                        <div ng-if="item.id=='ALL'">
+                            <div class="select-account__row__cell">
+                              Wszystkie
+                            </div>
+                        </div>
+                        <div class="select-account__row">
+                            <div class="select-account__row__cell" ng-if="getIcon(item.accountId)">
+                                <img ng-if="item.customerData.icon >= 0" ng-src="{{getIcon(item.customerData.icon)}}"
+                                     class="select-account__icon"/>
+                            </div>
+                            <div class="select-account__row__cell">
+                                {{((item.customerData.name || item.accountName)) + ' '}}<br class="bd-hide-md"/>{{(item.accountNo
+                                | nrbIbanFilter) | highlight: $select.search}}
+                            </div>
+                        </div>
+                    </ui-select-choices>
+                </ui-select>
+            </bd-item-property>
+            <rb-future-date-panel
+                    date-range="dateRange"
+                    options="options.futureDatePanelConfig"
+                    on-submit="onOperationsDateSubmit()"
+                    valid="model.dateRangeValidity"
+                    ></rb-future-date-panel>-->
+
+    <rb-basket-search-panel
+            data="data"
+            options="options.futureDatePanelConfig"
+            on-submit="onOperationsDateSubmit()"
+            valid="model.dataValidity"></rb-basket-search-panel>
+
+        <bd-table bd-type="typeGG"
+                  bd-table-params="table.tableConfig"
+                  bd-table-control="table.tableControl"
+                  bd-table-data="table.tableData"
+                  bd-table-promise="listPromise"
+                  bd-table-meta="{
+                    'first': {
+                        'title': '##raiff.payments.basket.list.header.operation_date',
+                        'data': 'realizationDate'
+                    },
+                    'second': {
+                        'title': '##raiff.payments.basket.list.header.status',
+                        'data': 'signedStatus'
+                    },
+                    'third': {
+                        'title': '##raiff.payments.basket.list.header.operation_type',
+                        'data': 'transferType'
+                    },
+                    'fourth': {
+                        'title': '##raiff.payments.basket.list.header.recipient_name',
+                        'data': 'recipientName'
+                    },
+                    'fifth': {
+                        'title': '##raiff.payments.basket.list.header.operation_title',
+                        'data': 'title'
+                    },
+                    'sixth': {
+                        'title': '##raiff.payments.basket.list.header.targetAccount',
+                        'data': 'recipientAccountNo'
+                    },
+                    'seventh': {
+                        'title': '##raiff.payments.basket.list.header.operation_amount',
+                        'data': [
+                            'amount',
+                            'currency'
+                        ]
+                    }
+                }">
+
+            <bd-details-section bd-table-row-details>
+                <div ng-if="$data">
+                    <ng-include src="templateDetails"></ng-include>
+                    <bd-details-action-section>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12" style="text-align:right;">
+                                <bd-button ng-if="$data.signedStatus != 'DELETED' && $data.signedStatus != 'SUBMITTED' " ng-click="onDelete($data)" class="bd-button">
+                                    {{::'raiff.payments.basket.list.details.buttons.delete' | translate}}
+                                </bd-button>
+                                <bd-button ng-if="$data.actions.indexOf('BASKET_TRANSFER_EDIT_ACCESS') >-1 && $data.signedStatus != 'SUBMITTED' " ng-click="onEdit($data)" class="bd-button">
+                                    {{::'raiff.payments.basket.list.details.buttons.modify' | translate}}
+                                </bd-button>
+                            </div>
+                        </div>
+                    </bd-details-action-section>
+
+                </div>
+
+                <!--<bd-details-action-section>-->
+
+                <!--<div class="bd-grid">-->
+                <!--<div class="bd-grid__row">-->
+                <!--<div class="bd-grid__col&#45;&#45;sm-12">-->
+                <!--<bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.edit' | translate}}</bd-button>-->
+                <!--</div>-->
+                <!--<div class="bd-grid__col&#45;&#45;sm-4">-->
+                <!--<bd-button ng-click="onRecipientTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm bd-float-right">{{::'raiff.payments.recipients.list.details.transfer' | translate}}</bd-button>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <!--</bd-details-action-section>-->
+
+            </bd-details-section>
+
+            <div bd-table-footer>
+                <bd-table-pagination></bd-table-pagination>
+            </div>
+
+        </bd-table>
+
+        <div class="bd-list basket-vew__summary" ng-show="listPromise.$$state.status === 1">
+            <bd-list-item summary>
+                <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
+                    <div class="bd-table bd-table__fixed">
+                        <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                            <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                <div class="summary-item__label" style="border-bottom: 0px;">
+                                    {{::"raiff.payments.basket.list.summary.chose"|translate}}
+                                </div>
+                            </div>
+                            <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-11">
+                                <div ng-repeat="currencySummary in summaryItem">
+                                    <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                        <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-8">
+                                            <div>
+                                                {{::"raiff.payments.future.list.summary.currency"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
+                                            </div>
+                                        </div>
+                                        <div bd-table-cell="first"
+                                             class="bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
+                                            <bd-amount amount="currencySummary.sum"
+                                                       currency="{{currencySummary.currency}}"></bd-amount>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </bd-list-item>
+
+            <bd-list-item summary>
+                <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
+                    <div class="bd-table bd-table__fixed">
+                        <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                            <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                <div class="summary-item__label" style="border-bottom: 0px;">
+                                    {{::"raiff.payments.basket.list.summary.all"|translate}}
+                                </div>
+                            </div>
+                            <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-11">
+                                <div ng-repeat="currencySummary in summaryAll">
+                                    <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                        <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-8">
+                                            <div>
+                                                {{::"raiff.payments.future.list.summary.currency"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
+                                            </div>
+                                        </div>
+                                        <div bd-table-cell="first"
+                                             class="bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
+                                            <bd-amount amount="currencySummary.sum"
+                                                       currency="{{currencySummary.currency}}"></bd-amount>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </bd-list-item>
+        </div>
+        <span class="eb-validation-messages">
+             <span class="messages"  ng-if="limitBasketExeeded !== undefined && limitBasketExeeded.show">
+                 <span class="validation-message">
+                    {{limitBasketExeeded.messages}}
+                 </span>
+             </span>
+        </span>
+</div>

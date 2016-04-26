@@ -37,7 +37,7 @@
                    name="recipientAccountNo"
                    ng-model="payment.formData.recipientAccountNo"
                    ng-disabled="payment.options.fixedRecipientSelection || showHide"
-                   ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                   ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    required
                    bban-nrb
                    bd-matches-none-of="recipientAccountValidators"
@@ -47,7 +47,7 @@
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
-             <rb-bank-name account-no="payment.formData.recipientAccountNo" bank-name-promise="payment.formData.recipientBankNamePromise"></rb-bank-name>
+             <rb-bank-name account-no="payment.formData.recipientAccountNo" bank-name-promise="payment.formData.recipientBankNamePromise" ng-show="!showHide && payment.formData.recipientAccountNo"></rb-bank-name>
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                 <div class="validation-message animate-on">
                     {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
@@ -78,11 +78,16 @@
             <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
             <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
             <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer"  name="nrbCheck" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();"  ng-required="isOk || showHide">
                 <span class="tooltipFix__tooltip">
                     <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
                  </span>
             </span>
+             <eb-validation-messages eb-name="nrbCheck">
+                 <div eb-message-key="required" class="validation-message animate-on">
+                     {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+                 </div>
+             </eb-validation-messages>
         </span>
 
     </rb-paste-warning>
@@ -157,7 +162,7 @@
                        class="input-field"
                        ng-model="payment.formData.amount"
                        ng-pattern="AMOUNT_PATTERN"
-                       bd-no-more-than="{ 'elixir' : payment.formData.sendBySorbnet ? 99999999999999999 : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
+                       bd-no-more-than="{ 'elixir' : payment.formData.sendBySorbnet ? 99999999999999999 : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate || payment.formData.addToBasket ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
                        required
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
             </div>
@@ -249,10 +254,16 @@
         </eb-validation-messages>
 
     </bd-item-property>
-
     <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.realization_type_sorbnet.label' | translate }}">
         <rb-sorbnet-selection rb-model="payment.formData.sendBySorbnet" rb-destination-nrb="payment.formData.recipientAccountNo"></rb-sorbnet-selection>
+        <div class="row" ng-show="payment.formData.sendBySorbnet && payment.showCotWarning">
+            <div class="col-xs-12 col-sm-12">
+                <bd-msg-panel bd-msg-type="warning">{{payment.showCotWarningMsg}}</bd-msg-panel>
+            </div>
+        </div>
     </bd-item-property>
+
+    <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-basket-select>
 
     <bd-item-property class="bd-item-property--multirow">
         <rb-info-account-investment rb-source-choose="payment.items.senderAccount.category" rb-destination-nrb="payment.formData.recipientAccountNo"></rb-info-account-investment>

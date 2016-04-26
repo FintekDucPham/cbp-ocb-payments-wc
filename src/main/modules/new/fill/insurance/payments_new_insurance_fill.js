@@ -244,7 +244,7 @@ angular.module('raiffeisen-payments')
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
                         totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
-                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
+                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate || $scope.payment.formData.addToBasket ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
                 } else {
                     return true;
                 }
@@ -269,9 +269,11 @@ angular.module('raiffeisen-payments')
                     if(!out){
                         out = angular.copy(val);
                         out.insuranceDestinationType=key;
+                        out.amount = ("" + out.amount).replace(/,/, ".");
                     }
                 });
                 copiedFormData.insurancePremium = out;
+
             }else{
                 copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
                     element.amount = ("" + element.amount).replace(/,/, ".");
@@ -362,7 +364,7 @@ angular.module('raiffeisen-payments')
                     return false;
                 }
             }
-            return (insuranceCode!==$scope.editedInsuranceCode);
+            return true;//(insuranceCode!==$scope.editedInsuranceCode);
         };
 
     });

@@ -102,7 +102,7 @@ angular.module('raiffeisen-payments')
 
         function validateBalance() {
             if($scope.paymentForm.amount){
-                $scope.paymentForm.amount.$setValidity('balance', !(isCurrentDateSelected() && isAmountOverBalance()));
+                $scope.paymentForm.amount.$setValidity('balance',  ($scope.payment.formData.addToBasket || !(isCurrentDateSelected() && isAmountOverBalance())));
             }
         }
 
@@ -120,6 +120,13 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$watch('payment.formData.realizationDate',function(newVal){
+            validateBalance();
+        });
+
+        $scope.$watch('payment.formData.addToBasket',function(newVal){
+            if(!!$scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$validate();
+            }
             validateBalance();
         });
 
@@ -157,6 +164,11 @@ angular.module('raiffeisen-payments')
                                     $scope.limitExeeded = {
                                         show: true,
                                         messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                                    };
+                                }else if(currentError.field == 'raiff.basket.transfers.limit.exceeed') {
+                                    $scope.limitBasketExeeded = {
+                                        show: true,
+                                        messages: translate.property("raiff.payments.basket.add.validation.amount_exceeded")
                                     };
                                 }
                             }

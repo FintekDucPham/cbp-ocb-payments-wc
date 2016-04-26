@@ -1,0 +1,53 @@
+<div class="basket-vew__details">
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_date'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        {{$data.payment.realizationDate| date:'shortDate' }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.addedToBasketDate'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        {{$data.addedToBasketDate| date:'shortDate' }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.status'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        {{$data.signedStatus}}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_type'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        {{ ::'raiff.payments.new.types.'+$data.payment.transferType| translate}}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.recipient_name'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        {{ $data.payment.recipientName.join('') }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_title'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        <span ng-if="$data.payment.title.join('')=='ZUSPayment'">
+             {{'raiff.payments.basket.list.description.zus.ZUSPayment' | translate}}
+        </span>
+        <span ng-if="$data.payment.title.join('')!='ZUSPayment'">
+            {{ $data.payment.title.join('') }}
+        </span>
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_amount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        {{ $data.payment.amount | number: 2}} {{ $data.payment.currency }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.sourceAccount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        <div>{{$data.payment.accountNo| nrbIbanFilter }}</div>
+        <div>{{$data.payment.owner}}</div>
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.targetAccount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        <span ng-if="$data.payment.recipientAccountNo=='ZUS_ACCOUNTS'">
+             {{'raiff.payments.basket.list.account.zus.ZUS_ACCOUNTS' | translate}}
+        </span>
+        <span ng-if="$data.payment.recipientAccountNo!='ZUS_ACCOUNTS'">
+            {{$data.payment.recipientAccountNo| nrbIbanFilter }}
+        </span>
+        <div>{{$data.payment.recipientName.join('') }}</div>
+        <div>{{$data.payment.recipientAddress.join('') }}</div>
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.historyAction'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+        <div class="basket-vew__details__action-history">
+            <div ng-repeat="item in $data.actionHistoryList track by $index">
+                <span>{{item.date|date:'short'}}</span>
+                <span>{{::'raiff.payments.basket.history.action.'+item.action| translate}}</span>
+                <span>-</span>
+                <span>{{item.firstName}} {{item.lastName}}</span>
+            </div>
+        </div>
+    </bd-item-property>
+
+</div>

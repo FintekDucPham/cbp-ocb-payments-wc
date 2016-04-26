@@ -130,12 +130,16 @@ angular.module('raiffeisen-payments')
 
         $scope.onDelete = function(payment) {
             if (payment.transferType == rbPaymentTypes.STANDING.code) {
-                viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                    payment: payment.details,
-                    returnToPage: $scope.table.tableConfig.currentPage
-                });
+                if (payment.details.alreadyDeleted) {
+                    $state.go('payments.standing.error');
+                } else {
+                    viewStateService.setInitialState('payments.standing.manage.remove.verify', {
+                        payment: payment.details,
+                        returnToPage: $scope.table.tableConfig.currentPage
+                    });
 
-                $state.go('payments.standing.manage.remove.verify');
+                    $state.go('payments.standing.manage.remove.verify');
+                }
             }
             else {
                 var responseObject = parseDataByTransfer(payment);

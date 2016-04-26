@@ -1,0 +1,12 @@
+<span ng-if="notAcceptedTransactionMsg.show">
+    <bd-msg-panel bd-msg-type="warning">{{notAcceptedTransactionMsg.message}}</bd-msg-panel>
+</span>
+<span ng-if="validationMsg.show">
+    <bd-msg-panel bd-msg-type="error">{{validationMsg.message}}</bd-msg-panel>
+</span>
+<span ng-if="realizationDateExceeded.show">
+    <bd-msg-panel bd-msg-type="warning">{{realizationDateExceeded.message}}</bd-msg-panel>
+</span>
+<span ng-if="transactionsSubmited.show">
+    <bd-msg-panel bd-msg-type="warning">{{transactionsSubmited.message}}</bd-msg-panel>
+</span>

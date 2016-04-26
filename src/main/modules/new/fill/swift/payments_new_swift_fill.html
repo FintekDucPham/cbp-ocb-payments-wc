@@ -43,7 +43,7 @@
                    ng-maxlength = "payment.formData.recipientBankCountry.ibanLength || null"
                    ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                    class="input-field"
-                   ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                   ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    type="text"
                    ng-disabled="payment.options.fixedRecipientSelection || showHide"
                    bd-matches-none-of="recipientAccountValidators"
@@ -86,11 +86,16 @@
             <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
             <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
             <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer"  name="nrbCheck" ng-required="isOk || showHide" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                 <span class="tooltipFix__tooltip">
                     <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>                 </span>
             </span>
         </span>
+        <eb-validation-messages eb-name="nrbCheck">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+            </div>
+        </eb-validation-messages>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.foreign.fill.recipient_data' | translate }}">
@@ -380,16 +385,26 @@
         </ui-select>
     </bd-item-property>
 
-    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
-        <ui-select ng-model="payment.formData.paymentType"
-                   theme="bootstrap"
-                   required>
-            <ui-select-match placeholder="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
-                {{$select.selected}}
-            </ui-select-match>
-            <ui-select-choices repeat="cost in [transfer_constants.PAYMENT_TYPES.STANDARD, transfer_constants.PAYMENT_TYPES.EXPRESS]">
-                {{ cost }}
-            </ui-select-choices>
-        </ui-select>
+    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.payment_trybe.label'|translate}}" ng-if="transfer_type.data">
+        <rb-payment-trybe rb-trybes="payment.items.paymentTrybes"
+                          rb-model="payment.formData.paymentType"
+                          rb-destination-nrb="payment.formData.recipientAccountNo"
+                          currency="payment.formData.currency"
+                          transfer-type="transfer_type.data"
+                          swift="swift"
+                          costs="payment.formData.transferCost"
+                            ></rb-payment-trybe>
+
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['noTargetMethodAvailable'] !== undefined">
+            NoTargetMethodAv
+        </div>
+
+
     </bd-item-property>
+
+
+    <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-basket-select>
+
+
 </div>

@@ -127,7 +127,6 @@
             </div>
         </eb-validation-messages>
     </bd-item-property>
-
     <bd-item-property label="{{ ::'raiff.payments.new.zus.fill.payment_type' | translate }}">
         <ui-select ng-model="payment.formData.paymentType"
                    theme="bootstrap"
@@ -232,6 +231,9 @@
 
     </bd-item-property>
 
+    <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-basket-select>
+
+
     <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.fill.payment_options' | translate }}">
 
         <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums" style="width: 100%">
@@ -257,7 +259,7 @@
                                        rb-number-type-input
                                        ng-min="0.01"
                                        bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceItem.insuranceCode] }}"
-                                       bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
+                                       bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate || payment.formData.addToBasket ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                                        ng-pattern="AMOUNT_PATTERN"
                                        ng-model-options="{ allowInvalid: true }"
                                        required
