@@ -52,7 +52,7 @@ angular.module('raiffeisen-payments')
                 "valid": "=?"
 
             },
-            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService) {
+            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService, formService) {
 
 
                 // max date, based on now and business parameter
@@ -62,7 +62,16 @@ angular.module('raiffeisen-payments')
                     options = rbFutureDateRangeParams($scope.options);
 
                 $scope.data = {
-                    dateRange: {}
+                    dateRange: {},
+                    amountRange: {}
+                };
+
+                $scope.advancedSearch = false;
+                $scope.showAdvanced = function(){
+                    $scope.advancedSearch = !$scope.advancedSearch;
+                };
+                $scope.hideAdvanced = function(){
+                    $scope.advancedSearch = !$scope.advancedSearch;
                 };
 
 
@@ -86,8 +95,13 @@ angular.module('raiffeisen-payments')
                     $scope.data.account = $scope.inputData.selectedAccount;
                 };
 
+                var commitAmountRange = function(){
+                    $scope.data.amountRange.min = $scope.inputData.amountRange.min;
+                    $scope.data.amountRange.max = $scope.inputData.amountRange.max;
+                };
+
                 var getSelectedAccount = function(accountList){
-                    $scope.accountList = accountList;
+                    $scope.accountList = angular.copy(accountList);
                     accountsService.loadAccountIcons($scope.accountList);
                     account = {};
                     account.accountId = "ALL";
@@ -112,14 +126,34 @@ angular.module('raiffeisen-payments')
                 maxDate = new Date(now.getTime());
                 maxDate.setMonth(now.getMonth() + parseInt(options.maxOffsetInMonths, 10));
 
-                $scope.inputData = {
-                    selectedMode: options.dateChooseType,
-                    periodRange: FUTURE_DATE_RANGES.DAYS,
-                    period: options.period,
-                    dateFrom: options.dateFrom,
-                    dateTo: options.dateTo,
-                    status: [PAYMENT_BASKET_STATUS.NEW, PAYMENT_BASKET_STATUS.TO_ACCEPT, PAYMENT_BASKET_STATUS.READY],
-                    selectedAccount: getSelectedAccount(options.account)
+                var init = function(){
+                    $scope.inputData = {
+                        selectedMode: options.dateChooseType,
+                        periodRange: FUTURE_DATE_RANGES.DAYS,
+                        period: options.period,
+                        dateFrom: options.dateFrom,
+                        dateTo: options.dateTo,
+                        status: [PAYMENT_BASKET_STATUS.NEW, PAYMENT_BASKET_STATUS.TO_ACCEPT, PAYMENT_BASKET_STATUS.READY],
+                        selectedAccount: getSelectedAccount(options.account),
+                        amountRange:{
+                            min:null,
+                            max:null
+                        }
+                    };
+                };
+
+
+                $scope.clearFilter = function(){
+                    clearFormInput( $scope.futureDatePanelForm.amountFrom);
+                    clearFormInput( $scope.futureDatePanelForm.amountTo);
+                    init();
+                    $scope.futureDatePanelForm.amountFrom.$render();
+                    $scope.futureDatePanelForm.amountTo.$render();
+                };
+
+                var clearFormInput = function(formConrol){
+                    formConrol.$setViewValue(null);
+                    formConrol.$modelValue = null;
                 };
 
 
@@ -164,7 +198,7 @@ angular.module('raiffeisen-payments')
                     }
 
                     $scope.valid = $scope.futureDatePanelForm.$valid;
-                    if ($scope.futureDatePanelForm.$valid) {
+                    if ($scope.futureDatePanelForm.period.$valid) {
                         commitDateRange();
                     }
                 };
@@ -224,7 +258,7 @@ angular.module('raiffeisen-payments')
                     }
 
                     $scope.valid = $scope.futureDatePanelForm.$valid;
-                    if ($scope.futureDatePanelForm.$valid) {
+                    if ($scope.futureDatePanelForm.dateFromInput.$valid && $scope.futureDatePanelForm.dateToInput.$valid) {
                         commitDateRange();
                     }
                 };
@@ -300,38 +334,62 @@ angular.module('raiffeisen-payments')
                     }
                 });
 
-                var validateAccount = function(){
-                    $scope.valid = $scope.futureDatePanelForm.$valid;
-                    if ($scope.futureDatePanelForm.$valid) {
-                        commitAccount();
-                    }
-                };
-
-                var validateStatus = function(){
-                    $scope.valid = $scope.futureDatePanelForm.$valid;
-                    if ($scope.futureDatePanelForm.$valid) {
-                        commitStatus();
-                    }
-                };
 
                 $scope.$watch('inputData.selectedAccount', function(selectedAccount) {
                     $scope.futureDatePanelForm.account.$setDirty();
-                    validateAccount();
+                    if ($scope.futureDatePanelForm.account) {
+                        $scope.futureDatePanelForm.account.$validate();
+                    }
+                    $scope.valid = $scope.futureDatePanelForm.$valid;
+                    if ($scope.futureDatePanelForm.account.$valid) {
+                        commitAccount();
+                    }
                 });
 
                 $scope.$watch('inputData.status', function(selectedAccount) {
                     $scope.futureDatePanelForm.status.$setDirty();
-                    validateStatus();
+                    if ($scope.futureDatePanelForm.status) {
+                        $scope.futureDatePanelForm.status.$validate();
+                    }
+                    $scope.valid = $scope.futureDatePanelForm.$valid;
+                    if ($scope.futureDatePanelForm.status.$valid) {
+                        commitStatus();
+                    }
                 });
+
+                $scope.$watch('inputData.amountRange.min', function(selectedAccount) {
+                    $scope.futureDatePanelForm.amountFrom.$setDirty();
+                    if ($scope.futureDatePanelForm.amountFrom) {
+                        $scope.futureDatePanelForm.amountFrom.$validate();
+                    }
+                    $scope.valid = $scope.futureDatePanelForm.$valid;
+                    if ($scope.futureDatePanelForm.amountFrom.$valid) {
+                        commitAmountRange();
+                    }
+                });
+
+                $scope.$watch('inputData.amountRange.max', function(selectedAccount) {
+                    $scope.futureDatePanelForm.amountTo.$setDirty();
+                    if ($scope.futureDatePanelForm.amountTo) {
+                        $scope.futureDatePanelForm.amountTo.$validate();
+                    }
+                    $scope.valid = $scope.futureDatePanelForm.amountTo.$valid;
+                    if ($scope.futureDatePanelForm.$valid) {
+                        commitAmountRange();
+                    }
+                });
+
 
 
                 $scope.constraints = {
                     maxLastFieldValue: 6
                 };
 
+                init();
                 commitDateRange();
                 commitAccount();
                 commitStatus();
+                commitAmountRange();
             }
         };
     });

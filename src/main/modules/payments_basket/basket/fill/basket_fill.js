@@ -39,15 +39,6 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsBasketFillController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, bdStepStateEvents, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, paymentsBasketService, paymentsBasketFilterCriteria, accountsService, customerService, dateFilter, dateParser, customerProductService) {
         $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
 
-        var TYPE_ID_MAPPER = {
-            P: "PESEL",
-            N: "NIP",
-            R: "REGON",
-            1: "ID_CARD",
-            2: "PASSPORT",
-            3: "OTHER"
-        };
-
         $scope.data = {};
         $scope.summaryItemMap = {};
 
@@ -190,6 +181,8 @@ angular.module('raiffeisen-payments')
                         params.accountId = $scope.data.account.accountId=='ALL' ? null : $scope.data.account.accountId;
                         params.statuses = $scope.data.status.join(";");
                     }
+                    params.amountFrom = $scope.data.amountRange.min;
+                    params.amountTo = $scope.data.amountRange.max;
 
 
                     $scope.transactionList = paymentsBasketService.search(params).then(function (data) {

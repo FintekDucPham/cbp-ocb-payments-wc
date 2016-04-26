@@ -1271,5 +1271,8 @@
   "raiff.payments.basket.add.validation.amount_exceeded":"Przekroczona został dopuszczalna liczba przelewów jakie można umieścić w Koszyku płatności. Dodanie przelewu do Koszyka płatności nie jest możliwe",
   "raiff.payments.basket.process.validation.amount_exceeded":"Przekroczona dozwolona liczba przelewów do autoryzacji w ramach jednej akceptacji. Możliwe jest jednoczesne wybranie tylko {0} operacji do autoryzacji.",
 
-  "raiff.payments.basket.search.panel.status":"Status zlecenia"
+  "raiff.payments.basket.search.panel.status":"Status zlecenia",
+  "raiff.payments.basket.search.panel.account.all":"Wszystkie",
+  "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane"
+
 }
