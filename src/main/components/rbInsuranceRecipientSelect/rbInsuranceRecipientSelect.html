@@ -13,7 +13,10 @@
         </ui-select>
     </div>
     <div class="rb-zus-recipient-select__btn-clear">
-        <bd-button ng-click="clearSelection()" ng-disabled="!selection.isSelected" eb-analytics-disabled>{{ clearText }}</bd-button>
+        <bd-button ng-click="clearSelection()" ng-disabled="!selection.isSelected" eb-analytics-disabled>
+            <span class="hidden-xs">{{ clearText }}</span>
+            <span class="hidden-sm hidden-md hidden-lg">X</span>
+        </bd-button>
     </div>
 </div>
 
