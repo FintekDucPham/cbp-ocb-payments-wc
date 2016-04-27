@@ -1273,6 +1273,7 @@
 
   "raiff.payments.basket.search.panel.status":"Status zlecenia",
   "raiff.payments.basket.search.panel.account.all":"Wszystkie",
-  "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane"
+  "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane",
+  "raiff.layout.basket.tooltip":"Koszyk płatności"
 
 }

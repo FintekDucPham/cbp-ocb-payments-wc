@@ -22,6 +22,7 @@ angular.module('raiffeisen-payments')
             paymentsBasketService.realize($scope.payment.token.params.resourceId, $scope.payment.token.model.input.model).then(function(data){
                 $scope.payment.item.result.messages = data.messages[0];
                 $scope.payment.item.result.type = 'success';
+                paymentsBasketService.updateCounter('REMOVE_FROM_BASKET');
                 doneFn();
             }).catch(function(error){
                 $scope.payment.item.result.messages = 'error';
