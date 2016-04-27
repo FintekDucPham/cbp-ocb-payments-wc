@@ -286,18 +286,35 @@ angular.module('raiffeisen-payments')
             return copiedFormData;
         });
 
+        var defaultInsurancePremium = angular.copy($scope.payment.formData.insurancePremiums);
         $scope.setClearFormFunction(function(){
-            $scope.payment.formData = {};
+            angular.forEach($scope.payment.formData, function(v,k){
+                if(k!=='insurancePremiums'){
+                    delete $scope.payment.formData[k];
+                }
+            });
             $scope.payment.formData.realizationDate = new Date();
             $scope.payment.formData.secondaryIdType = 'PESEL';
             $scope.payment.formData.paymentType = 'TYPE_S';
-            $scope.payment.formData.insurancePremiums = {};
+            $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
+            if($scope.payment.operation.code==='EDIT'){
+                angular.forEach($scope.payment.formData.insurancePremiums, function(v,k){
+                    v.amount = null;
+                });
+            }
             $scope.accountSelectorRemote.resetToDefault();
         });
 
-        $scope.setFieldsToOmitOnFormClear(lodash.map(zusPaymentInsurances, function(type) {
+
+        var omitFormFirelds = lodash.map(zusPaymentInsurances, function(type) {
             return type + 'Amount';
-        }));
+        });
+        //if transfer modification - dont uncheck default selected
+        if($scope.payment.operation.code==='EDIT'){
+            omitFormFirelds.push("insuranceErrors");
+        }
+
+        $scope.setFieldsToOmitOnFormClear(omitFormFirelds);
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
