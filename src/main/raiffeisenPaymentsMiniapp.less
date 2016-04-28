@@ -128,8 +128,30 @@
 
   }
 }
-.bd-form-panel{
-  max-width: 580px;
+.bd-form-panel--responsive{
+
+  .bd-form-footer{
+    button{
+      margin-left:0px;
+      margin-right:0px;
+
+      @media (max-width: 767px) {
+        display:block;
+        margin:6px auto!important;
+        float:none;
+
+      }
+    }
+
+    .bd-form-footer__button--negative{
+      margin-right:6px;
+    }
+
+    .bd-form-footer__button--positive{
+      margin-left:6px;
+    }
+
+  }
 }
 
 .new-standing-payment-fill {
@@ -160,7 +182,6 @@
   padding: 10px 0;
   .bd-msg-panel__message {
     font-weight: 400;
-    font-size: 15px;
   }
   .raiff-icon{
     padding-bottom: 10px;
@@ -197,7 +218,7 @@
 }
 
 
-.accounts {
+.payments_miniapp {
   .bd-table__row-details {
     .bd-item-property__value {
       & > div {
@@ -224,7 +245,7 @@
     width: auto;
   }
 }
-.accounts .bd-table .bd-table__cell--sm-7{
+.payments_miniapp .bd-table .bd-table__cell--sm-7{
   @media only screen and (max-width: 411px) {
     width: 35% !important;
   }

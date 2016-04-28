@@ -1,0 +1,11 @@
+<div class="rb-payment-trybe">
+    <div class="rb-payment-trybe__option" ng-repeat="tr in rbTrybes">
+        <div class="bd-regulations">
+            <div class="bd-regulations__checkbox">
+                <bd-checkbox ng-model="tr.selected" disabled="!tr.active"></bd-checkbox>
+            </div>
+            <div class="bd-regulations__text" >{{ tr.TRYBE_NAME }}</div>
+        </div>
+        <div class="rb-payment-trybe__option__overlay" ng-hide="tr.active"></div>
+    </div>
+</div>

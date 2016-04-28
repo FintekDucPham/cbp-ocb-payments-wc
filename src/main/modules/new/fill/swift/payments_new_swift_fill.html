@@ -48,7 +48,7 @@
                    ng-disabled="payment.options.fixedRecipientSelection || showHide"
                    bd-matches-none-of="recipientAccountValidators"
                    ng-change="unlockField()"
-                   ng-blur="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo)"
+                   ng-blur="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo, payment.formData.currency)"
                    placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
@@ -287,7 +287,8 @@
             <div class="bd-item-property__value--secondary">
                 <ui-select ng-model="payment.formData.currency"
                            theme="bootstrap"
-                           ng-required="true">
+                           ng-required="true"
+                            on-select="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo, payment.formData.currency)">
                     <ui-select-match placeholder="">
                         {{$select.selected.currency}}
                     </ui-select-match>
@@ -385,17 +386,22 @@
         </ui-select>
     </bd-item-property>
 
-    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
-        <ui-select ng-model="payment.formData.paymentType"
-                   theme="bootstrap"
-                   required>
-            <ui-select-match placeholder="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
-                {{$select.selected}}
-            </ui-select-match>
-            <ui-select-choices repeat="cost in [transfer_constants.PAYMENT_TYPES.STANDARD, transfer_constants.PAYMENT_TYPES.EXPRESS]">
-                {{ cost }}
-            </ui-select-choices>
-        </ui-select>
+    <bd-item-property label="{{::'raiff.payments.new.foreign.fill.payment_trybe.label'|translate}}" ng-if="transfer_type.data">
+        <rb-payment-trybe rb-trybes="payment.items.paymentTrybes"
+                          rb-model="payment.formData.paymentType"
+                          rb-destination-nrb="payment.formData.recipientAccountNo"
+                          currency="payment.formData.currency"
+                          transfer-type="transfer_type.data"
+                          swift="swift"
+                          costs="payment.formData.transferCost"
+                            ></rb-payment-trybe>
+
+        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+             ng-if="validationErrors['noTargetMethodAvailable'] !== undefined">
+            NoTargetMethodAv
+        </div>
+
+
     </bd-item-property>
 
 
