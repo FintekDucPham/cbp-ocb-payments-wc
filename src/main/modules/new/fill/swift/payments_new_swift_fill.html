@@ -48,7 +48,7 @@
                    ng-disabled="payment.options.fixedRecipientSelection || showHide"
                    bd-matches-none-of="recipientAccountValidators"
                    ng-change="unlockField()"
-                   ng-blur="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo)"
+                   ng-blur="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo, payment.formData.currency)"
                    placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
@@ -287,7 +287,8 @@
             <div class="bd-item-property__value--secondary">
                 <ui-select ng-model="payment.formData.currency"
                            theme="bootstrap"
-                           ng-required="true">
+                           ng-required="true"
+                            on-select="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo, payment.formData.currency)">
                     <ui-select-match placeholder="">
                         {{$select.selected.currency}}
                     </ui-select-match>
