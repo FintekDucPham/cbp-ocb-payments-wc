@@ -96,7 +96,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.basket.fill",
                     label: 'raiff.payments.basket.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    icon: "raiff-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 8
                 }
