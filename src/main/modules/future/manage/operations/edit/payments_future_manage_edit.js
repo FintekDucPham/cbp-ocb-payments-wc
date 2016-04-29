@@ -47,6 +47,11 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES) {
 
+        //@TODO: remove mock below
+        initialState = {
+            referenceId: "NIB-TRA4711030704161d379dc642a9c0be@waiting"
+        };
+
         var idTypesMap = {
             "P": "PESEL",
             "N": "NIP",
@@ -144,8 +149,17 @@ angular.module('raiffeisen-payments')
         //dispatch
         $scope.payment.operation = rbPaymentOperationTypes.EDIT;
 
-        $scope.clearForm = function () {
-            $scope.payment.formData = {};
+        $scope.clearFormFunction = null;
+        $scope.setClearFormFunction = function(fn){
+            $scope.clearFormFunction = fn;
+        };
+
+        $scope.clearForm = function() {
+            if(!$scope.clearFormFunction){
+                $scope.payment.formData = {};
+            }else{
+                $scope.clearFormFunction();
+            }
             $scope.$broadcast('clearForm');
         };
 

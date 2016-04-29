@@ -154,7 +154,7 @@
     "raiff.payments.new.domestic.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
     "raiff.payments.new.domestic.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.payments.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC": "Rachunek odbiorcy musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
-    "raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_US": "Nie możesz wykonać przelewu, pole 'Na rachunek' jest rachunkiem Urzędu Skarbowego. Aby wykonać przelew do Urzędu Skarbowego wybierz z Menu opcję 'Przelew do US'.",
+    "raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_US": "Nie możesz wykonać przelewu, pole 'Na rachunek' jest rachunkiem Urzędu Skarbowego/Izby Celnej. Aby wykonać przelew do Urzędu Skarbowego/Izby Celnej w PLN wybierz z Menu opcję 'Przelew do US/IC’.",
     "raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_ZUS": "Nie możesz wykonać przelewu – pole 'Na rachunek' jest rachunkiem ZUS. Aby wykonać przelew do ZUS wybierz z Menu opcję 'Przelew do ZUS'.",
     "raiff.payments.new.domestic.fill.recipient_data": "Nazwa odbiorcy",
     "raiff.payments.new.domestic.fill.recipient_data.placeholder": "Wpisz nazwę odbiorcy",
@@ -1276,5 +1276,9 @@
   "raiff.payments.basket.add.validation.amount_exceeded":"Przekroczona został dopuszczalna liczba przelewów jakie można umieścić w Koszyku płatności. Dodanie przelewu do Koszyka płatności nie jest możliwe",
   "raiff.payments.basket.process.validation.amount_exceeded":"Przekroczona dozwolona liczba przelewów do autoryzacji w ramach jednej akceptacji. Możliwe jest jednoczesne wybranie tylko {0} operacji do autoryzacji.",
 
-  "raiff.payments.basket.search.panel.status":"Status zlecenia"
+  "raiff.payments.basket.search.panel.status":"Status zlecenia",
+  "raiff.payments.basket.search.panel.account.all":"Wszystkie",
+  "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane",
+  "raiff.layout.basket.tooltip":"Koszyk płatności"
+
 }

@@ -19,11 +19,7 @@ angular.module('raiffeisen-payments')
         $scope.summaryItemMap = {};
 
         _.each( $scope.basket.payments, function(account) {
-
-
-
             _.each( account.basketTransfers, function( basketTransfer){
-
             var payment = basketTransfer.payment;
                 if (payment.checked){
                 $scope.addPaymentAmountToSummary(payment, $scope.summaryItemMap);
@@ -36,7 +32,7 @@ angular.module('raiffeisen-payments')
         function authorize(doneFn, actions) {
             paymentsBasketService.realize($scope.basket.transferId, $scope.basket.token.model.input.model).then(function(data){
                 $scope.basket.item.result = data;
-
+                paymentsBasketService.updateCounter('PROCESS_FROM_BASKET');
                 doneFn();
             });
         }
@@ -55,7 +51,6 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-
             if($scope.basket.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if($scope.basket.token.model.input.$isValid()) {
                     authorize(actions.proceed, actions);
@@ -63,7 +58,6 @@ angular.module('raiffeisen-payments')
             }else if($scope.basket.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
                 $scope.basket.token.model.$proceed();
             }
-
         });
 
     });
