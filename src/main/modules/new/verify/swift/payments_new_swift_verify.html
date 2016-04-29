@@ -8,7 +8,8 @@
                 realization-date="payment.formData.realizationDate"
                 cut-off-time-promise="meta.cutOffTimePromise"
                 end-of-day-warning="payment.endOfDayWarning"
-                is-holiday="payment.holiday">
+                is-holiday="payment.holiday"
+                add-to-basket="payment.formData.addToBasket">
             <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
         </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
