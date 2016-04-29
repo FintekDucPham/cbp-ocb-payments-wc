@@ -21,13 +21,11 @@
         </div>
 
         <div ng-show="!paymentsWidgetMode.fullMode && paymentSummary.content.length == 0">
-            <bd-button-panel>
-                <div class="bd-button-panel__button">
-                    <bd-button ui-sref="payments.recipients.list" style="line-height: 14px;">
-                        {{::'raiff.payments.widget.new'|translate}}
-                    </bd-button>
-                </div>
-            </bd-button-panel>
+            <div style="position:absolute; bottom:0px; width:100%; padding:5px;">
+                <bd-button ui-sref="payments.recipients.list" class="bd-form-footer__button bd-form-footer__button--positive bd-button__primary" style="line-height: 14px;">
+                    {{::'raiff.payments.widget.new'|translate}}
+                </bd-button>
+            </div>
         </div>
 
     </section>
