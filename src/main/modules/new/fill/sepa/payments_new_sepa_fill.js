@@ -69,6 +69,9 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.realizationDate = realizationDate;
             });
         });*/
+        $scope.setDefaultValues({
+            realizationDate: $scope.CURRENT_DATE
+        });
 
         function validateSwiftAndAccountNo(accountNo){
             if(accountNo && $scope.payment.formData.recipientSwiftOrBic){

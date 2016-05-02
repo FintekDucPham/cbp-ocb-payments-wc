@@ -95,6 +95,9 @@ angular.module('raiffeisen-payments')
             });
         });
 */
+        $scope.setDefaultValues({
+            realizationDate: $scope.CURRENT_DATE
+        });
         $scope.recipientAccountValidators = {
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);
