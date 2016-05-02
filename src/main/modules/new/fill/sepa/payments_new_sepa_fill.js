@@ -25,13 +25,13 @@ angular.module('raiffeisen-payments')
         });
 
         // quick fix
-        utilityService.getCurrentDate().then(function(currentDate) {
+       /* utilityService.getCurrentDate().then(function(currentDate) {
             var realizationDate = new Date(currentDate.getTime());
             realizationDate.setDate(realizationDate.getDate());
             $timeout(function() {
                 $scope.payment.formData.realizationDate = realizationDate;
             });
-        });
+        });*/
 
         function validateSwiftAndAccountNo(accountNo){
             if(accountNo && $scope.payment.formData.recipientSwiftOrBic){
