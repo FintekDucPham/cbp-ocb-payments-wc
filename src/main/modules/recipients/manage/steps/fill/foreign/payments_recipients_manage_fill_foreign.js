@@ -8,8 +8,8 @@ angular.module('raiffeisen-payments')
                                                                             translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES,
                                                                             bdRadioSelectEvents, countriesService, utilityService) {
 
-        $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
-
+        $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP');
+        $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION');
         $scope.onInited= function(){
             if($scope.recipient && $scope.recipient.formData && $scope.recipient.formData.recipientIdentityType){
                 if($scope.recipient.formData.recipientIdentityType==='MANUAL'){
@@ -84,6 +84,28 @@ angular.module('raiffeisen-payments')
         var recipientValidators = {
             tax: notTaxAccountGuard($scope.recipient.meta),
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
+        };
+
+        function validateSwiftAndAccountNo(accountNo){
+            if(accountNo && $scope.recipient.formData.recipientSwiftOrBic){
+                var  countryFromAccountNo = accountNo.substring(0,2).toLowerCase();
+                var countryFromSwift = $scope.recipient.formData.recipientSwiftOrBic.substring(4,6).toLowerCase();
+                if(countryFromAccountNo !== countryFromSwift){
+                    return false;
+                }
+            }
+            return true;
+        }
+        $scope.recipientAccountValidators = {
+            simpleIncorrectIban: function(accountNo) {
+                if (accountNo) {
+                    return $scope.SIMPLE_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
+                }
+                return false;
+            },
+            bankAndSwiftCountryNotTheSame: function(accountNo){
+                return validateSwiftAndAccountNo(accountNo);
+            }
         };
 
         $scope.getAccountByNrb = function(accountNumber){
