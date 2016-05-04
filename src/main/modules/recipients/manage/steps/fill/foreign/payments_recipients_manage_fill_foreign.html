@@ -141,7 +141,7 @@
                 <input name="recipientAccountNo"
                        ng-model="recipient.formData.recipientAccountNo"
                        ng-required = "true"
-                       ng-pattern="FOREIGN_IBAN_VALIDATION_REGEX"
+                       ng-pattern="SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP"
                        ng-maxlength = "recipient.formData.recipientBankCountry.ibanLength || null"
                        ng-minlength = "recipient.formData.recipientBankCountry.ibanLength || null"
                        class="input-field"
@@ -149,6 +149,7 @@
                        ng-paste="recipient.formData.nrbCheck = ''; recicpientForm.nrbCheck = ''; rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)"
                        ng-keyup="unlockField()"
                        type="text"
+                       bd-matches-none-of="recipientAccountValidators"
                        placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
                 <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
@@ -168,6 +169,12 @@
                         {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
                     </div>
                     <div eb-message-key="maxlength" class="validation-message animate-on">
+                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
+                    </div>
+                    <div eb-message-key="bankAndSwiftCountryNotTheSame" class="validation-message animate-on">
+                        {{::'raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT'|translate}}
+                    </div>
+                    <div eb-message-key="simpleIncorrectIban" class="validation-message animate-on">
                         {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
                     </div>
 
