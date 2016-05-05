@@ -9,7 +9,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, bdMainStepInitializer, transferService,depositsService, $stateParams, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, lodash, rbPaymentTypes, viewStateService, paymentsBasketService) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, bdMainStepInitializer, transferService,depositsService, $stateParams, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, lodash, rbPaymentTypes, viewStateService, paymentsBasketService, customerService) {
 
 
             if($scope.payment.formData.paymentId){
@@ -52,6 +52,10 @@ angular.module('raiffeisen-payments')
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             $scope.payment.token.params = {};
             delete $scope.payment.items.credentials;
+        });
+
+        customerService.getCustomerDetails().then(function(data) {
+            $scope.payment.meta.customerContext = data.customerDetails.context;
         });
 
         function authorize(doneFn, actions) {

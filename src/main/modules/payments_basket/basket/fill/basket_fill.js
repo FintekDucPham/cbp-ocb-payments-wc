@@ -46,6 +46,8 @@ angular.module('raiffeisen-payments')
             "futureDatePanelConfig": parameters
         };
 
+        $scope.basket.meta.context = $scope.options.futureDatePanelConfig.context;
+
 
         $scope.model = {
             dataValidity: false
@@ -204,6 +206,7 @@ angular.module('raiffeisen-payments')
                             data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
                             data.content.systemParameterDefinedName = $scope.systemParameterDefinedName;
                             data.content.getIcon = $scope.getIcon;
+                            data.content.context = $scope.basket.meta.context;
                             return data.content;
                         },
                         function (reason) {

@@ -7,6 +7,7 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsBasketStatusController', function ($scope, $state, $timeout, $q, translate, $filter) {
+
         $scope.validationMsg = {
             message : "",
             show: false
@@ -14,11 +15,11 @@ angular.module('raiffeisen-payments')
 
         var transactionSum = $scope.basket.item.result.notAcceptedTransactions + $scope.basket.item.result.readyTransactions;
         if($scope.basket.item.result.messages.indexOf("AMOUNT_EXCEEDED_FUNDS") > -1){
-            $scope.validationMsg.message = translate.property('raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS', [$scope.basket.item.result.readyTransactions, transactionSum]);
+            $scope.validationMsg.message = $scope.basket.meta.context == 'MICRO' ? translate.property('raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]):translate.property('raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.DETAL');
             $scope.validationMsg.show = true;
         }
         if($scope.basket.item.result.messages.indexOf("DAILY_LIMIT_EXCEEDED") > -1){
-            $scope.validationMsg.message = translate.property('raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED', [$scope.basket.item.result.readyTransactions, transactionSum]);
+            $scope.validationMsg.message = $scope.basket.meta.context == 'MICRO' ? translate.property('raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]):translate.property('raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL');
             $scope.validationMsg.show = true;
         }
         if($scope.basket.item.result.notAcceptedTransactions > 0){
@@ -35,7 +36,7 @@ angular.module('raiffeisen-payments')
         }
         if($scope.basket.item.result.transactionsSubmited){
             $scope.transactionsSubmited = {
-                message: translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED', [$scope.basket.item.result.readyTransactions, transactionSum]),
+                message: $scope.basket.meta.context == 'MICRO' ? translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]): translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'),
                 show:true
             };
         }
