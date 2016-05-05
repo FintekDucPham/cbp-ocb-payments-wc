@@ -47,11 +47,6 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, recipientGeneralService, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES) {
 
-        //@TODO: remove mock below
-        initialState = {
-            referenceId: "NIB-TRA4711030704161d379dc642a9c0be@waiting"
-        };
-
         var idTypesMap = {
             "P": "PESEL",
             "N": "NIP",
