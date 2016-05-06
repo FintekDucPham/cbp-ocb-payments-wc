@@ -24,7 +24,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE, utilityService) {
+    .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE, utilityService, rbPaymentTypes) {
         $scope.blockadesForward = angular.extend({
             isBlock : false
         });
@@ -240,7 +240,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$watch('payment.items.senderAccount', function(account) {
-            if(account) {
+            if(account && $scope.payment.type.code !== rbPaymentTypes.SWIFT.code && $scope.payment.type.code !== rbPaymentTypes.SEPA.code) {
                 $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
                 $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ? false : true;
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
