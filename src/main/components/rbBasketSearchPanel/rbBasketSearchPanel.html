@@ -1,5 +1,5 @@
 <form novalidate name="futureDatePanelForm" ng-submit="onSubmit(futureDatePanelForm)" class="basketSearchPanel rb-transaction-filter">
-    <div class="row">
+    <div class="row basketSearchPanel__account-section">
         <div class="col-md-10 col-sm-12" style="text-align: left;">
             <bd-item-property label="{{::'account.statement.select.label'|translate}}">
                 <ui-select ng-model="inputData.selectedAccount"
@@ -69,8 +69,8 @@
         </div>
     </div>
 
-    <div class="row" ng-show="advancedSearch">
-        <div class="col-md-7 col-sm-12">
+    <div class="row basketSearchPanel__advanced-section" ng-show="advancedSearch">
+        <div class="col-md-5 col-sm-12">
             <bd-radio-select bd-model="inputData.selectedMode">
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.PERIOD">
                     <div class="row__inline-block--middle row__inline-block--adjacent">
@@ -140,32 +140,36 @@
 
         </div>
 
-        <div class="col-md-5 col-sm-12" style="text-align: right;">
-            <div class="amount_range">
+        <div class="col-md-7 col-sm-12 basketSearchPanel__advanced-section__right-panel" style="text-align: right;">
+            <div class="basketSearchPanel__advanced-section__right-panel__item">
                 <bd-amount-range name-min="amountFrom" name-max="amountTo" infinite-min="true" label="{{::'account.transactions.list.amount'|translate}}" label-min=" {{::'account.transactions.select.filter.date.from.label'|translate}}" label-max=" {{::'account.transactions.select.filter.date.to.label'|translate}}" range="inputData.amountRange" validate-pattern="advancedSearch"></bd-amount-range>
             </div>
 
-            <bd-button class="bd-button" ng-click="clearFilter()" bd-id="clear_filter_desktop" eb-analytics-disabled type="button">
-                <i class="eb-icon eb-ico-filter-applied eb-raiffeisen-theme"></i>
-                {{::'account.transactions.select.filter.button.clear'|translate}}
-            </bd-button>
-
-            <div ng-show="options.context == 'MICRO'">
-                <bd-item-property label="{{::'raiff.payments.basket.search.panel.status'|translate}}">
-                    <ui-select ng-model="inputData.status"
-                               theme="bootstrap"
-                               reset-search-input="false"
-                               name="status"
-                               multiple >
-                        <ui-select-match placeholder="">
-                            {{ 'raiff.payments.basket.transaction.status.'+ $item | translate }}
-                        </ui-select-match>
-                        <ui-select-choices repeat="item in PAYMENT_BASKET_STATUS_LIST">
-                            {{ :: 'raiff.payments.basket.transaction.status.'+ item | translate }}
-                        </ui-select-choices>
-                    </ui-select>
-                </bd-item-property>
+            <div class="basketSearchPanel__advanced-section__right-panel__item">
+                <div ng-show="options.context == 'MICRO'" class="basketSearchPanel__advanced-section__right-panel__item__status">
+                    <bd-item-property label="{{::'raiff.payments.basket.search.panel.status'|translate}}">
+                        <ui-select ng-model="inputData.status"
+                                   theme="bootstrap"
+                                   reset-search-input="false"
+                                   name="status"
+                                   multiple >
+                            <ui-select-match placeholder="">
+                                {{ 'raiff.payments.basket.transaction.status.'+ $item | translate }}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in PAYMENT_BASKET_STATUS_LIST">
+                                {{ :: 'raiff.payments.basket.transaction.status.'+ item | translate }}
+                            </ui-select-choices>
+                        </ui-select>
+                    </bd-item-property>
+                </div>
+                <div class="basketSearchPanel__advanced-section__right-panel__item__button">
+                    <bd-button class="bd-button" ng-click="clearFilter()" bd-id="clear_filter_desktop" eb-analytics-disabled type="button">
+                        <i class="eb-icon eb-ico-filter-applied eb-raiffeisen-theme"></i>
+                        {{::'account.transactions.select.filter.button.clear'|translate}}
+                    </bd-button>
+                </div>
             </div>
+
         </div>
     </div>
 

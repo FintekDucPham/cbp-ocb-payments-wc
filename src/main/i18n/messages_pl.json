@@ -1234,6 +1234,8 @@
   "raiff.payments.basket.list.sourceAccount":"Z rachunku",
   "raiff.payments.basket.list.targetAccount":"Na rachunek",
   "raiff.payments.basket.list.summary.chose":"Podsumowanie wybrane",
+  "raiff.payments.basket.list.summary.amount":"Liczba przelewów",
+  "raiff.payments.basket.list.summary.sum":"Suma:",
   "raiff.payments.basket.list.summary.all":"Podsumowanie wszystkie",
   "raiff.payments.basket.list.details.buttons.delete":"Usuń",
   "raiff.payments.basket.list.details.buttons.modify":"Edytuj",
