@@ -168,7 +168,9 @@ angular.module('raiffeisen-payments')
 
 
             // ZD01287983
-            $scope.paymentForm.amount.$validate();
+            if ($scope.paymentForm && $scope.paymentForm.amount) { // przelew do zus
+                $scope.paymentForm.amount.$validate();
+            }
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
