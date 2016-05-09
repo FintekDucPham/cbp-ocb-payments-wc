@@ -8,20 +8,20 @@
                            ng-disabled="fixedAccountSelection"
                            on-select=""
                            name="account"
+                           class="iconized"
                            required>
                     <ui-select-match placeholder="{{::'account.statement.select.placeholder'|translate}}">
-                        <div class="select-account__row">
+                        <div class="select-account__row" style="padding-right: 30px">
                             <div ng-if="$select.selected.accountId=='ALL'">
                                 <div class="select-account__row__cell">
                                     {{::'raiff.payments.basket.search.panel.account.all'|translate}}
                                 </div>
                             </div>
-                            <div class="select-account__row__cell"><img ng-if="$select.selected.customerData.icon >= 0"
+                            <div class="select-account__row__cell account-icon"  ng-if="$select.selected.customerData.icon >= 0  && getIcon($select.selected.accountId)"><img
                                                                         ng-src="{{getIcon($select.selected.customerData.icon)}}"
                                                                         class="select-account__icon"/></div>
-                            <div class="select-account__row__cell">{{$select.selected.customerData.name ||
-                                $select.selected.accountName}}<span class="bd-show-md">&nbsp;</span><br
-                                        class="bd-hide-md"/>{{$select.selected.accountNo | nrbIbanFilter}}
+                            <div class="select-account__row__cell account-desc">
+                                <rb-account-responsive-line rb-allow-long-nrb="true" rb-account-name="$select.selected.customerData.name || $select.selected.accountName" rb-account-nrb="$select.selected.accountNo"></rb-account-responsive-line>
                             </div>
                         </div>
                     </ui-select-match>
@@ -32,13 +32,20 @@
                             </div>
                         </div>
                         <div class="select-account__row">
-                            <div class="select-account__row__cell" ng-if="getIcon(item.accountId)">
+                            <div class="select-account__row__cell account-icon" ng-if="item.customerData.icon >= 0 && getIcon(item.accountId)">
                                 <img ng-if="item.customerData.icon >= 0" ng-src="{{getIcon(item.customerData.icon)}}"
                                      class="select-account__icon"/>
                             </div>
-                            <div class="select-account__row__cell">
-                                {{((item.customerData.name || item.accountName)) + ' '}}<br class="bd-hide-md"/>{{(item.accountNo
-                                | nrbIbanFilter) | highlight: $select.search}}
+                            <div class="select-account__row__cell account-desc">
+                              <!--  {{((item.customerData.name || item.accountName)) + ' '}}<br class="bd-hide-md"/>{{(item.accountNo
+                                | nrbIbanFilter) | highlight: $select.search}}-->
+                                <div class="rb-account-select__account-name-row" ng-bind-html="(item.customerData.name || item.accountName) | highlight: $select.search"></div>
+                                <div class="rb-account-select__account-desc-row">
+                                    <span class="rb-account-select__account-desc-row__nrb hidden-xs hidden-sm" ng-bind-html="item.accountNo | nrbIbanFilter | highlight: $select.search"></span>
+                                    <span class="rb-account-select__account-desc-row__nrb hidden-md hidden-lg" ng-bind-html="item.accountNo | nrbIbanShortFilter | highlight: $select.search"></span>
+                                    <span class="rb-account-select__account-desc-row__amount" ng-bind-html="(item.accessibleAssets + ' ' + item.currency) | rbAmountFilter | highlight: $select.search"></span>
+                                </div>
+
                             </div>
                         </div>
                     </ui-select-choices>

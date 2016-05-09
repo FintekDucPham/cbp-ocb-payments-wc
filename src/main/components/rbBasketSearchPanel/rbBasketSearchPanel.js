@@ -22,7 +22,7 @@ angular.module('raiffeisen-payments')
             labels: {
             },
             initialValues: {
-                selectedMode: FUTURE_DATE_TYPES.PERIOD,  // range or next 5 days
+                selectedMode: FUTURE_DATE_TYPES.RANGE,  // range or next 5 days
                 dateFrom: new Date(),
                 dateTo: new Date()
             },
@@ -52,7 +52,7 @@ angular.module('raiffeisen-payments')
                 "valid": "=?"
 
             },
-            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService, formService) {
+            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService, formService, downloadService) {
 
 
                 // max date, based on now and business parameter
@@ -108,6 +108,9 @@ angular.module('raiffeisen-payments')
                     $scope.accountList.unshift(account);
                     return $scope.accountList[0];
                 };
+
+                $scope.getIcon = downloadService.downloadIconImage;
+
 
 
                 $scope.PAYMENT_BASKET_STATUS = PAYMENT_BASKET_STATUS;

@@ -21,14 +21,8 @@ angular.module('raiffeisen-payments')
                             account: data.account.content
                         };
                         result.period = result.offset;
-                        if (result.context === 'DETAL') {
-                            result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
-                            result.dateTo.setDate(result.dateTo.getDate() + result.offset);
-                        }
-                        else {
-                            result.dateTo.setDate(result.dateTo.getDate() + result.offset);
-                            result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
-                        }
+                        result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
+                        result.dateTo.setDate(result.dateTo.getDate() + result.offset);
                         return result;
                     });
                 }]

@@ -125,6 +125,10 @@ angular.module('raiffeisen-payments')
 
                 $scope.payment.meta.transferType = 'loading';
 
+
+                $scope.payment.rbPaymentsStepParams.completeState = 'payments.basket.new.fill';
+                $scope.payment.rbPaymentsStepParams.cancelState = 'payments.basket.new.fill';
+
                 $scope.payment.initData.promise = paymentsService.get($state.params.referenceId + '@basket_edit', {}).then(function (data) {
                     data.description = data.title;
                     $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = data.transferType == 'OWN' || data.transferType == 'DOMESTIC';

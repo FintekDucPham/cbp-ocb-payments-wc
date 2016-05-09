@@ -13,7 +13,6 @@
                         </div>
                     </div>
                     <div class="product-details-primary">
-
                         {{group.accountDetails.accountNo | nrbIbanFilter}}
                     </div>
                 </div>
@@ -60,7 +59,10 @@
                                     {{::"raiff.payments.basket.list.sourceAccount"|translate|uppercase}}
                                 </div>
                                 <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-8">
-                                  <div>{{item.payment.accountNo | nrbIbanFilter}}</div>
+                                  <div>
+                                      <span class="hidden-xs hidden-sm">{{item.payment.accountNo | nrbIbanFilter}}</span>
+                                      <span class="hidden-md hidden-lg">{{item.payment.accountNo | nrbIbanShortFilter}}</span>
+                                  </div>
                                   <div>{{item.payment.owner}}</div>
                                 </div>
                             </div>
@@ -69,7 +71,10 @@
                                     {{::"raiff.payments.basket.list.targetAccount"|translate|uppercase}}
                                 </div>
                                 <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-8">
-                                    <div>{{item.payment.recipientAccountNo | nrbIbanFilter}}</div>
+                                    <div>
+                                        <span class="hidden-xs hidden-sm">{{item.payment.recipientAccountNo | nrbIbanFilter}}</span>
+                                        <span class="hidden-md hidden-lg">{{item.payment.recipientAccountNo | nrbIbanShortFilter}}</span>
+                                    </div>
                                     <div>{{item.payment.recipientName.join('') }}</div>
                                     <div>{{item.payment.recipientAddress.join('') }}</div>
                                 </div>

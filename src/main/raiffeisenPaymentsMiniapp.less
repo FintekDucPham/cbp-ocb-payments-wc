@@ -296,6 +296,19 @@
       .bd-checkbox__marker{
         position: relative;
       }
+      .bd-details-action-section {
+        @media only screen and  (min-width: @screenMediumMin) {
+          text-align: right;
+        }
+        @media only screen and  (max-width: @screenMediumMin) {
+          text-align: center;
+        }
+        .bd-button {
+          @media only screen and  (max-width: @screenMediumMin) {
+            margin: 2px;
+          }
+        }
+      }
     }
   }
   &__summary{

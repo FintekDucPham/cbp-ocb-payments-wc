@@ -49,7 +49,7 @@
                     <ng-include src="templateDetails"></ng-include>
                     <bd-details-action-section>
                         <div class="row">
-                            <div class="col-sm-12 col-md-12" style="text-align:right;">
+                            <div class="col-sm-12 col-md-12">
                                 <bd-button ng-if="$data.signedStatus != 'DELETED' && $data.signedStatus != 'SUBMITTED' " ng-click="onDelete($data)" class="bd-button">
                                     {{::'raiff.payments.basket.list.details.buttons.delete' | translate}}
                                 </bd-button>
