@@ -199,7 +199,6 @@ angular.module('raiffeisen-payments')
                             data.content.systemParameterDefinedName = $scope.systemParameterDefinedName;
                             data.content.getIcon = $scope.getIcon;
                             data.content.context = $scope.basket.meta.context;
-                            data.content.isRealizationDateExceededForTransfer=  $scope.isRealizationDateExceededForTransfer;
                             return data.content;
                         },
                         function (reason) {
