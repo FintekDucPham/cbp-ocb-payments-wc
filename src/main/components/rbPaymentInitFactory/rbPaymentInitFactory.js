@@ -37,7 +37,6 @@ angular.module('raiffeisen-payments')
                     data.secondaryIdNo = data.secondIDNo;
                     data.secondaryIdType = data.secondIDType;
                     data.declarationDate = data.declaration;
-                    data.realizationDate = new Date(data.realizationDate);
                     data.recipientName = data.recipientName.join("\n");
                     data.remitterAccountId = data.accountId;
                     return $q.all({
@@ -66,21 +65,18 @@ angular.module('raiffeisen-payments')
                     data.periodNo = data.paymentDetails.periodNumber;
                     data.periodYear = data.paymentDetails.periodYear;
                     data.obligationId = data.paymentDetails.obligationId;
-                    data.realizationDate = new Date(data.realizationDate);
                     data.remitterAccountId = data.accountId;
                     return $q.when(true);
                 });
 
                 paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function (data) {
                     data.recipientName = data.recipientName.join('');
-                    data.realizationDate = new Date(data.realizationDate);
                     data.sendBySorbnet = sorbnetSelection[data.paymentDetails.clearingNetwork];
                     return $q.when(true);
                 });
 
                 paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function (data) {
                     data.description = data.title.join("\n");
-                    data.realizationDate = new Date(data.realizationDate);
                     return $q.when(true);
                 });
 
@@ -138,7 +134,7 @@ angular.module('raiffeisen-payments')
                         lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                         $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                         $scope.payment.formData.referenceId = $state.params.referenceId;
-
+                        $scope.payment.formData.realizationDate = new Date();
                         // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
                         if ($scope.payment.type.code == 'OWN') {
                             $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
