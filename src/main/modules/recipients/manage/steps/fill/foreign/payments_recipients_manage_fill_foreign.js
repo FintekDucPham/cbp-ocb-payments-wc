@@ -56,8 +56,12 @@ angular.module('raiffeisen-payments')
 
         // TODO: change to promise when you have properly working service
         $scope.countries = {
-            promise: countriesService.search(),
-            data: null
+            promise: $q.all({
+                    countryList: countriesService.search(),
+                    swiftCodeCountryList: recipientGeneralService.utils.getCountries()
+                }),
+            data: null,
+            swiftData: null
         };
 
         function findCountryByCode(countries, code) {
@@ -70,13 +74,18 @@ angular.module('raiffeisen-payments')
             var countryCode;
             if($scope.recipient.formData.recipientBankCountry){
                 countryCode = $scope.recipient.formData.recipientBankCountry.code || $scope.recipient.formData.recipientBankCountry;
-                $scope.recipient.formData.recipientBankCountry = angular.copy(findCountryByCode(data, countryCode));
+                $scope.recipient.formData.recipientBankCountry = angular.copy(findCountryByCode(data.countryList, countryCode));
             }
             if($scope.recipient.formData.recipientCountry){
                 countryCode = $scope.recipient.formData.recipientCountry.code || $scope.recipient.formData.recipientCountry;
-                $scope.recipient.formData.recipientCountry = angular.copy(findCountryByCode(data, countryCode));
+                $scope.recipient.formData.recipientCountry = angular.copy(findCountryByCode(data.countryList, countryCode));
             }
-            $scope.countries.data = data;
+            $scope.countries.data = data.countryList;
+            lodash.forEach(data.swiftCodeCountryList.content, function(element){
+               element.code = element.countryCode;
+               element.name = element.countryName;
+            });
+            $scope.countries.swiftData = data.swiftCodeCountryList.content;
         }).catch(function(error){
             $scope.countries.data = error;
         });
@@ -130,8 +139,8 @@ angular.module('raiffeisen-payments')
                 ).then(function(data){
                     if(data !== undefined && data !== null && data !==''){
                         $scope.recipient.formData.recipientBankName = data.institution;
-                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data,{
-                            code: data.location || data.code
+                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.swiftData,{
+                            code: data.location || data.countryCode
                         });
 
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
