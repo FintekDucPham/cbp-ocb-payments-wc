@@ -108,7 +108,7 @@ angular.module('raiffeisen-payments')
                             $scope.payment.formData.recipientBankName = data.institution;
                             //search and set bank country
                             if($scope.countries.data){
-                                $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {
+                                $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.swiftData, {
                                     code: $scope.swift.data.countryCode
                                 });
                             }
@@ -200,8 +200,12 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.countries = {
-            promise: countriesService.search(),
-            data: null
+            promise: $q.all({
+                countryList: countriesService.search(),
+                swiftCodeCountryList: recipientGeneralService.utils.getCountries()
+            }),
+            data: null,
+            swiftData: null
         };
 
         $scope.searchBankPromise = null;
@@ -231,13 +235,18 @@ angular.module('raiffeisen-payments')
             var countryCode;
             if($scope.payment.formData.recipientBankCountry){
                 countryCode = $scope.payment.formData.recipientBankCountry.code || $scope.payment.formData.recipientBankCountry;
-                $scope.payment.formData.recipientBankCountry = findCountryByCode(data, countryCode);
+                $scope.payment.formData.recipientBankCountry = findCountryByCode(data.countryList, countryCode);
             }
             if($scope.payment.formData.recipientCountry){
                 countryCode = $scope.payment.formData.recipientCountry.code || $scope.payment.formData.recipientCountry;
-                $scope.payment.formData.recipientCountry = findCountryByCode(data, countryCode);
+                $scope.payment.formData.recipientCountry = findCountryByCode(data.countryList, countryCode);
             }
-            $scope.countries.data = data;
+            $scope.countries.data = data.countryList;
+            lodash.forEach(data.swiftCodeCountryList.content, function(element){
+                element.code = element.countryCode;
+                element.name = element.countryName;
+            });
+            $scope.countries.swiftData = data.swiftCodeCountryList.content;
         }).catch(function(error){
             $scope.countries.data = error;
         });
