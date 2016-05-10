@@ -10,11 +10,21 @@ angular.module('raiffeisen-payments')
                     return insuranceAccounts.search().then(function(insuranceAccounts) {
                         return insuranceAccounts.content;
                     });
+                }],
+                userContext : ['customerService', function(customerService){
+                    return customerService.getCustomerDetails().then(function(context){
+                        return context.customerDetails.context;
+                    });
                 }]
             }
         });
     })
-    .controller("PaymentsBasketController", function($scope, translate, insuranceAccountList) {
+    .controller("PaymentsBasketController", function($scope, translate, insuranceAccountList, bdMainStepInitializer, userContext) {
+
+
+        $scope.userContext = userContext;
+
+
         $scope.insuranceAccounts = insuranceAccountList;
         $scope.setClearFormFunction = function(fn){
             $scope.clearFormFunction = fn;

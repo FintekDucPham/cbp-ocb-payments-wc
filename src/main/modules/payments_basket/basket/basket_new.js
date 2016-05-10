@@ -35,10 +35,7 @@ angular.module('raiffeisen-payments')
             },
             validation: {},
             payments: {},
-            item: {},
-            meta: {
-                context: null
-            }
+            item: {}
         });
 
         $scope.getIcon = downloadService.downloadIconImage;

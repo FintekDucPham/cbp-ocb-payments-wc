@@ -9,7 +9,6 @@ angular.module('raiffeisen-payments')
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getParameterByName("basketList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getParameterByName("basketList.max.offset"),
-                        customerDetails: customerService.getCustomerDetails(),
                         account: accountsService.search({pageSize: 10000})
                     }).then(function (data) {
                         var result = {
@@ -17,11 +16,10 @@ angular.module('raiffeisen-payments')
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths.value, 10),
                             dateFrom: new Date(),
                             dateTo: new Date(),
-                            context: data.customerDetails.customerDetails.context,
                             account: data.account.content
                         };
                         result.period = result.offset;
-                        result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
+                        result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
                         result.dateTo.setDate(result.dateTo.getDate() + result.offset);
                         return result;
                     });
@@ -36,11 +34,11 @@ angular.module('raiffeisen-payments')
         $scope.data = {};
         $scope.summaryItemMap = {};
 
+        parameters.context = $scope.userContext;
+
         $scope.options = {
             "futureDatePanelConfig": parameters
         };
-
-        $scope.basket.meta.context = $scope.options.futureDatePanelConfig.context;
 
 
         $scope.model = {

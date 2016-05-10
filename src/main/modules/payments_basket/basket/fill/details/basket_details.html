@@ -5,7 +5,7 @@
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.addedToBasketDate'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
         {{$data.addedToBasketDate| date:'shortDate' }}
     </bd-item-property>
-    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.status'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" ng-show="basket.meta.context == 'MICRO'">
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.status'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" ng-show="userContext == 'MICRO'">
         {{'raiff.payments.basket.transaction.status.'+$data.signedStatus | translate}}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.header.operation_type'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
@@ -39,7 +39,7 @@
         <div>{{$data.payment.recipientName.join('') }}</div>
         <div>{{$data.payment.recipientAddress.join('') }}</div>
     </bd-item-property>
-    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.historyAction'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" ng-show="basket.meta.context == 'MICRO'">
+    <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.basket.list.details.historyAction'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" ng-show="userContext == 'MICRO'">
         <div class="basket-vew__details__action-history">
             <div ng-repeat="item in $data.actionHistoryList track by $index">
                 <span>{{item.date|date:'short'}}</span>
