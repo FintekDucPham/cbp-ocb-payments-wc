@@ -1289,4 +1289,11 @@
   "raiff.payments.basket.search.panel.validation.TOO_EARLY_FIRST_DATE": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##MONTHS## miesięcy wstecz. Można wyszukiwać tylko płatności do potwierdzenia planowane do realizacji w ciągu ostatnich ##MONTHS## miesięcy.",
   "raiff.layout.basket.tooltip":"Koszyk płatności"
 
+    "raiff.payments.invoobill.label":"Invoobill",
+    "raiff.payments.invoobill.list.header":"Usługa Invoobill",
+    "raiff.payments.invoobill.list.header.operation_date":"Data płatności",
+    "raiff.payments.invoobill.list.header.creditor":"Dostawca",
+    "raiff.payments.invoobill.list.header.amount":"Kwota",
+    "raiff.payments.invoobill.list.header.status":"Status",
+    "raiff.payments.invoobill.list.empty":"Nie znaleziono płatności spełniających kryteria wyszukiwania"
 }
