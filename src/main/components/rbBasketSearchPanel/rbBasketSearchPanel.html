@@ -204,6 +204,7 @@
             <div ng-message="parse" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
             <div ng-message="rbDatepickerFormat" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
             <div ng-message="TOO_LATE_FINISH_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}</div>
+            <div ng-message="TOO_EARLY_FIRST_DATE" class="validation-message animate-on">{{::'raiff.payments.basket.search.panel.validation.TOO_EARLY_FIRST_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
         </div>
     </div>
     <div class="eb-validation-messages">

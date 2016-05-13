@@ -128,6 +128,10 @@ angular.module('raiffeisen-payments')
 
                 maxDate = new Date(now.getTime());
                 maxDate.setMonth(now.getMonth() + parseInt(options.maxOffsetInMonths, 10));
+                minDate = new Date(now.getTime());
+                minDate.setMonth(now.getMonth() - parseInt(options.maxOffsetInMonths, 10));
+
+
 
                 var init = function(){
                     $scope.inputData = {
@@ -257,6 +261,11 @@ angular.module('raiffeisen-payments')
                         }
                         else {
                             $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', true);
+                        }
+                        if(dateFrom){
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FIRST_DATE', dateFrom.getTime() >= minDate.getTime());
+                        }else {
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FIRST_DATE', true);
                         }
                     }
 

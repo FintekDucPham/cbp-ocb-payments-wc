@@ -1286,6 +1286,7 @@
   "raiff.payments.basket.search.panel.account.all":"Wszystkie",
   "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane",
   "raiff.payments.basket.search.panel.validation.TOO_LATE_END_DATE": "Nieprawidłowa data końcowa okresu wyszukiwania.  Data końcowa okresu wyszukiwania może uwzględniać tylko płatności do potwierdzenia na najbliższe ##MONTHS## miesięcy.",
+  "raiff.payments.basket.search.panel.validation.TOO_EARLY_FIRST_DATE": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##MONTHS## miesięcy wstecz. Można wyszukiwać tylko płatności do potwierdzenia planowane do realizacji w ciągu ostatnich ##MONTHS## miesięcy.",
   "raiff.layout.basket.tooltip":"Koszyk płatności"
 
 }
