@@ -134,6 +134,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
+                delete $scope.payment.token.params.resourceId;
                 var form = $scope.paymentForm;
                 $scope.limitExeeded = {
                     show: false

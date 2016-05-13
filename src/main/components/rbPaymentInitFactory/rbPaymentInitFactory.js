@@ -95,6 +95,7 @@ angular.module('raiffeisen-payments')
                         data.recipientBankCountry = data.paymentDetails.bankCountry;
                     }
                     data.recipientCountry = data.paymentDetails.foreignCountryCode;
+                    data.realizationDate = new Date(data.realizationDate);
                     data.remitterAccountId = data.accountId;
                     data.currency = {
                         currency : data.currency
@@ -115,6 +116,7 @@ angular.module('raiffeisen-payments')
                     }
                     data.recipientCountry = data.paymentDetails.foreignCountryCode;
                     data.remitterAccountId = data.accountId;
+                    data.realizationDate = new Date(data.realizationDate);
                     data.currency = {
                         currency : data.currency
                     };
@@ -138,7 +140,9 @@ angular.module('raiffeisen-payments')
                         lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                         $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                         $scope.payment.formData.referenceId = $state.params.referenceId;
-
+                        if($scope.payment.formData.realizationDate < new Date()){
+                            $scope.payment.formData.realizationDate = new Date();
+                        }
                         // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
                         if ($scope.payment.type.code == 'OWN') {
                             $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
