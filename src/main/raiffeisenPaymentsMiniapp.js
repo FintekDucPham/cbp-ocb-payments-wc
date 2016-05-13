@@ -99,7 +99,14 @@ angular.module('raiffeisen-payments', [
                     icon: "raiff-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 8
-                }
+                }/*,
+                {
+                    id: "payments.invoobill",
+                    label: 'raiff.payments.invoobill.label',
+                    icon: "raiff-icons invoobill",
+                    action: "payments.invoobill.list",
+                    priority: 9
+                }*/
             ]
         });
     }

@@ -1279,6 +1279,14 @@
   "raiff.payments.basket.search.panel.status":"Status zlecenia",
   "raiff.payments.basket.search.panel.account.all":"Wszystkie",
   "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane",
-  "raiff.layout.basket.tooltip":"Koszyk płatności"
+  "raiff.layout.basket.tooltip":"Koszyk płatności",
+
+    "raiff.payments.invoobill.label":"Invoobill",
+    "raiff.payments.invoobill.list.header":"Usługa Invoobill",
+    "raiff.payments.invoobill.list.header.operation_date":"Data płatności",
+    "raiff.payments.invoobill.list.header.creditor":"Dostawca",
+    "raiff.payments.invoobill.list.header.amount":"Kwota",
+    "raiff.payments.invoobill.list.header.status":"Status",
+    "raiff.payments.invoobill.list.empty":"Nie znaleziono płatności spełniających kryteria wyszukiwania"
 
 }
