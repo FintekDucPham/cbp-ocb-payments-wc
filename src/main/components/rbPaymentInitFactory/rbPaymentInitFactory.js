@@ -59,7 +59,7 @@ angular.module('raiffeisen-payments')
 
                 paymentDataResolveStrategy(rbPaymentTypes.TAX.code, function (data) {
                     data.taxpayerData = data.senderName.join("\n");
-                    data.idType = idTypesMap[data.paymentDetails.idtype];
+                    data.idType = data.paymentDetails.idtype;
                     data.idNumber = data.paymentDetails.idnumber;
                     data.formCode = data.paymentDetails.formCode;
                     data.periodType = data.paymentDetails.periodType;
@@ -95,6 +95,7 @@ angular.module('raiffeisen-payments')
                         data.recipientBankCountry = data.paymentDetails.bankCountry;
                     }
                     data.recipientCountry = data.paymentDetails.foreignCountryCode;
+                    data.realizationDate = new Date(data.realizationDate);
                     data.remitterAccountId = data.accountId;
                     data.currency = {
                         currency : data.currency
@@ -115,6 +116,7 @@ angular.module('raiffeisen-payments')
                     }
                     data.recipientCountry = data.paymentDetails.foreignCountryCode;
                     data.remitterAccountId = data.accountId;
+                    data.realizationDate = new Date(data.realizationDate);
                     data.currency = {
                         currency : data.currency
                     };
@@ -125,6 +127,10 @@ angular.module('raiffeisen-payments')
 
                 $scope.payment.meta.transferType = 'loading';
 
+
+                $scope.payment.rbPaymentsStepParams.completeState = 'payments.basket.new.fill';
+                $scope.payment.rbPaymentsStepParams.cancelState = 'payments.basket.new.fill';
+
                 $scope.payment.initData.promise = paymentsService.get($state.params.referenceId + '@basket_edit', {}).then(function (data) {
                     data.description = data.title;
                     $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = data.transferType == 'OWN' || data.transferType == 'DOMESTIC';
@@ -134,7 +140,9 @@ angular.module('raiffeisen-payments')
                         lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                         $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                         $scope.payment.formData.referenceId = $state.params.referenceId;
-
+                        if($scope.payment.formData.realizationDate < new Date()){
+                            $scope.payment.formData.realizationDate = new Date();
+                        }
                         // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
                         if ($scope.payment.type.code == 'OWN') {
                             $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;

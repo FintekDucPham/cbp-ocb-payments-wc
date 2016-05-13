@@ -65,25 +65,25 @@ angular.module('raiffeisen-payments')
 
         function getBankInformation(recipientSwiftOrBic){
             $scope.swift.promise = recipientGeneralService.utils.getBankInformation.getInformation(
-                recipientSwiftOrBic,
-                recipientGeneralService.utils.getBankInformation.strategies.SWIFT
-            ).then(function(data){
-                    $scope.swift.data = data;
-                    if(data !== undefined && data !== null && data !==''){
-                        $scope.payment.formData.recipientBankName = data.institution;
-                        //search and set bank country
-                        if($scope.countries.data){
-                            $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {
-                                code: $scope.swift.data.countryCode
-                            });
+                    recipientSwiftOrBic,
+                    recipientGeneralService.utils.getBankInformation.strategies.SWIFT
+                ).then(function(data){
+                        $scope.swift.data = data;
+                        if(data !== undefined && data !== null && data !==''){
+                            $scope.payment.formData.recipientBankName = data.institution;
+                            //search and set bank country
+                            if($scope.countries.data){
+                                $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.swiftData, {
+                                    code: $scope.swift.data.countryCode
+                                });
+                            }
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                        }else{
+                            $scope.payment.formData.recipientBankName = null;
+                            $scope.payment.formData.recipientBankCountry = undefined;
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                         }
-                        $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
-                    }else{
-                        $scope.payment.formData.recipientBankName = null;
-                        $scope.payment.formData.recipientBankCountry = undefined;
-                        $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
-                    }
-                });
+                    });
         }
 
         // quick fix
@@ -214,6 +214,14 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientBankCountry.ibanLength = null;
         };
 
+        $scope.countries = {
+            promise: $q.all({
+                countryList: countriesService.search(),
+                swiftCodeCountryList: recipientGeneralService.utils.getCountries()
+            }),
+            data: null,
+            swiftData: null
+        };
 
         $scope.searchBankPromise = null;
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
@@ -242,13 +250,18 @@ angular.module('raiffeisen-payments')
             var countryCode;
             if($scope.payment.formData.recipientBankCountry){
                 countryCode = $scope.payment.formData.recipientBankCountry.code || $scope.payment.formData.recipientBankCountry;
-                $scope.payment.formData.recipientBankCountry = findCountryByCode(data, countryCode);
+                $scope.payment.formData.recipientBankCountry = findCountryByCode(data.countryList, countryCode);
             }
             if($scope.payment.formData.recipientCountry){
                 countryCode = $scope.payment.formData.recipientCountry.code || $scope.payment.formData.recipientCountry;
-                $scope.payment.formData.recipientCountry = findCountryByCode(data, countryCode);
+                $scope.payment.formData.recipientCountry = findCountryByCode(data.countryList, countryCode);
             }
-            $scope.countries.data = data;
+            $scope.countries.data = data.countryList;
+            lodash.forEach(data.swiftCodeCountryList.content, function(element){
+                element.code = element.countryCode;
+                element.name = element.countryName;
+            });
+            $scope.countries.swiftData = data.swiftCodeCountryList.content;
         }).catch(function(error){
             $scope.countries.data = error;
         });

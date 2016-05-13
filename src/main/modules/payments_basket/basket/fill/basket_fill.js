@@ -9,7 +9,6 @@ angular.module('raiffeisen-payments')
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getParameterByName("basketList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getParameterByName("basketList.max.offset"),
-                        customerDetails: customerService.getCustomerDetails(),
                         account: accountsService.search({pageSize: 10000})
                     }).then(function (data) {
                         var result = {
@@ -17,18 +16,11 @@ angular.module('raiffeisen-payments')
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths.value, 10),
                             dateFrom: new Date(),
                             dateTo: new Date(),
-                            context: data.customerDetails.customerDetails.context,
                             account: data.account.content
                         };
                         result.period = result.offset;
-                        if (result.context === 'DETAL') {
-                            result.dateChooseType = FUTURE_DATE_TYPES.PERIOD;
-                            result.dateTo.setDate(result.dateTo.getDate() + result.offset);
-                        }
-                        else {
-                            result.dateTo.setDate(result.dateTo.getDate() + result.offset);
-                            result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
-                        }
+                        result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
+                        result.dateTo.setDate(result.dateTo.getDate() + result.offset);
                         return result;
                     });
                 }]
@@ -41,6 +33,8 @@ angular.module('raiffeisen-payments')
 
         $scope.data = {};
         $scope.summaryItemMap = {};
+
+        parameters.context = $scope.userContext;
 
         $scope.options = {
             "futureDatePanelConfig": parameters
@@ -204,6 +198,8 @@ angular.module('raiffeisen-payments')
                             data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
                             data.content.systemParameterDefinedName = $scope.systemParameterDefinedName;
                             data.content.getIcon = $scope.getIcon;
+                            data.content.context = $scope.basket.meta.context;
+                            data.content.isRealizationDateExceededForTransfer= $scope.isRealizationDateExceededForTransfer;
                             return data.content;
                         },
                         function (reason) {
@@ -295,28 +291,21 @@ angular.module('raiffeisen-payments')
 
         function isDateExceeded( transferDateMilliSec){
 
-            //get today's date in string
             var todayDate = new Date();
-            //need to add one to get current month as it is start with 0
 
             var todayMonth = todayDate.getMonth() + 1;
             var todayDay = todayDate.getDate();
             var todayYear = todayDate.getFullYear();
-            var todayDateText =  todayYear + "-" +  todayMonth + "-" + todayDay;
-            //
+
 
             var transferDate= new Date(transferDateMilliSec);
             var transferDateMonth=  transferDate.getMonth() +1;
             var transferDateDay= transferDate.getDate();
             var transferDateYear= transferDate.getFullYear();
-            var transferDateText=   transferDateYear + "-" + transferDateMonth + "-" + transferDateDay;
 
-            //Convert both input to date type
-            var inputToDate = new Date ( transferDateText);
-            var todayToDate = new Date( todayDateText);
-            //
+            var inputToDate = new Date ( transferDateYear, transferDateMonth, transferDateDay);
+            var todayToDate = new Date( todayYear, todayMonth, todayDay);
 
-            //compare dates
             if (inputToDate < todayToDate) { return true;}
             else { return false;}
         }

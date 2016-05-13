@@ -22,7 +22,7 @@ angular.module('raiffeisen-payments')
             labels: {
             },
             initialValues: {
-                selectedMode: FUTURE_DATE_TYPES.PERIOD,  // range or next 5 days
+                selectedMode: FUTURE_DATE_TYPES.RANGE,  // range or next 5 days
                 dateFrom: new Date(),
                 dateTo: new Date()
             },
@@ -52,7 +52,7 @@ angular.module('raiffeisen-payments')
                 "valid": "=?"
 
             },
-            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService, formService) {
+            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService, formService, downloadService) {
 
 
                 // max date, based on now and business parameter
@@ -109,6 +109,9 @@ angular.module('raiffeisen-payments')
                     return $scope.accountList[0];
                 };
 
+                $scope.getIcon = downloadService.downloadIconImage;
+
+
 
                 $scope.PAYMENT_BASKET_STATUS = PAYMENT_BASKET_STATUS;
                 $scope.PAYMENT_BASKET_STATUS_LIST = Object.keys(PAYMENT_BASKET_STATUS);
@@ -125,6 +128,10 @@ angular.module('raiffeisen-payments')
 
                 maxDate = new Date(now.getTime());
                 maxDate.setMonth(now.getMonth() + parseInt(options.maxOffsetInMonths, 10));
+                minDate = new Date(now.getTime());
+                minDate.setMonth(now.getMonth() - parseInt(options.maxOffsetInMonths, 10));
+
+
 
                 var init = function(){
                     $scope.inputData = {
@@ -254,6 +261,11 @@ angular.module('raiffeisen-payments')
                         }
                         else {
                             $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', true);
+                        }
+                        if(dateFrom){
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FIRST_DATE', dateFrom.getTime() >= minDate.getTime());
+                        }else {
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FIRST_DATE', true);
                         }
                     }
 

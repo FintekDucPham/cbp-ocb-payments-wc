@@ -1,4 +1,4 @@
-<div class="tableGG">
+<div class="basket-view tableGG">
     <div ng-repeat = "group in basket.payments track by $index">
         <div ng-show="group.showGroup">
             <div class="tableGG__account-section">
@@ -13,7 +13,6 @@
                         </div>
                     </div>
                     <div class="product-details-primary">
-
                         {{group.accountDetails.accountNo | nrbIbanFilter}}
                     </div>
                 </div>
@@ -30,10 +29,10 @@
             <div class="tableGG__table-section">
                 <div class="bd-table bd-table__fixed">
                     <div bd-table-header>
-                        <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_date"|translate}}</div>
-                        <div bd-table-heading="second" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_type"|translate}}</div>
-                        <div bd-table-heading="third" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-5">{{::"raiff.payments.basket.list.header.operation_title"|translate}}</div>
-                        <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-3">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
+                        <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_date"|translate}}</div>
+                        <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_type"|translate}}</div>
+                        <div bd-table-heading="third" class="bd-table__cell bd-hide-sm bd-table__cell--md-5">{{::"raiff.payments.basket.list.header.operation_title"|translate}}</div>
+                        <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-3">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
                     </div>
 
 
@@ -41,35 +40,41 @@
                          ng-repeat="item in group.basketTransfers track by $index">
 
                         <div class="bd-table__row-entry" ng-hide="!item.payment.checked">
-                            <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-sm">
-                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-2 bd-table__cell--md-4">
+                            <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-8 bd-table__cell--md-4">
                                     {{ item.payment.realizationDate | date:'shortDate'}}
                                 </div>
-                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-4">
+                                <div bd-table-cell="second" class="bd-hide-sm bd-table__cell--md-4">
                                     {{ ::'raiff.payments.new.types.'+item.payment.transferType | translate}}
                                 </div>
-                                <div bd-table-cell="third" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                <div bd-table-cell="third" class="bd-hide-sm bd-table__cell--md-5">
                                     {{item.payment.title.join('') }}
                                 </div>
-                                <div bd-table-cell="fourth" class="bd-table__cell--sm-2 bd-table__cell--md-3 text-right">
+                                <div bd-table-cell="fourth" class="bd-table__cell--sm-8 bd-table__cell--md-3 text-right">
                                     {{ item.payment.amount | number: 2}} {{ item.payment.currency }}
                                 </div>
                             </div>
-                            <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-sm">
-                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
-                                    {{::"raiff.payments.basket.list.sourceAccount"|translate}}
+                            <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-8 bd-table__cell--md-9 text-right" style="font-weight: bold;">
+                                    {{::"raiff.payments.basket.list.sourceAccount"|translate|uppercase}}
                                 </div>
-                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-8">
-                                  <div>{{item.payment.accountNo | nrbIbanFilter}}</div>
+                                <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-7">
+                                  <div>
+                                      <span class="hidden-xs hidden-sm">{{item.payment.accountNo | nrbIbanFilter}}</span>
+                                      <span class="hidden-md hidden-lg">{{item.payment.accountNo | nrbIbanShortFilter}}</span>
+                                  </div>
                                   <div>{{item.payment.owner}}</div>
                                 </div>
                             </div>
-                            <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-sm">
-                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-2 bd-table__cell--md-8 text-right">
-                                    {{::"raiff.payments.basket.list.targetAccount"|translate}}
+                            <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-8 bd-table__cell--md-9 text-right" style="font-weight: bold;">
+                                    {{::"raiff.payments.basket.list.targetAccount"|translate|uppercase}}
                                 </div>
-                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-8">
-                                    <div>{{item.payment.recipientAccountNo | nrbIbanFilter}}</div>
+                                <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-7">
+                                    <div>
+                                        <span class="hidden-xs hidden-sm">{{item.payment.recipientAccountNo | nrbIbanFilter}}</span>
+                                        <span class="hidden-md hidden-lg">{{item.payment.recipientAccountNo | nrbIbanShortFilter}}</span>
+                                    </div>
                                     <div>{{item.payment.recipientName.join('') }}</div>
                                     <div>{{item.payment.recipientAddress.join('') }}</div>
                                 </div>
@@ -80,30 +85,28 @@
         </div>
         </div>
     </div>
+    <div  class="basket-vew__summary">
+        <bd-list-item summary>
+            <div class="summary-item" style="border-bottom: 1px solid #F1F1F1;padding-bottom: 10px;">
+                <div class="bd-table bd-table__fixed">
+                    <div class="bd-table__row-line bd-table__row-line--sm-tight" style="border-bottom: 1px solid #F1F1F1;padding-bottom: 40px;">
+                    <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-16">
 
-    <bd-list-item summary>
-        <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
-            <div class="bd-table bd-table__fixed">
-                <div class="bd-table__row-line bd-table__row-line--sm-tight">
-                <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-16">
-
-                    <div class="summary-item__label" style="border-bottom: 0px;">
-                    {{::"raiff.payments.basket.list.verify.summary"|translate}}
+                        <div class="summary-item__label" style="border-bottom: 0px;">
+                        {{::"raiff.payments.basket.list.verify.summary"|translate}}
+                        </div>
                     </div>
-                </div>
-
-                </div>
-
-
+                    </div>
+                    <div style="padding-top: 10px;">
                         <div ng-repeat="currencySummary in summaryItem">
                             <div class="bd-table__row-line bd-table__row-line--sm-tight">
 
-                                <div bd-table-cell="first" class="bd-table__cell--sm-2 bd-table__cell--md-5">
+                                <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-5">
                                     <div>
                                         {{::"raiff.payments.basket.list.verify.summary.currency"|translate}} &nbsp;{{currencySummary.currency}}:
                                     </div>
                                 </div>
-                                <div bd-table-cell="second" class="bd-table__cell--sm-2 bd-table__cell--md-5 text-right">
+                                <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-5 text-right">
                                     <div>
                                         {{::"raiff.payments.basket.list.verify.summary.currency.transactions"|translate}} &nbsp;{{currencySummary.currency}}
                                     </div>
@@ -112,21 +115,19 @@
                                     </div>
                                 </div>
                                 <div bd-table-cell="third"
-                                     class="bd-table__cell--sm-2 bd-table__cell--md-6 text-right">
+                                     class="bd-table__cell--sm-8 bd-table__cell--md-6 text-right">
                                     <div>{{::"raiff.payments.basket.list.verify.summary.currency.transactions.amount"|translate}}</div>
-
-                                    <div>
                                     <bd-amount amount="currencySummary.sum"
                                                currency="{{currencySummary.currency}}"></bd-amount>
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                </div>
             </div>
-        </div>
-    </bd-list-item>
+        </bd-list-item>
+    </div>
     <bd-item-property class="bd-item-property--text" ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired" label="{{ basket.token.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
     </bd-item-property>
