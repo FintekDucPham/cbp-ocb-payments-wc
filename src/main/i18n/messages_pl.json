@@ -1285,6 +1285,7 @@
   "raiff.payments.basket.search.panel.status":"Status zlecenia",
   "raiff.payments.basket.search.panel.account.all":"Wszystkie",
   "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane",
+  "raiff.payments.basket.search.panel.validation.TOO_LATE_END_DATE": "Nieprawidłowa data końcowa okresu wyszukiwania.  Data końcowa okresu wyszukiwania może uwzględniać tylko płatności do potwierdzenia na najbliższe ##MONTHS## miesięcy.",
   "raiff.layout.basket.tooltip":"Koszyk płatności"
 
 }
