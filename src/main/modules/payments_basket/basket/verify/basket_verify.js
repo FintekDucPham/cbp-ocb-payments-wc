@@ -34,6 +34,18 @@ angular.module('raiffeisen-payments')
                 $scope.basket.item.result = data;
                 paymentsBasketService.updateCounter('PROCESS_FROM_BASKET');
                 doneFn();
+            }).catch(function (error) {
+                $scope.basket.result.token_error = true;
+
+                if($scope.basket.token.model && $scope.basket.token.model.$tokenRequired){
+                    if(!$scope.basket.token.model.$isErrorRegardingToken(error)){
+                        $scope.basket.result = error;
+                        actions.proceed();
+                    }
+                }else{
+                    $scope.basket.result = error;
+                    actions.proceed();
+                }
             });
         }
 
