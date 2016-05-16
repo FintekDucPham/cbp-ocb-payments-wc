@@ -204,15 +204,8 @@ angular.module('raiffeisen-payments')
                         defer.resolve([selectedPayment]);
                         $params.pageCount = 1;
                     }else{
-                        var payments = invoobillPaymentsService.search(params);
-                            _.each(payments, function(payment) {
-                                //addPaymentAmountToSummary(payment, summary);
-                                //linkDetailsLoading(payment);
-                            });
-                            defer.resolve(payments);
-                            $params.pageCount = 1;
-/*
-                        paymentsService.search(params).then(function (response) {
+                        invoobillPaymentsService.search(params).then(function (response) {
+                            /*
                             var summary = {};
                             _.each(response.content, function(payment) {
                                 if (payment.transferType == 'STANDING_ORDER') {
@@ -221,10 +214,10 @@ angular.module('raiffeisen-payments')
                                 addPaymentAmountToSummary(payment, summary);
                                 linkDetailsLoading(payment);
                             });
-                            formSummary(summary);
+                            formSummary(summary);*/
                             defer.resolve(response.content);
                             $params.pageCount = response.totalPages;
-                        });*/
+                        });
                     }
 
                 }
