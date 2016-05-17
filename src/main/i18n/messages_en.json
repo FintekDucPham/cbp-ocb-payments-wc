@@ -1059,7 +1059,7 @@
 "raiff.payments.new.standing.fill.custom_name.ILLEGAL": "TODO: illegal",
 "raiff.payments.new.standing.fill.sender_account": "From account",
 "raiff.payments.new.standing.fill.accessible_assets": "Available funds",
-"raiff.payments.new.standing.fill.recipient": "Select recipient",
+"raiff.payments.new.standing.fill.recipient": "Recipient details",
 "raiff.payments.new.standing.fill.recipient.placeholder": "Recipient not on the list",
 "raiff.payments.new.standing.fill.recipient.clear": "Clear",
 "raiff.payments.new.standing.fill.recipient_account": "Recipient account",

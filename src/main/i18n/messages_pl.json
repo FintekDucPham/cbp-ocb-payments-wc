@@ -1068,7 +1068,7 @@
     "raiff.payments.new.standing.fill.custom_name.ILLEGAL": "TODO: illegal",
     "raiff.payments.new.standing.fill.sender_account": "Z rachunku",
     "raiff.payments.new.standing.fill.accessible_assets": "Dostępne środki",
-    "raiff.payments.new.standing.fill.recipient": "Wybierz odbiorcę",
+    "raiff.payments.new.standing.fill.recipient": "Dane odbiorcy",
     "raiff.payments.new.standing.fill.recipient.placeholder": "Odbiorca spoza listy",
     "raiff.payments.new.standing.fill.recipient.clear": "Wyczyść",
     "raiff.payments.new.standing.fill.recipient_account": "Rachunek odbiorcy",
@@ -1119,8 +1119,8 @@
 
     "raiff.payments.new.standing.fill.frequencyType.types.empty": "Brak",
 
-    "raiff.payments.new.standing.fill.frequencyType.types.1.M": "miesiąc",
-    "raiff.payments.new.standing.fill.frequencyType.types.1.W": "tydzień",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.M": "miesiąc/miesięcy",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.W": "tydzień/tygodni",
     "raiff.payments.new.standing.fill.frequencyType.types.1.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.1.": "",
 
