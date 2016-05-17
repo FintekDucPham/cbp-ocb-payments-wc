@@ -87,7 +87,7 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
                                                    pathService, translate, $stateParams, $state, lodash, validationRegexp,
-                                                   standingTransferService, transferService, initialState, viewStateService) {
+                                                   standingTransferService, transferService, initialState, viewStateService, menuService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
@@ -267,6 +267,10 @@ angular.module('raiffeisen-payments')
             $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
+            var currentMenuItems = menuService.getCurrentMenuItem().items;
+            menuService.setActiveItem(currentMenuItems[currentMenuItems.length - 1]);
+        }else{
+            menuService.updateActiveItem('payments.new.fill');
         }
 
 
