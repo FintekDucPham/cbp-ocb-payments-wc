@@ -278,7 +278,10 @@ angular.module('raiffeisen-payments')
             $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
             var currentMenuItems = menuService.getCurrentMenuItem().items;
-            menuService.setActiveItem(currentMenuItems[currentMenuItems.length - 1]);
+            var subItem = lodash.find(currentMenuItems,{
+                id: 'payments.standing.list'
+            });
+            menuService.setActiveItem(subItem);
         }else{
             menuService.updateActiveItem('payments.new.fill');
         }
