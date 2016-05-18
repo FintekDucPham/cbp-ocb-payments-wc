@@ -1,15 +1,16 @@
 <div>
     <rb-basket-search-panel
-            data="data"
+            data="basket.data"
             options="options.futureDatePanelConfig"
             on-submit="onOperationsDateSubmit()"
-            valid="model.dataValidity"></rb-basket-search-panel>
+            valid="model.dataValidity"
+            input-data-commited="basket.searchPanel"></rb-basket-search-panel>
 
         <bd-table bd-type="typeGG"
                   bd-table-params="table.tableConfig"
                   bd-table-control="table.tableControl"
                   bd-table-data="table.tableData"
-                  bd-table-promise="listPromise"
+                  bd-table-promise="table.promise"
                   bd-table-meta="{
                     'first': {
                         'title': '##raiff.payments.basket.list.header.operation_date',
@@ -70,7 +71,7 @@
 
         </bd-table>
 
-        <div class="bd-list basket-vew__summary" ng-show="listPromise.$$state.status === 1">
+        <div class="bd-list basket-vew__summary" ng-show="table.promise.$$state.status === 1">
             <bd-list-item summary>
                 <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
                     <div class="bd-table bd-table__fixed">
@@ -81,7 +82,7 @@
                                 </div>
                             </div>
                             <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-11">
-                                <div ng-repeat="currencySummary in summaryItem">
+                                <div ng-repeat="currencySummary in basket.summary.summaryItem">
                                     <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="bd-table__cell--sm-8 bd-table__cell--md-8">
                                             <div>
@@ -112,7 +113,7 @@
                                 </div>
                             </div>
                             <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-11">
-                                <div ng-repeat="currencySummary in summaryAll">
+                                <div ng-repeat="currencySummary in basket.summary.summaryAll">
                                     <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="bd-table__cell--sm-8 bd-table__cell--md-8">
                                             <div>

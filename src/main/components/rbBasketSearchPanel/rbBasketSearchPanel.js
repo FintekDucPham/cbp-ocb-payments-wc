@@ -49,10 +49,11 @@ angular.module('raiffeisen-payments')
                 "data": "=",
                 "options": "=",
                 "onSubmit": "&?",
-                "valid": "=?"
+                "valid": "=?",
+                "inputDataCommited":"="
 
             },
-            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService, formService, downloadService) {
+            controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, PAYMENT_BASKET_STATUS, translate, accountsService, customerService, formService, downloadService, lodash) {
 
 
                 // max date, based on now and business parameter
@@ -61,9 +62,32 @@ angular.module('raiffeisen-payments')
                     minDate = now,
                     options = rbFutureDateRangeParams($scope.options);
 
+                var commitInputData = function(){
+                    $scope.inputDataCommited = {
+                        selectedMode : $scope.inputData.selectedMode,
+                        fromDate : $scope.inputData.dateFrom,
+                        toDate : $scope.inputData.dateTo,
+                        period : $scope.inputData.period,
+                        periodRange : $scope.inputData.periodRange,
+                        status : $scope.inputData.status,
+                        selectedAccount : $scope.inputData.selectedAccount,
+                        amountRange : {
+                            min : $scope.inputData.amountRange.min,
+                            max : $scope.inputData.amountRange.max
+                        }
+                    };
+                };
+
                 $scope.data = {
                     dateRange: {},
                     amountRange: {}
+                };
+
+
+
+                $scope.onSubmitForm = function(){
+                    commitInputData();
+                    $scope.onSubmit();
                 };
 
                 $scope.advancedSearch = false;
@@ -100,13 +124,13 @@ angular.module('raiffeisen-payments')
                     $scope.data.amountRange.max = $scope.inputData.amountRange.max;
                 };
 
-                var getSelectedAccount = function(accountList){
+                var getSelectedAccount = function(accountList, accountId){
                     $scope.accountList = angular.copy(accountList);
                     accountsService.loadAccountIcons($scope.accountList);
                     account = {};
                     account.accountId = "ALL";
                     $scope.accountList.unshift(account);
-                    return $scope.accountList[0];
+                    return accountId == null?$scope.accountList[0]: _.find($scope.accountList, function(o){return o.accountId == accountId;});
                 };
 
                 $scope.getIcon = downloadService.downloadIconImage;
@@ -134,25 +158,42 @@ angular.module('raiffeisen-payments')
 
 
                 var init = function(){
-                    $scope.inputData = {
-                        selectedMode: options.dateChooseType,
-                        periodRange: FUTURE_DATE_RANGES.DAYS,
-                        period: options.period,
-                        dateFrom: options.dateFrom,
-                        dateTo: options.dateTo,
-                        status: [PAYMENT_BASKET_STATUS.NEW, PAYMENT_BASKET_STATUS.TO_ACCEPT, PAYMENT_BASKET_STATUS.READY],
-                        selectedAccount: getSelectedAccount(options.account),
-                        amountRange:{
-                            min:null,
-                            max:null
-                        }
-                    };
+                    if(_.isEmpty($scope.inputDataCommited)){
+                        $scope.inputData = {
+                            selectedMode: options.dateChooseType,
+                            periodRange: FUTURE_DATE_RANGES.DAYS,
+                            period: options.period,
+                            dateFrom: options.dateFrom,
+                            dateTo: options.dateTo,
+                            status: [PAYMENT_BASKET_STATUS.NEW, PAYMENT_BASKET_STATUS.TO_ACCEPT, PAYMENT_BASKET_STATUS.READY],
+                            selectedAccount: getSelectedAccount(options.account),
+                            amountRange:{
+                                min:null,
+                                max:null
+                            }
+                        };
+                    }else {
+                        $scope.inputData = {
+                            selectedMode: $scope.inputDataCommited.selectedMode,
+                            periodRange:  $scope.inputDataCommited.periodRange,
+                            period: $scope.inputDataCommited.period,
+                            dateFrom: $scope.inputDataCommited.fromDate,
+                            dateTo: $scope.inputDataCommited.toDate,
+                            status: $scope.inputDataCommited.status,
+                            selectedAccount: getSelectedAccount(options.account, $scope.inputDataCommited.selectedAccount.accountId),
+                            amountRange:{
+                                min: $scope.inputDataCommited.amountRange.min,
+                                max: $scope.inputDataCommited.amountRange.max
+                            }
+                        };
+                    }
                 };
 
 
                 $scope.clearFilter = function(){
                     clearFormInput( $scope.futureDatePanelForm.amountFrom);
                     clearFormInput( $scope.futureDatePanelForm.amountTo);
+                    $scope.inputData = {};
                     init();
                     $scope.futureDatePanelForm.amountFrom.$render();
                     $scope.futureDatePanelForm.amountTo.$render();
@@ -402,6 +443,7 @@ angular.module('raiffeisen-payments')
                 commitAccount();
                 commitStatus();
                 commitAmountRange();
+                commitInputData();
             }
         };
     });
