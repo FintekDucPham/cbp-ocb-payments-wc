@@ -168,7 +168,7 @@ angular.module('raiffeisen-payments')
                                 data.content.updateSummaryForGroup = $scope.updateSummaryForGroup;
                                 data.content.systemParameterDefinedName = $scope.systemParameterDefinedName;
                                 data.content.getIcon = $scope.getIcon;
-                                data.content.context = $scope.basket.meta.context;
+                                data.content.context = $scope.userContext;
                                 data.content.isRealizationDateExceededForTransfer= $scope.isRealizationDateExceededForTransfer;
                                 return data.content;
                             },
