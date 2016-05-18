@@ -68,7 +68,7 @@ angular.module('raiffeisen-payments')
             completeState: 'payments.basket.new.fill',
             footerType: 'basket',
             labels : {
-                prev: 'config.multistepform.buttons.change',
+                prev: 'raiff.payments.basket.multistepform.buttons.cancel',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
                 finalize: 'raiff.payments.new.btn.finalize'
