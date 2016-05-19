@@ -292,6 +292,21 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.getTransferTypeHeader = function () {
+            var code = $scope.payment.type.code;
+            if (code == 'STANDING') {
+                if ($scope.payment.operation.code == 'EDIT') {
+                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".EDIT.header");
+                } else {
+                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".NEW.header");
+                }
+                return;
+            }
+            $scope.payment.header = translate.property("raiff.payments.new.types." + code);
+            return;
+        };
+
+        $scope.getTransferTypeHeader();
 
 
     });
