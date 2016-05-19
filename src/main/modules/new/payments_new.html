@@ -1,9 +1,7 @@
 
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
-    <bd-header ng-if="payment.type.code == 'STANDING' && payment.operation.code == 'NEW'">{{::'raiff.payments.new.label.STANDING.NEW.header'|translate}}</bd-header>
-    <bd-header ng-if="(payment.type.code == 'SEPA' ||  payment.type.code == 'SWIFT') && payment.operation.code == 'NEW'">{{::'payments.submenu.options.new_foreign.header'|translate}}</bd-header>
-    <bd-header ng-if="payment.type.code == 'STANDING' && payment.operation.code == 'EDIT'">{{::'raiff.payments.new.label.STANDING.EDIT.header'|translate}}</bd-header>
-    <bd-header ng-if="payment.type.code != 'STANDING' && payment.type.code == 'SEPA' &&  payment.type.code == 'SWIFT'">{{::'raiff.payments.new.label.header'|translate}}</bd-header>
+    <bd-header>{{payment.header}}</bd-header>
+
     <bd-form-panel class="bd-form-panel--responsive">
 
         <bd-item-property
