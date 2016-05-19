@@ -131,6 +131,13 @@
             </div>
         </bd-list-item>
     </div>
+     <span class="eb-validation-messages">
+             <span class="messages"  ng-if="basket.validator.realizationDateExceed">
+                 <span class="validation-message">
+                   {{::"raiff.payments.basket.status.REALIZATION_DATE_EXCEEDED"|translate}}
+                 </span>
+             </span>
+        </span>
     <bd-item-property class="bd-item-property--text" ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired" label="{{ basket.token.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
     </bd-item-property>

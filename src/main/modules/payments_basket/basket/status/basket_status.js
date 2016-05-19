@@ -28,12 +28,6 @@ angular.module('raiffeisen-payments')
                 show:true
             };
         }
-        if($scope.basket.item.result.messages.indexOf("REALIZATION_DATE_EXCEEDED") > -1){
-            $scope.realizationDateExceeded = {
-                message: translate.property('raiff.payments.basket.status.REALIZATION_DATE_EXCEEDED'),
-                show:true
-            };
-        }
         if($scope.basket.item.result.transactionsSubmited){
             $scope.transactionsSubmited = {
                 message: $scope.basket.meta.context == 'MICRO' ? translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]): translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'),

@@ -40,6 +40,7 @@ angular.module('raiffeisen-payments')
             $scope.basket.searchPanel={};
             $scope.basket.meta.newSearch= true;
             $scope.basket.summary={};
+            $scope.basket.validator={};
         }
 
         $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
@@ -217,7 +218,8 @@ angular.module('raiffeisen-payments')
             var checkedPaymentsId = {};
             checkedPaymentsId.transfersId = getCheckedPaymentsIdListAndSetViewGroupFlag($scope.basket.payments);
             paymentsBasketService.create(checkedPaymentsId).then(function(data){
-                $scope.basket.transferId = data;
+                $scope.basket.transferId = data.referenceId;
+                $scope.basket.validator.realizationDateExceed = data.realizationDateExceed;
                 $scope.basket.meta.correct = false;
                 $scope.basket.token.params = {};
                 actions.proceed();

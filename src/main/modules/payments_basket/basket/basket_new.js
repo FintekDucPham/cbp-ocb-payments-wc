@@ -42,7 +42,8 @@ angular.module('raiffeisen-payments')
                 newSearch: true,
                 correct : false
             },
-            summary:{}
+            summary:{},
+            validator:{}
         });
 
 
