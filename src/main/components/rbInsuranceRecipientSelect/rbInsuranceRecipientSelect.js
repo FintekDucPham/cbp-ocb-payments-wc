@@ -86,7 +86,7 @@ angular.module('raiffeisen-payments')
                 };
 
                 var nullOption = $scope.nullOption = {
-                    customerName: 'Odbiorca spoza listy'
+                    customerName: $scope.placeholderText
                 };
 
             }
