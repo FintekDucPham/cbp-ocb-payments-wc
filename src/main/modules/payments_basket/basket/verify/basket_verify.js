@@ -8,8 +8,6 @@ angular.module('raiffeisen-payments')
     })
 .controller('PaymentsBasketVerifyController', function ($scope, $state, $timeout, $q, translate, $filter, bdStepStateEvents, bdVerifyStepInitializer, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService) {
 
-        console.log( $scope.basket.payments.paymentsList);
-
         if ( $scope.basket.payments.paymentsList === null || typeof $scope.basket.payments.paymentsList === 'undefined') {
                 $state.go( 'payments.basket.new.fill');
         }
@@ -51,6 +49,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
+            $scope.basket.meta.correct = true;
         });
 
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {

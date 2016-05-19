@@ -278,9 +278,17 @@ angular.module('raiffeisen-payments')
             $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
             var currentMenuItems = menuService.getCurrentMenuItem().items;
-            menuService.setActiveItem(currentMenuItems[currentMenuItems.length - 1]);
-        }else{
+            var subItem = lodash.find(currentMenuItems,{
+                id: 'payments.standing.list'
+            });
+            menuService.setActiveItem(subItem);
+        }else if($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code ||
+            $scope.payment.type.code == rbPaymentTypes.INSURANCE.code ||
+            $scope.payment.type.code == rbPaymentTypes.TAX.code){
             menuService.updateActiveItem('payments.new.fill');
+        }else if($scope.payment.type.code == rbPaymentTypes.SWIFT.code ||
+            $scope.payment.type.code == rbPaymentTypes.SEPA.code){
+            menuService.updateActiveItem('payments.new_foreign.fill');
         }
 
 
@@ -294,6 +302,21 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.getTransferTypeHeader = function () {
+            var code = $scope.payment.type.code;
+            if (code == 'STANDING') {
+                if ($scope.payment.operation.code == 'EDIT') {
+                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".EDIT.header");
+                } else {
+                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".NEW.header");
+                }
+                return;
+            }
+            $scope.payment.header = translate.property("raiff.payments.new.types." + code);
+            return;
+        };
+
+        $scope.getTransferTypeHeader();
 
         rbPaymentInitFactory($scope);
 

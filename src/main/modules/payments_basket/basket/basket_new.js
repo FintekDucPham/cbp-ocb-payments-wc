@@ -35,8 +35,17 @@ angular.module('raiffeisen-payments')
             },
             validation: {},
             payments: {},
-            item: {}
+            item: {},
+            transactionList:{},
+            searchPanel:{},
+            meta : {
+                newSearch: true,
+                correct : false
+            },
+            summary:{},
+            validator:{}
         });
+
 
         $scope.getIcon = downloadService.downloadIconImage;
 
@@ -60,7 +69,7 @@ angular.module('raiffeisen-payments')
             completeState: 'payments.basket.new.fill',
             footerType: 'basket',
             labels : {
-                prev: 'config.multistepform.buttons.change',
+                prev: 'raiff.payments.basket.multistepform.buttons.cancel',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
                 finalize: 'raiff.payments.new.btn.finalize'

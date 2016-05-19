@@ -1253,6 +1253,7 @@
   "raiff.payments.basket.list.details.addedToBasketDate":"Data dodania do koszyka",
   "raiff.payments.basket.list.details.historyAction":"Informacje o akcjach zlecenia",
   "raiff.payments.basket.multistepform.buttons.delete":"Usuń",
+  "raiff.payments.basket.multistepform.buttons.cancel":"Anuluj",
   "raiff.payments.basket.modify.verify.MICRO":"Przelew zostanie zmodyfikowany w Twoim koszyku płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego akceptacji w koszyku płatności. Edycja przelewu powoduje usunięcie wszystkich wcześniej złożonych akceptacji.",
   "raiff.payments.basket.modify.verify.DETAL":"Przelew zostanie zmodyfikowany w Twoim koszyku płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego autoryzacji w koszyku płatności.",
   "raiff.payments.basket.modify.signRemove.verify":"Edycja przelewu powoduje, że wszystkie akceptację złożone pod zleceniem zostaną anulowane.",

@@ -30,27 +30,30 @@
                 <div class="bd-table bd-table__fixed">
                     <div bd-table-header>
                         <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_date"|translate}}</div>
-                        <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_type"|translate}}</div>
-                        <div bd-table-heading="third" class="bd-table__cell bd-hide-sm bd-table__cell--md-5">{{::"raiff.payments.basket.list.header.operation_title"|translate}}</div>
-                        <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-3">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
+                        <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-2" ng-show="userContext=='MICRO'">{{::'raiff.payments.basket.list.header.status'|translate}}</div>
+                        <div bd-table-heading="third" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_type"|translate}}</div>
+                        <div bd-table-heading="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'">{{::"raiff.payments.basket.list.header.operation_title"|translate}}</div>
+                        <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-3">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
                     </div>
 
 
                     <div bd-table-row
                          ng-repeat="item in group.basketTransfers track by $index">
-
                         <div class="bd-table__row-entry" ng-hide="!item.payment.checked">
                             <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                 <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-8 bd-table__cell--md-4">
                                     {{ item.payment.realizationDate | date:'shortDate'}}
                                 </div>
-                                <div bd-table-cell="second" class="bd-hide-sm bd-table__cell--md-4">
+                                <div bd-table-cell="second" class="bd-hide-sm bd-table__cell--md-2" ng-show="userContext=='MICRO'">
+                                    {{'raiff.payments.basket.transaction.status.'+item.signedStatus | translate}}
+                                </div>
+                                <div bd-table-cell="third" class="bd-hide-sm bd-table__cell--md-4"> 
                                     {{ ::'raiff.payments.new.types.'+item.payment.transferType | translate}}
                                 </div>
-                                <div bd-table-cell="third" class="bd-hide-sm bd-table__cell--md-5">
+                                <div bd-table-cell="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'">
                                     {{item.payment.title.join('') }}
                                 </div>
-                                <div bd-table-cell="fourth" class="bd-table__cell--sm-8 bd-table__cell--md-3 text-right">
+                                <div bd-table-cell="fifth" class="bd-table__cell--sm-8 bd-table__cell--md-3 text-right">
                                     {{ item.payment.amount | number: 2}} {{ item.payment.currency }}
                                 </div>
                             </div>
@@ -128,6 +131,13 @@
             </div>
         </bd-list-item>
     </div>
+     <span class="eb-validation-messages">
+             <span class="messages"  ng-if="basket.validator.realizationDateExceed">
+                 <span class="validation-message">
+                   {{::"raiff.payments.basket.status.REALIZATION_DATE_EXCEEDED"|translate}}
+                 </span>
+             </span>
+        </span>
     <bd-item-property class="bd-item-property--text" ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired" label="{{ basket.token.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
     </bd-item-property>
