@@ -68,6 +68,10 @@ angular.module('raiffeisen-payments')
             child.$emit('$collapseRows');
         };
 
+        $scope.showDetails = function(item){
+            item.expanded = !item.expanded;
+        };
+
         var calculateModelDate = function() {
             var lastMiliseconds = $scope.rejectedList.filterData.last.value * 24 * 3600 * 1000;
 
@@ -167,77 +171,57 @@ angular.module('raiffeisen-payments')
             model: $scope.rejectedList
         });
 
-        //table def
-        $scope.table = {
-            tableConfig: $scope.tableConfig,
-            tableData: {
-                getData: function ($promise, $params) {
-                    var params = {
-                        statusPaymentCriteria: "rejected",
-                        realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
-                        realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
-                    };
-
-                    params.pageSize   = $params.pageSize;
-                    params.pageNumber = $params.currentPage;
-
-                    if ($params.model.filterData.periodType.model === PERIOD_TYPES.LAST) {
-                        params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
-                        params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
-                    }
-                    if(angular.isDefined($stateParams.referenceId) && $stateParams.referenceId != null) {
-                        paymentsService.get($stateParams.referenceId, {}).then(function(paymentDetails){
-                            angular.extend(paymentDetails, {
-                                loadDetails: function () {
-                                    //this.promise = $q.defer();
-                                    paymentDetails.details = paymentDetails;
-                                    if (paymentDetails.transferType === 'OWN') {
-                                        paymentDetails.transferType = 'INTERNAL';
-                                    }
-                                    //this.promise.resolve();
-                                    paymentDetails.loadDetails = undefined;
-                                }
-                            });
-                            $params.pageCount = 1;
-                            $promise.resolve([lodash.merge(paymentDetails,{renderExpanded: true})]);
-                        });
-                    } else {
-
-                        invoobillPaymentsService.search(params).then(function(paymentSummary) {
-                            $params.pageCount = paymentSummary.totalPages;
-                            $promise.resolve(paymentSummary.content);
-                        });
-
-/*
-                        paymentsService.search(params).then(function (paymentSummary) {
-                            angular.forEach(paymentSummary.content, function (payment) {
-                                if(payment.transferType === 'OWN') {
-                                    payment.transferType = 'INTERNAL';
-                                }
-
-                                angular.extend(payment, {
-                                    loadDetails: function () {
-                                        this.promise = paymentsService.get(this.id, {}).then(function (paymentDetails) {
-                                            payment.details = paymentDetails;
-                                            if(payment.details.transferType === 'OWN') {
-                                                payment.details.transferType = 'INTERNAL';
-                                            }
-                                        });
-
-                                        payment.loadDetails = undefined;
-                                    }
-                                });
-                            });
-                            $params.pageCount = paymentSummary.totalPages;
-                            $promise.resolve(paymentSummary.content);
-                        });
-*/
-                    }
-
-                }
-            },
-            tableControl: undefined
+        $scope.recipients = {
+            list: [
+                {fullName: "Za gaz"},
+                {fullName: "Za internet"}
+            ],
+            current: null
         };
+
+        $scope.loadInvoobillPayments = function(){
+            var params = {
+                //realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
+                //realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
+            };
+/*
+            params.pageSize   = $params.pageSize;
+            params.pageNumber = $params.currentPage;
+
+            if ($params.model.filterData.periodType.model === PERIOD_TYPES.LAST) {
+                params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
+                params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
+            }
+*/
+            $scope.table = {};
+            $scope.table.promise = invoobillPaymentsService.search(params).then(function(data) {
+                angular.forEach(data.content, function (payment) {
+                    payment.realizationDateTxt = $filter('date')(payment.realizationDate, "dd.MM.yyyy");
+                    payment.amountTxt = $filter('currency')(payment.amount, payment.currency, 2);
+                });
+                //$params.pageCount = paymentSummary.totalPages;
+                $scope.showDetailsEvent = {};
+                $scope.table.items = data.content;
+            });
+        };
+
+        $scope.loadInvoobillPayments();
+
+        $scope.$on('showEventDetails', function(event,data) {
+            $scope.showDetailsEvent = data;
+        });
+
+        //payNow
+        $scope.payNow = function (data) {
+        }
+
+        //pay
+        $scope.pay = function (data) {
+        }
+
+        //reject
+        $scope.reject = function (data) {
+        }
 
         function dateTodayOrInFuture(paymentDate) {
             paymentDate = new Date(paymentDate);
@@ -342,6 +326,4 @@ angular.module('raiffeisen-payments')
             });
         }
     };
-
-
 });
