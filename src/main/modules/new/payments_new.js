@@ -272,8 +272,13 @@ angular.module('raiffeisen-payments')
                 id: 'payments.standing.list'
             });
             menuService.setActiveItem(subItem);
-        }else{
+        }else if($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code ||
+            $scope.payment.type.code == rbPaymentTypes.INSURANCE.code ||
+            $scope.payment.type.code == rbPaymentTypes.TAX.code){
             menuService.updateActiveItem('payments.new.fill');
+        }else if($scope.payment.type.code == rbPaymentTypes.SWIFT.code ||
+            $scope.payment.type.code == rbPaymentTypes.SEPA.code){
+            menuService.updateActiveItem('payments.new_foreign.fill');
         }
 
 
