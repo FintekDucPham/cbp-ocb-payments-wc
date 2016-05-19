@@ -126,16 +126,16 @@
         <div class="row-line">
             <div class="row-line__cell">
                 <bd-item-property label="{{::'raiff.payments.invoobill.recipient'|translate}}">
-                    <ui-select ng-model="recipients.list"
+                    <ui-select ng-model="creditors.list"
                                theme="bootstrap"
                                reset-search-input="false"
                                on-select=""
-                               required>
+                               >
                         <ui-select-match placeholder="{{::'raiff.payments.invoobill.recipients.select' | translate }}">
-                            {{ $select.selected.name | arrayFilter }}
+                            {{ $select.selected.fullName | arrayFilter }}
                         </ui-select-match>
-                        <ui-select-choices repeat="recipient in recipients.list">
-                            {{ recipient.fullName | arrayFilter }}
+                        <ui-select-choices repeat="creditor in creditors.list">
+                            {{ creditor.fullName | arrayFilter }}
                         </ui-select-choices>
                     </ui-select>
                 </bd-item-property>

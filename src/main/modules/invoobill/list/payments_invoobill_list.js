@@ -171,14 +171,16 @@ angular.module('raiffeisen-payments')
             model: $scope.rejectedList
         });
 
-        $scope.recipients = {
-            list: [
-                {fullName: "Za gaz"},
-                {fullName: "Za internet"}
-            ],
+        // Invoobill creditor list
+        $scope.creditors = {
+            list: [],
             current: null
         };
+        invoobillPaymentsService.getCreditors({ status: "ACTIVE"}).then(function(data) {
+            $scope.creditors.list = data.content;
+        });
 
+        // Invoobill payments list
         $scope.loadInvoobillPayments = function(){
             var params = {
                 //realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
