@@ -217,7 +217,7 @@
         </div>
     </div>
     <eb-validation-messages eb-name="period">
-        <div eb-message-key="required" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange | translate}}</div>
+        <div eb-message-key="required" class="validation-message animate-on">{{'raiff.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange | translate}}</div>
         <div eb-message-key="pattern" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange | translate}}</div>
         <div eb-message-key="INCORRECT_END_DATE" class="validation-message animate-on">{{::messages.INCORRECT_END_DATE}}</div> 
         <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.basket.search.panel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
