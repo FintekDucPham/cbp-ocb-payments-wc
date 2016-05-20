@@ -39,14 +39,6 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsInvoobillListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, invoobillPaymentsService, lodash, $state, $stateParams, $filter) {
 
-        var TYPE_ID_MAPPER = {
-            P: "PESEL",
-            N: "NIP",
-            R: "REGON",
-            1: "ID_CARD",
-            2: "PASSPORT",
-            3: "OTHER"
-        };
         var PERIOD_TYPES = {
             LAST: 'LAST',
             RANGE: 'RANGE'
@@ -63,7 +55,7 @@ angular.module('raiffeisen-payments')
         var firstDayOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         var oneDayMilisecs = 1000 * 60 * 60 * 24;
 
-
+        //not used
         $scope.onBack = function(child) {
             child.$emit('$collapseRows');
         };
@@ -111,7 +103,6 @@ angular.module('raiffeisen-payments')
                     }
                 }
             }
-
 
             // we need to recalculate model date after changing week
             calculateModelDate();
@@ -208,89 +199,34 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.loadInvoobillPayments();
-
+/*
         $scope.$on('showEventDetails', function(event,data) {
             $scope.showDetailsEvent = data;
         });
-
+*/
         //payNow
         $scope.payNow = function (data) {
-        }
+            console.info("payNow", data);
+        };
 
         //pay
         $scope.pay = function (data) {
-        }
+            console.info("pay", data);
+        };
 
         //reject
         $scope.reject = function (data) {
-        }
+            console.info("reject", data);
+        };
 
         function dateTodayOrInFuture(paymentDate) {
             paymentDate = new Date(paymentDate);
             return now.getTime() > paymentDate.getTime() ? now : paymentDate;
         }
 
-        //renew
-        $scope.renew = function (data) {
-            var copiedData = angular.copy(data);
-            var details = copiedData.details;
-            var paymentType = angular.lowercase(copiedData.transferType);
-            $state.go(paymentType === 'internal' ? "payments.new_internal.fill" : "payments.new.fill", {
-                paymentType: paymentType,
-                payment: lodash.extend({
-                    remitterAccountId : details.accountId,
-                    recipientName : details.recipientName,
-                    realizationDate: dateTodayOrInFuture(details.realizationDate)
-                }, (function() {
-                    switch(paymentType) {
-                        case 'domestic':
-                            return {
-                                recipientAccountNo: details.accountNo,
-                                recipientName: details.recipientName,
-                                description: cropArray(details.title),
-                                amount: details.amount,
-                                currency: details.currency
-                            };
-                        case 'internal':
-                            return {
-                                beneficiaryAccountId: details.recipientAccountId,
-                                amount: details.amount,
-                                recipientAccountNo: details.recipientAccountNo,
-                                currency: details.currency,
-                                description: cropArray(details.title)
-                            };
-                        case 'tax':
-                            return {
-                                recipientAccountNo: details.recipientAccountNo,
-                                taxpayerData: details.senderName,
-                                idType: TYPE_ID_MAPPER[details.paymentDetails.idtype],
-                                idNumber: details.paymentDetails.idnumber,
-                                formCode: details.paymentDetails.formCode,
-                                periodType: details.paymentDetails.periodType,
-                                periodNo: details.paymentDetails.periodNumber,
-                                periodYear: details.paymentDetails.periodYear,
-                                obligationId: details.paymentDetails.obligationId,
-                                amount: details.amount,
-                                currency: details.currency
-                            };
-                        default:
-                            throw "Payment type {0} not supported.".format(paymentType);
-                    }
-                })())
-            });
-        };
-
-        function cropArray(array) {
-            array = array || [];
-            for (var i = array.length - 1; i >= 0; i--) {
-                if (!!array[i]) {
-                    return array.splice(0, i + 1);
-                }
-            }
-        }
-
         //action
         $scope.onSubmit = function (form) {
+            //debugger;
             if(angular.isDefined($stateParams.referenceId) && $stateParams.referenceId != null){
                 delete $stateParams.referenceId;
             }

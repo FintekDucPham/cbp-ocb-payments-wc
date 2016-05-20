@@ -86,9 +86,7 @@
                                            style="width: 140px;"></rb-datepicker>
                         </div>
                     </bd-radio-option>
-
                 </div>
-
             </div>
 
             <div class="eb-validation-messages col-xs-12" ng-if="filterForm.dateToInput_delgate.$invalid">
@@ -126,7 +124,7 @@
         <div class="row-line">
             <div class="row-line__cell">
                 <bd-item-property label="{{::'raiff.payments.invoobill.recipient'|translate}}">
-                    <ui-select ng-model="creditors.list"
+                    <ui-select ng-model="creditors.current"
                                theme="bootstrap"
                                reset-search-input="false"
                                on-select=""
@@ -234,6 +232,5 @@
             <bd-table-pagination></bd-table-pagination>
         </div>
 
-    </bd-table>
     </div>
 </rb-content-view>
