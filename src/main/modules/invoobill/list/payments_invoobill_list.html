@@ -2,6 +2,7 @@
     <bd-header>{{::"raiff.payments.invoobill.list.header"|translate}}</bd-header>
 
     <form novalidate name="filterForm" ng-submit="onSubmit(filterForm)">
+
         <bd-radio-select bd-model="rejectedList.filterData.periodType.model">
 
             <div class="bd-item-property row">
@@ -88,10 +89,6 @@
 
                 </div>
 
-                <div class="row--spacing col-md-2 col-sm-12" style="text-align: right;">
-                    <bd-button class="bd-button__primary" type="submit">{{::'raiff.payments.rejected.select.filter.button.action'|translate}}</bd-button>
-                </div>
-
             </div>
 
             <div class="eb-validation-messages col-xs-12" ng-if="filterForm.dateToInput_delgate.$invalid">
@@ -125,72 +122,118 @@
             </div>
 
         </bd-radio-select>
+
+        <div class="row-line">
+            <div class="row-line__cell">
+                <bd-item-property label="{{::'raiff.payments.invoobill.recipient'|translate}}">
+                    <ui-select ng-model="creditors.list"
+                               theme="bootstrap"
+                               reset-search-input="false"
+                               on-select=""
+                               >
+                        <ui-select-match placeholder="{{::'raiff.payments.invoobill.recipients.select' | translate }}">
+                            {{ $select.selected.fullName | arrayFilter }}
+                        </ui-select-match>
+                        <ui-select-choices repeat="creditor in creditors.list">
+                            {{ creditor.fullName | arrayFilter }}
+                        </ui-select-choices>
+                    </ui-select>
+                </bd-item-property>
+
+                <div class="row-line__cell row-line__cell--right-button">
+                    <bd-button class="bd-button__primary" type="submit">
+                        {{::'raiff.payments.rejected.select.filter.button.action' | translate}}
+                    </bd-button>
+                </div>
+            </div>
+        </div>
     </form>
 
     <div></div>
-    <bd-table bd-type="typeR"
-              bd-table-params="table.tableConfig"
-              bd-table-control="table.tableControl"
-              bd-table-data="table.tableData"
-              bd-table-promise="recipientListPromise"
-              bd-table-data="tableData"
-              bd-table-meta="{'first':{'title':'##raiff.payments.rejected.list.header.realizationDate.label','data':'realizationDate'},
-                                                        'second':{'title':'##raiff.payments.rejected.list.header.paymentType.label','data':'transferType'},
-                                                        'third':{'title':'##raiff.payments.rejected.list.header.accountNo.label','data':'accountNo'},
-                                                        'fourth':{'title':'##raiff.payments.rejected.list.header.senderName.label', 'data':'recipientName'},
-                                                        'fifth':{'title':'##raiff.payments.rejected.list.header.title.label','data':'title'},
-                                                        'sixth':{'title':'##raiff.payments.rejected.list.header.amount.label','data':['amount','currency']}}">
+    <div class="bd-table">
+        <div bd-table-header>
+            <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.realization_date' | translate}}</div>
+            <div bd-table-heading="second" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.recipient' | translate}}</div>
+            <div bd-table-heading="third" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4 bd-pull-right">{{::'raiff.payments.invoobill.list.header.amount' | translate}}</div>
+            <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.status' | translate}}</div>
+        </div>
 
-        <bd-details-section bd-table-row-details>
-            <div eb-preloader eb-promise="$data.promise"></div>
+        <div ng-show="(table.promise.$$state.status === 1)"
+             bd-table-row
+             bd-table-expandable
+             ng-click="showDetails(item)"
+             ng-class="item.expanded ? 'bd-table__row--expanded' : ''"
+             ng-repeat="item in table.items track by $index">
 
-            <section ng-if="$data.details">
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.transferType' | translate }}">
-                    {{ 'raiff.payments.new.types.'+$data.details.transferType | translate }}
-                </bd-item-property>
-                <bd-item-property  label="{{::'raiff.payments.rejected.operation.status.label'|translate}}">
-                    {{ :: 'raiff.payments.rejected.opration_type.rejected' | translate }}
-                </bd-item-property>
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.registrationDate' | translate }}">
-                    {{ $data.details.realizationDate | date : 'shortDate' }}
-                </bd-item-property>
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.accountNo' | translate }}">
-                    <div style=" word-break: break-all;">{{ $data.details.accountName }}</div>
-                    {{ $data.details.accountNo | nrbIbanFilter }} <br/>
-                    {{ $data.details.owner }}
-                </bd-item-property>
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.recipientAccountNo' | translate }}">
-                    {{ $data.details.recipientAccountNo | nrbIbanFilter }}
-                </bd-item-property>
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.recipientName' | translate }}">
-                    {{ $data.details.recipientName[0] }}
-                </bd-item-property>
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.amount' | translate }}">
-                    {{ $data.details.amount }} {{ $data.details.currency }}
-                </bd-item-property>
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.title' | translate }}">
-                    {{ $data.details.title[0] }}
-                </bd-item-property>
-                <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.realizationDate' | translate }}">
-                    {{ $data.details.realizationDate | date : 'shortDate' }}
-                </bd-item-property>
-
-            </section>
-
-            <bd-details-action-section>
-                <div class="row">
-                    <div class="col-sm-12 col-md-12" style="text-align:right;">
-                        <bd-button ng-click="onBack(this)" class="bd-button bd-button--right">{{::'raiff.payments.rejected.list.details.back' | translate}}</bd-button>
-                        <bd-button ng-click="renew($data)" class="bd-button bd-button__primary bd-button--right">{{::'raiff.payments.rejected.list.details.renew.button' | translate}}</bd-button>
+            <div class="bd-table__row-entry">
+                <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                    <div bd-table-cell="first" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-table__cell-index">
+                        {{ item.realizationDate | date : 'shortDate'}}
+                    </div>
+                    <!-- this will disappear if screen gets too small -->
+                    <div bd-table-cell="second" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-hide-sm">
+                        {{ item.recipient[0] }}
+                    </div>
+                    <div bd-table-cell="third" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-pull-right">
+                        {{ item.amount | number: 2}} {{item.currency}}
+                    </div>
+                    <div bd-table-cell="fourth" class="bd-table__cell--sm-4 bd-table__cell--md-4">
+                        {{ item.status }}
                     </div>
                 </div>
-            </bd-details-action-section>
+                <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-md">
+                    <!-- this will be shown if screen gets small enough -->
+                    <div bd-table-cell="second" class="bd-table__cell--sm-16">
+                        {{ item.recipient[0] }}
+                    </div>
+                </div>
+            </div>
 
-        </bd-details-section>
+            <bd-details-section bd-table-row-details ng-if="item.expanded">
+                <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.status' | translate }}">
+                    {{ item.status }}
+                </bd-item-property>
+
+                <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.recipientAccountNo' | translate}}">
+                    {{ item.recipientAccountNo | nrbIbanFilter }}
+                </bd-item-property>
+
+                <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.recipient' | translate }}">
+                    {{ item.recipient | arrayFilter }}
+                </bd-item-property>
+
+                <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.title' | translate }}">
+                    {{ item.title  | arrayFilter }}
+                </bd-item-property>
+
+                <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.amount' | translate }}">
+                    {{ item.amount | number: 2 }} {{ item.currency }}
+                </bd-item-property>
+
+                <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.realization_date' | translate }}">
+                    {{ item.realizationDate | date : 'shortDate' }}
+                </bd-item-property>
+
+                <bd-details-action-section>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12" style="text-align:right;">
+                            <bd-button ng-click="payNow($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.paynow' | translate}}</bd-button>
+                            <bd-button ng-click="pay($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.pay' | translate}}</bd-button>
+                            <bd-button ng-click="reject($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.reject' | translate}}</bd-button>
+                        </div>
+                    </div>
+                </bd-details-action-section>
+            </bd-details-section>
+        </div>
+
+        <div ng-if="(table.promise.$$state.status === 1 && table.items.length < 1)" class="bd-table__empty-placeholder">
+            <div class="bd-table__empty-placeholder-text">{{::'raiff.payments.invoobill.list.empty' | translate}}</div>
+        </div>
 
         <div bd-table-footer>
             <bd-table-pagination></bd-table-pagination>
         </div>
-    </bd-table>
 
+    </bd-table>
+    </div>
 </rb-content-view>

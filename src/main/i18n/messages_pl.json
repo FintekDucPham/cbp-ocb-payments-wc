@@ -1289,9 +1289,25 @@
 
     "raiff.payments.invoobill.label":"Invoobill",
     "raiff.payments.invoobill.list.header":"Usługa Invoobill",
-    "raiff.payments.invoobill.list.header.operation_date":"Data płatności",
-    "raiff.payments.invoobill.list.header.creditor":"Dostawca",
+    "raiff.payments.invoobill.list.header.realization_date":"Data płatności",
+    "raiff.payments.invoobill.list.header.recipient":"Dostawca",
     "raiff.payments.invoobill.list.header.amount":"Kwota",
     "raiff.payments.invoobill.list.header.status":"Status",
-    "raiff.payments.invoobill.list.empty":"Nie znaleziono płatności spełniających kryteria wyszukiwania"
+    "raiff.payments.invoobill.list.empty":"Nie znaleziono płatności spełniających kryteria wyszukiwania",
+
+    "raiff.payments.invoobill.recipients.select": "Wybierz dostawcę...",
+    "raiff.payments.invoobill.recipient": "Dostawca",
+
+    "raiff.payments.invoobil.list.details.status":"Status",
+    "raiff.payments.invoobil.list.details.recipientAccountNo":"Rachunek dostawcy",
+    "raiff.payments.invoobil.list.details.recipient":"Dostawca",
+    "raiff.payments.invoobil.list.details.title":"Tytuł",
+    "raiff.payments.invoobil.list.details.amount":"Kwota",
+    "raiff.payments.invoobil.list.details.realization_date":"Data płatności",
+
+    "raiff.payments.invoobil.list.details.paynow":"Zapłać teraz",
+    "raiff.payments.invoobil.list.details.pay":"Zapłać w terminie",
+    "raiff.payments.invoobil.list.details.reject":"Odrzuć płatność"
+
+
 }
