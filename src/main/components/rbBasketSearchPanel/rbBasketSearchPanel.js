@@ -11,11 +11,11 @@ angular.module('raiffeisen-payments')
     })
     .constant('PAYMENT_BASKET_STATUS',{
         'NEW':'NEW',
-        'READY':'READY',
         'TO_ACCEPT':'TO_ACCEPT',
         'IN_PROCESSING':'IN_PROCESSING',
         'SUBMITTED':'SUBMITTED',
-        'DELETED':'DELETED'
+        'DELETED':'DELETED',
+        'READY':'READY'
     })
     .provider('rbFutureDateRangeParams', function(FUTURE_DATE_RANGES, FUTURE_DATE_TYPES) {
         var defaultOptions = {
