@@ -169,6 +169,7 @@ angular.module('raiffeisen-payments')
         };
         invoobillPaymentsService.getCreditors({ status: "ACTIVE"}).then(function(data) {
             $scope.creditors.list = data.content;
+            console.debug($scope.creditors);
         });
 
         // Invoobill payments list
@@ -177,10 +178,10 @@ angular.module('raiffeisen-payments')
                 //realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
                 //realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
             };
-/*
-            params.pageSize   = $params.pageSize;
-            params.pageNumber = $params.currentPage;
 
+            params.pageSize   = $scope.pageSize;
+            params.pageNumber = $scope.currentPage;
+/*
             if ($params.model.filterData.periodType.model === PERIOD_TYPES.LAST) {
                 params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
                 params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
@@ -189,34 +190,42 @@ angular.module('raiffeisen-payments')
             $scope.table = {};
             $scope.table.promise = invoobillPaymentsService.search(params).then(function(data) {
                 angular.forEach(data.content, function (payment) {
-                    payment.realizationDateTxt = $filter('date')(payment.realizationDate, "dd.MM.yyyy");
-                    payment.amountTxt = $filter('currency')(payment.amount, payment.currency, 2);
                 });
-                //$params.pageCount = paymentSummary.totalPages;
                 $scope.showDetailsEvent = {};
                 $scope.table.items = data.content;
+                $scope.pageCount = data.totalPages;
+                console.debug($scope.table);
             });
         };
 
+        $scope.pageSize = 10;
+        $scope.currentPage = 1;
         $scope.loadInvoobillPayments();
-/*
-        $scope.$on('showEventDetails', function(event,data) {
-            $scope.showDetailsEvent = data;
-        });
-*/
+
+        $scope.switchPage = function(deferred, pageNumber) {
+            console.debug("switchPage:", deferred, pageNumber);
+            if (pageNumber !== $scope.currentPage) {
+                $scope.currentPage = pageNumber;
+                $scope.loadInvoobillPayments();
+                deferred.resolve();
+            } else {
+                deferred.resolve();
+            }
+        };
+
         //payNow
         $scope.payNow = function (data) {
-            console.info("payNow", data);
+            console.debug("payNow", data);
         };
 
         //pay
         $scope.pay = function (data) {
-            console.info("pay", data);
+            console.debug("pay", data);
         };
 
         //reject
         $scope.reject = function (data) {
-            console.info("reject", data);
+            console.debug("reject", data);
         };
 
         function dateTodayOrInFuture(paymentDate) {
@@ -231,7 +240,8 @@ angular.module('raiffeisen-payments')
                 delete $stateParams.referenceId;
             }
             if (form.$valid) {
-                $scope.table.tableControl.invalidate();
+                //$scope.table.tableControl.invalidate();
+                $scope.loadInvoobillPayments();
             }
         };
     }).directive('minDateInvoobill', function () {

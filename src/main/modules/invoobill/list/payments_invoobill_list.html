@@ -229,8 +229,10 @@
         </div>
 
         <div bd-table-footer>
-            <bd-table-pagination></bd-table-pagination>
+            <bd-pagination ng-show="pageCount > 1"
+                           bd-on-page-switch="switchPage"
+                           bd-page-count="pageCount"
+                           bd-current-page="currentPage"></bd-pagination>
         </div>
-
     </div>
 </rb-content-view>
