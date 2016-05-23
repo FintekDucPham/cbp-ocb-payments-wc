@@ -76,7 +76,7 @@ angular.module('raiffeisen-payments')
             },
             visibility:{
                 change: true,
-                next: true,
+                next: false,
                 accept: true,
                 finalize: true
             }

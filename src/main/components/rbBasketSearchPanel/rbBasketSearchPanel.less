@@ -1,12 +1,22 @@
+@screenMediumMin: 768px;
+@screenSmallMax: 767px;
 .basketSearchPanel{
   &__advanced-section{
     &__right-panel{
+      text-align: right;
+      @media only screen and  (max-width: @screenSmallMax) {
+        text-align: left;
+      }
       &__item{
         padding-top: 7px;
         padding-bottom: 10px;
         &__status {
           display: inline-block;
           width:400px;
+          @media only screen and  (max-width: @screenSmallMax) {
+            width: 100%;
+            margin: 0px 3px;
+          }
         }
         &__button {
           display: inline-block;
@@ -14,6 +24,13 @@
           padding-top: 10px;
           padding-left: 10px;
         }
+      }
+    }
+    &__left-panel{
+      &__range {
+      /*  @media only screen and  (max-width: @screenSmallMax) {
+          width: 100%;
+        }*/
       }
     }
   }

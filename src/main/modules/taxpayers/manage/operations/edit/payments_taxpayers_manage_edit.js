@@ -41,6 +41,7 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsTaxpayersManageEditController', function ($scope, lodash, authorizationService, $stateParams) {
 
         lodash.extend($scope.taxpayer.formData, $stateParams.taxpayer, $scope.taxpayer.formData);
+        $scope.taxpayer.payerId = $scope.taxpayer.formData.taxpayerId;
 
         $scope.clearForm = function () {
             $scope.taxpayer.formData = {};
@@ -49,7 +50,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestOperationConverter(function(data) {
             return angular.extend(data, {
-                payerId: $scope.taxpayer.formData.taxpayerId
+                payerId: $scope.taxpayer.payerId
             });
         });
 

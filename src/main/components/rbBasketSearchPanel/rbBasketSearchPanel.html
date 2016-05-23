@@ -77,7 +77,7 @@
     </div>
 
     <div class="row basketSearchPanel__advanced-section" ng-show="advancedSearch">
-        <div class="col-md-5 col-sm-12">
+        <div class="col-md-5 col-sm-12 basketSearchPanel__advanced-section__left-panel">
             <bd-radio-select bd-model="inputData.selectedMode">
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.PERIOD">
                     <div class="row__inline-block--middle row__inline-block--adjacent">
@@ -106,7 +106,7 @@
                     </div>
                 </bd-radio-option>
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE">
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                    <div class="row__inline-block--middle row__inline-block--adjacent basketSearchPanel__advanced-section__left-panel__range">
                         {{:: 'raiff.payments.components.futureDatePanel.dateTypes.RANGE' | translate}}
                     </div>
                     <div class="row__inline-block--middle row__inline-block--adjacent">
@@ -147,7 +147,7 @@
 
         </div>
 
-        <div class="col-md-7 col-sm-12 basketSearchPanel__advanced-section__right-panel" style="text-align: right;">
+        <div class="col-md-7 col-sm-12 basketSearchPanel__advanced-section__right-panel">
             <div class="basketSearchPanel__advanced-section__right-panel__item">
                 <bd-amount-range name-min="amountFrom" name-max="amountTo" infinite-min="true" label="{{::'account.transactions.list.amount'|translate}}" label-min=" {{::'account.transactions.select.filter.date.from.label'|translate}}" label-max=" {{::'account.transactions.select.filter.date.to.label'|translate}}" range="inputData.amountRange" validate-pattern="advancedSearch"></bd-amount-range>
             </div>

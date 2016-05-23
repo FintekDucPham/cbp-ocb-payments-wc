@@ -37,7 +37,8 @@ angular.module('raiffeisen-payments')
 
                 if($scope.basket.token.model && $scope.basket.token.model.$tokenRequired){
                     if(!$scope.basket.token.model.$isErrorRegardingToken(error)){
-                        $scope.basket.result = error;
+                        $scope.basket.item.result = error;
+                        $scope.basket.item.result.error = true;
                         actions.proceed();
                     }
                 }else{
