@@ -246,6 +246,14 @@ angular.module('raiffeisen-payments')
 
         };
 
+        $scope.$watch('basket.summary.summaryItem', function(n, o){
+           if(n.length > 0){
+               $scope.basket.rbBasketStepParams.visibility.next = true;
+           }else {
+               $scope.basket.rbBasketStepParams.visibility.next = false;
+           }
+        });
+
         function isDateExceeded( transferDateMilliSec){
 
             var todayDate = new Date();
