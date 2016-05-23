@@ -1310,7 +1310,9 @@
 
     "raiff.payments.invoobil.list.details.paynow":"Zapłać teraz",
     "raiff.payments.invoobil.list.details.pay":"Zapłać w terminie",
-    "raiff.payments.invoobil.list.details.reject":"Odrzuć płatność"
+    "raiff.payments.invoobil.list.details.reject":"Odrzuć płatność",
+    "raiff.payments.invoobill.show_creditors": "Zobacz listę dostawców w ramach usługi Invoobill",
+    "raiff.payments.invoobill.cancel_service": "Zrezygnuj z usługi"
 
 
 }
