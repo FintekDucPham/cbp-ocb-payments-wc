@@ -160,6 +160,19 @@ angular.module('raiffeisen-payments')
     }
 ).factory('recipientManager', function (lodash) {
 
+        function calculateInsurancesSummary(insurancePremiums) {
+            return lodash.map(lodash.groupBy(insurancePremiums, 'currency'), function (values) {
+                var totalAmount = 0;
+                lodash.forEach(values, function (value) {
+                    totalAmount += value.amount ? parseFloat((""+value.amount).replace( /,/, '.')) : 0;
+                });
+                return {
+                    currency: values[0].currency,
+                    amount: totalAmount
+                };
+            });
+        }
+
         function wrapWithCommonData(data, recipient) {
             return lodash.merge(data, {
                 formData: {
@@ -201,7 +214,11 @@ angular.module('raiffeisen-payments')
                         paymentType: recipient.paymentType,
                         secondaryIdType: recipient.secondaryIdType,
                         secondaryIdNo: recipient.secondaryId,
-                        selectedInsuranceId: recipient.nrb
+                        selectedInsuranceId: recipient.nrb,
+                        insurancePremiums: recipient.insurancePremiums
+                    },
+                    meta: {
+                        amountSummary: calculateInsurancesSummary(recipient.insurancePremiums)
                     }
                 }, recipient);
             },
