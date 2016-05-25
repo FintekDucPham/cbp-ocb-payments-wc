@@ -6,11 +6,18 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsListController",
             data: {
                 analyticsTitle: "raiff.payments.recipients.label"
+            },
+            resolve: {
+                insuranceAccountList : ["insuranceAccounts", function(insuranceAccounts) {
+                    return insuranceAccounts.search().then(function (insuranceAccounts) {
+                        return insuranceAccounts.content;
+                    });
+                }]
             }
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, insuranceAccountList) {
 
 
 
@@ -171,6 +178,9 @@ angular.module('raiffeisen-payments')
                         $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
                             var list = $scope.recipientList = lodash.map(data.content, function (recipient) {
                                 var template = recipient.paymentTemplates[0];
+                                if (!template) {
+                                    return {};
+                                }
                                 return lodash.extend({
                                     recipientType: template.templateType,
                                     recipientTypeMessage: translate.property('raiff.payments.recipients.new.type.{0}'.format(template.templateType)),
@@ -208,7 +218,12 @@ angular.module('raiffeisen-payments')
                                                 nip: paymentDetails.nip,
                                                 secondaryIdType: paymentDetails.secondIDType,
                                                 secondaryId: paymentDetails.secondIDNo,
-                                                paymentType: paymentDetails.paymentType
+                                                paymentType: paymentDetails.paymentType,
+                                                insurancePremiums: lodash.reduce(recipient.paymentTemplates, function(result, value){
+                                                    var insuranceCode = lodash.find(insuranceAccountList, {accountNo : value.beneficiaryAccountNo}).insuranceCode;
+                                                    result[insuranceCode] = {amount : value.amount, currency : value.currency, nrb : value.beneficiaryAccountNo};
+                                                    return result;
+                                                }, {})
                                             };
                                         case "TAX":
                                             return {

@@ -4,9 +4,15 @@
     </div>
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.account_no'|translate}}">
-    {{ $data.nrb | nrbIbanFilter }}
-</bd-item-property>
+<!--<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.account_no'|translate}}">-->
+    <!--{{ $data.nrb | nrbIbanFilter }}-->
+<!--</bd-item-property>-->
+
+        <bd-item-property class="eb-item-property--text" label="{{premium.nrb}}" ng-repeat="premium in $data.insurancePremiums">
+            {{premium.amount}}
+        </bd-item-property>
+
+        {{$data.insurancePremiums | json}}
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.recipient_name'|translate}}">
     <div style="word-break: break-all;">{{ $data.recipientName }}</div>

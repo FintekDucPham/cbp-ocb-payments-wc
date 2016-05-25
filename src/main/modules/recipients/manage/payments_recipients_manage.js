@@ -11,6 +11,11 @@ angular.module('raiffeisen-payments')
             },
             data: {
                 analyticsTitle: "raiff.payments.recipients.label"
+            },
+            resolve: {
+                paymentRulesResolved: ['paymentRules', function(paymentRules){
+                    return paymentRules.search();
+                }]
             }
         });
     })
@@ -18,7 +23,9 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService, paymentRulesResolved) {
+
+        $scope.paymentRulesResolved = paymentRulesResolved;
 
         $scope.actualRecipientList = null;
 
