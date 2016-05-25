@@ -4,10 +4,17 @@
     </div>
 </bd-item-property>
 
-        <bd-item-property class="eb-item-property--text" label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + code | translate }}" ng-repeat="(code, premium) in $data.insurancePremiums">
-            {{premium.nrb|nrbIbanFilter}}<br />
-            {{ premium.amount | number: 2}} {{ premium.currency }}
-        </bd-item-property>
+<div style="border-top:1px solid #ddd; border-bottom:1px solid #ddd;">
+    <bd-item-property class="eb-item-property--text bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + premium.code | translate }}"
+                      ng-repeat="(code, premium) in $data.insurancePremiums | insurancesDisplayOrder  ">
+        {{premium.nrb|nrbIbanFilter}}<br />
+        {{ premium.amount | number: 2}} {{ premium.currency }} {{premium.order}}
+    </bd-item-property>
+    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipient.details.insurance.amount_summary'|translate}}">
+        {{ $data.insurancePremiusSumary | number: 2}} PLN
+    </bd-item-property>
+</div>
+
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.recipient_name'|translate}}">
     <div style="word-break: break-all;">{{ $data.recipientName }}</div>

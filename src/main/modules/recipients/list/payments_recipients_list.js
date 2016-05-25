@@ -109,6 +109,7 @@ angular.module('raiffeisen-payments')
             });
         };
 
+
         $scope.onRecipientTransfer = function(data) {
             // dla przelewow do odbiorcow walutowych potrzebna osobna logika
             if (data.recipientType.toLowerCase() == 'swift') {
@@ -214,6 +215,7 @@ angular.module('raiffeisen-payments')
                                                 transferTitleTable: template.title.join(" ")
                                             };
                                         case "INSURANCE":
+
                                             return {
                                                 nip: paymentDetails.nip,
                                                 secondaryIdType: paymentDetails.secondIDType,
@@ -221,9 +223,16 @@ angular.module('raiffeisen-payments')
                                                 paymentType: paymentDetails.paymentType,
                                                 insurancePremiums: lodash.reduce(recipient.paymentTemplates, function(result, value){
                                                     var insuranceCode = lodash.find(insuranceAccountList, {accountNo : value.beneficiaryAccountNo}).insuranceCode;
-                                                    result[insuranceCode] = {amount : value.amount, currency : value.currency, nrb : value.beneficiaryAccountNo};
+                                                    result[insuranceCode] = {amount : value.amount, code:insuranceCode, currency : value.currency, nrb : value.beneficiaryAccountNo};
                                                     return result;
-                                                }, {})
+                                                }, {}),
+                                                insurancePremiusSumary: (function(){
+                                                    var sum = 0;
+                                                    angular.forEach(recipient.paymentTemplates, function(v){
+                                                        sum+= v.amount;
+                                                    });
+                                                    return sum;
+                                                })()
                                             };
                                         case "TAX":
                                             return {
@@ -250,4 +259,21 @@ angular.module('raiffeisen-payments')
         };
 
     }
-);
+).filter('insurancesDisplayOrder', function() {
+    return function(items) {
+        var codeOrders={
+            SOCIAL: 1,
+            HEALTH: 2,
+            FPIFGSP:3,
+            PENSION:4
+        };
+        var filtered = [];
+        angular.forEach(items, function(item) {
+            filtered.push(item);
+        });
+        filtered.sort(function (a, b) {
+            return (codeOrders[a.code] > codeOrders[b.code] ? 1 : -1);
+        });
+        return filtered;
+    };
+});
