@@ -1,13 +1,12 @@
-<div ng-controller="PaymentsWidgetContentController" ng-mouseleave="enterFullMode(false)" ng-mouseenter="enterFullMode(true)">
+<div ng-controller="PaymentsWidgetContentController" ng-mouseenter="enterFullMode(true)">
 
-    <div ng-show="paymentsWidgetMode.fullMode" ng-click="openCloseActionList($event, false)"  class="widget__options hover_background" >
+    <div ng-show="paymentsWidgetMode.fullMode" ng-click="openCloseActionList($event, false)"  class="widget__options" >
         <div class="row">
-            <div class="col-xs-1">&nbsp;</div>
 
-            <div class="col-xs-10">
+            <div class="col-xs-12">
                 <div ng-include="paymentItemContent"></div>
 
-                <div class="row widget-tile__button">
+                <div class="row widget-tile__button" style="position:absolute; bottom: -41px;">
                     <div class="col-xs-4 text-left">
                         <bd-button ui-sref="payments.recipients.list">{{::'raiff.payments.widget.new'|translate}}</bd-button>
                     </div>
@@ -23,7 +22,6 @@
 
             </div>
 
-            <div class="col-xs-1">&nbsp;</div>
         </div>
     </div>
 
