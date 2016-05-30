@@ -151,7 +151,8 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig : new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
+                placeholderText: translate.property("raiff.payments.recipients.label.empty_list"),
+                makeTransfer: $scope.onRecipientTransfer
             }),
             tableData : {
                 getData: function ($promise, $params) {
