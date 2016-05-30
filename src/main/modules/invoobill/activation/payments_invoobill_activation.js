@@ -12,7 +12,7 @@ angular.module('raiffeisen-payments')
                     return $q.all({
                         linkForDetal: systemParameterService.getParameterByName("page.url.invb.regulations.detal"),
                         linkForMicro: systemParameterService.getParameterByName("page.url.invb.regulations.micro"),
-                        customerDetails: customerService.getCustomerDetails(),
+                        customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         return {
                             micro: {
@@ -23,7 +23,7 @@ angular.module('raiffeisen-payments')
                             },
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
-                            },
+                            }
                         };
                     });
                 }]
@@ -39,7 +39,7 @@ angular.module('raiffeisen-payments')
         //$scope.regulaminsAccept = false;
         $scope.accept = function(){
             if($scope.model.regulaminsAccept) {
-                alert('submit')
+                alert('submit');
             }
             var ss = splashForm;
         };
