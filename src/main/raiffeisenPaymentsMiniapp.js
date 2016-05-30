@@ -116,10 +116,88 @@ angular.module('raiffeisen-payments', [
     registerBaseState();
     registerNavigation();
 
-}).run(function (RAIFF_NRB_CONSTANTS, systemParameterService) {
+}).run(function (RAIFF_NRB_CONSTANTS, systemParameterService, customerService, SEGMENT_TYPES, menuService) {
     systemParameterService.getParameterByName("account.bank.prefix.rbpl").then(function(data){
         RAIFF_NRB_CONSTANTS.insternal_prefix = data.value.split(',');/*przy mergu poprawna nazwa to RAIFF_NRB_CONSTANTS*/
     });
+
+
+    customerService.getCustomerDetails().then(function(userDetails){
+        var customerDetails = userDetails.customerDetails;
+        var customerBusinessLine = customerDetails.businessLine;
+
+        var menuItem = {
+            id: "payments.invoobill",
+            label: 'raiff.payments.invoobill.label',
+            icon: "raiff-icons invoobill",
+            priority: 9
+        };
+
+        //pobranie parametru access.invb
+        systemParameterService.getParameterByName("access.invb").then(function (param) {
+            var acceessParameter = param.value.split(',').map(function (item) {
+                return item.trim();
+            });
+
+            var access = false;
+
+            //kontekst DETAL
+            if(acceessParameter.indexOf('D') != -1 &&
+                (customerBusinessLine == SEGMENT_TYPES.DETAIL_AFFLUENT ||
+                customerBusinessLine ==  SEGMENT_TYPES.DETAIL_CSB)){
+                access = true;
+            //kontekst MICRO
+            } else if(acceessParameter.indexOf('M') &&
+                customerBusinessLine == SEGMENT_TYPES.MICRO) {
+                access = true;
+            //FWR
+            } else if(acceessParameter.indexOf('F') &&
+                customerBusinessLine == SEGMENT_TYPES.DETAIL_FWR) {
+                access = true;
+            //Pracownik
+            } else if(acceessParameter.indexOf('P') &&
+                customerDetails.isEmployee) {
+                access = true;
+            }
+
+            if(access) {
+                menuItem.action = "payments.invoobill.list";
+                //menuService.pushMenuItems('raiffeisen-payments', menuItem);
+            }
+
+
+        });
+
+        //if(customerDetails.context == 'DETAL') {
+        //    applicationsService.getPersonalData().then(function(personal){
+        //        if(personal.legalIdentification1 != null) {
+        //            systemParameterService.getParameterByName("NIB.account.invb.detal").then(function (param) {
+        //                var categories = param.value.split(',').map(function(item) {
+        //                    return parseInt(item);
+        //                });
+        //
+        //                accountsService.search({pageSize: 10000}).then(function(data) {
+        //                    var accountList = data.content;
+        //                    for (var i = 0; i< accountList.length; i++) {
+        //                        if(categories.indexOf(accountList[i].category) != -1) {
+        //
+        //                            menuItem.action = "payments.invoobill.list";
+        //                            menuService.pushMenuItems('raiffeisen-payments', menuItem);
+        //                            break;
+        //                        }
+        //                    }
+        //                });
+        //            });
+        //        }
+        //    });
+        //
+        //} else if(customerDetails.context == 'MICRO') {
+        //    menuItem.action = "";
+        //}
+
+
+    });
+
 }).value('RAIFF_NRB_CONSTANTS', {
     insternal_prefix: null
 }).filter('arrayFilter', function(){

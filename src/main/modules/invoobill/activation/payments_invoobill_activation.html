@@ -1,0 +1,50 @@
+<rb-content-view class="form">
+
+    <bd-header>{{::"raiff.payments.invoobill.activation.header"|translate}}</bd-header>
+
+    <bd-form-panel class="text-xs-justify">
+        <form method="post" novalidate name="activationForm" ng-submit="onSubmit(activationForm)">
+            <span>
+                    {{:: 'raiff.payments.invoobill.activation.descrition' | translate}}
+            </span>
+
+
+            <br/>
+            <br/>
+
+            <div class="bd-regulations">
+                <div class="bd-regulations__checkbox">
+                    <bd-checkbox name="regulaminsAccept"
+                                 id="regulaminsAccept"
+                                 ng-model="model.regulaminsAccept"
+                                 ng-required="true"
+                                 required
+                    ></bd-checkbox>
+                    <eb-validation-messages eb-name="regulaminsAccept">
+                        <div eb-message-key="required" class="validation-message animate-on">
+                            {{::'db.auth.reset_password.maiden_name.label.empty'|translate}}
+                        </div>
+                    </eb-validation-messages>
+                </div>
+                <div class="bd-regulations__text">
+                    <a href="{{link}}" target="_blank" class="regulationLink">{{ :: 'raiff.payments.invoobill.activation.link.label' | translate }}</a>
+                </div>
+            </div>
+
+            <div class="settings-mifid__buttons ">
+
+                <bd-form-footer class="bd-form-footer--stackable">
+                    <bd-button class="bd-form-footer__button bd-form-footer__button--negative" ng-click="revertChanges()"
+                               >{{ :: 'raiff.payments.invoobill.activation.notInterested' | translate }}
+                    </bd-button>
+
+                    <bd-button class="bd-button__primary" ng-submit="accept()">
+                        {{ :: 'raiff.payments.invoobill.activation.accept' | translate }}
+                        <i class="eb-icon eb-raiffeisen-theme eb-ico-next"></i>
+                    </bd-button>
+
+                </bd-form-footer>
+            </div>
+        </form>
+    </bd-form-panel>
+</rb-content-view>
