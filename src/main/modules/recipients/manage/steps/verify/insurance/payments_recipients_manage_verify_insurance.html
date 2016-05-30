@@ -36,9 +36,23 @@
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.custom_name' | translate }}">
             {{ recipient.formData.customName }}
         </bd-item-property>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.recipient_account' | translate }}">
-            {{recipient.items.selectedInsurance.translatedValue}} {{ recipient.items.selectedInsurance.accountNo | nrbIbanFilter  }}
-        </bd-item-property>
+
+        <bd-panel bd-panel-heading="{{ ::'raiff.payments.new.zus.verify.payment_data' | translate }}">
+
+            <div ng-repeat="insurance in insurances">
+                <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insurance.type | translate }}">
+                    {{::insurance.nrb | nrbIbanFilter}}
+                    <bd-amount amount="insurance.amount.replace(',','.')" currency="{{ insurance.currency }}" not-styled></bd-amount>
+                </bd-item-property>
+            </div>
+
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}">
+            <span ng-repeat="summary in recipient.meta.amountSummary">
+                <bd-amount amount="summary.amount" currency="{{ summary.currency }}" not-styled></bd-amount>
+            </span>
+            </bd-item-property>
+
+        </bd-panel>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.zus.verify.taxpayer_nip' | translate }}">
             {{ recipient.formData.nip }}

@@ -1,17 +1,13 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyZusController', function ($scope, lodash, insuranceAccounts, translate, customerService) {
+    .controller('RecipientsManageVerifyZusController', function ($scope, lodash, zusPaymentInsurances) {
 
-        if(!$scope.recipient.items.selectedInsurance) {
-            insuranceAccounts.search().then(function(insuranceAccounts) {
-                $scope.recipient.items.selectedInsurance = lodash.find(insuranceAccounts.content, {
-                    accountNo : $scope.recipient.formData.selectedInsuranceId
-                });
-                $scope.recipient.items.selectedInsurance.translatedValue = translate.property("raiff.payments.insurances.type."+
-                    $scope.recipient.items.selectedInsurance.insuranceCode);
-            });
-        }else{
-            $scope.recipient.items.selectedInsurance.translatedValue = translate.property("raiff.payments.insurances.type."+
-                $scope.recipient.items.selectedInsurance.insuranceCode);
-        }
+        $scope.insurances = lodash.sortBy(lodash.forEach($scope.recipient.formData.insurancePremiums, function(insurance, insurance_type) {
+            insurance.type = insurance_type;
+            if(typeof insurance.amount == 'number'){
+                insurance.amount = insurance.amount.toString();
+            }
+        }), function(insurance) {
+            return zusPaymentInsurances.indexOf(insurance.type);
+        });
 
     });

@@ -11,6 +11,11 @@ angular.module('raiffeisen-payments')
             },
             data: {
                 analyticsTitle: "raiff.payments.recipients.label"
+            },
+            resolve: {
+                paymentRulesResolved: ['paymentRules', function(paymentRules){
+                    return paymentRules.search();
+                }]
             }
         });
     })
@@ -18,7 +23,9 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService, paymentRulesResolved) {
+
+        $scope.paymentRulesResolved = paymentRulesResolved;
 
         $scope.actualRecipientList = null;
 
@@ -153,6 +160,19 @@ angular.module('raiffeisen-payments')
     }
 ).factory('recipientManager', function (lodash) {
 
+        function calculateInsurancesSummary(insurancePremiums) {
+            return lodash.map(lodash.groupBy(insurancePremiums, 'currency'), function (values) {
+                var totalAmount = 0;
+                lodash.forEach(values, function (value) {
+                    totalAmount += value.amount ? parseFloat((""+value.amount).replace( /,/, '.')) : 0;
+                });
+                return {
+                    currency: values[0].currency,
+                    amount: totalAmount
+                };
+            });
+        }
+
         function wrapWithCommonData(data, recipient) {
             return lodash.merge(data, {
                 formData: {
@@ -194,7 +214,11 @@ angular.module('raiffeisen-payments')
                         paymentType: recipient.paymentType,
                         secondaryIdType: recipient.secondaryIdType,
                         secondaryIdNo: recipient.secondaryId,
-                        selectedInsuranceId: recipient.nrb
+                        selectedInsuranceId: recipient.nrb,
+                        insurancePremiums: recipient.insurancePremiums
+                    },
+                    meta: {
+                        amountSummary: calculateInsurancesSummary(recipient.insurancePremiums)
                     }
                 }, recipient);
             },
