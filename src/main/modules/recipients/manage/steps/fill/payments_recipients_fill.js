@@ -12,6 +12,9 @@ angular.module('raiffeisen-payments')
                     formName: 'recipientForm',
                     dataObject: $scope.recipient
                 });
+                var paymentRulesResolved = $scope.paymentRulesResolved;
+                //paymentRulesResolved
+                angular.extend($scope.recipient.meta, paymentRulesResolved);
 
                 $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                     if($scope.blockadesForward.isBlock){return;}

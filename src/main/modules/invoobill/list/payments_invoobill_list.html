@@ -3,11 +3,11 @@
 
     <form novalidate name="filterForm" ng-submit="onSubmit(filterForm)">
 
-        <bd-radio-select bd-model="rejectedList.filterData.periodType.model">
+        <bd-radio-select bd-model="invoobillPayments.filterData.periodType.model">
 
             <div class="bd-item-property row">
                 <div class="col-xs-12">
-                    <bd-radio-option bd-option-value="rejectedList.periodTypes.LAST" class="row__inline-block--middle">
+                    <bd-radio-option bd-option-value="invoobillPayments.periodTypes.LAST" class="row__inline-block--middle">
                         <div class="row__inline-block--middle row__inline-block--adjacent">
                             {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
                         </div>
@@ -15,24 +15,24 @@
                             <input
                                     bd-type="number"
                                     class="input-field"
-                                    ng-model="rejectedList.filterData.last.value"
+                                    ng-model="invoobillPayments.filterData.last.value"
                                     name="last_value"
                                     ng-change="onFilterLastValueChange()"
-                                    ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST"
-                                    min-date="rejectedList.minDate"
-                                    model-date="rejectedList.filterData.last.dateFrom"
+                                    ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.LAST"
+                                    min-date="invoobillPayments.minDate"
+                                    model-date="invoobillPayments.filterData.last.dateFrom"
                                     ng-pattern="/^\d+$/"/>
                         </div>
                         <div class="row__inline-block--middle" style="width:100px;">
-                            <ui-select ng-model="rejectedList.filterData.last.type.selected"
+                            <ui-select ng-model="invoobillPayments.filterData.last.type.selected"
                                        theme="bootstrap"
                                        ng-change="onFilterLastTypeChange()"
                                        reset-search-input="false"
-                                       required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
+                                       required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.LAST">
                                 <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
                                     {{ 'raiff.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
                                 </ui-select-match>
-                                <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">
+                                <ui-select-choices repeat="item in invoobillPayments.filterData.last.type.list">
                                     {{ :: 'raiff.payments.rejected.list.filter.type.last.types.'+ item | translate }}
                                 </ui-select-choices>
                             </ui-select>
@@ -45,20 +45,20 @@
             <div class="eb-validation-messages col-xs-12" ng-if="filterForm.last_value.$invalid">
                 <div class="messages">
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.required">
-                        {{::'raiff.payments.rejected.select.filter.EMPTY_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+rejectedList.filterData.last.type.selected | translate }}
+                        {{::'raiff.payments.rejected.select.filter.EMPTY_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.pattern">
-                        {{::'raiff.payments.rejected.select.filter.INCORRECT_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+rejectedList.filterData.last.type.selected | translate }}
+                        {{::'raiff.payments.rejected.select.filter.INCORRECT_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.mindate">
-                        {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': rejectedList.maxOffset }}
+                        {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="row--spacing col-md-10 col-sm-12">
-                    <bd-radio-option bd-option-value="rejectedList.periodTypes.RANGE" class="row__inline-block--middle">
+                    <bd-radio-option bd-option-value="invoobillPayments.periodTypes.RANGE" class="row__inline-block--middle">
                         <div class="row__inline-block--middle row__inline-block--adjacent">
                             {{:: 'raiff.payments.rejected.list.filter.type.range.label' | translate}}
                         </div>
@@ -66,8 +66,8 @@
                             {{::'raiff.payments.rejected.list.filter.type.range.from.label'|translate}}
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
-                            <input name="dateFromInput_delgate" hidden ng-model="rejectedList.filterData.range.dateFrom" min-date="rejectedList.minDate" model-date="rejectedList.filterData.range.dateFrom" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                            <rb-datepicker ng-model="rejectedList.filterData.range.dateFrom"
+                            <input name="dateFromInput_delgate" hidden ng-model="invoobillPayments.filterData.range.dateFrom" min-date="invoobillPayments.minDate" model-date="invoobillPayments.filterData.range.dateFrom" ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.RANGE"/>
+                            <rb-datepicker ng-model="invoobillPayments.filterData.range.dateFrom"
                                            ng-model-options="{ allowInvalid: false }"
                                            rb-name="dateFromInput"
                                            max-search-date
@@ -77,8 +77,8 @@
                             {{::'raiff.payments.rejected.list.filter.type.range.to.label'|translate}}
                         </div>
                         <div class="row__inline-block--middle" style="width:140px;">
-                            <input name="dateToInput_delgate" hidden ng-model="rejectedList.filterData.range.dateTo" min-date="rejectedList.filterData.range.dateFrom" model-date="rejectedList.filterData.range.dateTo" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                            <rb-datepicker ng-model="rejectedList.filterData.range.dateTo"
+                            <input name="dateToInput_delgate" hidden ng-model="invoobillPayments.filterData.range.dateTo" min-date="invoobillPayments.filterData.range.dateFrom" model-date="invoobillPayments.filterData.range.dateTo" ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.RANGE"/>
+                            <rb-datepicker ng-model="invoobillPayments.filterData.range.dateTo"
                                            empty-date
                                            ng-model-options="{ allowInvalid: false }"
                                            rb-name="dateToInput"
@@ -114,7 +114,7 @@
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_FROM'|translate}}
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.mindate">
-                        {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': rejectedList.maxOffset }}
+                        {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
         <div class="row-line">
             <div class="row-line__cell">
                 <bd-item-property label="{{::'raiff.payments.invoobill.recipient'|translate}}">
-                    <ui-select ng-model="creditors.current"
+                    <ui-select ng-model="invoobillPayments.filterData.creditor"
                                theme="bootstrap"
                                reset-search-input="false"
                                on-select=""
@@ -132,7 +132,7 @@
                         <ui-select-match placeholder="{{::'raiff.payments.invoobill.recipients.select' | translate }}">
                             {{ $select.selected.fullName | arrayFilter }}
                         </ui-select-match>
-                        <ui-select-choices repeat="creditor in creditors.list">
+                        <ui-select-choices repeat="creditor in invoobillPayments.creditors.list">
                             {{ creditor.fullName | arrayFilter }}
                         </ui-select-choices>
                     </ui-select>
@@ -156,12 +156,12 @@
             <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.status' | translate}}</div>
         </div>
 
-        <div ng-show="(table.promise.$$state.status === 1)"
+        <div ng-show="(invoobillPayments.data.promise.$$state.status === 1)"
              bd-table-row
              bd-table-expandable
              ng-click="showDetails(item)"
              ng-class="item.expanded ? 'bd-table__row--expanded' : ''"
-             ng-repeat="item in table.items track by $index">
+             ng-repeat="item in invoobillPayments.data.items track by $index">
 
             <div class="bd-table__row-entry">
                 <div class="bd-table__row-line bd-table__row-line--sm-tight">
@@ -224,15 +224,28 @@
             </bd-details-section>
         </div>
 
-        <div ng-if="(table.promise.$$state.status === 1 && table.items.length < 1)" class="bd-table__empty-placeholder">
+        <div ng-if="(invoobillPayments.data.promise.$$state.status === 1 && invoobillPayments.data.items.length < 1)" class="bd-table__empty-placeholder">
             <div class="bd-table__empty-placeholder-text">{{::'raiff.payments.invoobill.list.empty' | translate}}</div>
         </div>
 
         <div bd-table-footer>
-            <bd-pagination ng-show="pageCount > 1"
+            <bd-pagination ng-show="invoobillPayments.data.pageCount > 1"
                            bd-on-page-switch="switchPage"
-                           bd-page-count="pageCount"
-                           bd-current-page="currentPage"></bd-pagination>
+                           bd-page-count="invoobillPayments.data.pageCount"
+                           bd-current-page="invoobillPayments.data.currentPage"></bd-pagination>
+        </div>
+
+        <div class="row-line">
+            <div class="row-line__cell">
+                <div class="row-line__cell row-line__cell--right-button">
+                    <bd-button class="bd-button" ng-clic="cancelService()">
+                        {{::'raiff.payments.invoobill.cancel_service' | translate}}
+                    </bd-button>
+                </div>
+
+                <a href="{{invoobillPayments.creditorInfoLink}}" target="_blank">{{::'raiff.payments.invoobill.show_creditors' | translate}}</a>
+
+            </div>
         </div>
     </div>
 </rb-content-view>

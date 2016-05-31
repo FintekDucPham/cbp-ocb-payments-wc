@@ -10,10 +10,18 @@ angular.module('raiffeisen-payments')
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
+                        /* Po aktualizacji AKD ma byc to:
+                         detalOffsetMax: systemParameterService.getParameterByName("invb.max.offset.detal"),
+                         microOffsetMax: systemParameterService.getParameterByName("invb.max.offset.micro"),
+                         detalOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.detal"),
+                         microOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.micro"),
+                         creditorInfoLink: systemParameterService.getParameterByName("page.url.invb.suppliers"),
+                         */
                         detalOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.detal"),
                         microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
                         detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
                         microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
+                        creditorInfoLink: "http://www.invoobill.pl/gdzie-zaplace-z-invoobill/",
                         customerDetails: customerService.getCustomerDetails(),
                     }).then(function (data) {
                         return {
@@ -28,6 +36,7 @@ angular.module('raiffeisen-payments')
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
                             },
+                            creditorInfoLink: data.creditorInfoLink,
                         };
                     });
                 }]
@@ -65,9 +74,9 @@ angular.module('raiffeisen-payments')
         };
 
         var calculateModelDate = function() {
-            var lastMiliseconds = $scope.rejectedList.filterData.last.value * 24 * 3600 * 1000;
+            var lastMiliseconds = $scope.invoobillPayments.filterData.last.value * 24 * 3600 * 1000;
 
-            switch($scope.rejectedList.filterData.last.type.selected) {
+            switch($scope.invoobillPayments.filterData.last.type.selected) {
                 case LAST_TYPES.WEEKS: {
                     lastMiliseconds *= 7;
                     break;
@@ -78,27 +87,27 @@ angular.module('raiffeisen-payments')
                 }
             }
 
-            $scope.rejectedList.filterData.last.dateFrom = new Date((+new Date()) - lastMiliseconds);
+            $scope.invoobillPayments.filterData.last.dateFrom = new Date((+new Date()) - lastMiliseconds);
         };
 
         $scope.onFilterLastTypeChange = function() {
             calculateModelDate();
 
-            var modelDate = $scope.rejectedList.filterData.last.dateFrom,
-                minDate   = $scope.rejectedList.minDate,
+            var modelDate = $scope.invoobillPayments.filterData.last.dateFrom,
+                minDate   = $scope.invoobillPayments.minDate,
                 diffMS    = now.getTime() - minDate.getTime();
 
             // if value is incorrect (too big)
             if (modelDate.getTime() < minDate.getTime()) {
-                switch ($scope.rejectedList.filterData.last.type.selected) {
+                switch ($scope.invoobillPayments.filterData.last.type.selected) {
                     case LAST_TYPES.WEEKS:
                     {
-                        $scope.rejectedList.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 7));
+                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 7));
                         break;
                     }
                     case LAST_TYPES.MONTH:
                     {
-                        $scope.rejectedList.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 31));
+                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 31));
                         break;
                     }
                 }
@@ -107,21 +116,35 @@ angular.module('raiffeisen-payments')
             // we need to recalculate model date after changing week
             calculateModelDate();
 
-            $scope.rejectedList.filterData.periodType.model = PERIOD_TYPES.LAST;
+            $scope.invoobillPayments.filterData.periodType.model = PERIOD_TYPES.LAST;
         };
 
         $scope.onFilterLastValueChange = function() {
             calculateModelDate();
         };
 
-
         //scope object
-        $scope.rejectedList = {
-            data: null,
+        $scope.invoobillPayments = {
+            // Invoobill payments list
+            data: {
+                items : [],
+                promise: null,
+                pageSize: 10,
+                currentPage: 1,
+                pageCount: 1
+            },
+
+            // Invoobill creditor list
+            creditors : {
+                list: []
+            },
+
             periodTypes: PERIOD_TYPES,
             parameters: parameters,
             minDate: new Date((new Date()).setMonth(now.getMonth() - parameters.detal.max)),
             maxOffset: parameters.detal.max,
+            creditorInfoLink: parameters.creditorInfoLink,
+
             filterData: {
                 periodType: {
                     model: parameters.customerDetails.context === 'DETAL' ? PERIOD_TYPES.LAST : PERIOD_TYPES.RANGE
@@ -138,7 +161,10 @@ angular.module('raiffeisen-payments')
                 range: {
                     dateFrom: new Date(now.getTime() - parameters.detal.default * oneDayMilisecs),
                     dateTo: now
-                }
+                },
+
+                // selected creditor
+                creditor: null
             }
         };
 
@@ -146,66 +172,48 @@ angular.module('raiffeisen-payments')
 
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
-            $scope.rejectedList.filterData.last.value = now.getDate(); // bo data bieżąca - data początku miesiąca + 1 to taki skomplikowany sposób na powiedzenie, że chodzi o dzień miesiąca
-            $scope.rejectedList.filterData.last.default = now.getDate();
-            $scope.rejectedList.filterData.range.dateFrom = firstDayOfCurrentMonth;
+            $scope.invoobillPayments.filterData.last.value = now.getDate(); // bo data bieżąca - data początku miesiąca + 1 to taki skomplikowany sposób na powiedzenie, że chodzi o dzień miesiąca
+            $scope.invoobillPayments.filterData.last.default = now.getDate();
+            $scope.invoobillPayments.filterData.range.dateFrom = firstDayOfCurrentMonth;
 
             // hello world, tutaj weeeee ned to change something, i hope only here ;)
-            $scope.rejectedList.minDate = new Date((new Date()).setMonth(now.getMonth() - parameters.micro.max));
+            $scope.invoobillPayments.minDate = new Date((new Date()).setMonth(now.getMonth() - parameters.micro.max));
 
-            $scope.rejectedList.maxOffset = parameters.micro.max;
+            $scope.invoobillPayments.maxOffset = parameters.micro.max;
         }
 
-        //table config
-        $scope.tableConfig = new bdTableConfig({
-            placeholderText: translate.property("raiff.payments.invoobill.list.empty"),
-            model: $scope.rejectedList
-        });
-
-        // Invoobill creditor list
-        $scope.creditors = {
-            list: [],
-            current: null
-        };
         invoobillPaymentsService.getCreditors({ status: "ACTIVE"}).then(function(data) {
-            $scope.creditors.list = data.content;
-            console.debug($scope.creditors);
+            $scope.invoobillPayments.creditors.list = data.content;
         });
 
-        // Invoobill payments list
         $scope.loadInvoobillPayments = function(){
             var params = {
-                //realizationDateFrom: $filter('date')($params.model.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
-                //realizationDateTo: $filter('date')($params.model.filterData.range.dateTo.getTime(), "yyyy-MM-dd")
+                realizationDateFrom: $filter('date')($scope.invoobillPayments.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
+                realizationDateTo: $filter('date')($scope.invoobillPayments.filterData.range.dateTo.getTime(), "yyyy-MM-dd"),
+                pageSize: $scope.invoobillPayments.data.pageSize,
+                pageNumber: $scope.invoobillPayments.data.currentPage,
+                creditor: $scope.invoobillPayments.filterData.creditor
             };
 
-            params.pageSize   = $scope.pageSize;
-            params.pageNumber = $scope.currentPage;
-/*
-            if ($params.model.filterData.periodType.model === PERIOD_TYPES.LAST) {
+            if ($scope.invoobillPayments.filterData.periodType.model === PERIOD_TYPES.LAST) {
                 params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
-                params.realizationDateFrom = $filter('date')($params.model.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
+                params.realizationDateFrom = $filter('date')($scope.invoobillPayments.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
             }
-*/
-            $scope.table = {};
-            $scope.table.promise = invoobillPaymentsService.search(params).then(function(data) {
-                angular.forEach(data.content, function (payment) {
-                });
-                $scope.showDetailsEvent = {};
-                $scope.table.items = data.content;
-                $scope.pageCount = data.totalPages;
-                console.debug($scope.table);
+
+            $scope.invoobillPayments.data.promise = invoobillPaymentsService.search(params).then(function(data) {
+                //angular.forEach(data.content, function (payment) {
+                //});
+                $scope.invoobillPayments.data.items = data.content;
+                $scope.invoobillPayments.data.pageCount = data.totalPages;
             });
         };
 
-        $scope.pageSize = 10;
-        $scope.currentPage = 1;
         $scope.loadInvoobillPayments();
 
         $scope.switchPage = function(deferred, pageNumber) {
-            console.debug("switchPage:", deferred, pageNumber);
-            if (pageNumber !== $scope.currentPage) {
-                $scope.currentPage = pageNumber;
+            console.debug("switchPage(deferred, pageNumber)", deferred, pageNumber);
+            if (pageNumber !== $scope.invoobillPayments.data.currentPage) {
+                $scope.invoobillPayments.data.currentPage = pageNumber;
                 $scope.loadInvoobillPayments();
                 deferred.resolve();
             } else {
@@ -213,20 +221,25 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        //payNow
-        $scope.payNow = function (data) {
-            console.debug("payNow", data);
+        //pay now
+        $scope.payNow = function(data) {
+            console.debug("payNow(data)", data);
         };
 
-        //pay
-        $scope.pay = function (data) {
-            console.debug("pay", data);
+        //pay in future
+        $scope.pay = function(data) {
+            console.debug("pay(data)", data);
         };
 
-        //reject
-        $scope.reject = function (data) {
-            console.debug("reject", data);
+        //reject payment
+        $scope.reject = function(data) {
+            console.debug("reject(data)", data);
         };
+
+        // cancel Invobill service
+        function cancelService() {
+            console.debug("cancelService");
+        }
 
         function dateTodayOrInFuture(paymentDate) {
             paymentDate = new Date(paymentDate);
@@ -240,7 +253,6 @@ angular.module('raiffeisen-payments')
                 delete $stateParams.referenceId;
             }
             if (form.$valid) {
-                //$scope.table.tableControl.invalidate();
                 $scope.loadInvoobillPayments();
             }
         };

@@ -135,7 +135,8 @@
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",
     "raiff.payments.new.foreign.fill.sepa.recipient_country.error.required": "Pole Kraj odbiorcy nie może być puste",
-    "raiff.payments.new.foreign.fill.sepa.amount.EMPTY_AMOUNT": "Pole Kwota nie może być puste",
+    "raiff.payments.new.foreign.fill.sepa.title.format": "Tytuł nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
+    "raiff.payments.new.foreign.fill.sepa.amount.EMPTY_AMOUNT": "Kwota przelewu nie może być pusta",
     "raiff.payments.new.foreign.fill.multirow_data.error.required": "Nazwa i adres odbiorcy nie może przekraczać 140 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.multirow_title.error.required": "Pole Tytuł nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.swfitbic":"podaj SWIFT/BIC",
@@ -161,7 +162,7 @@
     "raiff.payments.new.domestic.fill.recipient_data.EMPTY_BNF_DATA": "Nazwa i adres odbiorcy nie może być pusta",
     "raiff.payments.new.domestic.fill.recipient_data.EMPTY_BANK_DATA": "Dane banku nie mogą być puste",
     "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BANK_DATA":"Dane banku nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
-    "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie może przekraczać 140 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.new.domestic.fill.bank_data.TOO_LONG_BNF_DATA": "Dane banku odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki/ - ? : ( ) . , ' + ",
     "raiff.payments.new.domestic.fill.description": "Tytułem",
     "raiff.payments.new.domestic.fill.description.placeholder": "Wpisz tytuł przelewu",
@@ -477,6 +478,10 @@
     "raiff.payments.new.status.00": "Przelew/transakcja zrealizowana",
     "raiff.payments.new.status.000": "Przelew/transakcja zrealizowana",
     "raiff.payments.new.status.0000": "Przelew/transakcja zrealizowana",
+    "raiff.payments.new.status.1": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.11": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.111": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.1111": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.20": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.40": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.60": "Przelew/transakcja przyjęta do realizacji",
@@ -1312,7 +1317,16 @@
 
     "raiff.payments.invoobil.list.details.paynow":"Zapłać teraz",
     "raiff.payments.invoobil.list.details.pay":"Zapłać w terminie",
-    "raiff.payments.invoobil.list.details.reject":"Odrzuć płatność"
+    "raiff.payments.invoobil.list.details.reject":"Odrzuć płatność",
+    "raiff.payments.invoobill.show_creditors": "Zobacz listę dostawców w ramach usługi Invoobill",
+    "raiff.payments.invoobill.cancel_service": "Zrezygnuj z usługi",
+    "raiff.payments.recipient.details.insurance.amount_summary": "Kwota całkowita",
 
+    "raiff.payments.invoobill.activation.header":"Usługa Invoobill",
+    "raiff.payments.invoobill.activation.descrition":"Zachęcamy do korzystania z  elektronicznych faktur za usługi np. internet, czynsz, telefon itp. Płatności do realizacji udostępniane są bezpośrednio do bankowości internetowej od podmiotów udostepniających taką usługę, z którymi zawarłeś umowę i przekazałeś im swój numer PESEL(osoby indywidualne)/NIP(przedsiębiocy). Wystarczy, że zapoznasz się z regulaminem usługi i go zaakceptujesz.",
+    "raiff.payments.invoobill.activation.link.label":"Regulamin usługi Invoobill",
+    "raiff.payments.invoobill.activation.accept":"Akceptuję",
+    "raiff.payments.invoobill.activation.notInterested":"Nie jestem zainteresowany",
+    "raiff.payments.invoobill.activation.regulamins.no.accept":"Zaakceptuj regulamin korzystania z usługi Invoobill"
 
 }

@@ -6,11 +6,18 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsRecipientsListController",
             data: {
                 analyticsTitle: "raiff.payments.recipients.label"
+            },
+            resolve: {
+                insuranceAccountList : ["insuranceAccounts", function(insuranceAccounts) {
+                    return insuranceAccounts.search().then(function (insuranceAccounts) {
+                        return insuranceAccounts.content;
+                    });
+                }]
             }
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, insuranceAccountList) {
 
 
 
@@ -102,6 +109,7 @@ angular.module('raiffeisen-payments')
             });
         };
 
+
         $scope.onRecipientTransfer = function(data) {
             // dla przelewow do odbiorcow walutowych potrzebna osobna logika
             if (data.recipientType.toLowerCase() == 'swift') {
@@ -143,7 +151,8 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig : new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.recipients.label.empty_list")
+                placeholderText: translate.property("raiff.payments.recipients.label.empty_list"),
+                makeTransfer: $scope.onRecipientTransfer
             }),
             tableData : {
                 getData: function ($promise, $params) {
@@ -171,6 +180,9 @@ angular.module('raiffeisen-payments')
                         $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
                             var list = $scope.recipientList = lodash.map(data.content, function (recipient) {
                                 var template = recipient.paymentTemplates[0];
+                                if (!template) {
+                                    return {};
+                                }
                                 return lodash.extend({
                                     recipientType: template.templateType,
                                     recipientTypeMessage: translate.property('raiff.payments.recipients.new.type.{0}'.format(template.templateType)),
@@ -204,11 +216,24 @@ angular.module('raiffeisen-payments')
                                                 transferTitleTable: template.title.join(" ")
                                             };
                                         case "INSURANCE":
+
                                             return {
                                                 nip: paymentDetails.nip,
                                                 secondaryIdType: paymentDetails.secondIDType,
                                                 secondaryId: paymentDetails.secondIDNo,
-                                                paymentType: paymentDetails.paymentType
+                                                paymentType: paymentDetails.paymentType,
+                                                insurancePremiums: lodash.reduce(recipient.paymentTemplates, function(result, value){
+                                                    var insuranceCode = lodash.find(insuranceAccountList, {accountNo : value.beneficiaryAccountNo}).insuranceCode;
+                                                    result[insuranceCode] = {amount : value.amount, code:insuranceCode, currency : value.currency, nrb : value.beneficiaryAccountNo};
+                                                    return result;
+                                                }, {}),
+                                                insurancePremiusSumary: (function(){
+                                                    var sum = 0;
+                                                    angular.forEach(recipient.paymentTemplates, function(v){
+                                                        sum+= v.amount;
+                                                    });
+                                                    return sum;
+                                                })()
                                             };
                                         case "TAX":
                                             return {
@@ -235,4 +260,21 @@ angular.module('raiffeisen-payments')
         };
 
     }
-);
+).filter('insurancesDisplayOrder', function() {
+    return function(items) {
+        var codeOrders={
+            SOCIAL: 1,
+            HEALTH: 2,
+            FPIFGSP:3,
+            PENSION:4
+        };
+        var filtered = [];
+        angular.forEach(items, function(item) {
+            filtered.push(item);
+        });
+        filtered.sort(function (a, b) {
+            return (codeOrders[a.code] > codeOrders[b.code] ? 1 : -1);
+        });
+        return filtered;
+    };
+});

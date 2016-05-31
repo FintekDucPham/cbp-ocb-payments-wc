@@ -1,5 +1,5 @@
 <div ng-controller="PaymentsWidgetController">
-    <section ng-hide="paymentSummary.content.length === 0">
+    <section ng-hide="paymentSummary.content.length === 0"  ng-mouseleave="enterFullMode(false)" ng-class="{'hover_background': paymentsWidgetMode.fullMode }">
         <eb-slide-widget eb-context="context"
                          eb-modes="paymentsWidgetMode"
                          eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"

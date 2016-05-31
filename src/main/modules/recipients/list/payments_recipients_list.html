@@ -51,7 +51,7 @@
                   bd-table-control="table.tableControl"
                   bd-table-data="table.tableData"
                   bd-table-promise="recipientListPromise"
-                  bd-table-meta="{ 'first' : { 'title': '##raiff.payments.recipients.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##raiff.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' }, 'third' : { 'title': '##raiff.payments.recipients.list.header.nrb.label', 'data' : 'nrb' }, 'fourth' : { 'title': '##raiff.payments.recipients.list.header.type.label', 'data' : 'recipientTypeMessage' } }">
+                  bd-table-meta="{ 'first' : { 'title': '##raiff.payments.recipients.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##raiff.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' }, 'third' : { 'title': '##raiff.payments.recipients.list.header.nrb.label', 'data' : 'nrb' }, 'fourth' : { 'title': '##raiff.payments.recipients.list.header.type.label', 'data' : 'recipientTypeMessage' }, 'button' : {'title': '##raiff.payments.recipients.list.details.transfer', 'data': '-'}}">
 
             <bd-details-section bd-table-row-details>
 
@@ -61,14 +61,10 @@
                     <div class="bd-grid">
                         <div class="bd-grid__row">
                             <div class="bd-grid__col--sm-12 desktop-only">
-                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.edit' | translate}}</bd-button>
+                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm" style="margin-right: 5px;">{{::'raiff.payments.recipients.list.details.edit' | translate}}</bd-button>
                                 <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.remove' | translate}}</bd-button>
                             </div>
-                            <div class="bd-grid__col--sm-4 desktop-only">
-                                <bd-button ng-click="onRecipientTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm bd-float-right">{{::'raiff.payments.recipients.list.details.transfer' | translate}}</bd-button>
-                            </div>
                             <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
-                                <bd-button ng-click="onRecipientTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.transfer' | translate}}</bd-button><br />
                                 <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.edit' | translate}}</bd-button><br />
                                 <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.recipients.list.details.remove' | translate}}</bd-button>
                             </div>
