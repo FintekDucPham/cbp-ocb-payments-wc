@@ -26,6 +26,12 @@ angular.module('raiffeisen-payments', [
                 data: {
                     analyticsTitle: "raiff.menu.transfer"
                 }
+            }).state('payments.no_permission', {
+                url: '/noPermission',
+                templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-shared") + "/components/rbPrivileges/no_permission.html",
+                data: {
+                    analyticsTitle: "=no allow"
+                }
             });
     }
 
