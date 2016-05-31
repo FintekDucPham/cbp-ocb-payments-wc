@@ -39,13 +39,13 @@ angular.module('raiffeisen-payments')
             $scope.basket.transactionList={};
             $scope.basket.searchPanel={};
             $scope.basket.meta.newSearch= true;
-            $scope.basket.summary={};
+            $scope.basket.summary.summaryItemMap = {};
+            $scope.basket.summary.summaryItem = {};
             $scope.basket.validator={};
         }
 
         $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
 
-        $scope.basket.summary.summaryItemMap = {};
 
         parameters.context = $scope.userContext;
 
@@ -63,6 +63,8 @@ angular.module('raiffeisen-payments')
         $scope.onOperationsDateSubmit = function() {
             if ($scope.model.dataValidity) {
                 $scope.basket.meta.newSearch = true;
+                $scope.basket.summary.summaryItemMap = {};
+                $scope.basket.summary.summaryItem = {};
                 $scope.table.tableControl.invalidate();
             }
         };
