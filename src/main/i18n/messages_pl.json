@@ -1326,6 +1326,6 @@
     "raiff.payments.invoobill.activation.link.label":"Regulamin usługi Invoobill",
     "raiff.payments.invoobill.activation.accept":"Akceptuję",
     "raiff.payments.invoobill.activation.notInterested":"Nie jestem zainteresowany",
-    "raiff.payments.invoobill.activation.regulamins.no.accept":"Zaakceptuj regulamin korzystania z usługi Invoobill"
+    "raiff.payments.invoobill.activation.regulamins.reqiured":"Zaakceptuj regulamin korzystania z usługi Invoobill"
 
 }

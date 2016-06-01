@@ -33,15 +33,27 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsInvoobillActivationController', function ($scope, $sce, parameters) {
+    .controller('PaymentsInvoobillActivationController', function ($scope, $sce, $state, parameters, invoobillPaymentsService) {
+
+        $scope.model = {
+            regulaminsAccept: false
+        };
 
         $scope.link = parameters.customerDetails.context === 'DETAL' ? parameters.micro.link : parameters.detal.link;
-        //$scope.regulaminsAccept = false;
-        $scope.accept = function(){
-            if($scope.model.regulaminsAccept) {
-                alert('submit');
+
+        $scope.accept = function(form){
+            form.regulaminsAccept.$setValidity('rulesRegulaminsRequired', $scope.model.regulaminsAccept);
+            if (form.$valid) {
+                var params = {
+                    status: $scope.model.regulaminsAccept ? "ACTIVE" : "INACTIVE"
+                }
+                invoobillPaymentsService.setStatusForDetal(params);
+                $state.go("payments.invoobill.list");
             }
-            var ss = splashForm;
+        };
+
+        $scope.notInterested = function () {
+            $state.go("dashboard");
         };
 
     });
