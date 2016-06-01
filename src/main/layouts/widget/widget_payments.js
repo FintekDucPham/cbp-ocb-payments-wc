@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
     $scope.params = {
         statusPaymentCriteria: "waiting",
         paymentSummaryScopeType: "all",
-        pageSize: 1000,
+        pageSize: 10,
         pageNumber: 1
     };
         $scope.paymentsWidgetMode = paymentsWidgetMode;
