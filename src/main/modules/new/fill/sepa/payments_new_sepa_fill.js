@@ -278,6 +278,7 @@ angular.module('raiffeisen-payments')
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                 if($scope.payment.meta.customerContext==='MICRO'){
                     return lodash.filter(accounts,  function(account){

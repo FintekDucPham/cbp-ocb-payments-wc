@@ -262,6 +262,7 @@ angular.module('raiffeisen-payments')
 
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.senderSelectParams.payments = true;
+        $scope.senderSelectParams.showCustomNames = true;
         $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
             return lodash.filter(accounts, function(account){
                 return isAccountInvestmentFulfilsRules(account);
@@ -271,6 +272,7 @@ angular.module('raiffeisen-payments')
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: false,
             alwaysSelected: false,
+            showCustomNames: true,
             accountFilter: function (accounts, $accountId) {
                 var filteredAccounts = accounts;
                 var filterParams = [];
