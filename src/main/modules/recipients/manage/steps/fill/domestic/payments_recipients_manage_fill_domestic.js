@@ -62,6 +62,7 @@ angular.module('raiffeisen-payments')
             messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.domestic.fill.account_related.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                return accounts;
             },

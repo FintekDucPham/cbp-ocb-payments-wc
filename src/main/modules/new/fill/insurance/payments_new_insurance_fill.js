@@ -322,6 +322,7 @@ angular.module('raiffeisen-payments')
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                 return lodash.filter(accounts, {
                    currency : 'PLN'
