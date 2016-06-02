@@ -46,7 +46,7 @@ angular.module('raiffeisen-payments')
             if (form.$valid) {
                 var params = {
                     status: $scope.model.regulaminsAccept ? "ACTIVE" : "INACTIVE"
-                }
+                };
                 invoobillPaymentsService.setStatusForDetal(params);
                 $state.go("payments.invoobill.list");
             }
