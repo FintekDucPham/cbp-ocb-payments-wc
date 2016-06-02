@@ -192,7 +192,7 @@
         <ui-select ng-show="countries.data"
                    ng-model="payment.formData.recipientBankCountry"
                    name="recipientBankCountry"
-                   ng-required="!!swift_bic"
+                   ng-required="true"
                    ng-disabled="true"
                    bd-matches-none-of="recipientBankCountryValidators"
                    theme="bootstrap">
