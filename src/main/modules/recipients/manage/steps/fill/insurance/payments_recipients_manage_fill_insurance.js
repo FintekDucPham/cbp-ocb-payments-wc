@@ -25,6 +25,7 @@ angular.module('raiffeisen-payments')
             messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.zus.fill.remitter_account.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                 return accounts;
             },
