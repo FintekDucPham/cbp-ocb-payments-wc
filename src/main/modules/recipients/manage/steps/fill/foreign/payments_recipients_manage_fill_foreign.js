@@ -36,6 +36,10 @@ angular.module('raiffeisen-payments')
                     $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                     $scope.recipient.formData.recipientSwiftOrBic = " ";
                 }
+
+                if($scope.recipientForm){
+                    $scope.recipientForm.recipientAccountNo.$validate();
+                }
             }
         });
         customerService.getCustomerDetails().then(function(customerDetails){
@@ -96,7 +100,7 @@ angular.module('raiffeisen-payments')
         };
 
         function validateSwiftAndAccountNo(accountNo){
-            if(accountNo && $scope.recipient.formData.recipientSwiftOrBic){
+            if(accountNo && $scope.recipient.formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC && $scope.recipient.formData.recipientSwiftOrBic){
                 var  countryFromAccountNo = accountNo.substring(0,2).toLowerCase();
                 var countryFromSwift = $scope.recipient.formData.recipientSwiftOrBic.substring(4,6).toLowerCase();
                 if(countryFromAccountNo !== countryFromSwift){
