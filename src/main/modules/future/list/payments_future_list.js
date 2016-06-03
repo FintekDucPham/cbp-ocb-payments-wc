@@ -33,17 +33,21 @@ angular.module('raiffeisen-payments')
                         }
                         return result;
                     });
+                }],
+                countriesResolved: ['countriesService', 'lodash', function(countriesService, lodash){
+                    return countriesService.search().then(function(data){
+                        return lodash.indexBy(data, 'code');
+                    });
                 }]
-
             },
             data: {
                 analyticsTitle: "raiff.payments.future.label"
             }
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, countriesResolved) {
         $scope.dateRange = {};
-
+        $scope.countryList = countriesResolved;
         $scope.options = {
             "futureDatePanelConfig": parameters
         };
