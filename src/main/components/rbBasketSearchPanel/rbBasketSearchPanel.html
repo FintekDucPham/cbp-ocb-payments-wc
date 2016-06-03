@@ -106,41 +106,25 @@
                     </div>
                 </bd-radio-option>
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE">
-                    <div class="row__inline-block--middle row__inline-block--adjacent basketSearchPanel__advanced-section__left-panel__range">
-                        {{:: 'raiff.payments.components.futureDatePanel.dateTypes.RANGE' | translate}}
+                    <div class="dateLabel">
+                        {{ ::'account.transactions.select.filter.date.label'|translate }}
                     </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'raiff.payments.components.futureDatePanel.labels.from'|translate}}
+                    <div class="dateRange">
+                        <div style="display: inline-flex; ">
+                            <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.from'|translate}}</div>&nbsp;
+                            <rb-datepicker ng-model="inputData.dateFrom"
+                                           ng-model-options="{ allowInvalid: false }"
+                                           rb-name="dateFromInput"
+                                           max-search-date
+                                    ></rb-datepicker>
                     </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
-                        <input name="dateFromInput_delegate"
-                               hidden
-                               ng-model="inputData.dateFrom_delegate"
-                               min-date="rejectedList.minDate"
-                               model-date="rejectedList.filterData.range.dateFrom"
-                                />
-                        <rb-datepicker ng-model="inputData.dateFrom"
-                                       ng-model-options="{ allowInvalid: false }"
-                                       rb-name="dateFromInput"
-                                       max-search-date
-                                       style="width: 140px;"></rb-datepicker>
-                    </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'raiff.payments.components.futureDatePanel.labels.to'|translate}}
-                    </div>
-                    <div class="row__inline-block--middle" style="width:140px;">
-                        <input name="dateToInput_delegate"
-                               hidden
-                               ng-model="inputData.dateTo_delegate"
-                               min-date="rejectedList.filterData.range.dateFrom"
-                               model-date="rejectedList.filterData.range.dateTo"
-                                />
-                        <rb-datepicker ng-model="inputData.dateTo"
-                                       empty-date
-                                       ng-model-options="{ allowInvalid: false }"
-                                       rb-name="dateToInput"
-                                       max-search-date
-                                       style="width: 140px;"></rb-datepicker>
+                        <div style="display: inline-flex; ">
+                            <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.to'|translate}}</div>&nbsp;
+                            <rb-datepicker ng-model="inputData.dateTo"
+                                           ng-model-options="{ allowInvalid: false }"
+                                           rb-name="dateToInput"
+                                ></rb-datepicker>
+                            </div>
                     </div>
                 </bd-radio-option>
             </bd-radio-select>
@@ -219,7 +203,7 @@
     <eb-validation-messages eb-name="period">
         <div eb-message-key="required" class="validation-message animate-on">{{'raiff.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange | translate}}</div>
         <div eb-message-key="pattern" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange | translate}}</div>
-        <div eb-message-key="INCORRECT_END_DATE" class="validation-message animate-on">{{::messages.INCORRECT_END_DATE}}</div> 
+        <div eb-message-key="INCORRECT_END_DATE" class="validation-message animate-on">{{::messages.INCORRECT_END_DATE}}</div>
         <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.basket.search.panel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
     </eb-validation-messages>
     <div class="eb-validation-messages">
