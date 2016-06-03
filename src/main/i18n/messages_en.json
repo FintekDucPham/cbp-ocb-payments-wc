@@ -473,6 +473,7 @@
     "raiff.payments.new.status.00": "Transfer/transaction executed",
     "raiff.payments.new.status.000": "Transfer/transaction executed",
     "raiff.payments.new.status.0000": "Transfer/transaction executed",
+    "raiff.payments.new.status.2": "Transfer/transaction accepted for execution",
     "raiff.payments.new.status.20": "Transfer/transaction accepted for execution",
     "raiff.payments.new.status.40": "Transfer/transaction accepted for execution",
     "raiff.payments.new.status.60": "Transfer/transaction accepted for execution",
