@@ -1,5 +1,5 @@
 <div ng-controller="PaymentsWidgetController">
-    <section ng-hide="paymentSummary.content.length === 0">
+    <section ng-hide="!paymentSummary.content.length">
         <eb-slide-widget eb-context="context"
                          eb-modes="paymentsWidgetMode"
                          eb-selected-item="item" content="{{widgetContent}}" items="paymentSummary" max-indicators="10"
@@ -8,7 +8,7 @@
 
     <section>
 
-        <div ng-show="paymentsPromise.$$state.status === 1 && paymentSummary.content.length == 0" style="height: 100px;">
+        <div ng-show="paymentsPromise.$$state.status === 1 && !paymentSummary.content.length" style="height: 100px;">
             <div class="widget-content-inner info-text" style="margin: 100px auto; text-align: center;">
                 {{::'raiff.payments.widget.no_content'|translate}}
             </div>
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div ng-show="!paymentsWidgetMode.fullMode && paymentSummary.content.length == 0">
+        <div ng-show="!paymentsWidgetMode.fullMode && !paymentSummary.content.length">
             <div style="position:absolute; bottom:0px; width:100%; padding:5px;">
                 <bd-button ui-sref="payments.recipients.list" class="bd-form-footer__button bd-form-footer__button--positive bd-button__primary" style="line-height: 14px;">
                     {{::'raiff.payments.widget.new'|translate}}
