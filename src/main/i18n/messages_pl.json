@@ -817,12 +817,15 @@
     "raiff.payments.taxpayers.verify.taxpayer_nip": "NIP płatnika",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id_type": "Typ identyfikatora uzupełniającego",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id": "Numer identyfikatora uzupełniającego",
-    "raiff.payments.taxpayers.manage.new.status.ok": "Płatnik został utworzony",
-    "raiff.payments.taxpayers.manage.new.status.fail": "Płatnik nie został utworzony",
-    "raiff.payments.taxpayers.manage.edit.status.ok": "Płatnik został uaktualniony",
-    "raiff.payments.taxpayers.manage.edit.status.fail": "Płatnik nie został uaktualniony",
-    "raiff.payments.taxpayers.manage.remove.status.ok": "Płatnik został usunięty",
-    "raiff.payments.taxpayers.manage.remove.status.fail": "Płatnik nie został usunięty",
+
+    "raiff.payments.taxpayers.manage.new.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.new.status.fail": "Zlecenie odrzucone",
+
+    "raiff.payments.taxpayers.manage.edit.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.edit.status.fail": "Zlecenie odrzucone",
+
+    "raiff.payments.taxpayers.manage.remove.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.remove.status.fail": "Zlecenie odrzucone",
 
     "raiff.payments.taxpayers.manage.status.taxpayer_type": "Typ płatnika",
 
