@@ -12,9 +12,9 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsInvoobillAcctivationSuccessfulController', function ($scope, $state) {
         $scope.next = function() {
             $state.go('payments.invoobill.list');
-        }
+        };
 
         $scope.cancel = function() {
             $state.go('payments.recipients.list');
-        }
+        };
     });
