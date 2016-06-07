@@ -122,7 +122,7 @@ angular.module('raiffeisen-payments', [
     registerBaseState();
     registerNavigation();
 
-}).run(function (RAIFF_NRB_CONSTANTS, systemParameterService, customerService, SEGMENT_TYPES, menuService) {
+}).run(function (RAIFF_NRB_CONSTANTS, systemParameterService, customerService, SEGMENT_TYPES, menuService, invoobillPaymentsService) {
     systemParameterService.getParameterByName("account.bank.prefix.rbpl").then(function(data){
         RAIFF_NRB_CONSTANTS.insternal_prefix = data.value.split(',');/*przy mergu poprawna nazwa to RAIFF_NRB_CONSTANTS*/
     });
@@ -145,62 +145,52 @@ angular.module('raiffeisen-payments', [
                 return item.trim();
             });
 
-            var access = false;
+            var visible = false;
 
             //kontekst DETAL
             if(acceessParameter.indexOf('D') != -1 &&
                 (customerBusinessLine == SEGMENT_TYPES.DETAIL_AFFLUENT ||
                 customerBusinessLine ==  SEGMENT_TYPES.DETAIL_CSB)){
-                access = true;
+                visible = true;
             //kontekst MICRO
             } else if(acceessParameter.indexOf('M') &&
                 customerBusinessLine == SEGMENT_TYPES.MICRO) {
-                access = true;
+                visible = true;
             //FWR
             } else if(acceessParameter.indexOf('F') &&
                 customerBusinessLine == SEGMENT_TYPES.DETAIL_FWR) {
-                access = true;
+                visible = true;
             //Pracownik
             } else if(acceessParameter.indexOf('P') &&
                 customerDetails.isEmployee) {
-                access = true;
+                visible = true;
             }
 
-            if(access) {
-                menuItem.action = "payments.invoobill.list";
-                //menuService.pushMenuItems('raiffeisen-payments', menuItem);
-            }
+            if(visible) {
+                //sprawdzenie dostepnosci uslugi
+                invoobillPaymentsService.isAccess().then(function(access) {
+                    if(access.content) {
+                        invoobillPaymentsService.getStatus().then(function(status) {
+                           var action = "";
+                           if(status.content) {
+                               action = "payments.invoobill.list";
+                           }  else {
+                               action = "payments.invoobill.activation";
+                           }
 
+                           menuItem.action = action;
+                           menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                        });
+                    } else {
+                        menuItem.action = "payments.invoobill.formalIdLack";
+                        menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                    }
+
+
+                });
+            }
 
         });
-
-        //if(customerDetails.context == 'DETAL') {
-        //    applicationsService.getPersonalData().then(function(personal){
-        //        if(personal.legalIdentification1 != null) {
-        //            systemParameterService.getParameterByName("NIB.account.invb.detal").then(function (param) {
-        //                var categories = param.value.split(',').map(function(item) {
-        //                    return parseInt(item);
-        //                });
-        //
-        //                accountsService.search({pageSize: 10000}).then(function(data) {
-        //                    var accountList = data.content;
-        //                    for (var i = 0; i< accountList.length; i++) {
-        //                        if(categories.indexOf(accountList[i].category) != -1) {
-        //
-        //                            menuItem.action = "payments.invoobill.list";
-        //                            menuService.pushMenuItems('raiffeisen-payments', menuItem);
-        //                            break;
-        //                        }
-        //                    }
-        //                });
-        //            });
-        //        }
-        //    });
-        //
-        //} else if(customerDetails.context == 'MICRO') {
-        //    menuItem.action = "";
-        //}
-
 
     });
 
