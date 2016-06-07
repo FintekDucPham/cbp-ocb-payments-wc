@@ -33,7 +33,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsInvoobillActivationController', function ($scope, $sce, $state, parameters, invoobillPaymentsService, customerService) {
+    .controller('PaymentsInvoobillActivationController', function ($scope, $sce, $state, parameters, invoobillPaymentsService) {
 
         $scope.model = {
             regulaminsAccept: false

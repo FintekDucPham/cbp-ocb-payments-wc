@@ -22,7 +22,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text" ng-show="$data.paymentDetails.bankCountry"  label="{{::'raiff.payments.future.list.details.foreign.bankCountry.label'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        {{ :: $data.paymentDetails.bankCountry }}
+        {{ :: countryList[$data.paymentDetails.bankCountry].name }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.recipientAccountNo'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
@@ -35,7 +35,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text" label="{{::'raiff.payments.future.list.details.foreign.recipientCountry.label'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        {{ :: $data.paymentDetails.foreignCountryCode }}
+        {{ :: countryList[$data.paymentDetails.foreignCountryCode].name }}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferTitle'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
