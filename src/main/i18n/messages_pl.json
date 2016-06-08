@@ -1252,7 +1252,7 @@
   "raiff.payments.basket.accepted":"Przyjęto do realizacji",
   "raiff.payments.basket.add.verify":"Przelew zostanie dodany do Twojego koszyka płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego potwierdzenia w koszyku płatności",
   "raiff.payments.new.status.ADDED_TO_BASKET":"Przelew pomyślnie został dodany do koszyka i oczekuje na dalsze decyzje.",
-  "raiff.payments.basket.list.empty":"Nie znaleziono płatności do potwierdzenia spełniających kryteria wyszukiwania",
+  "raiff.payments.basket.list.empty":"Nie znaleziono przelewów do potwierdzenia spełniających wybrane kryteria wyszukiwania.",
   "raiff.payments.new.status.SIGNED_REQUIRED":"Zlecenie oczekuje na brakujące podpisy wymagane w schemacie akceptacji.",
   "raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO":"Dla {0} z {1} przelewów gotowych go przekazania do realizacji łączna kwota przelewów przekracza wysokość dostępnych środków. Realizacja przelewów nie jest możliwa.",
   "raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.DETAL":"Łączna kwota przelewów przekracza wysokość dostępnych środków.",
