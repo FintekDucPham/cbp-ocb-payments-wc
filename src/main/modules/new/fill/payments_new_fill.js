@@ -282,6 +282,12 @@ angular.module('raiffeisen-payments')
                             return;
                         }
 
+                        // dla przelewu wlasnego, dla rachunkow zajetych egzekcyjnie, nie walidujemy dostepnych srodkow
+                        if (scope.payment.items.recipientAccount !== undefined && scope.payment.items.senderAccount.executiveRestriction && scope.payment.items.recipientAccount.executiveRestriction) {
+                            resolve();
+                            return;
+                        }
+
                         //currencyExchangeService.exchangeForValidation(newValue, scope.payment.formData.currency.currency, scope.payment.items.senderAccount.currency).then(function(exchanged) {
                         currencyExchangeService.exchangeForValidation(newValue, transactionCurrency, sourceAccountCurrency).then(function(exchanged) {
                             return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject();
