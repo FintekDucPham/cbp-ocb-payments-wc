@@ -100,8 +100,14 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        function accountsWithoutExecutiveRestriction() {
+            return ($scope.payment.items.senderAccount !== undefined &&
+            (!$scope.payment.items.senderAccount.executiveRestriction &&
+            !$scope.payment.items.recipientAccount.executiveRestriction));
+        }
+
         function validateBalance() {
-            if($scope.paymentForm.amount){
+            if($scope.paymentForm.amount && accountsWithoutExecutiveRestriction()){
                 $scope.paymentForm.amount.$setValidity('balance',  ($scope.payment.formData.addToBasket || !(isCurrentDateSelected() && isAmountOverBalance())));
             }
         }

@@ -89,17 +89,17 @@
                                     {{::"raiff.payments.basket.list.summary.chose"|translate}}
                                 </div>
                             </div>
-                            <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-10">
+                            <div bd-table-cell="second" class="bd-table__cell--sm-14 bd-table__cell--md-10">
                                 <div ng-repeat="currencySummary in basket.summary.summaryItem">
                                     <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="bd-table__cell--sm-8 bd-table__cell--md-8">
-                                            <div>
+                                            <div style="padding-top: 10px;">
                                                 {{::"raiff.payments.basket.list.summary.amount"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
                                             </div>
                                         </div>
                                         <div bd-table-cell="first"
-                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right">
-                                            {{::"raiff.payments.basket.list.summary.sum"|translate}}
+                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px;">
+                                            {{::"raiff.payments.basket.list.summary.sum"|translate}}&nbsp;
                                             <bd-amount amount="currencySummary.sum"
                                                        currency="{{currencySummary.currency}}"></bd-amount>
                                         </div>
@@ -114,22 +114,22 @@
             <bd-list-item summary>
                 <div class="summary-item" style="border-top: 1px solid #F1F1F1;">
                     <div class="bd-table bd-table__fixed">
-                        <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                        <div class="basket-vew__summary__height bd-table__row-line bd-table__row-line--sm-tight">
                             <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-6">
                                 <div class="summary-item__label" style="border-bottom: 0px;">
                                     {{::"raiff.payments.basket.list.summary.all"|translate}}
                                 </div>
                             </div>
-                            <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-10">
+                            <div bd-table-cell="second" class="bd-table__cell--sm-14 bd-table__cell--md-10">
                                 <div ng-repeat="currencySummary in basket.summary.summaryAll">
-                                    <div class="bd-table__row-line bd-table__row-line--sm-tight">
+                                    <div class="basket-vew__summary__height bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="bd-table__cell--sm-8 bd-table__cell--md-8">
-                                            <div>
+                                            <div style="padding-top: 10px;">
                                                 {{::"raiff.payments.basket.list.summary.amount"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
                                             </div>
                                         </div>
                                         <div bd-table-cell="first"
-                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right">
+                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px;">
                                             {{::"raiff.payments.basket.list.summary.sum"|translate}}&nbsp;
                                             <bd-amount amount="currencySummary.sum"
                                                        currency="{{currencySummary.currency}}"></bd-amount>

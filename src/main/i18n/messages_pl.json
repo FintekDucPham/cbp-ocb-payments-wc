@@ -483,6 +483,7 @@
     "raiff.payments.new.status.11": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.111": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.1111": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.2": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.20": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.40": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.60": "Przelew/transakcja przyjęta do realizacji",
@@ -818,12 +819,15 @@
     "raiff.payments.taxpayers.verify.taxpayer_nip": "NIP płatnika",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id_type": "Typ identyfikatora uzupełniającego",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id": "Numer identyfikatora uzupełniającego",
-    "raiff.payments.taxpayers.manage.new.status.ok": "Płatnik został utworzony",
-    "raiff.payments.taxpayers.manage.new.status.fail": "Płatnik nie został utworzony",
-    "raiff.payments.taxpayers.manage.edit.status.ok": "Płatnik został uaktualniony",
-    "raiff.payments.taxpayers.manage.edit.status.fail": "Płatnik nie został uaktualniony",
-    "raiff.payments.taxpayers.manage.remove.status.ok": "Płatnik został usunięty",
-    "raiff.payments.taxpayers.manage.remove.status.fail": "Płatnik nie został usunięty",
+
+    "raiff.payments.taxpayers.manage.new.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.new.status.fail": "Zlecenie odrzucone",
+
+    "raiff.payments.taxpayers.manage.edit.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.edit.status.fail": "Zlecenie odrzucone",
+
+    "raiff.payments.taxpayers.manage.remove.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.remove.status.fail": "Zlecenie odrzucone",
 
     "raiff.payments.taxpayers.manage.status.taxpayer_type": "Typ płatnika",
 
@@ -1248,7 +1252,7 @@
   "raiff.payments.basket.accepted":"Przyjęto do realizacji",
   "raiff.payments.basket.add.verify":"Przelew zostanie dodany do Twojego koszyka płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego potwierdzenia w koszyku płatności",
   "raiff.payments.new.status.ADDED_TO_BASKET":"Przelew pomyślnie został dodany do koszyka i oczekuje na dalsze decyzje.",
-  "raiff.payments.basket.list.empty":"Nie znaleziono płatności do potwierdzenia spełniających kryteria wyszukiwania",
+  "raiff.payments.basket.list.empty":"Nie znaleziono przelewów do potwierdzenia spełniających wybrane kryteria wyszukiwania.",
   "raiff.payments.new.status.SIGNED_REQUIRED":"Zlecenie oczekuje na brakujące podpisy wymagane w schemacie akceptacji.",
   "raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO":"Dla {0} z {1} przelewów gotowych go przekazania do realizacji łączna kwota przelewów przekracza wysokość dostępnych środków. Realizacja przelewów nie jest możliwa.",
   "raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.DETAL":"Łączna kwota przelewów przekracza wysokość dostępnych środków.",
@@ -1328,6 +1332,10 @@
     "raiff.payments.invoobill.activation.link.label":"Regulamin usługi Invoobill",
     "raiff.payments.invoobill.activation.accept":"Akceptuję",
     "raiff.payments.invoobill.activation.notInterested":"Nie jestem zainteresowany",
-    "raiff.payments.invoobill.activation.regulamins.reqiured":"Zaakceptuj regulamin korzystania z usługi Invoobill"
+    "raiff.payments.invoobill.activation.regulamins.reqiured":"Zaakceptuj regulamin korzystania z usługi Invoobill",
+    "raiff.payments.invoobill.formal.lack.descrition":"Nie możesz skorzystać z usługi – brak spełnionych warunków formalnych skontaktuj się Centrum Telefonicznym pod numerem 22 549 99 99 lub 801 180 801",
+    "raiff.payments.invoobill.activation.successful":"Usługa Invoobill została uruchomiona.",
+    "raiff.payments.invoobill.activation.successful.next":"Dalej",
+    "raiff.payments.invoobill.activation.successful.cancel":"Anuluj"
 
 }
