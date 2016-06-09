@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments', [
 
     'raiffeisen-shared'
 
-]).config(function (menuServiceProvider, translationsLoaderProvider, $urlRouterProvider, miniappServiceProvider, pathServiceProvider, stateServiceProvider) {
+]).config(function (menuServiceProvider, translationsLoaderProvider, $urlRouterProvider, miniappServiceProvider, pathServiceProvider, stateServiceProvider, privilegesServiceProvider, PRIVILEGES_FUNCTIONALITY) {
     'use strict';
 
     function registerModule() {
@@ -25,12 +25,6 @@ angular.module('raiffeisen-payments', [
                 controller: "PaymentsViewController",
                 data: {
                     analyticsTitle: "raiff.menu.transfer"
-                }
-            }).state('payments.no_permission', {
-                url: '/noPermission',
-                templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-shared") + "/components/rbPrivileges/no_permission.html",
-                data: {
-                    analyticsTitle: "=no allow"
                 }
             });
     }
@@ -116,11 +110,15 @@ angular.module('raiffeisen-payments', [
             ]
         });
     }
+    function registerRestrictedState(){
+        privilegesServiceProvider.registerRestrictedState('payments').restrictionRules.add(privilegesServiceProvider.createRestriction.ifFunctionalityEnabled(PRIVILEGES_FUNCTIONALITY.PAYMENTS));
+    }
 
     registerModule();
     registerComponents();
     registerBaseState();
     registerNavigation();
+    registerRestrictedState();
 
 }).run(function (RAIFF_NRB_CONSTANTS, systemParameterService, customerService, SEGMENT_TYPES, menuService) {
     systemParameterService.getParameterByName("account.bank.prefix.rbpl").then(function(data){
