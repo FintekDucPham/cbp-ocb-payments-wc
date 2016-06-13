@@ -8,6 +8,9 @@ angular.module('raiffeisen-payments')
                 referenceId: null
             },
             resolve: {
+                userDetails: ['userService', function(userService) {
+                    return userService.getUserDetails();
+                }],
                 parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
                         /* Po aktualizacji AKD ma byc to:
@@ -46,7 +49,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsInvoobillListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, invoobillPaymentsService, lodash, $state, $stateParams, $filter) {
+    .controller('PaymentsInvoobillListController', function ($scope, $q, $timeout, bdTableConfig, viewStateService, translate, userDetails, parameters, paymentsService, invoobillPaymentsService, lodash, $state, $stateParams, $filter) {
 
         var PERIOD_TYPES = {
             LAST: 'LAST',
@@ -224,16 +227,34 @@ angular.module('raiffeisen-payments')
         //pay now
         $scope.payNow = function(data) {
             console.debug("payNow(data)", data);
+            viewStateService.setInitialState('payments.invoobill.new_payment', {
+                invoobillPayment: data
+            });
+            $state.go("payments.invoobill.new_payment.fill", {
+                invoobillPayment: data
+            });
         };
 
         //pay in future
         $scope.pay = function(data) {
             console.debug("pay(data)", data);
+            viewStateService.setInitialState('payments.invoobill.new_payment', {
+                invoobillPayment: data
+            });
+            $state.go("payments.invoobill.new_payment.fill", {
+                invoobillPayment: data
+            });
         };
 
         //reject payment
         $scope.reject = function(data) {
             console.debug("reject(data)", data);
+            viewStateService.setInitialState('payments.invoobill.reject_payment', {
+                invoobillPayment: data
+            });
+            $state.go("payments.invoobill.reject_payment.fill", {
+                invoobillPayment: data
+            });
         };
 
         // cancel Invobill service
