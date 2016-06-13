@@ -1262,6 +1262,7 @@
   "raiff.payments.basket.status.REALIZATION_DATE_EXCEEDED":"Przelewy, dla których planowana data realizacji minęła zostaną zrealizowana z datą bieżącą.",
   "raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO":"{0} z {1} przelewów zostało przekazanych do realizacji.",
   "raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL":"Przelewy przyjęte do realizacji. Realizacja nastąpi  zgodnie z wybranym trybem realizacji.",
+  "raiff.payments.basket.status.CUT_OFF_TIME.DETAL":"Cześć przelewów może zostać zrealizowana w następnym dniu roboczym.",
   "raiff.payments.basket.list.details.addedToBasketDate":"Data dodania do koszyka",
   "raiff.payments.basket.list.details.historyAction":"Informacje o akcjach zlecenia",
   "raiff.payments.basket.multistepform.buttons.delete":"Usuń",
