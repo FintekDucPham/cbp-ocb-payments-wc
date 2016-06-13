@@ -1,0 +1,31 @@
+<div class="form-body">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.invoobil.list.details.recipientAccountNo' | translate}}">
+        {{ payment.invoobill.recipientAccountNo | nrbIbanFilter }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.invoobil.list.details.recipient' | translate }}">
+        {{ payment.invoobill.recipient | arrayFilter }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.invoobil.list.details.title' | translate }}">
+        {{ payment.invoobill.title | arrayFilter }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.invoobil.list.details.amount' | translate }}">
+        {{ payment.invoobill.amount | number: 2 }} {{ payment.invoobill.currency }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.invoobil.list.details.realization_date' | translate }}">
+        {{ payment.invoobill.realizationDate | date : 'shortDate' }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.invoobill.reject_payment.reason' | translate }}">
+        {{ payment.formData.reason }}
+    </bd-item-property>
+</div>
+<section ng-if="payment.operation.code!=='EDIT'">
+    <bd-item-property class="bd-item-property--text" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
+        <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
+    </bd-item-property>
+</section>
+
