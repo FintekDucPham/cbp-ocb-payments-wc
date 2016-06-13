@@ -11,7 +11,7 @@
                            class="iconized"
                            required>
                     <ui-select-match placeholder="{{::'account.statement.select.placeholder'|translate}}">
-                        <div class="select-account__row" style="padding-right: 30px">
+                        <div class="select-account__row" style="padding-right: 34px">
                             <div ng-if="$select.selected.accountId=='ALL'">
                                 <div class="select-account__row__cell">
                                     {{::'raiff.payments.basket.search.panel.account.all'|translate}}
@@ -83,7 +83,7 @@
                     <div class="row__inline-block--middle row__inline-block--adjacent">
                         {{:: 'raiff.payments.components.futureDatePanel.dateTypes.PERIOD' | translate}}
                     </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
+                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:37px;">
                         <input
                                 bd-type="number"
                                 class="input-field"
@@ -92,7 +92,7 @@
                                 ng-required="inputData.selectedMode===FUTURE_DATE_TYPES.PERIOD"
                                 ng-pattern="/^\d+$/"/>
                     </div>
-                    <div class="row__inline-block--middle" style="width:100px;">
+                    <div class="row__inline-block--middle" style="width:90px;">
                         <ui-select ng-model="inputData.periodRange"
                                    theme="bootstrap"
                                    reset-search-input="false">
@@ -105,28 +105,30 @@
                         </ui-select>
                     </div>
                 </bd-radio-option>
-                <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE">
-                    <div class="dateLabel">
-                        {{ ::'account.transactions.select.filter.date.label'|translate }}
-                    </div>
-                    <div class="dateRange">
-                        <div style="display: inline-flex; ">
-                            <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.from'|translate}}</div>&nbsp;
-                            <rb-datepicker ng-model="inputData.dateFrom"
-                                           ng-model-options="{ allowInvalid: false }"
-                                           rb-name="dateFromInput"
-                                           max-search-date
+                <div class="basket-no-padding">
+                    <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE">
+                        <div class="dateLabel">
+                            {{ ::'account.transactions.select.filter.date.label'|translate }}
+                        </div>
+                        <div class="dateRange">
+                            <div style="display: inline-flex; ">
+                                <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.from'|translate}}</div>&nbsp;
+                                <rb-datepicker ng-model="inputData.dateFrom"
+                                               ng-model-options="{ allowInvalid: false }"
+                                               rb-name="dateFromInput"
+                                               max-search-date
+                                        ></rb-datepicker>
+                        </div>
+                            <div style="display: inline-flex; ">
+                                <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.to'|translate}}</div>&nbsp;
+                                <rb-datepicker ng-model="inputData.dateTo"
+                                               ng-model-options="{ allowInvalid: false }"
+                                               rb-name="dateToInput"
                                     ></rb-datepicker>
-                    </div>
-                        <div style="display: inline-flex; ">
-                            <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.to'|translate}}</div>&nbsp;
-                            <rb-datepicker ng-model="inputData.dateTo"
-                                           ng-model-options="{ allowInvalid: false }"
-                                           rb-name="dateToInput"
-                                ></rb-datepicker>
-                            </div>
-                    </div>
-                </bd-radio-option>
+                                </div>
+                        </div>
+                    </bd-radio-option>
+                </div>
             </bd-radio-select>
 
         </div>

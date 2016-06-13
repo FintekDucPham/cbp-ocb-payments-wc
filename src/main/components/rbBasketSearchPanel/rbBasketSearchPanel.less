@@ -8,7 +8,6 @@
         text-align: left;
       }
       &__item{
-        padding-top: 7px;
         padding-bottom: 10px;
         &__status {
           display: inline-block;
@@ -34,4 +33,18 @@
       }
     }
   }
+}
+
+.rb-transaction-filter .dateLabel{
+  @media only screen and  (max-width: @screenSmallMax) {
+    display: table-cell;
+  }
+}
+
+.rb-transaction-filter .dateRangeLabel{
+  width: 32px;
+}
+
+.basket-no-padding .bd-radio-option{
+  padding-bottom: 0px !important;
 }
