@@ -111,7 +111,7 @@ angular.module('raiffeisen-payments', [
         });
     }
     function registerRestrictedState(){
-        privilegesServiceProvider.registerRestrictedState('payments').restrictionRules.add(privilegesServiceProvider.createRestriction.ifFunctionalityEnabled(PRIVILEGES_FUNCTIONALITY.PAYMENTS));
+        privilegesServiceProvider.registerRestrictedState('payments').restrictWidget('payments').restrictionRules.add(privilegesServiceProvider.createRestriction.ifFunctionalityEnabled(PRIVILEGES_FUNCTIONALITY.PAYMENTS));
     }
 
     registerModule();
