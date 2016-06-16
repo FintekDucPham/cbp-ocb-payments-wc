@@ -69,6 +69,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onRulesChange = function (form) {
             form.regulaminsAccept.$setValidity('rulesRegulaminsRequired', true);
-        }
+        };
 
     });
