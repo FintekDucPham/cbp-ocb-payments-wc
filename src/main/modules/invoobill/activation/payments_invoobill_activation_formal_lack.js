@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.formalIdLack', {
             url: "/formalIdLack",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/activation/payments_invoobill_formal_lack.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/activation/payments_invoobill_activation_formal_lack.html",
             controller: "PaymentsInvoobillFormalLackController",
             params: {
                 referenceId: null

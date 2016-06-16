@@ -1,0 +1,28 @@
+<rb-content-view class="form">
+
+    <bd-header class="auth-content-view__content__title">
+        {{::'raiff.payments.invoobill.activation.header' |translate}}
+    </bd-header>
+
+    <bd-form-panel class="text-xs-justify">
+        <bd-form-content>
+
+            <span>{{:: 'raiff.payments.invoobill.resignation.descrition' | translate}}</span>
+
+        </bd-form-content>
+
+    </bd-form-panel>
+
+    <div class="settings-mifid__buttons ">
+
+        <bd-button class="bd-form-footer__button bd-form-footer__button--negative"ng-click="cancel()">
+            {{ :: 'raiff.payments.invoobill.resignation.cancel.button' | translate }}
+        </bd-button>
+
+        <bd-button class="bd-button__primary" ng-click="resignation()">
+            {{ :: 'raiff.payments.invoobill.resignation.button' | translate }}
+            <i class="eb-icon eb-raiffeisen-theme eb-ico-next"></i>
+        </bd-button>
+    </div>
+
+</rb-content-view>

@@ -1336,6 +1336,12 @@
     "raiff.payments.invoobill.formal.lack.descrition":"Nie możesz skorzystać z usługi – brak spełnionych warunków formalnych skontaktuj się Centrum Telefonicznym pod numerem 22 549 99 99 lub 801 180 801",
     "raiff.payments.invoobill.activation.successful":"Usługa Invoobill została uruchomiona.",
     "raiff.payments.invoobill.activation.successful.next":"Dalej",
-    "raiff.payments.invoobill.activation.successful.cancel":"Anuluj"
+    "raiff.payments.invoobill.activation.successful.cancel":"Anuluj",
+    "raiff.payments.invoobill.resignation.descrition":"Rezygnacja z usługi oznacza, że nie będziesz więcej otrzymywał płatności w ramach Invoobil.",
+    "raiff.payments.invoobill.resignation.cancel.button":"Anuluj",
+    "raiff.payments.invoobill.resignation.button":"Rezygnuj",
+    "raiff.payments.invoobill.resignation.successful":"Usługa Invoobill została zdeaktywowana",
+    "raiff.payments.invoobill.resignation.successful.back":"Powrót",
+    "raiff.payments.invoobill.resignation.lack.permission.descrition":"Nie możesz zrezygnować z usługi – brak spełnionych warunków formalnych  – skontaktuj się Centrum Telefonicznym pod numerem 22 549 99 99 lub 801 180 801"
 
 }
