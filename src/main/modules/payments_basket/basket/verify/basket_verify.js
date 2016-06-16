@@ -72,4 +72,30 @@ angular.module('raiffeisen-payments')
             }
         });
 
+        $scope.$watch('basket.token.model.view.name', function(newValue, oldValue){
+            var params = $scope.basket.rbBasketStepParams;
+            if(newValue){
+                if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                    var backendErrors = $scope.basket.token.model.currentToken.$backendErrors;
+                    if(backendErrors.TOKEN_AUTH_BLOCKED){
+                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }else if(backendErrors.TOKEN_NOT_SEND){
+                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }else if(backendErrors.TOKEN_EXPIRED){
+                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }
+                }else{
+                    params.visibility.finalize = true;
+                    params.visibility.accept = true;
+                    params.labels.prev = 'raiff.payments.basket.multistepform.buttons.cancel';
+                }
+            }
+        });
+
     });

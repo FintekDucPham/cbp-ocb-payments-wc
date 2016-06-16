@@ -222,6 +222,7 @@ angular.module('raiffeisen-payments')
             paymentsBasketService.create(checkedPaymentsId).then(function(data){
                 $scope.basket.transferId = data.referenceId;
                 $scope.basket.validator.realizationDateExceed = data.realizationDateExceed;
+                $scope.basket.validator.cutOffTimePresent = data.cutOffTimePresent;
                 $scope.basket.meta.correct = false;
                 $scope.basket.token.params = {};
                 actions.proceed();
@@ -233,6 +234,18 @@ angular.module('raiffeisen-payments')
                             $scope.limitBasketExeeded = {
                                 show: true,
                                 messages: translate.property("raiff.payments.basket.process.validation.amount_exceeded", [currentError.code])
+                            };
+                        }
+                        if(currentError.field == 'raiff.basket.transfers.proceed.amount.exceed') {
+                            $scope.amountBasketExeeded = {
+                                show: true,
+                                messages: translate.property("raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.DETAL")
+                            };
+                        }
+                        if(currentError.field == 'raiff.basket.transfers.proceed.daily.exceed') {
+                            $scope.dailyBasketExeeded = {
+                                show: true,
+                                messages: translate.property("raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL")
                             };
                         }
                     }

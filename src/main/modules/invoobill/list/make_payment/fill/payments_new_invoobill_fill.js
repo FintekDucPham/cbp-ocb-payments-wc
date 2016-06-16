@@ -1,9 +1,9 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.new_internal.fill', {
+        stateServiceProvider.state('payments.invoobill.new_payment.fill', {
             url: "/fill/:accountId/:nrb",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/fill/payments_new_internal_fill.html",
-            controller: "NewPaymentInternalFillController",
+            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/make_payment/fill/payments_new_invoobill_fill.html",
+            controller: "PaymentsNewInvoobillFillController",
             params: {
                 accountId: null,
                 recipientId: null
@@ -13,9 +13,8 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService) {
+    .controller('PaymentsNewInvoobillFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService) {
         var CURRENT_DATE = $scope.CURRENT_DATE;
-
 
         var senderAccountInitDefer = $q.defer();
 
@@ -100,14 +99,8 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        function accountsWithoutExecutiveRestriction() {
-            return ($scope.payment.items.senderAccount !== undefined &&
-            (!$scope.payment.items.senderAccount.executiveRestriction &&
-            !$scope.payment.items.recipientAccount.executiveRestriction));
-        }
-
         function validateBalance() {
-            if($scope.paymentForm.amount && accountsWithoutExecutiveRestriction()){
+            if($scope.paymentForm.amount){
                 $scope.paymentForm.amount.$setValidity('balance',  ($scope.payment.formData.addToBasket || !(isCurrentDateSelected() && isAmountOverBalance())));
             }
         }
@@ -146,6 +139,10 @@ angular.module('raiffeisen-payments')
                     show: false
                 };
 
+                $scope.payment.transferId = "NIB";
+                actions.proceed();
+
+/*
                 if(!$scope.payment.items.recipientAccount){
                     form.recipientAcc.$setValidity('required', false);
                 }
@@ -181,7 +178,7 @@ angular.module('raiffeisen-payments')
                             }
                         }
                     });
-                }
+                }*/
             }
         });
 
@@ -281,7 +278,6 @@ angular.module('raiffeisen-payments')
 
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.senderSelectParams.payments = true;
-        $scope.senderSelectParams.showCustomNames = true;
         $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
             return lodash.filter(accounts, function(account){
                 return isAccountInvestmentFulfilsRules(account);
@@ -291,7 +287,6 @@ angular.module('raiffeisen-payments')
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: false,
             alwaysSelected: false,
-            showCustomNames: true,
             accountFilter: function (accounts, $accountId) {
                 var filteredAccounts = accounts;
                 var filterParams = [];

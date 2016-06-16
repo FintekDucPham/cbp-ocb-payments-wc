@@ -341,7 +341,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
-            var recipientAccountNo = null;
+            /*var recipientAccountNo = null;
 
             var insuranceNrbs = _.pluck($scope.payment.formData.insurancePremiums, 'nrb');
             var recipientsNrbs = _.pluck($scope.payment.meta.recipientList, 'nrb');
@@ -350,16 +350,16 @@ angular.module('raiffeisen-payments')
 
             if (nonAddedAccounts.length > 0) {
                 recipientAccountNo = nonAddedAccounts[0];
-            }
+            }*/
 
             var recipientData2 = angular.copy({
-                selectedInsuranceId: recipientAccountNo,
                 customName: "Nowy odbiorca",
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 nip: $scope.payment.formData.nip,
                 secondaryIdType:  $scope.payment.formData.secondaryIdType,
                 secondaryIdNo: $scope.payment.formData.secondaryIdNo,
-                paymentType: $scope.payment.formData.paymentType
+                paymentType: $scope.payment.formData.paymentType,
+                insurancePremiums: $scope.payment.formData.insurancePremiums
             });
 
             $scope.setRecipientDataExtractor(function() {

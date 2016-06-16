@@ -73,7 +73,7 @@ angular.module('raiffeisen-payments')
                             $scope.payment.formData.recipientBankName = data.institution;
                             //search and set bank country
                             if($scope.countries.data){
-                                $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.swiftData, {
+                                $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {
                                     code: $scope.swift.data.countryCode
                                 });
                             }
