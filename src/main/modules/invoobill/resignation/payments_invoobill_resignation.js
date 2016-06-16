@@ -24,7 +24,7 @@ angular.module('raiffeisen-payments')
                     //rezygnacja
                     var params = {
                         status: "INACTIVE"
-                    }
+                    };
 
                     invoobillPaymentsService.setStatus(params).then(function(change) {
                         if(change.content) {
