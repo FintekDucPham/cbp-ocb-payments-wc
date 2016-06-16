@@ -46,7 +46,7 @@ angular.module('raiffeisen-payments')
             if (form.$valid) {
                 var params = {
                     status: "ACTIVE"
-                };
+                }
                 invoobillPaymentsService.setStatus(params);
                 menuService.removeMenuItem('raiffeisen-payments', 'payments.invoobill');
 

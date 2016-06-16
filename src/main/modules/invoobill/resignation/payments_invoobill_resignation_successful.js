@@ -13,5 +13,5 @@ angular.module('raiffeisen-payments')
 
         $scope.back = function() {
             $state.go('payments.recipients.list');
-        }
+        };
     });

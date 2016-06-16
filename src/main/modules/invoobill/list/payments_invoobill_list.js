@@ -228,7 +228,7 @@ angular.module('raiffeisen-payments')
         $scope.cancelService = function(){
             console.debug("cancelService");
             $state.go("payments.invoobill.resignation");
-        }
+        };
 
         //pay now
         $scope.payNow = function(data) {
