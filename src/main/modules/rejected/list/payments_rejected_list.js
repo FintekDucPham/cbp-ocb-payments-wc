@@ -275,7 +275,7 @@ angular.module('raiffeisen-payments')
                             };
                         case 'domestic':
                             return {
-                                recipientAccountNo: details.accountNo,
+                                recipientAccountNo: details.recipientAccountNo,
                                 recipientName: details.recipientName,
                                 description: cropArray(details.title),
                                 amount: details.amount,
