@@ -1345,7 +1345,7 @@
     "raiff.payments.invoobill.resignation.button":"Rezygnuj",
     "raiff.payments.invoobill.resignation.successful":"Usługa Invoobill została zdeaktywowana",
     "raiff.payments.invoobill.resignation.successful.back":"Powrót",
-    "raiff.payments.invoobill.resignation.lack.permission.descrition":"Nie możesz zrezygnować z usługi – brak spełnionych warunków formalnych  – skontaktuj się Centrum Telefonicznym pod numerem 22 549 99 99 lub 801 180 801"
+    "raiff.payments.invoobill.resignation.lack.permission.descrition":"Nie możesz zrezygnować z usługi – brak spełnionych warunków formalnych  – skontaktuj się Centrum Telefonicznym pod numerem 22 549 99 99 lub 801 180 801",
 
     "raiff.payments.invoobill.new_payment.header":"Usługa Invoobill",
     "raiff.payments.invoobill.new_payment.sender":"Właściciel",
