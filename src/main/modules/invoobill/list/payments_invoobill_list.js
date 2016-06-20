@@ -224,6 +224,12 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        // cancel Invobill service
+        $scope.cancelService = function(){
+            console.debug("cancelService");
+            $state.go("payments.invoobill.resignation");
+        };
+
         //pay now
         $scope.payNow = function(data) {
             console.debug("payNow(data)", data);
@@ -256,11 +262,6 @@ angular.module('raiffeisen-payments')
                 invoobillPayment: data
             });
         };
-
-        // cancel Invobill service
-        function cancelService() {
-            console.debug("cancelService");
-        }
 
         function dateTodayOrInFuture(paymentDate) {
             paymentDate = new Date(paymentDate);

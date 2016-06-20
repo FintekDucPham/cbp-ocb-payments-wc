@@ -45,9 +45,20 @@ angular.module('raiffeisen-payments')
             form.regulaminsAccept.$setValidity('rulesRegulaminsRequired', $scope.model.regulaminsAccept);
             if (form.$valid) {
                 var params = {
-                    status: $scope.model.regulaminsAccept ? "ACTIVE" : "INACTIVE"
+                    status: "ACTIVE"
                 };
                 invoobillPaymentsService.setStatus(params);
+                menuService.removeMenuItem('raiffeisen-payments', 'payments.invoobill');
+
+                var menuItem = {
+                    id: "payments.invoobill",
+                    label: 'raiff.payments.invoobill.label',
+                    icon: "raiff-icons invoobill",
+                    action: "payments.invoobill.list",
+                    priority: 9
+                };
+                menuService.pushMenuItems('raiffeisen-payments', menuItem);
+
                 $state.go("payments.invoobill.activationSuccessful");
             }
         };
