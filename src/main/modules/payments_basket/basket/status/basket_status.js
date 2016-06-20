@@ -18,7 +18,7 @@ angular.module('raiffeisen-payments')
             $scope.validationMsg.show = true;
         }else {
             var transactionSum = $scope.basket.item.result.notAcceptedTransactions + $scope.basket.item.result.readyTransactions;
-            if($scope.basket.meta.context == 'MICRO'){
+            if($scope.userContext == 'MICRO'){
                 if ($scope.basket.item.result.messages.indexOf("AMOUNT_EXCEEDED_FUNDS") > -1) {
                     $scope.validationMsg.message = translate.property('raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]);
                     $scope.validationMsg.show = true;
@@ -36,7 +36,7 @@ angular.module('raiffeisen-payments')
             }
             if ($scope.basket.item.result.transactionsSubmited) {
                 $scope.transactionsSubmited = {
-                    message: $scope.basket.meta.context == 'MICRO' ? translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]) : translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'),
+                    message: $scope.userContext == 'MICRO' ? translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]) : translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'),
                     show: true
                 };
             }
