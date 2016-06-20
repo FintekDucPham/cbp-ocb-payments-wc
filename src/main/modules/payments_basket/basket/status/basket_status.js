@@ -6,41 +6,129 @@ angular.module('raiffeisen-payments')
             controller: "PaymentsBasketStatusController"
         });
     })
-    .controller('PaymentsBasketStatusController', function ($scope, $state, $timeout, $q, translate, $filter) {
+    .controller('PaymentsBasketStatusController', function ($scope, $state, $timeout, $q, translate) {
 
-        $scope.validationMsg = {
-            message : "",
-            show: false
+        var messageType = {
+            error: "error",
+            success: "success",
+            warning: "warning"
         };
 
-        if($scope.basket.item.result.error){
-            $scope.validationMsg.message = translate.property('raiff.payments.basket.delete.status.messages.error');
-            $scope.validationMsg.show = true;
-        }else {
-            var transactionSum = $scope.basket.item.result.notAcceptedTransactions + $scope.basket.item.result.readyTransactions;
-            if($scope.userContext == 'MICRO'){
-                if ($scope.basket.item.result.messages.indexOf("AMOUNT_EXCEEDED_FUNDS") > -1) {
-                    $scope.validationMsg.message = translate.property('raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]);
-                    $scope.validationMsg.show = true;
-                }
-                if ($scope.basket.item.result.messages.indexOf("DAILY_LIMIT_EXCEEDED") > -1) {
-                    $scope.validationMsg.message = translate.property('raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]);
-                    $scope.validationMsg.show = true;
-                }
-                if ($scope.basket.item.result.notAcceptedTransactions > 0) {
-                    $scope.notAcceptedTransactionMsg = {
-                        message: translate.property('raiff.payments.basket.status.NOT_ACCEPTED_TRANSACTIONS', [$scope.basket.item.result.notAcceptedTransactions, transactionSum]),
-                        show: true
-                    };
-                }
-            }
-            if ($scope.basket.item.result.transactionsSubmited) {
-                $scope.transactionsSubmited = {
-                    message: $scope.userContext == 'MICRO' ? translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [$scope.basket.item.result.readyTransactions, transactionSum]) : translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'),
-                    show: true
-                };
-            }
-        }
+        var messagesList = [];
 
+        var paymentsAmount= {
+            ready: null,
+            notAccepted: null,
+            sum: null,
+            messagesKey: []
+        };
+
+        var MESSAGE_PROTOTYPE = {
+            message: null,
+            type: null,
+            position: null,
+            showRules:{
+                list: [],
+                add: function(rule){
+                    this.list.push(rule);
+                    return this;
+                }
+            }
+        };
+
+        var initAmount = function(notAcceptedTransactions, readyTransactions, messagesKey){
+            paymentsAmount.ready = readyTransactions;
+            paymentsAmount.notAccepted = notAcceptedTransactions;
+            paymentsAmount.sum = readyTransactions + notAcceptedTransactions;
+            paymentsAmount.messagesKey = messagesKey;
+        };
+
+        var registerMessage = function(position, message, type, showRules){
+            var messageObj = angular.copy(MESSAGE_PROTOTYPE);
+            messageObj.message = message;
+            if(showRules){
+                messageObj.showRules.list = showRules;
+            }
+            messageObj.position = position;
+            messageObj.type = type;
+            messagesList.push(messageObj);
+            return messageObj;
+        };
+
+        var resolveMessage = function(){
+            $scope.messagesListShow = [];
+            angular.forEach(messagesList, function(value){
+                var show = true;
+                angular.forEach(value.showRules.list, function(rule){
+                    if(!rule){
+                        show = false;
+                    }
+                });
+                if(show){
+                    $scope.messagesListShow.push(value);
+                }
+            });
+        };
+
+        var showRules = {
+            isMicro: function(){
+                if($scope.userContext == 'MICRO'){
+                    return true;
+                }else {
+                    return false;
+                }
+            },
+            hasKey: function(key){
+                if(paymentsAmount.messagesKey.indexOf(key) > -1){
+                    return true;
+                }else {
+                    return false;
+                }
+            },
+            notAccepted: function(notAcceptedTransactions){
+                if(notAcceptedTransactions>0){
+                    return true;
+                }else {
+                    return false;
+                }
+            },
+            transactionsSubmited: function(isSubmited){
+                return isSubmited;
+            }
+        };
+
+        if(!$scope.basket.item.result.error){
+            initAmount($scope.basket.item.result.notAcceptedTransactions, $scope.basket.item.result.readyTransactions, $scope.basket.item.result.messages);
+
+            registerMessage(1,
+                translate.property('raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.error)
+                .showRules
+                .add(showRules.isMicro())
+                .add(showRules.hasKey("AMOUNT_EXCEEDED_FUNDS"));
+            registerMessage(2,
+                translate.property('raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.error)
+                .showRules
+                .add(showRules.isMicro())
+                .add(showRules.hasKey("DAILY_LIMIT_EXCEEDED"));
+            registerMessage(3,
+                translate.property('raiff.payments.basket.status.NOT_ACCEPTED_TRANSACTIONS', [paymentsAmount.notAccepted, paymentsAmount.sum]), messageType.warning)
+                .showRules
+                .add(showRules.isMicro())
+                .add(showRules.notAccepted($scope.basket.item.result.notAcceptedTransactions));
+            registerMessage(4,
+                translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.success)
+                .showRules
+                .add(showRules.isMicro())
+                .add(showRules.transactionsSubmited($scope.basket.item.result.transactionsSubmited));
+            registerMessage(5,
+                translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'), messageType.success)
+                .showRules
+                .add(showRules.transactionsSubmited($scope.basket.item.result.transactionsSubmited));
+
+            resolveMessage();
+        }else {
+            registerMessage(1,
+                translate.property('raiff.payments.basket.delete.status.messages.error'), messageType.error);
+        }
 
     });
