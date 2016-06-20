@@ -1,9 +1,3 @@
-<span ng-if="notAcceptedTransactionMsg.show">
-    <bd-msg-panel bd-msg-type="warning">{{notAcceptedTransactionMsg.message}}</bd-msg-panel>
-</span>
-<span ng-if="validationMsg.show">
-    <bd-msg-panel bd-msg-type="error">{{validationMsg.message}}</bd-msg-panel>
-</span>
-<span ng-if="transactionsSubmited.show">
-    <bd-msg-panel bd-msg-type="success">{{transactionsSubmited.message}}</bd-msg-panel>
+<span ng-repeat="message in messagesListShow | orderBy: 'position' ">
+    <bd-msg-panel bd-msg-type="{{message.type}}">{{message.message}}</bd-msg-panel>
 </span>
