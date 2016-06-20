@@ -167,10 +167,10 @@ angular.module('raiffeisen-payments', [
             if(visible) {
                 //sprawdzenie dostepnosci uslugi
                 invoobillPaymentsService.isAccess().then(function(access) {
-                    if(access.content) {
+                    if(access) {
                         invoobillPaymentsService.getStatus().then(function(status) {
                            var action = "";
-                           if(status.content) {
+                           if(status) {
                                action = "payments.invoobill.list";
                            }  else {
                                action = "payments.invoobill.activation";
