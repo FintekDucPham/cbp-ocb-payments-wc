@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
-                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q, rbPaymentTrybeFactory, rbPaymentTrybeConstants) {
+                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -22,6 +22,8 @@ angular.module('raiffeisen-payments')
             data: null
         };
 
+        $scope.accountSelectorRemote = {};
+        
         $scope.swift = {
             promise: null,
             data: null
@@ -368,4 +370,24 @@ angular.module('raiffeisen-payments')
         $scope.onInited= function(){
             //$scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.recipientIdentityType);
         };
+
+        $scope.setClearFormFunction(function(){
+            $scope.payment.formData = {
+                recipientIdentityType: RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC,
+                sendBySorbnet: false,
+                transferCost: "SHA",
+                addToBasket: false,
+                paymentType: 'STANDARD',
+                currency: lodash.find($scope.currencies.data, {currency: $scope.currencies.init})
+            };
+
+            $scope.payment.items.modifyFromBasket = false;
+
+            angular.forEach($scope.payment.items.paymentTrybes, function(trybe){
+                trybe.selected = trybe.TRYBE_NAME==='STANDARD';
+            });
+            delete $scope.payment.items.senderAccount;
+            $scope.payment.formData.realizationDate = new Date();
+            $scope.accountSelectorRemote.resetToDefault();
+        });
     });
