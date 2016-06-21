@@ -134,7 +134,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o)){
+            if(n && !angular.equals(n, o) && n.length >= 8){
                 getBankInformation(n);
             }
         });
@@ -227,7 +227,7 @@ angular.module('raiffeisen-payments')
 
         $scope.searchBankPromise = null;
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o)){
+            if(n && !angular.equals(n, o) && n.length >=8){
                 $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                     $scope.payment.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT

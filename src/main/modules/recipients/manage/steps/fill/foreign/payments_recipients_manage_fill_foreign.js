@@ -136,14 +136,14 @@ angular.module('raiffeisen-payments')
         $scope.currentSearchCode = 0;
 
         $scope.$watch('recipient.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o) && !_.isEmpty(_.trim(n))) {
+            if(n && !angular.equals(n, o) && !_.isEmpty(_.trim(n)) && n.length >= 8) {
                 $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                     $scope.recipient.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
                 ).then(function(data){
                     if(data !== undefined && data !== null && data !==''){
                         $scope.recipient.formData.recipientBankName = data.institution;
-                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.swiftData,{
+                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data,{
                             code: data.countryCode
                         });
 
