@@ -390,4 +390,13 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.realizationDate = new Date();
             $scope.accountSelectorRemote.resetToDefault();
         });
+
+        $scope.$watch('payment.formData.paymentType', function(n,o){
+            if(n && n === 'TARGET'){
+                $scope.payment.formData.realizationDate = $scope.CURRENT_DATE;
+                $scope.payment.meta.realizationDateDisabled = true;
+            }else{
+                $scope.payment.meta.realizationDateDisabled = false;
+            }
+        });
     });
