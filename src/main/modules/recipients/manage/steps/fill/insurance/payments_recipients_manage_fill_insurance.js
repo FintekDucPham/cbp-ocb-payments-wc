@@ -1,6 +1,8 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillZusController', function ($scope, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, zusSuplementaryIds, zusPaymentTypes, translate, zusPaymentInsurances, insuranceAccounts, $timeout) {
+    .controller('RecipientsManageFillZusController', function ($scope, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, zusSuplementaryIds, zusPaymentTypes, translate, zusPaymentInsurances, insuranceAccounts, $timeout, validationRegexp) {
 
+
+        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         angular.extend($scope.recipient.meta, {
             zusInsuranceTypes: zusPaymentInsurances,
             zusSuplementaryIds: zusSuplementaryIds,
