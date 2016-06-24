@@ -20,14 +20,14 @@ angular.module('raiffeisen-payments')
 
         $scope.resignation = function() {
             invoobillPaymentsService.isResignationAccessStatus().then(function(resignationAccessStatus){
-                if(resignationAccessStatus.content) {
+                if(resignationAccessStatus) {
                     //rezygnacja
                     var params = {
                         status: "INACTIVE"
                     };
 
                     invoobillPaymentsService.setStatus(params).then(function(change) {
-                        if(change.content) {
+                        if(change) {
                             menuService.removeMenuItem('raiffeisen-payments', 'payments.invoobill');
 
                             var menuItem = {

@@ -95,7 +95,7 @@ angular.module('raiffeisen-payments')
                     if(s.currency.currency!=='EUR'){
                         targetAv=false;
                     }
-                    if(!(swift.data && swift.data.target)){
+                    if(!(s.swift.data && swift.data.target)){
                         targetAv=false;
                     }
 
@@ -117,7 +117,7 @@ angular.module('raiffeisen-payments')
 
                 s.$watch('costs', obtainActivity);
                 s.$watch('swift.data.target', obtainActivity);
-
+                s.$watch('currency', obtainActivity);
             }
         };
     });

@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
-                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q, rbPaymentTrybeFactory, rbPaymentTrybeConstants) {
+                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q,rbPaymentTrybeFactory, rbPaymentTrybeConstants) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -22,6 +22,8 @@ angular.module('raiffeisen-payments')
             data: null
         };
 
+        $scope.accountSelectorRemote = {};
+        
         $scope.swift = {
             promise: null,
             data: null
@@ -35,7 +37,7 @@ angular.module('raiffeisen-payments')
         $scope.currencies = {
             promise: paymentsService.getCurrencyUse(),
             data:null,
-            init: "PLN"
+            init: null
         };
 
         if($scope.payment.formData.currency){
@@ -132,7 +134,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o)){
+            if(n && !angular.equals(n, o) && n.length >= 8){
                 getBankInformation(n);
             }
         });
@@ -190,6 +192,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.amount = (""+formData.amount).replace(",",".");
             formData.amount = copiedFormData.amount;
             copiedFormData.recipientCountry = formData.recipientCountry.code;
+            copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             return copiedFormData;
         });
 
@@ -225,7 +228,7 @@ angular.module('raiffeisen-payments')
 
         $scope.searchBankPromise = null;
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o)){
+            if(n && !angular.equals(n, o) && n.length >=8){
                 $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                     $scope.payment.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
@@ -319,7 +322,7 @@ angular.module('raiffeisen-payments')
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
                 });
-
+            $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase();
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {
@@ -368,4 +371,33 @@ angular.module('raiffeisen-payments')
         $scope.onInited= function(){
             //$scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.payment.formData.recipientIdentityType);
         };
+
+        $scope.setClearFormFunction(function(){
+            $scope.payment.formData = {
+                recipientIdentityType: RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC,
+                sendBySorbnet: false,
+                transferCost: "SHA",
+                addToBasket: false,
+                paymentType: 'STANDARD',
+                currency: lodash.find($scope.currencies.data, {currency: $scope.currencies.init})
+            };
+
+            $scope.payment.items.modifyFromBasket = false;
+
+            angular.forEach($scope.payment.items.paymentTrybes, function(trybe){
+                trybe.selected = trybe.TRYBE_NAME==='STANDARD';
+            });
+            delete $scope.payment.items.senderAccount;
+            $scope.payment.formData.realizationDate = new Date();
+            $scope.accountSelectorRemote.resetToDefault();
+        });
+
+        $scope.$watch('payment.formData.paymentType', function(n,o){
+            if(n && n === 'TARGET'){
+                $scope.payment.formData.realizationDate = $scope.CURRENT_DATE;
+                $scope.payment.meta.realizationDateDisabled = true;
+            }else{
+                $scope.payment.meta.realizationDateDisabled = false;
+            }
+        });
     });
