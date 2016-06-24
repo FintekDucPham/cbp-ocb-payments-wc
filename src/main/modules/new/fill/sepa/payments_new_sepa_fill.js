@@ -139,6 +139,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientBankName= utilityService.splitTextEveryNSigns(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
+            copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             copiedFormData.amount = (""+formData.amount).replace(",",".");
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
             if(angular.isObject(copiedFormData.currency) && copiedFormData.currency.currency){
@@ -239,6 +240,7 @@ angular.module('raiffeisen-payments')
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
                 });
+            $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase();
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
         });
 
