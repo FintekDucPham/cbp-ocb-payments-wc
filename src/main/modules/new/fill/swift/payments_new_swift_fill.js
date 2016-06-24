@@ -37,7 +37,7 @@ angular.module('raiffeisen-payments')
         $scope.currencies = {
             promise: paymentsService.getCurrencyUse(),
             data:null,
-            init: "PLN"
+            init: null
         };
 
         if($scope.payment.formData.currency){
