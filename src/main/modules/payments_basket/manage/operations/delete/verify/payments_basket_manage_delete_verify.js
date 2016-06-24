@@ -10,7 +10,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.basketItem = initialState.basketItem.payment;
             $scope.payment.meta.transferType = $scope.payment.basketItem.transferType;
             $scope.$data.operationType = $scope.payment.operationType;
-            paymentsBasketService.remove({transferId:$scope.payment.basketItem.id}).then(function(resp){
+            paymentsBasketService.remove({transferId:initialState.basketItem.referenceId}).then(function(resp){
                 $scope.payment.token.params.resourceId = resp;
                 $scope.payment.token.params.rbOperationType="PAYMENTS_BASKET";
                 $scope.payment.result.token_error = false;

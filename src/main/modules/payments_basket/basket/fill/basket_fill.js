@@ -201,25 +201,25 @@ angular.module('raiffeisen-payments')
 
 
         function getCheckedPaymentsIdListAndSetViewGroupFlag(groupPaymentsList){
-            var checkedPaymentsId = [];
+            var checkedBasketItemId = [];
             _.each(groupPaymentsList, function(group) {
                 _.each(group.basketTransfers, function(basketTransfer) {
                     var payment = basketTransfer.payment;
                     if(payment.checked){
-                        checkedPaymentsId.push(payment.id);
+                        checkedBasketItemId.push(basketTransfer.referenceId);
                         group.showGroup = true;
                     }
                 });
             });
-            return checkedPaymentsId;
+            return checkedBasketItemId;
         }
 
 
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var checkedPaymentsId = {};
-            checkedPaymentsId.transfersId = getCheckedPaymentsIdListAndSetViewGroupFlag($scope.basket.payments);
-            paymentsBasketService.create(checkedPaymentsId).then(function(data){
+            var basketItemId = {};
+            basketItemId.transfersId = getCheckedPaymentsIdListAndSetViewGroupFlag($scope.basket.payments);
+            paymentsBasketService.create(basketItemId).then(function(data){
                 $scope.basket.transferId = data.referenceId;
                 $scope.basket.validator.realizationDateExceed = data.realizationDateExceed;
                 $scope.basket.validator.cutOffTimePresent = data.cutOffTimePresent;
