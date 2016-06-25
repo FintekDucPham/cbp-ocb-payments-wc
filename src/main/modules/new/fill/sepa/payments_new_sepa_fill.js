@@ -117,7 +117,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 27);
+            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 35);
             copiedFormData.additionalInfo = " ";
 
             copiedFormData.phoneNumber = " ";
