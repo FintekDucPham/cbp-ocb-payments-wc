@@ -82,11 +82,12 @@
                            ng-readonly="recipient.operation.code === 'EDIT'"
                            bd-matches-none-of="recipientAccountValidators"
                            class="input-field"
-                           ng-paste="rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)"
+                           ng-paste="recipient.formData.nrbCheck = ''; recicpientForm.nrbCheck = ''; rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)"
                            ng-keyup="unlockField()"
                            type="text"
                            placeholder="{{ ::'raiff.payments.recipients.new.domestic.fill.recipient_account.placeholder' | translate }}">
                     <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
+                    <rb-bank-name ng-show="!showHide && recipient.formData.recipientAccountNo" account-no="recipient.formData.recipientAccountNo" bank-name-promise="recipient.formData.recipientBankNamePromise"></rb-bank-name>
                     <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                         <div class="validation-message animate-on">
                             {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
@@ -116,11 +117,16 @@
             <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
             <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
             <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer" name="nrbCheck" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault(); " ng-required="isOk || showHide">
                 <span class="tooltipFix__tooltip">
                     <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
                  </span>
             </span>
+             <eb-validation-messages eb-name="nrbCheck">
+                 <div eb-message-key="required" class="validation-message animate-on">
+                     {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+                 </div>
+             </eb-validation-messages>
         </span>
         </rb-paste-warning>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
@@ -176,5 +182,6 @@
             </eb-validation-messages>
 
         </bd-item-property>
+        <bd-msg-panel ng-if="recipient.meta.showRecipientExistInfo" bd-msg-type="warning">{{::'raiff.payments.recipient.new.error.MSG-0660_SAME_BNF'|translate}}</bd-msg-panel>
         </div>
 </rb-payment-recipients-fill>

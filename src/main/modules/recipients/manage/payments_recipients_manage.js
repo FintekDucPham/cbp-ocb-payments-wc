@@ -8,6 +8,9 @@ angular.module('raiffeisen-payments')
             params: {
                 recipientType: 'domestic',
                 operation: 'new'
+            },
+            data: {
+                analyticsTitle: "raiff.payments.recipients.label"
             }
         });
     })
@@ -15,8 +18,18 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService, paymentsService) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService) {
 
+        $scope.actualRecipientList = null;
+
+        $scope.clearForm = function () {
+            $scope.recipient.formData = {};
+            $scope.recipient.meta.bankName = {
+                recipientBankName:null,
+                bankNamePromise:null
+            };
+            $scope.$broadcast('clearForm');
+        };
 
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
@@ -42,6 +55,22 @@ angular.module('raiffeisen-payments')
                     bankNamePromise:null
                 },
                 operation: null
+            },
+            items:{
+                actualRecipientList: recipientsService.search({pageSize: 2000}).then(function(recipientList){
+                    return lodash.map(recipientList.content, function(entry) {
+                        var paymentTemplate = entry.paymentTemplates[0];
+                        return {
+                            recipientId: entry.recipientId,
+                            templateType: paymentTemplate.templateType,
+                            name: entry.recipientName.join(' '),
+                            accountNo: paymentTemplate.beneficiaryAccountNo,
+                            srcAccountNo: paymentTemplate.remitterAccountNo,
+                            details: paymentTemplate.paymentDetails || null
+
+                        };
+                    });
+                })
             },
             multiStepParams:{
                 completeState: 'payments.recipients.list',
@@ -78,7 +107,6 @@ angular.module('raiffeisen-payments')
             }
         };
 
-
         /**
          * This should be used to convert form data into format expected for the particular payment type.
          * @param formData
@@ -87,7 +115,6 @@ angular.module('raiffeisen-payments')
         $scope.requestConverter = function (formData) {
             return formData;
         };
-
 
         $scope.setRequestConverter = function (converterFn) {
             $scope.requestConverter = converterFn;
@@ -141,8 +168,8 @@ angular.module('raiffeisen-payments')
             domestic: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
-                        recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join("") : recipient.recipientAddress,
-                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join("") : recipient.transferTitleTable,
+                        recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join(" ") : recipient.recipientAddress,
+                        description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join( "") : recipient.transferTitleTable,
                         bankName: recipient.bankName
                     }
                 }, recipient);

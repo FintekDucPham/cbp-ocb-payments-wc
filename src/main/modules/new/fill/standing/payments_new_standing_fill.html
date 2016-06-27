@@ -69,21 +69,19 @@
                    ng-disabled="payment.options.fixedRecipientSelection || showHide"
                    required
                    bban-nrb
-                   ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                   ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    bd-matches-none-of="recipientAccountValidators"
                    class="input-field"
                    type="text"
                    ng-keyup="unlockField()"
                    placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_account.placeholder' | translate }}">
+            <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <rb-bank-name
-                    response-value="payment.items.recipientBankName"
                     account-no="payment.formData.recipientAccountNo"
                     bank-name-promise="payment.items.bankNamePromise"
-                    ng-show="payment.items.bankNamePromise.$$state.status === 1"
+                    ng-show="!showHide && payment.items.bankNamePromise.$$state.status === 1"
                     >
-                {{payment.items.recipientBankName}}
             </rb-bank-name>
-            <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                 <div class="validation-message animate-on">
                     {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
@@ -111,12 +109,17 @@
             <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
             <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
             <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer" name="nrbCheck" ng-required="isOk || showHide" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                 <span class="tooltipFix__tooltip">
                     <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
                  </span>
             </span>
         </span>
+        <eb-validation-messages eb-name="nrbCheck">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+            </div>
+        </eb-validation-messages>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.standing.fill.recipient_data' | translate }}">
@@ -124,6 +127,7 @@
               ng-model="payment.formData.recipientName"
               ng-pattern="STANDING_ORDER_BNF_REGEX"
               required
+              ng-change="validationErrors.recipientName = undefined"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -153,6 +157,7 @@
                   ng-model="payment.formData.description"
                   class="input-field input-area--payment-description"
                   required
+                  ng-change="validationErrors.description = undefined"
                   split-text-max-length-validators="140"
                   ng-pattern="PAYMENT_DESCRIPTION_REGEX"
                   placeholder="{{ ::'raiff.payments.new.standing.fill.description.placeholder' | translate }}"></textarea>
@@ -182,9 +187,9 @@
                        name="amount"
                        rb-number-type-input
                        class="input-field"
+                       ng-change="validationErrors.amount = undefined"
                        ng-model="payment.formData.amount"
                        ng-min="0.01"
-                       step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        required
                        placeholder="{{ ::'raiff.payments.new.standing.fill.amount.placeholder' | translate }}"/>
@@ -198,7 +203,7 @@
                         {{$select.selected}}
                     </ui-select-match>
                     <ui-select-choices repeat="currency in ['PLN'] track by $index">
-                        <div ng-bind-html="currency | highlight: $select.search"></div>
+                        <div ng-bind="currency"></div>
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -288,7 +293,7 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['firstRealizationDate'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['firstRealizationDate']}}
         </div>
     </bd-item-property>
 
@@ -327,14 +332,14 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['nextRealizationDate'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['nextRealizationDate']}}
         </div>
     </bd-item-property>
 
-    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.frequency' | translate }}" class="bd-item-property--multi">
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.frequency' | translate }}" class="bd-item-property--multi standing_order_frequency">
         <div class="bd-item-property--multi__values">
 
-            <div class="bd-item-property__value--secondary frequency">
+            <div class="bd-item-property__value--secondary frequency" style="padding-right:5px;">
 
                 <input name="frequency"
                        ng-model="payment.formData.frequency"
@@ -358,16 +363,16 @@
                         >
                     <ui-select-match placeholder="{{ ::'raiff.payments.new.standing.fill.frequencyType.types.empty'|translate }}">
 
-                        <div ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
-                        <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
-                        <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+                        <div class="standing-order-truncate" ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+                        <div class="standing-order-truncate" ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+                        <div class="standing-order-truncate" ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
 
                     </ui-select-match>
 
                     <ui-select-choices repeat="frequency in STANDING_FREQUENCY_TYPES_LIST">
-                        <div ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
-                        <div ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
-                        <div ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
+                        <div class="standing-order-truncate" ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
+                        <div class="standing-order-truncate" ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
+                        <div class="standing-order-truncate" ng-show="payment.formData.frequency >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -403,7 +408,7 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['frequency'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['frequency']}}
         </div>
 
 
@@ -418,10 +423,6 @@
                 rb-name="finishDate">
         </rb-datepicker>
 
-        <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
-             ng-if="validationErrors['finishDate'] !== undefined">
-            {{validationErrors['finishDate']}}
-        </div>
         <eb-validation-messages eb-name="finishDate">
             <div eb-message-key="date" class="validation-message animate-on">
                 {{::'raiff.payments.new.standing.fill.finish_date.INCORRECT_END_DATE'|translate}}
@@ -437,7 +438,7 @@
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['finishDate'] !== undefined">
-            {{validationErrors['recipientName']}}
+            {{validationErrors['finishDate']}}
         </div>
     </bd-item-property>
 

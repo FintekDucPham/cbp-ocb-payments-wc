@@ -237,9 +237,9 @@
         <bd-checkbox-select bd-checkbox-select-values="payment.formData.insurancePremiums" style="width: 100%">
 
             <bd-checkbox-select-option ng-repeat="insuranceItem in insuranceAccountList"
+                                       bd-disabled="payment.operation.code==='EDIT' && isInsuranceDisabled(insuranceItem.insuranceCode)"
                                        bd-on-check="enableInsurancePremium(insuranceItem.insuranceCode)"
-                                       bd-checkbox-key="{{ insuranceItem.insuranceCode }}" style="width: 100%">
-
+                                       bd-checkbox-key="{{ insuranceItem.insuranceCode }}" style="width: 100%; position:relative;">
 
                 <bd-item-property
                         label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + insuranceItem.insuranceCode | translate }}">
@@ -254,13 +254,12 @@
                                        ng-init="bindInsuranceAccount(insuranceItem.insuranceCode)"
                                        type="text"
                                        class="input-field"
-                                       min="0.01"
+                                       rb-number-type-input
+                                       ng-min="0.01"
                                        bd-novalidate-when="{{ !payment.formData.insurancePremiums[insuranceItem.insuranceCode] }}"
                                        bd-no-more-than="{ 'balance' : payment.options.futureRealizationDate ? 99999999999999999 : payment.items.senderAccount.accessibleAssets, 'elixir' : payment.meta.maxElixirAmount }"
                                        ng-pattern="AMOUNT_PATTERN"
-                                       rb-number-type-input
                                        ng-model-options="{ allowInvalid: true }"
-                                       step="0.01"
                                        required
                                        name="{{ insuranceItem.insuranceCode }}Amount"/>
                             </div>
@@ -288,9 +287,6 @@
                         <div eb-message-key="ngMin" class="validation-message animate-on">
                             {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
                         </div>
-                        <div eb-message-key="min" class="validation-message animate-on">
-                            {{::'raiff.payments.new.zus.fill.amount.INCORRECT_AMOUNT'|translate}}
-                        </div>
                         <div eb-message-key="balance" class="validation-message animate-on">
                             {{ ::'raiff.payments.new.zus.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
                         </div>
@@ -302,6 +298,7 @@
                 </bd-item-property>
             </bd-checkbox-select-option>
         </bd-checkbox-select>
+
 
         <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-show="totalPaymentAmount.length > 0">
             <div class="rb-payments-new-zus-fill__summary">

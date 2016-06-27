@@ -3,10 +3,13 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.new.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/status/payments_new_status.html",
-            controller: "NewPaymentStatusController"
+            controller: "NewPaymentStatusController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step3"
+            }
         });
     })
-    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes) {
+    .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes, $stateParams) {
 
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && ($scope.payment.type.code != rbPaymentTypes.OWN.code);
 

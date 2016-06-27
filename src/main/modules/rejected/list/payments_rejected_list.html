@@ -70,6 +70,7 @@
                                            ng-model-options="{ allowInvalid: false }"
                                            rb-name="dateFromInput"
                                            max-search-date
+                                           rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
                                            style="width: 140px;"></rb-datepicker>
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent">
@@ -82,6 +83,7 @@
                                            ng-model-options="{ allowInvalid: false }"
                                            rb-name="dateToInput"
                                            max-search-date
+                                           rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
                                            style="width: 140px;"></rb-datepicker>
                         </div>
                     </bd-radio-option>

@@ -1,12 +1,25 @@
 <div class="form-body" ng-controller="NewSwiftPaymentVerifyController">
-
+    <span ng-show="meta.cutOffTimePromise.$$state.status  !== 0">
+        <rb-cut-off-time
+                response-value="meta.responseCutOffTime"
+                account-no="payment.formData.recipientAccountNo"
+                transfer-kind="payment.type.code"
+                transfer-type="SWIFT"
+                realization-date="payment.formData.realizationDate"
+                cut-off-time-promise="meta.cutOffTimePromise"
+                end-of-day-warning="payment.endOfDayWarning"
+                is-holiday="payment.holiday">
+            <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
+        </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
-        <span class="desktop-only-payments">
-        <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
-        {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
-        </span>
-        <div class="mobile-only-payments">
-            <span class="ellipsis-account" >{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}  </span>&nbsp; {{payment.items.senderAccount.accountNo | nrbIbanShortFilter }}
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+            <div>
+                {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+            </div>
+        </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
         </div>
     </bd-item-property>
 
@@ -28,7 +41,7 @@
         {{:: payment.formData.recipientBankName }}
     </bd-item-property>
 
-    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.verify.recipient_account.label' | translate }}">
         {{::payment.formData.recipientAccountNo}}
     </bd-item-property>
 
@@ -48,14 +61,18 @@
         <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency.currency }}" not-styled></bd-amount>
     </bd-item-property>
 
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
+        {{payment.formData.realizationDate | localDate}}
+    </bd-item-property>
+
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
         {{::payment.formData.transferCost}} <a ng-show="transferCost.link != null" href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
-
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
         {{::payment.formData.paymentType}}
     </bd-item-property>
+
      <span class="eb-validation-messages" ng-if="payment.holiday">
          <span class="messages">
              <span class="validation-message">
@@ -63,4 +80,6 @@
              </span>
          </span>
     </span>
+    </span>
+    <eb-preloader class="eb-list-preloader" eb-promise="meta.cutOffTimePromise"></eb-preloader>
 </div>

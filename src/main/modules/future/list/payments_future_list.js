@@ -33,14 +33,21 @@ angular.module('raiffeisen-payments')
                         }
                         return result;
                     });
+                }],
+                countriesResolved: ['countriesService', 'lodash', function(countriesService, lodash){
+                    return countriesService.search().then(function(data){
+                        return lodash.indexBy(data, 'code');
+                    });
                 }]
-
+            },
+            data: {
+                analyticsTitle: "raiff.payments.future.label"
             }
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, countriesResolved) {
         $scope.dateRange = {};
-
+        $scope.countryList = countriesResolved;
         $scope.options = {
             "futureDatePanelConfig": parameters
         };
@@ -84,7 +91,7 @@ angular.module('raiffeisen-payments')
                     "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.details.frequency.periodUnit)).code,
                     "frequency": payment.details.frequency.periodCount,
                     "amount": payment.details.amount,
-                    "id": payment.id
+                    "id": payment.details.id
                 };
 
                 viewStateService.setInitialState('payments.new', {
@@ -127,12 +134,16 @@ angular.module('raiffeisen-payments')
 
         $scope.onDelete = function(payment) {
             if (payment.transferType == rbPaymentTypes.STANDING.code) {
-                viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                    payment: payment.details,
-                    returnToPage: $scope.table.tableConfig.currentPage
-                });
+                if (payment.details.alreadyDeleted) {
+                    $state.go('payments.standing.error');
+                } else {
+                    viewStateService.setInitialState('payments.standing.manage.remove.verify', {
+                        payment: payment.details,
+                        returnToPage: $scope.table.tableConfig.currentPage
+                    });
 
-                $state.go('payments.standing.manage.remove.verify');
+                    $state.go('payments.standing.manage.remove.verify');
+                }
             }
             else {
                 var responseObject = parseDataByTransfer(payment);
@@ -182,20 +193,18 @@ angular.module('raiffeisen-payments')
 
                     if(initialState && initialState.relation === 'DETAILS_FROM_WIDGET'){
                         var selectedPayment = angular.copy(initialState.paymentDetails);
+                        
+                        if (selectedPayment.transferType == 'STANDING_ORDER') {
+                            selectedPayment.transferType = rbPaymentTypes.STANDING.code;
+                        }
+
                         selectedPayment.renderExpanded = true;
                         $params.renderExpanded = true;
                         var summary = {};
                         addPaymentAmountToSummary(selectedPayment, summary);
                         viewStateService.resetInitialState('payments.future.list',{});
                         formSummary(summary);
-                        selectedPayment.loadDetails = function(){
-                            selectedPayment.promise = $q.when(selectedPayment).then(function(response){
-
-
-                                selectedPayment.details = response;
-                            });
-                        };
-                        //linkDetailsLoading(selectedPayment);
+                        linkDetailsLoading(selectedPayment);
                         defer.resolve([selectedPayment]);
                         $params.pageCount = 1;
                     }else{

@@ -26,12 +26,10 @@ angular.module('raiffeisen-payments')
         $scope.paymentSummary = $scope.paymentSummaryList(paymentSummary);
     });
 
-
     $scope.widgetContent = pathService.generateTemplatePath("raiffeisen-payments") + '/layouts/widget/widget_payments_content.html';
     $scope.context = {};
     $scope.context.options = {
         detailsShown: false
     };
-
-
+    $scope.widget.modes = paymentsWidgetMode;
 });

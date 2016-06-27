@@ -114,23 +114,23 @@
   @media (max-width: @screenSmallMax) {
     .bd-item-property__label-placeholder{
       width: auto !important;
-      display:table-cell !important;
+      display:inline-block !important;
+      margin-top: 10px;
     }
     .bd-item-property__value-placeholder{
-      display: table-cell !important;
+      display: inline-block !important;
+      float: right;
       .bd-item-property__value{
         .bd-amount {
           text-align: right !important;
         }
-    }
+      }
     }
 
 
   }
 }
-.bd-form-panel{
-  max-width: 580px;
-}
+
 
 .new-standing-payment-fill {
   & .frequency {
@@ -155,6 +155,15 @@
   }
 }
 .payments-recipients{
+}
+.message-inline{
+  padding: 10px 0;
+  .bd-msg-panel__message {
+    font-weight: 400;
+  }
+  .raiff-icon{
+    padding-bottom: 10px;
+  }
 }
 
 .fixTableStanding .bd-table__row-line .bd-table__cell--sm-3{
@@ -187,7 +196,7 @@
 }
 
 
-.accounts {
+.payments_miniapp {
   .bd-table__row-details {
     .bd-item-property__value {
       & > div {
@@ -214,7 +223,7 @@
     width: auto;
   }
 }
-.accounts .bd-table .bd-table__cell--sm-7{
+.payments_miniapp .bd-table .bd-table__cell--sm-7{
   @media only screen and (max-width: 411px) {
     width: 35% !important;
   }
@@ -229,6 +238,30 @@
   @media only screen and (min-width: 768px) {
     float: left;
   }
+}
+.rb-own-account{
+
+  .raiff-icon.warning{
+    color:#EAC919;
+  }
+}
+.desktop-only-payments {
+    @media only screen and  (max-width: @screenSmallMax) {
+      display: none;
+    }
+}
+.mobile-only-payments {
+  @media only screen and  (min-width: @screenMediumMin) {
+    display: none;
+  }
+  white-space: nowrap;
+  display: inline-flex;
+}
+.ellipsis-account {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 155px;
 }
 
 

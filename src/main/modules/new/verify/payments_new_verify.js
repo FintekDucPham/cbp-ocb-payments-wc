@@ -3,12 +3,23 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.new.verify', {
             url: "/verify",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/payments_new_verify.html",
-            controller: "NewPaymentVerifyController"
+            controller: "NewPaymentVerifyController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step2"
+            }
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService,depositsService, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, rbPaymentTypes) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, bdMainStepInitializer, transferService,depositsService, $stateParams, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, lodash, rbPaymentTypes, viewStateService) {
 
-        $scope.payment.token.params.resourceId = null;
+
+            if($scope.payment.formData.paymentId){
+                $scope.payment.token.params.resourceId = $scope.payment.formData.paymentId;
+                delete $scope.payment.formData.paymentId;
+            }else{
+                $scope.payment.token.params.resourceId = null;
+            }
+
+
 
         if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
             $scope.payment.token.params.rbOperationType = "MANAGE_STANDING_ORDER";
@@ -19,7 +30,11 @@ angular.module('raiffeisen-payments')
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
-            dataObject: $scope.payment
+            dataObject: $scope.payment,
+            meta: {
+                cutOffTimePromise: null,
+                responseCutOffTime: null
+            }
         });
 
         transferService.getTransferCost({

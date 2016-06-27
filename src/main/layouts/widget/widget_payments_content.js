@@ -64,6 +64,7 @@ angular.module('raiffeisen-payments')
 
         $scope.goToDetails = function(evt, payment){
             evt.stopPropagation();
+            evt.preventDefault();
             var selectedPayment = parsePaymentData(payment);
             viewStateService.setInitialState('payments.future.list',{
                 relation: "DETAILS_FROM_WIDGET",

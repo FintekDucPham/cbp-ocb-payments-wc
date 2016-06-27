@@ -18,6 +18,9 @@ angular.module('raiffeisen-payments')
                 paymentRulesResolved: ['paymentRules', function(paymentRules){
                     return paymentRules.search();
                 }]
+            },
+            data: {
+                analyticsTitle: "config.multistepform.labels.step1"
             }
         });
     });

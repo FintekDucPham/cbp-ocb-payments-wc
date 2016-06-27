@@ -4,16 +4,20 @@ angular.module('raiffeisen-payments')
             url: "/delete",
 //            abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/delete/payments_future_manage_delete.html",
-            controller: "PaymentsFutureManageDeleteController"
+            controller: "PaymentsFutureManageDeleteController",
+            data: {
+                analyticsTitle: "raiff.payments.future.remove.label"
+            }
         });
     })
-    .constant('CODE_TO_ICONS', {
+    .constant('CODE_TO_ICONS_PA', {
         "100": "success",
         "99": "error",
         "98": "error",
+        "60": "success",
         "default": "warning"
     })
-    .controller('PaymentsFutureManageDeleteController', function ($scope, paymentsService, pathService, $state, gate, viewStateService, RB_TOKEN_AUTHORIZATION_CONSTANTS, CODE_TO_ICONS, initialState, rbPaymentTypes, $q, lodash, transferService) {
+    .controller('PaymentsFutureManageDeleteController', function ($scope, paymentsService, pathService, $state, gate, viewStateService, RB_TOKEN_AUTHORIZATION_CONSTANTS, CODE_TO_ICONS_PA, initialState, rbPaymentTypes, $q, lodash, transferService) {
         // TODO: ideka from initialState wyciagnac
         //$scope.paymentDetailsPromise = paymentsService.get(initialState.paymentId, {});
 
@@ -50,7 +54,7 @@ angular.module('raiffeisen-payments')
             viewStateService.setInitialState('payments.future.manage.delete.status', {
                 status: {
                     code: responseCode,
-                    icon: CODE_TO_ICONS.hasOwnProperty(responseCode) ? CODE_TO_ICONS[responseCode] : CODE_TO_ICONS['default']
+                    icon: CODE_TO_ICONS_PA.hasOwnProperty(responseCode) ? CODE_TO_ICONS_PA[responseCode] : CODE_TO_ICONS_PA['default']
                 }
             });
             $state.go('payments.future.manage.delete.status');
@@ -81,7 +85,7 @@ angular.module('raiffeisen-payments')
                         viewStateService.setInitialState('payments.future.manage.delete.status', {
                             status: {
                                 code: resp.status.code,
-                                icon: CODE_TO_ICONS.hasOwnProperty(resp.status.code) ? CODE_TO_ICONS[resp.status.code] : CODE_TO_ICONS['default']
+                                icon: CODE_TO_ICONS_PA.hasOwnProperty(resp.status.code) ? CODE_TO_ICONS_PA[resp.status.code] : CODE_TO_ICONS_PA['default']
                             }
                         });
                         $state.go('payments.future.manage.delete.status');

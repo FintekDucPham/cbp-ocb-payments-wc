@@ -3,7 +3,10 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.new_internal.status', {
             url: "/status",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/status/payments_new_internal_status.html",
-            controller: "NewPaymentInternalStatusController"
+            controller: "NewPaymentInternalStatusController",
+            data: {
+                analyticsTitle: "config.multistepform.labels.step3"
+            }
         });
     })
     .controller('NewPaymentInternalStatusController', function ($scope, bdStatusStepInitializer) {

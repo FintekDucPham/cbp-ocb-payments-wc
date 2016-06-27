@@ -3,7 +3,10 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.recipients.list', {
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/list/payments_recipients_list.html",
-            controller: "PaymentsRecipientsListController"
+            controller: "PaymentsRecipientsListController",
+            data: {
+                analyticsTitle: "raiff.payments.recipients.label"
+            }
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
@@ -69,6 +72,7 @@ angular.module('raiffeisen-payments')
 
         $scope.onRecipientRemove = function(data){
             data.bankName = $scope.recipient.item.recipientBankName;
+            var items = {};
             angular.extend(data, {
                 recipientData: data.recipientName,
                 description: data.transferTitle
@@ -77,9 +81,16 @@ angular.module('raiffeisen-payments')
             if(recipientType==='swift'){
                 recipientType='foreign';
             }
+            if(recipientType === 'insurance'){
+                var senderAccount = $scope.getAccountByNrb(data.debitNrb);
+                items = {
+                    senderAccount: senderAccount
+                };
+            }
             $state.go("payments.recipients.manage.remove.verify", {
                 recipientType: recipientType,
                 operation: 'remove',
+                items: angular.copy(items),
                 recipient: angular.copy(data)
             });
         };
@@ -178,19 +189,19 @@ angular.module('raiffeisen-payments')
                                             return {
                                                 transferTitle: template.title.join(" "),
                                                 bankName: template.paymentDetails.bankDetails[0],
-                                                bankData:template.paymentDetails.bankDetails.join(""),
+                                                bankData:template.paymentDetails.bankDetails.join(" "),
                                                 recipientIdentityType: template.paymentDetails.informationProvider,
                                                 recipientBankCountry: template.paymentDetails.bankCountry,
                                                 recipientCountry: template.paymentDetails.foreignCountryCode,
-                                                recipientAddress: recipient.recipientAddress.join(""),
-                                                transferTitleTable: template.title.join(""),
+                                                recipientAddress: recipient.recipientAddress.join(" "),
+                                                transferTitleTable: template.title.join(" "),
                                                 swift_bic: template.paymentDetails.recipientSwift
                                             };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: template.title.join(" "),
-                                                recipientAddress: recipient.recipientAddress.join(""),
-                                                transferTitleTable: template.title.join("")
+                                                recipientAddress: recipient.recipientAddress.join(" "),
+                                                transferTitleTable: template.title.join(" ")
                                             };
                                         case "INSURANCE":
                                             return {

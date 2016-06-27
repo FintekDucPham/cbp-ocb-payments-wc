@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams, rbRecipientOperationType) {
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -23,7 +23,9 @@ angular.module('raiffeisen-payments')
             });
         };
         $scope.onSenderAccountSelect = function () {
-            $scope.recipientForm.recipientAccountNo.$validate();
+            if ($scope.recipientForm.recipientAccountNo) {
+                $scope.recipientForm.recipientAccountNo.$validate();            
+            }            
         };
 
         $scope.$on('clearForm', function () {
@@ -33,15 +35,17 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            if ($scope.recipientForm.recipientAccountNo.$valid) {
-                control.holdOn();
-                var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
-                recipientValidators.insurance.validate(recipientAccountNo, function () {
-                    recipientValidators.tax.validate(recipientAccountNo, function () {
-                        $scope.recipientForm.recipientAccountNo.$validate();
-                        control.done();
-                    });
-                });
+            if ($scope.recipient.operation.code !== 'EDIT') {
+                    if ($scope.recipientForm.recipientAccountNo.$valid) {
+                        control.holdOn();
+                        var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
+                        recipientValidators.insurance.validate(recipientAccountNo, function () {
+                            recipientValidators.tax.validate(recipientAccountNo, function () {
+                                $scope.recipientForm.recipientAccountNo.$validate();
+                                control.done();
+                            });
+                        });
+                    }        
             }
         });
 
@@ -58,6 +62,7 @@ angular.module('raiffeisen-payments')
             messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.domestic.fill.account_related.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                return accounts;
             },

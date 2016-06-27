@@ -84,7 +84,7 @@ angular.module('raiffeisen-payments')
                 };
 
                 var nullOption = $scope.nullOption = {
-                    customerName: 'Płatnik spoza listy'
+                    customerName: $scope.placeholderText
                 };
 
                 systemParameterService.getParameterByName("payer.name.combo.length").then(function(data) {

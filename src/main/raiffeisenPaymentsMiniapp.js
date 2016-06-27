@@ -22,17 +22,20 @@ angular.module('raiffeisen-payments', [
                 url: "/payments",
                 abstract: true,
                 templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/layouts/fullscreen/fullscreen_payments.html",
-                controller: "PaymentsViewController"
+                controller: "PaymentsViewController",
+                data: {
+                    analyticsTitle: "raiff.menu.transfer"
+                }
             });
     }
 
     function registerNavigation() {
         menuServiceProvider.registerMenu({
             id: 'raiffeisen-payments',
-            priority: 300,
+            priority: 200,
             showMain: true,
             baseItem: "payments.recipients.list",
-            title: 'payments.title',
+            title: 'raiff.menu.transfer',
             items:[
                 {
                     id: "payments.new.fill",
@@ -65,7 +68,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.taxpayers.list",
                     label: 'raiff.payments.taxpayers.label',
-                    icon: "raiff-icons raiff_lista_kart",
+                    icon: "raiff-icons raiff_odbiorcy",
                     action: "payments.taxpayers.list",
                     priority: 4
                 },
@@ -79,7 +82,7 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.rejected.list",
                     label: 'raiff.payments.rejected.label',
-                    icon: "raiff-icons raiff_operacje_odrzucone",
+                    icon: "raiff-icons operation_rejected",
                     action: "payments.rejected.list",
                     priority: 6
                 },

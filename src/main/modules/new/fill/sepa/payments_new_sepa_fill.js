@@ -1,5 +1,7 @@
 angular.module('raiffeisen-payments')
-    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService, exchangeRates) {
+    .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
+                                                          validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService,
+                                                          exchangeRates, rbAccountOwnNrbService, forbiddenAccounts, formService) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION_REGEX');
@@ -14,7 +16,6 @@ angular.module('raiffeisen-payments')
             data: null
         };
 
-
         $scope.transfer_type = {
             promise: transferService.foreignTransferTypes(),
             data: null
@@ -24,25 +25,16 @@ angular.module('raiffeisen-payments')
         });
 
         // quick fix
-        utilityService.getCurrentDate().then(function(currentDate) {
+       /* utilityService.getCurrentDate().then(function(currentDate) {
             var realizationDate = new Date(currentDate.getTime());
             realizationDate.setDate(realizationDate.getDate());
             $timeout(function() {
                 $scope.payment.formData.realizationDate = realizationDate;
             });
+        });*/
+        $scope.setDefaultValues({
+            realizationDate: $scope.CURRENT_DATE
         });
-
-        $scope.payment.meta.recipientForbiddenAccounts = lodash.union($scope.payment.meta.recipientForbiddenAccounts, lodash.map([
-            "83101010230000261395100000",
-            "78101010230000261395200000",
-            "73101010230000261395300000",
-            "68101010230000261395400000"
-        ], function (val) {
-            return {
-                code: 'notZus',
-                value: val
-            };
-        }));
 
         function validateSwiftAndAccountNo(accountNo){
             if(accountNo && $scope.payment.formData.recipientSwiftOrBic){
@@ -57,24 +49,7 @@ angular.module('raiffeisen-payments')
 
         $scope.recipientAccountValidators = {
             notZus: function (accountNo) {
-                if (accountNo) {
-                    accountNo = accountNo.replace(/ /g, '');
-
-                    var countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-                    // jesli PL to walidujemy tylko dalsza czesc numeru
-                    // jesli nie PL lub brak prefixu, walidujemy calosc
-                    if (countryPrefix == 'PL') {
-                        accountNo = accountNo.substr(2);
-                    }
-
-                    return  !lodash.some($scope.payment.meta.recipientForbiddenAccounts, {
-                        code: 'notZus',
-                        value: accountNo
-                    });
-                } else {
-                    return false;
-                }
+                return !forbiddenAccounts.isZusAccount(accountNo);
             },
             simpleIncorrectIban: function(accountNo) {
                 if (accountNo) {
@@ -87,9 +62,8 @@ angular.module('raiffeisen-payments')
             }
         };
 
-
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o)){
+            if(n && !angular.equals(n, o) && n.length >= 8){
                 $scope.swift.promise = recipientGeneralService.utils.getBankInformation.getInformation(
                     n,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
@@ -143,7 +117,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
+            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 35);
             copiedFormData.additionalInfo = " ";
 
             copiedFormData.phoneNumber = " ";
@@ -158,15 +132,15 @@ angular.module('raiffeisen-payments')
                 copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.countryCode;
             }
             copiedFormData.transferType = "SEPA";
-            copiedFormData.description = splitTextEveryNSign(formData.description, 35);
+            copiedFormData.description = utilityService.splitTextEveryNSigns(formData.description, 35);
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientAddress = [""];
             copiedFormData.paymentCategory= (lodash.find($scope.transfer_type.data, copiedFormData.currency)).transferType;
-            copiedFormData.recipientBankName=splitTextEveryNSign(formData.recipientBankName, 27) || [''];
+            copiedFormData.recipientBankName= utilityService.splitTextEveryNSigns(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
+            copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             copiedFormData.amount = (""+formData.amount).replace(",",".");
-            formData.amount = (""+formData.amount).replace(",",".");
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
             if(angular.isObject(copiedFormData.currency) && copiedFormData.currency.currency){
                 copiedFormData.currency = copiedFormData.currency.currency;
@@ -194,10 +168,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientBankCountry.ibanLength = null;
         };
 
-        function updateRecipientsList() {
-
-        }
-
         $scope.countries = {
             promise: recipientGeneralService.utils.getCountries(),
             data: null
@@ -205,7 +175,7 @@ angular.module('raiffeisen-payments')
 
         $scope.searchBankPromise = null;
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o)){
+            if(n && !angular.equals(n, o) && n.length >= 8){
                 $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                     $scope.payment.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
@@ -243,7 +213,6 @@ angular.module('raiffeisen-payments')
             $scope.countries.data = error;
         });
 
-
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
             $scope.payment.formData.currency = {currency: 'EUR'};
@@ -255,7 +224,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
-            updateRecipientsList();
             $scope.validateBalance();
         };
 
@@ -264,34 +232,23 @@ angular.module('raiffeisen-payments')
             $timeout(recalculateCurrency);
         });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            if ($scope.paymentForm.$invalid) {
+                markInvalidFieldsAndStopForwardMove(control);
+                return;
+            }
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
-                }),
-                accountNo = $scope.payment.formData.recipientAccountNo.replace(/ */g, ''),
-                countryPrefix = accountNo.substr(0,2).toUpperCase();
-
-            if (countryPrefix == 'PL') {
-                accountNo = accountNo.substr(2);
-            }
-
+                });
+            $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase();
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
-
-            if($scope.payment.formData.recipientAccountNo) {
-                control.holdOn();
-                taxOffices.search({
-                    accountNo: accountNo
-                }).then(function (result) {
-                    if (result.length > 0) {
-                        $scope.payment.meta.recipientForbiddenAccounts.push({
-                            code: 'notUs',
-                            value: accountNo
-                        });
-                        $scope.paymentForm.recipientAccountNo.$validate();
-                    }
-                }).finally(control.done);
-            }
         });
+
+        function markInvalidFieldsAndStopForwardMove(remote) {
+            formService.dirtyFields($scope.paymentForm);
+            remote.holdOn();
+            remote.deferred.reject();
+        }
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
@@ -321,19 +278,9 @@ angular.module('raiffeisen-payments')
             });
         });
 
-        function isAccountInvestmentFulfilsRules(account){
-            if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
-                if(account.actions.indexOf('create_domestic_transfer')>-1){
-                    return true;
-                }else {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                 if($scope.payment.meta.customerContext==='MICRO'){
                     return lodash.filter(accounts,  function(account){
@@ -342,27 +289,22 @@ angular.module('raiffeisen-payments')
                 }else{
                     return accounts;
                 }
-
             },
             payments: true
         });
 
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
-
         $scope.onRecipientCountryChange = function() {
-            if (!$scope.payment.options.fixedRecipientSelection) {
+            if (!$scope.payment.options.fixedRecipientSelection && $scope.payment.formData.recipientBankCountry) {
                 $scope.payment.options.ibanLength = $scope.payment.formData.recipientBankCountry.ibanLength;
             }
             else {
                 $scope.payment.options.ibanLength = null;
             }
         };
+        $scope.$watch('payment.formData.recipientAccountNo', function(n,o){
+            if(n!==o && angular.isString(n)){
+                $scope.isOwnAccount = rbAccountOwnNrbService.startsWithPrefix(n.substring(2));
+            }
+        });
+
     });

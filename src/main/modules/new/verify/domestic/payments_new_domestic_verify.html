@@ -1,13 +1,32 @@
 <div class="form-body" ng-controller="NewDomesticPaymentVerifyController">
-
+    <span ng-show="meta.cutOffTimePromise.$$state.status  !== 0">
+    <rb-cut-off-time
+            response-value="meta.responseCutOffTime"
+            account-no="payment.formData.recipientAccountNo"
+            transfer-kind="payment.type.code"
+            transfer-type="{{payment.formData.sendBySorbnet?'SORBNET':'ELIXIR'}}"
+            realization-date="payment.formData.realizationDate"
+            cut-off-time-promise="meta.cutOffTimePromise"
+            end-of-day-warning="payment.endOfDayWarning"
+            is-holiday="payment.holiday">
+    </rb-cut-off-time>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
-        <span class="desktop-only-payments">
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+            <div>
+                {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+            </div>
+        </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
+        </div>
+        <!--<span class="desktop-only-payments">
         <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
-        {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+
         </span>
         <div class="mobile-only-payments">
             <span class="ellipsis-account" >{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}  </span>&nbsp; {{payment.items.senderAccount.accountNo | nrbIbanShortFilter }}
-        </div>
+        </div>-->
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_data'|translate}}">
@@ -15,8 +34,8 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_account_no'|translate}}">
+        <rb-bank-name account-no="payment.formData.recipientAccountNo" bank-name-promise="payment.formData.recipientBankNamePromise"></rb-bank-name>
         {{payment.formData.recipientAccountNo | nrbIbanFilter }} <!-- | nrb -->
-        <br ng-if="payment.formData.recipientAccountName"/>{{payment.formData.recipientAccountName}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.recipient_data'|translate}}">
@@ -28,22 +47,21 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.description'|translate}}">
-        <p style="word-break: break-all">{{payment.formData.description | arrayFilter}}</p>
+        <p style="word-break: break-word">{{payment.formData.description | arrayFilter}}</p>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.execution_date'|translate}}">
         {{payment.formData.realizationDate | date:'shortDate' }}
     </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.realization_type_sorbnet.verify.label'|translate}}">
+        <span ng-hide="payment.formData.sendBySorbnet">{{::'raiff.payments.new.realization_type_sorbnet.option.elixir'|translate }}</span>
+        <span ng-show="payment.formData.sendBySorbnet">{{::'raiff.payments.new.realization_type_sorbnet.option.sorbnet'|translate }}</span>
+    </bd-item-property>
+
     <bd-item-property ng-show="transferCost.link != null" class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.verify.transfer_cost'|translate}}">
         <a href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
     </bd-item-property>
-     <span class="eb-validation-messages" ng-if="payment.endOfDayWarning">
-         <span class="messages">
-             <span class="validation-message">
-                 {{::'raiff.payments.new.domestic.fill.execution_date.EOD_ERROR'|translate}}
-             </span>
-         </span>
-    </span>
      <span class="eb-validation-messages" ng-if="payment.holiday">
          <span class="messages">
              <span class="validation-message">
@@ -51,4 +69,6 @@
              </span>
          </span>
     </span>
+    </span>
+    <eb-preloader class="eb-list-preloader" eb-promise="meta.cutOffTimePromise"></eb-preloader>
 </div>

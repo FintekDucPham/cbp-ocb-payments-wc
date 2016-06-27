@@ -4,8 +4,10 @@ angular.module('raiffeisen-payments')
             url: "/manage",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/payments_future_manage.html",
-            controller: "PaymentsFutureManageController"
-
+            controller: "PaymentsFutureManageController",
+            data: {
+                analyticsTitle: "raiff.payments.future.label"
+            }
         });
     })
     .controller('PaymentsFutureManageController', function ($scope, $timeout, lodash, $rootScope, $stateParams,

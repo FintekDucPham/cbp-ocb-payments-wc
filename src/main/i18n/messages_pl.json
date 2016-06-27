@@ -20,8 +20,8 @@
     "raiff.payments.id_type.PESEL": "P - PESEL",
     "raiff.payments.id_type.NIP": "N - NIP",
     "raiff.payments.id_type.REGON": "R - REGON",
-    "raiff.payments.id_type.ID_CARD": "1 - dowód osobisty",
-    "raiff.payments.id_type.PASSPORT": "2 - paszport",
+    "raiff.payments.id_type.ID_CARD": "1 - Dowód osobisty",
+    "raiff.payments.id_type.PASSPORT": "2 - Paszport",
     "raiff.payments.id_type.OTHER": "3 - Inny dokument tożsamości",
 
     "raiff.payments.widget.recipient_name": "Odbiorca",
@@ -95,10 +95,13 @@
     "raiff.payments.new.step2.row.info.costs_not_available": "Informacje o przewidywancyh kosztach zlecenia nie są obecnie dostępne. Nie wpływa to na możliwość przekazania dyspozycji do realizacji.",
     "raiff.payments.new.step2.row.charges": "Opłaty",
 
+    "raiff.payments.new.confirmation.text": "Potwierdzenie dodania nowego przelewu",
+
     "raiff.payments.new.label.header": "Przelew",
     "raiff.payments.new.label.STANDING.NEW.header": "Dodawanie zlecenia stałego",
     "raiff.payments.new.label.STANDING.EDIT.header": "Modyfikacja zlecenia stałego",
 
+    "raiff.payments.recipient.new.error.exist":"Odbiorca o takim numerze rachunku znajduje się na liście.",
     "raiff.payments.new_internal.label.header": "Przelew własny",
     "raiff.payments.new.payment_type": "Typ przelewu",
     "raiff.payments.new.payment_type.select": "Wybierz typ przelewu",
@@ -111,6 +114,7 @@
     "raiff.payments.new.types.SWIFT": "Przelew zagraniczny",
     "raiff.payments.new.types.SEPA": "Przelew euroregulowany",
     "raiff.payments.new.types.STANDING": "Zlecenie stałe",
+    "raiff.payments.new.types.STANDING_ORDER": "Zlecenie stałe",
     "raiff.payments.new.btn.change": "Popraw",
     "raiff.payments.new.btn.cancel": "Anuluj",
     "raiff.payments.new.btn.accept": "Zatwierdź",
@@ -124,14 +128,16 @@
     "raiff.payments.new.realization_type_sorbnet.option.elixir": "ELIXIR – przelew standardowy",
     "raiff.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – przelew SORBNET",
     "raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Rachunek odbiorcy jest prowadzony przez Raiffeisen Bank Polska S.A.–nie może być zrealizowany jako SORBNET, zostanie zrealizowany w rozliczeniu wewnętrznym",
+    "raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO": "Rachunek odbiorcy jest prowadzony przez Raiffeisen Bank Polska S.A. – zostanie zrealizowany w rozliczeniu wewnętrznym",
     "raiff.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Raiffeisen Polbank. jest możliwy tylko jako przelew własny",
+    "raiff.payments.new.realization_type_sorbnet.sorbnet_hours": "Przelew SORBNET jest realizowany w godzinach od {0} do {1}",
 
     "raiff.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.foreign.fill.recipient_country.error.required": "Musisz wybrać kraj odbiorcy",
     "raiff.payments.new.foreign.fill.sepa.recipient_country.error.required": "Pole Kraj odbiorcy nie może być puste",
     "raiff.payments.new.foreign.fill.sepa.amount.EMPTY_AMOUNT": "Pole Kwota nie może być puste",
-    "raiff.payments.new.foreign.fill.multirow_data.error.required": "Pole Dane odbiorcy  nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
-    "raiff.payments.new.foreign.fill.multirow_title.error.required": "Pole Tytuł  nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
+    "raiff.payments.new.foreign.fill.multirow_data.error.required": "Nazwa i adres odbiorcy nie może przekraczać 140 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
+    "raiff.payments.new.foreign.fill.multirow_title.error.required": "Pole Tytuł nie może być dłuższe niż 140 znaki i powinno zawierać tylko litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.new.foreign.fill.swfitbic":"podaj SWIFT/BIC",
     "raiff.payments.new.foreign.fill.recipientBankData":"wprowadź dane banku odbiorcy",
     "raiff.payments.new.currency.fill.recipient_account.INCORRECT_IBAN": "Długość rachunku jest nieprawidłowa dla wybranego kraju",
@@ -148,14 +154,14 @@
     "raiff.payments.new.domestic.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
     "raiff.payments.new.domestic.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.payments.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC": "Rachunek odbiorcy musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
-    "raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_US": "Nie możesz wykonać przelewu, pole 'Na rachunek' jest rachunkiem Urzędu Skarbowego. Aby wykonać przelew do Urzędu Skarbowego wybierz z Menu opcję 'Przelew do US'.",
+    "raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_US": "Nie możesz wykonać przelewu, pole 'Na rachunek' jest rachunkiem Urzędu Skarbowego/Izby Celnej. Aby wykonać przelew do Urzędu Skarbowego/Izby Celnej w PLN wybierz z Menu opcję 'Przelew do US/IC’.",
     "raiff.payments.new.domestic.fill.recipient_account.BNF_ACC_NOT_ZUS": "Nie możesz wykonać przelewu – pole 'Na rachunek' jest rachunkiem ZUS. Aby wykonać przelew do ZUS wybierz z Menu opcję 'Przelew do ZUS'.",
     "raiff.payments.new.domestic.fill.recipient_data": "Nazwa odbiorcy",
     "raiff.payments.new.domestic.fill.recipient_data.placeholder": "Wpisz nazwę odbiorcy",
-    "raiff.payments.new.domestic.fill.recipient_data.EMPTY_BNF_DATA": "Dane odbiorcy nie mogą być puste",
+    "raiff.payments.new.domestic.fill.recipient_data.EMPTY_BNF_DATA": "Nazwa i adres odbiorcy nie może być pusta",
     "raiff.payments.new.domestic.fill.recipient_data.EMPTY_BANK_DATA": "Dane banku nie mogą być puste",
     "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BANK_DATA":"Dane banku nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
-    "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.domestic.fill.recipient_data.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.new.domestic.fill.bank_data.TOO_LONG_BNF_DATA": "Dane banku odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki/ - ? : ( ) . , ' + ",
     "raiff.payments.new.domestic.fill.description": "Tytułem",
     "raiff.payments.new.domestic.fill.description.placeholder": "Wpisz tytuł przelewu",
@@ -169,7 +175,6 @@
     "raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID": "Kwota przelewu przekracza środki dostępne na rachunku",
     "raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED": "Przekroczony dzienny limit operacji. Wartość limitu oraz kwotę pozostałą dziś do wykorzystania znajdziesz w menu \"Ustawienia - Bankowość internetowa - Limity dzienne\".",
     "raiff.payments.new.domestic.fill.amount.NOT_ELIXIR_PMNT": "Przelew nie może być wykonany jako płatność Elixir",
-    "raiff.payments.new.standing.fill.amount.MSG-0601_INCORRECT_DIFFERENCE_AMNT_SO":"Przekroczony dzienny limit operacji",
     "raiff.payments.new.domestic.fill.execution_date": "Data realizacji",
     "raiff.payments.new.domestic.fill.execution_date.placeholder": "Wybierz datę realizacji",
     "raiff.payments.new.domestic.fill.execution_date.EMPTY_EXECUTED_DATE": "Data realizacji przelewu nie może być pusta",
@@ -182,6 +187,7 @@
     "raiff.payments.new.domestic.fill.execution_date.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
+    "raiff.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Raiffeisen Polbank jest możliwy tylko jako przelew własny.",
     "raiff.payments.new.internal.fill.choose":"Wybierz",
 
     "raiff.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
@@ -193,6 +199,7 @@
     "raiff.payments.new.domestic.fill.account.digitName3":" cyfr ",
     "raiff.payments.new.domestic.fill.account.warning3":"wklejonego numeru rachunku",
     "raiff.payments.new.domestic.fill.errorPaste":"Wartość niezgodna z wklejonym numerem rachunku, spróbuj ponownie.",
+    "raiff.payments.new.domestic.fill.error.paste.required":"Pole nie może być puste",
     "raiff.payments.new.fill.tooltip":"Wpisane cyfry są zgodne z ostatnimi cyframi rachunku",
 
     "raiff.payments.new.domestic.verify.sender_account_name": "Z rachunku",
@@ -236,9 +243,9 @@
 
     "raiff.payments.new.zus.fill.sender_account": "Z rachunku",
     "raiff.payments.new.zus.fill.accessible_assets": "Dostępne środki",
-    "raiff.payments.new.zus.fill.recipient_data": "Nazwa płatnika",
-    "raiff.payments.new.zus.fill.recipient_data.EMPTY_PAYER": "Nazwa płatnika nie może być pusta",
-    "raiff.payments.new.zus.fill.recipient_data.TOO_LONG_PAYER_ZUS": "Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.zus.fill.recipient_data": "Dane płatnika",
+    "raiff.payments.new.zus.fill.recipient_data.EMPTY_PAYER": "Dane płatnika nie mogą być puste",
+    "raiff.payments.new.zus.fill.recipient_data.TOO_LONG_PAYER_ZUS": "Dane płatnika nie mogą przekraczać 54 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.new.zus.fill.recipient_data.placeholder": "Wpisz dane płatnika",
     "raiff.payments.new.zus.fill.taxpayer": "Płatnik",
     "raiff.payments.new.zus.fill.taxpayer.placeholder": "Wpisz nazwę płatnika",
@@ -301,7 +308,7 @@
 
     "raiff.payments.new.zus.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.zus.verify.sender_data": "Właściciel",
-    "raiff.payments.new.zus.verify.taxpayer_data": "Nazwa płatnika",
+    "raiff.payments.new.zus.verify.taxpayer_data": "Dane płatnika",
     "raiff.payments.new.zus.verify.taxpayer_nip": "NIP płatnika",
     "raiff.payments.new.zus.verify.taxpayer_supplementary_id_type": "Typ drugiego identyfikatora",
     "raiff.payments.new.zus.verify.taxpayer_supplementary_id": "Drugi identyfikator",
@@ -326,7 +333,7 @@
     "raiff.payments.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US": "Rachunek Urzędu Skarbowego/Izby Celnej musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
     "raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC": "Nie znaleziono Urzędu Skarbowego/Izby Celnej o podanym numerze rachunku",
     "raiff.payments.new.us.fill.recipient_account.NOT_FROM_LIST_US": "Urząd skarbowy musi zostać wybrany z listy wyboru.",
-    "raiff.payments.new.us.fill.taxpayer_data": "Nazwa płatnika",
+    "raiff.payments.new.us.fill.taxpayer_data": "Dane płatnika",
     "raiff.payments.new.us.fill.taxpayer_data.placeholder": "Wpisz nazwę płatnika",
     "raiff.payments.new.us.fill.taxpayer_data.EMPTY_PAYER": "Dane płatnika nie mogą być puste",
     "raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US": "Dane płatnika nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
@@ -406,11 +413,11 @@
     "raiff.payments.recipients.new.currency.fill.remitterAccount.EMPTY": "Pole nie może być puste",
     "raiff.payments.recipients.new.currency.fill.customName.EMPTY": "Nazwa skrócona odbiorcy nie może być pusta",
     "raiff.payments.recipients.new.currency.fill.customName.ILLEGAL": "Nazwa skrócona odbiorcy nie może przekraczać 35 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
-    "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",
-    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # % ^ & * ( ) - + [ ] { } : ; > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Nazwa i adres odbiorcy nie mogę być puste",
     "raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA": "Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # % ^ & * ( ) - + [ ] { } : ; > . ? \\ ~ ` '  , /",
 
     "raiff.payments.recipients.new.currency.fill.recipient_account.label": "Rachunek odbiorcy",
+    "raiff.payments.recipients.new.currency.verify.recipient_account.label":"Na rachunek",
     "raiff.payments.recipients.new.currency.remove.recipient_account.label": "Numer rachunku",
     "raiff.payments.recipients.new.currency.fill.recipient_account.placeholder": "Wpisz rachunek odbiorcy",
 
@@ -418,7 +425,7 @@
     "raiff.payments.recipients.new.currency.remove.recipient_name_address": "Nazwa i adres",
     "raiff.payments.recipients.new.currency.fill.recipient_data.placeholder": "Wpisz nazwę i adres odbiorcy",
 
-    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC": "Rachunek odbiorcy nie może być pusty",
     "raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC": "Rachunek odbiorcy nie może przekraczać 34 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK": "Dane banku odbiorcy nie mogą być puste",
@@ -434,7 +441,7 @@
     "raiff.payments.recipients.new.currency.fill.swift.recipentAccount.INCORRECT_CHARACTER_ACC": "Pole Rachunek odbiorcy nie może być dłuższe niż 34 znaki i powinno zawierać tylko: litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.description.EMPTY":"Tytuł przelewu nie może być pusty",
     "raiff.payments.recipients.edit.currency.verify.company.name":"Nazwa firmy",
-    "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Dane odbiorcy nie mogę być puste",
+    "raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Nazwa i adres odbiorcy nie mogę być puste",
     "raiff.payments.recipients.new.currency.fill.recipient_data.TOO_LONG_BANK": "Dane banku odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN": "Rachunek odbiorcy nie jest zgodny z formatem IBAN.",
     "raiff.payments.recipients.new.currency.fill.MSG-0609_EMPTY_SWIFT":"Kod SWIFT banku nie może być pusty",
@@ -444,7 +451,7 @@
 
     "raiff.payments.new.us.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.us.verify.recipient_account_no": "Na rachunek",
-    "raiff.payments.new.us.verify.taxpayer_data": "Nazwa płatnika",
+    "raiff.payments.new.us.verify.taxpayer_data": "Dane płatnika",
     "raiff.payments.new.us.verify.supplementary_id_type": "Typ identyfikatora uzupełniającego",
     "raiff.payments.new.us.verify.supplementary_id": "Numer identyfikatora uzupełniającego",
     "raiff.payments.new.us.verify.form_symbol": "Symbol formularza",
@@ -466,10 +473,15 @@
     "raiff.payments.MSG-0518_BLOCKED_SMS": "Autoryzacja hasłem SMS została zablokowana",
     "raiff.payments.MSG-0519_SMS_AGAIN": "Nie udało się wysłać kodu SMS. Naciśnij przycisk Potwierdź nowym hasłem SMS aby ponownie wysłać hasło SMS",
 
-    "raiff.payments.new.status.0": "Przelew/transakcja przyjęta do realizacji",
-    "raiff.payments.new.status.00": "Przelew/transakcja przyjęta do realizacji",
-    "raiff.payments.new.status.000": "Przelew/transakcja przyjęta do realizacji",
-    "raiff.payments.new.status.0000": "Przelew/transakcja przyjęta do realizacji",
+    "raiff.payments.new.status.0": "Przelew/transakcja zrealizowana",
+    "raiff.payments.new.status.00": "Przelew/transakcja zrealizowana",
+    "raiff.payments.new.status.000": "Przelew/transakcja zrealizowana",
+    "raiff.payments.new.status.0000": "Przelew/transakcja zrealizowana",
+    "raiff.payments.new.status.1": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.11": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.111": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.1111": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.2": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.20": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.40": "Przelew/transakcja przyjęta do realizacji",
     "raiff.payments.new.status.60": "Przelew/transakcja przyjęta do realizacji",
@@ -477,14 +489,17 @@
     "raiff.payments.new.status.99": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.98": "Przelew/transakcja odrzucona",
     "raiff.payments.new.status.error": "Przelew został odrzucony",
-    "raiff.payments.new.status.success": "Przelew/transakcja przyjęta do realizacji",
-    "raiff.payments.new.status.": "Przelew/transakcja odrzucona",
+    "raiff.payments.new.status.success": "Przelew/transakcja zrealizowana",
+    "raiff.payments.new.status.":"Przelew/transakcja odrzucona",
+    
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
     "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
     "raiff.payments.recipients.type.label": "Typ odbiorcy",
     "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.new.button": "Nowy odbiorca",
+    "raiff.payments.recipients.new.label": "Nowy odbiorca",
+    "raiff.payments.recipients.edit.label": "Edycja odbiorcy",
     "raiff.payments.recipients.select.filter.button.action": "szukaj",
     "raiff.payments.recipients.select.filter.text.label": "Szukaj odbiorcy",
     "raiff.payments.recipients.list.header.customName.label": "Twoja nazwa odbiorcy",
@@ -561,8 +576,6 @@
     "raiff.payments.recipients.new.domestic.fill.description.EMPTY":"Tytuł przelewu nie może być pusty",
     "raiff.payments.recipients.new.domestic.fill.description.PATTERN":"Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /",
     "raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , /",
-    "raiff.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Dane odbiorcy mogą składać się maskymalnie ze 140 znaków",
-
 
     "raiff.payments.recipients.new.zus.fill.remitter_account": "Z rachunku",
     "raiff.payments.recipients.new.zus.fill.recipient_name": "Nazwa rachunku",
@@ -742,6 +755,9 @@
     "raiff.payments.taxpayers.select.filter.text.label": "Szukaj płatnika",
     "raiff.payments.taxpayers.select.filter.button.action": "Szukaj",
 
+    "raiff.payments.taxpayers.new.label": "Dane płatnika",
+    "raiff.payments.taxpayers.edit.label": "Edycja płatnika",
+
     "raiff.payments.taxpayers.type.label": "Płatnicy",
 
     "raiff.payments.taxpayers.details.name.label": "Nazwa płatnika",
@@ -801,12 +817,15 @@
     "raiff.payments.taxpayers.verify.taxpayer_nip": "NIP płatnika",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id_type": "Typ identyfikatora uzupełniającego",
     "raiff.payments.taxpayers.verify.taxpayer_supplementary_id": "Numer identyfikatora uzupełniającego",
-    "raiff.payments.taxpayers.manage.new.status.ok": "Płatnik został utworzony",
-    "raiff.payments.taxpayers.manage.new.status.fail": "Płatnik nie został utworzony",
-    "raiff.payments.taxpayers.manage.edit.status.ok": "Płatnik został uaktualniony",
-    "raiff.payments.taxpayers.manage.edit.status.fail": "Płatnik nie został uaktualniony",
-    "raiff.payments.taxpayers.manage.remove.status.ok": "Płatnik został usunięty",
-    "raiff.payments.taxpayers.manage.remove.status.fail": "Płatnik nie został usunięty",
+
+    "raiff.payments.taxpayers.manage.new.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.new.status.fail": "Zlecenie odrzucone",
+
+    "raiff.payments.taxpayers.manage.edit.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.edit.status.fail": "Zlecenie odrzucone",
+
+    "raiff.payments.taxpayers.manage.remove.status.ok": "Zlecenie zrealizowane",
+    "raiff.payments.taxpayers.manage.remove.status.fail": "Zlecenie odrzucone",
 
     "raiff.payments.taxpayers.manage.status.taxpayer_type": "Typ płatnika",
 
@@ -829,6 +848,9 @@
 
     "raiff.payments.future.fill.transferType.label": "Typ przelewu",
     "raiff.payments.future.fill.debit_account.label": "Z rachunku",
+
+    "raiff.payments.future.edit.label": "Edycja płatności zaplanowanej",
+    "raiff.payments.future.remove.label": "Usunięcie płatności zaplanowanej",
 
     "raiff.payments.components.futureDatePanel.dateRanges.DAYS": "dni",
     "raiff.payments.components.futureDatePanel.dateRanges.WEEKS": "tygodni",
@@ -991,6 +1013,7 @@
     "raiff.INCORRECT_NIP": "Niepoprawny numer NIP płatnika",
     "raiff.change_me.EMPTY_SECONDARY_ID_TYPE": "Typ drugiego identyfikatora musi zostać wybrany",
     "raiff.change_me.EMPTY_PAYMENT_TYPE": "Typ wpłaty musi zostać wybrany",
+    "raiff.validation.sameSourceAccount":"Rachunek odbiorcy musi być różny od rachunku źródłowego",
 
     "raiff.payments.future.delete.buttons.proceed": "Usuń",
     "raiff.payments.future.bad_token.buttons.proceed": "Zatwierdź",
@@ -1007,7 +1030,7 @@
     "raiff.payments.future.delete.status.label.status.100": "Zlecenie zrealizowane",
     "raiff.payments.future.delete.status.label.status.99": "Zlecenie odrzucone",
     "raiff.payments.future.delete.status.label.status.98": "Zlecenie odrzucone",
-
+    "raiff.payments.future.delete.status.label.status.": "Zlecenie odrzucone",
 
     "raiff.payments.standing.label": "Zlecenia stałe",
     "raiff.payments.standing.list.header": "Zlecenia stałe",
@@ -1039,6 +1062,7 @@
 
 
     "raiff.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
+    "raiff.payments.new.error.description.NotNull":"Tytuł przelewu nie może być pusty",
     "raiff.payments.new.standing.edit.order_id": "Numer zlecenia",
 
 
@@ -1049,7 +1073,7 @@
     "raiff.payments.new.standing.fill.custom_name.ILLEGAL": "TODO: illegal",
     "raiff.payments.new.standing.fill.sender_account": "Z rachunku",
     "raiff.payments.new.standing.fill.accessible_assets": "Dostępne środki",
-    "raiff.payments.new.standing.fill.recipient": "Wybierz odbiorcę",
+    "raiff.payments.new.standing.fill.recipient": "Dane odbiorcy",
     "raiff.payments.new.standing.fill.recipient.placeholder": "Odbiorca spoza listy",
     "raiff.payments.new.standing.fill.recipient.clear": "Wyczyść",
     "raiff.payments.new.standing.fill.recipient_account": "Rachunek odbiorcy",
@@ -1060,10 +1084,10 @@
     "raiff.payments.new.standing.fill.recipient_account.BNF_ACC_NOT_ZUS": "Nie możesz utworzyć zlecenia stałego, pole 'Na rachunek' jest rachunkiem ZUS.",
     "raiff.payments.new.standing.fill.recipient_data": "Nazwa i adres odbiorcy",
     "raiff.payments.new.standing.fill.recipient_data.placeholder": "Wpisz nazwę odbiorcy",
-    "raiff.payments.new.standing.fill.recipient_data.EMPTY_BNF_DATA": "Dane odbiorcy nie mogą być puste",
+    "raiff.payments.new.standing.fill.recipient_data.EMPTY_BNF_DATA": "Nazwa i adres odbiorcy nie może być pusta",
     "raiff.payments.new.standing.fill.recipient_data.EMPTY_BANK_DATA": "Dane banku nie mogą być puste",
     "raiff.payments.new.standing.fill.recipient_data.TOO_LONG_BANK_DATA":"Dane banku nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
-    "raiff.payments.new.standing.fill.recipient_data.TOO_LONG_BNF_DATA": "Dane odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.new.standing.fill.recipient_data.TOO_LONG_BNF_DATA": "Nazwa i adres odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
     "raiff.payments.new.standing.fill.bank_data.TOO_LONG_BNF_DATA": "Dane banku odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki/ - ? : ( ) . , ' + ",
     "raiff.payments.new.standing.fill.description": "Tytułem",
     "raiff.payments.new.standing.fill.description.placeholder": "Wpisz tytuł przelewu",
@@ -1077,6 +1101,7 @@
     "raiff.payments.new.standing.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID": "Kwota przelewu przekracza środki dostępne na rachunku",
     "raiff.payments.new.standing.fill.amount.DAILY_LIMIT_EXCEEDED": "Przekroczony dzienny limit operacji",
     "raiff.payments.new.standing.fill.amount.NOT_ELIXIR_PMNT": "Przelew nie może być wykonany jako płatność Elixir",
+    "raiff.payments.new.standing.fill.amount.MSG-0601_INCORRECT_DIFFERENCE_AMNT_SO":"Przekroczony dzienny limit operacji",
     "raiff.payments.new.standing.fill.first_execution_date": "Data pierwszej realizacji",
     "raiff.payments.new.standing.fill.first_execution_date.placeholder": "Wybierz datę pierwszej realizacji",
     "raiff.payments.new.standing.fill.first_execution_date.EMPTY_EXECUTED_DATE": "TODO: Data realizacji przelewu nie może być pusta",
@@ -1099,8 +1124,8 @@
 
     "raiff.payments.new.standing.fill.frequencyType.types.empty": "Brak",
 
-    "raiff.payments.new.standing.fill.frequencyType.types.1.M": "miesiąc",
-    "raiff.payments.new.standing.fill.frequencyType.types.1.W": "tydzień",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.M": "miesiąc/miesięcy",
+    "raiff.payments.new.standing.fill.frequencyType.types.1.W": "tydzień/tygodni",
     "raiff.payments.new.standing.fill.frequencyType.types.1.B": "każdego dnia roboczego",
     "raiff.payments.new.standing.fill.frequencyType.types.1.": "",
 
@@ -1122,6 +1147,8 @@
     "raiffeisen.payments.standing_order.firstRealizationDate.to_late": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##0##",
     "raiff.payments.new.standing.fill.first_execution_date.TOO_LATE_FIRST_DATE": "Data pierwszej realizacji zlecenia nie może być późniejsza niż ##DATE##",
 
+    "raiffeisen.payments.standing_order.nextRealizationDate.to_early": "Data następnej realizacji zlecenia nie może być wcześniejsza niż ##0##",
+    "raiffeisen.payments.standing_order.nextRealizationDate.to_late": "Data następnej realizacji zlecenia nie może być późniejsza niż ##0##",
     "raiff.payments.new.standing.fill.edit.first_execution_date.FIRST_DATE": "Data następnej realizacji zlecenia nie może być pusta",
     "raiff.payments.new.standing.fill.edit.first_execution_date.INCORRECT_FIRST_DATE": "Niepoprawna data następnej realizacji zlecenia",
     "raiff.payments.new.standing.fill.edit.first_execution_date.TOO_EARLY_FIRST_DATE": "Data następnej realizacji zlecenia nie może być wcześniejsza niż ##DATE##",
@@ -1177,15 +1204,20 @@
     "raiff.payments.new.standing.accept": "Zatwierdź",
 
     "raiff.payments.standing.manage.remove.title": "Usunięcie zlecenia stałego",
+    "raiff.payments.remove.standing.error.already_deleted": "Nie można usunąć wybranego zlecenia stałego. Usunięcie tego zlecenia oczekuje na wykonanie.",
     "raiff.standing_order.startDate.to_early":"Niepoprawna data pierwszej realizacji zlecenia",
+    "raiff.standing_order.endDate.to_early":"Niepoprawna data zakończenia zlecenia",
   "EOF" : "",
     "raiff.payments.new.verify.transfer_cost": "Koszt przelewu",
     "raiff.payments.new.verify.transfer_cost.info" : "Informacja o koszcie przelewu",
 
   "raiff.payments.cut.off.time.MSG-0662": "Sesja księgowania Twojej transakcji jeszcze nie została rozpoczęta. W momencie jej rozpoczęcia, Twoja transakcja zostanie zrealizowana.",
   "raiff.payments.cut.off.time.MSG-0659": "Nie gwarantujemy, że dyspozycja zostanie zrealizowana dzisiaj.",
+    "raiff.payments.cut.off.time.MSG-0657_COT_SORBNET": "Przelew złożony po godzinie {0} będzie zrealizowany w następnym dniu roboczym, jeśli chcesz kontynuować wybierz przycisk \"Dalej\"",
     "raiff.payments.recipient.new.error.MSG-0660_SAME_BNF":"Dla podanej pary rachunków istnieje już zdefiniowany Odbiorca. Jeśli chcesz kontynuować, wybierz \"Dalej\"",
 "raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT":"Kraj banku odbiorcy nie jest zgodny z podanym kodem SWIFT banku odbiorcy.",
-    "raiff.payments.swift.validation.error.incorrect_country_code":"Kraj banku jest niezgodny z numerem rachunku"
+    "raiff.payments.swift.validation.error.incorrect_country_code":"Kraj banku jest niezgodny z numerem rachunku",
+    "raiff.payments.currency.placeholder":"Waluta",
+    "raiff.payments.new.currency.fill.currency.error.required": "Waluta nie może być pusta"
 
 }

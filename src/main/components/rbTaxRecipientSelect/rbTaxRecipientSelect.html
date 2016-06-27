@@ -8,12 +8,15 @@
                 {{$select.selected.customerName}}
             </ui-select-match>
             <ui-select-choices repeat="recipientItem in recipientList track by $index" null-option="nullOption">
-                <div ng-bind-html="recipientItem.customerName | highlight: $select.search"></div>
+                <div ng-bind="recipientItem.customerName"></div>
             </ui-select-choices>
         </ui-select>
     </div>
     <div class="rb-tax-recipient-select__btn-clear">
-        <bd-button ng-click="clearSelection()" ng-disabled="!selection.isSelected">{{ clearText }}</bd-button>
+        <bd-button ng-click="clearSelection()" ng-disabled="!selection.isSelected" eb-analytics-disabled>
+            <span class="hidden-xs">{{ clearText }}</span>
+            <span class="hidden-sm hidden-md hidden-lg">X</span>
+        </bd-button>
     </div>
 </div>
 

@@ -3,7 +3,10 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.details', {
             url: "/:id/details",
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/details/payment_details.html",
-            controller: "CardDetailsController"
+            controller: "CardDetailsController",
+            data: {
+                analyticsTitle: undefined
+            }
         });
     })
     .controller('PaymentDetailsController', function($scope, translate, $stateParams, accountsService, initialState, domService) {

@@ -42,7 +42,7 @@
                    ng-minlength = "payment.formData.recipientBankCountry.ibanLength || null"
                    class="input-field"
                    type="text"
-                   ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                   ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = '';rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    ng-change="unlockField()"
                    ng-disabled="payment.options.fixedRecipientSelection  || showHide"
                    bd-matches-none-of="recipientAccountValidators"
@@ -85,11 +85,16 @@
             <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
             <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
             <span class="" style="position: relative">
-            <input id="maskNumer"  type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
+            <input id="maskNumer"  ng-required="isOk || showHide" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                 <span class="tooltipFix__tooltip">
                     <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
                  </span>
             </span>
+             <eb-validation-messages eb-name="nrbCheck">
+                 <div eb-message-key="required" class="validation-message animate-on">
+                     {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+                 </div>
+             </eb-validation-messages>
         </span>
     </rb-paste-warning>
     <bd-item-property class="bd-item-property--multirow"
@@ -99,7 +104,7 @@
               ng-pattern="FOREIGN_DATA_REGEX"
               required
               bd-array-value
-
+              ng-change="validationErrors.recipientName = undefined"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -159,6 +164,7 @@
                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                    name="swift_bic"
                    required="true"
+                   ng-minlength="8"
                    placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
         </rb-item-property-data-preloader>
 
@@ -173,6 +179,9 @@
                 {{::'raiff.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT'|translate}}
             </div>
             <div eb-message-key="recipientBankIncorrectSwift" class="validation-message animate-on">
+                {{::'raiff.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
+            </div>
+            <div eb-message-key="minlength" class="validation-message animate-on">
                 {{::'raiff.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
             </div>
         </eb-validation-messages>
@@ -217,7 +226,7 @@
                         class="input-field input-area--party-data"
                         ng-model="payment.formData.recipientBankName"
                         name="recipientBankName"
-                        ng-required="true"
+                        ng-required="!!swift_bic"
                         ng-pattern="BANK_NAME_VALIDATION_REGEX"
                         bd-matches-none-of="recipientBankNameValidators"
                         split-text-max-length-validators="140"></textarea>
@@ -233,6 +242,7 @@
                   class="input-field input-area--payment-description"
                   required
                   bd-array-value
+                  ng-change="validationErrors.description = undefined"
                   split-text-max-length-validators="140"
                   ng-pattern="FOREIGN_DATA_REGEX"
                   placeholder="{{ ::'raiff.payments.new.domestic.fill.description.placeholder' | translate }}"></textarea>
@@ -265,9 +275,7 @@
                        rb-number-type-input
                        ng-model="payment.formData.amount"
                        ng-min="0.01"
-                       step="0.01"
                        ng-pattern="AMOUNT_PATTERN"
-
                        rb-foreign-amount-validator
                        rb-source-account-currency="payment.items.senderAccount.currency"
                        rb-transaction-currency="payment.formData.currency.currency"
@@ -280,7 +288,7 @@
                            theme="bootstrap"
                            ng-disabled="true"
                            required>
-                    <ui-select-match placeholder="Waluta">
+                    <ui-select-match placeholder="{{::'raiff.payments.currency.placeholder'|translate}}">
                         {{$select.selected.currency}}
                     </ui-select-match>
                     <ui-select-choices repeat="currency in [{currency: 'EUR'}] track by $index">
@@ -366,5 +374,9 @@
 
     <bd-item-property class="bd-item-property--text bd-item-property--multirow" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
         {{::'raiff.payments.new.foreign.fill.transfer_cost.message'|translate}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow rb-own-account" ng-show="isOwnAccount">
+        <bd-msg-panel bd-msg-type="warning">{{ :: 'raiff.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO' | translate }}</bd-msg-panel>
     </bd-item-property>
 </div>

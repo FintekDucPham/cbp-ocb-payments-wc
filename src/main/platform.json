@@ -11,5 +11,13 @@
     }
   ],
   "main": "raiffeisenPaymentsMiniapp.js",
-  "namespace": "raiffeisen"
+  "namespace": "raiffeisen",
+  "settings":[
+    {
+      "name": "raiffeisen-payments-AdvertisingSlots.settings",
+      "src": "/settings/raiffeisen-payments-AdvertisingSlots.settings.json",
+      "src-schema": "/settings/raiffeisen-payments-AdvertisingSlots.settings_schema.json",
+      "src-permissions": "/settings/raiffeisen-payments-AdvertisingSlots.settings_permissions.json"
+    }
+  ]
 }

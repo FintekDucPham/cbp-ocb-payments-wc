@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents) {
+    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents, utilityService) {
 
         $scope.accountSelectorRemote = {};
 
@@ -261,7 +261,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.recipientName = splitTextEveryNSign(formData.recipientName, 27);
+            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 27);
             copiedFormData.decisionNo = copiedFormData.additionalInfo;
             if($scope.payment.operation.code==='EDIT'){
                 var out = null;
@@ -269,9 +269,11 @@ angular.module('raiffeisen-payments')
                     if(!out){
                         out = angular.copy(val);
                         out.insuranceDestinationType=key;
+                        out.amount = ("" + out.amount).replace(/,/, ".");
                     }
                 });
                 copiedFormData.insurancePremium = out;
+
             }else{
                 copiedFormData.insurancePremiums = lodash.map(copiedFormData.insurancePremiums, function(element, key) {
                     element.amount = ("" + element.amount).replace(/,/, ".");
@@ -284,19 +286,39 @@ angular.module('raiffeisen-payments')
             return copiedFormData;
         });
 
+        var defaultInsurancePremium = angular.copy($scope.payment.formData.insurancePremiums);
         $scope.setClearFormFunction(function(){
-            $scope.payment.formData = {};
+            angular.forEach($scope.payment.formData, function(v,k){
+                if(k!=='insurancePremiums'){
+                    delete $scope.payment.formData[k];
+                }
+            });
             $scope.payment.formData.realizationDate = new Date();
             $scope.payment.formData.secondaryIdType = 'PESEL';
             $scope.payment.formData.paymentType = 'TYPE_S';
-            $scope.payment.formData.insurancePremiums = {};
+            $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
+            if($scope.payment.operation.code==='EDIT'){
+                angular.forEach($scope.payment.formData.insurancePremiums, function(v,k){
+                    v.amount = null;
+                });
+            }
             $scope.accountSelectorRemote.resetToDefault();
-
-
         });
+
+
+        var omitFormFirelds = lodash.map(zusPaymentInsurances, function(type) {
+            return type + 'Amount';
+        });
+        //if transfer modification - dont uncheck default selected
+        if($scope.payment.operation.code==='EDIT'){
+            omitFormFirelds.push("insuranceErrors");
+        }
+
+        $scope.setFieldsToOmitOnFormClear(omitFormFirelds);
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                 return lodash.filter(accounts, {
                    currency : 'PLN'
@@ -340,29 +362,6 @@ angular.module('raiffeisen-payments')
                 return recipientData2;
             });
         });
-       /* $scope.setRecipientDataExtractor(function() {
-            var recipientData = $scope.payment;
-            return {
-                customName: "Nowy odbiorca",
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
-                selectedInsuranceId: $scope.payment.items.recipient.nrb,
-                nip: $scope.payment.formData.nip,
-                secondaryIdType:  $scope.payment.formData.secondaryIdType,
-                secondaryIdNo: $scope.payment.formData.secondaryIdNo,
-                paymentType: $scope.payment.formData.paymentType
-            };
-
-        });*/
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
 
         $scope.enableInsurancePremium = function(insuranceType) {
             var insurancePremium = lodash.find($scope.insuranceAccountList, function(insuranceAccount) {
@@ -372,6 +371,18 @@ angular.module('raiffeisen-payments')
                 currency: "PLN",
                 nrb: insurancePremium.accountNo
             });
+        };
+
+        $scope.editedInsuranceCode = null;
+        $scope.isInsuranceDisabled = function(insuranceCode){
+            if(!$scope.editedInsuranceCode){
+                if($scope.payment.formData.insurancePremiums && $scope.payment.formData.insurancePremiums[insuranceCode]){
+                    $scope.editedInsuranceCode = insuranceCode;
+                }else{
+                    return false;
+                }
+            }
+            return true;//(insuranceCode!==$scope.editedInsuranceCode);
         };
 
     });

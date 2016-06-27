@@ -77,48 +77,71 @@ angular.module('raiffeisen-payments')
                 paymentType: 'domestic',
                 payment: {},
                 items: {}
+            },
+            data: {
+                analyticsTitle: ["$stateParams", function($stateParams) {
+                    return "raiff.payments.new.types." + $stateParams.paymentType.toUpperCase();
+                }]
             }
         });
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
                                                    pathService, translate, $stateParams, $state, lodash, validationRegexp,
-                                                   standingTransferService, transferService, initialState, viewStateService) {
+                                                   standingTransferService, transferService, initialState, viewStateService, menuService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
 
-        bdMainStepInitializer($scope, 'payment',{
-            formName: 'paymentForm',
-            type: lodash.find(rbPaymentTypes, {
-                state: $stateParams.paymentType || 'domestic'
-            }),
-            operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
-            formData: {
-            },
-            token: {
-                model: null,
-                params: {}
-            },
-            options: {
-                fixedAccountSelection: false,
-                fixedRecipientSelection: false
-            },
-            meta: {
-                paymentTypes: [],
-                isFuturePaymentAllowed: true,
-                dateSetByCategory: false,
-                hideSaveRecipientButton: false
-            },
-            validation: {}
-        });
+
+            bdMainStepInitializer($scope, 'payment',{
+                formName: 'paymentForm',
+                type: lodash.find(rbPaymentTypes, {
+                    state: $stateParams.paymentType || 'domestic'
+                }),
+                operation: (initialState && initialState.paymentOperationType) || rbPaymentOperationTypes.NEW,
+                formData: {
+                    hideSaveRecipientButton: false,
+                    sendBySorbnet: false
+                },
+                token: {
+                    model: null,
+                    params: {}
+                },
+                options: {
+                    fixedAccountSelection: false,
+                    fixedRecipientSelection: false
+                },
+                meta: {
+                    paymentTypes: [],
+                    isFuturePaymentAllowed: true,
+                    dateSetByCategory: false,
+                    hideSaveRecipientButton: false
+                },
+                validation: {}
+            });
 
         if(!angular.equals({}, $stateParams.payment)){
-            lodash.assign($scope.payment.formData, $stateParams.payment);
+            $scope.payment.formData = angular.copy($stateParams.payment);
+            if($stateParams.payment.paymentId){
+                $scope.payment.transferId = $stateParams.payment.paymentId;
+                $scope.payment.token.params.resourceId = $scope.payment.transferId;
+            }
+            if($stateParams.payment.fromMyPayment){
+                $scope.payment.meta.hideSaveRecipientButton = true;
+            }
             $stateParams.payment = {};
         }
         if(!angular.equals({}, $stateParams.items)){
             lodash.assign($scope.payment.items,  $stateParams.items);
             $stateParams.items = {};
+        }
+        if(!angular.equals({}, $stateParams.meta)){
+            lodash.assign($scope.payment.meta,  $stateParams.meta);
+            $stateParams.meta = {};
+        }
+        if(!angular.equals({}, $stateParams.options)){
+            lodash.assign($scope.payment.options,  $stateParams.options);
+            $stateParams.options = {};
         }
 
 
@@ -234,7 +257,7 @@ angular.module('raiffeisen-payments')
                 accept: true,
                 finalAction: true,
                 finalize: true,
-                addAsStandingOrder: false
+                addAsStandingOrder: true
             }
         };
 
@@ -244,6 +267,18 @@ angular.module('raiffeisen-payments')
             $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
+            var currentMenuItems = menuService.getCurrentMenuItem().items;
+            var subItem = lodash.find(currentMenuItems,{
+                id: 'payments.standing.list'
+            });
+            menuService.setActiveItem(subItem);
+        }else if($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code ||
+            $scope.payment.type.code == rbPaymentTypes.INSURANCE.code ||
+            $scope.payment.type.code == rbPaymentTypes.TAX.code){
+            menuService.updateActiveItem('payments.new.fill');
+        }else if($scope.payment.type.code == rbPaymentTypes.SWIFT.code ||
+            $scope.payment.type.code == rbPaymentTypes.SEPA.code){
+            menuService.updateActiveItem('payments.new_foreign.fill');
         }
 
 
@@ -257,6 +292,21 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.getTransferTypeHeader = function () {
+            var code = $scope.payment.type.code;
+            if (code == 'STANDING') {
+                if ($scope.payment.operation.code == 'EDIT') {
+                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".EDIT.header");
+                } else {
+                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".NEW.header");
+                }
+                return;
+            }
+            $scope.payment.header = translate.property("raiff.payments.new.types." + code);
+            return;
+        };
+
+        $scope.getTransferTypeHeader();
 
 
     });

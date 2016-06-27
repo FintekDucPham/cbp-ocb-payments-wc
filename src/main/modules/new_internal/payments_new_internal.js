@@ -14,6 +14,9 @@ angular.module('raiffeisen-payments')
                         return currentDate;
                     });
                 }]
+            },
+            data: {
+                analyticsTitle: "payments.submenu.options.new_internal.header"
             }
         });
     })

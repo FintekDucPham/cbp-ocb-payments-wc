@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
         },
         'R': {}
     })
-    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents) {
+    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents, utilityService) {
 
         $scope.accountSelectorRemote = {};
 
@@ -34,9 +34,10 @@ angular.module('raiffeisen-payments')
 
          $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             var recipient = lodash.find($scope.payment.meta.recipientList, {
-                 nrb: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
+                 nrb: $scope.payment.items.recipientAccount.accountNo.replace(/\s+/g, "")
              });
              $scope.payment.meta.hideSaveRecipientButton = !!recipient;
+             $scope.payment.rbPaymentsStepParams.visibility.finalAction = !!recipient;
          });
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
@@ -56,6 +57,7 @@ angular.module('raiffeisen-payments')
 
         $scope.remitterAccountSelectParams = new rbAccountSelectParams({
             alwaysSelected: true,
+            showCustomNames: true,
             accountFilter: function (accounts) {
                 return lodash.filter(accounts, {
                     currency : 'PLN'
@@ -97,8 +99,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.realizationDate = new Date();
             $scope.payment.formData.idType = "NIP";
             $scope.accountSelectorRemote.resetToDefault();
-
-
         });
 
         $scope.setDefaultValues({
@@ -211,15 +211,15 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.setRequestConverter(function(formData) {
-            var copiedFormData = JSON.parse(JSON.stringify(formData));
+            var copiedFormData = angular.copy(formData);
             formData.amount = (""+copiedFormData.amount).replace(",",".");
             copiedFormData.amount = (""+copiedFormData.amount).replace(",",".");
             var recipient = $scope.payment.items.recipientAccount;
-            formData.taxpayerDataTable = splitTextEveryNSign(formData.taxpayerData);
+            formData.taxpayerDataTable = utilityService.splitTextEveryNSigns(formData.taxpayerData);
             return angular.extend(copiedFormData, {
-                taxPayerData: splitTextEveryNSign(copiedFormData.taxpayerData),
+                taxPayerData: utilityService.splitTextEveryNSigns(copiedFormData.taxpayerData),
                 recipientName: recipient.officeName,
-                recipientNameTable: splitTextEveryNSign(recipient.officeName),
+                recipientNameTable: utilityService.splitTextEveryNSigns(recipient.officeName),
                 recipientAccountNo: recipient.accountNo
             });
         });
@@ -232,27 +232,4 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.currency = 'PLN';
         });
 
-        /*$scope.setRecipientDataExtractor(function() {
-
-            return {
-                customName: "Nowy odbiorca",
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
-                selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
-                secondaryIdType:  $scope.payment.formData.idType,
-                idNumber: $scope.payment.formData.idNumber,
-                formCode: $scope.payment.formData.formCode,
-                periodType: $scope.payment.formData.periodType
-            };
-
-        });*/
-
-        function splitTextEveryNSign(text, lineLength){
-            if(text !== undefined && text.length > 0) {
-                text = ("" + text).replace(/(\n)+/g, '');
-                var regexp = new RegExp('(.{1,' + (lineLength || 35) + '})', 'gi');
-                return lodash.filter(text.split(regexp), function (val) {
-                    return !lodash.isEmpty(val) && " \n".indexOf(val) < 0;
-                });
-            }
-        }
     });

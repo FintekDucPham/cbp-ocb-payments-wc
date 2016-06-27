@@ -17,7 +17,7 @@
   "author": "Grzegorz Gurgul <grzegorz.gurgul@asseco.pl>",
   "license": "ISC",
   "devDependencies": {
-    "cbp-raiffeisen-build-tools": "git+https://repopbk.poland.asseco.corp/cbp-raiffeisen/cbp-raiffeisen-build-tools.git",
+    "cbp-raiffeisen-build-tools": "git+https://repopbk.poland.asseco.corp/cbp-raiffeisen/cbp-raiffeisen-build-tools.git#26c21004",
     "grunt": "^0.4.5"
   }
 }
