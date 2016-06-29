@@ -151,15 +151,15 @@ angular.module('raiffeisen-payments', [
                 customerBusinessLine ==  SEGMENT_TYPES.DETAIL_CSB)){
                 visible = true;
             //kontekst MICRO
-            } else if(acceessParameter.indexOf('M') &&
+            } else if(acceessParameter.indexOf('M') != -1 &&
                 customerBusinessLine == SEGMENT_TYPES.MICRO) {
                 visible = true;
             //FWR
-            } else if(acceessParameter.indexOf('F') &&
+            } else if(acceessParameter.indexOf('F') != -1 &&
                 customerBusinessLine == SEGMENT_TYPES.DETAIL_FWR) {
                 visible = true;
             //Pracownik
-            } else if(acceessParameter.indexOf('P') &&
+            } else if(acceessParameter.indexOf('P') != -1 &&
                 customerDetails.isEmployee) {
                 visible = true;
             }

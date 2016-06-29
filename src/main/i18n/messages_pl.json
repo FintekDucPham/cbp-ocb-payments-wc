@@ -1334,7 +1334,7 @@
     "raiff.payments.recipient.details.insurance.amount_summary": "Kwota całkowita",
 
     "raiff.payments.invoobill.activation.header":"Usługa Invoobill",
-    "raiff.payments.invoobill.activation.descrition":"Zachęcamy do korzystania z  elektronicznych faktur za usługi np. internet, czynsz, telefon itp. Płatności do realizacji udostępniane są bezpośrednio do bankowości internetowej od podmiotów udostepniających taką usługę, z którymi zawarłeś umowę i przekazałeś im swój numer PESEL(osoby indywidualne)/NIP(przedsiębiocy). Wystarczy, że zapoznasz się z regulaminem usługi i go zaakceptujesz.",
+    "raiff.payments.invoobill.activation.descrition":"Zachęcamy do korzystania z  elektronicznych faktur za usługi np. internet, czynsz, telefon itp. Płatności do realizacji udostępniane są bezpośrednio do bankowości internetowej od podmiotów udostępniających taką usługę, z którymi zawarłeś umowę i przekazałeś im swój numer PESEL(osoby indywidualne)/NIP(przedsiębiocy). Wystarczy, że zapoznasz się z regulaminem usługi i go zaakceptujesz.",
     "raiff.payments.invoobill.activation.link.label":"Regulamin usługi Invoobill",
     "raiff.payments.invoobill.activation.accept":"Akceptuję",
     "raiff.payments.invoobill.activation.notInterested":"Nie jestem zainteresowany",
