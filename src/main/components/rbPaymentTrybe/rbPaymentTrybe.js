@@ -82,7 +82,7 @@ angular.module('raiffeisen-payments')
                 var obtainActivity = function(){
                     var avail = {};
                     angular.forEach(s.transferType, function(v){
-                        if(v.currency=== s.currency.currency){
+                        if(s.currency && v.currency === s.currency.currency){
                             avail[v.transferType]=true;
                         }
                     });
@@ -95,9 +95,11 @@ angular.module('raiffeisen-payments')
                     if(s.currency.currency!=='EUR'){
                         targetAv=false;
                     }
-                    if(!(s.swift.data && swift.data.target)){
+                    if(!(s.swift.data && s.swift.data.target)){
                         targetAv=false;
                     }
+
+                    avail['TARGET'] = targetAv;
 
                     //finalize - merge
                     angular.forEach(s.rbTrybes, function(tr){
