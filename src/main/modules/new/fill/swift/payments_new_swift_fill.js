@@ -313,8 +313,9 @@ angular.module('raiffeisen-payments')
                 recipientData.recipientBankName = $scope.payment.formData.recipientBankName;
             }
 
-            if($scope.targetInnerAccountWarning)
+            if($scope.targetInnerAccountWarning){
                 $scope.payment.formData.paymentType = 'STANDARD';
+            }
 
             $scope.setRecipientDataExtractor(function() {
                 recipientData.description = recipientData.description.join('\n');
@@ -403,8 +404,9 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.realizationDate = $scope.CURRENT_DATE;
                 $scope.payment.meta.realizationDateDisabled = true;
 
-                if(isInnerBankAccount($scope.payment.formData.recipientAccountNo))
+                if(isInnerBankAccount($scope.payment.formData.recipientAccountNo)){
                     $scope.targetInnerAccountWarning = true;
+                }
             }else{
                 $scope.payment.meta.realizationDateDisabled = false;
                 $scope.targetInnerAccountWarning = false;
@@ -413,17 +415,20 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.recipientAccountNo', function(n,o){
             var paymentType = $scope.payment.formData.paymentType;
-            if(n && n.length > 5 && paymentType && paymentType === 'TARGET' && isInnerBankAccount(n))
+            if(n && n.length > 5 && paymentType && paymentType === 'TARGET' && isInnerBankAccount(n)){
                 $scope.targetInnerAccountWarning = true;
+            }
         });
 
         var isInnerBankAccount = function(nrb){
-            if(!nrb)
+            if(!nrb){
                 return false;
+            }
 
-            if($scope.simpleIbanValidation.test(nrb))
+            if($scope.simpleIbanValidation.test(nrb)){
                 nrb = nrb.substr(2);
+            }
 
             return rbAccountOwnNrbService.startsWithPrefix(nrb);
-        }
+        };
     });

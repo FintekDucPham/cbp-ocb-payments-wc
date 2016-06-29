@@ -99,7 +99,7 @@ angular.module('raiffeisen-payments')
                         targetAv=false;
                     }
 
-                    avail['TARGET'] = targetAv;
+                    avail.TARGET = targetAv;
 
                     //finalize - merge
                     angular.forEach(s.rbTrybes, function(tr){
