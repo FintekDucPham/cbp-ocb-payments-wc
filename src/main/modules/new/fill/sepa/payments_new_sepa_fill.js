@@ -125,7 +125,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 27);
+            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 35);
             copiedFormData.additionalInfo = " ";
 
             copiedFormData.phoneNumber = " ";
@@ -147,6 +147,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientBankName= utilityService.splitTextEveryNSigns(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
+            copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             copiedFormData.amount = (""+formData.amount).replace(",",".");
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
             if(angular.isObject(copiedFormData.currency) && copiedFormData.currency.currency){
@@ -247,6 +248,7 @@ angular.module('raiffeisen-payments')
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
                 });
+            $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase();
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
         });
 

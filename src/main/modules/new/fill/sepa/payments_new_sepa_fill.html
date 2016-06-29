@@ -288,7 +288,7 @@
                            theme="bootstrap"
                            ng-disabled="true"
                            required>
-                    <ui-select-match placeholder="Waluta">
+                    <ui-select-match placeholder="{{::'raiff.payments.currency.placeholder'|translate}}">
                         {{$select.selected.currency}}
                     </ui-select-match>
                     <ui-select-choices repeat="currency in [{currency: 'EUR'}] track by $index">

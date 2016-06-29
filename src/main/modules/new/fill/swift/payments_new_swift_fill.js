@@ -37,7 +37,7 @@ angular.module('raiffeisen-payments')
         $scope.currencies = {
             promise: paymentsService.getCurrencyUse(),
             data:null,
-            init: "PLN"
+            init: null
         };
 
         if($scope.payment.formData.currency){
@@ -168,7 +168,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
-            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 27);
+            copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 35);
             copiedFormData.currency = formData.currency.currency;
             copiedFormData.additionalInfo = " ";
             copiedFormData.phoneNumber = " ";
@@ -192,6 +192,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.amount = (""+formData.amount).replace(",",".");
             formData.amount = copiedFormData.amount;
             copiedFormData.recipientCountry = formData.recipientCountry.code;
+            copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             return copiedFormData;
         });
 
@@ -321,7 +322,7 @@ angular.module('raiffeisen-payments')
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
                 });
-
+            $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase();
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
 
             if($scope.payment.formData.recipientAccountNo) {

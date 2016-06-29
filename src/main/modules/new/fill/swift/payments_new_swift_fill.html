@@ -291,9 +291,10 @@
             <div class="bd-item-property__value--secondary">
                 <ui-select ng-model="payment.formData.currency"
                            theme="bootstrap"
+                           name="currency"
                            ng-required="true"
                             on-select="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo, payment.formData.currency)">
-                    <ui-select-match placeholder="">
+                    <ui-select-match  placeholder="{{::'raiff.payments.currency.placeholder'|translate}}">
                         {{$select.selected.currency}}
                     </ui-select-match>
                     <ui-select-choices repeat="currency in currencies.data track by $index">
@@ -332,6 +333,11 @@
             </div>
             <div eb-message-key="transfer.amount.raiff.transfer.limit.nonres" class="validation-message animate-on">
                 {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+            </div>
+        </eb-validation-messages>
+        <eb-validation-messages eb-name="currency">
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{::'raiff.payments.new.currency.fill.currency.error.required'|translate}}
             </div>
         </eb-validation-messages>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
