@@ -103,7 +103,6 @@
               ng-model="payment.formData.recipientName"
               ng-pattern="FOREIGN_DATA_REGEX"
               required
-              bd-array-value
               ng-change="validationErrors.recipientName = undefined"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
@@ -246,7 +245,6 @@
                   ng-model="payment.formData.description"
                   class="input-field input-area--payment-description"
                   required
-                  bd-array-value
                   ng-change="validationErrors.description = undefined"
                   split-text-max-length-validators="140"
                   ng-pattern="FOREIGN_DATA_REGEX"
