@@ -1,7 +1,8 @@
 angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
-                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q,rbPaymentTrybeFactory, rbPaymentTrybeConstants) {
+                                                           $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q,rbPaymentTrybeFactory, rbPaymentTrybeConstants,
+                                                           rbAccountOwnNrbService) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -9,6 +10,8 @@ angular.module('raiffeisen-payments')
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
         $scope.SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP = validationRegexp('SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP');
         $scope.currencyList = [];
+        $scope.targetInnerAccountWarning = false;
+        $scope.simpleIbanValidation = validationRegexp('SIMPLE_IBAN_VALIDATION');
 
         $scope.payment.items.paymentTrybes = rbPaymentTrybeFactory.createModel(rbPaymentTrybeConstants.DEFAULT_TRYBES.SWIFT.TRYBES);
 
@@ -23,7 +26,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.accountSelectorRemote = {};
-        
+
         $scope.swift = {
             promise: null,
             data: null
@@ -128,7 +131,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.currency', function(n, o) {
             if ($scope.paymentForm && $scope.paymentForm.amount) {
-                $scope.paymentForm.amount.$validate(); 
+                $scope.paymentForm.amount.$validate();
                 $scope.paymentForm.recipientAccountNo.$validate();
             }
         });
@@ -185,7 +188,7 @@ angular.module('raiffeisen-payments')
                 copiedFormData.recipientSwift = null;
             }
             copiedFormData.recipientBankCountryCode = formData.recipientBankCountry.code;
-            copiedFormData.paymentCategory= formData.paymentType;
+            copiedFormData.paymentCategory= $scope.targetInnerAccountWarning ? 'STANDARD' : formData.paymentType;
             copiedFormData.recipientBankName=utilityService.splitTextEveryNSigns(formData.recipientBankName, 27) || [''];
             copiedFormData.saveTemplate = false;
             copiedFormData.templateName = " ";
@@ -310,6 +313,10 @@ angular.module('raiffeisen-payments')
                 recipientData.recipientBankName = $scope.payment.formData.recipientBankName;
             }
 
+            if($scope.targetInnerAccountWarning){
+                $scope.payment.formData.paymentType = 'STANDARD';
+            }
+
             $scope.setRecipientDataExtractor(function() {
                 recipientData.description = recipientData.description.join('\n');
                 recipientData.recipientData = recipientData.recipientData.join('\n');
@@ -396,8 +403,32 @@ angular.module('raiffeisen-payments')
             if(n && n === 'TARGET'){
                 $scope.payment.formData.realizationDate = $scope.CURRENT_DATE;
                 $scope.payment.meta.realizationDateDisabled = true;
+
+                if(isInnerBankAccount($scope.payment.formData.recipientAccountNo)){
+                    $scope.targetInnerAccountWarning = true;
+                }
             }else{
                 $scope.payment.meta.realizationDateDisabled = false;
+                $scope.targetInnerAccountWarning = false;
             }
         });
+
+        $scope.$watch('payment.formData.recipientAccountNo', function(n,o){
+            var paymentType = $scope.payment.formData.paymentType;
+            if(n && n.length > 5 && paymentType && paymentType === 'TARGET' && isInnerBankAccount(n)){
+                $scope.targetInnerAccountWarning = true;
+            }
+        });
+
+        var isInnerBankAccount = function(nrb){
+            if(!nrb){
+                return false;
+            }
+
+            if($scope.simpleIbanValidation.test(nrb)){
+                nrb = nrb.substr(2);
+            }
+
+            return rbAccountOwnNrbService.startsWithPrefix(nrb);
+        };
     });
