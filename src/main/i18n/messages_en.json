@@ -1194,20 +1194,20 @@
 "raiff.payments.new.verify.transfer_cost": "Transfer costs",
 "raiff.payments.new.verify.transfer_cost.info" : "Transfer cost information",
 
-"raiff.payments.cut.off.time.MSG-0662_POSSIBILITY_OF_REALIZATION_EARLY": "Cut-off time for your transaction has not elapsed yet. Your transaction will be executed at the cut-off time.",
-"raiff.payments.cut.off.time.MSG-0659_POSSIBILITY_OF_REALIZATION_NOT_TODAY": "We do not guarantee that the instruction will be executed today.",
+"raiff.payments.cut.off.time.MSG-0662_POSSIBILITY_OF_REALIZATION_EARLY": "Realization today",
+"raiff.payments.cut.off.time.MSG-0659_POSSIBILITY_OF_REALIZATION_NOT_TODAY": "Realization on next working day",
 "raiff.payments.recipient.new.error.MSG-0660_SAME_BNF":"A defined recipient already exists for the provided pair of accounts. To continue, select \"Next\"",
 "raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT":"Recipient bank country does not match the SWIFT code of recipient bank you provided.",
 
     "raiff.payments.cut.off.time.MSG-0656_SORBNET_HOURS": "Realization today",
-    "raiff.payments.cut.off.time.MSG-1304_COT_TARGET": "Przelew złożony po godzinie {0} będzie zrealizowany w następnym dniu roboczym, jeśli chcesz kontynuować wybierz przycisk \"Dalej\"",
+    "raiff.payments.cut.off.time.MSG-1304_COT_TARGET": "Realization on next working day",
     "raiff.payments.cut.off.time.MSG-1305_INTERNAL_TRANSFER_NOT_FOREIGN": "Rachunek odbiorcy jest prowadzony przez Raiffeisen Bank Polska S.A. - nie może być zrealizoany jako TARGET. Zostanie zrealizowany w rozliczeniu wewnętrznym",
     "raiff.payments.cut.off.time.MSG-1303_TARGET_HOURS": "Realization today",
 
 "raiff.payments.swift.validation.error.incorrect_country_code":"Bank country does not match the account number",
 
 "raiff.payments.new.types.STANDING_ORDER": "Standing order",
-"raiff.payments.new.realization_type_sorbnet.sorbnet_hours": "SORBNET transfers are executed from {0} to {1}",
+"raiff.payments.new.realization_type_sorbnet.sorbnet_hours": "Realization today",
 "raiff.payments.new.domestic.fill.error.paste.required": "This field cannot be blank",
 "raiff.payments.recipients.new.currency.fill.recipient_account.US_PMNT_ONLY_EURO": "FX transfer to the Revenue Office/Customs Chamber account may be executed in EUR only",
 "raiff.validation.sameSourceAccount": "The recipient's account number must be different from the sender's account number",
@@ -1216,7 +1216,7 @@
 "raiffeisen.payments.standing_order.nextRealizationDate.to_late": "The next execution date for the order cannot be later than ##0##",
 "raiff.payments.remove.standing.error.already_deleted": "The selected standing order cannot be removed. The removal of this order is awaiting execution.",
 "raiff.standing_order.endDate.to_early": "Invalid order completion date",
-"raiff.payments.cut.off.time.MSG-0657_COT_SORBNET": "Orders submitted after {0} will be executed on the following business day, if you wish to continue, please click the “Next” button",
+"raiff.payments.cut.off.time.MSG-0657_COT_SORBNET": "Realization tomorrow",
     "raiff.payments.currency.placeholder":"Currency",
     "raiff.payments.new.currency.fill.currency.error.required": "Currency cannot be empty"
 }
