@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .controller('paymentTaxpayersFillController', function (lodash, bdFillStepInitializer, authorizationService,
                                                             taxpayerManagementService, zusSuplementaryIds,
                                                             usSupplementaryIds, dateFilter, translate, $scope,
-                                                            formService, bdStepStateEvents, validationRegexp) {
+                                                            formService, bdStepStateEvents, validationRegexp, utilityService) {
 
         bdFillStepInitializer($scope, {
             formName: 'taxpayerForm',
@@ -62,7 +62,7 @@ angular.module('raiffeisen-payments')
                 "secondaryIdType": copiedFormData.secondaryIdType,
                 "secondaryId": copiedFormData.secondaryIdNo,
                 "nip": copiedFormData.nip,
-                "data": copiedFormData.taxpayerData,
+                "data": utilityService.splitTextEveryNSigns(copiedFormData.taxpayerData, 35),
                 "payerType": copiedFormData.taxpayerType
             };
         });

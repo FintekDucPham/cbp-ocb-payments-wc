@@ -7,7 +7,7 @@
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.recipient_name_address'|translate}}">
-    <bd-multiline-text bd-text="$data.nameAndAddress"></bd-multiline-text>
+    {{$data.nameAndAddress | arrayFilter}}
 </bd-item-property>
 
 <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.secondary_id_type'|translate}}">

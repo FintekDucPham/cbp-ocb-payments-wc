@@ -64,7 +64,7 @@
                 </bd-item-property>
 
                 <bd-item-property class="eb-item-property--text" label="{{::'raiff.payments.taxpayers.details.data.label'|translate}}">
-                    <bd-multiline-text bd-text="$data.data"></bd-multiline-text>
+                    {{$data.data | arrayFilter}}
                 </bd-item-property>
 
                 <bd-item-property ng-if="$data.taxpayerType.code === 'INSURANCE'" class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.nip.label' | translate }}">
