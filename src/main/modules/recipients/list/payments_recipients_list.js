@@ -193,11 +193,11 @@ angular.module('raiffeisen-payments')
                                 return lodash.extend({
                                     recipientType: template.templateType,
                                     recipientTypeMessage: translate.property('raiff.payments.recipients.new.type.{0}'.format(template.templateType)),
-                                    customerName: recipient.recipientName.join(" "),
+                                    customerName: $filter('arrayFilter')(recipient.recipientName),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
-                                    recipient: recipient.recipientName.join(" "),
-                                    recipientName: recipient.recipientAddress.join(" "),
+                                    recipient: $filter('arrayFilter')(recipient.recipientName),
+                                    recipientName: $filter('arrayFilter')(recipient.recipientAddress),
                                     debitNrb: template.remitterAccountNo,
                                     ownerList: $scope.getAccountByNrb(template.remitterAccountNo)
                                 }, (function () {
@@ -205,24 +205,22 @@ angular.module('raiffeisen-payments')
                                     switch (template.templateType) {
                                         case "SWIFT":
                                             return {
-                                                transferTitle: template.title.join(" "),
+                                                transferTitle: $filter('arrayFilter')(template.title),
                                                 bankName: template.paymentDetails.bankDetails[0],
-                                                bankData:template.paymentDetails.bankDetails.join(" "),
+                                                bankData:$filter('arrayFilter')(template.paymentDetails.bankDetails),
                                                 recipientIdentityType: template.paymentDetails.informationProvider,
                                                 recipientBankCountry: template.paymentDetails.bankCountry,
                                                 recipientCountry: template.paymentDetails.foreignCountryCode,
-                                                recipientAddress: recipient.recipientAddress.join(" "),
+                                                recipientAddress: $filter('arrayFilter')(recipient.recipientAddress),
                                                 nrb: template.beneficiaryAccountNo,
-                                                transferTitleTable: template.title.join(" "),
-                                                swift_bic: template.paymentDetails.recipientSwift
+ 												transferTitleTable: $filter('arrayFilter')(template.title),                                                swift_bic: template.paymentDetails.recipientSwift
                                             };
                                         case "DOMESTIC":
                                             return {
-                                                transferTitle: template.title.join(" "),
-                                                recipientAddress: recipient.recipientAddress.join(" "),
-                                                transferTitleTable: template.title.join(" "),
-                                                nrb: template.beneficiaryAccountNo
-                                            };
+                                                transferTitle: $filter('arrayFilter')(template.title),
+                                                recipientAddress: $filter('arrayFilter')(recipient.recipientAddress),
+                                                transferTitleTable: $filter('arrayFilter')(template.title),
+ 												nrb: template.beneficiaryAccountNo                                            };
                                         case "INSURANCE":
 
                                             return {

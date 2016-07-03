@@ -13,7 +13,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.taxpayers.verify.taxpayer_data'|translate}}">
-        <bd-multiline-text bd-text="taxpayer.formData.taxpayerData"></bd-multiline-text>
+        {{taxpayer.formData.taxpayerData | arrayFilter}}
 
     </bd-item-property>
 
