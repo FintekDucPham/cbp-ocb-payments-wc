@@ -1344,7 +1344,7 @@
     "raiff.payments.invoobill.activation.successful.next":"Dalej",
     "raiff.payments.invoobill.activation.successful.cancel":"Anuluj",
 
-    "raiff.payments.invoobill.resignation.descrition":"Rezygnacja z usługi oznacza, że nie będziesz więcej otrzymywał płatności w ramach Invoobil.",
+    "raiff.payments.invoobill.resignation.descrition":"Rezygnacja z usługi oznacza, że nie będziesz więcej otrzymywał płatności w ramach Invoobill.",
     "raiff.payments.invoobill.resignation.cancel.button":"Anuluj",
     "raiff.payments.invoobill.resignation.button":"Rezygnuj",
     "raiff.payments.invoobill.resignation.successful":"Usługa Invoobill została zdeaktywowana",
