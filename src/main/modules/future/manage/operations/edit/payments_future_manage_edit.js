@@ -115,12 +115,13 @@ angular.module('raiffeisen-payments')
 
         paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function(data){
             data.recipientName = data.recipientName.join('');
+            data.description = data.title.join('');
             data.realizationDate = new Date(data.realizationDate);
             return $q.when(true);
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function(data){
-            data.description = data.title.join("\n");
+            data.description = data.title.join("");
             data.realizationDate = new Date(data.realizationDate);
             return $q.when(true);
         });
