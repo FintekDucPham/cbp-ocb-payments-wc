@@ -167,7 +167,7 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.amount.$validate();
             }
 
-            if (form.$invalid) {
+            if (form.$invalid || !lodash.isEmpty(form.$error)) {
                 formService.dirtyFields(form);
             } else {
                 // for standing orders we need standingTransferService
@@ -187,9 +187,6 @@ angular.module('raiffeisen-payments')
                 }, requestConverter($scope.payment.formData), templateParameters), $scope.payment.operation.link || false ).then(function (transfer) {
                     if(transfer.showCotWarning && !$scope.sorbnetCotConfirmed){
                         $scope.payment.showCotWarning = transfer.showCotWarning;
-                        var cotTime = new Date(transfer.cotTime);
-                        $scope.payment.showCotWarningMsg = translate.property("raiff.payments.cut.off.time.MSG-0657_COT_SORBNET", [$filter('date')(cotTime, 'HH:mm')]);
-                        return;
                     }else{
                         $scope.payment.transferId = transfer.referenceId;
                         $scope.payment.endOfDayWarning = transfer.endOfDayWarning;

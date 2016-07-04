@@ -14,7 +14,7 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsInvoobillResignationController', function ($scope, $state, invoobillPaymentsService, menuService) {
 
-        $scope.cancal = function() {
+        $scope.cancel = function() {
             $state.go("payments.invoobill.list");
         };
 

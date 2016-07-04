@@ -112,7 +112,12 @@ angular.module('raiffeisen-payments')
         $scope.recipientAccountValidators = {
             simpleIncorrectIban: function(accountNo) {
                 if (accountNo) {
-                    return $scope.SIMPLE_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
+                    if($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
+                        return $scope.SIMPLE_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
+                    }
+                    else{
+                        return $scope.FOREIGN_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
+                    }
                 }
                 return false;
             },
