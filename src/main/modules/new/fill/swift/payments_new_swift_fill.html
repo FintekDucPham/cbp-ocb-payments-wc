@@ -290,7 +290,7 @@
                 <ui-select ng-model="payment.formData.currency"
                            theme="bootstrap"
                            name="currency"
-                           ng-required="true"
+                           required
                             on-select="checkUsPmntOnlyEuro(payment.formData.recipientAccountNo, payment.formData.currency)">
                     <ui-select-match  placeholder="{{::'raiff.payments.currency.placeholder'|translate}}">
                         {{$select.selected.currency}}
