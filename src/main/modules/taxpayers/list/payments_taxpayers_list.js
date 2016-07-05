@@ -51,7 +51,7 @@ angular.module('raiffeisen-payments')
                     "secondaryIdType": copiedData.secondaryIdType,
                     "secondaryIdNo": copiedData.secondaryId,
                     "nip": copiedData.nip,
-                    "taxpayerData": copiedData.data,
+                    "taxpayerData": $filter('arrayFilter')(copiedData.data),
                     "taxpayerType": copiedData.taxpayerType.code
                 }
             });
