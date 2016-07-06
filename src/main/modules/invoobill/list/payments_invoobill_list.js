@@ -13,18 +13,18 @@ angular.module('raiffeisen-payments')
                 }],
                 parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
-                        /* Po aktualizacji AKD ma byc to:
-                         detalOffsetMax: systemParameterService.getParameterByName("invb.max.offset.detal"),
-                         microOffsetMax: systemParameterService.getParameterByName("invb.max.offset.micro"),
-                         detalOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.detal"),
-                         microOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.micro"),
-                         creditorInfoLink: systemParameterService.getParameterByName("page.url.invb.suppliers"),
-                         */
+                        detalOffsetMax: systemParameterService.getParameterByName("invb.max.offset.detal"),
+                        microOffsetMax: systemParameterService.getParameterByName("invb.max.offset.micro"),
+                        detalOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.detal"),
+                        microOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.micro"),
+                        creditorInfoLink: systemParameterService.getParameterByName("page.url.invb.suppliers"),
+                        /*
                         detalOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.detal"),
                         microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
                         detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
                         microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
                         creditorInfoLink: "http://www.invoobill.pl/gdzie-zaplace-z-invoobill/",
+                        */
                         customerDetails: customerService.getCustomerDetails(),
                     }).then(function (data) {
                         return {
