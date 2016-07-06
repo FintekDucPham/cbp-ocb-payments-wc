@@ -28,9 +28,14 @@
             <input type="text"
                    name="reason"
                    class="input-field"
-                   ng-maxlength="40"
                    ng-model="payment.formData.reason"
             />
+
+            <eb-validation-messages eb-name="reason">
+                <div eb-message-key="toLong" class="validation-message animate-on">
+                    {{::'raiff.payments.invoobill.reject_payment.reason.toLong'|translate}}
+                </div>
+            </eb-validation-messages>
         </bd-item-property>
     </div>
 </form>

@@ -1318,8 +1318,9 @@
     "raiff.payments.invoobill.list.header.status":"Status",
     "raiff.payments.invoobill.list.empty":"Nie znaleziono płatności spełniających kryteria wyszukiwania",
 
-    "raiff.payments.invoobill.recipients.select": "Wybierz dostawcę...",
-    "raiff.payments.invoobill.recipient": "Dostawca",
+    "raiff.payments.invoobill.creditors.all": "Wszyscy",
+    "raiff.payments.invoobill.creditors.select": "Wybierz dostawcę...",
+    "raiff.payments.invoobill.creditor": "Dostawca",
 
     "raiff.payments.invoobil.list.details.status":"Status",
     "raiff.payments.invoobil.list.details.recipientAccountNo":"Rachunek dostawcy",
@@ -1358,5 +1359,6 @@
     "raiff.payments.invoobill.new_payment.transfer_cost_info":"Koszt przelewu",
 
     "raiff.payments.invoobill.reject_payment.header":"Odrzucenie płatności Invoobill",
-    "raiff.payments.invoobill.reject_payment.reason":"Powód odrzucenia"
+    "raiff.payments.invoobill.reject_payment.reason":"Powód odrzucenia",
+    "raiff.payments.invoobill.reject_payment.reason.toLong":"Powód odrzucenia za długi"
 }

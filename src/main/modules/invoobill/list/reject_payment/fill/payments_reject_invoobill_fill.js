@@ -131,6 +131,13 @@ angular.module('raiffeisen-payments')
 
         setRealizationDateToCurrent();
 
+        function validateReason(form) {
+            form.reason.$setValidity('toLong', true);
+            if ($scope.payment.formData.reason.length > 40) {
+                form.reason.$setValidity('toLong', false);
+            }
+        }
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 delete $scope.payment.token.params.resourceId;
@@ -139,7 +146,13 @@ angular.module('raiffeisen-payments')
                     show: false
                 };
 
-                actions.proceed();
+                validateReason(form);
+
+                if (form.$invalid) {
+                    formService.dirtyFields(form);
+                } else {
+                    actions.proceed();
+                }
 
 /*
                 if(!$scope.payment.items.recipientAccount){

@@ -29,6 +29,7 @@ angular.module('raiffeisen-payments')
             formName: 'paymentForm',
             invoobill: initialState.invoobillPayment,
             formData: {
+                reason: ""
             },
             options: {
                 fixedAccountSelection: false

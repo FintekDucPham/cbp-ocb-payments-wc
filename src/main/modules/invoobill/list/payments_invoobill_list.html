@@ -1,4 +1,4 @@
-<rb-content-view class="rb-content-view--solid">
+<rb-content-view class="rb-content-view--solid invoobill-view">
     <bd-header>{{::"raiff.payments.invoobill.list.header"|translate}}</bd-header>
 
     <form novalidate name="filterForm" ng-submit="onSubmit(filterForm)">
@@ -55,8 +55,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             <div class="row">
                 <div class="row--spacing col-md-10 col-sm-12">
@@ -120,18 +118,16 @@
                     </div>
                 </div>
             </div>
-
         </bd-radio-select>
 
         <div class="row-line">
             <div class="row-line__cell">
-                <bd-item-property label="{{::'raiff.payments.invoobill.recipient'|translate}}">
+                <bd-item-property label="{{::'raiff.payments.invoobill.creditor'|translate}}">
                     <ui-select ng-model="invoobillPayments.filterData.creditor"
                                theme="bootstrap"
                                reset-search-input="false"
-                               on-select=""
-                               >
-                        <ui-select-match placeholder="{{::'raiff.payments.invoobill.recipients.select' | translate }}">
+                               on-select="">
+                        <ui-select-match placeholder="{{::'raiff.payments.invoobill.creditors.select' | translate }}">
                             {{ $select.selected.fullName | arrayFilter }}
                         </ui-select-match>
                         <ui-select-choices repeat="creditor in invoobillPayments.creditors.list">
@@ -139,17 +135,16 @@
                         </ui-select-choices>
                     </ui-select>
                 </bd-item-property>
-
-                <div class="row-line__cell row-line__cell--right-button">
-                    <bd-button class="bd-button__primary" type="submit">
-                        {{::'raiff.payments.rejected.select.filter.button.action' | translate}}
-                    </bd-button>
-                </div>
+            </div>
+            <div class="row-line__cell row-line__cell--right-button">
+                <bd-button class="bd-button__primary" type="submit">
+                    {{::'raiff.payments.rejected.select.filter.button.action' | translate}}
+                </bd-button>
             </div>
         </div>
+
     </form>
 
-    <div></div>
     <div class="bd-table">
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.realization_date' | translate}}</div>
@@ -168,38 +163,38 @@
             <div class="bd-table__row-entry">
                 <div class="bd-table__row-line bd-table__row-line--sm-tight">
                     <div bd-table-cell="first" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-table__cell-index">
-                        {{ item.realizationDate | date : 'shortDate'}}
+                        {{ item.paymentDate | date : 'shortDate'}}
                     </div>
                     <!-- this will disappear if screen gets too small -->
                     <div bd-table-cell="second" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-hide-sm">
-                        {{ item.recipient[0] }}
+                        {{ item.creditorFullName }}
                     </div>
                     <div bd-table-cell="third" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-pull-right">
                         {{ item.amount | number: 2}} {{item.currency}}
                     </div>
-                    <div bd-table-cell="fourth" class="bd-table__cell--sm-4 bd-table__cell--md-4">
-                        {{ item.status }}
+                    <div bd-table-cell="fourth" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-pull-right">
+                        {{ item.paymentStatusDescription }}
                     </div>
                 </div>
                 <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-md">
                     <!-- this will be shown if screen gets small enough -->
                     <div bd-table-cell="second" class="bd-table__cell--sm-16">
-                        {{ item.recipient[0] }}
+                        {{ item.creditorFullName }}
                     </div>
                 </div>
             </div>
 
             <bd-details-section bd-table-row-details ng-if="item.expanded">
                 <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.status' | translate }}">
-                    {{ item.status }}
+                    {{ item.paymentStatusDescription }}
                 </bd-item-property>
 
                 <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.recipientAccountNo' | translate}}">
-                    {{ item.recipientAccountNo | nrbIbanFilter }}
+                    {{ item.beneficiaryAccount | nrbIbanFilter }}
                 </bd-item-property>
 
                 <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.recipient' | translate }}">
-                    {{ item.recipient | arrayFilter }}
+                    {{ item.creditorFullName | arrayFilter }}
                 </bd-item-property>
 
                 <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.title' | translate }}">
@@ -211,7 +206,7 @@
                 </bd-item-property>
 
                 <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.realization_date' | translate }}">
-                    {{ item.realizationDate | date : 'shortDate' }}
+                    {{ item.paymentDate | date : 'shortDate' }}
                 </bd-item-property>
 
                 <bd-details-action-section>

@@ -186,30 +186,53 @@ angular.module('raiffeisen-payments')
         }
 
         invoobillPaymentsService.getCreditors({ status: "ACTIVE"}).then(function(data) {
-            $scope.invoobillPayments.creditors.list = data.content;
+            $scope.invoobillPayments.creditors.list = data.creditors;
+
+            // and item 'All'
+            var all = translate.property('raiff.payments.invoobill.creditors.all'),
+                allItem = {
+                    id: null,
+                    fullName: all,
+                    shortName: all
+                };
+
+            $scope.invoobillPayments.creditors.list.push(allItem);
+            $scope.invoobillPayments.filterData.creditor = allItem;
         });
 
         $scope.loadInvoobillPayments = function(){
             var params = {
-                realizationDateFrom: $filter('date')($scope.invoobillPayments.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
-                realizationDateTo: $filter('date')($scope.invoobillPayments.filterData.range.dateTo.getTime(), "yyyy-MM-dd"),
+                dateFrom: $filter('date')($scope.invoobillPayments.filterData.range.dateFrom.getTime(), "yyyy-MM-dd"),
+                dateTo: $filter('date')($scope.invoobillPayments.filterData.range.dateTo.getTime(), "yyyy-MM-dd"),
                 pageSize: $scope.invoobillPayments.data.pageSize,
                 pageNumber: $scope.invoobillPayments.data.currentPage,
-                creditor: $scope.invoobillPayments.filterData.creditor
+                creditorId: null
             };
 
+            if ($scope.invoobillPayments.filterData.creditor != null) {
+                params.creditorId = $scope.invoobillPayments.filterData.creditor.id;
+            }
+
             if ($scope.invoobillPayments.filterData.periodType.model === PERIOD_TYPES.LAST) {
-                params.realizationDateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
-                params.realizationDateFrom = $filter('date')($scope.invoobillPayments.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
+                params.dateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
+                params.dateFrom = $filter('date')($scope.invoobillPayments.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
             }
 
             $scope.invoobillPayments.data.promise = invoobillPaymentsService.search(params).then(function(data) {
-                //angular.forEach(data.content, function (payment) {
-                //});
+                angular.forEach(data.content, function (payment) {
+                    payment.creditorFullName = getCreditorName(payment.creditorId);
+                });
                 $scope.invoobillPayments.data.items = data.content;
                 $scope.invoobillPayments.data.pageCount = data.totalPages;
             });
         };
+
+        function getCreditorName(creditorId) {
+            var creditor = $scope.invoobillPayments.creditors.list.find(function(creditor) {
+                return creditor.id === creditorId;
+            });
+            return creditor !== undefined ? creditor.fullName : null;
+        }
 
         $scope.loadInvoobillPayments();
 
