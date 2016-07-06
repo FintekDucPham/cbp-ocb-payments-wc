@@ -89,7 +89,7 @@
                                     {{::"raiff.payments.basket.list.summary.chose"|translate}}
                                 </div>
                             </div>
-                            <div bd-table-cell="second" class="bd-table__cell--sm-14 bd-table__cell--md-10">
+                            <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-10">
                                 <div ng-repeat="currencySummary in basket.summary.summaryItem">
                                     <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="bd-table__cell--sm-8 bd-table__cell--md-8">
@@ -98,8 +98,9 @@
                                             </div>
                                         </div>
                                         <div bd-table-cell="first"
-                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px;">
+                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px; text-align: right;">
                                             {{::"raiff.payments.basket.list.summary.sum"|translate}}&nbsp;
+                                            <br class="bd-hide-md"/>
                                             <bd-amount amount="currencySummary.sum"
                                                        currency="{{currencySummary.currency}}"></bd-amount>
                                         </div>
@@ -120,7 +121,7 @@
                                     {{::"raiff.payments.basket.list.summary.all"|translate}}
                                 </div>
                             </div>
-                            <div bd-table-cell="second" class="bd-table__cell--sm-14 bd-table__cell--md-10">
+                            <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-10">
                                 <div ng-repeat="currencySummary in basket.summary.summaryAll">
                                     <div class="basket-vew__summary__height bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="bd-table__cell--sm-8 bd-table__cell--md-8">
@@ -129,8 +130,9 @@
                                             </div>
                                         </div>
                                         <div bd-table-cell="first"
-                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px;">
+                                             class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px; text-align: right;">
                                             {{::"raiff.payments.basket.list.summary.sum"|translate}}&nbsp;
+                                            <br class="bd-hide-md"/>
                                             <bd-amount amount="currencySummary.sum"
                                                        currency="{{currencySummary.currency}}"></bd-amount>
                                         </div>
