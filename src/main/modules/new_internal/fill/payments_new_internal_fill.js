@@ -348,7 +348,6 @@ angular.module('raiffeisen-payments')
     })
     .filter('dstAccountListFilter', function(){
         return function(dstAccountList, srcAccount) {
-            console.debug(dstAccountList, srcAccount);
            return dstAccountList;
         };
     });
