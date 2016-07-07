@@ -20,11 +20,11 @@
         </bd-item-property>
 
         <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.recipientAccountNo' | translate}}">
-            {{ payment.invoobill.recipientAccountNo | nrbIbanFilter }}
+            {{ payment.invoobill.beneficiaryAccount | nrbIbanFilter }}
         </bd-item-property>
 
         <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.recipient' | translate }}">
-            {{ payment.invoobill.recipient | arrayFilter }}
+            {{ payment.invoobill.creditorFullName | arrayFilter }}
         </bd-item-property>
 
         <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.title' | translate }}">
@@ -36,7 +36,7 @@
         </bd-item-property>
 
         <bd-item-property  label="{{::'raiff.payments.invoobil.list.details.realization_date' | translate }}">
-            {{ payment.invoobill.realizationDate | date : 'shortDate' }}
+            {{ payment.invoobill.paymentDate | date : 'shortDate' }}
         </bd-item-property>
         <!--
         <input name="recipientAcc" hidden ng-model="payment.formData.beneficiaryAccountId" required/>
