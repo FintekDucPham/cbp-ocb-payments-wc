@@ -57,7 +57,7 @@
                        bd-matches-none-of="recipientBankSwiftCodeValidators"
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                        name="swift_bic"
-                       ng-minlength="8"
+                       ng-minlength="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 8 : 0"
                        placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
             </rb-item-property-data-preloader>
             <eb-validation-messages eb-name="swift_bic" ng-if="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"><!--max 35-->
