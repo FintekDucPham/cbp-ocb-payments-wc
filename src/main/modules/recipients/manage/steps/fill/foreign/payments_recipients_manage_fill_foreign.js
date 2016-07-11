@@ -100,7 +100,7 @@ angular.module('raiffeisen-payments')
         };
 
         function validateSwiftAndAccountNo(accountNo){
-            if(accountNo && $scope.recipient.formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC && $scope.recipient.formData.recipientSwiftOrBic){
+            if(accountNo && $scope.SIMPLE_IBAN_VALIDATION_REGEX.test(_.trim(accountNo)) && $scope.recipient.formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC && $scope.recipient.formData.recipientSwiftOrBic){
                 var  countryFromAccountNo = accountNo.substring(0,2).toLowerCase();
                 var countryFromSwift = $scope.recipient.formData.recipientSwiftOrBic.substring(4,6).toLowerCase();
                 if(countryFromAccountNo !== countryFromSwift){
@@ -112,7 +112,7 @@ angular.module('raiffeisen-payments')
         $scope.recipientAccountValidators = {
             simpleIncorrectIban: function(accountNo) {
                 if (accountNo) {
-                    return $scope.SIMPLE_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
+                    return $scope.FOREIGN_IBAN_VALIDATION_REGEX.test(_.trim(accountNo));
                 }
                 return false;
             },

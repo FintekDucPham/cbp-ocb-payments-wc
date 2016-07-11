@@ -10,7 +10,7 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentsTaxpayersListController', function ($scope, $state, bdTableConfig, $timeout, taxpayersService,
-                                                             viewStateService, translate, rbTaxpayerTypes, rbTaxpayerOperationType, lodash) {
+                                                             viewStateService, translate, rbTaxpayerTypes, rbTaxpayerOperationType, lodash, $filter) {
 
         var taxpayerFilterType = angular.extend({}, rbTaxpayerTypes, {
             ALL: {
@@ -51,7 +51,7 @@ angular.module('raiffeisen-payments')
                     "secondaryIdType": copiedData.secondaryIdType,
                     "secondaryIdNo": copiedData.secondaryId,
                     "nip": copiedData.nip,
-                    "taxpayerData": copiedData.data,
+                    "taxpayerData": $filter('arrayFilter')(copiedData.data),
                     "taxpayerType": copiedData.taxpayerType.code
                 }
             });
@@ -105,7 +105,7 @@ angular.module('raiffeisen-payments')
                                     secondaryId: taxpayer.secondaryId,
                                     nip: taxpayer.nip,
                                     data: taxpayer.data,
-                                    dataShort: taxpayer.data.join(' ').substring(0, 70)
+                                    dataShort: $filter('arrayFilter')(taxpayer.data).substring(0, 70)
                                 };
                             });
                             $params.pageCount = data.totalPages;

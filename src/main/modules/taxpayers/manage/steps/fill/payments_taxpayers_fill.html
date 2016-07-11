@@ -35,9 +35,7 @@
                   ng-model="taxpayer.formData.taxpayerData"
                   ng-pattern="patterns.taxpayerData[taxpayer.formData.taxpayerType]"
                   required
-                  bd-split-text="{{ taxpayer.formData.taxpayerType === 'INSURANCE' ? 27 : 35 }}"
-                  bd-split-text-length="{{ taxpayer.formData.taxpayerType === 'INSURANCE' ? 54 : 140 }}"
-                  bd-split-text-max-rows="{{ taxpayer.formData.taxpayerType === 'INSURANCE' ? 2 : 4 }}"
+                  split-text-max-length-validators="{{ taxpayer.formData.taxpayerType === 'INSURANCE' ? 54 : 140 }}"
                   class="input-field input-area--party-data"
                   placeholder="{{ ::'raiff.payments.taxpayers.fill.taxpayer_data.placeholder' | translate }}"></textarea>
 
@@ -48,7 +46,7 @@
             <div eb-message-key="pattern" class="validation-message animate-on">
                 {{ taxpayer.formData.taxpayerType === 'INSURANCE' ? ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_ZUS' | translate) : ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_US_IC' | translate) }}
             </div>
-            <div eb-message-key="splitTextLength" class="validation-message animate-on">
+            <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
                 {{ taxpayer.formData.taxpayerType === 'INSURANCE' ? ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_ZUS' | translate) : ('raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_US_IC' | translate) }}
             </div>
         </eb-validation-messages>

@@ -20,16 +20,15 @@ angular.module('raiffeisen-payments')
                                                               standingTransferService, forbiddenAccounts, promiseSet, utilityService) {
 
         var maxDaysForward = SYSTEM_PARAMETERS['standing.order.max.days'];
+        var minDaysForward = SYSTEM_PARAMETERS['standing.order.min.days'];
 
         $scope.firstDateMinDate= new Date();
         $scope.firstDateMaxDate = new Date();
         $scope.firstDateMaxDate.setDate($scope.firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
-        standingTransferService.standingOrderRules().then(function(response){
-            $scope.firstDateMinDate = new Date(response.standingOrderMinDate);
+        $scope.firstDateMinDate.setDate($scope.firstDateMinDate.getDate() + parseInt(minDaysForward, 10));
             $scope.firstOrNextDateDatepickerOptions = rbDatepickerOptions({
                 minDate: $scope.firstDateMinDate,
                 maxDate: $scope.firstDateMaxDate
-            });
         });
 
         $scope.firstOrNextDateDatepickerOptions = rbDatepickerOptions({

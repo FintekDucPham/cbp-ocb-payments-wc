@@ -103,7 +103,6 @@
               ng-model="payment.formData.recipientName"
               ng-pattern="FOREIGN_DATA_REGEX"
               required
-              bd-array-value
               ng-change="validationErrors.recipientName = undefined"
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
@@ -246,7 +245,6 @@
                   ng-model="payment.formData.description"
                   class="input-field input-area--payment-description"
                   required
-                  bd-array-value
                   ng-change="validationErrors.description = undefined"
                   split-text-max-length-validators="140"
                   ng-pattern="FOREIGN_DATA_REGEX"
@@ -285,7 +283,7 @@
                        rb-source-account-currency="payment.items.senderAccount.currency"
                        rb-transaction-currency="payment.formData.currency.currency"
 
-                       required
+                       ng-required="true"
                        placeholder="{{ ::'raiff.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
             </div>
             <div class="bd-item-property__value--secondary">
@@ -303,43 +301,47 @@
                 </ui-select>
             </div>
         </div>
-        <eb-validation-messages eb-name="amount">
-            <div eb-message-key="number" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
-            </div>
-            <div eb-message-key="pattern" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
-            </div>
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
-            </div>
-            <div eb-message-key="ngMin" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
-            </div>
-            <div eb-message-key="amount" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
-            </div>
-            <div eb-message-key="balance" class="validation-message animate-on">
-                {{ 'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
-            </div>
-            <div eb-message-key="convertedBalance" class="validation-message animate-on">
-                {{ 'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
-            </div>
-            <div eb-message-key="##todo##" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID'|translate}}
-            </div>
-            <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
-            </div>
-            <div eb-message-key="transfer.amount.raiff.transfer.limit.nonres" class="validation-message animate-on">
-                {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
-            </div>
-        </eb-validation-messages>
-        <eb-validation-messages eb-name="currency">
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'raiff.payments.new.currency.fill.currency.error.required'|translate}}
-            </div>
-        </eb-validation-messages>
+        <div ng-if="paymentForm.amount.$invalid">
+            <eb-validation-messages eb-name="amount">
+                <div eb-message-key="number" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="ngMin" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="amount" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="balance" class="validation-message animate-on">
+                    {{ 'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
+                </div>
+                <div eb-message-key="convertedBalance" class="validation-message animate-on">
+                    {{ 'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
+                </div>
+                <div eb-message-key="##todo##" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID'|translate}}
+                </div>
+                <div eb-message-key="transfer.amount.raiff.transfer.limit.exceeed" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+                </div>
+                <div eb-message-key="transfer.amount.raiff.transfer.limit.nonres" class="validation-message animate-on">
+                    {{::'raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED'|translate}}
+                </div>
+            </eb-validation-messages>
+        </div>
+        <div ng-if="paymentForm.currency.$invalid">
+            <eb-validation-messages eb-name="currency">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'raiff.payments.new.currency.fill.currency.error.required'|translate}}
+                </div>
+            </eb-validation-messages>
+        </div>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="limitExeeded !== undefined && limitExeeded.show">
             {{limitExeeded.messages}}

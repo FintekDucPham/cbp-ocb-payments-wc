@@ -161,7 +161,7 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.amount.$validate();
             }
 
-            if (form.$invalid) {
+            if (form.$invalid || !lodash.isEmpty(form.$error)) {
                 formService.dirtyFields(form);
             } else {
                 // for standing orders we need standingTransferService
