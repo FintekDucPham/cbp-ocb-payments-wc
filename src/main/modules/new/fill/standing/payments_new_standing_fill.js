@@ -240,4 +240,10 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
+
+        $scope.$watch('payment.formData.firstRealizationDate', function(n,o){
+            if(n!==o){
+                $scope.validationErrors.firstRealizationDate = undefined;
+            }
+        });
     });
