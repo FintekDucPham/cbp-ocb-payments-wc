@@ -60,7 +60,7 @@ angular.module('raiffeisen-payments')
 
                 $scope.$watch('model.searchQuery', function (query, oldQuery) {
                     if (query && query.replace(/ /g, '').length == 26 && query !== oldQuery) {
-                        $scope.searchForOffice(query);
+                        $scope.searchForOffice(query.replace(/ /g, ''));
                     }else {
                         $scope.onAccountSelect({
                             $office: null
