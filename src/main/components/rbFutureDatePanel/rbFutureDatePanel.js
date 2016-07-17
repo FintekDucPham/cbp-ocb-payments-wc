@@ -44,6 +44,9 @@ angular.module('raiffeisen-payments')
                 "valid": "=?"
             },
             controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, translate) {
+                $scope.rbDatePickerParams = {
+                    dateFrom: new Date()
+                };
                 // max date, based on now and business parameter
                 var now     = new Date(),
                     maxDate,
@@ -131,6 +134,11 @@ angular.module('raiffeisen-payments')
 
                 var validateRange = function() {
                     var dateFrom, dateTo;
+                    var todayMidnight = new Date();
+                    todayMidnight.setHours(0);
+                    todayMidnight.setMinutes(0);
+                    todayMidnight.setSeconds(0);
+                    todayMidnight.setMilliseconds(0);
 
                     if ($scope.futureDatePanelForm.dateFromInput) {
                         $scope.futureDatePanelForm.dateFromInput.$validate();
@@ -175,6 +183,11 @@ angular.module('raiffeisen-payments')
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', true);
                         }
 
+                        if(dateFrom){
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FINISH_DATE', dateFrom.getTime() >= todayMidnight.getTime());
+                        }else{
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FINISH_DATE', true);
+                        }
                         if (dateTo) {
                             $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', dateTo.getTime() <= maxDate.getTime());
                         }
