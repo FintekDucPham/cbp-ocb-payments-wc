@@ -884,7 +884,7 @@
 
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE": "Data końcowa okresu wyszukiwania jest późniejsza niż ##MONTHS## miesięcy w przód. Można wyszukiwać tylko operacje zaplanowane na najbliższe ##MONTHS## miesięcy.",
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
-
+    "raiff.payments.components.futureDatePanel.validation.TOO_EARLY_FINISH_DATE": "Data początkowa nie może być wcześniejsza niż data bieżąca",
     "raiff.payments.components.futureDatePanel.validation.AMNT_EXCEEDED_MODIFY_NON_RESID": "Modyfikacja danych tego przelewu w internecie nie jest możliwa ze względu na wymogi sprawozdawcze Banku wobec NBP (płatność z rachunku  nierezydenta). Aby zmodyfikować ten przelew, skontaktuj się z Operatorem Centrum Telefonicznego lub doradcą bankowym w Oddziale Banku.",
 
 
