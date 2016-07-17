@@ -160,8 +160,11 @@ angular.module('raiffeisen-payments')
             if ($scope.paymentForm && $scope.paymentForm.amount) { // przelew do zus
                 $scope.paymentForm.amount.$validate();
             }
-
-            if (form.$invalid || !lodash.isEmpty(form.$error)) {
+            $scope.accountNotSelectedError = false;
+            if(!$scope.payment.items.senderAccount){
+                $scope.accountNotSelectedError = true;
+            }
+            if (form.$invalid || !lodash.isEmpty(form.$error) || $scope.accountNotSelectedError) {
                 formService.dirtyFields(form);
             } else {
                 // for standing orders we need standingTransferService
