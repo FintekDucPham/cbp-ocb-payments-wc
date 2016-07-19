@@ -1191,14 +1191,14 @@
   "raiff.payments.new.standing.fill.MSG-0599_EXECUTED_DATE_NOT_EMPTY_SO": "Dzień realizacji zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.MSG-0600_INCORRECT_EXECUTED_DATE_SO": "Dzień realizacji zlecenia powinnien być liczbą z zakresu od 1 do 31",
 
-    "raiff.payments.new.standing.status.20": "Zlecnie przyjęte do realizacji ",
-    "raiff.payments.new.standing.status.40": "Zlecnie przyjęte do realizacji ",
-    "raiff.payments.new.standing.status.60": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.new.standing.status.20": "Zlecenie przyjęte do realizacji",
+    "raiff.payments.new.standing.status.40": "Zlecenie przyjęte do realizacji",
+    "raiff.payments.new.standing.status.60": "Zlecenie przyjęte do realizacji",
     "raiff.payments.new.standing.status.100": "Zlecenie zrealizowane",
     "raiff.payments.new.standing.status.98": "Zlecenie odrzucone",
     "raiff.payments.new.standing.status.99": "Zlecenie odrzucone",
     "raiff.payments.new.standing.status.error": "Zlecenie odrzucone",
-    "raiff.payments.new.standing.status.success": "Zlecnie przyjęte do realizacji ",
+    "raiff.payments.new.standing.status.success": "Zlecenie przyjęte do realizacji",
 
     "raiff.payments.standing.new.btn.finalize": "Zamknij",
 
