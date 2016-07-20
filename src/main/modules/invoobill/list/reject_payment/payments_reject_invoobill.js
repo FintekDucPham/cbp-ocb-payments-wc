@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.reject_payment', {
-            url: "/reject-payment/:referenceId",
+            url: "/reject-payment",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/reject_payment/payments_reject_invoobill.html",
             controller: "PaymentsRejectInvoobillController",
@@ -21,63 +21,29 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectInvoobillController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService, initialState, rbPaymentInitFactory) {
-
-        $scope.CURRENT_DATE = CURRENT_DATE;
+    .controller('PaymentsRejectInvoobillController', function ($scope, bdMainStepInitializer, initialState, lodash) {
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
-            formName: 'paymentForm',
-            invoobill: initialState.invoobillPayment,
-            formData: {
-                reason: ""
-            },
-            options: {
-                fixedAccountSelection: false
-            },
-            operation: rbPaymentOperationTypes.NEW,
-            token: {
-                model: null,
-                params: {}
-            },
-            initData: {
-            },
-            items: {
-                modifyFromBasket : false
-            }
-        }), {
-            formData: {
-                addToBasket: false,
-            }
-        });
-
-        if(!angular.equals({}, $stateParams.payment)){
-            lodash.assign($scope.payment.formData, $stateParams.payment);
-            $stateParams.payment = {};
-        }
-        if(!angular.equals({}, $stateParams.items)){
-            lodash.assign($scope.payment.items,  $stateParams.items);
-            $stateParams.items = {};
-        }
-        $scope.clearForm = function () {
-            $scope.payment.formData = {};
-            $scope.payment.items = {};
-            $scope.$broadcast('clearForm');
-        };
-
-        var alreadySet = false;
-        $scope.setDefaultValues = function (value) {
-            if (!alreadySet) {
-                angular.extend($scope.payment.formData, value, lodash.pick($scope.payment.formData, angular.isDefined));
-                alreadySet = true;
-            }
-        };
+                formName: 'paymentForm',
+                invoobill: initialState.invoobillPayment,
+                formData: {
+                    reason: ""
+                },
+                token: {
+                    model: null,
+                    params: {}
+                },
+                meta: {
+                    referenceId: null
+                },
+                result: {}
+            }));
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.invoobill.list',
             footerType: 'payment',
             onClear: $scope.clearForm,
             cancelState: 'payments.invoobill.list',
-            addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
                 change: 'config.multistepform.buttons.change',
@@ -87,8 +53,7 @@ angular.module('raiffeisen-payments')
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
                 finalize: 'raiff.payments.new.btn.finalize',
-                finalAction: 'raiff.payments.new.btn.final_action',
-                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
+                finalAction: 'raiff.payments.new.btn.final_action'
             },
             visibility:{
                 fillReturn: false,
@@ -103,6 +68,4 @@ angular.module('raiffeisen-payments')
                 addAsStandingOrder: false
             }
         };
-
-        rbPaymentInitFactory($scope);
     });

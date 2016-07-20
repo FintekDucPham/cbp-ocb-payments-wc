@@ -9,11 +9,6 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentRejectInvoobillStatusController', function ($scope, bdStatusStepInitializer) {
-        bdStatusStepInitializer($scope, {
-            formName: 'paymentForm',
-            dataObject: $scope.payment
-        });
-
+    .controller('PaymentRejectInvoobillStatusController', function ($scope) {
         $scope.payment.formData = {};
     });
