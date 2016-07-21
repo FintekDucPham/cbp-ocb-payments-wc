@@ -1313,11 +1313,13 @@
 
     "raiff.payments.invoobill.label":"Invoobill",
     "raiff.payments.invoobill.list.header":"Usługa Invoobill",
+    "raiff.payments.invoobill.list.filter.type.last.label":"Najbliższe",
     "raiff.payments.invoobill.list.header.realization_date":"Data płatności",
     "raiff.payments.invoobill.list.header.recipient":"Dostawca",
     "raiff.payments.invoobill.list.header.amount":"Kwota",
     "raiff.payments.invoobill.list.header.status":"Status",
     "raiff.payments.invoobill.list.empty":"Nie znaleziono płatności spełniających kryteria wyszukiwania",
+    "raiff.payments.invoobill.select.filter.INCORRECT_DATE_SEARCH": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##months## miesięcy wstecz. Można wyszukiwać tylko operacje na najbliższe ##months## miesięcy.",
 
     "raiff.payments.invoobill.creditors.all": "Wszyscy",
     "raiff.payments.invoobill.creditors.select": "Wybierz dostawcę...",

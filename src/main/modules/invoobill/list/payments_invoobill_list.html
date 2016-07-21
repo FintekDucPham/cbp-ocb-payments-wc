@@ -9,7 +9,7 @@
                 <div class="col-xs-12">
                     <bd-radio-option bd-option-value="invoobillPayments.periodTypes.LAST" class="row__inline-block--middle">
                         <div class="row__inline-block--middle row__inline-block--adjacent">
-                            {{:: 'raiff.payments.rejected.list.filter.type.last.label' | translate}}
+                            {{:: 'raiff.payments.invoobill.list.filter.type.last.label' | translate}}
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
                             <input
@@ -51,7 +51,7 @@
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.mindate">
-                        {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
+                        {{::'raiff.payments.invoobill.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
                     </div>
                 </div>
             </div>
