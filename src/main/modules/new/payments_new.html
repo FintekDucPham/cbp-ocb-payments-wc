@@ -1,37 +1,42 @@
 
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
-    <bd-header>{{payment.header}}</bd-header>
+    <section ng-hide="payment.beforeTransfer.suggestions.displayed">
+        <bd-header>{{payment.header}}</bd-header>
 
-    <bd-form-panel class="bd-form-panel--responsive">
+        <bd-form-panel class="bd-form-panel--responsive">
 
-        <bd-item-property
-                label="{{::'raiff.payments.new.payment_type'|translate}}"
-                ng-show="payment.type.code != 'STANDING'"
-                >
-
-            <ui-select ng-model="payment.type"
-                       theme="bootstrap"
-                       on-select="changePaymentType($item)"
-                       ng-disabled="activeStep.id !== 'fill' || payment.fixedAccountSelection"
-                       reset-search-input="false"
-                       required
+            <bd-item-property
+                    label="{{::'raiff.payments.new.payment_type'|translate}}"
+                    ng-show="payment.type.code != 'STANDING'"
                     >
-                <ui-select-match placeholder="{{ ::'raiff.payments.new.payment_type.select'|translate }}">
-                    {{'raiff.payments.new.types.' + $select.selected.code | translate}}
-                </ui-select-match>
-                <ui-select-choices repeat="paymentType in payment.meta.paymentTypes">
-                    <div ng-bind-html="::'raiff.payments.new.types.' + paymentType.code | translate | highlight: $select.search"></div>
-                </ui-select-choices>
-            </ui-select>
 
-        </bd-item-property>
+                <ui-select ng-model="payment.type"
+                           theme="bootstrap"
+                           on-select="changePaymentType($item)"
+                           ng-disabled="activeStep.id !== 'fill' || payment.fixedAccountSelection"
+                           reset-search-input="false"
+                           required
+                        >
+                    <ui-select-match placeholder="{{ ::'raiff.payments.new.payment_type.select'|translate }}">
+                        {{'raiff.payments.new.types.' + $select.selected.code | translate}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="paymentType in payment.meta.paymentTypes">
+                        <div ng-bind-html="::'raiff.payments.new.types.' + paymentType.code | translate | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
 
-        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
-            <div ng-if="payment.initData.promise.$$state.status!==0">
-                <div ui-view></div>
-            </div>
-        </rb-multistep-form>
+            </bd-item-property>
 
-    </bd-form-panel>
+            <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
+                <div ng-if="payment.initData.promise.$$state.status!==0">
+                    <div ui-view></div>
+                </div>
+            </rb-multistep-form>
+
+        </bd-form-panel>
+
+    </section>
+
+    <rb-before-transfer rb-before-transfer-prototype="beforeTransfer.PROTOTYPE.SUGGESTION" rb-before-transfer-model="payment" rb-before-transfer-context-investments></rb-before-transfer>
 
 </rb-content-view>
