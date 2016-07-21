@@ -25,7 +25,7 @@ angular.module('raiffeisen-payments')
                         microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
                         creditorInfoLink: "http://www.invoobill.pl/gdzie-zaplace-z-invoobill/",
                         */
-                        customerDetails: customerService.getCustomerDetails(),
+                        customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         return {
                             micro: {
@@ -39,7 +39,7 @@ angular.module('raiffeisen-payments')
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
                             },
-                            creditorInfoLink: data.creditorInfoLink,
+                            creditorInfoLink: data.creditorInfoLink
                         };
                     });
                 }]
@@ -281,9 +281,7 @@ angular.module('raiffeisen-payments')
             viewStateService.setInitialState('payments.invoobill.reject_payment', {
                 invoobillPayment: data
             });
-            $state.go("payments.invoobill.reject_payment.fill", {
-                invoobillPayment: data
-            });
+            $state.go("payments.invoobill.reject_payment.fill");
         };
 
         function dateTodayOrInFuture(paymentDate) {
