@@ -23,7 +23,7 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService, paymentRulesResolved) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService, paymentRulesResolved, $filter) {
 
         $scope.paymentRulesResolved = paymentRulesResolved;
 
@@ -197,12 +197,12 @@ angular.module('raiffeisen-payments')
             foreign: function (recipient) {
                 return wrapWithCommonData({
                     formData: {
-                        recipientData: recipient.recipientAddress,
-                        description: recipient.transferTitleTable,
+                        recipientData: $filter('arrayFilter')(recipient.recipientAddress),
+                        description: $filter('arrayFilter')(recipient.transferTitleTable),
                         recipientIdentityType: recipient.recipientIdentityType,
                         recipientBankName: recipient.bankData,
                         recipientBankCountry: recipient.recipientBankCountry,
-                        recipientCountry: recipient.recipientCountry,
+                        recipientCountry: recipient.recipientBankCountry,
                         recipientSwiftOrBic: recipient.swift_bic
                     }
                 }, recipient);
