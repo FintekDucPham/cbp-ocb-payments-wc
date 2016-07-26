@@ -9,16 +9,9 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewInvoobillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService ) {
+    .controller('PaymentsNewInvoobillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, invoobillPaymentsService ) {
 
-        bdVerifyStepInitializer($scope, {
-            formName: 'paymentForm',
-            dataObject: $scope.payment
-        });
-
-        function sendAuthorizationToken() {
-            $scope.payment.token.params.resourceId = $scope.payment.transferId;
-        }
+        $scope.payment.token.params.rbOperationType="INVOOBIL";
 
         transferService.getTransferCost({
             remitterId: $scope.payment.formData.remitterAccountId
@@ -26,77 +19,75 @@ angular.module('raiffeisen-payments')
             $scope.transferCost = transferCostData;
         });
 
-        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
-            if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
-                $scope.payment.result.token_error = false;
-                sendAuthorizationToken();
-            }
-        });
-
-        $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
-            delete $scope.payment.items.credentials;
-        });
 
         function authorize(doneFn, actions) {
-            transferService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
-                var parts = resultCode.split('|');
-                $scope.payment.result = {
-                    code: parts[1],
-                    type: parts[0] === 'OK' ? "success" : "error"
-                };
-                if (parts[0] !== 'OK' && !parts[1]) {
-                    $scope.payment.result.code = 'error';
-                }
-                depositsService.clearDepositCache();
-                $scope.payment.result.token_error = false;
-                paymentsBasketService.updateCounter($scope.payment.result.code);
+            invoobillPaymentsService.realize($scope.payment.meta.referenceId, $scope.payment.token.model.input.model).then(function(data){
+                $scope.payment.result = data;
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
 
                 if($scope.payment.token.model && $scope.payment.token.model.$tokenRequired){
                     if(!$scope.payment.token.model.$isErrorRegardingToken(error)){
+                        $scope.payment.result = error;
+                        $scope.payment.result.error = true;
                         actions.proceed();
                     }
                 }else{
+                    $scope.payment.result = error;
                     actions.proceed();
                 }
-
-            }).finally(function() {
-                //delete $scope.payment.items.credentials;
-                formService.clearForm($scope.paymentAuthForm);
             });
         }
 
-        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            actions.proceed();
-            /* Na razie
-            if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
-                if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
-                    if($scope.payment.token.model.input.$isValid()) {
-                        if ($scope.payment.result.token_error) {
-                            if ($scope.payment.result.nextTokenType === 'next') {
-                                sendAuthorizationToken();
-                            } else {
-                                $scope.payment.result.token_error = false;
-                            }
-                        } else {
-                            authorize(actions.proceed, actions);
-                        }
-                    }
-                }
-                else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
-                    $scope.payment.token.model.$proceed();
-                }
-            }
-            */
+        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
+            $scope.payment.result.token_error = false;
+            $scope.payment.token.params.resourceId =  $scope.payment.meta.referenceId;
         });
-
-        $scope.setForm = function (form) {
-            $scope.paymentAuthForm = form;
-        };
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
+        });
+
+
+        $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+            $scope.payment.token.params = {};
+        });
+
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                if($scope.payment.token.model.input.$isValid()) {
+                    authorize(actions.proceed, actions);
+                }
+            }else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                $scope.payment.token.model.$proceed();
+            }
+        });
+
+
+        $scope.$watch('payment.token.model.view.name', function(newValue, oldValue){
+            var params = $scope.payment.rbPaymentsStepParams;
+            if(newValue){
+                if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
+                    var backendErrors = $scope.payment.token.model.currentToken.$backendErrors;
+                    if(backendErrors.TOKEN_AUTH_BLOCKED){
+                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }else if(backendErrors.TOKEN_NOT_SEND){
+                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }else if(backendErrors.TOKEN_EXPIRED){
+                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.visibility.finalize = false;
+                        params.visibility.accept = false;
+                    }
+                }else{
+                    params.visibility.finalize = true;
+                    params.visibility.accept = true;
+                    params.labels.prev = 'raiff.payments.basket.multistepform.buttons.cancel';
+                }
+            }
         });
     });

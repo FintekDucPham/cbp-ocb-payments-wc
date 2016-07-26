@@ -12,6 +12,7 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsRejectInvoobillFillController', function ($scope, bdStepStateEvents, invoobillPaymentsService) {
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            delete $scope.payment.token.params.resourceId;
             var form = $scope.paymentForm;
             if (form.$invalid) {
                 formService.dirtyFields(form);

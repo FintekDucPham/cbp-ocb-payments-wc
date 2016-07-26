@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.new_payment', {
-            url: "/make-payment/:referenceId",
+            url: "/new",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/make_payment/payments_new_invoobill.html",
             controller: "PaymentsNewInvoobillController",
@@ -21,72 +21,33 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewInvoobillController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService, initialState, rbPaymentInitFactory) {
-
-        $scope.CURRENT_DATE = CURRENT_DATE;
+    .controller('PaymentsNewInvoobillController', function ($scope, bdMainStepInitializer, initialState, lodash) {
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             invoobill: initialState.invoobillPayment,
             formData: {
             },
-            options: {
-                fixedAccountSelection: false
-            },
-            operation: rbPaymentOperationTypes.NEW,
             token: {
                 model: null,
                 params: {}
             },
-            initData: {
+            meta: {
+                referenceId: null,
+                payNow: initialState.payNow ? true : false,
+                validators: {}
             },
-            items: {
-                modifyFromBasket : false
-            }
-        }), {
-            formData: {
-                addToBasket: false,
-            }
-        });
+            result: {}
+            }));
 
-        if(!angular.equals({}, $stateParams.payment)){
-            lodash.assign($scope.payment.formData, $stateParams.payment);
-            $stateParams.payment = {};
+        if($scope.payment.meta.payNow){
+            $scope.payment.invoobill.paymentDate = new Date();
         }
-        if(!angular.equals({}, $stateParams.items)){
-            lodash.assign($scope.payment.items,  $stateParams.items);
-            $stateParams.items = {};
-        }
+
         $scope.clearForm = function () {
             $scope.payment.formData = {};
             $scope.payment.items = {};
             $scope.$broadcast('clearForm');
-        };
-
-        var alreadySet = false;
-        $scope.setDefaultValues = function (value) {
-            if (!alreadySet) {
-                angular.extend($scope.payment.formData, value, lodash.pick($scope.payment.formData, angular.isDefined));
-                alreadySet = true;
-            }
-        };
-
-        $scope.addAsStandingOrder = function() {
-
-            viewStateService.setInitialState('payments.new', {
-                paymentOperationType: rbPaymentOperationTypes.NEW
-            });
-
-            $state.transitionTo('payments.new.fill', {
-                paymentType: 'standing',
-                payment: $scope.payment.standingOrderData
-            }, {reload: true}).finally(function() {
-                // workaround for paymentType parameter and state reloading problems
-                $state.go('payments.new.fill', {
-                    paymentType: 'standing',
-                    payment: $scope.payment.standingOrderData
-                });
-            });
         };
 
         $scope.payment.rbPaymentsStepParams = {
@@ -120,6 +81,4 @@ angular.module('raiffeisen-payments')
                 addAsStandingOrder: false
             }
         };
-
-        rbPaymentInitFactory($scope);
     });
