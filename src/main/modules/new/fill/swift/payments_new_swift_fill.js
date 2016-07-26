@@ -3,25 +3,25 @@ angular.module('raiffeisen-payments')
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
                                                            $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q) {
 
+        $scope.EXPRESS_AVAILABLE_CURRENCIES = ['PLN', 'EUR', 'USD'];
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.foreignIbanValidationRegex = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
         $scope.SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP = validationRegexp('SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP');
         $scope.currencyList = [];
-
         $scope.RECIPIENT_IDENTITY_TYPES = RECIPIENT_IDENTITY_TYPES;
+
         if(!$scope.payment.formData.recipientIdentityType){
             $scope.payment.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
         }
-
         $scope.accountSelectorRemote = {};
-        
+
+
         $scope.swift = {
             promise: null,
             data: null
         };
-
         $scope.transfer_type = {
             promise: transferService.foreignTransferTypes(),
             data: null
@@ -33,36 +33,49 @@ angular.module('raiffeisen-payments')
             init: null
         };
 
+
         if($scope.payment.formData.currency){
             $scope.currencies.init = $scope.payment.formData.currency.currency;
         }
-
         $scope.currencies.promise.then(function(data){
             $scope.currencies.data = data.content;
             $scope.payment.formData.currency = lodash.find($scope.currencies.data, {currency: $scope.currencies.init});
         });
 
         $scope.transfer_constants = rbForeignTransferConstants;
+        $scope.swiftTransferTypes = [rbForeignTransferConstants.PAYMENT_TYPES.STANDARD];
+
+
+        $scope.$watch('payment.formData.currency', function(newValue, oldValue){
+           if(newValue && newValue.currency && newValue.currency.length > 0){
+               var currency = newValue.currency;
+               if($scope.EXPRESS_AVAILABLE_CURRENCIES.indexOf(currency) > -1){
+                   $scope.swiftTransferTypes = [rbForeignTransferConstants.PAYMENT_TYPES.STANDARD, rbForeignTransferConstants.PAYMENT_TYPES.EXPRESS];
+               }else{
+                   $scope.swiftTransferTypes = [rbForeignTransferConstants.PAYMENT_TYPES.STANDARD];
+               }
+           }
+        });
         if(!$scope.payment.formData.transferCost){
             $scope.payment.formData.transferCost = rbForeignTransferConstants.TRANSFER_COSTS.SHA;
         }
         if(!$scope.payment.formData.paymentType){
             $scope.payment.formData.paymentType = rbForeignTransferConstants.PAYMENT_TYPES.STANDARD;
         }
-
         $scope.transfer_type.promise.then(function(data){
             $scope.transfer_type.data = data.content;
         });
 
         // quick fix
- /*       utilityService.getCurrentDate().then(function(currentDate) {
-            var realizationDate = new Date(currentDate.getTime());
-            realizationDate.setDate(realizationDate.getDate());
-            $timeout(function() {
-                $scope.payment.formData.realizationDate = realizationDate;
-            });
-        });
-*/
+
+        /*       utilityService.getCurrentDate().then(function(currentDate) {
+                   var realizationDate = new Date(currentDate.getTime());
+                   realizationDate.setDate(realizationDate.getDate());
+                   $timeout(function() {
+                       $scope.payment.formData.realizationDate = realizationDate;
+                   });
+               });
+       */
         $scope.setDefaultValues({
             realizationDate: $scope.CURRENT_DATE
         });
@@ -94,10 +107,11 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.currency', function(n, o) {
             if ($scope.paymentForm && $scope.paymentForm.amount) {
-                $scope.paymentForm.amount.$validate(); 
+                $scope.paymentForm.amount.$validate();
                 $scope.paymentForm.recipientAccountNo.$validate();
             }
         });
+
 
         $scope.$watch('payment.formData.recipientSwiftOrBic', function(n,o){
             if(n && !angular.equals(n, o) && n.length >= 8){
@@ -123,14 +137,13 @@ angular.module('raiffeisen-payments')
                     });
             }
         });
-
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
             $scope.payment.formData.recipientAccountNo = recipient.accountNo;
             $scope.payment.formData.recipientName = recipient.data.join('');
-            $scope.payment.formData.description = recipient.title.join('');
 
+            $scope.payment.formData.description = recipient.title.join('');
             if(recipient.details.informationProvider==='MANUAL'){
                 $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
                 $timeout(function(){
@@ -150,6 +163,7 @@ angular.module('raiffeisen-payments')
             $scope.foreignIbanValidationRegex =  $scope.FOREIGN_IBAN_VALIDATION_REGEX;
             $scope.payment.options.ibanLength = null;
         };
+
 
         $scope.setRequestConverter(function(formData) {
             var copiedFormData = JSON.parse(JSON.stringify(formData));
@@ -180,7 +194,6 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             return copiedFormData;
         });
-
         $scope.clearRecipient = function () {
             $scope.payment.options.fixedRecipientSelection = false;
             $scope.payment.items.recipient = null;

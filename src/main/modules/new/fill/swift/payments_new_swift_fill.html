@@ -405,7 +405,7 @@
             <ui-select-match placeholder="{{::'raiff.payments.new.foreign.fill.payment_type.label'|translate}}">
                 {{$select.selected}}
             </ui-select-match>
-            <ui-select-choices repeat="cost in [transfer_constants.PAYMENT_TYPES.STANDARD, transfer_constants.PAYMENT_TYPES.EXPRESS]">
+            <ui-select-choices repeat="cost in swiftTransferTypes">
                 {{ cost }}
             </ui-select-choices>
         </ui-select>
