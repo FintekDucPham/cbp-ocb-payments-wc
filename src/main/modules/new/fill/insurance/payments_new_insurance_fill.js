@@ -51,8 +51,6 @@ angular.module('raiffeisen-payments')
             $scope.supplementaryIdType = val;
         });
 
-
-
         function calculateInsurancesAmount() {
             var summary = calculateInsurancesSummary();
             if (!summary || !summary.length) {
@@ -232,6 +230,19 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.paymentForm.insuranceErrors.$validate();
         });
+        $scope.$watch('payment.options.futureRealizationDate', function(n, o) {
+            if (angular.isDefined(n) && n != o) {
+                validateInsurances();
+            }
+        });
+        function validateInsurances() {
+            lodash.forEach(zusPaymentInsurances, function(insuranceType) {
+                var field = $scope.paymentForm[insuranceType + 'Amount'];
+                if (field.$dirty) {
+                    field.$validate();
+                }
+            });
+        }
         $scope.insurancesValidators = {
             atLeastOne: function (insurances) {
                 return getActiveInsurancesCount(insurances) > 0;
@@ -308,7 +319,6 @@ angular.module('raiffeisen-payments')
             }
             $scope.accountSelectorRemote.resetToDefault();
         });
-
 
         var omitFormFirelds = lodash.map(zusPaymentInsurances, function(type) {
             return type + 'Amount';
