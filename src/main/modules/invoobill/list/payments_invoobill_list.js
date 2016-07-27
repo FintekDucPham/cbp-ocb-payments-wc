@@ -257,11 +257,10 @@ angular.module('raiffeisen-payments')
         $scope.payNow = function(data) {
             console.debug("payNow(data)", data);
             viewStateService.setInitialState('payments.invoobill.new_payment', {
-                invoobillPayment: data
+                invoobillPayment: data,
+                payNow: true
             });
-            $state.go("payments.invoobill.new_payment.fill", {
-                invoobillPayment: data
-            });
+            $state.go("payments.invoobill.new_payment.fill");
         };
 
         //pay in future
@@ -270,9 +269,7 @@ angular.module('raiffeisen-payments')
             viewStateService.setInitialState('payments.invoobill.new_payment', {
                 invoobillPayment: data
             });
-            $state.go("payments.invoobill.new_payment.fill", {
-                invoobillPayment: data
-            });
+            $state.go("payments.invoobill.new_payment.fill");
         };
 
         //reject payment

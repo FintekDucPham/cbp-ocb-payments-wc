@@ -10,13 +10,5 @@ angular.module('raiffeisen-payments')
         });
     })
     .controller('PaymentNewInvoobillStatusController', function ($scope, bdStatusStepInitializer) {
-        bdStatusStepInitializer($scope, {
-            formName: 'paymentForm',
-            dataObject: $scope.payment
-        });
-
-        $scope.payment.standingOrderData = $scope.payment.formData;
-        $scope.payment.standingOrderData.recipientAccountNo = $scope.payment.items.recipientAccount.accountNo;
-
         $scope.payment.formData = {};
     });
