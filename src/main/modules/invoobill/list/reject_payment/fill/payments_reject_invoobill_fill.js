@@ -27,7 +27,8 @@ angular.module('raiffeisen-payments')
         var createPaymentEntity = function(){
             return invoobillPaymentsService.create({
                 messageId : $scope.payment.invoobill.refId,
-                rejectedReason : $scope.payment.formData.reason
+                rejectedReason : $scope.payment.formData.reason,
+                paymentStatus : $scope.payment.invoobill.paymentStatus
             }, "reject").then(function(data){
                 return data;
             });
