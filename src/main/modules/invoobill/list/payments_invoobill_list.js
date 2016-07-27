@@ -39,7 +39,7 @@ angular.module('raiffeisen-payments')
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
                             },
-                            creditorInfoLink: data.creditorInfoLink
+                            creditorInfoLink: data.creditorInfoLink.value
                         };
                     });
                 }]
