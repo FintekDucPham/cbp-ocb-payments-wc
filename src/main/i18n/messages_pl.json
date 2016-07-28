@@ -452,7 +452,7 @@
     "raiff.payments.recipients.new.currency.fill.description.label": "Tytułem",
     "raiff.payments.recipients.new.currency.fill.description.placeholder": "Wpisz tytuł",
 
-    "raiff.payments.new.us.verify.sender_account_name": "Z rachunku",
+                "raiff.payments.new.us.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.us.verify.recipient_account_no": "Na rachunek",
     "raiff.payments.new.us.verify.taxpayer_data": "Dane płatnika",
     "raiff.payments.new.us.verify.supplementary_id_type": "Typ identyfikatora uzupełniającego",
