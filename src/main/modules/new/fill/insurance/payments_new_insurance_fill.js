@@ -363,7 +363,7 @@ angular.module('raiffeisen-payments')
             }*/
 
             var recipientData2 = angular.copy({
-                customName: "Nowy odbiorca",
+                customName: translate.property('raiff.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 nip: $scope.payment.formData.nip,
                 secondaryIdType:  $scope.payment.formData.secondaryIdType,
