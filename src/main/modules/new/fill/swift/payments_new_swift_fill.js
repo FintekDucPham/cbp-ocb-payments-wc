@@ -52,6 +52,7 @@ angular.module('raiffeisen-payments')
                if($scope.EXPRESS_AVAILABLE_CURRENCIES.indexOf(currency) > -1){
                    $scope.swiftTransferTypes = [rbForeignTransferConstants.PAYMENT_TYPES.STANDARD, rbForeignTransferConstants.PAYMENT_TYPES.EXPRESS];
                }else{
+                   $scope.payment.formData.paymentType = rbForeignTransferConstants.PAYMENT_TYPES.STANDARD;
                    $scope.swiftTransferTypes = [rbForeignTransferConstants.PAYMENT_TYPES.STANDARD];
                }
            }
