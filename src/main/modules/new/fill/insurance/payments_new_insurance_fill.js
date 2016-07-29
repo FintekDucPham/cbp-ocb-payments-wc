@@ -2,7 +2,9 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents, utilityService) {
+    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, translate, zusPaymentInsurances,
+                                                         zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout,
+                                                         rbAccountSelectParams, bdStepStateEvents, utilityService) {
 
         $scope.accountSelectorRemote = {};
 
@@ -228,7 +230,9 @@ angular.module('raiffeisen-payments')
             }
         };
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
-            $scope.paymentForm.insuranceErrors.$validate();
+            $timeout(function() {
+                $scope.paymentForm.insuranceErrors.$validate();
+            });
         });
         $scope.$watch('payment.options.futureRealizationDate', function(n, o) {
             if (angular.isDefined(n) && n != o) {
@@ -253,13 +257,14 @@ angular.module('raiffeisen-payments')
                 }));
             },
             amountExceedingFunds: function (insurances) {
-                if($scope.payment.items.senderAccount && insurances) {
+                if ($scope.payment.items.senderAccount && insurances && !$scope.payment.options.futureRealizationDate
+                    && !$scope.payment.formData.addToBasket && $scope.insurancesValidators.validSelection()) {
                     var totalPayment = 0;
 
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
                         totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
-                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate || $scope.payment.formData.addToBasket ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
+                    return !totalPayment || totalPayment <= $scope.payment.items.senderAccount.accessibleAssets;
                 } else {
                     return true;
                 }
