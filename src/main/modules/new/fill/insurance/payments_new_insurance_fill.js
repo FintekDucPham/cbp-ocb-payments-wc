@@ -2,7 +2,9 @@ angular.module('raiffeisen-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
-    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, zusPaymentInsurances, zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout, rbAccountSelectParams, bdStepStateEvents, utilityService) {
+    .controller('NewZusPaymentFillController', function ($scope, insuranceAccounts, lodash, translate, zusPaymentInsurances,
+                                                         zusSuplementaryIds, zusPaymentTypes, validationRegexp, $timeout,
+                                                         rbAccountSelectParams, bdStepStateEvents, utilityService) {
 
         $scope.accountSelectorRemote = {};
 
