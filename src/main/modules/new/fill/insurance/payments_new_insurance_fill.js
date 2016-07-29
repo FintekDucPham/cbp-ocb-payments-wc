@@ -226,7 +226,9 @@ angular.module('raiffeisen-payments')
             }
         };
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
-            $scope.paymentForm.insuranceErrors.$validate();
+            $timeout(function() {
+                $scope.paymentForm.insuranceErrors.$validate();
+            });
         });
         $scope.$watch('payment.options.futureRealizationDate', function(n, o) {
             if (angular.isDefined(n) && n != o) {
@@ -251,13 +253,13 @@ angular.module('raiffeisen-payments')
                 }));
             },
             amountExceedingFunds: function (insurances) {
-                if($scope.payment.items.senderAccount && insurances) {
+                if ($scope.payment.items.senderAccount && insurances && !$scope.payment.options.futureRealizationDate && $scope.insurancesValidators.validSelection()) {
                     var totalPayment = 0;
 
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
                         totalPayment += val ?  parseFloat(val.toString().replace(/,/, ".")) : 0;
                     });
-                    return !totalPayment || totalPayment <= ($scope.payment.options.futureRealizationDate ? 99999999999999999 : $scope.payment.items.senderAccount.accessibleAssets);
+                    return !totalPayment || totalPayment <= $scope.payment.items.senderAccount.accessibleAssets;
                 } else {
                     return true;
                 }
