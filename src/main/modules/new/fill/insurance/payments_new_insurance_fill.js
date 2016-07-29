@@ -257,8 +257,7 @@ angular.module('raiffeisen-payments')
                 }));
             },
             amountExceedingFunds: function (insurances) {
-                if ($scope.payment.items.senderAccount && insurances && !$scope.payment.options.futureRealizationDate
-                    && !$scope.payment.formData.addToBasket && $scope.insurancesValidators.validSelection()) {
+                if ($scope.payment.items.senderAccount && insurances && !$scope.payment.options.futureRealizationDate && !$scope.payment.formData.addToBasket && $scope.insurancesValidators.validSelection()) {
                     var totalPayment = 0;
 
                     _.each(_.pluck(_.values(insurances), "amount"), function(val) {
