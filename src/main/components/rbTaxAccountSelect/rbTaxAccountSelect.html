@@ -29,9 +29,9 @@
                         <span class="visible-xs">{{ $select.selected.accountNo | nrbIbanShortFilter }}</span>
                         <span class="hidden-xs">{{ $select.selected.accountNo | nrbIbanFilter }}</span>
                     </ui-select-match>
-                    <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'">
-                        <div ng-bind-html="taxOffice.accountNo | nrbIbanFilter | highlight: $select.search"></div>
-                        <div ng-bind-html="taxOffice.officeName+', '+taxOffice.officeAddress"></div>
+                    <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'" class="taxAccountSelectChoices">
+                        {{taxOffice.accountNo | nrbIbanFilter}}<br/>
+                        {{taxOffice.officeName+', '+taxOffice.officeAddress}}
                     </ui-select-choices>
                 </ui-select>
             </div>
