@@ -184,7 +184,7 @@
     "raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE": "Data realizacji przelewu nie może być późniejsza niż ##date##",
     "raiff.payments.new.domestic.fill.execution_date.EARLIER_EXECUTED_DATE": "Data realizacji przelewu nie może być wcześniejsza niż data bieżąca",
     "raiff.payments.new.domestic.fill.execution_date.EMPTY_AUTH":"Proszę podać kod autoryzacyjny",
-    "raiff.payments.new.domestic.fill.execution_date.EOD_ERROR":"Operacje zlecone w tych godzinach mogą zostać zrealizowane w godzinach porannych.",
+    "raiff.payments.new.domestic.fill.execution_date.EOD_ERROR":"Realizacja w najbliższym dniu roboczym",
     "raiff.payments.new.domestic.fill.execution_date.holiday":"Wybrany termin realizacji jest dniem wolnym. Dyspozycja zostanie wykonana w najbliższym dniu roboczym",
     "raiff.payments.new.domestic.fill.execution_date.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
     "raiff.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
@@ -452,7 +452,7 @@
     "raiff.payments.recipients.new.currency.fill.description.label": "Tytułem",
     "raiff.payments.recipients.new.currency.fill.description.placeholder": "Wpisz tytuł",
 
-    "raiff.payments.new.us.verify.sender_account_name": "Z rachunku",
+                "raiff.payments.new.us.verify.sender_account_name": "Z rachunku",
     "raiff.payments.new.us.verify.recipient_account_no": "Na rachunek",
     "raiff.payments.new.us.verify.taxpayer_data": "Dane płatnika",
     "raiff.payments.new.us.verify.supplementary_id_type": "Typ identyfikatora uzupełniającego",
@@ -1362,6 +1362,5 @@
     "raiff.payments.invoobill.new_payment.transfer_cost_info":"Koszt przelewu",
 
     "raiff.payments.invoobill.reject_payment.header":"Odrzucenie płatności Invoobill",
-    "raiff.payments.invoobill.reject_payment.reason":"Powód odrzucenia",
-    "raiff.payments.invoobill.reject_payment.reason.toLong":"Powód odrzucenia za długi"
+    "raiff.payments.invoobill.reject_payment.reason":"Powód odrzucenia"
 }

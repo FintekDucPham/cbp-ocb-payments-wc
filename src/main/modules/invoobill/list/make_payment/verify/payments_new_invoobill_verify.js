@@ -21,8 +21,17 @@ angular.module('raiffeisen-payments')
 
 
         function authorize(doneFn, actions) {
-            invoobillPaymentsService.realize($scope.payment.meta.referenceId, $scope.payment.token.model.input.model).then(function(data){
-                $scope.payment.result = data;
+            invoobillPaymentsService.realize($scope.payment.meta.referenceId, $scope.payment.token.model.input.model).then(function(resultCode){
+                var parts = resultCode.split('|');
+                $scope.payment.result = {
+                    code: parts[1],
+                    type: parts[0] === 'OK' ? "success" : "error"
+                };
+                if (parts[0] !== 'OK' && !parts[1]) {
+                    $scope.payment.result.code = 'error';
+                }
+                $scope.payment.result.token_error = false;
+                $scope.payment.formData = {};
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;

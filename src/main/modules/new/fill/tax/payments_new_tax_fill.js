@@ -41,7 +41,7 @@ angular.module('raiffeisen-payments')
          });
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
-                customName: "Nowy odbiorca",
+                customName: translate.property('raiff.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
                 secondaryIdType:  $scope.payment.formData.idType,

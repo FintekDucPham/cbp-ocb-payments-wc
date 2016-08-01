@@ -212,9 +212,9 @@
                 <bd-details-action-section>
                     <div class="row">
                         <div class="col-sm-12 col-md-12" style="text-align:right;">
-                            <bd-button ng-click="payNow($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.paynow' | translate}}</bd-button>
-                            <bd-button ng-click="pay($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.pay' | translate}}</bd-button>
-                            <bd-button ng-click="reject($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.reject' | translate}}</bd-button>
+                            <bd-button ng-if="$data.actions.indexOf('PAY_NOW_ACCESS') >-1" ng-click="payNow($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.paynow' | translate}}</bd-button>
+                            <bd-button ng-if="$data.actions.indexOf('PAY_IN_TIME_ACCESS') >-1" ng-click="pay($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.pay' | translate}}</bd-button>
+                            <bd-button ng-if="$data.actions.indexOf('REJECT_ACCESS') >-1" ng-click="reject($data)" class="bd-button bd-button--right">{{::'raiff.payments.invoobil.list.details.reject' | translate}}</bd-button>
                         </div>
                     </div>
                 </bd-details-action-section>
