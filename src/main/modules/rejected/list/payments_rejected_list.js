@@ -250,7 +250,7 @@ angular.module('raiffeisen-payments')
                 goPage = "payments.invoobill.new_payment.fill";
             } else {
                 goPage = "payments.new.fill";
-            };
+            }
             $state.go(goPage, {
                 paymentType: paymentType,
                 payment: lodash.extend({
@@ -319,7 +319,7 @@ angular.module('raiffeisen-payments')
                                 amount: details.amount,
                                 currency: details.currency,
                                 paymentDate: new Date()
-                            }
+                            };
                             viewStateService.setInitialState('payments.invoobill.new_payment', {
                                 invoobillPayment: invoobill
                             });
