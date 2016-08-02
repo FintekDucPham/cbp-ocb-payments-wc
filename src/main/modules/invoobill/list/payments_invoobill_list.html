@@ -45,7 +45,7 @@
             <div class="eb-validation-messages col-xs-12" ng-if="filterForm.last_value.$invalid">
                 <div class="messages">
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.required">
-                        {{::'raiff.payments.rejected.select.filter.EMPTY_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
+                        {{::'raiff.payments.invoobill.select.filter.EMPTY_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.pattern">
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
