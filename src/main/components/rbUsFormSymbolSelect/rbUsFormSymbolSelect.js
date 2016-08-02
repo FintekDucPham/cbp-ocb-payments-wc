@@ -64,6 +64,9 @@ angular.module('raiffeisen-payments')
                     if (!$scope.formSymbolId) {
                         return;
                     }
+                    if(!$scope.formSymbolList){
+                        return;
+                    }
                     var taxFormSymbol = lodash.find($scope.formSymbolList, function(taxForm) {
                        return taxForm.code == $scope.formSymbolId;
                     });

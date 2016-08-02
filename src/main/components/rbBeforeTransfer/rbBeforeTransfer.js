@@ -13,6 +13,11 @@ angular.module('raiffeisen-payments')
                 this.getModel = function(){
                     return $scope.prototypeInstance;
                 };
+
+                this.getPayment = function(){
+                    return $scope.rbBeforeTransferModel;
+                };
+
                 this.getPrototype = function(){
                     return $scope.rbBeforeTransferPrototype;
                 };
