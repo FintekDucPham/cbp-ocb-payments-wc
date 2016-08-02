@@ -87,21 +87,10 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
                                                    pathService, translate, $stateParams, $state, lodash, validationRegexp,
-                                                   standingTransferService, transferService, initialState, viewStateService, rbPaymentInitFactory, menuService) {
+                                                   standingTransferService, transferService, initialState, viewStateService,
+                                                   rbPaymentInitFactory, menuService, rbBeforeTransferConstants) {
 
-        $scope.beforeTransfer = {
-            PROTOTYPE: {
-                SUGGESTION: {
-                    rejected: false,
-                    proceedTransferFn: null,
-                    displayed: false,
-                    resolvedValue: null,
-                    checkBundle: null,
-                    type: 'SUGGESTION'
-                }
-            }
-        };
-
+        $scope.beforeTransfer = rbBeforeTransferConstants;
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 

@@ -1,4 +1,17 @@
-angular.module('raiffeisen-payments').factory('rbBeforeTransferManager', function($q){
+angular.module('raiffeisen-payments')
+    .constant('rbBeforeTransferConstants', {
+        PROTOTYPE: {
+            SUGGESTION: {
+                rejected: false,
+                proceedTransferFn: null,
+                displayed: false,
+                resolvedValue: null,
+                checkBundle: null,
+                type: 'SUGGESTION'
+            }
+        }
+    })
+    .factory('rbBeforeTransferManager', function($q){
 
     var _resolveSuggestions = function(suggestions, formControl){
         //resolve -> go to verification
