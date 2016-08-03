@@ -134,9 +134,6 @@ angular.module('raiffeisen-payments')
                         }
                         return true;
                     },
-                    usNotFound: function (val) {
-                        return $scope.model.searchQuery && !lodash.contains($scope.notFoundList, val.replace(/ /g, ''));
-                    },
                     notZus: function (val) {
                         if (val) {
                             return !lodash.some($scope.rbForbiddenAccounts, {
