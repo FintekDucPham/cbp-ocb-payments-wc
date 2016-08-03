@@ -228,6 +228,10 @@ angular.module('raiffeisen-payments')
         };
 
         function getCreditorName(creditorId) {
+            if($scope.invoobillPayments.creditors.list.length < 1) {
+                return null;
+            };
+
             var creditor = $scope.invoobillPayments.creditors.list.find(function(creditor) {
                 return creditor.id === creditorId;
             });
