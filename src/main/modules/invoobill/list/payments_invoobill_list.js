@@ -13,10 +13,10 @@ angular.module('raiffeisen-payments')
                 }],
                 parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
-                        detalOffsetMax: systemParameterService.getParameterByName("invb.max.offset.detal"),
-                        microOffsetMax: systemParameterService.getParameterByName("invb.max.offset.micro"),
-                        detalOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.detal"),
-                        microOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.micro"),
+                        detalOffsetMax: systemParameterService.getParameterByName("INVB.list.max.offset.detal"),
+                        microOffsetMax: systemParameterService.getParameterByName("INVB.list.max.offset.micro"),
+                        detalOffsetDefault: systemParameterService.getParameterByName("INVB.list.default.offset.detal"),
+                        microOffsetDefault: systemParameterService.getParameterByName("INVB.list.default.offset.micro"),
                         creditorInfoLink: systemParameterService.getParameterByName("page.url.invb.suppliers"),
                         /*
                         detalOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.detal"),
