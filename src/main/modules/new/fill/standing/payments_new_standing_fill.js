@@ -17,7 +17,7 @@ angular.module('raiffeisen-payments')
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
-                                                              standingTransferService, forbiddenAccounts, promiseSet, utilityService) {
+                                                              standingTransferService, forbiddenAccounts, promiseSet, utilityService, translate) {
 
 
         $scope.payment.meta.hideSaveRecipientButton = true;

@@ -1,7 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
                                                           validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService,
-                                                          exchangeRates, rbAccountOwnNrbService, forbiddenAccounts, formService) {
+                                                          exchangeRates, rbAccountOwnNrbService, forbiddenAccounts, formService, translate) {
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
         $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION_REGEX');
