@@ -17,24 +17,8 @@ angular.module('raiffeisen-payments')
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
-                                                              standingTransferService, forbiddenAccounts, promiseSet, utilityService) {
+                                                              standingTransferService, forbiddenAccounts, promiseSet, utilityService, translate) {
 
-        var maxDaysForward = SYSTEM_PARAMETERS['standing.order.max.days'];
-        var minDaysForward = SYSTEM_PARAMETERS['standing.order.min.days'];
-
-        $scope.firstDateMinDate= new Date();
-        $scope.firstDateMaxDate = new Date();
-        $scope.firstDateMaxDate.setDate($scope.firstDateMaxDate.getDate() + parseInt(maxDaysForward, 10));
-        $scope.firstDateMinDate.setDate($scope.firstDateMinDate.getDate() + parseInt(minDaysForward, 10));
-            $scope.firstOrNextDateDatepickerOptions = rbDatepickerOptions({
-                minDate: $scope.firstDateMinDate,
-                maxDate: $scope.firstDateMaxDate
-        });
-
-        $scope.firstOrNextDateDatepickerOptions = rbDatepickerOptions({
-            minDate: $scope.firstDateMinDate,
-            maxDate: $scope.firstDateMaxDate
-        });
 
         $scope.payment.meta.hideSaveRecipientButton = true;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
@@ -43,7 +27,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.frequencyType = STANDING_FREQUENCY_TYPES.MONTHLY.code;
         }
 
-        $scope.onFrequencyTypeSelect = function() {
+        $scope.onFrequencyTypeSelect = function () {
             if ($scope.payment.formData.frequencyType == "DAILY") {
                 $scope.payment.formData.frequency = "";
             }
@@ -52,7 +36,7 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.$watch('payment.formData.finishDate', function(newValue) {
+        $scope.$watch('payment.formData.finishDate', function (newValue) {
             if ($scope.payment && $scope.payment.formData && $scope.payment.formData.firstRealizationDate) {
                 if (newValue) {
                     if ($scope.paymentForm.firstRealizationDate) {
@@ -62,11 +46,11 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        $scope.setRequestConverter(function(formData) {
+        $scope.setRequestConverter(function (formData) {
             var result = {
                 "standingOrderId": formData.id ? formData.id : "",
                 "shortName": formData.shortName,
-                "amount": (""+formData.amount).replace(',', '.'),
+                "amount": ("" + formData.amount).replace(',', '.'),
                 "beneficiary": utilityService.splitTextEveryNSigns(formData.recipientName),
                 "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
                 "remarks": utilityService.splitTextEveryNSigns(formData.description),
@@ -95,9 +79,9 @@ angular.module('raiffeisen-payments')
         $scope.STANDING_FREQUENCY_TYPES = STANDING_FREQUENCY_TYPES;
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
-        $scope.STANDING_ORDER_NAME_REGEX   = validationRegexp('STANDING_ORDER_NAME_REGEX');
-        $scope.STANDING_ORDER_BNF_REGEX   = validationRegexp('STANDING_ORDER_BNF_REGEX');
-        $scope.INTEGER_REGEX   = validationRegexp('INTEGER');
+        $scope.STANDING_ORDER_NAME_REGEX = validationRegexp('STANDING_ORDER_NAME_REGEX');
+        $scope.STANDING_ORDER_BNF_REGEX = validationRegexp('STANDING_ORDER_BNF_REGEX');
+        $scope.INTEGER_REGEX = validationRegexp('INTEGER');
         $scope.currencyList = [];
 
         $scope.selectRecipient = function (recipient) {
@@ -120,28 +104,28 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.frequencyValidators = {
-            frequencyTypeRequired: function() {
+            frequencyTypeRequired: function () {
                 return !_.isEmpty($scope.payment.formData.frequencyType);
             },
-            minWeeklyValue: function(val) {
+            minWeeklyValue: function (val) {
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
                     return val >= 1;
                 }
                 return true;
             },
-            minMonthlyValue: function(val) {
+            minMonthlyValue: function (val) {
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
                     return val >= 1;
                 }
                 return true;
             },
-            maxWeeklyValue: function(val) {
+            maxWeeklyValue: function (val) {
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
                     return val <= 9;
                 }
                 return true;
             },
-            maxMonthlyValue: function(val) {
+            maxMonthlyValue: function (val) {
                 if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
                     return val <= 99;
                 }
@@ -153,7 +137,7 @@ angular.module('raiffeisen-payments')
             var senderAccount = $scope.payment.items.senderAccount;
             $scope.payment.formData.currency = 'PLN';
             $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
-            if($scope.paymentForm){
+            if ($scope.paymentForm) {
                 $scope.paymentForm.amount.$validate();
             }
         }
@@ -169,31 +153,31 @@ angular.module('raiffeisen-payments')
             $timeout(recalculateCurrency);
         });
 
-        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
+        $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function (event, control) {
             var recipientData = angular.copy({
-                customName: "Nowy odbiorca",
+                customName: translate.property('raiff.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,
                 description: $scope.payment.formData.description
             });
-            $scope.setRecipientDataExtractor(function() {
+            $scope.setRecipientDataExtractor(function () {
                 return recipientData;
             });
         });
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             if ($scope.payment.formData.amount) {
-                $scope.payment.formData.amount = (""+$scope.payment.formData.amount).replace(",", ".");
+                $scope.payment.formData.amount = ("" + $scope.payment.formData.amount).replace(",", ".");
             }
 
-            if($scope.payment.formData.recipientAccountNo) {
+            if ($scope.payment.formData.recipientAccountNo) {
                 control.holdOn();
                 $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
             }
         });
 
-        function isAccountInvestmentFulfilsRules(account){
-            if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
+        function isAccountInvestmentFulfilsRules(account) {
+            if (account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1) {
                 return account.actions.indexOf('create_domestic_transfer') > -1;
             }
             return true;
@@ -203,8 +187,8 @@ angular.module('raiffeisen-payments')
             alwaysSelected: true,
             showCustomNames: true,
             accountFilter: function (accounts) {
-                return lodash.filter(accounts,  function(account){
-                    return account.currency == 'PLN' &&  isAccountInvestmentFulfilsRules(account);
+                return lodash.filter(accounts, function (account) {
+                    return account.currency == 'PLN' && isAccountInvestmentFulfilsRules(account);
                 });
             },
             payments: true
@@ -220,7 +204,7 @@ angular.module('raiffeisen-payments')
                     set: 'usValidation',
                     key: accountNo,
                     expected: false,
-                    promise: function() {
+                    promise: function () {
                         return forbiddenAccounts.isUsAccount(accountNo);
                     },
                     callback: $scope.paymentForm.recipientAccountNo.$validate
@@ -240,10 +224,4 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
-
-        $scope.$watch('payment.formData.firstRealizationDate', function(n,o){
-            if(n!==o){
-                $scope.validationErrors.firstRealizationDate = undefined;
-            }
-        });
     });

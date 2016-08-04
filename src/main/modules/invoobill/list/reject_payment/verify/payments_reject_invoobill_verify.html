@@ -22,10 +22,9 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.invoobill.reject_payment.reason' | translate }}">
         {{ payment.formData.reason }}
     </bd-item-property>
-</div>
-<section ng-if="payment.operation.code!=='EDIT'">
     <bd-item-property class="bd-item-property--text" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
-        <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
+        <rb-token-authorization rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
     </bd-item-property>
-</section>
+</div>
+
 

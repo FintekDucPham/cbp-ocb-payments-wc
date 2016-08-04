@@ -39,7 +39,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter) {
+    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter, viewStateService) {
 
         var TYPE_ID_MAPPER = {
             P: "PESEL",
@@ -243,7 +243,15 @@ angular.module('raiffeisen-payments')
             var copiedData = angular.copy(data);
             var details = copiedData.details;
             var paymentType = angular.lowercase(copiedData.transferType);
-            $state.go(paymentType === 'internal' ? "payments.new_internal.fill" : "payments.new.fill", {
+            var goPage = "";
+            if(paymentType === 'internal') {
+                goPage = "payments.new_internal.fill";
+            } else if(paymentType === 'e_faktura') {
+                goPage = "payments.invoobill.new_payment.fill";
+            } else {
+                goPage = "payments.new.fill";
+            }
+            $state.go(goPage, {
                 paymentType: paymentType,
                 payment: lodash.extend({
                     remitterAccountId : details.accountId,
@@ -303,6 +311,19 @@ angular.module('raiffeisen-payments')
                                 amount: details.amount,
                                 currency: details.currency
                             };
+                        case 'e_faktura':
+                            var invoobill = {
+                                beneficiaryAccount: details.recipientAccountNo,
+                                creditorFullName: details.recipientName,
+                                title: cropArray(details.title),
+                                amount: details.amount,
+                                currency: details.currency,
+                                paymentDate: new Date()
+                            };
+                            viewStateService.setInitialState('payments.invoobill.new_payment', {
+                                invoobillPayment: invoobill
+                            });
+                            return {};
                         default:
                             throw "Payment type {0} not supported.".format(paymentType);
                     }

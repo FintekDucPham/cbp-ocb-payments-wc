@@ -6,7 +6,11 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $timeout, $scope, recipientGeneralService, notInsuranceAccountGuard,
                                                                             notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams,
                                                                             translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES,
-                                                                            bdRadioSelectEvents, countriesService, utilityService) {
+                                                                            bdRadioSelectEvents, countriesService, utilityService, $stateParams) {
+
+        if($stateParams.nrb) {
+            $scope.recipient.formData.debitAccountNo = $stateParams.nrb;
+        }
 
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP');
         $scope.SIMPLE_IBAN_VALIDATION_REGEX = validationRegexp('SIMPLE_IBAN_VALIDATION');

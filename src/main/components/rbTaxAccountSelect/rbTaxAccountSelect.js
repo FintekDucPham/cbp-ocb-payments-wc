@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .directive('rbTaxAccountSelect', function (pathService, attrBinder, taxOffices, lodash) {
+    .directive('rbTaxAccountSelect', function (pathService, attrBinder, taxOffices, lodash, validationRegexp) {
         return {
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxAccountSelect/rbTaxAccountSelect.html",
@@ -14,7 +14,9 @@ angular.module('raiffeisen-payments')
                 attrBinder.bindParams($element.find('ui-select'), $attr);
             },
             controller: function ($scope) {
-
+                $scope.showResultNotFound = false;
+                $scope.taxOfficeSearched = false;
+                $scope.taxAccounts = [];
                 if ($scope.params instanceof String) {
                     $scope.params = $scope.$eval($scope.params);
                 }
@@ -59,12 +61,16 @@ angular.module('raiffeisen-payments')
                 });
 
                 $scope.$watch('model.searchQuery', function (query, oldQuery) {
-                    if (query && query.replace(/ /g, '').length == 26 && query !== oldQuery) {
-                        $scope.searchForOffice(query.replace(/ /g, ''));
-                    }else {
-                        $scope.onAccountSelect({
-                            $office: null
-                        });
+                    $scope.showResultNotFound = false;
+                    if(query && query.length > 0){
+                        var queryParsed = query.replace(/ /g, '');
+                        if (queryParsed && queryParsed.length == 26 && query !== oldQuery) {
+                            $scope.searchForOffice(queryParsed);
+                        }else {
+                            $scope.onAccountSelect({
+                                $office: null
+                            });
+                        }
                     }
                 });
 
@@ -77,26 +83,29 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.searchForOffice = function(selectedInput) {
+                    $scope.taxOfficeSearched = true;
                     selectedInput = encodeURIComponent(selectedInput);
-
-                    return taxOffices.search((function (selectedInput) {
-                        var regexp = new RegExp('^[0-9 ]+$');
-                        if (regexp.test(selectedInput)) {
-                            return {
-                                accountNo: selectedInput.replace(/ /g, '')
-                            };
-                        } else {
-                            return {
-                                officeName: selectedInput
-                            };
-                        }
-                    })(selectedInput)).then(function (result) {
+                    var params = {};
+                    var regexp = new RegExp('^[0-9 ]+$');
+                    if (regexp.test(selectedInput)) {
+                        params = {
+                            accountNo: selectedInput.replace(/ /g, '')
+                        };
+                    }else{
+                        params = {
+                            officeName: selectedInput
+                        };
+                    }
+                    return taxOffices.search(params).then(function (result) {
                         if (result.length < 1) {
                             $scope.notFoundList = lodash.union($scope.notFoundList, [$scope.model.searchQuery]);
+                            $scope.showResultNotFound = true;
+                            $scope.taxAccounts = [];
                             $scope.onAccountSelect({
                                 $office: null
                             });
                         } else {
+                            $scope.showResultNotFound = false;
                             $scope.taxAccounts = result;
                             $scope.isFromList = true;
                             $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
@@ -108,15 +117,22 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.useCustom = function () {
+                    $scope.taxOfficeSearched = false;
                     $scope.isFromList = false;
                     $scope.model.taxOffice = null;
                     $scope.model.searchQuery = null;
                 };
 
                 $scope.accountValidators = {
-
-                    usNotFound: function (val) {
-                        return $scope.model.searchQuery && !lodash.contains($scope.notFoundList, val.replace(/ /g, ''));
+                    bbanNrb: function(val){
+                        if(val){
+                            var regexp = new RegExp('^[0-9 ]+$');
+                            var ibanNumber = val.replace(/ /g, '');
+                            if (regexp.test(val) && ibanNumber.length != 26) {
+                                return false;
+                            }
+                        }
+                        return true;
                     },
                     notZus: function (val) {
                         if (val) {

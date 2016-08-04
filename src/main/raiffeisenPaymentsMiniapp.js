@@ -98,13 +98,6 @@ angular.module('raiffeisen-payments', [
                     label: 'raiff.payments.basket.label',
                     icon: "raiff-icons basket",
                     action: "payments.basket.new.fill",
-                    priority: 8
-                },
-                {
-                    id: "payments.invoobill",
-                    label: 'raiff.payments.invoobill.label',
-                    icon: "raiff-icons invoobill",
-                    action: "payments.invoobill.list",
                     priority: 9
                 }
             ]
@@ -134,7 +127,7 @@ angular.module('raiffeisen-payments', [
             id: "payments.invoobill",
             label: 'raiff.payments.invoobill.label',
             icon: "raiff-icons invoobill",
-            priority: 9
+            priority: 8
         };
 
         //pobranie parametru access.invb

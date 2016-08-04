@@ -1,55 +1,60 @@
-<div class="rb-tax-account-select">
+<div>
+    <div class="rb-tax-account-select">
 
-    <div class="rb-tax-account-select__select">
-        <div class="rb-tax-account-select__account">
+        <div class="rb-tax-account-select__select">
+            <div class="rb-tax-account-select__account">
 
-            <div ng-if="!isFromList">
-                <input id="recipientAccountNo"
-                       name="recipientAccountNo"
-                       ng-model-options="{ allowInvalid: true }"
-                       class="input-field"
-                       ng-model="model.searchQuery"
-                       required
-                       bban-nrb
-                       bd-matches-none-of="accountValidators"
-                       type="text"
-                       placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
+                <div ng-if="!isFromList">
+                    <input id="recipientAccountNo"
+                           name="recipientAccountNo"
+                           ng-model-options="{ allowInvalid: true }"
+                           class="input-field"
+                           ng-model="model.searchQuery"
+                           required
+                           bd-matches-none-of="accountValidators"
+                           type="text"
+                           placeholder="{{ ::'raiff.payments.new.domestic.fill.recipient_account.placeholder' | translate }}">
+                </div>
+
+                <div ng-show="isFromList">
+                    <ui-select ng-model="model.taxOffice"
+                               search-enabled="true"
+                               on-select="select($item)"
+                               theme="bootstrap"
+                               placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
+                               ng-pattern="patterns.nrbPattern"
+                               ui-select-popup-trigger="taxAccountSearched"
+                               required>
+                        <ui-select-match>
+                            <span class="visible-xs">{{ $select.selected.accountNo | nrbIbanShortFilter }}</span>
+                            <span class="hidden-xs">{{ $select.selected.accountNo | nrbIbanFilter }}</span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'" class="taxAccountSelectChoices">
+                            {{taxOffice.accountNo | nrbIbanFilter}}<br/>
+                            {{taxOffice.officeName+', '+taxOffice.officeAddress}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
             </div>
 
-            <div ng-show="isFromList">
-                <ui-select ng-model="model.taxOffice"
-                           search-enabled="true"
-                           on-select="select($item)"
-                           theme="bootstrap"
-                           placeholder="{{ ::'raiff.payments.new.us.fill.recipient_account.placeholder' | translate }}"
-                           ng-pattern="patterns.nrbPattern"
-                           ui-select-popup-trigger="taxAccountSearched"
-                           required>
-                    <ui-select-match>
-                        <span class="visible-xs">{{ $select.selected.accountNo | nrbIbanShortFilter }}</span>
-                        <span class="hidden-xs">{{ $select.selected.accountNo | nrbIbanFilter }}</span>
-                    </ui-select-match>
-                    <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'">
-                        <div ng-bind-html="taxOffice.accountNo | nrbIbanFilter | highlight: $select.search"></div>
-                        <div ng-bind-html="taxOffice.officeName+', '+taxOffice.officeAddress"></div>
-                    </ui-select-choices>
-                </ui-select>
+            <div class="rb-tax-account-select__control">
+                <bd-button type="button" ng-show="!isFromList" ng-click="onSearched(model.searchQuery)">{{ ::params.searchText |
+                    translate }}
+                </bd-button>
+                <bd-button type="button" ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate}}
+                </bd-button>
             </div>
-
         </div>
 
-        <div class="rb-tax-account-select__control">
-            <bd-button type="button" ng-show="!isFromList" ng-click="onSearched(model.searchQuery)">{{ ::params.searchText |
-                translate }}
-            </bd-button>
-            <bd-button type="button" ng-show="isFromList" ng-click="useCustom(model.searchQuery)">{{ ::params.clearText | translate}}
-            </bd-button>
+        <div class="rb-tax-account-select__name">
+            {{ model.taxOffice.officeName }}<span ng-if="model.taxOffice.officeAddress.length > 0">, {{model.taxOffice.officeAddress}}</span>
         </div>
+
+
     </div>
-
-    <div class="rb-tax-account-select__name">
-        {{ model.taxOffice.officeName }}<span ng-if="model.taxOffice.officeAddress.length > 0">, {{model.taxOffice.officeAddress}}</span>
+    <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+         ng-if="showResultNotFound">
+        {{:: 'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC' | translate}}
     </div>
-
-
 </div>

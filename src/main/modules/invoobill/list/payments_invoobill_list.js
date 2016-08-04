@@ -13,10 +13,10 @@ angular.module('raiffeisen-payments')
                 }],
                 parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
-                        detalOffsetMax: systemParameterService.getParameterByName("invb.max.offset.detal"),
-                        microOffsetMax: systemParameterService.getParameterByName("invb.max.offset.micro"),
-                        detalOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.detal"),
-                        microOffsetDefault: systemParameterService.getParameterByName("invb.default.offset.micro"),
+                        detalOffsetMax: systemParameterService.getParameterByName("INVB.list.max.offset.detal"),
+                        microOffsetMax: systemParameterService.getParameterByName("INVB.list.max.offset.micro"),
+                        detalOffsetDefault: systemParameterService.getParameterByName("INVB.list.default.offset.detal"),
+                        microOffsetDefault: systemParameterService.getParameterByName("INVB.list.default.offset.micro"),
                         creditorInfoLink: systemParameterService.getParameterByName("page.url.invb.suppliers"),
                         /*
                         detalOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.detal"),
@@ -25,7 +25,7 @@ angular.module('raiffeisen-payments')
                         microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
                         creditorInfoLink: "http://www.invoobill.pl/gdzie-zaplace-z-invoobill/",
                         */
-                        customerDetails: customerService.getCustomerDetails(),
+                        customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         return {
                             micro: {
@@ -39,7 +39,7 @@ angular.module('raiffeisen-payments')
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
                             },
-                            creditorInfoLink: data.creditorInfoLink,
+                            creditorInfoLink: data.creditorInfoLink.value
                         };
                     });
                 }]
@@ -228,6 +228,10 @@ angular.module('raiffeisen-payments')
         };
 
         function getCreditorName(creditorId) {
+            if($scope.invoobillPayments.creditors.list.length < 1) {
+                return null;
+            }
+
             var creditor = $scope.invoobillPayments.creditors.list.find(function(creditor) {
                 return creditor.id === creditorId;
             });
@@ -257,11 +261,10 @@ angular.module('raiffeisen-payments')
         $scope.payNow = function(data) {
             console.debug("payNow(data)", data);
             viewStateService.setInitialState('payments.invoobill.new_payment', {
-                invoobillPayment: data
+                invoobillPayment: data,
+                payNow: true
             });
-            $state.go("payments.invoobill.new_payment.fill", {
-                invoobillPayment: data
-            });
+            $state.go("payments.invoobill.new_payment.fill");
         };
 
         //pay in future
@@ -270,9 +273,7 @@ angular.module('raiffeisen-payments')
             viewStateService.setInitialState('payments.invoobill.new_payment', {
                 invoobillPayment: data
             });
-            $state.go("payments.invoobill.new_payment.fill", {
-                invoobillPayment: data
-            });
+            $state.go("payments.invoobill.new_payment.fill");
         };
 
         //reject payment
@@ -281,9 +282,7 @@ angular.module('raiffeisen-payments')
             viewStateService.setInitialState('payments.invoobill.reject_payment', {
                 invoobillPayment: data
             });
-            $state.go("payments.invoobill.reject_payment.fill", {
-                invoobillPayment: data
-            });
+            $state.go("payments.invoobill.reject_payment.fill");
         };
 
         function dateTodayOrInFuture(paymentDate) {

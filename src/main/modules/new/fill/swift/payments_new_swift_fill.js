@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .controller('NewSwiftPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
                                                            $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q,rbPaymentTrybeFactory, rbPaymentTrybeConstants,
-                                                           rbAccountOwnNrbService) {
+                                                           rbAccountOwnNrbService, translate) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.FOREIGN_IBAN_VALIDATION_REGEX = validationRegexp('FOREIGN_IBAN_VALIDATION_REGEX');
@@ -293,7 +293,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
-                customName: "Nowy odbiorca",
+                customName: translate.property('raiff.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,
@@ -318,8 +318,6 @@ angular.module('raiffeisen-payments')
             }
 
             $scope.setRecipientDataExtractor(function() {
-                recipientData.description = recipientData.description.join('\n');
-                recipientData.recipientData = recipientData.recipientData.join('\n');
                 return recipientData;
             });
         });

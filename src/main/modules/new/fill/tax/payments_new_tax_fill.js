@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
         },
         'R': {}
     })
-    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents, utilityService) {
+    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents, utilityService, translate) {
 
         $scope.accountSelectorRemote = {};
 
@@ -32,6 +32,14 @@ angular.module('raiffeisen-payments')
             usPeriodTypes: usPeriodTypes
         });
 
+
+        $scope.$watch('isErrorPaste', function(newValue){
+            if(newValue){
+                $scope.payment.items.recipientAccount = null;
+                $scope.payment.formData.recipientAccountNo = null;
+            }
+           console.debug(newValue);
+        });
          $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                  nrb: $scope.payment.items.recipientAccount.accountNo.replace(/\s+/g, "")
@@ -41,7 +49,7 @@ angular.module('raiffeisen-payments')
          });
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
-                customName: "Nowy odbiorca",
+                customName: translate.property('raiff.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
                 secondaryIdType:  $scope.payment.formData.idType,
