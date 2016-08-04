@@ -31,7 +31,10 @@ angular.module('raiffeisen-payments')
                            }
                        });
                    } else {
-                       clearRecipient();
+                       if($scope.selection.isSelected){
+                           clearRecipient();
+                       }
+
                    }
                 });
 
