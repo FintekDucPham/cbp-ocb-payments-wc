@@ -40,12 +40,14 @@ angular.module('raiffeisen-payments')
                 });
 
                 function update(item, model) {
+                    console.log('CL:formSymbolSelect1('+item.code+','+model+')');
                     $scope.formSymbol = item;
                     $scope.formSymbolId = model;
                     $scope.selection.model = model;
                 }
 
                 $scope.select = function (item, model) {
+                    console.log('CL:formSymbolSelect:exe');
                     $scope.onSelect({
                         $oldSymbol: $scope.formSymbol,
                         $symbol: item
@@ -54,6 +56,7 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.$on("filterFormSymbols", function(e, taxAccountType) {
+                    console.log('CL:$onFilterFormSymbols:'+taxAccountType);
                     if(taxAccountType == null){
                         $scope.formSymbolList = $scope.allFormSymbols;
                         return;
