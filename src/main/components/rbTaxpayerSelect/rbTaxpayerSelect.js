@@ -33,7 +33,6 @@ angular.module('raiffeisen-payments')
                             $oldTaxpayer: oldTaxpayer
                         });
                     } else {
-                        console.log("CL:payer:0");
                         clearSelection();
                         $scope.onClearTaxpayer();
                     }
@@ -78,7 +77,6 @@ angular.module('raiffeisen-payments')
                 });
 
                 var clearSelection = $scope.clearSelection = function () {
-                    console.log("CL:payer:1");
                     $scope.selection.taxpayer = null;
                     $scope.taxpayer = null;
                     $scope.onClearTaxpayer();
