@@ -114,7 +114,6 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.clearRecipient = function () {
-            console.log("CL:C:1");
             if($scope.payment.options.isFromRecipient) {
                 delete $scope.payment.formData.templateId;
                 delete $scope.payment.formData.idType;
@@ -129,7 +128,6 @@ angular.module('raiffeisen-payments')
 
         $scope.selectRecipient = function (recipient) {
             if(recipient) {
-                console.log("CL:C:2:"+recipient.formCode);
                 var formData = $scope.payment.formData;
                 formData.templateId = recipient.templateId;
                 formData.idType = recipient.secondaryIdType;

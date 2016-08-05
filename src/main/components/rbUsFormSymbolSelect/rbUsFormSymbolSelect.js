@@ -9,7 +9,8 @@ angular.module('raiffeisen-payments')
                 formSymbolList: '=?rbFormSymbolList',
                 onSelect: '&rbOnSelect',
                 placeholder: "@rbPlaceholder",
-                isDisabled: '=rbIsDisabled'
+                isDisabled: '=rbIsDisabled',
+                items: '='
             },
             compile: function ($element, $attr) {
                 attrBinder.bindParams($element.find('ui-select'), $attr);
@@ -19,11 +20,6 @@ angular.module('raiffeisen-payments')
                     isSelected: false
                 };
 
-                $scope.$watch('formSymbolId', function (symbolId) {
-                    update(lodash.find($scope.formSymbolList, {
-                        code: symbolId
-                    }), symbolId);
-                });
 
                 taxFormSymbols.search().then(function(formSymbols) {
                     $scope.allFormSymbols = lodash.sortBy(lodash.map(formSymbols, function(symbol) {
@@ -37,43 +33,76 @@ angular.module('raiffeisen-payments')
                     update(lodash.find($scope.formSymbolList, {
                         code: $scope.formSymbolId
                     }), $scope.formSymbolId);
-                });
 
-                function update(item, model) {
-                    console.log('CL:formSymbolSelect1('+item.code+','+model+')');
-                    $scope.formSymbol = item;
-                    $scope.formSymbolId = model;
-                    $scope.selection.model = model;
-                }
 
-                $scope.select = function (item, model) {
-                    console.log('CL:formSymbolSelect:exe');
-                    $scope.onSelect({
-                        $oldSymbol: $scope.formSymbol,
-                        $symbol: item
-                    });
-                    update(item, model);
-                };
 
-                $scope.$on("filterFormSymbols", function(e, taxAccountType) {
-                    console.log('CL:$onFilterFormSymbols:'+taxAccountType);
-                    if(taxAccountType == null){
-                        $scope.formSymbolList = $scope.allFormSymbols;
-                        return;
+
+
+                    function isOnCurrentList(code){
+                        var out = lodash.find($scope.formSymbolList, function(taxForm) {
+                            return taxForm.code == code;
+                        });
+                        return out;
                     }
-                    $scope.formSymbolList = lodash.filter($scope.allFormSymbols, function(formSymbol) {
-                       return formSymbol.accountType === taxAccountType;
+
+                    $scope.$watch('formSymbolId', function (symbolId) {
+                        update(lodash.find($scope.formSymbolList, {
+                            code: symbolId
+                        }), symbolId);
                     });
-                    if (!$scope.formSymbolId) {
-                        return;
+
+                    function update(item, model) {
+
+                        if(model && isOnCurrentList(item.code)){
+                            $scope.formSymbol = item;
+                            $scope.formSymbolId = model;
+                            $scope.selection.model = model;
+                        }else{
+                            $scope.formSymbol = null;
+                            $scope.formSymbolId = null;
+                            $scope.selection.model = null;
+                        }
                     }
-                    if(!$scope.formSymbolList){
-                        return;
-                    }
-                    var taxFormSymbol = lodash.find($scope.formSymbolList, function(taxForm) {
-                       return taxForm.code == $scope.formSymbolId;
+
+                    $scope.select = function (item, model) {
+                        $scope.onSelect({
+                            $oldSymbol: $scope.formSymbol,
+                            $symbol: item
+                        });
+                        update(item, model);
+                    };
+
+                    var updateList = function(taxAccountType){
+
+                        if(taxAccountType == null){
+                            $scope.formSymbolList = $scope.allFormSymbols;
+                        }else{
+                            $scope.formSymbolList = lodash.filter($scope.allFormSymbols, function(formSymbol) {
+                                return formSymbol.accountType === taxAccountType;
+                            });
+                        }
+
+                        if($scope.formSymbolList){
+                            var taxFormSymbol = lodash.find($scope.formSymbolList, function(taxForm) {
+                                return taxForm.code == $scope.formSymbolId;
+                            });
+                            update(taxFormSymbol, taxFormSymbol ? taxFormSymbol.code : undefined);
+                        }
+
+
+                    };
+
+                    $scope.$watch('items.recipientAccount.taxAccountType', function(taxAccountType,o){
+                        if(taxAccountType!==o){
+                            updateList(taxAccountType);
+                        }
                     });
-                    update(taxFormSymbol, taxFormSymbol ? taxFormSymbol.code : undefined);
+
+                    if($scope.items.recipientAccount && $scope.items.recipientAccount.taxAccountType){
+                        updateList($scope.items.recipientAccount.taxAccountType);
+                    }
+
+
                 });
 
             }
