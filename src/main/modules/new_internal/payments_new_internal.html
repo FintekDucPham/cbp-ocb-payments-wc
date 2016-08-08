@@ -1,17 +1,20 @@
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
-    <bd-header>{{::"raiff.payments.new_internal.label.header"|translate}}</bd-header>
-    <bd-form-panel class="bd-form-panel--responsive">
+    <section ng-hide="payment.beforeTransfer.suggestions.displayed">
+        <bd-header>{{::"raiff.payments.new_internal.label.header"|translate}}</bd-header>
+        <bd-form-panel class="bd-form-panel--responsive">
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.payment_type'|translate}}">
-            {{ ::'raiff.payments.new.types.INTERNAL' | translate }}
-        </bd-item-property>
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.payment_type'|translate}}">
+                {{ ::'raiff.payments.new.types.INTERNAL' | translate }}
+            </bd-item-property>
 
-        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
-            <div ng-if="payment.initData.promise.$$state.status!==0">
-                <div ui-view></div>
-            </div>
-        </rb-multistep-form>
+            <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
+                <div ng-if="payment.initData.promise.$$state.status!==0">
+                    <div ui-view></div>
+                </div>
+            </rb-multistep-form>
 
-    </bd-form-panel>
+        </bd-form-panel>
+    </section>
+    <rb-before-transfer rb-before-transfer-prototype="beforeTransfer.PROTOTYPE.SUGGESTION" rb-before-transfer-model="payment" rb-before-transfer-context-investments></rb-before-transfer>
 
 </rb-content-view>

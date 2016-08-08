@@ -87,7 +87,10 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsNewController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes,
                                                    pathService, translate, $stateParams, $state, lodash, validationRegexp,
-                                                   standingTransferService, transferService, initialState, viewStateService, rbPaymentInitFactory, menuService) {
+                                                   standingTransferService, transferService, initialState, viewStateService,
+                                                   rbPaymentInitFactory, menuService, rbBeforeTransferConstants) {
+
+        $scope.beforeTransfer = rbBeforeTransferConstants;
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
 
@@ -126,6 +129,12 @@ angular.module('raiffeisen-payments')
                     modifyFromBasket : false
                 },
                 initData: {
+                },
+                beforeTransfer: {
+                    suggestions: {
+                        displayed: false,
+                        list: []
+                    }
                 }
             });
 

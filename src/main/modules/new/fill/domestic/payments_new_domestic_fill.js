@@ -1,6 +1,7 @@
 angular.module('raiffeisen-payments')
     .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
-                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet, $q, utilityService) {
+                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet, $q, utilityService,
+                                                              rbBeforeTransferManager) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
@@ -77,6 +78,7 @@ angular.module('raiffeisen-payments')
                 return recipientData;
             });
         });
+
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                 templateType: 'DOMESTIC',
@@ -85,9 +87,21 @@ angular.module('raiffeisen-payments')
             $scope.payment.meta.hideSaveRecipientButton = !!recipient;
             $scope.payment.rbPaymentsStepParams.visibility.finalAction = !!recipient;
 
+            control.holdOn();
             if($scope.payment.formData.recipientAccountNo) {
-                control.holdOn();
-                $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
+                $q.all(promiseSet.getPendingPromises('usValidation')).finally(function(){
+                    rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function(){
+                        control.done();
+                    }).catch(function(){
+                        console.log('false');
+                    });
+                });
+            }else{
+                rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function(){
+                    control.done();
+                }).catch(function(){
+                    console.log('false');
+                });
             }
         });
 

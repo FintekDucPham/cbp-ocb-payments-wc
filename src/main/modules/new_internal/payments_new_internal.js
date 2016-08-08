@@ -21,7 +21,9 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService, rbPaymentInitFactory) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants) {
+
+        $scope.beforeTransfer = rbBeforeTransferConstants;
 
         $scope.CURRENT_DATE = CURRENT_DATE;
 
@@ -37,9 +39,16 @@ angular.module('raiffeisen-payments')
             },
             initData: {
             },
+            beforeTransfer: {
+                suggestions: {
+                    displayed: false,
+                        list: []
+                }
+            },
             items: {
                 modifyFromBasket : false
-            }
+            },
+            type: rbPaymentTypes.OWN
         }), {
             formData: {
                 addToBasket: false
