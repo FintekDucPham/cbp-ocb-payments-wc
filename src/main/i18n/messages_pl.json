@@ -1319,7 +1319,7 @@
     "raiff.payments.invoobill.list.header.amount":"Kwota",
     "raiff.payments.invoobill.list.header.status":"Status",
     "raiff.payments.invoobill.list.empty":"Nie znaleziono płatności spełniających kryteria wyszukiwania",
-    "raiff.payments.invoobill.select.filter.INCORRECT_DATE_SEARCH": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##months## miesięcy wstecz. Można wyszukiwać tylko operacje na najbliższe ##months## miesięcy.",
+    "raiff.payments.invoobill.select.filter.INCORRECT_DATE_SEARCH": "Data końcowa okresu wyszukiwania jest wcześniejsza niż ##months## miesięcy wstecz. Można wyszukiwać tylko operacje na najbliższe ##months## miesięcy.",
     "raiff.payments.invoobill.select.filter.EMPTY_PERIOD": "Prosimy wprowadzić liczbę najbliższych",
     "raiff.payments.invoobill.select.filter.INCORRECT_PERIOD": "Nieprawidłowa liczba najbliższych",
     "raiff.payments.invoobill.select.filter.EMPTY_DATE_FROM": "Prosimy wprowadzić datę początkową okresu wyszukiwania",

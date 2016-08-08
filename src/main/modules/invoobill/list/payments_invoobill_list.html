@@ -113,9 +113,10 @@
                     <div class="validation-message animate-on" ng-if="filterForm.dateFromInput.$error.date">
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_FROM'|translate}}
                     </div>
+                    <!--
                     <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.mindate">
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </bd-radio-select>
