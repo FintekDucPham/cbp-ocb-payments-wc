@@ -1324,6 +1324,7 @@
     "raiff.payments.invoobill.select.filter.INCORRECT_PERIOD": "Nieprawidłowa liczba najbliższych",
     "raiff.payments.invoobill.select.filter.EMPTY_DATE_FROM": "Prosimy wprowadzić datę początkową okresu wyszukiwania",
     "raiff.payments.invoobill.select.filter.EMPTY_DATE_TO": "Musisz wprowadzić datę końcową okresu wyszukiwania",
+    "raiff.payments.invoobill.select.filter.FUTURE_DATE": "Data końcowa okresu wyszukiwania jest późniejsza niż ##months## miesięcy w przód. Można wyszukiwać tylko operacje na najbliższe ##months## miesięcy.",
 
     "raiff.payments.invoobill.creditors.all": "Wszyscy",
     "raiff.payments.invoobill.creditors.select": "Wybierz dostawcę...",

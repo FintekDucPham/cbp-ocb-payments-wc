@@ -101,7 +101,7 @@
                         {{::'raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE' | translate }}
                     </div>
                     <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.future">
-                        {{::'raiff.payments.rejected.select.filter.FUTURE_DATE' | translate }}
+                        {{::'raiff.payments.invoobill.select.filter.FUTURE_DATE' | translate | regexReplace : '##months##': invoobillPayments.maxOffset}}
                     </div>
                 </div>
             </div>
