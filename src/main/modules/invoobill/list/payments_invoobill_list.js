@@ -162,8 +162,8 @@ angular.module('raiffeisen-payments')
                     }
                 },
                 range: {
-                    dateFrom: new Date(now.getTime() - parameters.detal.default * oneDayMilisecs),
-                    dateTo: now
+                    dateFrom: now,
+                    dateTo: new Date(now.getTime() + parameters.detal.default * oneDayMilisecs),
                 },
 
                 // selected creditor
@@ -175,9 +175,9 @@ angular.module('raiffeisen-payments')
 
         //if micro
         if (parameters.customerDetails.context === 'MICRO') {
-            $scope.invoobillPayments.filterData.last.value = now.getDate(); // bo data bieżąca - data początku miesiąca + 1 to taki skomplikowany sposób na powiedzenie, że chodzi o dzień miesiąca
-            $scope.invoobillPayments.filterData.last.default = now.getDate();
-            $scope.invoobillPayments.filterData.range.dateFrom = firstDayOfCurrentMonth;
+            $scope.invoobillPayments.filterData.last.value = parameters.micro.default;
+            $scope.invoobillPayments.filterData.last.default = parameters.micro.default;
+            $scope.invoobillPayments.filterData.range.dateTo = new Date(now.getTime() + parameters.micro.default * oneDayMilisecs);
 
             // hello world, tutaj weeeee ned to change something, i hope only here ;)
             $scope.invoobillPayments.minDate = new Date((new Date()).setMonth(now.getMonth() - parameters.micro.max));
