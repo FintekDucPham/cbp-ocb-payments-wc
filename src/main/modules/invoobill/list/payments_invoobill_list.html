@@ -19,8 +19,8 @@
                                     name="last_value"
                                     ng-change="onFilterLastValueChange()"
                                     ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.LAST"
-                                    min-date="invoobillPayments.minDate"
-                                    model-date="invoobillPayments.filterData.last.dateFrom"
+                                    max-date="invoobillPayments.maxDate"
+                                    model-date="invoobillPayments.filterData.last.dateTo"
                                     ng-pattern="/^\d+$/"/>
                         </div>
                         <div class="row__inline-block--middle" style="width:100px;">
@@ -50,7 +50,7 @@
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.pattern">
                         {{::'raiff.payments.invoobill.select.filter.INCORRECT_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
                     </div>
-                    <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.mindate">
+                    <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.maxdate">
                         {{::'raiff.payments.invoobill.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
                     </div>
                 </div>

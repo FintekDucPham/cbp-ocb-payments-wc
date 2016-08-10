@@ -90,18 +90,18 @@ angular.module('raiffeisen-payments')
                 }
             }
 
-            $scope.invoobillPayments.filterData.last.dateFrom = new Date((+new Date()) - lastMiliseconds);
+            $scope.invoobillPayments.filterData.last.dateTo = new Date((+new Date()) + lastMiliseconds);
         };
 
         $scope.onFilterLastTypeChange = function() {
             calculateModelDate();
 
             var modelDate = $scope.invoobillPayments.filterData.last.dateFrom,
-                minDate   = $scope.invoobillPayments.minDate,
-                diffMS    = now.getTime() - minDate.getTime();
+                maxDate   = $scope.invoobillPayments.maxDate,
+                diffMS    = now.getTime() - maxDate.getTime();
 
             // if value is incorrect (too big)
-            if (modelDate.getTime() < minDate.getTime()) {
+            if (modelDate.getTime() < maxDate.getTime()) {
                 switch ($scope.invoobillPayments.filterData.last.type.selected) {
                     case LAST_TYPES.WEEKS:
                     {
@@ -144,7 +144,7 @@ angular.module('raiffeisen-payments')
 
             periodTypes: PERIOD_TYPES,
             parameters: parameters,
-            minDate: new Date((new Date()).setMonth(now.getMonth() - parameters.detal.max)),
+            maxDate: new Date((new Date()).setMonth(now.getMonth() + parameters.detal.max)),
             maxOffset: parameters.detal.max,
             creditorInfoLink: parameters.creditorInfoLink,
 
@@ -155,7 +155,7 @@ angular.module('raiffeisen-payments')
                 last: {
                     value: parameters.detal.default,
                     default: parameters.detal.default,
-                    dateFrom: null,
+                    dateTo: null,
                     type: {
                         selected: LAST_TYPES.DAYS,
                         list: [LAST_TYPES.DAYS, LAST_TYPES.WEEKS, LAST_TYPES.MONTH]
@@ -179,8 +179,7 @@ angular.module('raiffeisen-payments')
             $scope.invoobillPayments.filterData.last.default = parameters.micro.default;
             $scope.invoobillPayments.filterData.range.dateTo = new Date(now.getTime() + parameters.micro.default * oneDayMilisecs);
 
-            // hello world, tutaj weeeee ned to change something, i hope only here ;)
-            $scope.invoobillPayments.minDate = new Date((new Date()).setMonth(now.getMonth() - parameters.micro.max));
+            $scope.invoobillPayments.maxDate = new Date((new Date()).setMonth(now.getMonth() + parameters.micro.max));
 
             $scope.invoobillPayments.maxOffset = parameters.micro.max;
         }
@@ -214,8 +213,8 @@ angular.module('raiffeisen-payments')
             }
 
             if ($scope.invoobillPayments.filterData.periodType.model === PERIOD_TYPES.LAST) {
-                params.dateTo   = $filter('date')(now.getTime(), "yyyy-MM-dd");
-                params.dateFrom = $filter('date')($scope.invoobillPayments.filterData.last.dateFrom.getTime(), "yyyy-MM-dd");
+                params.dateFrom = $filter('date')(now.getTime(), "yyyy-MM-dd");
+                params.dateTo = $filter('date')($scope.invoobillPayments.filterData.last.dateTo.getTime(), "yyyy-MM-dd");
             }
 
             $scope.invoobillPayments.data.promise = invoobillPaymentsService.search(params).then(function(data) {
