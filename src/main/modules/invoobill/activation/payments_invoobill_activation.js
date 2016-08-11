@@ -64,6 +64,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.notInterested = function () {
+            invoobillPaymentsService.notInterested();
             $state.go("payments.recipients.list");
         };
 
