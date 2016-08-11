@@ -22,7 +22,6 @@ angular.module('raiffeisen-payments')
 
         var validatorList = [];
 
-
         var validatorObjectPrototype = {
             name : null,
             valid: function(){
@@ -56,10 +55,6 @@ angular.module('raiffeisen-payments')
 
         registerValidator('amountExceedFunds', amountExceedFundsValidator, setAmountExceedMessage);
 
-        $scope.$watch('payment.formData.remitterAccountId', function(newVal, oldVal){
-            $scope.payment.meta.validators = {};
-        });
-
         var validate = function(){
             var valid = true;
             angular.forEach(validatorList, function(validator){
@@ -70,6 +65,10 @@ angular.module('raiffeisen-payments')
             });
             return valid;
         };
+
+        $scope.$watch('payment.formData.remitterAccountId', function(newVal, oldVal){
+            $scope.payment.meta.validators = {};
+        });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             delete $scope.payment.token.params.resourceId;
@@ -88,10 +87,6 @@ angular.module('raiffeisen-payments')
                 });
             }
         });
-
-
-
-
 
         var handleValidationErrors = function(errorReason){
             if(errorReason.subType == 'validation') {
@@ -115,16 +110,5 @@ angular.module('raiffeisen-payments')
                 return data;
             });
         };
-
-
-
-        $scope.getAccountByNrb = function(accountList, selectFn) {
-            if ($stateParams.accountId) {
-                selectFn(lodash.findWhere(accountList, {
-                    accountId: $stateParams.accountId
-                }));
-            }
-        };
-
 
     });
