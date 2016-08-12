@@ -90,18 +90,18 @@ angular.module('raiffeisen-payments')
                 }
             }
 
-            $scope.invoobillPayments.filterData.last.dateTo = new Date((+new Date()) + lastMiliseconds);
+            $scope.invoobillPayments.filterData.last.dateTo = new Date(new Date().getTime() + lastMiliseconds);
         };
 
-        $scope.onFilterLastTypeChange = function() {
+        $scope.onFilterLastTypeChange = function(filterForm) {
             calculateModelDate();
 
-            var modelDate = $scope.invoobillPayments.filterData.last.dateFrom,
+            var modelDate = $scope.invoobillPayments.filterData.last.dateTo,
                 maxDate   = $scope.invoobillPayments.maxDate,
-                diffMS    = now.getTime() - maxDate.getTime();
+                diffMS    = maxDate.getTime() - now.getTime();
 
             // if value is incorrect (too big)
-            if (modelDate.getTime() < maxDate.getTime()) {
+            if (modelDate.getTime() > maxDate.getTime()) {
                 switch ($scope.invoobillPayments.filterData.last.type.selected) {
                     case LAST_TYPES.WEEKS:
                     {
@@ -116,14 +116,32 @@ angular.module('raiffeisen-payments')
                 }
             }
 
+            validatePeriod(filterForm);
+
             // we need to recalculate model date after changing week
             calculateModelDate();
 
             $scope.invoobillPayments.filterData.periodType.model = PERIOD_TYPES.LAST;
         };
 
-        $scope.onFilterLastValueChange = function() {
+        var validatePeriod = function(filterForm) {
+            if ($scope.invoobillPayments.filterData.periodType.model == PERIOD_TYPES.LAST) {
+
+                var modelDate = $scope.invoobillPayments.filterData.last.dateTo,
+                    maxDate   = $scope.invoobillPayments.maxDate;
+
+                filterForm.last_value.$setValidity("TOO_LATE_END_DATE", modelDate.getTime() <= maxDate.getTime());
+            }
+            else if ($scope.inputData.selectedMode == PERIOD_TYPES.RANGE) {
+                filterForm.last_value.$setValidity("TOO_LATE_END_DATE", true);
+            }
+        };
+
+        $scope.onFilterLastValueChange = function(filterForm) {
             calculateModelDate();
+            if(filterForm) {
+                validatePeriod(filterForm);
+            }
         };
 
         //scope object
