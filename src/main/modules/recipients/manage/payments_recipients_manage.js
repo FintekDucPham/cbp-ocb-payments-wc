@@ -18,7 +18,7 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService, $filter) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService) {
 
         $scope.actualRecipientList = null;
 
@@ -151,7 +151,7 @@ angular.module('raiffeisen-payments')
         };
 
     }
-).factory('recipientManager', function (lodash) {
+).factory('recipientManager', function (lodash, $filter) {
 
         function wrapWithCommonData(data, recipient) {
             return lodash.merge(data, {
