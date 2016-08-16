@@ -23,7 +23,7 @@ angular.module('raiffeisen-payments')
                                                                 pathService, NRB_REGEX, CUSTOM_NAME_REGEX,
                                                                 bdMainStepInitializer, rbRecipientOperationType,
                                                                 validationRegexp, rbRecipientTypes, recipientGeneralService,
-                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService, paymentRulesResolved, $filter) {
+                                                                authorizationService, dateFilter, translate, customerService, paymentsService, recipientsService, paymentRulesResolved) {
 
         $scope.paymentRulesResolved = paymentRulesResolved;
 
@@ -158,7 +158,7 @@ angular.module('raiffeisen-payments')
         };
 
     }
-).factory('recipientManager', function (lodash) {
+).factory('recipientManager', function (lodash, $filter) {
 
         function calculateInsurancesSummary(insurancePremiums) {
             return lodash.map(lodash.groupBy(insurancePremiums, 'currency'), function (values) {
