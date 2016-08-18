@@ -93,7 +93,7 @@ angular.module('raiffeisen-payments')
             $scope.invoobillPayments.filterData.last.dateTo = new Date(new Date().getTime() + lastMiliseconds);
         };
 
-        $scope.onFilterLastTypeChange = function(filterForm) {
+        $scope.onFilterLastTypeChange = function() {
             calculateModelDate();
 
             var modelDate = $scope.invoobillPayments.filterData.last.dateTo,
@@ -116,32 +116,14 @@ angular.module('raiffeisen-payments')
                 }
             }
 
-            validatePeriod(filterForm);
-
             // we need to recalculate model date after changing week
             calculateModelDate();
 
             $scope.invoobillPayments.filterData.periodType.model = PERIOD_TYPES.LAST;
         };
 
-        var validatePeriod = function(filterForm) {
-            if ($scope.invoobillPayments.filterData.periodType.model == PERIOD_TYPES.LAST) {
-
-                var modelDate = $scope.invoobillPayments.filterData.last.dateTo,
-                    maxDate   = $scope.invoobillPayments.maxDate;
-
-                filterForm.last_value.$setValidity("TOO_LATE_END_DATE", modelDate.getTime() <= maxDate.getTime());
-            }
-            else if ($scope.inputData.selectedMode == PERIOD_TYPES.RANGE) {
-                filterForm.last_value.$setValidity("TOO_LATE_END_DATE", true);
-            }
-        };
-
-        $scope.onFilterLastValueChange = function(filterForm) {
+        $scope.onFilterLastValueChange = function() {
             calculateModelDate();
-            if(filterForm) {
-                validatePeriod(filterForm);
-            }
         };
 
         //scope object
@@ -317,34 +299,28 @@ angular.module('raiffeisen-payments')
                 $scope.loadInvoobillPayments();
             }
         };
-    }).directive('minDateInvoobill', function () {
+    }).directive('maxDate', function () {
     return {
         restrict: 'A',
         require: 'ngModel',
         scope: {
-            minDate: "=",
+            maxDate: "=",
             modelDate: "=",
             ngRequired: "="
         },
-        link: function (s, e, a, model) {
+        link: function (scope, element, attribute, model) {
             var validator = function (arg) {
-                var date = s.modelDate;
+                var date = scope.modelDate;
 
-                if (s.ngRequired && date.getTime() < s.minDate.getTime()) {
-                    model.$setValidity('mindate', false);
+                if (scope.ngRequired && date.getTime() > scope.maxDate.getTime()) {
+                    model.$setValidity('maxdate', false);
                 } else {
-                    model.$setValidity('mindate', true);
+                    model.$setValidity('maxdate', true);
                 }
             };
-            s.$watch('modelDate', validator);
-            s.$watch('ngRequired', validator);
-            s.$watch('minDateInvoobill', validator);
-            s.$watch('modelDate', function(n, o){
-                if(n!=o){
-                    var now = new Date();
-                    model.$setValidity('future', (now.getTime() > s.modelDate.getTime()));
-                }
-            });
+            scope.$watch('modelDate', validator);
+            scope.$watch('ngRequired', validator);
+            scope.$watch('maxDate', validator);
         }
     };
 });

@@ -17,15 +17,16 @@
                                     class="input-field"
                                     ng-model="invoobillPayments.filterData.last.value"
                                     name="last_value"
-                                    ng-change="onFilterLastValueChange(filterForm)"
+                                    ng-change="onFilterLastValueChange()"
                                     ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.LAST"
                                     model-date="invoobillPayments.filterData.last.dateTo"
+                                    max-date="invoobillPayments.maxDate"
                                     ng-pattern="/^\d+$/"/>
                         </div>
                         <div class="row__inline-block--middle" style="width:100px;">
                             <ui-select ng-model="invoobillPayments.filterData.last.type.selected"
                                        theme="bootstrap"
-                                       ng-change="onFilterLastTypeChange(filterForm)"
+                                       ng-change="onFilterLastTypeChange()"
                                        reset-search-input="false"
                                        required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.LAST">
                                 <ui-select-match placeholder="{{:: 'raiff.payments.rejected.list.filter.type.last.placeholder' | translate }}">
@@ -49,7 +50,10 @@
                     <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.pattern">
                         {{::'raiff.payments.invoobill.select.filter.INCORRECT_PERIOD'|translate}} {{ 'raiff.payments.rejected.list.filter.type.last.types.'+invoobillPayments.filterData.last.type.selected | translate }}
                     </div>
-                    <div class="validation-message animate-on" eb-message-key="TOO_LATE_END_DATE">
+                    <!--<div class="validation-message animate-on" eb-message-key="TOO_LATE_END_DATE">
+                        {{::'raiff.payments.invoobill.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
+                    </div> -->
+                    <div class="validation-message animate-on" ng-if="filterForm.last_value.$error.maxdate">
                         {{::'raiff.payments.invoobill.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
                     </div>
                 </div>
@@ -65,7 +69,7 @@
                             {{::'raiff.payments.rejected.list.filter.type.range.from.label'|translate}}
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
-                            <input name="dateFromInput_delgate" hidden ng-model="invoobillPayments.filterData.range.dateFrom" min-date="invoobillPayments.minDate" model-date="invoobillPayments.filterData.range.dateFrom" ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.RANGE"/>
+                            <input name="dateFromInput_delgate" hidden ng-model="invoobillPayments.filterData.range.dateFrom" max-date="invoobillPayments.filterData.range.dateTo" model-date="invoobillPayments.filterData.range.dateFrom" ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.RANGE"/>
                             <rb-datepicker ng-model="invoobillPayments.filterData.range.dateFrom"
                                            ng-model-options="{ allowInvalid: false }"
                                            rb-name="dateFromInput"
@@ -76,7 +80,7 @@
                             {{::'raiff.payments.rejected.list.filter.type.range.to.label'|translate}}
                         </div>
                         <div class="row__inline-block--middle" style="width:140px;">
-                            <input name="dateToInput_delgate" hidden ng-model="invoobillPayments.filterData.range.dateTo" min-date="invoobillPayments.filterData.range.dateFrom" model-date="invoobillPayments.filterData.range.dateTo" ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.RANGE"/>
+                            <input name="dateToInput_delgate" hidden ng-model="invoobillPayments.filterData.range.dateTo" max-date="invoobillPayments.maxDate" model-date="invoobillPayments.filterData.range.dateTo" ng-required="invoobillPayments.filterData.periodType.model===invoobillPayments.periodTypes.RANGE"/>
                             <rb-datepicker ng-model="invoobillPayments.filterData.range.dateTo"
                                            empty-date
                                            ng-model-options="{ allowInvalid: false }"
@@ -96,10 +100,7 @@
                     <div class="validation-message animate-on" ng-if="filterForm.dateToInput.$error.date">
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_TO'|translate}}
                     </div>
-                    <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.mindate">
-                        {{::'raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE' | translate }}
-                    </div>
-                    <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.future">
+                    <div class="validation-message animate-on" ng-if="filterForm.dateToInput_delgate.$error.maxdate">
                         {{::'raiff.payments.invoobill.select.filter.FUTURE_DATE' | translate | regexReplace : '##months##': invoobillPayments.maxOffset}}
                     </div>
                 </div>
@@ -112,10 +113,9 @@
                     <div class="validation-message animate-on" ng-if="filterForm.dateFromInput.$error.date">
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_FROM'|translate}}
                     </div>
-                    <!--
-                    <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.mindate">
-                        {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_SEARCH' | translate | regexReplace : '##months##': invoobillPayments.maxOffset }}
-                    </div> -->
+                    <div class="validation-message animate-on" ng-if="filterForm.dateFromInput_delgate.$error.maxdate">
+                        {{::'raiff.payments.rejected.select.filter.TOO_LATE_FIRST_DATE' | translate }}
+                    </div>
                 </div>
             </div>
         </bd-radio-select>
