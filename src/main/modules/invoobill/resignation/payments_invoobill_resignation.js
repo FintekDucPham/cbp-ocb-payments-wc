@@ -35,7 +35,7 @@ angular.module('raiffeisen-payments')
                                 label: 'raiff.payments.invoobill.label',
                                 icon: "raiff-icons invoobill",
                                 action: "payments.invoobill.activation",
-                                priority: 9
+                                priority: 8
                             };
                             menuService.pushMenuItems('raiffeisen-payments', menuItem);
 
