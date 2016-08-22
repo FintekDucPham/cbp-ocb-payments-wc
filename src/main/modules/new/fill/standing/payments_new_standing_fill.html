@@ -128,6 +128,7 @@
               ng-pattern="STANDING_ORDER_BNF_REGEX"
               required
               ng-change="validationErrors.recipientName = undefined"
+              rb-split-array
               split-text-max-length-validators="140"
               class="input-field input-area--party-data"
               placeholder="{{ ::'raiff.payments.new.standing.fill.recipient_data.placeholder' | translate }}"></textarea>
@@ -158,6 +159,7 @@
                   class="input-field input-area--payment-description"
                   required
                   ng-change="validationErrors.description = undefined"
+                  rb-split-array
                   split-text-max-length-validators="140"
                   ng-pattern="PAYMENT_DESCRIPTION_REGEX"
                   placeholder="{{ ::'raiff.payments.new.standing.fill.description.placeholder' | translate }}"></textarea>
