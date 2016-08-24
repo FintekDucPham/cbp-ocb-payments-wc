@@ -51,6 +51,8 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsInvoobillListController', function ($scope, $q, $timeout, bdTableConfig, viewStateService, translate, userDetails, parameters, paymentsService, invoobillPaymentsService, lodash, $state, $stateParams, $filter) {
 
+        $scope.forms = {};
+
         var PERIOD_TYPES = {
             LAST: 'LAST',
             RANGE: 'RANGE'
@@ -249,6 +251,10 @@ angular.module('raiffeisen-payments')
                 deferred.resolve();
             }
         };
+
+        $scope.$watch('invoobillPayments.filterData.periodType.model', function(model) {
+            var ddd = $scope.forms.filterForm.$valid;
+        });
 
         // cancel Invobill service
         $scope.cancelService = function(){
