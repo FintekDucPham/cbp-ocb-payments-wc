@@ -27,7 +27,7 @@
                              rb-recipient-clear-text="{{ :: ( payment.operation.code==='EDIT' ? 'raiff.payments.new.domestic.fill.recipient.clear' : 'raiff.payments.edit.domestic.fill.recipient.clear') | translate }}"
                              rb-recipient-placeholder-text="{{ ::'raiff.payments.new.domestic.fill.recipient.placeholder' | translate }}"
                              rb-on-recipient-clear="clearRecipient()"
-                             rb-recipient-layout="{{ :: ( payment.operation.code==='EDIT' ? 'WIDE' : 'DEFAULT' ) }}"
+                             rb-recipient-layout="DEFAULT"
                              rb-on-recipient-select="selectRecipient($recipient)"></rb-recipient-select>
     </bd-item-property>
     <rb-paste-warning>
