@@ -244,4 +244,11 @@ angular.module('raiffeisen-payments')
                 $scope.$broadcast('validationErrorsChanged');
             }
         });
+
+        $scope.$on('clearForm', function () {
+            if($scope.paymentForm) {
+                $scope.paymentForm.finishDate.$error = {};
+            }
+
+        });
     });
