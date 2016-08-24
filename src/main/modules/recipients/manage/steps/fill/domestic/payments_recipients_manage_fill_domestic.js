@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
         }
 
         lodash.assign($scope.recipient.meta, {
-            nonEditableFields: ['debitAccountNo', 'recipientAccountNo', 'recipientId', 'remitterAccountId'],
+            nonEditableFields: ['debitAccountNo', 'remitterAccountId'],
             forbiddenAccounts: []
         });
 

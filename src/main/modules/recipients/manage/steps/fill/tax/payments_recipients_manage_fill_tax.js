@@ -11,6 +11,18 @@ angular.module('raiffeisen-payments')
 
         $scope.COMMITMENT_ID_REGEX = validationRegexp('TAX_COMMITMENT_ID_REGEX');
 
+        lodash.assign($scope.recipient.meta, {
+            nonEditableFields: ['debitAccountNo', 'remitterAccountId'],
+            forbiddenAccounts: []
+        });
+
+
+        $scope.$on('clearForm', function () {
+            if($scope.recipientForm) {
+                formService.clearForm($scope.recipientForm, $scope.recipient.meta.nonEditableFields);
+            }
+        });
+
         $scope.selectSymbol = function() {
             delete $scope.recipient.formData.periodType;
         };
