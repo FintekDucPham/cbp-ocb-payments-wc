@@ -156,6 +156,8 @@ angular.module('raiffeisen-payments')
                 return;
             }
             $scope.validationErrors = [];
+            $scope.$broadcast('validationErrorsChanged');
+
             var form = $scope.paymentForm;
             $scope.limitExeeded = {
                 show: false
@@ -225,6 +227,7 @@ angular.module('raiffeisen-payments')
                                     $scope.validationErrors[currentError.field] = $scope.validationErrors[currentError.field].replace("##"+errorCodeIndex+"##", code);
                                     errorCodeIndex++;
                                 });
+                                $scope.$broadcast('validationErrorsChanged');
                             }
                         });
                         /*for(var i=0; i<errorReason.errors.length; i++){

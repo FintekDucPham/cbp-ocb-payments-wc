@@ -224,4 +224,31 @@ angular.module('raiffeisen-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
+
+
+         $scope.$on('validationErrorsChanged', function(){
+             $timeout(function(){
+                 if($scope.paymentForm && $scope.paymentForm.firstRealizationDate){
+                    if($scope.validationErrors && $scope.validationErrors.firstRealizationDate){
+                        $scope.paymentForm.firstRealizationDate.$setValidity('firstRealizationDateBck', false);
+                    }else{
+                        $scope.paymentForm.firstRealizationDate.$setValidity('firstRealizationDateBck', true);
+                    }
+                 }
+             });
+         });
+
+        $scope.$watch('payment.formData.firstRealizationDate', function(n,o){
+            if(n!=o){
+                $scope.validationErrors.firstRealizationDate = undefined;
+                $scope.$broadcast('validationErrorsChanged');
+            }
+        });
+
+        $scope.$on('clearForm', function () {
+            if($scope.paymentForm) {
+                $scope.paymentForm.finishDate.$error = {};
+            }
+
+        });
     });

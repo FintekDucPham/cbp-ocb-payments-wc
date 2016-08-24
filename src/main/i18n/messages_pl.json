@@ -497,6 +497,7 @@
 
     "raiff.payments.new.zus.verify.tmp.zus_name": "Zakład Ubezpieczeń Społecznych",
 
+    "raiff.new.recipient.custom_name": "Nowy odbiorca",
     "raiff.payments.recipients.label": "Odbiorcy zdefiniowani",
     "raiff.payments.recipients.type.label": "Typ odbiorcy",
     "raiff.payments.recipients.search.label": "Szukaj odbiorcy",
