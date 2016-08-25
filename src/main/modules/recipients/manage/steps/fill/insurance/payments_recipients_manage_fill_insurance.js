@@ -17,6 +17,19 @@ angular.module('raiffeisen-payments')
         }
 
 
+        lodash.assign($scope.recipient.meta, {
+            nonEditableFields: ['debitAccountNo', 'remitterAccountId'],
+            forbiddenAccounts: []
+        });
+
+
+        $scope.$on('clearForm', function () {
+            if($scope.recipientForm) {
+                formService.clearForm($scope.recipientForm, $scope.recipient.meta.nonEditableFields);
+            }
+        });
+
+
         function calculateInsurancesAmount() {
             var summary = calculateInsurancesSummary();
             if (!summary || !summary.length) {

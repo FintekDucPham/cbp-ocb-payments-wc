@@ -30,7 +30,7 @@ angular.module('raiffeisen-payments')
         $scope.actualRecipientList = null;
 
         $scope.clearForm = function () {
-            $scope.recipient.formData = {};
+            //$scope.recipient.formData = {};
             $scope.recipient.meta.bankName = {
                 recipientBankName:null,
                 bankNamePromise:null
