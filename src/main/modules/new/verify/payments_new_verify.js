@@ -11,15 +11,18 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, bdMainStepInitializer, transferService,depositsService, $stateParams, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, lodash, rbPaymentTypes, viewStateService, paymentsBasketService, customerService) {
 
+        if($scope.payment.formData.realizationDate && !angular.isDate($scope.payment.formData.realizationDate)){
+            try{
+                $scope.payment.formData.realizationDate = new Date($scope.payment.formData.realizationDate);
+            }catch(e){}
+        }
 
-            if($scope.payment.formData.paymentId){
-                $scope.payment.token.params.resourceId = $scope.payment.formData.paymentId;
-                delete $scope.payment.formData.paymentId;
-            }else{
-                $scope.payment.token.params.resourceId = null;
-            }
-
-
+        if($scope.payment.formData.paymentId){
+            $scope.payment.token.params.resourceId = $scope.payment.formData.paymentId;
+            delete $scope.payment.formData.paymentId;
+        }else{
+            $scope.payment.token.params.resourceId = null;
+        }
 
         if ($scope.payment.type.code == rbPaymentTypes.STANDING.code) {
             $scope.payment.token.params.rbOperationType = "MANAGE_STANDING_ORDER";
@@ -44,10 +47,9 @@ angular.module('raiffeisen-payments')
         });
 
 
-        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
-            $scope.payment.result.token_error = false;
-            $scope.payment.token.params.resourceId = $scope.payment.transferId;
-        });
+        $scope.payment.result.token_error = false;
+        $scope.payment.token.params.resourceId = $scope.payment.transferId;
+
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             $scope.payment.token.params = {};

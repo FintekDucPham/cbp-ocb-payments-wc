@@ -29,6 +29,12 @@ angular.module('raiffeisen-payments')
             isBlock : false
         });
 
+        if($scope.payment.formData.realizationDate && !angular.isDate($scope.payment.formData.realizationDate)){
+            try{
+                $scope.payment.formData.realizationDate = new Date($scope.payment.formData.realizationDate);
+            }catch(e){}
+        }
+
         $scope.validationErrors = [];
         $scope.CURRENT_DATE = CURRENT_DATE;
 
