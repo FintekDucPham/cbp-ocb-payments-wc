@@ -207,6 +207,7 @@ angular.module('raiffeisen-payments')
             formData.recipientName = taxpayer.data.join('');
             $scope.payment.options.isFromTaxpayer = true;
             $scope.payment.items.taxPayer = taxpayer;
+            $scope.payment.formData.taxpayerId = taxpayer.taxpayerId;
         };
 
         $scope.onAccountSelected = function (account, oldAccount) {

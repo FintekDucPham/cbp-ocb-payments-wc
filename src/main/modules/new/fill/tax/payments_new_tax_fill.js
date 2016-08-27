@@ -170,6 +170,7 @@ angular.module('raiffeisen-payments')
             formData.taxpayerData = taxpayer.data.join('');
             $scope.payment.items.taxPayer = taxpayer;
             $scope.payment.options.isFromTaxpayer = true;
+            $scope.payment.formData.taxpayerId = taxpayer.taxpayerId;
         };
 
         function resetControl(ctrl) {
