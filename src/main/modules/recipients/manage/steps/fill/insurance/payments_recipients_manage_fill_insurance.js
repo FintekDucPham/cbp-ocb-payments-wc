@@ -26,6 +26,9 @@ angular.module('raiffeisen-payments')
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
                 formService.clearForm($scope.recipientForm, $scope.recipient.meta.nonEditableFields);
+                if($scope.recipient && $scope.recipient.formData){
+                    $scope.recipient.formData.insurancePremiums = {};
+                }
             }
         });
 
