@@ -88,9 +88,9 @@ angular.module('raiffeisen-payments')
         };
 
         var setRealizationDateToCurrent = function () {
-            angular.extend($scope.payment.formData, {
-                realizationDate: CURRENT_DATE
-            }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+            if($scope.payment.formData){
+                $scope.payment.formData.realizationDate = CURRENT_DATE;
+            }
         };
 
         var resetRealizationOnBlockedInput = function () {
@@ -135,6 +135,27 @@ angular.module('raiffeisen-payments')
             }
             validateBalance();
         });
+
+        function checkCurrency(){
+            $scope.payment.meta.blockByCurrency = false;
+            var recipientAccount = $scope.payment.items.recipientAccount;
+            var senderAccount = $scope.payment.items.senderAccount;
+            if(recipientAccount && senderAccount){
+                if(recipientAccount.currency !== senderAccount.currency){
+                    setRealizationDateToCurrent(true);
+                    $scope.payment.meta.blockByCurrency = true;
+                }
+            }
+        }
+
+        $scope.$watch('payment.items.senderAccount', function(newValues, oldValues){
+           checkCurrency();
+        }, true);
+
+        $scope.$watch('payment.items.recipientAccount', function(newValues, oldValues){
+            checkCurrency();
+        }, true);
+
 
         setRealizationDateToCurrent();
 
