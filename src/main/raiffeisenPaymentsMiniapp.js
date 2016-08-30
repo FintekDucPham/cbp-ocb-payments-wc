@@ -158,26 +158,24 @@ angular.module('raiffeisen-payments', [
             }
 
             if(visible) {
-                //sprawdzenie dostepnosci uslugi
-                invoobillPaymentsService.isAccess().then(function(access) {
-                    if(access) {
-                        invoobillPaymentsService.getStatus().then(function(status) {
-                           var action = "";
-                           if(status) {
-                               action = "payments.invoobill.list";
-                           }  else {
-                               action = "payments.invoobill.activation";
-                           }
-
-                           menuItem.action = action;
-                           menuService.pushMenuItems('raiffeisen-payments', menuItem);
-                        });
-                    } else {
-                        menuItem.action = "payments.invoobill.formalIdLack";
+                invoobillPaymentsService.getStatus().then(function(status) {
+                    var action = "";
+                    if(status) {
+                        menuItem.action = "payments.invoobill.list";
                         menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                    }  else {
+                        invoobillPaymentsService.isAccess().then(function(access) {
+                            if(access) {
+                                action = "payments.invoobill.activation";
+                            } else {
+                                action = "payments.invoobill.formalIdLack";
+                            };
+
+                            menuItem.action = action;
+                            menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                        });
+
                     }
-
-
                 });
             }
 
