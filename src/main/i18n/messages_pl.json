@@ -302,7 +302,7 @@
 
     "raiff.payments.new.zus.fill.payment_option.SOCIAL": "Ubezpieczenie społeczne",
     "raiff.payments.new.zus.fill.payment_option.HEALTH": "Ubezpieczenie zdrowotne",
-    "raiff.payments.new.zus.fill.payment_option.FPIFGSP": "Ubezpieczenie FP i FGSP",
+    "raiff.payments.new.zus.fill.payment_option.FPIFGSP": "FP i FGSP",
     "raiff.payments.new.zus.fill.payment_option.PENSION": "Fundusz Emerytur Pomostowych",
     "raiff.payments.new.zus.fill.payment_options.amount": "Ubezpieczenie zdrowotne",
     "raiff.payments.new.zus.fill.total_payment": "Kwota całkowita",
@@ -322,7 +322,7 @@
     "raiff.payments.new.zus.verify.payment_data": "Dane ubezpieczeń",
     "raiff.payments.new.zus.verify.payment.SOCIAL": "Na ubezpieczenie społeczne",
     "raiff.payments.new.zus.verify.payment.HEALTH": "Na ubezpieczenie zdrowotne",
-    "raiff.payments.new.zus.verify.payment.FPIFGSP": "Na ubezpieczenie FP i FGSP",
+    "raiff.payments.new.zus.verify.payment.FPIFGSP": "Na FP i FGSP",
     "raiff.payments.new.zus.verify.payment.PENSION": "Na Fundusz Emerytur Pomostowych",
 
     "raiff.payments.new.us.fill.sender_account": "Z rachunku",

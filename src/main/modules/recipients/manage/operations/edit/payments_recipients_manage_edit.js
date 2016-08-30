@@ -52,10 +52,10 @@ angular.module('raiffeisen-payments')
             lodash.extend($scope.recipient.formData, $stateParams.recipient, $scope.recipient.formData);
         }
 
-        $scope.clearForm = function () {
-            $scope.recipient.formData = lodash.pick($scope.recipient.formData, $scope.recipient.meta.nonEditableFields);
-            $scope.$broadcast('clearForm');
-        };
+        lodash.assign($scope.recipient.meta, {
+            nonEditableFields: ['debitAccountNo', 'recipientAccountNo', 'recipientId', 'remitterAccountId'],
+            forbiddenAccounts: []
+        });
 
         $scope.prepareOperation = $scope.create;
 

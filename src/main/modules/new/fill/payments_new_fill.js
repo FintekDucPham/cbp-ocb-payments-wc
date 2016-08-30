@@ -29,6 +29,12 @@ angular.module('raiffeisen-payments')
             isBlock : false
         });
 
+        if($scope.payment.formData.realizationDate && !angular.isDate($scope.payment.formData.realizationDate)){
+            try{
+                $scope.payment.formData.realizationDate = new Date($scope.payment.formData.realizationDate);
+            }catch(e){}
+        }
+
         $scope.validationErrors = [];
         $scope.CURRENT_DATE = CURRENT_DATE;
 
@@ -156,6 +162,8 @@ angular.module('raiffeisen-payments')
                 return;
             }
             $scope.validationErrors = [];
+            $scope.$broadcast('validationErrorsChanged');
+
             var form = $scope.paymentForm;
             $scope.limitExeeded = {
                 show: false
@@ -225,6 +233,7 @@ angular.module('raiffeisen-payments')
                                     $scope.validationErrors[currentError.field] = $scope.validationErrors[currentError.field].replace("##"+errorCodeIndex+"##", code);
                                     errorCodeIndex++;
                                 });
+                                $scope.$broadcast('validationErrorsChanged');
                             }
                         });
                         /*for(var i=0; i<errorReason.errors.length; i++){
