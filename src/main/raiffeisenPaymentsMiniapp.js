@@ -169,8 +169,7 @@ angular.module('raiffeisen-payments', [
                                 action = "payments.invoobill.activation";
                             } else {
                                 action = "payments.invoobill.formalIdLack";
-                            };
-
+                            }
                             menuItem.action = action;
                             menuService.pushMenuItems('raiffeisen-payments', menuItem);
                         });
