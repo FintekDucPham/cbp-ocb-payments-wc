@@ -91,10 +91,10 @@
 
             <div class="eb-validation-messages col-xs-12" ng-if="forms.filterForm.dateToInput_delgate.$invalid">
                 <div class="messages">
-                    <div class="validation-message animate-on" ng-if="forms.filterForm.dateToInput_delgate.$error.required && !filterForm.dateToInput.$error.date">
+                    <div class="validation-message animate-on" ng-if="!forms.filterForm.dateToInput.$viewValue">
                         {{::'raiff.payments.invoobill.select.filter.EMPTY_DATE_TO'|translate}}
                     </div>
-                    <div class="validation-message animate-on" ng-if="forms.filterForm.dateToInput.$error.date">
+                    <div class="validation-message animate-on" ng-if="forms.filterForm.dateToInput.$error.date || forms.filterForm.dateToInput.$error.parse">
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_TO'|translate}}
                     </div>
                     <div class="validation-message animate-on" ng-if="forms.filterForm.dateToInput_delgate.$error.maxdate">
@@ -104,10 +104,10 @@
             </div>
             <div class="eb-validation-messages col-xs-12" ng-if="forms.filterForm.dateFromInput_delgate.$invalid">
                 <div class="messages">
-                    <div class="validation-message animate-on" ng-if="forms.filterForm.dateFromInput_delgate.$error.required && !filterForm.dateFromInput.$error.date">
+                    <div class="validation-message animate-on" ng-if="!forms.filterForm.dateFromInput.$viewValue">
                         {{::'raiff.payments.invoobill.select.filter.EMPTY_DATE_FROM'|translate}}
                     </div>
-                    <div class="validation-message animate-on" ng-if="forms.filterForm.dateFromInput.$error.date">
+                   <div class="validation-message animate-on" ng-if="forms.filterForm.dateFromInput.$error.date || forms.filterForm.dateFromInput.$error.parse">
                         {{::'raiff.payments.rejected.select.filter.INCORRECT_DATE_FROM'|translate}}
                     </div>
                     <div class="validation-message animate-on" ng-if="forms.filterForm.dateFromInput_delgate.$error.maxdate">

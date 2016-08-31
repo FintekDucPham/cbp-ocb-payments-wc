@@ -318,7 +318,7 @@ angular.module('raiffeisen-payments')
             var validator = function (arg) {
                 var date = scope.modelDate;
 
-                if (scope.ngRequired && date.getTime() > scope.maxDate.getTime()) {
+                if (scope.ngRequired && date && date.getTime() > scope.maxDate.getTime()) {
                     model.$setValidity('maxdate', false);
                 } else {
                     model.$setValidity('maxdate', true);
