@@ -253,7 +253,22 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.$watch('invoobillPayments.filterData.periodType.model', function(model) {
-            var ddd = $scope.forms.filterForm.$valid;
+            if($scope.forms.filterForm) {
+                $scope.forms.filterForm.$valid;
+            }
+        });
+
+
+        $scope.$watch('invoobillPayments.filterData.range.dateFrom', function(dateFrom) {
+            if($scope.forms.filterForm) {
+                $scope.forms.filterForm.dateFromInput.$setValidity('required', !!$scope.forms.filterForm.dateFromInput.$viewValue);
+            }
+        });
+
+        $scope.$watch('invoobillPayments.filterData.range.dateTo', function(dateTo) {
+            if($scope.forms.filterForm) {
+                $scope.forms.filterForm.dateToInput.$setValidity('required', !!$scope.forms.filterForm.dateToInput.$viewValue);
+            }
         });
 
         // cancel Invobill service
@@ -318,7 +333,7 @@ angular.module('raiffeisen-payments')
             var validator = function (arg) {
                 var date = scope.modelDate;
 
-                if (scope.ngRequired && date && date.getTime() > scope.maxDate.getTime()) {
+                if (scope.ngRequired && date && scope.maxDate && date.getTime() > scope.maxDate.getTime()) {
                     model.$setValidity('maxdate', false);
                 } else {
                     model.$setValidity('maxdate', true);
