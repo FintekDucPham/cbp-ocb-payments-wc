@@ -254,7 +254,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('invoobillPayments.filterData.periodType.model', function(model) {
             if($scope.forms.filterForm) {
-                $scope.forms.filterForm.$valid;
+                $scope.forms.filterForm.$validate();
             }
         });
 
