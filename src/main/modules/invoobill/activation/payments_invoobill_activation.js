@@ -39,7 +39,7 @@ angular.module('raiffeisen-payments')
             regulaminsAccept: false
         };
 
-        $scope.link = parameters.customerDetails.context === 'DETAL' ? parameters.micro.link : parameters.detal.link;
+        $scope.link = parameters.customerDetails.context === 'DETAL' ? parameters.detal.link : parameters.micro.link;
 
         $scope.accept = function(form){
             form.regulaminsAccept.$setValidity('rulesRegulaminsRequired', $scope.model.regulaminsAccept);
