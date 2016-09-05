@@ -248,6 +248,7 @@ angular.module('raiffeisen-payments')
         $scope.$on('clearForm', function () {
             if($scope.paymentForm) {
                 $scope.paymentForm.finishDate.$error = {};
+                $scope.validationErrors.finishDate = undefined;
             }
 
         });
