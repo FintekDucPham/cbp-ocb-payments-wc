@@ -28,12 +28,12 @@ angular.module('raiffeisen-payments')
             $scope.transferCost = transferCostData;
         });
 
-        $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
-            if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
-                $scope.payment.result.token_error = false;
-                sendAuthorizationToken();
-            }
-        });
+
+        if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
+            $scope.payment.result.token_error = false;
+            sendAuthorizationToken();
+        }
+
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             delete $scope.payment.items.credentials;
