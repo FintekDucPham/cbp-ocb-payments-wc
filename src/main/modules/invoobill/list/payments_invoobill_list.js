@@ -18,13 +18,6 @@ angular.module('raiffeisen-payments')
                         detalOffsetDefault: systemParameterService.getParameterByName("INVB.list.default.offset.detal"),
                         microOffsetDefault: systemParameterService.getParameterByName("INVB.list.default.offset.micro"),
                         creditorInfoLink: systemParameterService.getParameterByName("page.url.invb.suppliers"),
-                        /*
-                        detalOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.detal"),
-                        microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
-                        detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
-                        microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
-                        creditorInfoLink: "http://www.invoobill.pl/gdzie-zaplace-z-invoobill/",
-                        */
                         customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         return {
@@ -112,7 +105,7 @@ angular.module('raiffeisen-payments')
                     }
                     case LAST_TYPES.MONTH:
                     {
-                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 31));
+                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 30));
                         break;
                     }
                 }
@@ -332,6 +325,9 @@ angular.module('raiffeisen-payments')
         link: function (scope, element, attribute, model) {
             var validator = function (arg) {
                 var date = scope.modelDate;
+                if (date) {
+                    date.setHours(0, 0, 0, 0);
+                }
 
                 if (scope.ngRequired && date && scope.maxDate && date.getTime() > scope.maxDate.getTime()) {
                     model.$setValidity('maxdate', false);
