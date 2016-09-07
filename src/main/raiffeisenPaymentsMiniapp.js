@@ -146,7 +146,9 @@ angular.module('raiffeisen-payments', [
             //kontekst MICRO
             } else if(acceessParameter.indexOf('M') != -1 &&
                 customerBusinessLine == SEGMENT_TYPES.MICRO) {
-                visible = true;
+                visible = invoobillPaymentsService.getVisibleInvoobill().then(function(visible) {
+                    return visible;
+                });
             //FWR
             } else if(acceessParameter.indexOf('F') != -1 &&
                 customerBusinessLine == SEGMENT_TYPES.DETAIL_FWR) {
