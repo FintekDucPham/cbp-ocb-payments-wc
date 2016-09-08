@@ -108,11 +108,14 @@ angular.module('raiffeisen-payments')
                         $scope.data.dateRange.fromDate = $scope.inputData.dateFrom;
                         $scope.data.dateRange.toDate   = $scope.inputData.dateTo;
                     }
-                    $scope.data.status = $scope.inputData.status;
+                    commitStatus();
                 };
 
                 var commitStatus = function(){
-                    $scope.data.status = $scope.inputData.status;
+                    $scope.data.status = [];
+                    angular.forEach($scope.inputData.status, function(val, key){
+                       this.push(val.id);
+                    }, $scope.data.status);
                 };
 
                 var commitAccount = function(){
@@ -138,7 +141,11 @@ angular.module('raiffeisen-payments')
 
 
                 $scope.PAYMENT_BASKET_STATUS = PAYMENT_BASKET_STATUS;
-                $scope.PAYMENT_BASKET_STATUS_LIST = Object.keys(PAYMENT_BASKET_STATUS);
+                $scope.PAYMENT_BASKET_STATUS_LIST = [];
+                angular.forEach(PAYMENT_BASKET_STATUS, function(value, key) {
+                    this.push({id: value, label: translate.property('raiff.payments.basket.transaction.status.'+value)});
+                }, $scope.PAYMENT_BASKET_STATUS_LIST);
+
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;
                 $scope.FUTURE_DATE_TYPES  = FUTURE_DATE_TYPES;
                 $scope.FUTURE_DATE_RANGES_LIST = Object.keys(FUTURE_DATE_RANGES);  // because repeat doesn't support objects
@@ -165,7 +172,7 @@ angular.module('raiffeisen-payments')
                             period: options.period,
                             dateFrom: options.dateFrom,
                             dateTo: options.dateTo,
-                            status: [PAYMENT_BASKET_STATUS.NEW, PAYMENT_BASKET_STATUS.TO_ACCEPT, PAYMENT_BASKET_STATUS.READY],
+                            status: [{id:PAYMENT_BASKET_STATUS.NEW}, {id:PAYMENT_BASKET_STATUS.TO_ACCEPT}, {id:PAYMENT_BASKET_STATUS.READY}],
                             selectedAccount: getSelectedAccount(options.account),
                             amountRange:{
                                 min:null,
@@ -194,6 +201,7 @@ angular.module('raiffeisen-payments')
                     clearFormInput( $scope.futureDatePanelForm.amountFrom);
                     clearFormInput( $scope.futureDatePanelForm.amountTo);
                     $scope.inputData = {};
+                    $scope.inputDataCommited = {};
                     init();
                     $scope.futureDatePanelForm.amountFrom.$render();
                     $scope.futureDatePanelForm.amountTo.$render();
@@ -399,17 +407,6 @@ angular.module('raiffeisen-payments')
                     }
                 });
 
-                $scope.$watch('inputData.status', function(selectedAccount) {
-                    $scope.futureDatePanelForm.status.$setDirty();
-                    if ($scope.futureDatePanelForm.status) {
-                        $scope.futureDatePanelForm.status.$validate();
-                    }
-                    $scope.valid = $scope.futureDatePanelForm.$valid;
-                    if ($scope.futureDatePanelForm.status.$valid) {
-                        commitStatus();
-                    }
-                });
-
                 $scope.$watch('inputData.amountRange.min', function(selectedAccount) {
                     $scope.futureDatePanelForm.amountFrom.$setDirty();
                     if ($scope.futureDatePanelForm.amountFrom) {
@@ -432,6 +429,13 @@ angular.module('raiffeisen-payments')
                     }
                 });
 
+                $scope.onItemSelect = function(item) {
+                    commitStatus();
+                };
+
+                $scope.onItemDeselect = function(item) {
+                    commitStatus();
+                };
 
 
                 $scope.constraints = {
