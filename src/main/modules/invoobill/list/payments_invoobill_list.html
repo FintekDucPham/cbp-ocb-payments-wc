@@ -144,12 +144,14 @@
 
     <div class="bd-table">
         <div bd-table-header>
-            <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.realization_date' | translate}}</div>
-            <div bd-table-heading="second" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.recipient' | translate}}</div>
-            <div bd-table-heading="third" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4 bd-pull-right">{{::'raiff.payments.invoobill.list.header.amount' | translate}}</div>
-            <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-4 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.status' | translate}}</div>
+            <!-- this will disappear if screen gets too small -->
+            <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.realization_date' | translate}}</div>
+            <div bd-table-heading="second" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.recipient' | translate}}</div>
+            <div bd-table-heading="third" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-4 bd-pull-right">{{::'raiff.payments.invoobill.list.header.amount' | translate}}</div>
+            <!-- this will disappear if screen gets too small -->
+            <div bd-table-heading="fourth" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::'raiff.payments.invoobill.list.header.status' | translate}}</div>
         </div>
-
+        <div eb-preloader eb-promise="promise"></div>
         <div ng-show="(invoobillPayments.data.promise.$$state.status === 1)"
              bd-table-row
              bd-table-expandable
@@ -159,24 +161,26 @@
 
             <div class="bd-table__row-entry">
                 <div class="bd-table__row-line bd-table__row-line--sm-tight">
-                    <div bd-table-cell="first" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-table__cell-index">
+                    <div bd-table-cell="first" class="bd-hide-sm bd-table__cell--md-4 bd-table__cell-index">
                         {{ item.paymentDate | date : 'shortDate'}}
                     </div>
                     <!-- this will disappear if screen gets too small -->
-                    <div bd-table-cell="second" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-hide-sm">
+                    <div bd-table-cell="second" class="bd-hide-sm--sm-4 bd-table__cell--md-4">
                         {{ item.creditorFullName }}
                     </div>
-                    <div bd-table-cell="third" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-pull-right">
+                    <!-- this will disappear if screen gets too small -->
+                    <div bd-table-cell="third" class="bd-hide-sm bd-table__cell--md-4 bd-pull-right">
                         {{ item.amount | number: 2}} {{item.currency}}
                     </div>
-                    <div bd-table-cell="fourth" class="bd-table__cell--sm-4 bd-table__cell--md-4 bd-pull-right">
+                    <!-- this will disappear if screen gets too small -->
+                    <div bd-table-cell="fourth" class="bd-hide-sm bd-table__cell--md-4 bd-pull-right">
                         {{ item.paymentStatusDescription }}
                     </div>
                 </div>
+                <!-- this will be shown if screen gets small enough -->
                 <div class="bd-table__row-line bd-table__row-line--sm-tight bd-hide-md">
-                    <!-- this will be shown if screen gets small enough -->
                     <div bd-table-cell="second" class="bd-table__cell--sm-16">
-                        {{ item.creditorFullName }}
+                        {{ item.amount | number: 2}} {{item.currency}}
                     </div>
                 </div>
             </div>
