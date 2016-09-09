@@ -1367,5 +1367,6 @@
     "raiff.payments.invoobill.new_payment.transfer_cost_info":"Koszt przelewu",
 
     "raiff.payments.invoobill.reject_payment.header":"Odrzucenie płatności Invoobill",
-    "raiff.payments.invoobill.reject_payment.reason":"Powód odrzucenia"
+    "raiff.payments.invoobill.reject_payment.reason":"Powód odrzucenia",
+    "config.multistepform.invoobill.buttons.accept":"Usuń"
 }
