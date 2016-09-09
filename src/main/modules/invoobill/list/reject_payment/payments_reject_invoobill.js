@@ -46,7 +46,7 @@ angular.module('raiffeisen-payments')
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
                 next: 'config.multistepform.buttons.next',
-                accept: 'config.multistepform.buttons.accept',
+                accept: 'config.multistepform.invoobill.buttons.accept',
                 finalize: 'raiff.payments.new.btn.finalize'
             },
             visibility:{
