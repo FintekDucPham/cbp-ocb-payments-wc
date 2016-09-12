@@ -5,11 +5,15 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/basket_fill.html",
             controller: "PaymentsBasketFillController",
             resolve: {
-                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "accountsService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, accountsService) {
+                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "transferService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, transferService) {
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getParameterByName("basketList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getParameterByName("basketList.max.offset"),
-                        account: accountsService.search({pageSize: 10000})
+                        account: transferService.getTransferAccounts({
+                            restrictions: "ACCOUNT_RESTRICTION_DEBIT",
+                            productList: "COMPLEX_TRANSFER_LIST",
+                            pageSize: 30
+                        })
                     }).then(function (data) {
                         var result = {
                             offset: parseInt(data.defaultOffsetInDays.value, 10),

@@ -13,16 +13,17 @@
 
     </bd-form-panel>
 
-    <div class="settings-mifid__buttons ">
+    <bd-form-footer class="bd-form-footer--stackable">
 
         <bd-button class="bd-form-footer__button bd-form-footer__button--negative" ng-click="cancel()">
             {{ :: 'raiff.payments.invoobill.resignation.cancel.button' | translate }}
         </bd-button>
 
-        <bd-button class="bd-button__primary" ng-click="resignation()">
+        <bd-button class="bd-form-footer__button bd-button__primary bd-form-footer__button--positive" ng-click="resignation()">
             {{ :: 'raiff.payments.invoobill.resignation.button' | translate }}
             <i class="eb-icon eb-raiffeisen-theme eb-ico-next"></i>
         </bd-button>
-    </div>
+
+    </bd-form-footer>
 
 </rb-content-view>
