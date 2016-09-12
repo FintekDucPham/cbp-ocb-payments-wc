@@ -106,7 +106,13 @@ angular.module('raiffeisen-payments')
         };
 
         var createPaymentEntity = function(){
-            return invoobillPaymentsService.create(angular.extend({}, $scope.payment.invoobill, $scope.payment.formData), "create").then(function(data){
+            var transfer = angular.extend({}, $scope.payment.invoobill, $scope.payment.formData);
+            var params = angular.copy(transfer);
+            if(params.beneficiaryName){
+                params.beneficiaryName = utilityService.splitTextEveryNSigns(params.beneficiaryName);
+            }
+            params.title = utilityService.splitTextEveryNSigns(params.title);
+            return invoobillPaymentsService.create(params, "create").then(function(data){
                 return data;
             });
         };
