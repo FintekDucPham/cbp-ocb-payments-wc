@@ -146,8 +146,27 @@ angular.module('raiffeisen-payments', [
             //kontekst MICRO
             } else if(acceessParameter.indexOf('M') != -1 &&
                 customerBusinessLine == SEGMENT_TYPES.MICRO) {
-                visible = invoobillPaymentsService.getVisibleInvoobill().then(function(visible) {
-                    return visible;
+                invoobillPaymentsService.getVisibleInvoobill().then(function(visible) {
+                    if(visible) {
+                        invoobillPaymentsService.getStatus().then(function(status) {
+                            var action = "";
+                            if(status) {
+                                menuItem.action = "payments.invoobill.list";
+                                menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                            }  else {
+                                invoobillPaymentsService.isAccess().then(function(access) {
+                                    if(access) {
+                                        action = "payments.invoobill.activation";
+                                    } else {
+                                        action = "payments.invoobill.formalIdLack";
+                                    }
+                                    menuItem.action = action;
+                                    menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                                });
+
+                            }
+                        });
+                    }
                 });
             //FWR
             } else if(acceessParameter.indexOf('F') != -1 &&
