@@ -19,7 +19,6 @@ angular.module('raiffeisen-payments')
                 });
             },
             link: function(s,e,a){
-
                 var isSelectedAny = function(){
                     var out = false;
                     angular.forEach(s.rbTrybes, function(trybe){
@@ -31,13 +30,13 @@ angular.module('raiffeisen-payments')
                 };
 
                 var initialSelection = function(){
-                    var toSelect = null;
+                    var selected = false;
                     angular.forEach(s.rbTrybes, function(tr){
-                        if(!toSelect && tr.active){
-                            toSelect = tr;
+                        if (!selected && tr.active) {
+                            tr.selected = true;
+                            selected = true;
                         }
                     });
-                    toSelect.selected = true;
                 };
 
                 var onChange = function(n, o, trybe){
@@ -92,7 +91,7 @@ angular.module('raiffeisen-payments')
                     if(s.costs!=='SHA'){
                         targetAv=false;
                     }
-                    if(s.currency.currency!=='EUR'){
+                    if(!s.currency || s.currency.currency!=='EUR'){
                         targetAv=false;
                     }
                     if(!(s.swift.data && s.swift.data.target)){
@@ -115,7 +114,6 @@ angular.module('raiffeisen-payments')
                         initialSelection();
                     }
                 };
-
 
                 s.$watch('costs', obtainActivity);
                 s.$watch('swift.data.target', obtainActivity);
