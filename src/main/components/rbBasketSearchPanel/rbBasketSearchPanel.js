@@ -194,6 +194,7 @@ angular.module('raiffeisen-payments')
                             }
                         };
                     }
+                    $scope.valid = true;
                 };
 
 
@@ -376,8 +377,6 @@ angular.module('raiffeisen-payments')
                             $scope.futureDatePanelForm.dateToInput.$setPristine();
                             $scope.futureDatePanelForm.dateToInput.$setUntouched();
                         }
-
-                        validatePeriod();
                     }
                     else if(selectedMode == FUTURE_DATE_TYPES.RANGE) {
                         $scope.futureDatePanelForm.dateFromInput.$setDirty();
@@ -390,8 +389,6 @@ angular.module('raiffeisen-payments')
 
                         $scope.futureDatePanelForm.period.$setPristine();
                         $scope.futureDatePanelForm.period.$setUntouched();
-
-                        validateRange();
                     }
                 });
 

@@ -65,7 +65,7 @@ angular.module('raiffeisen-payments')
 
 
         $scope.onOperationsDateSubmit = function() {
-            if ($scope.model.dataValidity) {
+            if (typeof $scope.model.dataValidity == 'undefined' || $scope.model.dataValidity) {
                 $scope.basket.meta.newSearch = true;
                 $scope.basket.summary.summaryItemMap = {};
                 $scope.basket.summary.summaryItem = {};
