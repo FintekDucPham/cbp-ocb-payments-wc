@@ -192,10 +192,12 @@ angular.module('raiffeisen-payments')
                     templateParameters.payerId = $scope.payment.items.taxPayer.taxpayerId;
                 }
 
+                var convertedRequest = requestConverter($scope.payment.formData);
+                var paymentTypeCode = convertedRequest.alternativePaymentCode || $scope.payment.type.code;
 
-                $scope.getProperPaymentService($scope.payment.type.code).create($scope.payment.type.code, angular.extend({
+                $scope.getProperPaymentService(paymentTypeCode).create(paymentTypeCode, angular.extend({
                     "remitterId": 0
-                }, requestConverter($scope.payment.formData), templateParameters), $scope.payment.operation.link || false ).then(function (transfer) {
+                }, convertedRequest, templateParameters), $scope.payment.operation.link || false ).then(function (transfer) {
                         $scope.payment.transferId = transfer.referenceId;
                         $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                         $scope.payment.holiday = transfer.holiday;

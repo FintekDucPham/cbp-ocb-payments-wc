@@ -47,6 +47,12 @@ angular.module('raiffeisen-payments')
             state: 'sepa',
             parentState: 'new_foreign'
         },
+        "SMART": {
+            code: 'SMART',
+            state: 'smart',
+            parentState: 'new_foreign',
+            hidePaymentOptions: true
+        },
         "OWN": {
             code: 'OWN',
             state: 'own',

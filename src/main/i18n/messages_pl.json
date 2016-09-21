@@ -116,6 +116,7 @@
     "raiff.payments.new.types.STANDING": "Zlecenie stałe",
     "raiff.payments.new.types.STANDING_ORDER": "Zlecenie stałe",
     "raiff.payments.new.types.E_FAKTURA": "Invoobill",
+    "raiff.payments.new.types.SMART": "Przelew walutowy",
     "raiff.payments.new.btn.change": "Popraw",
     "raiff.payments.new.btn.cancel": "Anuluj",
     "raiff.payments.new.btn.accept": "Zatwierdź",
@@ -1368,5 +1369,14 @@
 
     "raiff.payments.invoobill.reject_payment.header":"Odrzucenie płatności Invoobill",
     "raiff.payments.invoobill.reject_payment.reason":"Powód odrzucenia",
-    "config.multistepform.invoobill.buttons.accept":"Usuń"
+    "config.multistepform.invoobill.buttons.accept":"Usuń",
+
+    "raiff.payments.foreign.smart.fill.foreign_transfer_type.label": "Typ przelewu",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_type.option.STANDARD": "zagraniczny STANDARDOWY",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_type.option.SEPA": "zagraniczny SEPA",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.STANDARD": "BRAK",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.EXPRESS": "EKSPRESOWY",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.TARGET": "TARGET",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.OUR": "OUR – pokrywa nadawca ",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.SHA": "SHA - pokrywają obie strony"
 }

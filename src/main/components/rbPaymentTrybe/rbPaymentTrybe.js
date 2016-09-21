@@ -77,47 +77,8 @@ angular.module('raiffeisen-payments')
 
 
                 //activity checks
+                //moved to smart controller
 
-                var obtainActivity = function(){
-                    var avail = {};
-                    angular.forEach(s.transferType, function(v){
-                        if(s.currency && v.currency === s.currency.currency){
-                            avail[v.transferType]=true;
-                        }
-                    });
-
-                    //target
-                    var targetAv = true;
-                    if(s.costs!=='SHA'){
-                        targetAv=false;
-                    }
-                    if(!s.currency || s.currency.currency!=='EUR'){
-                        targetAv=false;
-                    }
-                    if(!(s.swift.data && s.swift.data.target)){
-                        targetAv=false;
-                    }
-
-                    avail.TARGET = targetAv;
-
-                    //finalize - merge
-                    angular.forEach(s.rbTrybes, function(tr){
-                        if(avail[tr.TRYBE_NAME]){
-                            tr.active = true;
-                        }else{
-                            tr.active = false;
-                        }
-                    });
-
-                    //check selection
-                    if(!isSelectedAny()){
-                        initialSelection();
-                    }
-                };
-
-                s.$watch('costs', obtainActivity);
-                s.$watch('swift.data.target', obtainActivity);
-                s.$watch('currency', obtainActivity);
             }
         };
     });

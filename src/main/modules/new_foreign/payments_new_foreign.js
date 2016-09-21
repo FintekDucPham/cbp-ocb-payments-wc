@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/payments_new.html",
             controller: "PaymentsNewController",
             params: {
-                paymentType: 'sepa',
+                paymentType: 'SMART',
                 payment: {}
             },
             data: {

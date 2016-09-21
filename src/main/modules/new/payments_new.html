@@ -5,7 +5,7 @@
 
         <bd-form-panel class="bd-form-panel--responsive">
 
-            <bd-item-property
+            <bd-item-property ng-if="!payment.type.hidePaymentOptions"
                     label="{{::'raiff.payments.new.payment_type'|translate}}"
                     ng-show="payment.type.code != 'STANDING'"
                     >
@@ -36,7 +36,7 @@
         </bd-form-panel>
 
     </section>
-
+    <pre>{{ payment | json }}</pre>
     <rb-before-transfer rb-before-transfer-prototype="beforeTransfer.PROTOTYPE.SUGGESTION" rb-before-transfer-model="payment" rb-before-transfer-context-investments></rb-before-transfer>
 
 </rb-content-view>

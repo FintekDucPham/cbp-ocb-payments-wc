@@ -1,0 +1,105 @@
+<div class="form-body" ng-controller="NewSmartPaymentVerifyController">
+    <span ng-show="meta.cutOffTimePromise.$$state.status  !== 0">
+        <rb-cut-off-time
+                response-value="meta.responseCutOffTime"
+                account-no="payment.formData.recipientAccountNo"
+                transfer-kind="payment.type.code"
+                transfer-type="SWIFT"
+                realization-date="payment.formData.realizationDate"
+                cut-off-time-promise="meta.cutOffTimePromise"
+                end-of-day-warning="payment.endOfDayWarning"
+                is-holiday="payment.holiday"
+                add-to-basket="payment.formData.addToBasket">
+            <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
+        </rb-cut-off-time>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+            <div>
+                {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+            </div>
+        </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
+        </div>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_data'|translate}}">
+        <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
+    </bd-item-property>
+
+    <!-- swift -->
+    <bd-item-property ng-show="payment.formData.recipientSwiftOrBic" class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
+        {{:: payment.formData.recipientSwiftOrBic}}
+    </bd-item-property>
+
+    <!-- bank country -->
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.bankCountry' | translate }}">
+        {{:: payment.formData.recipientBankCountry.name }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}" ng-show="payment.formData.recipientBankName">
+        {{:: payment.formData.recipientBankName }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.recipients.new.currency.verify.recipient_account.label' | translate }}">
+        {{::payment.formData.recipientAccountNo}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.recipient_data.label'|translate}}">
+        <p>{{payment.formData.recipientName | arrayFilter}}</p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled"  label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
+        {{:: payment.formData.recipientCountry.name }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.fill.description'|translate}}">
+        <p>{{payment.formData.description | arrayFilter}}</p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.amount'|translate}}">
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency.currency }}" not-styled></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.domestic.fill.execution_date' | translate }}">
+        {{payment.formData.realizationDate | localDate}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.transfer_cost.label'|translate}}">
+        {{::'raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.'+payment.formData.transferCost | translate}} <a ng-show="transferCost.link != null" href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.foreign.smart.fill.foreign_transfer_type.label'|translate}}">
+        {{:: 'raiff.payments.foreign.smart.fill.foreign_transfer_type.option.'+payment.formData.foreignType | translate }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.foreign.fill.payment_trybe.label'|translate}}">
+        {{:: 'raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.' +payment.formData.paymentType |translate }}
+    </bd-item-property>
+
+     <span class="eb-validation-messages">
+         <span class="messages" ng-if="payment.holiday">
+             <span class="validation-message">
+                 {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
+             </span>
+         </span>
+        <span class="messages" ng-if="payment.formData.addToBasket && !payment.items.modifyFromBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.add.verify'|translate}}
+             </span>
+         </span>
+          <span class="messages" ng-if="payment.items.modifyFromBasket">
+             <span class="validation-message">
+               {{::'raiff.payments.basket.modify.verify.'+payment.meta.customerContext|translate}}
+             </span>
+         </span>
+         <span class="messages" ng-if="payment.items.modifyFromBasket">
+             <span class="validation-message">
+                 {{::'raiff.payments.basket.modify.signRemove.verify'|translate}}
+             </span>
+         </span>
+    </span>
+    </span>
+    <eb-preloader class="eb-list-preloader" eb-promise="meta.cutOffTimePromise"></eb-preloader>
+</div>

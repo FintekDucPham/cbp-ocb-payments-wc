@@ -48,7 +48,7 @@ angular.module('raiffeisen-payments', [
                     id: "payments.new_foreign.fill",
                     label: 'payments.submenu.options.new_foreign.header',
                     icon: "raiff-icons raiff_przelew",
-                    action: "payments.new_foreign.fill({ paymentType: 'sepa' })",
+                    action: "payments.new_foreign.fill({ paymentType: 'smart' })",
                     priority: 2
                 },
                 {
