@@ -2,7 +2,7 @@ angular.module('raiffeisen-payments')
     .controller('NewSmartPaymentFillController', function ($scope, $filter, lodash, bdFocus, taxOffices, bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                            recipientGeneralService, transferService, rbForeignTransferConstants, paymentsService, utilityService,
                                                            $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q,rbPaymentTrybeFactory, rbPaymentTrybeConstants,
-                                                           rbAccountOwnNrbService, translate) {
+                                                           rbAccountOwnNrbService, translate, systemParameterService) {
 
 
 
@@ -403,6 +403,14 @@ angular.module('raiffeisen-payments')
             return rbAccountOwnNrbService.startsWithPrefix(nrb);
         };
 
+        //sepa message
+        $scope.displaySepaMessage = false;
+        systemParameterService.getParameterByName("foreign.pmnt.showmessageforSEPA").then(function(param){
+            if(param && angular.isString(param.value)){
+                $scope.displaySepaMessage = param.value.toLowerCase() === 'true';
+            }
+        });
+
         //for costs lock
         $scope.$watch(function(){
             return {
@@ -504,16 +512,19 @@ angular.module('raiffeisen-payments')
 
         });
 
-        $scope.payment.smart = {
-            promise: null,
-            swiftbicPromise: null,
-            data: {},
-            source: null,
-            bicAutoInserted: false,
-            ourCostsLock: false,
-            sepaLock: false
+        if(!$scope.payment.smart){
+            $scope.payment.smart = {
+                promise: null,
+                swiftbicPromise: null,
+                data: {},
+                source: null,
+                bicAutoInserted: false,
+                ourCostsLock: false,
+                sepaLock: false
 
-        };
+            };
+        }
+
 
         $scope.smartFill = function(source){
             var d = $scope.payment.smart.data;
@@ -531,8 +542,8 @@ angular.module('raiffeisen-payments')
 
                 //for iban source
                 if($scope.payment.smart.source==='IBAN' && d.swift){
-                    $scope.payment.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
                     $timeout(function(){
+                        $scope.payment.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
                         $scope.payment.formData.recipientSwiftOrBic = d.bic;
                     });
                 }
@@ -544,12 +555,17 @@ angular.module('raiffeisen-payments')
                         code: d.countryCode
                     });
                 }
-                $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                if($scope.paymentForm.swift_bic){
+                    $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                }
+
 
             }else{
                 $scope.payment.formData.recipientBankName = null;
                 $scope.payment.formData.recipientBankCountry = undefined;
-                $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                if($scope.paymentForm.swift_bic){
+                    $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                }
             }
 
             if($scope.payment.smart.source==='IBAN' && !d.swift){
@@ -573,8 +589,10 @@ angular.module('raiffeisen-payments')
                 $scope.payment.smart.promise = paymentsService.bankInformation($scope.payment.formData.recipientAccountNo).then(function(data){
                     $scope.payment.smart.data = angular.isObject(data) ? data : {};
                     $scope.payment.smart.source = 'IBAN';
-                    $scope.paymentForm.recipientAccountNo.$setValidity('minlength',true);
-                    $scope.paymentForm.recipientAccountNo.$setValidity('maxlength',true);
+                    if($scope.paymentForm.recipientAccountNo){
+                        $scope.paymentForm.recipientAccountNo.$setValidity('minlength',true);
+                        $scope.paymentForm.recipientAccountNo.$setValidity('maxlength',true);
+                    }
                     $scope.smartFill();
                 }).catch(function(e){
                     var toShort = true;
@@ -583,9 +601,10 @@ angular.module('raiffeisen-payments')
                         toShort = e.errors[0].defaultMessage!=='iban_to_short';
                         toLong = e.errors[0].defaultMessage!=='iban_to_long';
                     }
-
-                    $scope.paymentForm.recipientAccountNo.$setValidity('minlength',toShort);
-                    $scope.paymentForm.recipientAccountNo.$setValidity('maxlength',toLong);
+                    if($scope.paymentForm.recipientAccountNo){
+                        $scope.paymentForm.recipientAccountNo.$setValidity('minlength',toShort);
+                        $scope.paymentForm.recipientAccountNo.$setValidity('maxlength',toLong);
+                    }
                     $scope.payment.smart.data = {};
                     $scope.payment.smart.source = 'IBAN';
                     $scope.smartFill();
@@ -598,7 +617,6 @@ angular.module('raiffeisen-payments')
 
         $scope.onSwiftBicInited = function(formField){
             //view to model only
-            $scope.payment.smart.source = null;
             $timeout(function(){
                 $scope.paymentForm.swift_bic.$parsers.push(function(n){
                     if(n.length >=8){
@@ -607,12 +625,16 @@ angular.module('raiffeisen-payments')
                             recipientGeneralService.utils.getBankInformation.strategies.SWIFT
                         ).then(function(data){
                                 if(data !== undefined && data !== null && data !==''){
-                                    $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                                    if($scope.paymentForm.swift_bic){
+                                        $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                                    }
                                     $scope.payment.smart.data = data;
                                     $scope.payment.smart.source = 'BIC';
                                     $scope.smartFill();
                                 }else{
-                                    $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                                    if($scope.paymentForm.swift_bic){
+                                        $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                                    }
                                 }
                             });
                     }
@@ -623,6 +645,10 @@ angular.module('raiffeisen-payments')
 
         };
 
+        //initialization of smart data
+        if($scope.payment.smart.data.countryCode){
+            $scope.smartFill();
+        }
 
 
     });

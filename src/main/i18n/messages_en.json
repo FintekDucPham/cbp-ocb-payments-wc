@@ -1228,5 +1228,7 @@
     "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.EXPRESS": "EXPRESS",
     "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.TARGET": "TARGET",
     "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.OUR": "OUR – sender covers",
-    "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.SHA": "SHA - both sides cover"
+    "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.SHA": "SHA - both sides cover",
+
+    "raiff.payments.foreign.smart.fill.sepa.message": "W związku ze zleceniem przelewu SEPA wyrażam zgodę na przetwarzanie danych płatnika przelewu przez EBA Clearing (ABE Clearing S.A.S a capital variable) w celu realizacji tego zlecenia płatniczego, w zakresie niezbędnym do jego wykonania. Przelew SEPA realizowany jest poprzez system płatności STEP2 SEPA Credit Trasfer, którego operatorem jest Europejskie Stowarzyszenie Bankowe EBA Clearing (ABE Clearing S.A.S. a capital variable), a Bank występuje, jako uczestnik pośredni rozliczający tą płatność w tym systemie, za pośrednictwem Narodowego Banku Polskiego."
 }
