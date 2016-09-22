@@ -52,9 +52,8 @@ angular.module('raiffeisen-payments')
             "futureDatePanelConfig": parameters
         };
 
-
         $scope.canEdit = function($data){
-            return $data.details.transferType.toUpperCase()!=='SEPA' && $data.details.transferType.toUpperCase()!=='SWIFT' && $data.details.transferType.toUpperCase()!=='E_FAKTURA' && parseFloat($data.operationStatus) < 60;
+            return ['SEPA', 'SWIFT', 'E_FAKTURA'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
         };
 
         $scope.canDelete = function($data){
@@ -63,7 +62,6 @@ angular.module('raiffeisen-payments')
         $scope.model = {
             dateRangeValidity: false
         };
-
 
         $scope.onOperationsDateSubmit = function() {
             if ($scope.model.dateRangeValidity) {
@@ -83,7 +81,7 @@ angular.module('raiffeisen-payments')
                     "recipientName": payment.details.beneficiary ? payment.details.beneficiary.join("\n") : "",
                     "recipientAccountNo": payment.details.creditAccount,
                     "description": payment.details.remarks ? payment.details.remarks.join("\n") : "",
-                    "remitterAccountId": payment.details.debitAccountId,
+                    "remitterAccountId": payment.accountId,
                     "currency": payment.details.currency,
                     "nextRealizationDate": payment.details.frequency.nextDate ? new Date(Date.parse(payment.details.frequency.nextDate)) : null,
                     "firstRealizationDate": payment.details.startDate ? new Date(payment.details.startDate) : null,
@@ -189,8 +187,6 @@ angular.module('raiffeisen-payments')
 
                     $scope.summary = {};
 
-
-
                     if(initialState && initialState.relation === 'DETAILS_FROM_WIDGET'){
                         var selectedPayment = angular.copy(initialState.paymentDetails);
                         
@@ -240,9 +236,7 @@ angular.module('raiffeisen-payments')
                 else {
                     payment.promise = paymentsService.get(payment.id, {}).then(function(resp) {
                         payment.details = resp;
-                        var list = lodash.reject(payment.details.paymentDetails.bankDetails, lodash.isEmpty);
-                        payment.details.paymentDetails.bankDetails = list;
-
+                        payment.details.paymentDetails.bankDetails = lodash.reject(payment.details.paymentDetails.bankDetails, lodash.isEmpty);
                     });
                 }
             };
@@ -280,6 +274,5 @@ angular.module('raiffeisen-payments')
                 return this.indexOf(currencySum.currency);
             }, parameters.currencyOrder);
         }
-
     }
 );
