@@ -255,7 +255,7 @@ angular.module('raiffeisen-payments')
                 paymentType: paymentType,
                 payment: lodash.extend({
                     remitterAccountId : details.accountId,
-                    recipientName : details.recipientName,
+                    recipientName : $filter('arrayFilter')(details.recipientName),
                     realizationDate: dateTodayOrInFuture(details.realizationDate)
                 }, (function() {
                     switch(paymentType) {
@@ -284,8 +284,8 @@ angular.module('raiffeisen-payments')
                         case 'domestic':
                             return {
                                 recipientAccountNo: details.recipientAccountNo,
-                                recipientName: details.recipientName,
-                                description: cropArray(details.title),
+                                recipientName: $filter('arrayFilter')(details.recipientName),
+                                description: $filter('arrayFilter')(cropArray(details.title)),
                                 amount: details.amount,
                                 currency: details.currency
                             };
@@ -295,7 +295,7 @@ angular.module('raiffeisen-payments')
                                 amount: details.amount,
                                 recipientAccountNo: details.recipientAccountNo,
                                 currency: details.currency,
-                                description: cropArray(details.title)
+                                description: $filter('arrayFilter')(cropArray(details.title))
                             };
                         case 'tax':
                             return {
@@ -314,8 +314,8 @@ angular.module('raiffeisen-payments')
                         case 'e_faktura':
                             var invoobill = {
                                 beneficiaryAccount: details.recipientAccountNo,
-                                creditorFullName: details.recipientName,
-                                title: cropArray(details.title),
+                                creditorFullName: $filter('arrayFilter')(details.recipientName),
+                                title: $filter('arrayFilter')(cropArray(details.title)),
                                 amount: details.amount,
                                 currency: details.currency,
                                 paymentDate: new Date()
