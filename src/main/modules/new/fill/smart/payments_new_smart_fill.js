@@ -541,7 +541,7 @@ angular.module('raiffeisen-payments')
                 }
 
                 //for iban source
-                if($scope.payment.smart.source==='IBAN' && d.swift){
+                if($scope.payment.smart.source==='IBAN'){
                     $timeout(function(){
                         $scope.payment.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
                         $scope.payment.formData.recipientSwiftOrBic = d.bic;

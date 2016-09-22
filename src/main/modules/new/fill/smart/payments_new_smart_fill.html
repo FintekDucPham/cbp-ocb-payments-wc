@@ -156,7 +156,7 @@
     <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankData' | translate }}">
 
         <bd-radio-select bd-model="payment.formData.recipientIdentityType" ng-init="onInited()">
-            <rb-element-disabler rb-disabled="payment.smart.data.swift && payment.smart.source==='IBAN'">
+            <rb-element-disabler rb-disabled="payment.smart.data.countryCode && payment.smart.source==='IBAN'">
                 <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC" class="row__inline-block--middle">{{::'raiff.payments.new.foreign.fill.swfitbic'|translate}}</bd-radio-option>
                 <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'raiff.payments.new.foreign.fill.recipientBankData'|translate}}</bd-radio-option>
             </rb-element-disabler>
