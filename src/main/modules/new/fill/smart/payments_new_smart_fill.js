@@ -172,7 +172,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.transferFromTemplate = false;
             copiedFormData.recipientAddress = [""];
             if(formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC){
-                copiedFormData.informationProvider = "SWIFT";
+                copiedFormData.informationProvider = trType;
                 copiedFormData.recipientSwift = formData.recipientSwiftOrBic;
             }else{
                 copiedFormData.informationProvider = "MANUAL";
