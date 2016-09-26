@@ -12,14 +12,14 @@
         {{ ::'raiff.payments.new.types.'+$data.payment.transferType| translate}}
     </bd-item-property>
     <bd-item-property label="{{::'raiff.payments.basket.list.header.recipient_name'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        {{ $data.payment.recipientName.join('') }}
+        {{ $data.payment.recipientName.join(' ') }}
     </bd-item-property>
     <bd-item-property label="{{::'raiff.payments.basket.list.header.operation_title'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
         <span ng-if="$data.payment.title.join('')=='ZUSPayment'">
              {{'raiff.payments.basket.list.description.zus.ZUSPayment' | translate}}
         </span>
         <span ng-if="$data.payment.title.join('')!='ZUSPayment'">
-            {{ $data.payment.title.join('') }}
+            {{ $data.payment.title.join(' ') }}
         </span>
     </bd-item-property>
     <bd-item-property label="{{::'raiff.payments.basket.list.header.operation_amount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
@@ -36,8 +36,8 @@
         <span ng-if="$data.payment.recipientAccountNo!='ZUS_ACCOUNTS'">
             {{$data.payment.recipientAccountNo| nrbIbanFilter }}
         </span>
-        <div>{{$data.payment.recipientName.join('') }}</div>
-        <div>{{$data.payment.recipientAddress.join('') }}</div>
+        <div>{{$data.payment.recipientName.join(' ') }}</div>
+        <div>{{$data.payment.recipientAddress.join(' ') }}</div>
     </bd-item-property>
     <bd-item-property label="{{::'raiff.payments.basket.list.details.historyAction'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" ng-show="userContext == 'MICRO'">
         <div class="basket-vew__details__action-history">

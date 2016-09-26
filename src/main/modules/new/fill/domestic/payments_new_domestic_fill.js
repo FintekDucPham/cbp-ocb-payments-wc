@@ -90,18 +90,26 @@ angular.module('raiffeisen-payments')
             control.holdOn();
             if($scope.payment.formData.recipientAccountNo) {
                 $q.all(promiseSet.getPendingPromises('usValidation')).finally(function(){
-                    rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function(){
+                    if($scope.payment.beforeTransfer){//future doesnt use it
+                        rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function(){
+                            control.done();
+                        }).catch(function(){
+                            console.log('false');
+                        });
+                    }else{
                         control.done();
-                    }).catch(function(){
-                        console.log('false');
-                    });
+                    }
                 });
             }else{
-                rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function(){
+                if($scope.payment.beforeTransfer) {//future doesnt use it
+                    rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function () {
+                        control.done();
+                    }).catch(function () {
+                        console.log('false');
+                    });
+                }else{
                     control.done();
-                }).catch(function(){
-                    console.log('false');
-                });
+                }
             }
         });
 
