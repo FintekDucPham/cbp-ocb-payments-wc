@@ -141,7 +141,7 @@
             <div class="basketSearchPanel__advanced-section__right-panel__item">
                 <div ng-show="options.context == 'MICRO'" class="basketSearchPanel__advanced-section__right-panel__item__status">
                     <bd-item-property label="{{::'raiff.payments.basket.search.panel.status'|translate}}">
-                        <div ng-dropdown-multiselect="" options="PAYMENT_BASKET_STATUS_LIST" selected-model="inputData.status" style=" position: relative;" events="onItemSelect();onItemDeselect()"></div>
+                        <div ng-dropdown-multiselect="" options="PAYMENT_BASKET_STATUS_LIST" selected-model="inputData.status" style=" position: relative;" events="onItemSelect();onItemDeselect()" extra-settings="filterStatusExtraSettings"></div>
                     </bd-item-property>
                 </div>
                 <div class="basketSearchPanel__advanced-section__right-panel__item__button">

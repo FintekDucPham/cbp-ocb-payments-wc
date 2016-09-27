@@ -83,6 +83,11 @@ angular.module('raiffeisen-payments')
                     amountRange: {}
                 };
 
+                $scope.filterStatusExtraSettings = {
+                    showUncheckAll:false,
+                    showCheckAll:false
+                };
+
 
 
                 $scope.onSubmitForm = function(){
