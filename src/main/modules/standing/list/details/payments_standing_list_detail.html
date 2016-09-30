@@ -27,7 +27,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.amount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.amount }} {{ $data.currency }}
+    {{ $data.amount | amountFormat }} {{ $data.currency }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.title'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
@@ -48,4 +48,3 @@
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.endDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{ $data.endDate | date: 'shortDate' }}
 </bd-item-property>
-
