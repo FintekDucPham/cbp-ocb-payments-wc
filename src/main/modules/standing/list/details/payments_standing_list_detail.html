@@ -35,7 +35,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.frequencyDescription'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.frequency.periodCount }}&nbsp;
+    <span ng-show="$data.frequency.periodUnit != 'B'">{{ $data.frequency.periodCount }}&nbsp;</span>
     <span ng-show="$data.frequency.periodCount <= 1 || !$data.frequency.periodCount">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $data.frequency.periodUnit | translate}}</span>
     <span ng-show="$data.frequency.periodCount >= 2 && $data.frequency.periodCount < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $data.frequency.periodUnit | translate}}</span>
     <span ng-show="$data.frequency.periodCount >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $data.frequency.periodUnit | translate}}</span>
