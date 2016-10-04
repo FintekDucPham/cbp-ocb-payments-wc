@@ -16,7 +16,6 @@ angular.module('raiffeisen-payments')
     .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager) {
         var CURRENT_DATE = $scope.CURRENT_DATE;
 
-
         var senderAccountInitDefer = $q.defer();
 
         $scope.remote = {
@@ -120,15 +119,8 @@ angular.module('raiffeisen-payments')
             return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
         }
 
-
-        $scope.$watch('payment.formData.amount',function(newVal){
-            validateBalance();
-        });
-
-        $scope.$watch('payment.formData.realizationDate',function(newVal){
-            validateBalance();
-        });
-
+        $scope.$watch('payment.formData.amount', validateBalance);
+        $scope.$watch('payment.formData.realizationDate', validateBalance);
         $scope.$watch('payment.formData.addToBasket',function(newVal){
             if(!!$scope.paymentForm.amount) {
                 $scope.paymentForm.amount.$validate();
@@ -148,14 +140,8 @@ angular.module('raiffeisen-payments')
             }
         }
 
-        $scope.$watch('payment.items.senderAccount', function(newValues, oldValues){
-           checkCurrency();
-        }, true);
-
-        $scope.$watch('payment.items.recipientAccount', function(newValues, oldValues){
-            checkCurrency();
-        }, true);
-
+        $scope.$watch('payment.items.senderAccount', checkCurrency, true);
+        $scope.$watch('payment.items.recipientAccount', checkCurrency, true);
 
         setRealizationDateToCurrent();
 
@@ -177,7 +163,6 @@ angular.module('raiffeisen-payments')
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-
                     var createTransfer = function(){
                         transferService.create('INTERNAL', angular.extend({
                             "remitterId": 0
@@ -210,15 +195,13 @@ angular.module('raiffeisen-payments')
                         done: createTransfer
                     };
                     rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, fakeControl).then(createTransfer);
-
                 }
             }
         });
 
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account) {
-                $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
-                $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ? false : true;
+                $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0;
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
             } else {
@@ -264,7 +247,6 @@ angular.module('raiffeisen-payments')
             if($scope.paymentForm.amount){
                 $scope.paymentForm.amount.$validate();
             }
-
         }
 
         function updatePaymentCurrencies() {
@@ -299,14 +281,7 @@ angular.module('raiffeisen-payments')
         }
 
         function isAccountInvestmentFulfilsRules(account){
-            if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
-                if(account.actions.indexOf('create_between_own_accounts_transfer')>-1){
-                    return true;
-                }else {
-                    return false;
-                }
-            }
-            return true;
+            return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0 || account.actions.indexOf('create_between_own_accounts_transfer') > -1;
         }
 
         $scope.senderSelectParams = new rbAccountSelectParams({});
@@ -323,61 +298,31 @@ angular.module('raiffeisen-payments')
             alwaysSelected: false,
             showCustomNames: true,
             accountFilter: function (accounts, $accountId) {
-                var filteredAccounts = accounts;
-                var filterParams = [];
-                filteredAccounts =  lodash.reject(accounts, function(account) {
+                var filteredAccounts = lodash.reject(accounts, function(account) {
                     return account.accountId === $accountId || isSenderAccountCategoryRestricted(account);
                 });
-                if (!!$accountId) {
-                    if($scope.payment.items.senderAccount){
-                        if($scope.payment.items.senderAccount.accountRestrictFlag){
-                            filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
-                            filteredAccounts = lodash.filter(filteredAccounts, function (account) {
-                                return lodash.filter(filterParams, function(params) {
-                                   var accountOk = true;
-                                    if (params.destSubCategory) {
-                                        accountOk = account.subProduct === params.destSubCategory;
-                                    }
-                                    return accountOk && account.category === params.destCategory;
-                                }).length > 0;
-                            });
-                        }
-                    }
-                    return filteredAccounts;
-                } else {
-                    if($scope.payment.items.senderAccount){
-                        if($scope.payment.items.senderAccount.accountRestrictFlag){
-                            filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
-                            filteredAccounts = lodash.filter(filteredAccounts, function (account) {
-                                return lodash.filter(filterParams, function(params) {
-                                    var accountOk = true;
-                                    if (params.destSubCategory) {
-                                        accountOk = account.subProduct === params.destSubCategory;
-                                    }
-                                    return accountOk && account.category === params.destCategory;
-                                }).length > 0;
-                            });
-                        }
-                    }
-                    return lodash.filter(filteredAccounts, function(account){
-                       return isAccountInvestmentFulfilsRules(account);
+                if($scope.payment.items.senderAccount && $scope.payment.items.senderAccount.accountRestrictFlag) {
+                    var filterParams = $scope.payment.items.senderAccount.destAccountRestrictions;
+                    filteredAccounts = lodash.filter(filteredAccounts, function (account) {
+                        return lodash.filter(filterParams, function(params) {
+                            var accountOk = true;
+                            if (params.destSubCategory) {
+                                accountOk = account.subProduct === params.destSubCategory;
+                            }
+                            return accountOk && account.category === params.destCategory;
+                        }).length > 0;
                     });
                 }
+                if (!!$accountId) {
+                    return filteredAccounts;
+                }
+                return lodash.filter(filteredAccounts, function(account){
+                    return isAccountInvestmentFulfilsRules(account);
+                });
             },
             payments: true
         });
 
-        $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', function () {
-            updatePaymentCurrencies();
-        }, true);
-
-        $scope.$watch('payment.formData.currency', function () {
-            recalculateCurrencies();
-        }, true);
-
-    })
-    .filter('dstAccountListFilter', function(){
-        return function(dstAccountList, srcAccount) {
-           return dstAccountList;
-        };
+        $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
+        $scope.$watch('payment.formData.currency', updatePaymentCurrencies, true);
     });
