@@ -121,6 +121,7 @@ angular.module('raiffeisen-payments')
                 delete $scope.payment.formData.formCode;
                 delete $scope.payment.formData.periodType;
                 delete $scope.payment.items.recipientAccount;
+                delete $scope.payment.formData.obligationId;
                 delete $scope.payment.items.recipient;
                 $scope.payment.options.isFromRecipient = false;
             }
@@ -133,6 +134,7 @@ angular.module('raiffeisen-payments')
                 formData.idType = recipient.secondaryIdType;
                 formData.idNumber = recipient.secondaryId;
                 formData.formCode = recipient.formCode;
+                formData.obligationId = recipient.obligationId;
                 $scope.payment.items.recipient = recipient;
                 var periodTypeCode = formData.periodType = recipient.periodType;
                 if(periodTypeCode && angular.isString(periodTypeCode) && periodTypeCode.length){
