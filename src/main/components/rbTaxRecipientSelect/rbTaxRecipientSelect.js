@@ -84,7 +84,8 @@ angular.module('raiffeisen-payments')
                             secondaryIdType: paymentDetails.idtype,
                             secondaryId: paymentDetails.idnumber,
                             periodType: paymentDetails.periodType,
-                            formCode: paymentDetails.formCode
+                            formCode: paymentDetails.formCode,
+                            obligationId: paymentDetails.obligationId
                         };
                     }));
                 });
