@@ -31,6 +31,7 @@ angular.module('raiffeisen-payments')
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             //delete $scope.taxpayer.formData.taxpayerId;
             //delete $scope.taxpayer.formData.credentials;
+            $scope.taxpayerAuthForm.params = {};
             delete $scope.taxpayer.promises.authorizationPromise;
         });
 
