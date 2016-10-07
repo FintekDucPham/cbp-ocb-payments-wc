@@ -14,7 +14,9 @@ angular.module('raiffeisen-payments')
             tax: notTaxAccountGuard($scope.recipient.meta),
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
         };
-        $scope.accountListPromise = accountsService.search().then(function(accountList){
+        $scope.accountListPromise = accountsService.search({
+            productList: 'BENEFICIARY_CREATE_FROM_LIST'
+        }).then(function(accountList){
             $scope.accountsList = accountList.content;
         });
         $scope.getAccountByNrb = function(accountNumber){
