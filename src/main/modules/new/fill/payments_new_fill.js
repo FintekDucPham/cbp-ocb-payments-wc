@@ -76,7 +76,7 @@ angular.module('raiffeisen-payments')
         //paymentRulesResolved
         angular.extend($scope.payment.meta, paymentRulesResolved);
         var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
-            minDate: new Date(),
+            minDate: $scope.CURRENT_DATE,
             maxDaysFromNow: paymentRulesResolved.maxDaysToDelayPayment,
             readDataFromServer: false
         });
