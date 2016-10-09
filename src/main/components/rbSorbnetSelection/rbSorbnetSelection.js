@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .directive('rbSorbnetSelection', function (pathService, lodash, rbAccountOwnNrbService, paymentsService, dateFilter) {
+    .directive('rbSorbnetSelection', function (pathService, lodash, rbAccountOwnNrbService, paymentsService, dateFilter, utilityService) {
         return {
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbSorbnetSelection/rbSorbnetSelection.html",
@@ -63,12 +63,14 @@ angular.module('raiffeisen-payments')
                 });
 
                 var refreshSorbnetHours = function() {
-                    return paymentsService.getCutOffTimeInfo('00000000', 'DOMESTIC', 'SORBNET', new Date()).then(function (data) {
-                        s.sorbnetHours = {
-                            start: dateFilter(data.otbTime, 'HH:00'),
-                            end: dateFilter(data.cotTime, 'HH:00')
-                        };
-                        return s.sorbnetHours;
+                    return utilityService.getCurrentDate.then(function(currentDate){
+                        return paymentsService.getCutOffTimeInfo('00000000', 'DOMESTIC', 'SORBNET', currentDate).then(function (data) {
+                            s.sorbnetHours = {
+                                start: dateFilter(data.otbTime, 'HH:00'),
+                                end: dateFilter(data.cotTime, 'HH:00')
+                            };
+                            return s.sorbnetHours;
+                        });
                     });
                 };
 
