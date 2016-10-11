@@ -9,6 +9,7 @@ angular.module('raiffeisen-payments')
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getParameterByName("basketList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getParameterByName("basketList.max.offset"),
+                        storageDaysPayments: systemParameterService.getParameterByName("storageDaysPayments.basket.pmnt"),
                         account: transferService.getTransferAccounts({
                             restrictions: "ACCOUNT_RESTRICTION_DEBIT",
                             productList: "COMPLEX_TRANSFER_LIST",
@@ -20,11 +21,13 @@ angular.module('raiffeisen-payments')
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths.value, 10),
                             dateFrom: new Date(),
                             dateTo: new Date(),
-                            account: data.account.content
+                            account: data.account.content,
+                            storageDaysPayments: parseInt(data.storageDaysPayments.value, 10)
                         };
                         result.period = result.offset;
                         result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
                         result.dateTo.setDate(result.dateTo.getDate() + result.offset);
+                        result.dateFrom.setDate(result.dateFrom.getDate() - result.storageDaysPayments);
                         return result;
                     });
                 }]

@@ -1370,5 +1370,14 @@
     "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.OUR": "OUR – sender covers",
     "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.SHA": "SHA - both sides cover",
 
-    "raiff.payments.foreign.smart.fill.sepa.message": "W związku ze zleceniem przelewu SEPA wyrażam zgodę na przetwarzanie danych płatnika przelewu przez EBA Clearing (ABE Clearing S.A.S a capital variable) w celu realizacji tego zlecenia płatniczego, w zakresie niezbędnym do jego wykonania. Przelew SEPA realizowany jest poprzez system płatności STEP2 SEPA Credit Trasfer, którego operatorem jest Europejskie Stowarzyszenie Bankowe EBA Clearing (ABE Clearing S.A.S. a capital variable), a Bank występuje, jako uczestnik pośredni rozliczający tą płatność w tym systemie, za pośrednictwem Narodowego Banku Polskiego."
+    "raiff.payments.foreign.smart.fill.sepa.message": "W związku ze zleceniem przelewu SEPA wyrażam zgodę na przetwarzanie danych płatnika przelewu przez EBA Clearing (ABE Clearing S.A.S a capital variable) w celu realizacji tego zlecenia płatniczego, w zakresie niezbędnym do jego wykonania. Przelew SEPA realizowany jest poprzez system płatności STEP2 SEPA Credit Trasfer, którego operatorem jest Europejskie Stowarzyszenie Bankowe EBA Clearing (ABE Clearing S.A.S. a capital variable), a Bank występuje, jako uczestnik pośredni rozliczający tą płatność w tym systemie, za pośrednictwem Narodowego Banku Polskiego.",
+
+    "raiff.ng_dropdown_multiselect.option.checkAll":"All",
+    "raiff.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
+    "raiff.ng_dropdown_multiselect.option.selectionCount":"selected",
+    "raiff.ng_dropdown_multiselect.option.searchPlaceholder":"Search...",
+    "raiff.ng_dropdown_multiselect.option.buttonDefaultText":"All",
+    "raiff.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
+    "raiff.ng_dropdown_multiselect.option.waiting":"Waiting"
+
 }

@@ -1307,7 +1307,7 @@
   "raiff.payments.basket.search.panel.account.all":"Wszystkie",
   "raiff.payments.basket.search.panel.advanced.label":"Kryteria zaawansowane",
   "raiff.payments.basket.search.panel.validation.TOO_LATE_END_DATE": "Nieprawidłowa data końcowa okresu wyszukiwania.  Data końcowa okresu wyszukiwania może uwzględniać tylko płatności do potwierdzenia na najbliższe ##MONTHS## miesięcy.",
-  "raiff.payments.basket.search.panel.validation.TOO_EARLY_FIRST_DATE": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##MONTHS## miesięcy wstecz. Można wyszukiwać tylko płatności do potwierdzenia planowane do realizacji w ciągu ostatnich ##MONTHS## miesięcy.",
+  "raiff.payments.basket.search.panel.validation.TOO_EARLY_FIRST_DATE": "Data początkowa okresu wyszukiwania jest wcześniejsza niż ##DAYS## dni wstecz. Można wyszukiwać tylko płatności do potwierdzenia planowane do realizacji w ciągu ostatnich ##DAYS## dni.",
   "raiff.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_DAYS": "Wprowadź liczbę najbliższych dni",
   "raiff.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_WEEKS": "Wprowadź liczbę najbliższych tygodni",
   "raiff.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Wprowadź liczbę najbliższych miesięcy",
@@ -1380,5 +1380,15 @@
     "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.OUR": "OUR – pokrywa nadawca ",
     "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.SHA": "SHA - pokrywają obie strony",
 
-    "raiff.payments.foreign.smart.fill.sepa.message": "W związku ze zleceniem przelewu SEPA wyrażam zgodę na przetwarzanie danych płatnika przelewu przez EBA Clearing (ABE Clearing S.A.S a capital variable) w celu realizacji tego zlecenia płatniczego, w zakresie niezbędnym do jego wykonania. Przelew SEPA realizowany jest poprzez system płatności STEP2 SEPA Credit Trasfer, którego operatorem jest Europejskie Stowarzyszenie Bankowe EBA Clearing (ABE Clearing S.A.S. a capital variable), a Bank występuje, jako uczestnik pośredni rozliczający tą płatność w tym systemie, za pośrednictwem Narodowego Banku Polskiego."
+    "raiff.payments.foreign.smart.fill.sepa.message": "W związku ze zleceniem przelewu SEPA wyrażam zgodę na przetwarzanie danych płatnika przelewu przez EBA Clearing (ABE Clearing S.A.S a capital variable) w celu realizacji tego zlecenia płatniczego, w zakresie niezbędnym do jego wykonania. Przelew SEPA realizowany jest poprzez system płatności STEP2 SEPA Credit Trasfer, którego operatorem jest Europejskie Stowarzyszenie Bankowe EBA Clearing (ABE Clearing S.A.S. a capital variable), a Bank występuje, jako uczestnik pośredni rozliczający tą płatność w tym systemie, za pośrednictwem Narodowego Banku Polskiego.",
+
+    "raiff.ng_dropdown_multiselect.option.checkAll":"Wszystkie",
+    "raiff.ng_dropdown_multiselect.option.uncheckAll":"Odznacz",
+    "raiff.ng_dropdown_multiselect.option.selectionCount":"zaznaczono",
+    "raiff.ng_dropdown_multiselect.option.searchPlaceholder":"Wyszukaj...",
+    "raiff.ng_dropdown_multiselect.option.buttonDefaultText":"Wszystkie",
+    "raiff.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"zaznaczono",
+    "raiff.ng_dropdown_multiselect.option.waiting":"Oczekujące"
+
+
 }

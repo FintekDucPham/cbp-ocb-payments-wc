@@ -168,9 +168,10 @@ angular.module('raiffeisen-payments')
 
                 maxDate = new Date(now.getTime());
                 maxDate.setMonth(now.getMonth() + parseInt(options.maxOffsetInMonths, 10));
+                maxDate.setHours(0,0,0,0);
                 minDate = new Date(now.getTime());
-                minDate.setMonth(now.getMonth() - parseInt(options.maxOffsetInMonths, 10));
-
+                minDate.setDate(minDate.getDate() - parseInt(options.storageDaysPayments, 10));
+                minDate.setHours(0,0,0,0);
 
 
                 var init = function(){
