@@ -21,7 +21,11 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRejectInvoobillController', function ($scope, bdMainStepInitializer, initialState, lodash) {
+    .controller('PaymentsRejectInvoobillController', function ($scope, bdMainStepInitializer, initialState, lodash, translate) {
+
+        $scope.labels = {
+            rejectHeader: translate.property('raiff.payments.invoobill.reject_payment.header', [$scope.invbName])
+        };
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
                 formName: 'paymentForm',

@@ -1,6 +1,5 @@
 <rb-content-view class="form">
-
-    <bd-header>{{::"raiff.payments.invoobill.activation.header"|translate}}</bd-header>
+    <bd-header>{{invbHeader}}</bd-header>
 
 
     <bd-form-panel class="text-xs-justify">
@@ -21,7 +20,7 @@
                     </div>
 
                     <div class="bd-regulations__text">
-                        <a href="{{link}}" target="_blank" class="regulationLink">{{ :: 'raiff.payments.invoobill.activation.link.label' | translate }}</a>
+                        <a href="{{link}}" target="_blank" class="regulationLink">{{labels.termOfUse}}</a>
                     </div>
 
                 </div>
@@ -29,7 +28,7 @@
                 <div class="eb-validation-messages"
                      ng-messages="activationForm.$error">
                     <div class="messages">
-                        <div ng-message="rulesRegulaminsRequired" class="validation-message animate-on">{{::'raiff.payments.invoobill.activation.regulamins.reqiured' | translate}}</div>
+                        <div ng-message="rulesRegulaminsRequired" class="validation-message animate-on">{{labels.termOfUseRequired}}</div>
                     </div>
                 </div>
             </bd-form-content>

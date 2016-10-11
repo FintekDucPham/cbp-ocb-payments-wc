@@ -24,6 +24,7 @@ angular.module('raiffeisen-payments')
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
                             }
+
                         };
                     });
                 }]
@@ -33,7 +34,14 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsInvoobillActivationController', function ($scope, $sce, $state, parameters, invoobillPaymentsService, menuService) {
+    .controller('PaymentsInvoobillActivationController', function ($scope, $sce, $state, parameters, invoobillPaymentsService, menuService, translate) {
+
+
+        $scope.labels = {
+            showCreditors: translate.property('raiff.payments.invoobill.show_creditors', [$scope.invbName]),
+            termOfUse: translate.property('raiff.payments.invoobill.activation.link.label', [$scope.invbName]),
+            termOfUseRequired: translate.property('raiff.payments.invoobill.activation.regulamins.reqiured', [$scope.invbName])
+        };
 
         $scope.model = {
             regulaminsAccept: false
@@ -52,7 +60,7 @@ angular.module('raiffeisen-payments')
 
                 var menuItem = {
                     id: "payments.invoobill",
-                    label: 'raiff.payments.invoobill.label',
+                    label: $scope.invbName,
                     icon: "raiff-icons invoobill",
                     action: "payments.invoobill.list",
                     priority: 8

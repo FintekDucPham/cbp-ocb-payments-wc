@@ -12,11 +12,16 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsInvoobillResignationController', function ($scope, $state, invoobillPaymentsService, menuService) {
+    .controller('PaymentsInvoobillResignationController', function ($scope, $state, invoobillPaymentsService, menuService, systemParameterService, translate) {
 
         $scope.cancel = function() {
             $state.go("payments.invoobill.list");
         };
+
+        $scope.labels = {
+            resignationDescription: translate.property('raiff.payments.invoobill.resignation.descrition', [$scope.invbName])
+        };
+
 
         $scope.resignation = function() {
             invoobillPaymentsService.isResignationAccessStatus().then(function(resignationAccessStatus){
@@ -32,7 +37,7 @@ angular.module('raiffeisen-payments')
 
                             var menuItem = {
                                 id: "payments.invoobill",
-                                label: 'raiff.payments.invoobill.label',
+                                label: $scope.invbName,
                                 icon: "raiff-icons invoobill",
                                 action: "payments.invoobill.activation",
                                 priority: 8

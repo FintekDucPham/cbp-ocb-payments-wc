@@ -46,6 +46,11 @@ angular.module('raiffeisen-payments')
 
         $scope.forms = {};
 
+        $scope.labels = {
+            header: translate.property('raiff.payments.invoobill.list.header', [$scope.invbName]),
+            showCreditors: translate.property('raiff.payments.invoobill.show_creditors', [$scope.invbName]),
+        };
+
         var PERIOD_TYPES = {
             LAST: 'LAST',
             RANGE: 'RANGE'

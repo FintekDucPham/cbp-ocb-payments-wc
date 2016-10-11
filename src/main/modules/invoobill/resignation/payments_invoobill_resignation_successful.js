@@ -9,7 +9,11 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsInvoobillResignationSuccessfulController', function ($scope, $state) {
+    .controller('PaymentsInvoobillResignationSuccessfulController', function ($scope, $state, translate) {
+
+        $scope.labels = {
+            successful: translate.property('raiff.payments.invoobill.resignation.successful', [$scope.invbName])
+        };
 
         $scope.back = function() {
             $state.go('payments.recipients.list');
