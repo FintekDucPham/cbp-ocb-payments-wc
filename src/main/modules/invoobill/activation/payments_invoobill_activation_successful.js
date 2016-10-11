@@ -9,8 +9,12 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsInvoobillAcctivationSuccessfulController', function ($scope, $state) {
+    .controller('PaymentsInvoobillAcctivationSuccessfulController', function ($scope, $state, translate) {
         $scope.next = function() {
             $state.go('payments.invoobill.list');
+        };
+
+        $scope.labels = {
+            successful: translate.property('raiff.payments.invoobill.activation.successful', [$scope.invbName])
         };
     });

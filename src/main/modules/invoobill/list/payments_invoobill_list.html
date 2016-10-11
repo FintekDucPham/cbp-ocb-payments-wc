@@ -1,5 +1,5 @@
 <rb-content-view class="rb-content-view--solid invoobill-view">
-    <bd-header>{{::"raiff.payments.invoobill.list.header"|translate}}</bd-header>
+    <bd-header>{{labels.header}}</bd-header>
 
     <form novalidate name="forms.filterForm" ng-submit="onSubmit(forms.filterForm)" ng-transclude>
 
@@ -241,7 +241,7 @@
                     </bd-button>
                 </div>
 
-                <a href="{{invoobillPayments.creditorInfoLink}}" target="_blank">{{::'raiff.payments.invoobill.show_creditors' | translate}}</a>
+                <a href="{{invoobillPayments.creditorInfoLink}}" target="_blank">{{labels.showCreditors}}</a>
             </div>
         </div>
     </div>
