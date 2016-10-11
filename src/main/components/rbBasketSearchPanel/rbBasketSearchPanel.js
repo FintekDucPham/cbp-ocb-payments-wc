@@ -7,7 +7,6 @@ angular.module('raiffeisen-payments')
     .constant('FUTURE_DATE_TYPES', {
         'RANGE': 'RANGE',
         'PERIOD': 'PERIOD'
-        //'LAST': 'LAST' // TODO: zrobic ten komponent zeby byl uzywalny rowniez z last
     })
     .constant('PAYMENT_BASKET_STATUS',{
         'NEW':'NEW',
@@ -83,11 +82,16 @@ angular.module('raiffeisen-payments')
                     amountRange: {}
                 };
 
-                $scope.filterStatusExtraSettings = {
-                    showUncheckAll:false,
-                    showCheckAll:false
+                var selectWaiting = function(){
+                    $scope.inputData.status = [{id:PAYMENT_BASKET_STATUS.NEW}, {id:PAYMENT_BASKET_STATUS.TO_ACCEPT}, {id:PAYMENT_BASKET_STATUS.READY}];
                 };
 
+                $scope.filterStatusExtraSettings = {
+                    showUncheckAll:false,
+                    showCheckAll:true,
+                    showWaiting: true,
+                    selectWaiting: selectWaiting
+                };
 
 
                 $scope.onSubmitForm = function(){
