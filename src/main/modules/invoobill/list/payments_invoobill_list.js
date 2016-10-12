@@ -172,13 +172,16 @@ angular.module('raiffeisen-payments')
 
         $scope.onFilterLastValueChange();
 
-        //if micro
         if (parameters.customerDetails.context === 'MICRO') {
             $scope.invoobillPayments.filterData.last.value = parameters.micro.default;
             $scope.invoobillPayments.filterData.last.default = parameters.micro.default;
-            $scope.invoobillPayments.filterData.range.dateTo = new Date(now.getTime() + parameters.micro.default * oneDayMilisecs);
+            $scope.invoobillPayments.filterData.range.dateTo = lastDayOfMonth();
             $scope.invoobillPayments.maxDate = new Date((new Date()).setMonth(now.getMonth() + parameters.micro.max));
             $scope.invoobillPayments.maxOffset = parameters.micro.max;
+        }
+
+        function lastDayOfMonth() {
+            return new Date(now.getFullYear(), now.getMonth() + 1, 0);
         }
 
         invoobillPaymentsService.getCreditors({ status: "ACTIVE"}).then(function(data) {
