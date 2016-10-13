@@ -8,14 +8,19 @@ angular.module('raiffeisen-payments')
                 accountId: null,
                 recipientId: null
             },
+            resolve:{
+                CURRENT_DATE: ['utilityService', function(utilityService){
+                    return utilityService.getCurrentDateWithTimezone().then(function(currentDate){
+                        return currentDate;
+                    });
+                }]
+            },
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService) {
-        var CURRENT_DATE = $scope.CURRENT_DATE;
-
+    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, CURRENT_DATE) {
 
         var senderAccountInitDefer = $q.defer();
 
@@ -63,7 +68,7 @@ angular.module('raiffeisen-payments')
         paymentRules.search().then(function (result) {
             angular.extend($scope.payment.meta, result);
             var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
-                minDate: new Date(),
+                minDate: CURRENT_DATE.time,
                 maxDaysFromNow: result.maxDaysToDelayPayment
             });
             $scope.payment.meta.laterExecutedDateMsg = translate.property('raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
@@ -80,6 +85,7 @@ angular.module('raiffeisen-payments')
             var copiedForm = angular.copy(formData);
             copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             copiedForm.amount = (""+formData.amount).replace(",", ".");
+            copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, CURRENT_DATE.zone);
             return copiedForm;
         };
 
@@ -89,7 +95,7 @@ angular.module('raiffeisen-payments')
 
         var setRealizationDateToCurrent = function () {
             angular.extend($scope.payment.formData, {
-                realizationDate: CURRENT_DATE
+                realizationDate: CURRENT_DATE.time
             }, lodash.omit($scope.payment.formData, lodash.isUndefined));
         };
 

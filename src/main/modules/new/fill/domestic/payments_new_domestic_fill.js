@@ -15,7 +15,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setDefaultValues({
             description: translate.property('raiff.payments.new.internal.fill.default_description'),
-            realizationDate: $scope.CURRENT_DATE
+            realizationDate: $scope.CURRENT_DATE.time
         });
 
         $scope.clearRecipient = function () {
@@ -61,6 +61,7 @@ angular.module('raiffeisen-payments')
             copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             copiedForm.sendBySorbnet = formData.sendBySorbnet;
             copiedForm.toSendSorbnet = formData.sendBySorbnet;
+            copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             return copiedForm;
         });
 

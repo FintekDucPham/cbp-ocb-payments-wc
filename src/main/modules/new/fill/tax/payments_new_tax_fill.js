@@ -104,13 +104,13 @@ angular.module('raiffeisen-payments')
 
         $scope.setClearFormFunction(function(){
             $scope.payment.formData = {};
-            $scope.payment.formData.realizationDate = new Date();
+            $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.payment.formData.idType = "NIP";
             $scope.accountSelectorRemote.resetToDefault();
         });
 
         $scope.setDefaultValues({
-            realizationDate: $scope.CURRENT_DATE
+            realizationDate: $scope.CURRENT_DATE.time
         });
 
         $scope.clearRecipient = function () {
@@ -229,6 +229,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.amount = (""+copiedFormData.amount).replace(",",".");
             var recipient = $scope.payment.items.recipientAccount;
             formData.taxpayerDataTable = utilityService.splitTextEveryNSigns(formData.taxpayerData);
+            copiedFormData.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             return angular.extend(copiedFormData, {
                 taxPayerData: utilityService.splitTextEveryNSigns(copiedFormData.taxpayerData),
                 recipientName: recipient.officeName,
