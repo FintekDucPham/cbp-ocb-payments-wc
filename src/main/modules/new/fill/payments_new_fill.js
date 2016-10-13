@@ -11,7 +11,7 @@ angular.module('raiffeisen-payments')
             },
             resolve:{
                 CURRENT_DATE: ['utilityService', function(utilityService){
-                  return utilityService.getCurrentDate().then(function(currentDate){
+                  return utilityService.getCurrentDateWithTimezone().then(function(currentDate){
                      return currentDate;
                   });
                 }],
@@ -51,7 +51,7 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
-            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate), new Date(CURRENT_DATE));
+            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate), new Date(CURRENT_DATE.time));
             if(!!$scope.paymentForm.amount) {
                 $scope.paymentForm.amount.$validate();
             }
@@ -64,7 +64,7 @@ angular.module('raiffeisen-payments')
         //paymentRulesResolved
         angular.extend($scope.payment.meta, paymentRulesResolved);
         var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
-            minDate: $scope.CURRENT_DATE,
+            minDate: $scope.CURRENT_DATE.time,
             maxDaysFromNow: paymentRulesResolved.maxDaysToDelayPayment,
             readDataFromServer: false
         });
@@ -88,7 +88,7 @@ angular.module('raiffeisen-payments')
 
         var setRealizationDateToCurrent = function () {
             angular.extend($scope.payment.formData, {
-                realizationDate: CURRENT_DATE
+                realizationDate: CURRENT_DATE.time
             }, lodash.omit($scope.payment.formData, lodash.isUndefined));
         };
 
@@ -98,6 +98,7 @@ angular.module('raiffeisen-payments')
             copiedForm.amount = (""+formData.amount).replace(",", ".");
             copiedForm.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName);
             copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
+            copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, CURRENT_DATE.zone);
             return copiedForm;
         };
 

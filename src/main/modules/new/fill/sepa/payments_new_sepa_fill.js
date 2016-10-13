@@ -33,7 +33,7 @@ angular.module('raiffeisen-payments')
             });
         });*/
         $scope.setDefaultValues({
-            realizationDate: $scope.CURRENT_DATE
+            realizationDate: $scope.CURRENT_DATE.time
         });
 
         function validateSwiftAndAccountNo(accountNo){
@@ -142,6 +142,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             copiedFormData.amount = (""+formData.amount).replace(",",".");
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
+            copiedFormData.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             if(angular.isObject(copiedFormData.currency) && copiedFormData.currency.currency){
                 copiedFormData.currency = copiedFormData.currency.currency;
             }

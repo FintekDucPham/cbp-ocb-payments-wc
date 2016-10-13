@@ -63,8 +63,9 @@ angular.module('raiffeisen-payments')
                 });
 
                 var refreshSorbnetHours = function() {
-                    return utilityService.getCurrentDate.then(function(currentDate){
-                        return paymentsService.getCutOffTimeInfo('00000000', 'DOMESTIC', 'SORBNET', currentDate).then(function (data) {
+                    return utilityService.getCurrentDateWithTimezone().then(function(currentDate){
+                        var today = currentDate.time;
+                        return paymentsService.getCutOffTimeInfo('00000000', 'DOMESTIC', 'SORBNET', utilityService.convertDateToCurrentTimezone(today , currentDate.zone)).then(function (data) {
                             s.sorbnetHours = {
                                 start: dateFilter(data.otbTime, 'HH:00'),
                                 end: dateFilter(data.cotTime, 'HH:00')

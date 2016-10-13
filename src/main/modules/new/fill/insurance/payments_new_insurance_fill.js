@@ -279,6 +279,7 @@ angular.module('raiffeisen-payments')
             var copiedFormData = JSON.parse(JSON.stringify(formData));
             copiedFormData.recipientName = utilityService.splitTextEveryNSigns(formData.recipientName, 27);
             copiedFormData.decisionNo = copiedFormData.additionalInfo;
+            copiedFormData.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             if($scope.payment.operation.code==='EDIT'){
                 var out = null;
                 angular.forEach(copiedFormData.insurancePremiums, function(val, key){
@@ -309,7 +310,7 @@ angular.module('raiffeisen-payments')
                     delete $scope.payment.formData[k];
                 }
             });
-            $scope.payment.formData.realizationDate = new Date();
+            $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.payment.formData.secondaryIdType = 'PESEL';
             $scope.payment.formData.paymentType = 'TYPE_S';
             $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
@@ -344,7 +345,7 @@ angular.module('raiffeisen-payments')
 
         $scope.setDefaultValues({
             secondaryIdType: 'PESEL',
-            realizationDate: $scope.CURRENT_DATE
+            realizationDate: $scope.CURRENT_DATE.time
         });
 
         $scope.onSecondaryIdTypeChanged = function() {
