@@ -9,13 +9,6 @@ angular.module('raiffeisen-payments')
                 payment: {},
                 items: {}
             },
-            resolve:{
-                CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDate().then(function(currentDate){
-                        return currentDate;
-                    });
-                }]
-            },
             data: {
                 analyticsTitle: "payments.submenu.options.new_internal.header"
             }

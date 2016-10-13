@@ -101,7 +101,7 @@ angular.module('raiffeisen-payments')
         });
 */
         $scope.setDefaultValues({
-            realizationDate: $scope.CURRENT_DATE
+            realizationDate: $scope.CURRENT_DATE.time
         });
         $scope.recipientAccountValidators = {
             notZus: function (accountNo) {
@@ -196,6 +196,7 @@ angular.module('raiffeisen-payments')
             formData.amount = copiedFormData.amount;
             copiedFormData.recipientCountry = formData.recipientCountry.code;
             copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
+            copiedFormData.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             return copiedFormData;
         });
 
@@ -393,7 +394,7 @@ angular.module('raiffeisen-payments')
                 trybe.selected = trybe.TRYBE_NAME==='STANDARD';
             });
             delete $scope.payment.items.senderAccount;
-            $scope.payment.formData.realizationDate = new Date();
+            $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.accountSelectorRemote.resetToDefault();
         });
 
