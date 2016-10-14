@@ -10,9 +10,7 @@ angular.module('raiffeisen-payments')
             },
             resolve:{
                 CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDateWithTimezone().then(function(currentDate){
-                        return currentDate;
-                    });
+                    return utilityService.getCurrentDateWithTimezone();
                 }]
             },
             data: {
@@ -28,10 +26,7 @@ angular.module('raiffeisen-payments')
             model_from:{
                 initLoadingDefer:senderAccountInitDefer,
                 initLoadingPromise: senderAccountInitDefer.promise,
-                loading:true/*,
-                onAccountsLoaded: function(){
-                    this.initLoadingDefer.resolve();
-                }*/
+                loading: true
             },
             model_to:{}
         };
@@ -120,7 +115,6 @@ angular.module('raiffeisen-payments')
             return $scope.payment.formData.amount > $scope.payment.meta.convertedAssets;
         }
 
-
         $scope.$watch('payment.formData.amount',function(newVal){
             validateBalance();
         });
@@ -174,16 +168,28 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account) {
-                $scope.payment.meta.isFuturePaymentAllowed = !$scope.payment.meta.cardAccountList || !($scope.payment.meta.cardAccountList.indexOf(account.category?account.category.toString():null) != -1 && !$scope.payment.meta.futurePaymentFromCardAllowed);
-                $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ? false : true;
+                $scope.payment.meta.isFuturePaymentAllowed = isFuturePaymentAllowed(account);
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
+                $scope.payment.meta.isFuturePaymentAllowed = true;
             }
             resetRealizationOnBlockedInput();
             validateBalance();
         });
+
+        function isFuturePaymentAllowed(account) {
+            return isNotInvestmentAccount(account) && (isNotCardAccount(account) || $scope.payment.meta.futurePaymentFromCardAllowed);
+        }
+
+        function isNotInvestmentAccount(account) {
+            return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') <= -1;
+        }
+
+        function isNotCardAccount(account) {
+            return !$scope.payment.meta.cardAccountList || $scope.payment.meta.cardAccountList.indexOf(account.category + '') == -1;
+        }
 
         exchangeRates.search().then(function(currencies) {
             $scope.payment.meta.currencies = lodash.indexBy(currencies.content, 'currencySymbol');
@@ -221,7 +227,6 @@ angular.module('raiffeisen-payments')
             if($scope.paymentForm.amount){
                 $scope.paymentForm.amount.$validate();
             }
-
         }
 
         function updatePaymentCurrencies() {
@@ -257,11 +262,7 @@ angular.module('raiffeisen-payments')
 
         function isAccountInvestmentFulfilsRules(account){
             if(account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') > -1 ){
-                if(account.actions.indexOf('create_between_own_accounts_transfer')>-1){
-                    return true;
-                }else {
-                    return false;
-                }
+                return account.actions.indexOf('create_between_own_accounts_transfer') > -1;
             }
             return true;
         }
@@ -280,9 +281,8 @@ angular.module('raiffeisen-payments')
             alwaysSelected: false,
             showCustomNames: true,
             accountFilter: function (accounts, $accountId) {
-                var filteredAccounts = accounts;
                 var filterParams = [];
-                filteredAccounts =  lodash.reject(accounts, function(account) {
+                var filteredAccounts =  lodash.reject(accounts, function(account) {
                     return account.accountId === $accountId || isSenderAccountCategoryRestricted(account);
                 });
                 if (!!$accountId) {
