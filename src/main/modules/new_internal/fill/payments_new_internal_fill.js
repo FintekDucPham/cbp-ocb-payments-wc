@@ -180,7 +180,7 @@ angular.module('raiffeisen-payments')
         });
 
         function isFuturePaymentAllowed(account) {
-            return isNotInvestmentAccount(account) && (isNotCardAccount(account) || $scope.payment.meta.futurePaymentFromCardAllowed);
+            return isNotInvestmentAccount(account) && (isNotCardAccount(account) || canUserMakeFuturePayment());
         }
 
         function isNotInvestmentAccount(account) {
@@ -191,12 +191,17 @@ angular.module('raiffeisen-payments')
             return !$scope.payment.meta.cardAccountList || $scope.payment.meta.cardAccountList.indexOf(account.category + '') == -1;
         }
 
+        function canUserMakeFuturePayment() {
+            return $scope.payment.meta.employee ? $scope.payment.meta.futurePaymentFromWorkerCardAllowed : $scope.payment.meta.futurePaymentFromCardAllowed;
+        }
+
         exchangeRates.search().then(function(currencies) {
             $scope.payment.meta.currencies = lodash.indexBy(currencies.content, 'currencySymbol');
         });
 
         customerService.getCustomerDetails().then(function(data) {
             $scope.payment.meta.customerContext = data.customerDetails.context;
+            $scope.payment.meta.employee = data.customerDetails.isEmployee;
         });
 
         angular.extend($scope.payment.formData, {
