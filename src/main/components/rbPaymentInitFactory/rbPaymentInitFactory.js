@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES, paymentsBasketService) {
+    .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES, paymentsBasketService, STANDING_FREQUENCY_TYPES) {
         'use strict';
         var paymentDataResolveStrategyStrategies = {};
 
@@ -125,30 +125,55 @@ angular.module('raiffeisen-payments')
                 });
 
 
+                paymentDataResolveStrategy(rbPaymentTypes.STANDING.code, function (data) {
+                    data.frequencyOld = angular.copy(data.frequency);
+                    data.frequency =  data.frequencyOld.periodCount;
+                    data.firstRealizationDate = new Date(data.firstRealizationDate);
+                    data.nextRealizationDate =  new Date(data.nextRealizationDate);
+                    data.finishDate = new Date(data.finishDate);
+                    _.forEach(STANDING_FREQUENCY_TYPES, function(value, key) {
+                        if(value.symbol == data.frequencyOld.periodUnit){
+                            data.frequencyType = value.code;
+                        }
+                    });
+
+                    return $q.when(true);
+                });
+
+
                 $scope.payment.meta.transferType = 'loading';
 
 
                 $scope.payment.rbPaymentsStepParams.completeState = 'payments.basket.new.fill';
                 $scope.payment.rbPaymentsStepParams.cancelState = 'payments.basket.new.fill';
 
-                $scope.payment.initData.promise = paymentsService.get($state.params.referenceId + '@basket_edit', {}).then(function (data) {
-                    data.description = data.title;
-                    $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = data.transferType == 'OWN' || data.transferType == 'DOMESTIC';
-                    $scope.payment.meta.transferType = data.transferType;
-                    $scope.payment.items.modifyFromBasket = true;
-                    $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function () {
-                        lodash.extend($scope.payment.formData, data, $scope.payment.formData);
-                        $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
-                        $scope.payment.formData.referenceId = $state.params.referenceId;
-                        if($scope.payment.formData.realizationDate < new Date()){
-                            $scope.payment.formData.realizationDate = new Date();
-                        }
-                        // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
-                        if ($scope.payment.type.code == 'OWN') {
-                            $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
-                        }
+                var getApropiateDetailsPromise = function(paymentType){
+                    if(paymentType == 'STANDING'){
+                        return paymentsBasketService.getBasketPaymentStandingDetails($state.params.referenceId);
+                    }else {
+                        return paymentsService.get($state.params.referenceId + '@basket_edit_transaction', {});
+                    }
+                };
 
-                    });
+                $scope.payment.initData.promise =
+                    getApropiateDetailsPromise($scope.payment.type.code).then(function (data) {
+                        data.description = data.title;
+                        $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = data.transferType == 'OWN' || data.transferType == 'DOMESTIC';
+                        $scope.payment.meta.transferType = data.transferType;
+                        $scope.payment.items.modifyFromBasket = true;
+                        $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function () {
+                            lodash.extend($scope.payment.formData, data, $scope.payment.formData);
+                            $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
+                            $scope.payment.formData.referenceId = $state.params.referenceId;
+                            if($scope.payment.formData.realizationDate < new Date()){
+                                $scope.payment.formData.realizationDate = new Date();
+                            }
+                            // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
+                            if ($scope.payment.type.code == 'OWN') {
+                                $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
+                            }
+
+                        });
                 });
             }
 

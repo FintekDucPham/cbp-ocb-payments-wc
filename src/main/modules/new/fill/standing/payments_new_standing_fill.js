@@ -23,6 +23,10 @@ angular.module('raiffeisen-payments')
         $scope.payment.meta.hideSaveRecipientButton = true;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
 
+        $scope.addToBasketSelectOptions = {
+            hidden:true
+        };
+
         if (!$scope.payment.formData.frequencyType) {
             $scope.payment.formData.frequencyType = STANDING_FREQUENCY_TYPES.MONTHLY.code;
         }
@@ -61,7 +65,10 @@ angular.module('raiffeisen-payments')
                 "periodCount": formData.frequency,
                 "dayOfMonth": "",
                 "startDate": $filter('date')(formData.firstRealizationDate, 'yyyy-MM-dd'),
-                "nextDate": null
+                "nextDate": null,
+                "modifyFromBasket":formData.modifyFromBasket,
+                "addToBasket":formData.addToBasket,
+                "referenceId":formData.referenceId
             };
 
             if ($scope.payment.operation.code == 'EDIT') {

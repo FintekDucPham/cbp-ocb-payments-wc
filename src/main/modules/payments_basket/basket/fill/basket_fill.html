@@ -160,5 +160,10 @@
                     {{dailyBasketExeeded.messages}}
                  </span>
              </span>
+            <span class="messages"  ng-if="standingOrderStartDateExceed !== undefined && standingOrderStartDateExceed.show">
+                 <span class="validation-message">
+                    {{standingOrderStartDateExceed.messages}}
+                 </span>
+             </span>
         </span>
 </div>

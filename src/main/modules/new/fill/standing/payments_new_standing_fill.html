@@ -150,7 +150,6 @@
         </eb-validation-messages>
 
     </bd-item-property>
-
     <bd-item-property class="bd-item-property--multirow"
                       label="{{ ::'raiff.payments.new.standing.fill.description' | translate }}">
 
@@ -260,7 +259,6 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.first_execution_date' | translate }}" ng-if="payment.operation.code == 'NEW'">
-
         <rb-datepicker
                 ng-model="payment.formData.firstRealizationDate"
                 rb-form="paymentForm"
@@ -440,6 +438,10 @@
             {{validationErrors['finishDate']}}
         </div>
     </bd-item-property>
+
+    <div ng-if="!payment.meta.editFuturePayment">
+        <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket" rb-options="addToBasketSelectOptions"></rb-add-to-basket-select>
+    </div>
 
 
 </div>

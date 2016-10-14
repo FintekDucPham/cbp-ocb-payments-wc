@@ -1280,6 +1280,7 @@
     "raiff.payments.basket.modify.verify.DETAL": "The transfer will be modified in your Payment basket and it will be made in line with the scheduled operation date, but no sooner than on the date of its approval in the payment basket.",
     "raiff.payments.basket.modify.signRemove.verify": "If you modify the transfer, all prior acceptances will be cancelled.",
     "raiff.payments.new.status.MODIFY_FROM_BASKET": "The transfer has been modified.",
+    "raiff.payments.new.standing.status.MODIFY_FROM_BASKET": "The transfer has been modified.",
     "raiff.payments.basket.history.action.CREATED": "New transfer",
     "raiff.payments.basket.history.action.MODIFIED": "Modify transfer",
     "raiff.payments.basket.history.action.SUBMITED": "Submit for implementation",

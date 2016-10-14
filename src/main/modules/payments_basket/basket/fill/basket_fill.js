@@ -123,7 +123,7 @@ angular.module('raiffeisen-payments')
 
         $scope.onEdit = function (data) {
             var copiedData = angular.copy(data);
-            var paymentType = angular.lowercase(copiedData.payment.transferType);
+            var paymentType = angular.lowercase(copiedData.payment.transferType) == "standing_order" ? "standing" : angular.lowercase(copiedData.payment.transferType);
             $state.go(paymentType === 'own' ? "payments.new_internal.fill" : "payments.new.fill", {
                 referenceId: copiedData.payment.id,
                 paymentType: paymentType
@@ -253,6 +253,12 @@ angular.module('raiffeisen-payments')
                             $scope.dailyBasketExeeded = {
                                 show: true,
                                 messages: translate.property("raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL")
+                            };
+                        }
+                        if(currentError.field == 'raiff.basket.transfers.standingOrder.startDate.exceed') {
+                            $scope.standingOrderStartDateExceed = {
+                                show: true,
+                                messages: translate.property("raiff.payments.basket.status.MSG_MSIG_0139")
                             };
                         }
                     }
