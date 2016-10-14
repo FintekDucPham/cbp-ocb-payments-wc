@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
             controller: 'NewPaymentFillController',
             resolve: {
                 CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDate().then(function(currentDate){
+                    return utilityService.convertDateToCurrentTimezone().then(function(currentDate){
                         return currentDate;
                     });
                 }],
@@ -27,7 +27,7 @@ angular.module('raiffeisen-payments')
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"
             }
-        }).state('payments.future.manage.edit.verify', {
+        }).state('payments.future.Nmanage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/payments_new_verify.html";

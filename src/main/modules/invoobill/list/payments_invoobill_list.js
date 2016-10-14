@@ -64,7 +64,6 @@ angular.module('raiffeisen-payments')
 
         //prepare dates
         var now = new Date();
-        var firstDayOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         var oneDayMilisecs = 1000 * 60 * 60 * 24;
 
         //not used
@@ -90,7 +89,7 @@ angular.module('raiffeisen-payments')
                 }
             }
 
-            $scope.invoobillPayments.filterData.last.dateTo = new Date(new Date().getTime() + lastMiliseconds);
+            $scope.invoobillPayments.filterData.last.dateTo = new Date(now.getTime() + lastMiliseconds);
         };
 
         $scope.onFilterLastTypeChange = function() {
@@ -105,12 +104,12 @@ angular.module('raiffeisen-payments')
                 switch ($scope.invoobillPayments.filterData.last.type.selected) {
                     case LAST_TYPES.WEEKS:
                     {
-                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 7));
+                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (oneDayMilisecs * 7));
                         break;
                     }
                     case LAST_TYPES.MONTH:
                     {
-                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 30));
+                        $scope.invoobillPayments.filterData.last.value = Math.floor(diffMS / (oneDayMilisecs * 30));
                         break;
                     }
                 }
@@ -173,15 +172,16 @@ angular.module('raiffeisen-payments')
 
         $scope.onFilterLastValueChange();
 
-        //if micro
         if (parameters.customerDetails.context === 'MICRO') {
             $scope.invoobillPayments.filterData.last.value = parameters.micro.default;
             $scope.invoobillPayments.filterData.last.default = parameters.micro.default;
-            $scope.invoobillPayments.filterData.range.dateTo = new Date(now.getTime() + parameters.micro.default * oneDayMilisecs);
-
+            $scope.invoobillPayments.filterData.range.dateTo = lastDayOfMonth();
             $scope.invoobillPayments.maxDate = new Date((new Date()).setMonth(now.getMonth() + parameters.micro.max));
-
             $scope.invoobillPayments.maxOffset = parameters.micro.max;
+        }
+
+        function lastDayOfMonth() {
+            return new Date(now.getFullYear(), now.getMonth() + 1, 0);
         }
 
         invoobillPaymentsService.getCreditors({ status: "ACTIVE"}).then(function(data) {
@@ -240,14 +240,11 @@ angular.module('raiffeisen-payments')
         $scope.loadInvoobillPayments();
 
         $scope.switchPage = function(deferred, pageNumber) {
-            console.debug("switchPage(deferred, pageNumber)", deferred, pageNumber);
             if (pageNumber !== $scope.invoobillPayments.data.currentPage) {
                 $scope.invoobillPayments.data.currentPage = pageNumber;
                 $scope.loadInvoobillPayments();
-                deferred.resolve();
-            } else {
-                deferred.resolve();
             }
+            deferred.resolve();
         };
 
         $scope.$watch('invoobillPayments.filterData.periodType.model', function(model) {
@@ -271,13 +268,11 @@ angular.module('raiffeisen-payments')
 
         // cancel Invobill service
         $scope.cancelService = function(){
-            console.debug("cancelService");
             $state.go("payments.invoobill.resignation");
         };
 
         //pay now
         $scope.payNow = function(data) {
-            console.debug("payNow(data)", data);
             viewStateService.setInitialState('payments.invoobill.new_payment', {
                 invoobillPayment: data,
                 payNow: true
@@ -287,7 +282,6 @@ angular.module('raiffeisen-payments')
 
         //pay in future
         $scope.pay = function(data) {
-            console.debug("pay(data)", data);
             viewStateService.setInitialState('payments.invoobill.new_payment', {
                 invoobillPayment: data
             });
@@ -296,17 +290,11 @@ angular.module('raiffeisen-payments')
 
         //reject payment
         $scope.reject = function(data) {
-            console.debug("reject(data)", data);
             viewStateService.setInitialState('payments.invoobill.reject_payment', {
                 invoobillPayment: data
             });
             $state.go("payments.invoobill.reject_payment.fill");
         };
-
-        function dateTodayOrInFuture(paymentDate) {
-            paymentDate = new Date(paymentDate);
-            return now.getTime() > paymentDate.getTime() ? now : paymentDate;
-        }
 
         //action
         $scope.onSubmit = function (form) {

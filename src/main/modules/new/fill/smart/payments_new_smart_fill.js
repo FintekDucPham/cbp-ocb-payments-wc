@@ -455,9 +455,9 @@ angular.module('raiffeisen-payments')
             //dependencies changed scenario
             if(change.sepaAv && change.isEur && change.trybe !== 'TARGET'){
                 $scope.payment.smart.sepaLock = false;
-                if(old.trybe==='TARGET' && change.trybe==='STANDARD'){
+                //if(old.trybe==='TARGET' && change.trybe==='STANDARD'){
                     $scope.payment.formData.foreignType=$scope.FOREIGN_TYPES.SEPA;
-                }
+                //}
             }else{
                 $scope.payment.smart.sepaLock = true;
                 if($scope.payment.formData.foreignType===$scope.FOREIGN_TYPES.SEPA){

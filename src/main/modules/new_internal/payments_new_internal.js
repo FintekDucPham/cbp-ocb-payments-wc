@@ -9,23 +9,14 @@ angular.module('raiffeisen-payments')
                 payment: {},
                 items: {}
             },
-            resolve:{
-                CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDate().then(function(currentDate){
-                        return currentDate;
-                    });
-                }]
-            },
             data: {
                 analyticsTitle: "payments.submenu.options.new_internal.header"
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, CURRENT_DATE, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
-
-        $scope.CURRENT_DATE = CURRENT_DATE;
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
