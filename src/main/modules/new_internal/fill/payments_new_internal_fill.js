@@ -10,9 +10,7 @@ angular.module('raiffeisen-payments')
             },
             resolve:{
                 CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDateWithTimezone().then(function(currentDate){
-                        return currentDate;
-                    });
+                    return utilityService.getCurrentDateWithTimezone();
                 }]
             },
             data: {
@@ -28,10 +26,7 @@ angular.module('raiffeisen-payments')
             model_from:{
                 initLoadingDefer:senderAccountInitDefer,
                 initLoadingPromise: senderAccountInitDefer.promise,
-                loading:true/*,
-                onAccountsLoaded: function(){
-                    this.initLoadingDefer.resolve();
-                }*/
+                loading: true
             },
             model_to:{}
         };
@@ -208,15 +203,32 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account) {
-                $scope.payment.meta.isFuturePaymentAllowed = account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0;
+                $scope.payment.meta.isFuturePaymentAllowed = isFuturePaymentAllowed(account);
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, account.category);
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
+                $scope.payment.meta.isFuturePaymentAllowed = true;
             }
             resetRealizationOnBlockedInput();
             validateBalance();
         });
+
+        function isFuturePaymentAllowed(account) {
+            return isNotInvestmentAccount(account) && (isNotCardAccount(account) || canUserMakeFuturePayment());
+        }
+
+        function isNotInvestmentAccount(account) {
+            return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') <= -1;
+        }
+
+        function isNotCardAccount(account) {
+            return !$scope.payment.meta.cardAccountList || $scope.payment.meta.cardAccountList.indexOf(account.category + '') == -1;
+        }
+
+        function canUserMakeFuturePayment() {
+            return $scope.payment.meta.employee ? $scope.payment.meta.futurePaymentFromWorkerCardAllowed : $scope.payment.meta.futurePaymentFromCardAllowed;
+        }
 
         exchangeRates.search().then(function(currencies) {
             $scope.payment.meta.currencies = lodash.indexBy(currencies.content, 'currencySymbol');
@@ -224,6 +236,7 @@ angular.module('raiffeisen-payments')
 
         customerService.getCustomerDetails().then(function(data) {
             $scope.payment.meta.customerContext = data.customerDetails.context;
+            $scope.payment.meta.employee = data.customerDetails.isEmployee;
         });
 
         angular.extend($scope.payment.formData, {
