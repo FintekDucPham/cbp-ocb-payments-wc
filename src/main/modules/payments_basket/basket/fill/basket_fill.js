@@ -124,6 +124,9 @@ angular.module('raiffeisen-payments')
         $scope.onEdit = function (data) {
             var copiedData = angular.copy(data);
             var paymentType = angular.lowercase(copiedData.payment.transferType) == "standing_order" ? "standing" : angular.lowercase(copiedData.payment.transferType);
+            viewStateService.setInitialState('payments.new', {
+                paymentOperationType: copiedData.operationType == 'MODIFY_OPERATION' ? rbPaymentOperationTypes.EDIT : rbPaymentOperationTypes.NEW
+            });
             $state.go(paymentType === 'own' ? "payments.new_internal.fill" : "payments.new.fill", {
                 referenceId: copiedData.payment.id,
                 paymentType: paymentType

@@ -128,9 +128,9 @@ angular.module('raiffeisen-payments')
                 paymentDataResolveStrategy(rbPaymentTypes.STANDING.code, function (data) {
                     data.frequencyOld = angular.copy(data.frequency);
                     data.frequency =  data.frequencyOld.periodCount;
-                    data.firstRealizationDate = new Date(data.firstRealizationDate);
-                    data.nextRealizationDate =  new Date(data.nextRealizationDate);
-                    data.finishDate = new Date(data.finishDate);
+                    data.firstRealizationDate = data.firstRealizationDate ? new Date(data.firstRealizationDate) : null;
+                    data.nextRealizationDate = data.frequencyOld.nextDate ? new Date(Date.parse(data.frequencyOld.nextDate)) : null;
+                    data.finishDate = data.finishDate ? new Date(data.finishDate): null;
                     _.forEach(STANDING_FREQUENCY_TYPES, function(value, key) {
                         if(value.symbol == data.frequencyOld.periodUnit){
                             data.frequencyType = value.code;
