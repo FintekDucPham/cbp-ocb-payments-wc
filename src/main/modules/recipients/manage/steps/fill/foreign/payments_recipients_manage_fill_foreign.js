@@ -140,7 +140,7 @@ angular.module('raiffeisen-payments')
         $scope.currentSearchCode = 0;
 
         $scope.$watch('recipient.formData.recipientSwiftOrBic', function(n,o){
-            if(n && !angular.equals(n, o) && !_.isEmpty(_.trim(n)) && n.length >= 8) {
+            if(n && shouldTriggerSwiftBicUpdate(n, o)) {
                 $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                     $scope.recipient.formData.recipientSwiftOrBic,
                     recipientGeneralService.utils.getBankInformation.strategies.SWIFT
@@ -150,7 +150,6 @@ angular.module('raiffeisen-payments')
                         $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data,{
                             code: data.countryCode
                         });
-
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                     }else{
                         if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
@@ -164,6 +163,23 @@ angular.module('raiffeisen-payments')
                 });
             }
         });
+
+        function shouldTriggerSwiftBicUpdate(n, o) {
+            return hasSwiftOrBicProperLength(n) && (areDifferent(n, o) || isSwiftOrBicNotChangedYet());
+        }
+
+        function hasSwiftOrBicProperLength(code) {
+            var value = _.trim(code);
+            return !_.isEmpty(value) && value.length >= 8;
+        }
+
+        function areDifferent(value1, value2) {
+            return !angular.equals(value1, value2);
+        }
+
+        function isSwiftOrBicNotChangedYet() {
+            return $scope.recipientForm.swift_bic.$pristine;
+        }
 
         $scope.onSenderAccountSelect = function () {
             $scope.recipientForm.recipientAccountNo.$validate();
