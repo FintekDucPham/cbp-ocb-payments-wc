@@ -184,10 +184,9 @@
                 rb-on-select="selectSymbol()"
                 bd-attr-name="formSymbol"
                 bd-attr-required
-                rb-is-disabled="payment.options.isFromRecipient"
+                rb-is-disabled="payment.options.blockFormCodes"
                 rb-placeholder="{{ ::'raiff.payments.new.us.fill.form_symbol.placeholder' | translate }}"
                 items="payment.items">
-
         </rb-us-form-symbol-select>
 
         <eb-validation-messages eb-name="formSymbol">
@@ -220,7 +219,6 @@
                 {{::'raiff.payments.new.us.fill.period_type.NEEDED_PERIOD_TYPE'|translate}}
             </div>
         </eb-validation-messages>
-
 
     </bd-item-property>
 
