@@ -16,7 +16,8 @@ angular.module('raiffeisen-payments')
         },
         'R': {}
     })
-    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,bdStepStateEvents, utilityService, translate) {
+    .controller('NewUsPaymentFillController', function ($scope, validationRegexp, usSupplementaryIds, usPeriodTypes, lodash, taxOffices, rbAccountSelectParams,
+                                                        bdStepStateEvents, utilityService, translate, $timeout) {
 
         $scope.accountSelectorRemote = {};
 
@@ -38,7 +39,6 @@ angular.module('raiffeisen-payments')
                 $scope.payment.items.recipientAccount = null;
                 $scope.payment.formData.recipientAccountNo = null;
             }
-           console.debug(newValue);
         });
          $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             var recipient = lodash.find($scope.payment.meta.recipientList, {
@@ -145,11 +145,27 @@ angular.module('raiffeisen-payments')
                     officeName: recipient.recipientName.join(', '),
                     accountNo: recipient.nrb
                 };
+                getTaxOfficeAndUpdateAccountType(recipient.nrb);
                 $scope.payment.options.isFromRecipient = true;
             } else {
                 $scope.clearRecipient();
             }
         };
+
+        function getTaxOfficeAndUpdateAccountType(taxAccount) {
+            taxOffices.search({
+                accountNo: taxAccount
+            }).then(updateTaxAccountType);
+        }
+
+        function updateTaxAccountType(taxOffice) {
+            $scope.payment.items.recipientAccount.taxAccountType = taxOffice[0].taxAccountType;
+            $timeout(blockFormCodesIfValueFromRecipientIsValid);
+        }
+
+        function blockFormCodesIfValueFromRecipientIsValid() {
+            $scope.payment.options.blockFormCodes = !!$scope.payment.formData.formCode;
+        }
 
         $scope.clearTaxpayer = function () {
             if($scope.payment.options.isFromTaxpayer) {

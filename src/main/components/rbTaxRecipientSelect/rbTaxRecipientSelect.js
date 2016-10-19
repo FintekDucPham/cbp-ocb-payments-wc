@@ -13,7 +13,6 @@ angular.module('raiffeisen-payments')
                 onClearRecipient: '&rbOnClearRecipient'
             },
             controller: function ($scope) {
-
                 $scope.selection = {
                     isSelected: false
                 };
@@ -36,7 +35,6 @@ angular.module('raiffeisen-payments')
                        if($scope.selection.isSelected){
                            clearRecipient();
                        }
-
                    }
                 });
 
@@ -49,8 +47,11 @@ angular.module('raiffeisen-payments')
 
                 $scope.selectRecipient = function($item) {
                     if($item && $item !== nullOption) {
-                        $scope.selection.isSelected = true;
                         var oldRecipient = $scope.recipient;
+                        if ($item == oldRecipient) {
+                            return;
+                        }
+                        $scope.selection.isSelected = true;
                         $scope.recipient = $item;
                         $scope.onSelectRecipient({
                             $recipient: $item,
@@ -91,7 +92,6 @@ angular.module('raiffeisen-payments')
                 });
 
                 $scope.clearSelection = function () {
-                    console.log("CL3:exe");
                     $scope.selection.recipient = null;
                     $scope.recipient = null;
                     $scope.onClearRecipient();
@@ -101,7 +101,6 @@ angular.module('raiffeisen-payments')
                 var nullOption = $scope.nullOption = {
                     customerName: $scope.placeholderText
                 };
-
             }
         };
     });
