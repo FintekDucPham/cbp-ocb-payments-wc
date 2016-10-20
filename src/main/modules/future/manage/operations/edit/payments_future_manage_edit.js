@@ -16,7 +16,7 @@ angular.module('raiffeisen-payments')
             controller: 'NewPaymentFillController',
             resolve: {
                 CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDateWithTimezone()
+                    return utilityService.getCurrentDateWithTimezone();
                 }],
                 paymentRulesResolved: ['paymentRules', function(paymentRules){
                     return paymentRules.search();
