@@ -141,6 +141,7 @@ angular.module('raiffeisen-payments')
             copiedFormData.templateName = " ";
             copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
             copiedFormData.amount = (""+formData.amount).replace(",",".");
+            formData.amount = copiedFormData.amount;
             copiedFormData.recipientCountry = formData.recipientCountry.countryCode;
             copiedFormData.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             if(angular.isObject(copiedFormData.currency) && copiedFormData.currency.currency){
