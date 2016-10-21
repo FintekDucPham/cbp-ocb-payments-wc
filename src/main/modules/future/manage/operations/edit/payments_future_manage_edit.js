@@ -25,7 +25,7 @@ angular.module('raiffeisen-payments')
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"
             }
-        }).state('payments.future.Nmanage.edit.verify', {
+        }).state('payments.future.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
                 return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/payments_new_verify.html";
