@@ -80,7 +80,7 @@ angular.module('raiffeisen-payments')
 
         $scope.countries.promise.then(function(data){
             var countryCode;
-            if($scope.recipient.formData.recipientBankCountry){
+            if ($scope.recipient.formData.recipientBankCountry && !$scope.recipient.formData.recipientSwiftOrBic) {
                 countryCode = $scope.recipient.formData.recipientBankCountry.code || $scope.recipient.formData.recipientBankCountry;
                 $scope.recipient.formData.recipientBankCountry = angular.copy(findCountryByCode(data.countryList, countryCode));
             }
