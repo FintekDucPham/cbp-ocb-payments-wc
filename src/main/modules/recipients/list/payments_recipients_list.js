@@ -114,7 +114,7 @@ angular.module('raiffeisen-payments')
             // dla przelewow do odbiorcow walutowych potrzebna osobna logika
             if (data.recipientType.toLowerCase() == 'swift') {
                 $state.go('payments.new_foreign.fill', {
-                    paymentType: 'sepa',
+                    paymentType: 'SMART'.toLowerCase(),
                     recipientId: data.recipientId
                 });
             }
