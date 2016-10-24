@@ -11,9 +11,7 @@ angular.module('raiffeisen-payments')
             },
             resolve:{
                 CURRENT_DATE: ['utilityService', function(utilityService){
-                    return utilityService.getCurrentDate().then(function(currentDate){
-                        return currentDate;
-                    });
+                    return utilityService.getCurrentDateWithTimezone();
                 }],
                 paymentRulesResolved: ['paymentRules', function(paymentRules){
                     return paymentRules.search();
