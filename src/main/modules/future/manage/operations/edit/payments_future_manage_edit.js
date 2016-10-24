@@ -151,7 +151,9 @@ angular.module('raiffeisen-payments')
 
         $scope.clearForm = function() {
             if(!$scope.clearFormFunction){
+                var referenceId = angular.copy($scope.payment.formData.referenceId);
                 $scope.payment.formData = {};
+                $scope.payment.formData.referenceId  = referenceId;
             }else{
                 $scope.clearFormFunction();
             }
