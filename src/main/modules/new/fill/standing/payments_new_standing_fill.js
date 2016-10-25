@@ -20,8 +20,13 @@ angular.module('raiffeisen-payments')
                                                               standingTransferService, forbiddenAccounts, promiseSet, utilityService, translate) {
 
 
+        $scope.standingOrderId = null;
         $scope.payment.meta.hideSaveRecipientButton = true;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
+
+        if($scope.payment.operation.code === 'EDIT'){
+            $scope.standingOrderId = $scope.payment.formData.id;
+        }
 
         if (!$scope.payment.formData.frequencyType) {
             $scope.payment.formData.frequencyType = STANDING_FREQUENCY_TYPES.MONTHLY.code;
@@ -216,6 +221,11 @@ angular.module('raiffeisen-payments')
             }
         };
 
+        $scope.$on('clearForm', function(){
+            if($scope.payment.operation.code === 'EDIT'){
+                $scope.payment.formData.id = $scope.standingOrderId;
+            }
+        });
         var recipientFilter = $scope.recipientFilter = {
             doesMatch: function (recipient) {
                 return true;
