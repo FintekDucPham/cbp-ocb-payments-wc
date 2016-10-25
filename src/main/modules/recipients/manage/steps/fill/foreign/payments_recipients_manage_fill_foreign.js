@@ -141,24 +141,13 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('recipient.formData.recipientSwiftOrBic', function(n,o){
             if(n && shouldTriggerSwiftBicUpdate(n, o)) {
-                $scope.searchBankPromise = recipientGeneralService.utils.getBankInformation.getInformation(
-                    $scope.recipient.formData.recipientSwiftOrBic,
-                    recipientGeneralService.utils.getBankInformation.strategies.SWIFT
-                ).then(function(data){
-                    if(data !== undefined && data !== null && data !==''){
+                $scope.searchBankPromise = getBankInformationBySwift().then(function(data){
+                    if (data) {
                         $scope.recipient.formData.recipientBankName = data.institution;
-                        $scope.recipient.formData.recipientBankCountry = lodash.find($scope.countries.data,{
-                            code: data.countryCode
-                        });
+                        $scope.recipient.formData.recipientBankCountry = findCountryByCode($scope.countries.data, data.countryCode);
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
-                    }else{
-                        if ($scope.recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC) {
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
-                        }
-                        else {
-                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
-                        }
-
+                    } else {
+                        $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", isSwiftNotUsed());
                     }
                 });
             }
@@ -179,6 +168,17 @@ angular.module('raiffeisen-payments')
 
         function isSwiftOrBicNotChangedYet() {
             return $scope.recipientForm.swift_bic.$pristine;
+        }
+
+        function getBankInformationBySwift() {
+            return recipientGeneralService.utils.getBankInformation.getInformation(
+                $scope.recipient.formData.recipientSwiftOrBic,
+                recipientGeneralService.utils.getBankInformation.strategies.SWIFT
+            );
+        }
+
+        function isSwiftNotUsed() {
+            return $scope.recipient.formData.recipientIdentityType !== RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
         }
 
         $scope.onSenderAccountSelect = function () {
