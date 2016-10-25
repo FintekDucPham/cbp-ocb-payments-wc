@@ -1390,7 +1390,8 @@
     "raiff.ng_dropdown_multiselect.option.searchPlaceholder":"Wyszukaj...",
     "raiff.ng_dropdown_multiselect.option.buttonDefaultText":"Wszystkie",
     "raiff.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"zaznaczono",
-    "raiff.ng_dropdown_multiselect.option.waiting":"Oczekujące"
+    "raiff.ng_dropdown_multiselect.option.waiting":"Oczekujące",
+    "raiff.payments.reject.original_customer":"Oryginalny zleceniodawca"
 
 
 }

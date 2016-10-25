@@ -154,6 +154,9 @@
                 <bd-item-property  label="{{::'raiff.payments.rejected.operation.status.label'|translate}}">
                     {{ :: 'raiff.payments.rejected.opration_type.rejected' | translate }}
                 </bd-item-property>
+                <bd-item-property  ng-show="$data.details.originalCustomerVisible" label="{{ :: 'raiff.payments.reject.original_customer' | translate }}">
+                    {{ $data.details.originalCustomerName}}
+                </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.registrationDate' | translate }}">
                     {{ $data.details.realizationDate | date : 'shortDate' }} <!-- cannot resolve registration date from the bus -->
                 </bd-item-property>
