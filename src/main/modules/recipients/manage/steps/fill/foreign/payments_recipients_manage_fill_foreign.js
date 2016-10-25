@@ -144,8 +144,10 @@ angular.module('raiffeisen-payments')
                 $scope.searchBankPromise = getBankInformationBySwift().then(function(data){
                     if (data) {
                         $scope.recipient.formData.recipientBankName = data.institution;
-                        $scope.recipient.formData.recipientBankCountry = findCountryByCode($scope.countries.data, data.countryCode);
-                        $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                        $scope.countries.promise.then(function (countries) {
+                            $scope.recipient.formData.recipientBankCountry = findCountryByCode(countries.countryList, data.countryCode);
+                            $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
+                        });
                     } else {
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", isSwiftNotUsed());
                     }
