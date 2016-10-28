@@ -370,6 +370,9 @@ angular.module('raiffeisen-payments')
             delete $scope.payment.items.senderAccount;
             $scope.payment.formData.realizationDate = new Date();
             $scope.accountSelectorRemote.resetToDefault();
+            $scope.payment.smart = {
+                data: {}
+            };
         });
 
         $scope.$watch('payment.formData.paymentType', function(n,o){
