@@ -87,7 +87,7 @@ angular.module('raiffeisen-payments')
         }
 
         $scope.setDefaultValues({
-            realizationDate: $scope.CURRENT_DATE
+            realizationDate: $scope.CURRENT_DATE.time
         });
 
         $scope.recipientAccountValidators = {
@@ -187,7 +187,7 @@ angular.module('raiffeisen-payments')
             formData.amount = copiedFormData.amount;
             copiedFormData.recipientCountry = formData.recipientCountry.code;
             copiedFormData.recipientAccountNo = formData.recipientAccountNo.toUpperCase();
-
+            copiedFormData.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             copiedFormData.alternativePaymentCode = trType;
 
             return copiedFormData;
@@ -374,7 +374,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.paymentType', function(n,o){
             if(n && n === 'TARGET'){
-                $scope.payment.formData.realizationDate = $scope.CURRENT_DATE;
+                $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
                 $scope.payment.meta.realizationDateDisabled = true;
 
                 if(isInnerBankAccount($scope.payment.formData.recipientAccountNo)){
