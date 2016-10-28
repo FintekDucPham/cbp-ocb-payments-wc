@@ -206,7 +206,7 @@ angular.module('raiffeisen-payments')
         $scope.saveRecipient = function() {
             if($scope.resolveRecipientData) {
                 var recipientType = $scope.payment.type.state.toLowerCase();
-                if(recipientType==='swift' || recipientType==='sepa'){
+                if(recipientType==='swift' || recipientType==='sepa' || recipientType==='smart'){
                     recipientType = 'foreign';
                 }
                 $state.go("payments.recipients.manage.new.fill", {
