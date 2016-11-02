@@ -253,7 +253,7 @@ angular.module('raiffeisen-payments')
         }
 
         function isNotInvestmentAccount(account) {
-            return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') <= -1;
+            return !account.accountCategories || account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0;
         }
 
         function isNotCardAccount(account) {
