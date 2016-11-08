@@ -29,9 +29,6 @@
 
 }
 
-
-
-
 .break-force{
   word-break: break-all;
   word-break: break-word;
@@ -83,7 +80,6 @@
 
 }
 
-
 .authorization-blocked {
   text-align: center;
   font-size: 1.2em;
@@ -127,10 +123,8 @@
       }
     }
 
-
   }
 }
-
 
 .new-standing-payment-fill {
   & .frequency {
@@ -195,7 +189,6 @@
   }
 }
 
-
 .payments_miniapp {
   .bd-table__row-details {
     .bd-item-property__value {
@@ -205,7 +198,6 @@
           padding-right: 20px;
         }
       }
-
     }
   }
 
@@ -215,8 +207,6 @@
         display: block;
       }
     }
-
-
   }
 
   & .wide-button {
@@ -263,7 +253,6 @@
   white-space: nowrap;
   max-width: 155px;
 }
-
 
 .desktop-only-payments {
     @media only screen and  (max-width: @screenSmallMax) {
@@ -339,5 +328,10 @@
   }
 }
 
-
-
+.payments-future-list {
+  .bd-button + .bd-button {
+    @media (max-width: @screenSmallMax) {
+      margin-top: 5px;
+    }
+  }
+}
