@@ -104,7 +104,7 @@ angular.module('raiffeisen-payments')
                     }
                     case LAST_TYPES.MONTH:
                     {
-                        $scope.rejectedList.filterData.last.value = Math.floor(diffMS / (1000 * 3600 * 24 * 31));
+                        $scope.rejectedList.filterData.last.value = parameters.detal.max;
                         break;
                     }
                 }
