@@ -11,12 +11,18 @@ angular.module('raiffeisen-payments')
             },
             data: {
                 analyticsTitle: "payments.submenu.options.new_internal.header"
+            },
+            resolve:{
+                CURRENT_DATE: ['utilityService', function(utilityService){
+                    return utilityService.getCurrentDateWithTimezone();
+                }]
             }
         });
     })
-    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants) {
+    .controller('PaymentsNewInternalController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
+        $scope.CURRENT_DATE = CURRENT_DATE;
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
