@@ -177,6 +177,9 @@ angular.module('raiffeisen-payments')
                     if ($scope.dateRange.fromDate && $scope.dateRange.toDate) {
                         params.realizationDateFrom = $filter('date')($scope.dateRange.fromDate.getTime(), "yyyy-MM-dd");
                         params.realizationDateTo   = $filter('date')($scope.dateRange.toDate.getTime(), "yyyy-MM-dd");
+                    }else{
+                        params.realizationDateFrom = $filter('date')(parameters.dateFrom, "yyyy-MM-dd");
+                        params.realizationDateTo = $filter('date')(parameters.dateTo, "yyyy-MM-dd");
                     }
 
                     if($scope.table.tableData.newSearch){
