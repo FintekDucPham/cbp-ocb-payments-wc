@@ -382,7 +382,7 @@
     "raiff.payments.new.us.fill.period_year.PERIOD_TYPE_2_NUMBER": "Dla wybranego symbolu formularza rok okresu musi składać się z 2 cyfr",
     "raiff.payments.new.us.fill.commitment_id": "Identyfikacja zobowiązania",
     "raiff.payments.new.us.fill.commitment_id.placeholder": "Wpisz identyfikator zobowiązania",
-    "raiff.payments.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Identyfikacja zobowiązania nie może przekraczać 40 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki : ; , . \\",
+    "raiff.payments.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Identyfikacja zobowiązania nie może przekraczać 40 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki : ; , . \\ oraz spację",
     "raiff.payments.new.us.fill.amount": "Kwota",
     "raiff.payments.new.us.fill.amount.placeholder": "Wpisz kwotę",
     "raiff.payments.new.us.fill.amount.EMPTY_AMOUNT": "Pole kwota jest wymagane",
@@ -1391,7 +1391,7 @@
     "raiff.ng_dropdown_multiselect.option.buttonDefaultText":"Wszystkie",
     "raiff.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"zaznaczono",
     "raiff.ng_dropdown_multiselect.option.waiting":"Oczekujące",
-    "raiff.payments.reject.original_customer":"Oryginalny zleceniodawca"
-
-
+    "raiff.payments.reject.original_customer":"Oryginalny zleceniodawca",
+    "raiff.payments.tax.tax_account_select.placeholder":"Wpisz miejscowość urzędu/izby lub rachunek",
+    "raiff.payments.tax.tax_account_select.error.empty":"Urząd skarbowy nie może być pusty"
 }

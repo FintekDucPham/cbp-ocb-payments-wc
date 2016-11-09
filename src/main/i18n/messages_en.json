@@ -377,7 +377,7 @@
     "raiff.payments.new.us.fill.period_year.PERIOD_TYPE_2_NUMBER": "For the selected form symbol, year period must contain 2 digits",
     "raiff.payments.new.us.fill.commitment_id": "Commitment ID",
     "raiff.payments.new.us.fill.commitment_id.placeholder": "Enter commitment ID",
-    "raiff.payments.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Commitment ID cannot be longer than 40 characters and may include only letters, digits and the following characters: : ; , . \\",
+    "raiff.payments.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Commitment ID cannot be longer than 40 characters and may include only letters, digits and the following characters: : ; , . \\ and space",
     "raiff.payments.new.us.fill.amount": "Amount",
     "raiff.payments.new.us.fill.amount.placeholder": "Enter amount",
     "raiff.payments.new.us.fill.amount.EMPTY_AMOUNT": "Amount field is required",

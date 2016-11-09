@@ -14,8 +14,12 @@ angular.module('raiffeisen-payments')
                 attrBinder.bindParams($element.find('ui-select'), $attr);
             },
             controller: function ($scope) {
+                $scope.elementFocused = false;
                 $scope.showResultNotFound = false;
                 $scope.taxOfficeSearched = false;
+                $scope.changeFocus = function(){
+                    $scope.elementFocused = true;
+                };
                 $scope.taxAccounts = [];
                 if ($scope.params instanceof String) {
                     $scope.params = $scope.$eval($scope.params);
@@ -62,7 +66,7 @@ angular.module('raiffeisen-payments')
 
                 $scope.$watch('model.searchQuery', function (query, oldQuery) {
                     $scope.showResultNotFound = false;
-                    if(query && query.length > 0){
+                    if(query && query.length > 2){
                         var queryParsed = query.replace(/ /g, '');
                         if (queryParsed && queryParsed.length == 26 && query !== oldQuery) {
                             $scope.searchForOffice(queryParsed);
@@ -83,37 +87,40 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.searchForOffice = function(selectedInput) {
-                    $scope.taxOfficeSearched = true;
-                    selectedInput = encodeURIComponent(selectedInput);
-                    var params = {};
-                    var regexp = new RegExp('^[0-9 ]+$');
-                    if (regexp.test(selectedInput)) {
-                        params = {
-                            accountNo: selectedInput.replace(/ /g, '')
-                        };
-                    }else{
-                        params = {
-                            officeName: selectedInput
-                        };
-                    }
-                    return taxOffices.search(params).then(function (result) {
-                        if (result.length < 1) {
-                            $scope.notFoundList = lodash.union($scope.notFoundList, [$scope.model.searchQuery]);
-                            $scope.showResultNotFound = true;
-                            $scope.taxAccounts = [];
-                            $scope.onAccountSelect({
-                                $office: null
-                            });
-                        } else {
-                            $scope.showResultNotFound = false;
-                            $scope.taxAccounts = result;
-                            $scope.isFromList = true;
-                            $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
-                            $scope.onAccountSelect({
-                                $office: $scope.taxOffice
-                            });
+                    if(selectedInput.length >=3){
+                        $scope.taxOfficeSearched = true;
+                        selectedInput = encodeURIComponent(selectedInput);
+                        var params = {};
+                        var regexp = new RegExp('^[0-9 ]+$');
+                        if (regexp.test(selectedInput)) {
+                            params = {
+                                accountNo: selectedInput.replace(/ /g, '')
+                            };
+                        }else{
+                            params = {
+                                officeName: selectedInput
+                            };
                         }
-                    });
+                        return taxOffices.search(params).then(function (result) {
+                            if (result.length < 1) {
+                                $scope.notFoundList = lodash.union($scope.notFoundList, [$scope.model.searchQuery]);
+                                $scope.showResultNotFound = true;
+                                $scope.taxAccounts = [];
+                                delete $scope.model.taxOffice;
+                                $scope.onAccountSelect({
+                                    $office: null
+                                });
+                            } else {
+                                $scope.showResultNotFound = false;
+                                $scope.taxAccounts = result;
+                                $scope.isFromList = true;
+                                $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
+                                $scope.onAccountSelect({
+                                    $office: $scope.taxOffice
+                                });
+                            }
+                        });
+                    }
                 };
 
                 $scope.useCustom = function () {
