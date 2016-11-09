@@ -2,6 +2,7 @@
 
     <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.sender_account' | translate }}">
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
+                           rb-account-no="payment.items.recipient.srcAccountNo"
                            rb-account="payment.items.senderAccount"
                            bd-attr-required="true"
                            rb-account-list="payment.meta.accountList"
