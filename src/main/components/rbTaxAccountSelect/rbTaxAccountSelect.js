@@ -8,7 +8,8 @@ angular.module('raiffeisen-payments')
                 taxOfficeId: '=?rbTaxOfficeId',
                 onAccountSelect: '&rbOnTaxAccountSelect',
                 params: '=?rbTaxOfficeParams',
-                rbForbiddenAccounts: '=?rbForbiddenAccounts'
+                rbForbiddenAccounts: '=?rbForbiddenAccounts',
+                externalClear: '=externalClear'
             },
             compile: function ($element, $attr) {
                 attrBinder.bindParams($element.find('ui-select'), $attr);
@@ -17,13 +18,14 @@ angular.module('raiffeisen-payments')
                 $scope.elementFocused = false;
                 $scope.showResultNotFound = false;
                 $scope.taxOfficeSearched = false;
-                $scope.changeFocus = function(){
-                    $scope.elementFocused = true;
+                $scope.changeFocus = function(access){
+                    $scope.elementFocused = access;
                 };
                 $scope.taxAccounts = [];
                 if ($scope.params instanceof String) {
                     $scope.params = $scope.$eval($scope.params);
                 }
+
 
                 $scope.notFoundList = [];
 
@@ -50,7 +52,7 @@ angular.module('raiffeisen-payments')
                             $scope.searchForOffice(taxAccountNo);
                         }
                     } else {
-                        $scope.taxOffice = null;
+                        $scope.useCustom();
                     }
                 });
 
@@ -129,6 +131,8 @@ angular.module('raiffeisen-payments')
                     $scope.taxOffice = null;
                     $scope.model.taxOffice = null;
                     $scope.model.searchQuery = null;
+                    $scope.taxAccounts = [];
+                    $scope.elementFocused = false;
                 };
 
                 $scope.accountValidators = {
