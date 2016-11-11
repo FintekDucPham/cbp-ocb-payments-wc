@@ -32,6 +32,12 @@ angular.module('raiffeisen-payments')
             // ze wzgledu na fakt, ze inne nazwy pol dostajemy z backendu, a inne sa uzywane frontowo
             // trzeba dane przepisac; ze wzgledu na fakt ze rozne uslugi przyjmuja inne nazwy parametrow
             // nie mozemy rowniez tego po prostu uspojnic - trzeba przepisywac
+            var parsePaymentFrequency = function(frequency){
+                if(STANDING_FREQUENCY_TYPES.DAILY.symbol === payment.frequency.periodUnit){
+                    return undefined;
+                }
+                return frequency.periodCount;
+            };
             var paymentFormData = {
                 "shortName": payment.shortName,
                 "recipientName": payment.beneficiary ? payment.beneficiary.join("\n") : "",
@@ -44,7 +50,7 @@ angular.module('raiffeisen-payments')
                 "firstRealizationDate": payment.startDate ? new Date(payment.startDate) : null,
                 "finishDate": payment.endDate ? new Date(payment.endDate) : null,
                 "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
-                "frequency": payment.frequency.periodCount,
+                "frequency": parsePaymentFrequency(payment.frequency),
                 "amount": payment.amount,
                 "id": payment.id
             }; 
