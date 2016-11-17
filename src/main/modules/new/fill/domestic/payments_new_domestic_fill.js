@@ -173,7 +173,7 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.formData.sendBySorbnet', function(n, o){
             if(n===true && o===false){//to sorbnet
                 if ($scope.payment.options.futureRealizationDate) {
-                    $scope.payment.formData.realizationDate = new Date();
+                    $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
                 }
             }
 

@@ -91,7 +91,6 @@ angular.module('raiffeisen-payments')
                 $scope.searchForOffice = function(selectedInput) {
                     if(selectedInput.length >=3){
                         $scope.taxOfficeSearched = true;
-                        selectedInput = encodeURIComponent(selectedInput);
                         var params = {};
                         var regexp = new RegExp('^[0-9 ]+$');
                         if (regexp.test(selectedInput)) {
@@ -99,6 +98,7 @@ angular.module('raiffeisen-payments')
                                 accountNo: selectedInput.replace(/ /g, '')
                             };
                         }else{
+                            selectedInput = encodeURIComponent(selectedInput);
                             params = {
                                 officeName: selectedInput
                             };

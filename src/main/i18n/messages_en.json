@@ -1379,6 +1379,8 @@
     "raiff.ng_dropdown_multiselect.option.searchPlaceholder":"Search...",
     "raiff.ng_dropdown_multiselect.option.buttonDefaultText":"All",
     "raiff.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
-    "raiff.ng_dropdown_multiselect.option.waiting":"Waiting"
+    "raiff.ng_dropdown_multiselect.option.waiting":"Waiting",
+    "raiff.payments.tax.tax_account_select.placeholder":"Fill Revenue Office/Customs Chamber",
+    "raiff.payments.tax.tax_account_select.error.empty":"Please fill Revenue Office/Customs Chamber field"
 
 }
