@@ -17,9 +17,12 @@ angular.module('raiffeisen-payments')
             controller: function ($scope) {
                 $scope.elementFocused = false;
                 $scope.showResultNotFound = false;
+                $scope.showRequiredError = false;
                 $scope.taxOfficeSearched = false;
+                $scope.elementTouched = false;
                 $scope.changeFocus = function(access){
                     $scope.elementFocused = access;
+                    $scope.elementTouched = true;
                 };
                 $scope.taxAccounts = [];
                 if ($scope.params instanceof String) {
@@ -68,7 +71,7 @@ angular.module('raiffeisen-payments')
 
                 $scope.$watch('model.searchQuery', function (query, oldQuery) {
                     $scope.showResultNotFound = false;
-                    if(query && query.length > 2){
+                    if(query && query.length > 0){
                         var queryParsed = query.replace(/ /g, '');
                         if (queryParsed && queryParsed.length == 26 && query !== oldQuery) {
                             $scope.searchForOffice(queryParsed);
@@ -89,6 +92,12 @@ angular.module('raiffeisen-payments')
                 };
 
                 $scope.searchForOffice = function(selectedInput) {
+                    if($scope.elementTouched && selectedInput.length <= 0 && !$scope.taxOffice){
+                        $scope.showResultNotFound = false;
+                        $scope.showRequiredError = true;
+                    }else{
+                        $scope.showRequiredError = false;
+                    }
                     if(selectedInput.length >=3){
                         $scope.taxOfficeSearched = true;
                         var params = {};
