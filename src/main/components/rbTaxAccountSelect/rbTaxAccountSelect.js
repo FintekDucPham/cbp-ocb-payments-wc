@@ -1,5 +1,5 @@
 angular.module('raiffeisen-payments')
-    .directive('rbTaxAccountSelect', function (pathService, attrBinder, taxOffices, lodash, validationRegexp) {
+    .directive('rbTaxAccountSelect', function (pathService, attrBinder, taxOffices, lodash, validationRegexp, $q) {
         return {
             restrict: 'E',
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxAccountSelect/rbTaxAccountSelect.html",
@@ -84,7 +84,7 @@ angular.module('raiffeisen-payments')
                 });
 
                 $scope.onSearched = function(selectedInput) {
-                    $scope.searchForOffice(selectedInput).then(function() {
+                    $q.when($scope.searchForOffice(selectedInput)).then(function() {
                         if($scope.taxAccounts.length > 1) {
                             $scope.$broadcast('taxAccountSearched', selectedInput);
                         }
