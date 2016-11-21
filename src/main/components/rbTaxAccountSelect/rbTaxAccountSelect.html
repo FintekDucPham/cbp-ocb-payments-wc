@@ -11,8 +11,7 @@
             <ui-select-match
                     placeholder="{{::'raiff.payments.tax.tax_account_select.placeholder'|translate}}"
                     ng-click="changeFocus(true)">
-                <span class="visible-xs">{{ $select.selected.accountNo | nrbIbanShortFilter }}</span>
-                <span class="hidden-xs">{{ $select.selected.accountNo | nrbIbanFilter }}</span>
+                <span>{{ $select.selected.accountNo | nrbIbanFilter }}</span>
             </ui-select-match>
             <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'"
                                class="taxAccountSelectChoices"
