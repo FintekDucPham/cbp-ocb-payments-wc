@@ -125,7 +125,9 @@ angular.module('raiffeisen-payments')
                                 $scope.showResultNotFound = false;
                                 $scope.taxAccounts = result;
                                 $scope.isFromList = true;
-                                $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
+                                if(result.length===1){
+                                    $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
+                                }
                                 $scope.onAccountSelect({
                                     $office: $scope.taxOffice
                                 });
