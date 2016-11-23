@@ -189,7 +189,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
-                formService.clearForm($scope.recipientForm);
+                formService.clearForm($scope.recipientForm, ['remitterAccountId']);
                 $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
                 $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
             }
