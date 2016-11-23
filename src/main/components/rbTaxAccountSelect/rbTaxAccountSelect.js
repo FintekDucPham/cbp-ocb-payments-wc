@@ -1,4 +1,24 @@
 angular.module('raiffeisen-payments')
+    .config(function ($provide) {
+        $provide.decorator('uiSelectDirective', function ($delegate) {
+
+            var directive = $delegate[0];
+            var directiveCompile = directive.compile;
+
+            directive.compile = function (tElement, tAttrs) {
+                var link = directiveCompile.apply(this, arguments);
+                return function(scope, elem, attrs) {
+                    link.apply(this, arguments);
+                    scope.$watch('$select.open', function(val) {
+                        scope.$parent.$broadcast('uiSelect:open', val);
+                    });
+                };
+            };
+
+            return $delegate;
+
+        });
+    })
     .directive('rbTaxAccountSelect', function (pathService, attrBinder, taxOffices, lodash, validationRegexp, $q) {
         return {
             restrict: 'E',
@@ -14,7 +34,13 @@ angular.module('raiffeisen-payments')
             compile: function ($element, $attr) {
                 attrBinder.bindParams($element.find('ui-select'), $attr);
             },
-            controller: function ($scope) {
+            controller: function ($scope, $element) {
+                $scope.$on('uiSelect:open', function(evt, opened) {
+                    if(!opened && (!$scope.model.searchQuery || ($scope.model.searchQuery && $scope.model.searchQuery.length <= 0))) {
+                        $scope.elementFocused = false;
+                    }
+                });
+
                 $scope.elementFocused = false;
                 $scope.showResultNotFound = false;
                 $scope.showRequiredError = false;
@@ -146,6 +172,10 @@ angular.module('raiffeisen-payments')
                     $scope.elementFocused = false;
                 };
 
+                $scope.$on('scanner-started', function(event, args) {
+
+                    // do what you want to do
+                });
                 $scope.accountValidators = {
                     bbanNrb: function(val){
                         if(val){
@@ -174,16 +204,16 @@ angular.module('raiffeisen-payments')
 
             }
         };
-    }).directive('uiSelectPopupTrigger', function () {
-
+    }).directive('myBlur', function () {
         return {
             restrict: 'A',
-            require: 'uiSelect',
-            link: function ($scope, $element, $attrs, $ctrl) {
-                $scope.$on($attrs.uiSelectPopupTrigger, function () {
-                    $ctrl.activate();
+            link: function (scope, element, attr) {
+                element.bind('blur', function () {
+                    //apply scope (attributes)
+                    scope.$apply(attr.myBlur);
+                    //return scope value for focusing to false
+                    scope.$eval(attr.myFocus + '=false');
                 });
             }
         };
-
     });

@@ -10,7 +10,8 @@
                 ui-select-popup-trigger="taxAccountSearched">
             <ui-select-match
                     placeholder="{{::'raiff.payments.tax.tax_account_select.placeholder'|translate}}"
-                    ng-click="changeFocus(true)">
+                    ng-click="changeFocus(true)"
+                    ng-blur="onBlur('match')">
                 <span>{{ $select.selected.accountNo | nrbIbanFilter }}</span>
             </ui-select-match>
             <ui-select-choices repeat="taxOffice.accountNo as taxOffice in taxAccounts | unique: 'accountNo'"
