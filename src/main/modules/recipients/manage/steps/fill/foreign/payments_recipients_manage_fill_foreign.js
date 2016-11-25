@@ -155,6 +155,12 @@ angular.module('raiffeisen-payments')
             }
         });
 
+        $scope.$watch('recipient.formData.recipientAccountNo', function(n,o){
+            if(n!==o && angular.isString(n)){
+                $scope.recipient.formData.recipientAccountNo = n.toUpperCase().replace(/\s+/g,'');
+            }
+        });
+
         function shouldTriggerSwiftBicUpdate(n, o) {
             return hasSwiftOrBicProperLength(n) && (areDifferent(n, o) || isSwiftOrBicNotChangedYet());
         }
@@ -189,9 +195,12 @@ angular.module('raiffeisen-payments')
 
         $scope.$on('clearForm', function () {
             if($scope.recipientForm) {
-                formService.clearForm($scope.recipientForm, ['remitterAccountId']);
-                $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
-                $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
+                $scope.recipient.formData.recipientSwiftOrBic = null;
+                $timeout(function(){
+                    formService.clearForm($scope.recipientForm, ['remitterAccountId']);
+                    $scope.recipient.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
+                    $scope.$broadcast(bdRadioSelectEvents.MODEL_UPDATED, $scope.recipient.formData.recipientIdentityType);
+                });
             }
         });
 
