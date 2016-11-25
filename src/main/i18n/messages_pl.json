@@ -656,7 +656,7 @@
     "raiff.payments.recipients.new.us.fill.period_type.NEEDED_PERIOD_TYPE": "Dla wybranego symbolu formularza musisz wybrać typ okresu",
     "raiff.payments.recipients.new.us.fill.commitment_id": "Identyfikacja zobowiązania",
     "raiff.payments.recipients.new.us.fill.commitment_id.placeholder": "Wpisz identyfikator zobowiązania",
-    "raiff.payments.recipients.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Identyfikacja zobowiązania nie może przekraczać 40 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki : ; , . \\",
+    "raiff.payments.recipients.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Identyfikacja zobowiązania nie może przekraczać 40 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki : ; , . \\ oraz spację",
 
     "raiff.payments.recipients.verify.us.micro_name": "Nazwa firmy",
     "raiff.payments.recipients.verify.us.remitter_account": "Z rachunku",

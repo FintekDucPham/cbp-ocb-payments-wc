@@ -644,7 +644,7 @@
     "raiff.payments.recipients.new.us.fill.period_type.NEEDED_PERIOD_TYPE": "Please select the period for a given form symbol",
     "raiff.payments.recipients.new.us.fill.commitment_id": "Commitment ID",
     "raiff.payments.recipients.new.us.fill.commitment_id.placeholder": "Enter commitment ID",
-    "raiff.payments.recipients.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Commitment ID cannot be longer than 40 characters and may include only letters, digits and the following characters: : ; , . \\",
+    "raiff.payments.recipients.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID": "Commitment ID cannot be longer than 40 characters and may include only letters, digits and the following characters: : ; , . \\ and space",
 
     "raiff.payments.recipients.verify.us.micro_name": "Business name",
     "raiff.payments.recipients.verify.us.remitter_account": "From account",
