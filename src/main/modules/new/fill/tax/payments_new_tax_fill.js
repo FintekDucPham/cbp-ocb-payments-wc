@@ -103,7 +103,18 @@ angular.module('raiffeisen-payments')
         }));
 
         $scope.setClearFormFunction(function(){
-            $scope.payment.formData = {};
+            if($scope.payment.operation.code!=='EDIT'){
+                $scope.payment.formData = {};
+            }else{
+                $scope.payment.formData.amount = null;
+                $scope.payment.formData.description = null;
+                $scope.payment.formData.formCode = null;
+                $scope.payment.formData.idType = null;
+                $scope.payment.formData.idNumber = null;
+                $scope.payment.formData.periodNo = null;
+                $scope.payment.formData.periodType = null;
+                $scope.payment.formData.periodYear = null;
+            }
             $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.payment.formData.idType = "NIP";
             $scope.accountSelectorRemote.resetToDefault();
