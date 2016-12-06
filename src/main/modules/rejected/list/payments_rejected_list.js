@@ -217,6 +217,9 @@ angular.module('raiffeisen-payments')
                                             if(payment.details.transferType === 'OWN') {
                                                 payment.details.transferType = 'INTERNAL';
                                             }
+                                            if(payment.details.transferType === 'STANDING_ORDER'){
+                                                payment.details.realizationDate = payment.realizationDate;
+                                            }
                                         });
 
                                         payment.loadDetails = undefined;
@@ -244,6 +247,9 @@ angular.module('raiffeisen-payments')
             var details = copiedData.details;
             var paymentType = angular.lowercase(copiedData.transferType);
             var goPage = "";
+            if (paymentType === 'standing_order') {
+                paymentType = 'domestic';
+            }
             if(paymentType === 'internal') {
                 goPage = "payments.new_internal.fill";
             } else if(paymentType === 'e_faktura') {
