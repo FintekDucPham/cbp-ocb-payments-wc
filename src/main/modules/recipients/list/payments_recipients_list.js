@@ -149,6 +149,13 @@ angular.module('raiffeisen-payments')
             });
         };
 
+        $scope.prepareNameAndAddress = function(name, address){
+          var parsedName = $filter('arrayFilter')(name);
+            if(address){
+                parsedName += ", "+address;
+            }
+            return parsedName;
+        };
         function getInsurancePremiums(recipient){
            return lodash.reduce(recipient.paymentTemplates, function(result, value){
                 var insuranceCode = lodash.find(insuranceAccountList, {accountNo : value.beneficiaryAccountNo}).insuranceCode;
@@ -244,7 +251,7 @@ angular.module('raiffeisen-payments')
                                             };
                                         case "TAX":
                                             return {
-                                                nameAndAddress: lodash.union(paymentDetails.taxAccountName, recipient.recipientAddress),
+                                                nameAndAddress: $scope.prepareNameAndAddress(paymentDetails.taxAccountName, recipient.recipientAddress),
                                                 secondaryIdType: paymentDetails.idtype,
                                                 secondaryId: paymentDetails.idnumber,
                                                 nrb: template.beneficiaryAccountNo,

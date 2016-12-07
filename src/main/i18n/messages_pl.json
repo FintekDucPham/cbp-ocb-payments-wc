@@ -112,7 +112,7 @@
     "raiff.payments.new.types.TAX": "Przelew do US/IC",
     "raiff.payments.new.types.INSURANCE": "Przelew do ZUS",
     "raiff.payments.new.types.SWIFT": "Przelew zagraniczny",
-    "raiff.payments.new.types.SEPA": "Przelew euroregulowany",
+    "raiff.payments.new.types.SEPA": "Przelew zagraniczny",
     "raiff.payments.new.types.STANDING": "Zlecenie stałe",
     "raiff.payments.new.types.STANDING_ORDER": "Zlecenie stałe",
     "raiff.payments.new.types.E_FAKTURA": "Invoobill",
