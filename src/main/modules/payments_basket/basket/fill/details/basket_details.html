@@ -8,17 +8,17 @@
     <bd-item-property label="{{::'raiff.payments.basket.list.header.status'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" ng-show="userContext == 'MICRO'">
         {{'raiff.payments.basket.transaction.status.'+$data.signedStatus | translate}}
     </bd-item-property>
-    <bd-item-property label="{{::'raiff.payments.basket.list.header.operation_type'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+    <bd-item-property label="{{::'raiff.payments.basket.list.header.operation_type'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" style="word-break: break-word;">
         {{ ::'raiff.payments.new.types.'+$data.payment.transferType| translate}}
     </bd-item-property>
-    <bd-item-property label="{{::'raiff.payments.basket.list.header.recipient_name'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
+    <bd-item-property label="{{::'raiff.payments.basket.list.header.recipient_name'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" style="word-break: break-word;">
         {{ $data.payment.recipientName.join(' ') }}
     </bd-item-property>
     <bd-item-property label="{{::'raiff.payments.basket.list.header.operation_title'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
         <span ng-if="$data.payment.title.join('')=='ZUSPayment'">
              {{'raiff.payments.basket.list.description.zus.ZUSPayment' | translate}}
         </span>
-        <span ng-if="$data.payment.title.join('')!='ZUSPayment'">
+        <span ng-if="$data.payment.title.join('')!='ZUSPayment'" style="word-break: break-word;">
             {{ $data.payment.title.join(' ') }}
         </span>
     </bd-item-property>
