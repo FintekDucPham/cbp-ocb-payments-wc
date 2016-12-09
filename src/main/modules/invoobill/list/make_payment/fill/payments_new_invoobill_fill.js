@@ -117,4 +117,7 @@ angular.module('raiffeisen-payments')
             });
         };
 
+        $scope.remitterAccountSelectParams = new rbAccountSelectParams({
+            showCustomNames: true
+        });
     });

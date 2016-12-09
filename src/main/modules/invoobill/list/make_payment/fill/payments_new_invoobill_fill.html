@@ -5,7 +5,8 @@
                                rb-account-id="payment.formData.remitterAccountId"
                                rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                rb-product-list-name="TRANSFER_INVOOBILL_FROM_LIST"
-                               rb-remote="remote.model_from"></rb-account-select>
+                               rb-remote="remote.model_from"
+                               rb-account-select-params="remitterAccountSelectParams" ></rb-account-select>
         </bd-item-property>
 
         <bd-item-property ng-if="payment.formData.remitterAccountId"
