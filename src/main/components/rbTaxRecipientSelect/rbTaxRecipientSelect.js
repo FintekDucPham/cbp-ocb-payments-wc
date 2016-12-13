@@ -75,11 +75,17 @@ angular.module('raiffeisen-payments')
                     $scope.recipientList = lodash.union([ nullOption ], lodash.map(data.content, function(data) {
                         var template = data.paymentTemplates[0];
                         var paymentDetails = template.paymentDetails;
+
+                        var nameArr = data.recipientAddress;
+                        if(paymentDetails && paymentDetails.taxAccountName && paymentDetails.taxAccountName.length){
+                            nameArr = [].concat(paymentDetails.taxAccountName, data.recipientAddress);
+                        }
+
                         return {
                             templateId: data.recipientId,
                             customerName: data.recipientName.join(" "),
                             recipientId: data.recipientId,
-                            recipientName: data.recipientAddress,
+                            recipientName: nameArr,
                             nrb: template.beneficiaryAccountNo,
                             debitNrb: template.remitterAccountNo,
                             secondaryIdType: paymentDetails.idtype,
