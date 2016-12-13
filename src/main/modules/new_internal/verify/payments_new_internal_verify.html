@@ -65,7 +65,7 @@
 
 </div>
 <section ng-if="payment.operation.code!=='EDIT'">
-    <bd-item-property class="bd-item-property--text" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
+    <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
     </bd-item-property>
 </section>
