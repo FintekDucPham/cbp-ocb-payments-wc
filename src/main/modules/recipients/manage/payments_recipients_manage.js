@@ -41,7 +41,8 @@ angular.module('raiffeisen-payments')
         $scope.NRB_REGEX = new RegExp(NRB_REGEX);
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
-        $scope.RECIPIENT_NAME_REGEX = validationRegexp('RECIPIENT_NAME');
+        $scope.RECIPIENT_NAME_REGEX = validationRegexp('RECIPIENT_NAME');//CR_318
+        $scope.RECIPIENT_NAME_ZUS_REGEX = validationRegexp('RECIPIENT_NAME_ZUS');//CR_318 doesn't contain insurance
         $scope.PAYMENT_TITLE_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
         bdMainStepInitializer($scope, 'recipient', {
             formName: 'recipientForm',
