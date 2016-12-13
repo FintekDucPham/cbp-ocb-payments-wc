@@ -1365,7 +1365,7 @@
     "raiff.payments.foreign.smart.fill.foreign_transfer_type.label": "Payment type",
     "raiff.payments.foreign.smart.fill.foreign_transfer_type.option.STANDARD": "foreign STANDARD",
     "raiff.payments.foreign.smart.fill.foreign_transfer_type.option.SEPA": "foreign SEPA",
-    "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.STANDARD": "NONE",
+    "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.STANDARD": "STANDARD",
     "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.EXPRESS": "EXPRESS",
     "raiff.payments.foreign.smart.fill.foreign_transfer_trybe.option.TARGET": "TARGET",
     "raiff.payments.foreign.smart.fill.foreign_transfer_costs.option.OUR": "OUR – sender covers",
