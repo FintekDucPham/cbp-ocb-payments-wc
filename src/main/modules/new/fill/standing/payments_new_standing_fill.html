@@ -38,6 +38,7 @@
                            rb-on-account-select="onSenderAccountSelect()"
                            rb-account-select-params="remitterAccountSelectParams"
                            rb-remote="remote.model"
+                           readonly="modification"
                            rb-init-select-value = "{{ payment.formData.debitAccountNo }}"></rb-account-select>
     </bd-item-property>
 
@@ -50,7 +51,8 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.standing.verify.sender_data'|translate}}" ng-if="payment.operation.code == 'EDIT'">
         <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
     </bd-item-property>
-    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}">
+    <bd-item-property label="{{ ::'raiff.payments.new.standing.fill.recipient' | translate }}"
+                      ng-hide="modification">
         <rb-recipient-select rb-recipient="payment.items.recipient"
                              rb-recipient-id="payment.formData.templateId"
                              rb-recipient-list="payment.meta.recipientList"
@@ -66,7 +68,7 @@
                    ng-show="!showHide"
                    name="recipientAccountNo"
                    ng-model="payment.formData.recipientAccountNo"
-                   ng-disabled="payment.options.fixedRecipientSelection || showHide"
+                   ng-disabled="payment.options.fixedRecipientSelection || showHide || modification"
                    required
                    bban-nrb
                    ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"

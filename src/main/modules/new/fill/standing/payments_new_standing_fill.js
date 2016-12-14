@@ -15,11 +15,11 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
-                                                              STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q,
+                                                              STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q, viewStateService,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
                                                               standingTransferService, forbiddenAccounts, promiseSet, utilityService, translate) {
-
-
+        var initialState = viewStateService.getInitialState('payments.new');
+        $scope.modification = initialState && initialState.paymentOperationType === rbPaymentOperationTypes.EDIT;
         $scope.standingOrderId = null;
         $scope.payment.meta.hideSaveRecipientButton = true;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
@@ -182,7 +182,7 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.amount = ("" + $scope.payment.formData.amount).replace(",", ".");
             }
 
-            if ($scope.payment.formData.recipientAccountNo) {
+            if ($scope.payment.formData.recipientAccountNo && !$scope.modification) {
                 control.holdOn();
                 $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
             }
@@ -228,7 +228,6 @@ angular.module('raiffeisen-payments')
             }
         };
 
-      
         var recipientFilter = $scope.recipientFilter = {
             doesMatch: function (recipient) {
                 return true;
