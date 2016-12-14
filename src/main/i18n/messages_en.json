@@ -717,6 +717,15 @@
     "raiff.payments.rejected.list.details.realizationDate": "Execution date",
     "raiff.payments.rejected.list.details.renew.button": "Renew",
     "raiff.payments.rejected.list.details.back": "Back",
+
+    "raiff.payments.rejected.list.details.zus.recipient_data": "Payer's data",
+    "raiff.payments.rejected.list.details.zus.recipient_nip": "NIP",
+    "raiff.payments.rejected.list.details.zus.second_id_type": "Secondary ID type",
+    "raiff.payments.rejected.list.details.zus.second_id_no": "Secondary ID",
+    "raiff.payments.rejected.list.details.zus.payment_type": "Payment type",
+    "raiff.payments.rejected.list.details.zus.declaration": "Declaration date",
+    "raiff.payments.rejected.list.details.zus.declaration_no": "Declaration no.",
+
     "raiff.payments.rejected.select.filter.button.action": "Search",
     "raiff.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
     "raiff.payments.rejected.select.filter.INCORRECT_PERIOD": "Invalid number of last",
