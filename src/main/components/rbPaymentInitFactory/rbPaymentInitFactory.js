@@ -97,6 +97,7 @@ angular.module('raiffeisen-payments')
                     data.recipientCountry = data.paymentDetails.foreignCountryCode;
                     data.realizationDate = new Date(data.realizationDate);
                     data.remitterAccountId = data.accountId;
+                    data.recipientBankName = data.paymentDetails.bankName.join('');
                     data.currency = {
                         currency : data.currency
                     };
@@ -117,6 +118,7 @@ angular.module('raiffeisen-payments')
                     data.recipientCountry = data.paymentDetails.foreignCountryCode;
                     data.remitterAccountId = data.accountId;
                     data.realizationDate = new Date(data.realizationDate);
+                    data.recipientBankName = data.paymentDetails.bankName.join('');
                     data.currency = {
                         currency : data.currency
                     };
