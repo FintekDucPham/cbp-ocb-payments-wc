@@ -151,7 +151,7 @@ angular.module('raiffeisen-payments')
                                 $scope.showResultNotFound = false;
                                 $scope.taxAccounts = result;
                                 $scope.isFromList = true;
-                                if(result.length===1){
+                                if(result.length===1 || (result.length===2 && $scope.taxAccounts[0].accountNo === $scope.taxAccounts[1].accountNo)){//a hack here. In some cases result are 2 instances of the same office
                                     $scope.taxOffice = $scope.model.taxOffice = $scope.taxAccounts[0];
                                 }
                                 $scope.onAccountSelect({
