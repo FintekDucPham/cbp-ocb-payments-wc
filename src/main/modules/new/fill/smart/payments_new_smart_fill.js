@@ -639,6 +639,8 @@ angular.module('raiffeisen-payments')
             });
         };
 
+
+
         $scope.onSwiftBicInited = function(formField){
             //view to model only
             $timeout(function(){
@@ -664,6 +666,12 @@ angular.module('raiffeisen-payments')
                     }
                     return n;
                 });
+
+                //for cases when data is set somehow already:/
+                //      - if data in swiftbic detected the smart resolves again like bic was set as a last one
+                if($scope.paymentForm.swift_bic.$modelValue && angular.isString($scope.paymentForm.swift_bic.$modelValue) && $scope.paymentForm.swift_bic.$modelValue.length){
+                    $scope.paymentForm.swift_bic.$$parseAndValidate();
+                }
 
             });
 
