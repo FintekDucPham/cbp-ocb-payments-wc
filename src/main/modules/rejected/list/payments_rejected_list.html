@@ -200,7 +200,12 @@
                 </section>
 
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.recipientName' | translate }}">
-                    {{ $data.details.recipientName[0] }}
+                    <div ng-if="$data.details.transferType == 'INSURANCE'">
+                        {{ :: 'raiff.payments.taxpayers.select.type.INSURANCE' | translate }}
+                    </div>
+                    <div ng-if="$data.details.transferType != 'INSURANCE'">
+                        {{  $data.details.recipientName[0] }}
+                    </div>
                 </bd-item-property>
 
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.amount' | translate }}">
