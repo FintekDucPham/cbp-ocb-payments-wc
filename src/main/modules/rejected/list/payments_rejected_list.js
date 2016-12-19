@@ -355,6 +355,11 @@ angular.module('raiffeisen-payments')
                 $scope.table.tableControl.invalidate();
             }
         };
+
+        $scope.hasValue = function(value) {
+            return angular.isDefined(value) && value != null && value != "null";
+        };
+
     }).directive('minDate', function () {
         return {
             restrict: 'A',
