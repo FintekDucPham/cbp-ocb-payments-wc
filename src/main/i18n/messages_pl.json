@@ -730,12 +730,12 @@
     "raiff.payments.rejected.list.details.renew.button": "Wykonaj ponownie",
     "raiff.payments.rejected.list.details.back": "Powrót",
 
-    "raiff.payments.rejected.list.details.zus.recipient_data": "Dane płatnika",
+    "raiff.payments.rejected.list.details.zus.recipient_data": "Płatnik",
     "raiff.payments.rejected.list.details.zus.recipient_nip": "NIP płatnika",
-    "raiff.payments.rejected.list.details.zus.second_id_type": "Typ identyfikatora",
-    "raiff.payments.rejected.list.details.zus.second_id_no": "Numer identyfikatora",
+    "raiff.payments.rejected.list.details.zus.second_id_type": "Typ drugiego identyfikatora",
+    "raiff.payments.rejected.list.details.zus.second_id_no": "Drugi identyfikator",
     "raiff.payments.rejected.list.details.zus.payment_type": "Typ wpłaty",
-    "raiff.payments.rejected.list.details.zus.declaration": "Data deklaracji",
+    "raiff.payments.rejected.list.details.zus.declaration": "Deklaracja",
     "raiff.payments.rejected.list.details.zus.declaration_no": "Numer deklaracji",
 
     "raiff.payments.rejected.select.filter.button.action": "Szukaj",
@@ -1400,7 +1400,7 @@
     "raiff.ng_dropdown_multiselect.option.buttonDefaultText":"Wszystkie",
     "raiff.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"zaznaczono",
     "raiff.ng_dropdown_multiselect.option.waiting":"Oczekujące",
-    "raiff.payments.reject.original_customer":"Oryginalny zleceniodawca",
+    "raiff.payments.reject.original_customer":"Zlecający dyspozycję",
     "raiff.payments.tax.tax_account_select.placeholder":"Wpisz miejscowość urzędu/izby lub rachunek",
     "raiff.payments.tax.tax_account_select.error.empty":"Urząd skarbowy nie może być pusty"
 }

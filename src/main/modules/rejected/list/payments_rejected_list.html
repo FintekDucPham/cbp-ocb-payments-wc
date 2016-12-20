@@ -166,35 +166,35 @@
                     {{ $data.details.owner }}
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.recipientAccountNo' | translate }}">
-                    <div ng-if="$data.details.transferType == 'INSURANCE'" ng-bind-html="{{ $data.details.paymentDetails.beneficiary | arrayToHtml }}"></div>
+                    <div ng-if="$data.details.transferType == 'INSURANCE'" ng-bind-html="$data.details.paymentDetails.beneficiary | arrayToHtml"></div>
                     {{ $data.details.recipientAccountNo | nrbIbanFilter }}
                 </bd-item-property>
                 <section ng-if="$data.details.transferType == 'INSURANCE'">
-                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.recipient_data' | translate }}">
+                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.recipient_data' | translate }}" ng-if="hasValue($data.details.recipientName[0]) || hasValue($data.details.recipientName[1])">
                         {{ $data.details.recipientName[0] }}<br />
                         {{ $data.details.recipientName[1] }}
                     </bd-item-property>
 
-                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.recipient_nip' | translate }}">
+                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.recipient_nip' | translate }}" ng-if="hasValue($data.details.paymentDetails.nip)">
                         {{ $data.details.paymentDetails.nip }}
                     </bd-item-property>
 
-                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.second_id_type' | translate }}">
+                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.second_id_type' | translate }}" ng-if="hasValue($data.details.paymentDetails.secondIDType)">
                         {{ $data.details.paymentDetails.secondIDType }}
                     </bd-item-property>
 
-                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.second_id_no' | translate }}">
+                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.second_id_no' | translate }}" ng-if="hasValue($data.details.paymentDetails.secondIDNo)">
                         {{ $data.details.paymentDetails.secondIDNo }}
                     </bd-item-property>
 
-                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.payment_type' | translate }}">
+                    <bd-item-property label="{{ :: 'raiff.payments.rejected.list.details.zus.payment_type' | translate }}" ng-if="hasValue($data.details.paymentDetails.paymentType)">
                         {{ $data.details.paymentDetails.paymentType }}
                     </bd-item-property>
 
-                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.declaration' | translate }}">
+                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.declaration' | translate }}" ng-if="hasValue($data.details.paymentDetails.declaration)">
                         {{ $data.details.paymentDetails.declaration }}
                     </bd-item-property>
-                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.declaration_no' | translate }}">
+                    <bd-item-property  label="{{ :: 'raiff.payments.rejected.list.details.zus.declaration_no' | translate }}" ng-if="hasValue($data.details.paymentDetails.declarationNo)">
                         {{ $data.details.paymentDetails.declarationNo }}
                     </bd-item-property>
                 </section>
