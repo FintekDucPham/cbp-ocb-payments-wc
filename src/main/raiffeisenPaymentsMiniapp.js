@@ -1,7 +1,5 @@
 angular.module('raiffeisen-payments', [
-
     'raiffeisen-shared'
-
 ]).config(function (menuServiceProvider, translationsLoaderProvider, $urlRouterProvider, miniappServiceProvider, pathServiceProvider, stateServiceProvider, privilegesServiceProvider, PRIVILEGES_FUNCTIONALITY) {
     'use strict';
 
