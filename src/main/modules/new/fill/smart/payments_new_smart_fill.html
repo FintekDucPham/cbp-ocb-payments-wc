@@ -43,7 +43,7 @@
                        ng-required="true"
                        ng-pattern="SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP"
                        class="input-field"
-                       ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                       ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo); smartBankResolve()"
                        type="text"
                        ng-maxlength = "payment.smart.data.ibanLength || null"
                        ng-minlength = "payment.smart.data.ibanLength || null"
