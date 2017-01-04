@@ -23,6 +23,7 @@ angular.module('raiffeisen-payments')
         $scope.FOREIGN_DATA_REGEX = validationRegexp('FOREIGN_DATA_REGEX');
         $scope.SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP = validationRegexp('SWIFT_RECIPIENT_ACCOUNTNO_VALIDATION_REGEXP');
         $scope.simpleIbanValidation = validationRegexp('SIMPLE_IBAN_VALIDATION');
+        $scope.NRB_REGEX = new RegExp('^[0-9 ]+$');
 
         $scope.currencyList = [];
         $scope.targetInnerAccountWarning = false;
@@ -95,11 +96,21 @@ angular.module('raiffeisen-payments')
                 return !forbiddenAccounts.isZusAccount(accountNo);
             }
         };
+        var checkIsValidaPolishAccount = function(account){
+            if(account){
+                var accountTmp = account;
+                if(account.indexOf('PL') >=0 || account.indexOf('pl') >= 0){
+                    accountTmp = account.substring(2);
+                }
+                    return $scope.NRB_REGEX.test(accountTmp) && accountTmp.length == 26;
 
+            }
+            return false;
+        };
         $scope.checkUsPmntOnlyEuro = function(accountNo) {
             var valid = true;
-            if (!!accountNo && $scope.paymentForm.recipientAccountNo.$validators.pattern(accountNo)) {
-                accountNo = accountNo.replace(/ /g, '');
+            if (!!accountNo && checkIsValidaPolishAccount(accountNo)) {
+                accountNo = accountNo.replace(/ /g, '').replace('-', '');
                 var usAccount = promiseSet.getResult({
                     set: 'usValidation',
                     key: accountNo,
