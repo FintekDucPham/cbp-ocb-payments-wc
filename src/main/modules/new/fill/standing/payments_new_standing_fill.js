@@ -104,16 +104,27 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.description = recipient.title.join('');
         };
 
+        if($scope.payment.operation.code === 'EDIT'){
+            $scope.setFieldsToOmitOnFormClear([
+                'recipientAccountNo'
+            ]);
+        }
+
         $scope.clearRecipient = function () {
+
             $scope.payment.options.fixedRecipientSelection = false;
-            $scope.payment.items.recipient = null;
             $scope.payment.formData.templateId = null;
-            $scope.payment.formData.recipientAccountNo = null;
+            if($scope.payment.operation.code !== 'EDIT'){
+                $scope.payment.items.recipient = null;
+                $scope.payment.formData.recipientAccountNo = null;
+            }
             $scope.payment.formData.recipientName = null;
             $scope.payment.formData.description = null;
             $scope.payment.formData.transferFromTemplate = false;
-            bdFocus('recipientAccountNo');
+
         };
+
+        $scope.setClearFormFunction($scope.clearRecipient);
 
         $scope.frequencyValidators = {
             frequencyTypeRequired: function () {
@@ -257,14 +268,4 @@ angular.module('raiffeisen-payments')
             }
         });
 
-        $scope.$on('clearForm', function () {
-            if($scope.paymentForm) {
-                $scope.paymentForm.finishDate.$error = {};
-                $scope.validationErrors.finishDate = undefined;
-				if($scope.payment.operation.code === 'EDIT'){
-                	$scope.payment.formData.id = $scope.standingOrderId;
-            	}
-            }
-
-        });
     });
