@@ -13,7 +13,7 @@
                 <ui-select ng-model="payment.type"
                            theme="bootstrap"
                            on-select="changePaymentType($item)"
-                           ng-disabled="activeStep.id !== 'fill' || payment.fixedAccountSelection"
+                           ng-disabled="activeStep.id !== 'fill'"
                            reset-search-input="false"
                            required
                         >
