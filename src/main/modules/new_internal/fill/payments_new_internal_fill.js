@@ -339,5 +339,5 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
-        $scope.$watch('payment.formData.currency', updatePaymentCurrencies, true);
+        $scope.$watch('payment.formData.currency', recalculateCurrencies);
     });
