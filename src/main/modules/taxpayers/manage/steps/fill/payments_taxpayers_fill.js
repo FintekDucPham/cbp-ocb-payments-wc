@@ -76,10 +76,15 @@ angular.module('raiffeisen-payments')
             secondaryIdType: 'PESEL'
         });
 
+
         $scope.onFillStepAttached($scope);
 
         $scope.$on('clearForm', function() {
             formService.clearForm($scope.taxpayersForm);
+            setDefaultValues({
+                taxpayerType: 'INSURANCE',
+                secondaryIdType: 'PESEL'
+            });
         });
 
     });
