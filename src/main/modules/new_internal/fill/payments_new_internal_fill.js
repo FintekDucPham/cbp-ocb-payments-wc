@@ -132,6 +132,7 @@ angular.module('raiffeisen-payments')
             if(recipientAccount && senderAccount){
                 if(recipientAccount.currency !== senderAccount.currency){
                     setRealizationDateToCurrent(true);
+                    $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
                     $scope.payment.meta.blockByCurrency = true;
                 }
             }
