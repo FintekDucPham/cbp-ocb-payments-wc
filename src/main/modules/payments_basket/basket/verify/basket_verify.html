@@ -50,7 +50,7 @@
                                 <div bd-table-cell="third" class="bd-hide-sm bd-table__cell--md-4"> 
                                     {{ ::'raiff.payments.new.types.'+item.payment.transferType | translate}}
                                 </div>
-                                <div bd-table-cell="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'">
+                                <div bd-table-cell="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'" style="word-break: break-word;">
                                     {{item.payment.title.join(' ') }}
                                 </div>
                                 <div bd-table-cell="fifth" class="bd-table__cell--sm-8 bd-table__cell--md-3 text-right">
