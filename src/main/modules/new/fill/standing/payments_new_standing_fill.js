@@ -258,6 +258,13 @@ angular.module('raiffeisen-payments')
                         $scope.paymentForm.firstRealizationDate.$setValidity('firstRealizationDateBck', true);
                     }
                  }
+                 if($scope.paymentForm && $scope.paymentForm.nextRealizationDate){
+                     if($scope.validationErrors && $scope.validationErrors.nextRealizationDate){
+                         $scope.paymentForm.nextRealizationDate.$setValidity('nextRealizationDateBck', false);
+                     }else{
+                         $scope.paymentForm.nextRealizationDate.$setValidity('nextRealizationDateBck', true);
+                     }
+                 }
              });
          });
 
