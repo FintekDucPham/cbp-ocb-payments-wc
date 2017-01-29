@@ -44,7 +44,7 @@ angular.module('raiffeisen-payments')
         $scope.taxpayer.payerId = $scope.taxpayer.formData.taxpayerId;
 
         $scope.clearForm = function () {
-            $scope.taxpayer.formData = {};
+            //$scope.taxpayer.formData = {};
             $scope.$broadcast('clearForm');
         };
 
