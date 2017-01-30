@@ -379,7 +379,7 @@ angular.module('raiffeisen-payments')
                 currency: lodash.find($scope.currencies.data, {currency: $scope.currencies.init})
             };
 
-            $scope.payment.items.modifyFromBasket = false;
+            //$scope.payment.items.modifyFromBasket = false;
 
             angular.forEach($scope.payment.items.paymentTrybes, function(trybe){
                 trybe.selected = trybe.TRYBE_NAME==='STANDARD';

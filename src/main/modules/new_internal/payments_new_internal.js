@@ -62,7 +62,7 @@ angular.module('raiffeisen-payments')
         }
         $scope.clearForm = function () {
             $scope.payment.formData = {};
-            $scope.payment.items = {};
+            //$scope.payment.items = {};
             $scope.$broadcast('clearForm');
         };
 
