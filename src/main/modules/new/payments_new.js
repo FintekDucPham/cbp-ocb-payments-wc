@@ -182,7 +182,7 @@ angular.module('raiffeisen-payments')
         $scope.clearForm = function() {
             if(!$scope.clearFormFunction){
                 $scope.payment.formData = {};
-                $scope.payment.items = {};
+                //$scope.payment.items = {};
             }else{
                 $scope.clearFormFunction();
             }

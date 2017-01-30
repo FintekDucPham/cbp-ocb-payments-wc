@@ -42,11 +42,11 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
 
-        $scope.$on('clearForm', function () {
+       /* $scope.$on('clearForm', function () {
             if($scope.paymentForm) {
                 formService.clearForm($scope.paymentForm);
             }
-        });
+        });*/
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
