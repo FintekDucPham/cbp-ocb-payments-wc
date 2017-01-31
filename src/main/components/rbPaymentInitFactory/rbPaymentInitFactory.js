@@ -162,11 +162,13 @@ angular.module('raiffeisen-payments')
                         data.description = data.title;
                         $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = data.transferType == 'OWN' || data.transferType == 'DOMESTIC';
                         $scope.payment.meta.transferType = data.transferType;
+                        $scope.payment.meta.modifyFromBasket = true;
                         $scope.payment.items.modifyFromBasket = true;
                         $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function () {
                             lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                             $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                             $scope.payment.formData.referenceId = $state.params.referenceId;
+                            $scope.payment.meta.referenceId = $state.params.referenceId;
                             if($scope.payment.formData.realizationDate < new Date()){
                                 $scope.payment.formData.realizationDate = new Date();
                             }

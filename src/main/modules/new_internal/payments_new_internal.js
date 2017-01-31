@@ -62,6 +62,10 @@ angular.module('raiffeisen-payments')
         }
         $scope.clearForm = function () {
             $scope.payment.formData = {};
+            if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+                $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
+                $scope.payment.formData.addToBasket = true;
+            }
             //$scope.payment.items = {};
             $scope.$broadcast('clearForm');
         };
