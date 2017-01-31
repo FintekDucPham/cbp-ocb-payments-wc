@@ -323,6 +323,10 @@ angular.module('raiffeisen-payments')
                     v.amount = null;
                 });
             }
+            if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+                $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
+                $scope.payment.formData.addToBasket = true;
+            }
             $scope.accountSelectorRemote.resetToDefault();
         });
 
