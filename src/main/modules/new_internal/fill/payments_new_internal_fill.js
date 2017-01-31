@@ -42,11 +42,11 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
 
-        $scope.$on('clearForm', function () {
+       /* $scope.$on('clearForm', function () {
             if($scope.paymentForm) {
                 formService.clearForm($scope.paymentForm);
             }
-        });
+        });*/
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
@@ -132,6 +132,7 @@ angular.module('raiffeisen-payments')
             if(recipientAccount && senderAccount){
                 if(recipientAccount.currency !== senderAccount.currency){
                     setRealizationDateToCurrent(true);
+                    $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
                     $scope.payment.meta.blockByCurrency = true;
                 }
             }
@@ -339,5 +340,5 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
-        $scope.$watch('payment.formData.currency', updatePaymentCurrencies, true);
+        $scope.$watch('payment.formData.currency', recalculateCurrencies);
     });

@@ -59,7 +59,7 @@ angular.module('raiffeisen-payments')
                 $scope.searchRecipientsPromise = insuranceAccounts.search().then(function (insuranceAccountsList) {
                     return recipientsService.search({
                         filerTemplateType: 'INSURANCE',
-                        pageSize: 1000
+                        pageSize: 9999
                     }).then(function(data) {
                         $scope.recipientList = lodash.union([ nullOption ], lodash.map(data.content, function(data) {
                             var template = data.paymentTemplates[0];
@@ -70,7 +70,6 @@ angular.module('raiffeisen-payments')
                                 recipient: data.recipientName,
                                 recipientName: data.recipientAddress,
                                 nrb: template.beneficiaryAccountNo,
-                                debitNrb: template.remitterAccountNo,
                                 nip: paymentDetails.nip,
                                 secondaryIdType: paymentDetails.secondIDType,
                                 secondaryId: paymentDetails.secondIDNo,

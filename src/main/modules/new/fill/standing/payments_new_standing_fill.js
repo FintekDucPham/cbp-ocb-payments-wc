@@ -121,6 +121,10 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.recipientName = null;
             $scope.payment.formData.description = null;
             $scope.payment.formData.transferFromTemplate = false;
+            if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+                $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
+                $scope.payment.formData.addToBasket = true;
+            }
 
         };
 
@@ -257,6 +261,13 @@ angular.module('raiffeisen-payments')
                     }else{
                         $scope.paymentForm.firstRealizationDate.$setValidity('firstRealizationDateBck', true);
                     }
+                 }
+                 if($scope.paymentForm && $scope.paymentForm.nextRealizationDate){
+                     if($scope.validationErrors && $scope.validationErrors.nextRealizationDate){
+                         $scope.paymentForm.nextRealizationDate.$setValidity('nextRealizationDateBck', false);
+                     }else{
+                         $scope.paymentForm.nextRealizationDate.$setValidity('nextRealizationDateBck', true);
+                     }
                  }
              });
          });

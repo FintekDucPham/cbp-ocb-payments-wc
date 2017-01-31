@@ -118,6 +118,10 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.payment.formData.idType = "NIP";
             $scope.accountSelectorRemote.resetToDefault();
+            if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+                $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
+                $scope.payment.formData.addToBasket = true;
+            }
         });
 
         $scope.setDefaultValues({

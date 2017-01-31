@@ -379,17 +379,21 @@ angular.module('raiffeisen-payments')
                 currency: lodash.find($scope.currencies.data, {currency: $scope.currencies.init})
             };
 
-            $scope.payment.items.modifyFromBasket = false;
+            //$scope.payment.items.modifyFromBasket = false;
 
             angular.forEach($scope.payment.items.paymentTrybes, function(trybe){
                 trybe.selected = trybe.TRYBE_NAME==='STANDARD';
             });
             delete $scope.payment.items.senderAccount;
-            $scope.payment.formData.realizationDate = new Date();
+            $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.accountSelectorRemote.resetToDefault();
             $scope.payment.smart = {
                 data: {}
             };
+            if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+                $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
+                $scope.payment.formData.addToBasket = true;
+            }
         });
 
         $scope.$watch('payment.formData.paymentType', function(n,o){

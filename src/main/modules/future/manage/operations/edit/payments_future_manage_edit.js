@@ -190,7 +190,7 @@ angular.module('raiffeisen-payments')
 
                 // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
                 if ($scope.payment.type.code == 'OWN') {
-                    $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;        
+                    $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
                 }
 
             });
