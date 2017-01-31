@@ -396,6 +396,10 @@ angular.module('raiffeisen-payments')
             delete $scope.payment.items.senderAccount;
             $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.accountSelectorRemote.resetToDefault();
+            if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+                $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
+                $scope.payment.formData.addToBasket = true;
+            }
         });
 
         $scope.$watch('payment.formData.paymentType', function(n,o){

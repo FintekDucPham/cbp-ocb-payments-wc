@@ -182,6 +182,10 @@ angular.module('raiffeisen-payments')
         $scope.clearForm = function() {
             if(!$scope.clearFormFunction){
                 $scope.payment.formData = {};
+                if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+                    $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
+                    $scope.payment.formData.addToBasket = true;
+                }
                 //$scope.payment.items = {};
             }else{
                 $scope.clearFormFunction();
