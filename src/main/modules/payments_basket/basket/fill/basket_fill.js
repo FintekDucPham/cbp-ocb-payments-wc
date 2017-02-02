@@ -31,7 +31,6 @@ angular.module('raiffeisen-payments')
                         return result;
                     });
                 }]
-
             }
         });
     })
@@ -53,19 +52,15 @@ angular.module('raiffeisen-payments')
 
         $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
 
-
         parameters.context = $scope.userContext;
 
         $scope.options = {
             "futureDatePanelConfig": parameters
         };
 
-
         $scope.model = {
             dataValidity: false
         };
-
-
 
         $scope.onOperationsDateSubmit = function() {
             if (typeof $scope.model.dataValidity == 'undefined' || $scope.model.dataValidity) {
@@ -75,7 +70,6 @@ angular.module('raiffeisen-payments')
                 $scope.table.tableControl.invalidate();
             }
         };
-
 
         $scope.updateSummaryForItem = function (payment){
             if(payment.payment.checked){
@@ -107,19 +101,14 @@ angular.module('raiffeisen-payments')
             $scope.basket.summary.summaryItem = $scope.formSummary($scope.basket.summary.summaryItemMap);
         };
 
-
-
         $scope.paymentsData = function ($promise, $params) {
             preInit($promise, $params);
             $scope.table.tableData.getData = postInit;
         };
 
-
         $scope.resolveTemplateType = function (transferType) {
             return "{0}/modules/payments_basket/basket/fill/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
         };
-
-
 
         $scope.onEdit = function (data) {
             var copiedData = angular.copy(data);
@@ -164,7 +153,6 @@ angular.module('raiffeisen-payments')
                         params.amountFrom = $scope.basket.data.amountRange.min;
                         params.amountTo = $scope.basket.data.amountRange.max;
 
-
                         $scope.basket.transactionList = paymentsBasketService.search(params).then(function (data) {
                                 var summary = {};
                                 _.each(data.content, function (group) {
@@ -203,15 +191,14 @@ angular.module('raiffeisen-payments')
         function deletePaymentAmountFromSummary(payment, summary) {
             if (!!payment.currency) {
                 if (summary[payment.currency]) {
-                    summary[payment.currency].sum = summary[payment.currency].sum - payment.amount;
-                    summary[payment.currency].amount = summary[payment.currency].amount - 1;
+                    summary[payment.currency].sum -= payment.amount;
+                    summary[payment.currency].amount -= 1;
                     if(summary[payment.currency].amount === 0){
                         delete summary[payment.currency];
                     }
                 }
             }
         }
-
 
         function getCheckedPaymentsIdListAndSetViewGroupFlag(groupPaymentsList){
             var checkedBasketItemId = [];
@@ -226,8 +213,6 @@ angular.module('raiffeisen-payments')
             });
             return checkedBasketItemId;
         }
-
-
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var basketItemId = {};
@@ -273,29 +258,18 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.isRealizationDateExceededForTransfer= function( transferDateMilliSec, transferStatus ){
-
-            if (transferStatus!=="SUBMITTED" && transferStatus!== "DELETED" && isDateExceeded( transferDateMilliSec))
-               {return true;}
-            else { return false;}
-
+            return transferStatus !== "SUBMITTED" && transferStatus !== "DELETED" && isDateExceeded(transferDateMilliSec);
         };
 
         $scope.$watch('basket.summary.summaryItem', function(n, o){
-           if(n.length > 0){
-               $scope.basket.rbBasketStepParams.visibility.next = true;
-           }else {
-               $scope.basket.rbBasketStepParams.visibility.next = false;
-           }
+            $scope.basket.rbBasketStepParams.visibility.next = n.length > 0;
         });
 
         function isDateExceeded( transferDateMilliSec){
-
             var todayDate = new Date();
-
             var todayMonth = todayDate.getMonth() + 1;
             var todayDay = todayDate.getDate();
             var todayYear = todayDate.getFullYear();
-
 
             var transferDate= new Date(transferDateMilliSec);
             var transferDateMonth=  transferDate.getMonth() +1;
@@ -305,8 +279,7 @@ angular.module('raiffeisen-payments')
             var inputToDate = new Date ( transferDateYear, transferDateMonth, transferDateDay);
             var todayToDate = new Date( todayYear, todayMonth, todayDay);
 
-            if (inputToDate < todayToDate) { return true;}
-            else { return false;}
+            return inputToDate < todayToDate;
         }
 
     }
