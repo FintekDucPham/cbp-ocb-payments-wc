@@ -156,7 +156,7 @@ angular.module('raiffeisen-payments')
                         $scope.basket.transactionList = paymentsBasketService.search(params).then(function (data) {
                                 var summary = {};
                                 _.each(data.content, function (group) {
-                                    accountsService.get(group.accountId).then(function (accountDetails) {
+                                    getAccountWithCashBalance(group.accountId).then(function (accountDetails) {
                                         customerProductService.setCustomerData(accountDetails, 'ACCOUNT', 'accountId');
                                         group.accountDetails = accountDetails;
                                     });
@@ -187,6 +187,12 @@ angular.module('raiffeisen-payments')
             },
             tableControl: undefined
         };
+
+        function getAccountWithCashBalance(accountId) {
+            return accountsService.get(accountId, {
+                fetchCashAccountBalances: true
+            });
+        }
 
         function deletePaymentAmountFromSummary(payment, summary) {
             if (!!payment.currency) {
