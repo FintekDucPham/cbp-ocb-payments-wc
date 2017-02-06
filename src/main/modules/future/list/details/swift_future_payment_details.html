@@ -2,7 +2,7 @@
 <div ng-class="{'form-body': $data.operationType === 'DELETE'}">
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.transferType'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        {{ ::'raiff.payments.new.types.' + $data.details.transferType | translate}}
+        {{ ::$data.details.transactionTypeDesc}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.domestic.status'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">

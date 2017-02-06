@@ -1,6 +1,6 @@
 <div ng-class="{'form-body' :  $data.operationType === 'DELETE'}">
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.transferType'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        {{ ::'raiff.payments.future.list.details.domestic.transferTypes.' + $data.details.transferType | translate}}
+        {{ ::$data.details.transactionTypeDesc}}
     </bd-item-property>
     
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.status'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
