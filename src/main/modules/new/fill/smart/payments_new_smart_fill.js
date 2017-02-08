@@ -27,6 +27,7 @@ angular.module('raiffeisen-payments')
 
         $scope.currencyList = [];
         $scope.targetInnerAccountWarning = false;
+        $scope.smartFlag = false;
 
         $scope.payment.items.paymentTrybes = rbPaymentTrybeFactory.createModel(rbPaymentTrybeConstants.DEFAULT_TRYBES.SWIFT.TRYBES);
 
@@ -362,9 +363,16 @@ angular.module('raiffeisen-payments')
                     }
                 }
 
-                $scope.payment.formData.recipientSwiftOrBic = null;
-                $scope.payment.formData.recipientBankCountry = undefined;
-                $scope.payment.formData.recipientBankName = null;
+
+                if (!$scope.smartFlag) {
+                    $scope.payment.formData.recipientSwiftOrBic = null;
+                    $scope.payment.formData.recipientBankCountry = undefined;
+                    $scope.payment.formData.recipientBankName = null;
+
+                } else {
+                    $scope.smartFlag = false;
+                }
+
             }
         });
 
@@ -576,6 +584,7 @@ angular.module('raiffeisen-payments')
                 //for iban source
                 if($scope.payment.smart.source==='IBAN'){
                     $timeout(function(){
+                        $scope.smartFlag = true;
                         $scope.payment.formData.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
                         $scope.payment.formData.recipientSwiftOrBic = d.bic;
                     });
