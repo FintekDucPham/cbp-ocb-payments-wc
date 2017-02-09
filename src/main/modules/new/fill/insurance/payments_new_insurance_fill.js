@@ -192,9 +192,7 @@ angular.module('raiffeisen-payments')
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             var insuranceNrbs = _.pluck($scope.payment.formData.insurancePremiums, 'nrb');
             var recipientsNrbs = _.pluck($scope.payment.meta.recipientList, 'nrb');
-
             var nonAddedAccounts = _.difference(insuranceNrbs, recipientsNrbs);
-
             $scope.payment.meta.hideSaveRecipientButton = nonAddedAccounts.length <= 0;
             $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton;
         });
@@ -212,24 +210,27 @@ angular.module('raiffeisen-payments')
 
         $scope.onAccountSelected = function (account, oldAccount) {
             if (account && oldAccount) {
-                var oldOwnerCustId = oldAccount.ownersList[0].customerId;
-                var newOwnerCustId = account.ownersList[0].customerId;
+                var oldOwnerCustId = notEmptyArray(oldAccount.ownersList)[0].customerId;
+                var newOwnerCustId = notEmptyArray(account.ownersList)[0].customerId;
                 if (oldOwnerCustId !== newOwnerCustId) {
                     $scope.clearRecipient();
                 }
             }
 
             if ($scope.paymentForm) {
-
                 _.forEach(zusPaymentInsurances, function(val, key) {
                     if ($scope.paymentForm[val + 'Amount']) {
                         $scope.paymentForm[val + 'Amount'].$validate();
                     }
                 });
-
                 $scope.paymentForm.insuranceErrors.$validate();
             }
         };
+
+        function notEmptyArray(array) {
+            return array || [{}];
+        }
+
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $timeout(function() {
                 $scope.paymentForm.insuranceErrors.$validate();
