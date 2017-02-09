@@ -5,11 +5,12 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/basket_fill.html",
             controller: "PaymentsBasketFillController",
             resolve: {
-                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "transferService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, transferService) {
+                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "transferService", "utilityService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, transferService, utilityService) {
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getParameterByName("basketList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getParameterByName("basketList.max.offset"),
                         storageDaysPayments: systemParameterService.getParameterByName("storageDaysPayments.basket.pmnt"),
+                        CURRENT_DATE: utilityService.getCurrentDateWithTimezone(),
                         account: transferService.getTransferAccounts({
                             restrictions: "ACCOUNT_RESTRICTION_DEBIT",
                             productList: "COMPLEX_TRANSFER_LIST",
@@ -19,8 +20,8 @@ angular.module('raiffeisen-payments')
                         var result = {
                             offset: parseInt(data.defaultOffsetInDays.value, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths.value, 10),
-                            dateFrom: new Date(),
-                            dateTo: new Date(),
+                            dateFrom: new Date(data.CURRENT_DATE.time),
+                            dateTo: new Date(data.CURRENT_DATE.time),
                             account: data.account.content,
                             storageDaysPayments: parseInt(data.storageDaysPayments.value, 10)
                         };
