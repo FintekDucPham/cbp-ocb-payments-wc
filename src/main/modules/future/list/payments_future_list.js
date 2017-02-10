@@ -208,17 +208,21 @@ angular.module('raiffeisen-payments')
                         $params.pageCount = 1;
                     }else{
                         paymentsService.search(params).then(function (response) {
-                            var summary = {};
                             _.each(response.content, function(payment) {
                                 if (payment.transferType == 'STANDING_ORDER') {
                                     payment.transferType = rbPaymentTypes.STANDING.code;
                                 }
-                                addPaymentAmountToSummary(payment, summary);
                                 linkDetailsLoading(payment);
                             });
-                            formSummary(summary);
                             defer.resolve(response.content);
                             $params.pageCount = response.totalPages;
+                        });
+                        paymentsService.getAmountSummaries(params).then(function (response) {
+                           var summary = {};
+                            _.each(response.amountSummaries, function(val, key) {
+                                addPaymentAmountToSummary({currency: key, amount: val}, summary);
+                            });
+                           formSummary(summary);
                         });
                     }
 
