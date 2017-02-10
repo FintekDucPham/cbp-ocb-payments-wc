@@ -19,11 +19,7 @@ angular.module('raiffeisen-payments')
                     return $q.when(true);
                 };
             }
-
         }
-
-
-
 
         function init($scope, params) {
             if ($state.params.referenceId) {
@@ -33,10 +29,10 @@ angular.module('raiffeisen-payments')
                     angular.forEach(data.paymentDetails, function (val, key) {
                         data[key] = val;
                     });
-                    data.paymentType = data.paymentType;
                     data.secondaryIdNo = data.secondIDNo;
                     data.secondaryIdType = data.secondIDType;
                     data.declarationDate = data.declaration;
+                    data.additionalInfo = data.additionalInfo || data.declarationNo;
                     data.realizationDate = new Date(data.realizationDate);
                     data.recipientName = data.recipientName.join("\n");
                     data.remitterAccountId = data.accountId;
@@ -126,7 +122,6 @@ angular.module('raiffeisen-payments')
                     return $q.when(true);
                 });
 
-
                 paymentDataResolveStrategy(rbPaymentTypes.STANDING.code, function (data) {
                     data.frequencyOld = angular.copy(data.frequency);
                     data.frequency =  data.frequencyOld.periodCount;
@@ -142,10 +137,7 @@ angular.module('raiffeisen-payments')
                     return $q.when(true);
                 });
 
-
                 $scope.payment.meta.transferType = 'loading';
-
-
                 $scope.payment.rbPaymentsStepParams.completeState = 'payments.basket.new.fill';
                 $scope.payment.rbPaymentsStepParams.cancelState = 'payments.basket.new.fill';
 
@@ -180,11 +172,7 @@ angular.module('raiffeisen-payments')
                         });
                 });
             }
-
         }
 
         return init;
-
     });
-
-
