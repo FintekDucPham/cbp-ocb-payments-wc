@@ -631,34 +631,31 @@ angular.module('raiffeisen-payments')
             $scope.payment.smart.data = {};
             $scope.payment.smart.source = null;
             $timeout(function(){
-                if($scope.payment.formData.recipientAccountNo){
-                    $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase().replace(/\s+/g,'');
-                    $scope.payment.smart.promise = paymentsService.bankInformation($scope.payment.formData.recipientAccountNo).then(function(data){
-                        $scope.payment.smart.data = angular.isObject(data) ? data : { noMatch: true};
+                if($scope.payment.formData.recipientAccountNo) {
+                    $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase().replace(/\s+/g, '');
+                    $scope.payment.smart.promise = paymentsService.bankInformation($scope.payment.formData.recipientAccountNo).then(function (data) {
+                        $scope.payment.smart.data = angular.isObject(data) ? data : {noMatch: true};
                         $scope.payment.smart.source = 'IBAN';
-                        if($scope.paymentForm.recipientAccountNo){
-                            $scope.paymentForm.recipientAccountNo.$setValidity('minlength',true);
-                            $scope.paymentForm.recipientAccountNo.$setValidity('maxlength',true);
+                        if ($scope.paymentForm.recipientAccountNo) {
+                            $scope.paymentForm.recipientAccountNo.$setValidity('minlength', true);
+                            $scope.paymentForm.recipientAccountNo.$setValidity('maxlength', true);
                         }
                         $scope.smartFill();
-                    }).catch(function(e){
+                    }).catch(function (e) {
                         var toShort = true;
                         var toLong = true;
-                        if(e.subType==='validation' && e.errors.length){
-                            toShort = e.errors[0].defaultMessage!=='iban_to_short';
-                            toLong = e.errors[0].defaultMessage!=='iban_to_long';
+                        if (e.subType === 'validation' && e.errors.length) {
+                            toShort = e.errors[0].defaultMessage !== 'iban_to_short';
+                            toLong = e.errors[0].defaultMessage !== 'iban_to_long';
                         }
-                        if($scope.paymentForm.recipientAccountNo){
-                            $scope.paymentForm.recipientAccountNo.$setValidity('minlength',toShort);
-                            $scope.paymentForm.recipientAccountNo.$setValidity('maxlength',toLong);
+                        if ($scope.paymentForm.recipientAccountNo) {
+                            $scope.paymentForm.recipientAccountNo.$setValidity('minlength', toShort);
+                            $scope.paymentForm.recipientAccountNo.$setValidity('maxlength', toLong);
                         }
                         $scope.payment.smart.data = {};
                         $scope.payment.smart.source = 'IBAN';
                         $scope.smartFill();
                     });
-                }else{
-                    $scope.payment.smart.data = {};
-                    $scope.smartFill();
                 }
             });
         };
