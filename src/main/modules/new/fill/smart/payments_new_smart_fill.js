@@ -679,7 +679,7 @@ angular.module('raiffeisen-payments')
                                     $scope.payment.smart.source = 'BIC';
                                     $scope.smartFill();
                                 }else{
-                                    if($scope.paymentForm.swift_bic){
+                                    if(!$scope.payment.formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY && $scope.paymentForm.swift_bic){
                                         $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                                     }
                                 }
