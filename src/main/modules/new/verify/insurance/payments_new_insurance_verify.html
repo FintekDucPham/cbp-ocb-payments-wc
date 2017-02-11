@@ -97,9 +97,7 @@
         </div>
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}">
-            <span ng-repeat="summary in payment.meta.amountSummary">
-                <bd-amount amount="summary.amount" currency="{{ summary.currency }}" not-styled></bd-amount>
-            </span>
+            <bd-amount amount="payment.meta.amountSummary.amount" currency="{{ payment.meta.amountSummary.currency }}" not-styled></bd-amount>
         </bd-item-property>
 
     </bd-panel>
