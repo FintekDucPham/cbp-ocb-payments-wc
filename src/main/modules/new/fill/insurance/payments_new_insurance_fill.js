@@ -55,23 +55,32 @@ angular.module('raiffeisen-payments')
 
         function calculateInsurancesAmount() {
             var summary = calculateInsurancesSummary();
-            if (!summary || !summary.length) {
+            if (!summary) {
                 summary = createEmptySummary();
             }
             return summary;
         }
 
         function calculateInsurancesSummary() {
-            return lodash.map(lodash.groupBy($scope.payment.formData.insurancePremiums, 'currency'), function (values) {
+            var amount = 0;
+            lodash.forEach($scope.payment.formData.insurancePremiums, function(value){
+                amount += value.amount ? parseFloat((""+value.amount).replace( /,/, '.')) : 0;
+            });
+            return {
+                currency: "PLN",
+                amount: amount
+            };
+           /* return lodash.map(lodash.groupBy($scope.payment.formData.insurancePremiums, 'currency'), function (values) {
                 var totalAmount = 0;
                 lodash.forEach(values, function (value) {
                     totalAmount += value.amount ? parseFloat((""+value.amount).replace( /,/, '.')) : 0;
                 });
+                var currency = angular.isDefined(values[0].currency) ? values[0].currency : "PLN";
                 return {
-                    currency: values[0].currency,
+                    currency: currency,
                     amount: totalAmount
                 };
-            });
+            });*/
         }
 
         function createEmptySummary() {
@@ -318,8 +327,8 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.payment.formData.secondaryIdType = 'PESEL';
             $scope.payment.formData.paymentType = 'TYPE_S';
-            $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
             if($scope.payment.operation.code==='EDIT'){
+                $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
                 angular.forEach($scope.payment.formData.insurancePremiums, function(v,k){
                     v.amount = null;
                 });
@@ -327,6 +336,8 @@ angular.module('raiffeisen-payments')
             if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
                 $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
                 $scope.payment.formData.addToBasket = true;
+            }else{
+                $scope.payment.formData.addToBasket = false;
             }
             $scope.accountSelectorRemote.resetToDefault();
         });
@@ -392,9 +403,11 @@ angular.module('raiffeisen-payments')
             var insurancePremium = lodash.find($scope.insuranceAccountList, function(insuranceAccount) {
                 return insuranceType == insuranceAccount.insuranceCode;
             }) || {};
-            lodash.assign($scope.payment.formData.insurancePremiums[insuranceType], {
-                currency: "PLN",
-                nrb: insurancePremium.accountNo
+            $timeout(function(){
+                lodash.assign($scope.payment.formData.insurancePremiums[insuranceType], {
+                    currency: "PLN",
+                    nrb: insurancePremium.accountNo
+                });
             });
         };
 
