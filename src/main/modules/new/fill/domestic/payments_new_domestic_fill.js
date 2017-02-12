@@ -51,6 +51,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on('clearForm', function () {
             //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
+            $scope.payment.formData.sendBySorbnet = false;
             $timeout(recalculateCurrency);
         });
 
