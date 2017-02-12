@@ -14,6 +14,16 @@ angular.module('raiffeisen-payments')
                     sendBySorbnet: $scope.rbModel
                 };
 
+                $scope.$watch('rbModel', function(n,o){
+                    if(n!==o){
+                        $scope.model = {
+                            sendByElixir: !n,
+                            sendBySorbnet: n
+                        };
+                    }
+
+                });
+
             },
             link: function(s,e,a){
 
