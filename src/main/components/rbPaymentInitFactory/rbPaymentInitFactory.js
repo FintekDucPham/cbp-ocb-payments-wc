@@ -34,7 +34,7 @@ angular.module('raiffeisen-payments')
                     data.declarationDate = data.declaration;
                     data.additionalInfo = data.additionalInfo || data.declarationNo;
                     data.realizationDate = new Date(data.realizationDate);
-                    data.recipientName = data.recipientName.join("\n");
+                    data.recipientName = data.recipientName.join("");
                     data.remitterAccountId = data.accountId;
                     return $q.all({
                         insuranceAccounts : insuranceAccounts.search(),
@@ -75,7 +75,7 @@ angular.module('raiffeisen-payments')
                 });
 
                 paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function (data) {
-                    data.description = data.title.join("\n");
+                    data.description = data.title.join('');
                     data.realizationDate = new Date(data.realizationDate);
                     return $q.when(true);
                 });
