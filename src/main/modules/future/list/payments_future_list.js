@@ -149,6 +149,7 @@ angular.module('raiffeisen-payments')
                     var responseJson = angular.fromJson(resp.content);
                     var referenceId = responseJson.referenceId;
                     viewStateService.setInitialState('payments.future.manage.delete', {
+                        countryList: $scope.countryList,
                         paymentId: payment.id,
                         referenceId: referenceId,
                         paymentDetails: payment
