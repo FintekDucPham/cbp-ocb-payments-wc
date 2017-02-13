@@ -4,8 +4,6 @@ angular.module('raiffeisen-payments')
                                                            $timeout, RECIPIENT_IDENTITY_TYPES, bdRadioSelectEvents, countriesService, forbiddenAccounts, promiseSet, $q,rbPaymentTrybeFactory, rbPaymentTrybeConstants,
                                                            rbAccountOwnNrbService, translate, systemParameterService) {
 
-
-
         $scope.FOREIGN_TYPES = {
             STANDARD: 'STANDARD',
             SEPA: 'SEPA'
@@ -30,8 +28,6 @@ angular.module('raiffeisen-payments')
         $scope.smartFlag = false;
 
         $scope.payment.items.paymentTrybes = rbPaymentTrybeFactory.createModel(rbPaymentTrybeConstants.DEFAULT_TRYBES.SWIFT.TRYBES);
-
-
 
         $scope.countries = {
             promise: countriesService.search(),
@@ -80,8 +76,6 @@ angular.module('raiffeisen-payments')
         if(!$scope.payment.formData.paymentType){
             $scope.payment.formData.paymentType = rbForeignTransferConstants.PAYMENT_TYPES.STANDARD;
         }
-
-
 
         if($scope.payment.formData.recipientSwiftOrBic){
             //the smart gonna handle
@@ -157,7 +151,6 @@ angular.module('raiffeisen-payments')
 
                 };
             }
-
 
             $scope.payment.formData.recipientCountry = lodash.find($scope.countries.data, {code: recipient.details.foreignCountryCode});
 
@@ -363,7 +356,6 @@ angular.module('raiffeisen-payments')
                     }
                 }
 
-
                 if (!$scope.smartFlag) {
                     $scope.payment.formData.recipientSwiftOrBic = null;
                     $scope.payment.formData.recipientBankCountry = undefined;
@@ -372,10 +364,8 @@ angular.module('raiffeisen-payments')
                 } else {
                     $scope.smartFlag = false;
                 }
-
             }
         });
-
 
         $scope.setClearFormFunction(function(){
             $scope.payment.formData = {
@@ -679,7 +669,7 @@ angular.module('raiffeisen-payments')
                                     $scope.payment.smart.source = 'BIC';
                                     $scope.smartFill();
                                 }else{
-                                    if(!$scope.payment.formData.recipientIdentityType===RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY && $scope.paymentForm.swift_bic){
+                                    if($scope.payment.formData.recipientIdentityType!==RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY && $scope.paymentForm.swift_bic){
                                         $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                                     }
                                 }
