@@ -169,6 +169,9 @@ angular.module('raiffeisen-payments')
            }
         });
         $scope.selectRecipient = function (recipient) {
+            if (notNull($scope.payment.items.recipient).templateId == notNull(recipient).templateId) {
+                return;
+            }
             $scope.payment.items.recipient = recipient;
             $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
@@ -192,6 +195,10 @@ angular.module('raiffeisen-payments')
             }
             $scope.payment.options.isFromRecipient = true;
         };
+
+        function notNull(obj) {
+            return obj || {};
+        }
 
         $scope.clearTaxpayer = function () {
             if($scope.payment.options.isFromTaxpayer) {
@@ -272,7 +279,8 @@ angular.module('raiffeisen-payments')
             },
             validSelection: function() {
                 return lodash.isEmpty(lodash.filter($scope.payment.formData.insurancePremiums, function(premiumValue, premiumType) {
-                   return !$scope.paymentForm[premiumType + 'Amount'].$valid;
+                    var field = $scope.paymentForm[premiumType + 'Amount'] || {};
+                    return !field.$valid;
                 }));
             },
             amountExceedingFunds: function (insurances) {
