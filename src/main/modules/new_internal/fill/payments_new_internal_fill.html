@@ -8,7 +8,7 @@
                                rb-product-list-name="TRANSFER_OWN_FROM_LIST"
                                rb-account-select-params="senderSelectParams"
                                rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                               rb-on-account-select="recipientSelectParams.update($accountId)"
+                               rb-on-account-select="onSenderAccountSelect($accountId)"
                                rb-remote="remote.model_from"
                                rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
         </bd-item-property>
