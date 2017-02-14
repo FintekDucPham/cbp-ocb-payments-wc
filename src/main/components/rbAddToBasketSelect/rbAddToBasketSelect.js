@@ -10,7 +10,9 @@ angular.module('raiffeisen-payments')
             },
             controller: function($scope){
                 $scope.$watch('rbModifyFromBasket', function(newValue, oldValue){
-                    $scope.rbModel.addToBasket = newValue;
+                    if (newValue != oldValue) {
+                        $scope.rbModel.addToBasket = newValue;
+                    }
                 });
 
                 $scope.settings = {
