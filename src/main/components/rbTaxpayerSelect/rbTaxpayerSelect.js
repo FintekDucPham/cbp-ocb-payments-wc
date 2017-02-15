@@ -91,6 +91,9 @@ angular.module('raiffeisen-payments')
                     $scope.payerNameLength = parseInt(data.value);
                 });
 
+                $scope.nameLengthLimit = function (item) {
+                    return item == nullOption ? $scope.placeholderText.length : $scope.payerNameLength;
+                };
             }
         };
     });
