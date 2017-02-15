@@ -8,7 +8,7 @@
                 {{$select.selected.customerName | limitTo:payerNameLength}}
             </ui-select-match>
             <ui-select-choices repeat="taxpayerItem in taxpayerList track by $index" null-option="nullOption">
-                <div ng-bind="taxpayerItem.customerName | limitTo:payerNameLength"></div>
+                <div ng-bind="taxpayerItem.customerName | limitTo:nameLengthLimit(taxpayerItem)"></div>
             </ui-select-choices>
         </ui-select>
     </div>
