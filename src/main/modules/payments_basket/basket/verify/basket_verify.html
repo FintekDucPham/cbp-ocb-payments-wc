@@ -33,9 +33,8 @@
                         <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-2" ng-show="userContext=='MICRO'">{{::'raiff.payments.basket.list.header.status'|translate}}</div>
                         <div bd-table-heading="third" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_type"|translate}}</div>
                         <div bd-table-heading="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'">{{::"raiff.payments.basket.list.header.operation_title"|translate}}</div>
-                        <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-3">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
+                        <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-3 text-right">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
                     </div>
-
 
                     <div bd-table-row
                          ng-repeat="item in group.basketTransfers track by $index">
@@ -108,7 +107,6 @@
                     <div style="padding-top: 10px;">
                         <div ng-repeat="currencySummary in summaryItem">
                             <div class="bd-table__row-line bd-table__row-line--sm-tight">
-
                                 <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-5">
                                     <div>
                                         {{::"raiff.payments.basket.list.verify.summary.currency"|translate}} &nbsp;{{currencySummary.currency}}:
@@ -127,7 +125,6 @@
                                     <div>{{::"raiff.payments.basket.list.verify.summary.currency.transactions.amount"|translate}}</div>
                                     <bd-amount amount="currencySummary.sum"
                                                currency="{{currencySummary.currency}}"></bd-amount>
-
                                 </div>
                             </div>
                         </div>
@@ -151,7 +148,5 @@
     <bd-item-property class="bd-item-property--multirow" ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired" label="{{ basket.token.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
     </bd-item-property>
-
-
 
 </div>
