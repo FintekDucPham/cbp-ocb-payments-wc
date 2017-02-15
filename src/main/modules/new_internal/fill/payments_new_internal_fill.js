@@ -42,12 +42,6 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
 
-       /* $scope.$on('clearForm', function () {
-            if($scope.paymentForm) {
-                formService.clearForm($scope.paymentForm);
-            }
-        });*/
-
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
             if(!!$scope.paymentForm.amount) {
@@ -69,6 +63,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
+            $scope.remote.model_from.resetToDefault();
         });
 
         var requestConverter = function (formData) {
