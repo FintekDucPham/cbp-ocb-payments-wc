@@ -95,7 +95,7 @@
     <div  class="basket-vew__summary">
         <bd-list-item summary>
             <div class="summary-item" style="border-bottom: 1px solid #F1F1F1;padding-bottom: 10px;">
-                <div class="bd-table bd-table__fixed">
+                <div class="bd-table bd-table__fixed verify-step">
                     <div class="bd-table__row-line bd-table__row-line--sm-tight" style="border-bottom: 1px solid #F1F1F1;padding-bottom: 40px;">
                     <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-16">
 
@@ -116,7 +116,7 @@
                                     <div>
                                         {{::"raiff.payments.basket.list.verify.summary.currency.transactions"|translate}} &nbsp;{{currencySummary.currency}}
                                     </div>
-                                    <div>
+                                    <div class="transaction-count">
                                         &nbsp;{{currencySummary.amount}}
                                     </div>
                                 </div>

@@ -210,6 +210,7 @@ angular.module('raiffeisen-payments')
         function getCheckedPaymentsIdListAndSetViewGroupFlag(groupPaymentsList){
             var checkedBasketItemId = [];
             _.each(groupPaymentsList, function(group) {
+                group.showGroup = false;
                 _.each(group.basketTransfers, function(basketTransfer) {
                     var payment = basketTransfer.payment;
                     if(payment.checked){
