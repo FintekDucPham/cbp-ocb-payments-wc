@@ -28,7 +28,10 @@ angular.module('raiffeisen-payments')
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
-    }
+        }
+        if ($stateParams.payment) {
+            $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
+        }
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -92,9 +95,12 @@ angular.module('raiffeisen-payments')
         };
 
         function accountsWithoutExecutiveRestriction() {
-            return ($scope.payment.items.senderAccount !== undefined &&
-            (!$scope.payment.items.senderAccount.executiveRestriction &&
-            !$scope.payment.items.recipientAccount.executiveRestriction));
+            return accountWithoutExecutiveRestriction($scope.payment.items.senderAccount) &&
+                accountWithoutExecutiveRestriction($scope.payment.items.recipientAccount);
+        }
+
+        function accountWithoutExecutiveRestriction(account) {
+            return angular.isDefined(account) && !account.executiveRestriction;
         }
 
         function validateBalance() {

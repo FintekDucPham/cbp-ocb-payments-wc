@@ -280,17 +280,7 @@ angular.module('raiffeisen-payments')
             link: function (scope, elem, attr, ctrl) {
                 ctrl.$asyncValidators.convertedBalance = function(newValue) {
                     return $q(function(resolve, reject) {
-                        var sourceAccountCurrency = scope.$eval(attr.rbSourceAccountCurrency),
-                            transactionCurrency = scope.$eval(attr.rbTransactionCurrency);
-
-                        //dla zaznaczonej opcji dodad do koszyka nie walidujemy dostepnych srodkow
-                        if (scope.payment.formData.addToBasket) {
-                            resolve();
-                            return;
-                        }
-
-                        // dla przyszlych platnosci, nie walidujemy dostepnych srodkow
-                        if (scope.payment.options.futureRealizationDate) {
+                        if (angular.isUndefined(scope.payment.items.senderAccount) || scope.payment.formData.addToBasket || scope.payment.options.futureRealizationDate) {
                             resolve();
                             return;
                         }
@@ -300,6 +290,9 @@ angular.module('raiffeisen-payments')
                             resolve();
                             return;
                         }
+
+                        var sourceAccountCurrency = scope.$eval(attr.rbSourceAccountCurrency),
+                            transactionCurrency = scope.$eval(attr.rbTransactionCurrency);
 
                         currencyExchangeService.exchangeForValidation(newValue, transactionCurrency, sourceAccountCurrency).then(function(exchanged) {
                             return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject();
