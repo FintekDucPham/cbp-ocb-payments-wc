@@ -85,9 +85,8 @@
              <span class="validation-message">
                 {{::'raiff.payments.basket.modify.verify.'+payment.meta.customerContext|translate}}
              </span>
-         </span>
-         <span class="messages" ng-if="payment.items.modifyFromBasket">
-             <span class="validation-message">
+             <span ng-if="payment.meta.customerContext=='MICRO'"
+                   class="validation-message">
                  {{::'raiff.payments.basket.modify.signRemove.verify'|translate}}
              </span>
          </span>
