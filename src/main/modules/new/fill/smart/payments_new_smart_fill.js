@@ -53,7 +53,8 @@ angular.module('raiffeisen-payments')
         };
 
         if($scope.payment.formData.currency){
-            $scope.currencies.init = $scope.payment.formData.currency.currency;
+            var value = $scope.payment.formData.currency;
+            $scope.currencies.init = value.currency || value;
         }
 
         $scope.currencies.promise.then(function(data){
@@ -360,7 +361,6 @@ angular.module('raiffeisen-payments')
                     $scope.payment.formData.recipientSwiftOrBic = null;
                     $scope.payment.formData.recipientBankCountry = undefined;
                     $scope.payment.formData.recipientBankName = null;
-
                 } else {
                     $scope.smartFlag = false;
                 }
@@ -419,18 +419,15 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.recipientAccountNo.$setValidity('minlength',true);
                 $scope.paymentForm.recipientAccountNo.$setValidity('maxlength',true);
             }
-
         });
 
         var isInnerBankAccount = function(nrb){
             if(!nrb){
                 return false;
             }
-
             if($scope.simpleIbanValidation.test(nrb)){
                 nrb = nrb.substr(2);
             }
-
             return rbAccountOwnNrbService.startsWithPrefix(nrb);
         };
 
@@ -452,9 +449,7 @@ angular.module('raiffeisen-payments')
         }, function(changed){
             //dependencies changed scenario
             if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR'){
-
                 $scope.payment.formData.transferCost = 'SHA';
-
             }else{
                 $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
             }
@@ -498,7 +493,6 @@ angular.module('raiffeisen-payments')
                     targetAv: $scope.payment.smart.data.target,
                     costs: $scope.payment.formData.transferCost,
                     foreignType: $scope.payment.formData.foreignType,
-
                 };
             }, function(change){
                 //dependencies changed scenario
@@ -538,9 +532,7 @@ angular.module('raiffeisen-payments')
                 if($scope.payment.formData.paymentType==='EXPRESS' && !av.EXPRESS) {
                     $scope.payment.formData.paymentType = 'STANDARD';
                 }
-
             }, true);
-
         });
 
         if(!$scope.payment.smart){
@@ -552,16 +544,13 @@ angular.module('raiffeisen-payments')
                 bicAutoInserted: false,
                 ourCostsLock: false,
                 sepaLock: false
-
             };
         }
-
 
         $scope.smartFill = function(source){
             var d = $scope.payment.smart.data;
             $scope.payment.smart.data.ibanLength = null;
             if(d.countryCode){
-
                 //set country iban length if exists
                 var countryDetails = lodash.find($scope.countries.swiftData, {
                     countryCode: d.countryCode
@@ -590,8 +579,6 @@ angular.module('raiffeisen-payments')
                 if($scope.paymentForm.swift_bic){
                     $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                 }
-
-
             }else{
                 $scope.payment.formData.recipientBankName = null;
                 $scope.payment.formData.recipientBankCountry = undefined;
@@ -613,8 +600,6 @@ angular.module('raiffeisen-payments')
             }else{
                 $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
             }
-
-
         };
 
         $scope.smartBankResolve = function(){
@@ -650,8 +635,6 @@ angular.module('raiffeisen-payments')
             });
         };
 
-
-
         $scope.onSwiftBicInited = function(formField){
             //view to model only
             $timeout(function(){
@@ -685,13 +668,11 @@ angular.module('raiffeisen-payments')
                 }
 
             });
-
         };
 
         //initialization of smart data
         if($scope.payment.smart.data.countryCode){
             $scope.smartFill();
         }
-
 
     });
