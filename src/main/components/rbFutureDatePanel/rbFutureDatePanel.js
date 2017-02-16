@@ -50,7 +50,6 @@ angular.module('raiffeisen-payments')
                 // max date, based on now and business parameter
                 var now     = new Date(),
                     maxDate,
-                    minDate = now,
                     options = rbFutureDateRangeParams($scope.options);
 
                 var commitDateRange = function() {
@@ -62,7 +61,6 @@ angular.module('raiffeisen-payments')
                         $scope.dateRange.fromDate = $scope.inputData.dateFrom;
                         $scope.dateRange.toDate   = $scope.inputData.dateTo;
                     }
-
                 };
 
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;
@@ -75,7 +73,6 @@ angular.module('raiffeisen-payments')
                     'INCORRECT_END_DATE': translate.property('raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
                 };
 
-
                 maxDate = new Date(now.getTime());
                 maxDate.setMonth(now.getMonth() + parseInt(options.maxOffsetInMonths, 10));
 
@@ -86,7 +83,6 @@ angular.module('raiffeisen-payments')
                     dateFrom: options.dateFrom,
                     dateTo: options.dateTo
                 };
-
 
                 var calculateCurrentPeriodBaseDate = function() {
                     var periodDate = new Date(now.getTime());
@@ -106,11 +102,8 @@ angular.module('raiffeisen-payments')
                             break;
                         }
                     }
-
                     return periodDate;
                 };
-
-
 
                 var validatePeriod = function() {
                     if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
@@ -205,7 +198,6 @@ angular.module('raiffeisen-payments')
                 $scope.$watch('inputData.period', validatePeriod); // bind uneccessary
                 $scope.$watchGroup(['inputData.dateFrom', 'inputData.dateTo'], validateRange);
 
-
                 // change DAYS / WEEKS / MONTHS
                 $scope.$watch('inputData.periodRange', function() {
                     var tmp = calculateCurrentPeriodBaseDate();
@@ -228,8 +220,6 @@ angular.module('raiffeisen-payments')
 
                 // change date select mode between range and period
                 $scope.$watch('inputData.selectedMode', function(selectedMode) {
-
-
                     if (selectedMode == FUTURE_DATE_TYPES.PERIOD) {
                         $scope.futureDatePanelForm.period.$setDirty();
 
@@ -238,6 +228,7 @@ angular.module('raiffeisen-payments')
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('date', true);
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('rbDatepickerFormat', true);
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('parse', true);
+                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FINISH_DATE', true);
                             $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', true);
 
                             $scope.futureDatePanelForm.dateFromInput.$setPristine();
@@ -272,7 +263,6 @@ angular.module('raiffeisen-payments')
                         validateRange();
                     }
                 });
-
 
                 $scope.constraints = {
                     maxLastFieldValue: 6
