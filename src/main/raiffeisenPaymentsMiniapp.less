@@ -1,3 +1,5 @@
+@import "styles/variables.less";
+
 @screenMediumMin: 768px;
 @screenSmallMax: 767px;
 .recipients-view, .taxpayers-view, .invoobill-view {
@@ -318,11 +320,22 @@
     }
     padding-top: 50px;
     .summary-item{
-      .bd-table__cell-content-wrapper span {
-        display: inline;
+      .bd-table__cell-content-wrapper {
+        span {
+          display: inline;
+        }
+        .transaction-count {
+          font-size: @bd-amount__value--font-size;
+          font-weight: 300;
+        }
       }
       .bd-amount {
         display:inline;
+      }
+      .verify-step {
+        .bd-amount__value {
+          font-size: @bd-amount__value--font-size;
+        }
       }
     }
   }
