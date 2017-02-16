@@ -1,9 +1,7 @@
 angular.module('raiffeisen-payments')
-    .controller('paymentTaxpayersFillController', function (lodash, bdFillStepInitializer, authorizationService,
-                                                            taxpayerManagementService, zusSuplementaryIds,
-                                                            usSupplementaryIds, dateFilter, translate, $scope,
-                                                            formService, bdStepStateEvents, validationRegexp, utilityService) {
-
+    .controller('paymentTaxpayersFillController', function ($scope, lodash, bdFillStepInitializer, bdStepStateEvents,
+                                                            zusSuplementaryIds, usSupplementaryIds, formService,
+                                                            validationRegexp, utilityService) {
         bdFillStepInitializer($scope, {
             formName: 'taxpayerForm',
             dataObject: $scope.taxpayer
@@ -11,13 +9,12 @@ angular.module('raiffeisen-payments')
 
         $scope.TAXPAYER_NAME_REGEX = validationRegexp('TAXPAYER_NAME');
 
-        $scope.patterns = {};
-        angular.extend($scope.patterns, {
+        $scope.patterns = {
             taxpayerData: {
                 INSURANCE: validationRegexp('INSURANCE_TAXPAYER_DATA'),
                 TAX: validationRegexp('TAX_TAXPAYER_DATA')
             }
-        });
+        };
 
         function setDefaultValues(what) {
             lodash.extend($scope.taxpayer.formData, what, lodash.omit($scope.taxpayer.formData, lodash.isUndefined));
@@ -51,6 +48,7 @@ angular.module('raiffeisen-payments')
                     taxpayerNipField.$setPristine();
                     taxpayerNipField.$render();
                 }
+                $scope.taxpayer.formData.secondaryIdType = 'PESEL';
                 $scope.taxpayersForm.taxpayerData.$validate();
             }
         });
@@ -71,21 +69,19 @@ angular.module('raiffeisen-payments')
             $scope.taxpayersForm.taxpayerSupplementaryId.$validate();
         };
 
-        setDefaultValues({
-            taxpayerType: 'INSURANCE',
-            secondaryIdType: 'PESEL'
-        });
-
-
         $scope.onFillStepAttached($scope);
 
         $scope.$on('clearForm', function() {
             formService.clearForm($scope.taxpayersForm);
+            initForm();
+        });
+
+        function initForm() {
             setDefaultValues({
                 taxpayerType: 'INSURANCE',
                 secondaryIdType: 'PESEL'
             });
-        });
+        }
 
+        initForm();
     });
-
