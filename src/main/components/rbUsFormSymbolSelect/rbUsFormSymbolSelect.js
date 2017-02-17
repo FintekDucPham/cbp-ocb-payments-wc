@@ -9,7 +9,6 @@ angular.module('raiffeisen-payments')
                 formSymbolList: '=?rbFormSymbolList',
                 onSelect: '&rbOnSelect',
                 placeholder: "@rbPlaceholder",
-                isDisabled: '=rbIsDisabled',
                 items: '='
             },
             compile: function ($element, $attr) {
@@ -19,7 +18,6 @@ angular.module('raiffeisen-payments')
                 $scope.selection = {
                     isSelected: false
                 };
-
 
                 taxFormSymbols.search().then(function(formSymbols) {
                     $scope.allFormSymbols = lodash.sortBy(lodash.map(formSymbols, function(symbol) {
@@ -33,10 +31,6 @@ angular.module('raiffeisen-payments')
                     update(lodash.find($scope.formSymbolList, {
                         code: $scope.formSymbolId
                     }), $scope.formSymbolId);
-
-
-
-
 
                     function isOnCurrentList(code){
                         var out = lodash.find($scope.formSymbolList, function(taxForm) {
@@ -52,7 +46,6 @@ angular.module('raiffeisen-payments')
                     });
 
                     function update(item, model) {
-
                         if(model && isOnCurrentList(item.code)){
                             $scope.formSymbol = item;
                             $scope.formSymbolId = model;
@@ -88,8 +81,6 @@ angular.module('raiffeisen-payments')
                             });
                             update(taxFormSymbol, taxFormSymbol ? taxFormSymbol.code : undefined);
                         }
-
-
                     };
 
                     $scope.$watch('items.recipientAccount.taxAccountType', function(taxAccountType,o){
