@@ -5,6 +5,9 @@ angular.module('raiffeisen-payments')
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         $scope.currencyList = [];
+        $scope.remote = {
+            model: {}
+        };
 
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
@@ -49,10 +52,10 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.$on('clearForm', function () {
-            //$scope.payment.items.senderAccount = $scope.payment.meta.accountList[0];
+        $scope.setClearFormFunction(function () {
             $scope.payment.formData.sendBySorbnet = false;
             $scope.payment.items.recipient = undefined;
+            $scope.remote.model.resetToDefault();
             $timeout(recalculateCurrency);
         });
 
@@ -174,9 +177,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$watch('payment.formData.sendBySorbnet', function(n, o){
             if(n===true && o===false){//to sorbnet
-                if ($scope.payment.options.futureRealizationDate) {
                     $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
-                }
             }
 
             // quick fix - OZK224542

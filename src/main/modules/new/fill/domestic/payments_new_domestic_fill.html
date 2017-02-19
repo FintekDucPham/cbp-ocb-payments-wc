@@ -1,6 +1,7 @@
 <div ng-controller="NewDomesticPaymentFillController">
 
     <bd-item-property label="{{ ::'raiff.payments.new.domestic.fill.sender_account' | translate }}">
+        <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
         <rb-account-select rb-account-id="payment.formData.remitterAccountId"
                            rb-account-no="payment.items.recipient.srcAccountNo"
                            rb-account="payment.items.senderAccount"

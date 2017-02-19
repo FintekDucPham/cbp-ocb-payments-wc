@@ -28,7 +28,10 @@ angular.module('raiffeisen-payments')
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
-    }
+        }
+        if ($stateParams.payment) {
+            $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
+        }
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -41,12 +44,6 @@ angular.module('raiffeisen-payments')
         if ($stateParams.accountId) {
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
-
-       /* $scope.$on('clearForm', function () {
-            if($scope.paymentForm) {
-                formService.clearForm($scope.paymentForm);
-            }
-        });*/
 
         $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
             $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
@@ -69,6 +66,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
+            $scope.remote.model_from.resetToDefault();
         });
 
         var requestConverter = function (formData) {
@@ -97,9 +95,12 @@ angular.module('raiffeisen-payments')
         };
 
         function accountsWithoutExecutiveRestriction() {
-            return ($scope.payment.items.senderAccount !== undefined &&
-            (!$scope.payment.items.senderAccount.executiveRestriction &&
-            !$scope.payment.items.recipientAccount.executiveRestriction));
+            return accountWithoutExecutiveRestriction($scope.payment.items.senderAccount) &&
+                accountWithoutExecutiveRestriction($scope.payment.items.recipientAccount);
+        }
+
+        function accountWithoutExecutiveRestriction(account) {
+            return angular.isDefined(account) && !account.executiveRestriction;
         }
 
         function validateBalance() {
@@ -338,6 +339,13 @@ angular.module('raiffeisen-payments')
             },
             payments: true
         });
+
+        $scope.onSenderAccountSelect = function(accountId) {
+            if (accountId == $scope.payment.formData.beneficiaryAccountId) {
+                $scope.payment.formData.beneficiaryAccountId = undefined;
+            }
+            $scope.recipientSelectParams.update(accountId);
+        };
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);

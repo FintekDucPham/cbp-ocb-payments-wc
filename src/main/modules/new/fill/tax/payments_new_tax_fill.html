@@ -51,7 +51,6 @@
                         <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-if="showHide" class="input-field">
                     </div>
 
-
                     <div style="color: #F4390B;font-size: 14px;font-weight: 300;" ng-show="!showHide && isErrorPaste">
                         <div class="validation-message animate-on">
                             {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
@@ -111,7 +110,6 @@
                 {{ ::'raiff.payments.new.us.fill.taxpayer_data.TOO_LONG_PAYER_US' | translate }}
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.taxpayer_select' | translate }}">
@@ -129,7 +127,6 @@
         <ui-select ng-model="payment.formData.idType"
                    theme="bootstrap"
                    ng-change="onIdTypeChange($select.selected)"
-                   ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                    placeholder="{{ ::'raiff.payments.new.us.fill.taxpayer_supplementary_id_type.placeholder' | translate }}"
                    required>
             <ui-select-match>
@@ -145,7 +142,6 @@
         <input name="supplementaryId"
                ng-model="payment.formData.idNumber"
                required
-               ng-disabled="payment.options.isFromRecipient || payment.options.isFromTaxpayer"
                class="input-field"
                type="text"
                nip="payment.formData.idType === 'NIP'"
@@ -171,7 +167,6 @@
                 {{::'raiff.payments.new.us.fill.supplementary_id.INCORRECT_ID_NUMER_US'|translate}}
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.form_symbol' | translate }}">
@@ -182,7 +177,6 @@
                 rb-on-select="selectSymbol()"
                 bd-attr-name="formSymbol"
                 bd-attr-required
-                rb-is-disabled="payment.options.blockFormCodes"
                 rb-placeholder="{{ ::'raiff.payments.new.us.fill.form_symbol.placeholder' | translate }}"
                 items="payment.items">
         </rb-us-form-symbol-select>
@@ -192,7 +186,6 @@
                 {{::'raiff.payments.new.us.fill.form_symbol.required'|translate}}
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_type' | translate }}">
@@ -200,7 +193,7 @@
                    name="periodType"
                    on-select="selectPeriodType($item)"
                    theme="bootstrap"
-                   ng-disabled="!payment.items.formSymbol.periodRequired || payment.options.isFromRecipient"
+                   ng-disabled="!payment.items.formSymbol.periodRequired"
                    bd-novalidate-when="{{ !payment.items.formSymbol.periodRequired }}"
                    required>
             <ui-select-match placeholder="{{ ::'raiff.payments.new.us.fill.period_type.placeholder' | translate }}">
@@ -211,17 +204,14 @@
             </ui-select-choices>
         </ui-select>
 
-
         <eb-validation-messages eb-name="periodType">
             <div eb-message-key="required" class="validation-message animate-on">
                 {{::'raiff.payments.new.us.fill.period_type.NEEDED_PERIOD_TYPE'|translate}}
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.period_no' | translate }}">
-
         <div ng-if="payment.options.customPeriod || !payment.items.formSymbol.periodRequired">
             <input name="periodNo"
                    ng-model="payment.formData.periodNo"
@@ -284,7 +274,6 @@
                 {{::'raiff.payments.new.us.fill.period_year.PERIOD_TYPE_2_NUMBER'|translate}}
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.commitment_id' | translate }}">
@@ -301,7 +290,6 @@
                 {{::'raiff.payments.new.us.fill.commitment_id.TOO_LONG_OBLIGATION_ID'|translate}}
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--multi"
@@ -372,16 +360,12 @@
     </bd-item-property>
 
     <bd-item-property label="{{ ::'raiff.payments.new.us.fill.execution_date' | translate }}">
-
         <rb-datepicker rb-form="paymentForm"
                        rb-name="realizationDate"
                        ng-model="payment.formData.realizationDate"
                        rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                        rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory"
                        rb-required="true">
-
-            <!--bd-attr-bd-min-date="minRealizationDate"-->
-
         </rb-datepicker>
 
         <eb-validation-messages eb-name="realizationDate">
@@ -401,7 +385,6 @@
                 {{ payment.meta.laterExecutedDateMsg }}
             </div>
         </eb-validation-messages>
-
     </bd-item-property>
 
     <div ng-if="!payment.meta.editFuturePayment">

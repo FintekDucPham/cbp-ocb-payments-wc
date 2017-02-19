@@ -1290,7 +1290,7 @@
   "raiff.payments.basket.multistepform.buttons.cancel":"Anuluj",
   "raiff.payments.basket.modify.verify.MICRO":"Przelew zostanie zmodyfikowany w Twoim koszyku płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego akceptacji w koszyku płatności. Edycja przelewu powoduje usunięcie wszystkich wcześniej złożonych akceptacji.",
   "raiff.payments.basket.modify.verify.DETAL":"Przelew zostanie zmodyfikowany w Twoim koszyku płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego autoryzacji w koszyku płatności.",
-  "raiff.payments.basket.modify.signRemove.verify":"Edycja przelewu powoduje, że wszystkie akceptację złożone pod zleceniem zostaną anulowane.",
+  "raiff.payments.basket.modify.signRemove.verify":"Edycja przelewu powoduje, że wszystkie akceptacje złożone pod zleceniem zostaną anulowane.",
   "raiff.payments.new.status.MODIFY_FROM_BASKET":"Przelew został zmodyfikowany.",
   "raiff.payments.new.standing.status.MODIFY_FROM_BASKET":"Przelew został zmodyfikowany.",
   "raiff.payments.basket.history.action.CREATED":"Utworzenie przelewu",
@@ -1403,5 +1403,6 @@
     "raiff.ng_dropdown_multiselect.option.waiting":"Oczekujące",
     "raiff.payments.reject.original_customer":"Zlecający dyspozycję",
     "raiff.payments.tax.tax_account_select.placeholder":"Wpisz miejscowość urzędu/izby lub rachunek",
-    "raiff.payments.tax.tax_account_select.error.empty":"Urząd skarbowy nie może być pusty"
+    "raiff.payments.tax.tax_account_select.error.empty":"Urząd skarbowy nie może być pusty",
+    "raiff.payments.trybes.taget.not_available":"Tryb płatności TARGET nie jest dostępny"
 }

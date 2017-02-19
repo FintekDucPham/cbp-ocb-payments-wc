@@ -130,14 +130,22 @@ angular.module('raiffeisen-payments')
                     delete $scope.payment.formData.secondaryIdNo;
                 }
                 $scope.payment.options.isFromRecipient = false;
-                $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
                 if($scope.payment.operation.code==='EDIT'){
+                    $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
                     angular.forEach($scope.payment.formData.insurancePremiums, function(v,k){
                         v.amount = null;
                     });
+                } else {
+                    clearPremiums();
                 }
             }
         };
+
+        function clearPremiums() {
+            angular.forEach($scope.payment.formData.insurancePremiums, function(_, k) {
+                delete $scope.payment.formData.insurancePremiums[k];
+            });
+        }
 
         $scope.$watch('payment.formData.insuranceAccount', function(newValue){
            if(newValue){
@@ -161,12 +169,16 @@ angular.module('raiffeisen-payments')
            }
         });
         $scope.selectRecipient = function (recipient) {
+            if (notNull($scope.payment.items.recipient).templateId == notNull(recipient).templateId) {
+                return;
+            }
             $scope.payment.items.recipient = recipient;
             $scope.payment.formData.templateId = recipient.templateId;
             $scope.payment.formData.taxpayer = recipient.name;
             $scope.payment.formData.paymentType = recipient.paymentType;
 
             if($scope.payment.operation.code!=='EDIT'){
+                clearPremiums();
                 angular.forEach(recipient.insurancePremiums, function(v,k){
                     $scope.payment.formData.insurancePremiums[k] = {
                         currency: 'PLN',
@@ -181,9 +193,12 @@ angular.module('raiffeisen-payments')
                 $scope.payment.formData.secondaryIdType = recipient.secondaryIdType;
                 $scope.payment.formData.secondaryIdNo = recipient.secondaryId;
             }
-            // select insurances?
             $scope.payment.options.isFromRecipient = true;
         };
+
+        function notNull(obj) {
+            return obj || {};
+        }
 
         $scope.clearTaxpayer = function () {
             if($scope.payment.options.isFromTaxpayer) {
@@ -264,7 +279,8 @@ angular.module('raiffeisen-payments')
             },
             validSelection: function() {
                 return lodash.isEmpty(lodash.filter($scope.payment.formData.insurancePremiums, function(premiumValue, premiumType) {
-                   return !$scope.paymentForm[premiumType + 'Amount'].$valid;
+                    var field = $scope.paymentForm[premiumType + 'Amount'] || {};
+                    return !field.$valid;
                 }));
             },
             amountExceedingFunds: function (insurances) {
