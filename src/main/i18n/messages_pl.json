@@ -1393,5 +1393,6 @@
     "raiff.ng_dropdown_multiselect.option.waiting":"Oczekujące",
     "raiff.payments.reject.original_customer":"Oryginalny zleceniodawca",
     "raiff.payments.tax.tax_account_select.placeholder":"Wpisz miejscowość urzędu/izby lub rachunek",
-    "raiff.payments.tax.tax_account_select.error.empty":"Urząd skarbowy nie może być pusty"
+    "raiff.payments.tax.tax_account_select.error.empty":"Urząd skarbowy nie może być pusty",
+    "raiff.payments.trybes.taget.not_available":"Tryb płatności TARGET nie jest dostępny"
 }
