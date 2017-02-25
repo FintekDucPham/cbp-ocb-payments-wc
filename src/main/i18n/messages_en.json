@@ -1259,6 +1259,7 @@
     "raiff.payments.basket.accepted": "Accepted",
     "raiff.payments.basket.add.verify": "The transfer will be added to your payment basket and it will be made in accordance with the scheduled operation date, but no sooner than on the date of its confirmation in the payment basket.",
     "raiff.payments.new.status.ADDED_TO_BASKET": "The transfer has been added to the basket, awaiting further decisions.",
+    "raiff.payments.new.standing.status.ADDED_TO_BASKET":"The standing order has been added to the basket, awaiting further decisions.",
     "raiff.payments.basket.list.empty": "No transfers that match the search criteria have been found.",
     "raiff.payments.new.status.SIGNED_REQUIRED": "The order awaits the missing signatures required in the acceptance scheme.",
     "raiff.payments.new.status.SIGNED_NOT_ALLOWED": "Order acceptance cannot be achieved.",
