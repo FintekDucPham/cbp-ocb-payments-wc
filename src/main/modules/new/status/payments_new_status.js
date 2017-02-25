@@ -11,6 +11,9 @@ angular.module('raiffeisen-payments')
     })
     .controller('NewPaymentStatusController', function ($scope, bdStatusStepInitializer, viewStateService, $state, rbPaymentTypes, $stateParams) {
 
+        $scope.payment.formData = {};
+        $scope.payment.items = {};
+        $scope.payment.options = {};
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && ($scope.payment.type.code != rbPaymentTypes.OWN.code);
 
         // dodaj jako zlecenie stale tylko dla krajowego / wlasnego
@@ -31,5 +34,4 @@ angular.module('raiffeisen-payments')
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
-
     });

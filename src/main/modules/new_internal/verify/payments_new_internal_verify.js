@@ -9,7 +9,14 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService ) {
+    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash) {
+
+        $scope.showVerify =  false;
+        if(angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)){
+            $state.go('payments.new_internal.fill');
+        }else{
+            $scope.showVerify = true;
+        }
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',

@@ -9,7 +9,19 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, bdMainStepInitializer, transferService,depositsService, $stateParams, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, lodash, rbPaymentTypes, viewStateService, paymentsBasketService, customerService) {
+    .controller('NewPaymentVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, bdMainStepInitializer, transferService,depositsService, $stateParams, authorizationService, formService, translate, dateFilter, RB_TOKEN_AUTHORIZATION_CONSTANTS, lodash, rbPaymentTypes, viewStateService, paymentsBasketService, customerService, $state) {
+        $scope.showVerify = false;
+        if(angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)){
+            var stateToRedirect = 'payments.new.fill';
+            if($scope.payment.type.state === 'smart'){
+                stateToRedirect = 'payments.new_foreign.fill';
+            }
+            $state.go(stateToRedirect, {
+                paymentType: $scope.payment.type.state
+            });
+        }else{
+            $scope.showVerify = true;
+        }
 
         if($scope.payment.formData.realizationDate && !angular.isDate($scope.payment.formData.realizationDate)){
             try{
