@@ -1269,6 +1269,7 @@
   "raiff.payments.basket.accepted":"Przyjęto do realizacji",
   "raiff.payments.basket.add.verify":"Przelew zostanie dodany do Twojego koszyka płatności i zostanie zrealizowany zgodnie z planowaną datą realizacji, jednak nie wcześniej niż w dniu jego potwierdzenia w koszyku płatności",
   "raiff.payments.new.status.ADDED_TO_BASKET":"Przelew pomyślnie został dodany do koszyka i oczekuje na dalsze decyzje.",
+    "raiff.payments.new.standing.status.ADDED_TO_BASKET":"Zlecenie stałe zostało pomyślnie dodane do koszyka i oczekuje na dalsze decyzje.",
   "raiff.payments.basket.list.empty":"Nie znaleziono przelewów do potwierdzenia spełniających wybrane kryteria wyszukiwania.",
   "raiff.payments.new.status.SIGNED_REQUIRED":"Zlecenie oczekuje na brakujące podpisy wymagane w schemacie akceptacji.",
   "raiff.payments.new.status.SIGNED_NOT_ALLOWED":"Akceptacja zleceń nie jest możliwa.",
