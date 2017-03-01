@@ -22,6 +22,7 @@ angular.module('raiffeisen-payments')
         $scope.modification = initialState && initialState.paymentOperationType === rbPaymentOperationTypes.EDIT;
         $scope.standingOrderId = null;
         $scope.payment.meta.hideSaveRecipientButton = true;
+        $scope.payment.formData.addToBasket = false;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = false;
 
         $scope.addToBasketSelectOptions = {
