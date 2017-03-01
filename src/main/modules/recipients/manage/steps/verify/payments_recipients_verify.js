@@ -5,7 +5,12 @@ angular.module('raiffeisen-payments')
             transclude: true,
             templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/payments_recipients_verify.html",
             controller: function (bdVerifyStepInitializer, translate, dateFilter, $scope, pathService, recipientGeneralService, authorizationService,
-                                  formService, transferService, bdStepStateEvents, lodash, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
+                                  formService, transferService, bdStepStateEvents, lodash, RB_TOKEN_AUTHORIZATION_CONSTANTS, $state) {
+
+                $scope.showVerify = true;
+                if(angular.isUndefined($scope.recipient.formData) || lodash.isEmpty($scope.recipient.formData)){
+                    $scope.showVerify = false;
+                }
 
                 $scope.recipientAuthUrl = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
 
@@ -83,6 +88,11 @@ angular.module('raiffeisen-payments')
                                     if (parts[0] !== 'OK' && !parts[1]) {
                                         $scope.recipient.result.code = 'error';
                                     }
+                                    $scope.recipient.customName = $scope.recipient.formData.customName;
+                                    $scope.recipient.formData = {};
+                                    $scope.recipient.items = {};
+                                    $scope.recipient.options = {};
+                                    $scope.recipient.operation = {};
                                     actions.proceed();
                                 }).catch(function (e) {
                                     $scope.recipient.result.token_error = true;

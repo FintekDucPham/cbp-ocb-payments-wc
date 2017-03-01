@@ -35,7 +35,7 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsRecipientsManageRemoveController', function ($scope, initialState, $stateParams, recipientManager, recipientGeneralService, viewStateService, $state, lodash) {
+    .controller('PaymentsRecipientsManageRemoveController', function ($scope, initialState, $stateParams, recipientManager, recipientGeneralService, viewStateService, $state, lodash, $timeout) {
 
         var myRecipientManager = recipientManager($stateParams.recipientType);
 
@@ -44,7 +44,6 @@ angular.module('raiffeisen-payments')
         } else {
             lodash.extend($scope.recipient.formData, $stateParams.recipient, $scope.recipient.formData);
         }
-
         $scope.clearForm = function () {
             $scope.recipient.formData = {};
             $scope.$broadcast('clearForm');

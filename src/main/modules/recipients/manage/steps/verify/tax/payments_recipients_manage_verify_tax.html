@@ -1,4 +1,6 @@
-<rb-payment-recipients-verify>
+
+<div ng-show="showVerify">
+    <rb-payment-recipients-verify>
     <div ng-controller="RecipientsManageVerifyTaxController">
 
         <bd-item-property label="{{::'raiff.payments.recipients.new.zus.verify.micro_name'|translate}}" class="bd-item-property--text bd-item-property--disabled" ng-if="customerDetails.context == 'MICRO'">
@@ -46,3 +48,4 @@
 
     </div>
 </rb-payment-recipients-verify>
+    </div>

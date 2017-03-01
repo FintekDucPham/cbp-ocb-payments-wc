@@ -1,4 +1,6 @@
-<rb-payment-recipients-verify>
+
+<div ng-show="showVerify">
+    <rb-payment-recipients-verify>
     <div ng-controller="RecipientsManageVerifyDomesticController">
         <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
         <span class="payments-recipients__domestic-verify">
@@ -68,3 +70,4 @@
     </span>
     </div>
 </rb-payment-recipients-verify>
+</div>
