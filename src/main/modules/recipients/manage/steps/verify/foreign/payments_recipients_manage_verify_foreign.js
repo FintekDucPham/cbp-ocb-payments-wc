@@ -1,6 +1,16 @@
 angular.module('raiffeisen-payments')
-    .controller('RecipientsManageVerifyForeignDomesticController', function ($scope, accountsService, customerService, lodash) {
-
+    .controller('RecipientsManageVerifyForeignDomesticController', function ($scope, accountsService, customerService, lodash, $state, $timeout) {
+        $scope.showVerify = false;
+        if(angular.isUndefined($scope.recipient.formData) || lodash.isEmpty($scope.recipient.formData)){
+            $timeout(function(){
+                $state.go('payments.recipients.manage.new.fill', {
+                    recipientType: $scope.recipient.type.code,
+                    operation: "new"
+                });
+            });
+        }else{
+            $scope.showVerify = true;
+        }
         $scope.accountListPromise = accountsService.search().then(function(accountList){
             $scope.accountsList = accountList.content;
         });

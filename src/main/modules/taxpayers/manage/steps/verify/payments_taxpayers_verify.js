@@ -1,7 +1,16 @@
 angular.module('raiffeisen-payments')
-    .controller('TaxpayersManageVerifyController', function ($scope, bdVerifyStepInitializer, taxpayerManagementService, bdStepStateEvents, formService, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
+    .controller('TaxpayersManageVerifyController', function ($scope, bdVerifyStepInitializer, taxpayerManagementService, bdStepStateEvents, formService, RB_TOKEN_AUTHORIZATION_CONSTANTS, $timeout, $state, lodash) {
 
-
+        $scope.showVerify = false;
+        if(angular.isUndefined($scope.taxpayer.formData) || lodash.isEmpty($scope.taxpayer.formData)){
+            $timeout(function(){
+                $state.go('payments.taxpayers.manage.new.fill', {
+                    operation: "new"
+                });
+            });
+        }else{
+            $scope.showVerify = true;
+        }
 
         bdVerifyStepInitializer($scope, {
             formName: 'taxpayerForm',

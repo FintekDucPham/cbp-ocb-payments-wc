@@ -1,5 +1,6 @@
 angular.module('raiffeisen-payments')
     .controller('TaxpayersManageRemoveStatusController', function ($scope, bdStepStateEvents, translate) {
+        $scope.taxpayerClone = angular.copy($scope.taxpayer);
 
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
             if ($scope.taxpayer.result.type == 'success') {
@@ -18,4 +19,7 @@ angular.module('raiffeisen-payments')
             return translate.property(msg);
         }
 
+        $scope.taxpayer.formData = {};
+        $scope.taxpayer.options = {};
+        $scope.taxpayer.meta = {};
     });
