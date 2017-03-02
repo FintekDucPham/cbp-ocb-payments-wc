@@ -183,6 +183,7 @@ angular.module('raiffeisen-payments')
 
                     if($scope.table.tableData.newSearch){
                         params.pageNumber = 1;
+                        $scope.table.tableConfig.currentPage = 1;
                         $scope.table.tableData.newSearch = false;
                     }else{
                         params.pageSize   = $params.pageSize;

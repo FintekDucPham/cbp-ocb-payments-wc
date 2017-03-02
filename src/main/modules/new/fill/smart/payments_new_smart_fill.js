@@ -580,11 +580,16 @@ angular.module('raiffeisen-payments')
                     $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                 }
             }else{
-                $scope.payment.formData.recipientBankName = null;
-                $scope.payment.formData.recipientBankCountry = undefined;
-                if($scope.paymentForm.swift_bic){
-                    $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                if($scope.payment.smart.source==='IBAN' && $scope.payment.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                    //this case doesnt require any clearing
+                }else{
+                    $scope.payment.formData.recipientBankName = null;
+                    $scope.payment.formData.recipientBankCountry = undefined;
+                    if($scope.paymentForm.swift_bic){
+                        $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                    }
                 }
+
             }
 
             if($scope.payment.smart.source==='IBAN' && !d.swift && !d.noMatch){

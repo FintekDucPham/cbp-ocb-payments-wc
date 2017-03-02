@@ -152,7 +152,7 @@
                        ng-keyup="unlockField()"
                        type="text"
                        bd-matches-none-of="recipientAccountValidators"
-                       placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
+                       placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}" rb-remove-space-parser>
                 <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                     <div class="validation-message animate-on">
