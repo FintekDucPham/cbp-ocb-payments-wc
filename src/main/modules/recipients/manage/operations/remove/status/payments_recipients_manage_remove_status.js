@@ -4,5 +4,6 @@ angular.module('raiffeisen-payments')
         $scope.recipient.items = {};
         $scope.recipient.options = {};
         $scope.recipient.operation = {};
+        $scope.recipient.meta = {};
 
     });
