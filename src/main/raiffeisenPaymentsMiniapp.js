@@ -39,7 +39,11 @@ angular.module('raiffeisen-payments', [
                     id: "payments.new.fill",
                     label: 'payments.submenu.options.new.header',
                     icon: "raiff-icons raiff_przelew",
-                    action: "payments.new.fill({ paymentType: 'domestic', referenceId: undefined })",
+                    action: function(item, scope, state){
+                        state.reload('payments.new.fill').then(function(){
+                            state.transitionTo("payments.new.fill",{ paymentType: 'domestic', referenceId: undefined });
+                        });
+                    },
                     priority: 1
                 },
                 {
