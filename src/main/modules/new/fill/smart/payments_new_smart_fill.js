@@ -655,7 +655,7 @@ angular.module('raiffeisen-payments')
             //view to model only
             $timeout(function(){
                 $scope.paymentForm.swift_bic.$parsers.push(function(n){
-                    if(n.length >=8){
+                    if(n.length >=8 && $scope.payment.smart.source!=='IBAN'){//if data already set
                         $scope.payment.smart.swiftbicPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                             n,
                             recipientGeneralService.utils.getBankInformation.strategies.SWIFT
