@@ -492,7 +492,7 @@ angular.module('raiffeisen-payments')
                     curr:$scope.payment.formData.currency,
                     targetAv: $scope.payment.smart.data.target,
                     costs: $scope.payment.formData.transferCost,
-                    foreignType: $scope.payment.formData.foreignType,
+                    foreignType: $scope.payment.formData.foreignType
                 };
             }, function(change){
                 //dependencies changed scenario
@@ -580,10 +580,17 @@ angular.module('raiffeisen-payments')
                     $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", true);
                 }
             }else{
-                $scope.payment.formData.recipientBankName = null;
-                $scope.payment.formData.recipientBankCountry = undefined;
-                if($scope.paymentForm.swift_bic){
-                    $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                if($scope.payment.smart.source==='IBAN' && $scope.payment.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY) {
+                    //this case doesnt require any clearing
+                }else{
+                    if(!($scope.payment.smart.source==='IBAN' && d.noMatch)){
+                        $scope.payment.formData.recipientBankName = null;
+                        $scope.payment.formData.recipientBankCountry = undefined;
+                        if($scope.paymentForm.swift_bic){
+                            $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
+                        }
+                    }
+
                 }
             }
 
@@ -603,19 +610,23 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.smartBankResolve = function(){
-            $scope.payment.smart.data = {};
-            $scope.payment.smart.source = null;
+            if($scope.payment.smart.source==='IBAN'){//if triggered recipient account has changed
+                $scope.payment.smart.data = {};
+                $scope.payment.smart.source = null;
+            }
             $timeout(function(){
                 if($scope.payment.formData.recipientAccountNo) {
                     $scope.payment.formData.recipientAccountNo = $scope.payment.formData.recipientAccountNo.toUpperCase().replace(/\s+/g, '');
                     $scope.payment.smart.promise = paymentsService.bankInformation($scope.payment.formData.recipientAccountNo).then(function (data) {
-                        $scope.payment.smart.data = angular.isObject(data) ? data : {noMatch: true};
-                        $scope.payment.smart.source = 'IBAN';
-                        if ($scope.paymentForm.recipientAccountNo) {
-                            $scope.paymentForm.recipientAccountNo.$setValidity('minlength', true);
-                            $scope.paymentForm.recipientAccountNo.$setValidity('maxlength', true);
+                        if(angular.isObject(data)){
+                            $scope.payment.smart.data = angular.isObject(data) ? data : {noMatch: true};
+                            $scope.payment.smart.source = 'IBAN';
+                            if ($scope.paymentForm.recipientAccountNo) {
+                                $scope.paymentForm.recipientAccountNo.$setValidity('minlength', true);
+                                $scope.paymentForm.recipientAccountNo.$setValidity('maxlength', true);
+                            }
+                            $scope.smartFill();
                         }
-                        $scope.smartFill();
                     }).catch(function (e) {
                         var toShort = true;
                         var toLong = true;
@@ -627,8 +638,11 @@ angular.module('raiffeisen-payments')
                             $scope.paymentForm.recipientAccountNo.$setValidity('minlength', toShort);
                             $scope.paymentForm.recipientAccountNo.$setValidity('maxlength', toLong);
                         }
-                        $scope.payment.smart.data = {};
-                        $scope.payment.smart.source = 'IBAN';
+
+                        if($scope.payment.smart.source==='IBAN') {
+                            $scope.payment.smart.data = {noMatch: true};
+                            $scope.payment.smart.source = 'IBAN';
+                        }
                         $scope.smartFill();
                     });
                 }
