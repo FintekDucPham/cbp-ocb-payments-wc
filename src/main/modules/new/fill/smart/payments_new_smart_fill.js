@@ -364,6 +364,12 @@ angular.module('raiffeisen-payments')
                 } else {
                     $scope.smartFlag = false;
                 }
+
+                if(o===RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC && $scope.payment.smart && $scope.payment.smart.source && $scope.payment.smart.source==="BIC"){
+                    $scope.payment.smart.data = {};
+                    $scope.payment.smart.source = null;
+                    $scope.smartFill();
+                }
             }
         });
 
