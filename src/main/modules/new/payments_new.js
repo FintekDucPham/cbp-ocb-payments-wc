@@ -240,6 +240,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.addAsStandingOrder = function() {
+           $scope.payment.formData.addToBasket = false;
             
            viewStateService.setInitialState('payments.new', {
                paymentOperationType: rbPaymentOperationTypes.NEW
