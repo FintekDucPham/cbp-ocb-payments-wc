@@ -165,7 +165,9 @@ angular.module('raiffeisen-payments')
                                         var payment = basketTransfer.payment;
                                         //quick fix
                                         payment.recipientName.splice(1,3,null);
-                                        payment.title.splice(1,3,null);
+                                        if(payment.title){
+                                            payment.title.splice(1,3,null);
+                                        }
                                         $scope.addPaymentAmountToSummary(payment, summary);
                                     });
                                 });
