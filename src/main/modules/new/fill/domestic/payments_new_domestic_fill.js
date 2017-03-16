@@ -56,7 +56,15 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.sendBySorbnet = false;
             $scope.payment.items.recipient = undefined;
             $scope.remote.model.resetToDefault();
-            $timeout(recalculateCurrency);
+            $scope.payment.formData.recipientAccountNo = null;
+
+            bdFocus('recipientAccountNo');
+            $timeout(function(){
+                recalculateCurrency();
+                $scope.paymentForm.recipientAccountNo = $setPristine();
+                $scope.payment.formData.description = translate.property('raiff.payments.new.internal.fill.default_description');
+                $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
+            });
         });
 
         $scope.setRequestConverter(function(formData) {
