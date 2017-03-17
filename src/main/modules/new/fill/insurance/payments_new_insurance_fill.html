@@ -303,7 +303,7 @@
         </bd-checkbox-select>
 
 
-        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-show="payment.meta.amountSummary.amount > 0">
+        <bd-item-property class="bd-item-property--multirow" label="{{ ::'raiff.payments.new.zus.fill.total_payment' | translate }}" ng-show="payment.meta.amountSummary.amount > 0 && insurenePremiumsValid">
             <div class="rb-payments-new-zus-fill__summary">
                 <div class="rb-payments-new-zus-fill__summary-entry">
                     <bd-amount amount="payment.meta.amountSummary.amount" currency="{{ payment.meta.amountSummary.currency }}"></bd-amount>
