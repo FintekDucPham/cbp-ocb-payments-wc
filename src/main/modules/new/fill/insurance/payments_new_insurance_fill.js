@@ -104,6 +104,7 @@ angular.module('raiffeisen-payments')
             return lodash.size(lodash.keys(insurances));
         }
 
+        $scope.insurenePremiumsValid = true;
         var insurenePremiumsWatch = function (newInsurances, oldInsurances) {
             $scope.payment.meta.amountSummary = $scope.totalPaymentAmount = calculateInsurancesAmount();
             lodash.forEach(lodash.difference(lodash.keys(oldInsurances), lodash.keys(newInsurances)), function(insurance) {
@@ -112,6 +113,15 @@ angular.module('raiffeisen-payments')
                 formElement.$setUntouched();
                 formElement.$render();
             });
+            if($scope.paymentForm){
+                var valid = true;
+                angular.forEach(newInsurances, function(v,k){
+                    if($scope.paymentForm[k + 'Amount'].$invalid){
+                        valid = false;
+                    }
+                });
+                $scope.insurenePremiumsValid = valid;
+            }
         };
         $scope.$watch('payment.formData.insurancePremiums',insurenePremiumsWatch , true);
         if($scope.payment.formData.insurancePremiums){
