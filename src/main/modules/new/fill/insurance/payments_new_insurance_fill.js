@@ -116,7 +116,7 @@ angular.module('raiffeisen-payments')
             if($scope.paymentForm){
                 var valid = true;
                 angular.forEach(newInsurances, function(v,k){
-                    if($scope.paymentForm[k + 'Amount'].$invalid){
+                    if($scope.paymentForm[k + 'Amount'] && $scope.paymentForm[k + 'Amount'].$invalid){
                         valid = false;
                     }
                 });
