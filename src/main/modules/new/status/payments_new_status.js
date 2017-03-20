@@ -14,7 +14,7 @@ angular.module('raiffeisen-payments')
         $scope.payment.formData = {};
         $scope.payment.items = {};
         $scope.payment.options = {};
-        $scope.payment.meta = {};
+        //$scope.payment.meta = {};
         $scope.payment.smart = undefined;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && ($scope.payment.type.code != rbPaymentTypes.OWN.code);
 

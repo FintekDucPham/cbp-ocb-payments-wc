@@ -186,6 +186,7 @@ angular.module('raiffeisen-payments')
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
                 $scope.payment.formData.referenceId = initialState.referenceId;
+                $scope.payment.referenceId = initialState.referenceId;
                 $scope.payment.meta.editFuturePayment = true;
 
                 // dla przelewow wlasnych guzik zapisz odbiorce jest niewidczon
