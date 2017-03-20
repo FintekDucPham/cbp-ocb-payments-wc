@@ -802,7 +802,7 @@
     "raiff.payments.taxpayers.fill.type.tax": "US/IC",
     "raiff.payments.taxpayers.fill.taxpayer_data": "Dane płatnika",
     "raiff.payments.taxpayers.fill.taxpayer_data.placeholder": "Wpisz nazwę płatnika",
-    "raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_ZUS": "Pole Dane płatnika  nie może być dłuższe niż 54 (dla płatnika ZUS) i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' / _",
+    "raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_ZUS": "Dane płatnika nie mogą być dłuższe niż 54 znaki i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' / _",
     "raiff.payments.taxpayers.fill.taxpayer_data.TOO_LONG_PAYER_US_IC": "Pole Dane płatnika  nie może być dłuższe niż 140 znaków (dla płatnika US) i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' / _",
     "raiff.payments.taxpayers.fill.taxpayer_nip": "NIP płatnika",
     "raiff.payments.taxpayers.fill.taxpayer_nip.placeholder" : "Wpisz NIP płatnika",
