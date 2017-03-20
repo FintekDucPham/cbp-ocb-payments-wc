@@ -356,6 +356,9 @@ angular.module('raiffeisen-payments')
                     delete $scope.payment.formData[k];
                 }
             });
+            if($scope.payment.referenceId){
+                $scope.payment.formData.referenceId = angular.copy($scope.payment.referenceId);
+            }
             $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             $scope.payment.formData.secondaryIdType = 'PESEL';
             $scope.payment.formData.paymentType = 'TYPE_S';
