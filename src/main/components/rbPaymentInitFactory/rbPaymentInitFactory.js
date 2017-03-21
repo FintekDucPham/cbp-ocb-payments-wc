@@ -32,7 +32,7 @@ angular.module('raiffeisen-payments')
                     data.secondaryIdNo = data.secondIDNo;
                     data.secondaryIdType = data.secondIDType;
                     data.declarationDate = data.declaration;
-                    data.additionalInfo = data.additionalInfo || data.declarationNo;
+                    data.additionalInfo = data.additionalInfo;
                     data.realizationDate = new Date(data.realizationDate);
                     data.recipientName = data.recipientName.join("");
                     data.remitterAccountId = data.accountId;

@@ -509,7 +509,7 @@ angular.module('raiffeisen-payments')
                     curr:$scope.payment.formData.currency,
                     targetAv: $scope.payment.smart.data.target,
                     costs: $scope.payment.formData.transferCost,
-                    foreignType: $scope.payment.formData.foreignType,
+                    foreignType: $scope.payment.formData.foreignType
                 };
             }, function(change){
                 //dependencies changed scenario

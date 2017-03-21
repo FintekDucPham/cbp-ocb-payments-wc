@@ -55,6 +55,7 @@ angular.module('raiffeisen-payments')
         $scope.setClearFormFunction(function () {
             $scope.payment.formData.sendBySorbnet = false;
             $scope.payment.items.recipient = undefined;
+            $scope.payment.formData.recipientAccountNo = undefined;
             $scope.remote.model.resetToDefault();
             $scope.payment.formData.recipientAccountNo = null;
 
