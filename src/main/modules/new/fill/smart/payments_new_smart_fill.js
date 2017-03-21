@@ -406,7 +406,7 @@ angular.module('raiffeisen-payments')
                 source: null,
                 bicAutoInserted: false,
                 ourCostsLock: false,
-                sepaLock: false
+                sepaLock: true
             });
             $scope.smartFill();
         });
