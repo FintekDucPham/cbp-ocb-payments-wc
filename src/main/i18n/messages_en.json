@@ -782,7 +782,7 @@
 
     "raiff.payments.taxpayers.fill.custom_name": "Customer payer name",
     "raiff.payments.taxpayers.fill.custom_name.required": "Custom payer name is required",
-    "raiff.payments.taxpayers.fill.custom_name.pattern": "Payer name cannot be longer than 54 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , /",
+    "raiff.payments.taxpayers.fill.custom_name.pattern": "Payer name cannot be longer than 54 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' / _",
     "raiff.payments.taxpayers.fill.custom_name.placeholder": "Enter payer name",
     "raiff.payments.taxpayers.fill.taxpayer_type": "Payer type",
     "raiff.payments.taxpayers.fill.type.insurance": "Social Insurance Institution (ZUS)",
