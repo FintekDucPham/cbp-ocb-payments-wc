@@ -489,9 +489,23 @@ angular.module('raiffeisen-payments')
             //dependencies changed scenario
             if(change.sepaAv && change.isEur && change.trybe !== 'TARGET'){
                 $scope.payment.smart.sepaLock = false;
-                //if(old.trybe==='TARGET' && change.trybe==='STANDARD'){
+
+                //needs to be accurate to detect a manual change and avoid autoload issues
+                var manualChangeToEnableSepa = false;
+                if(!old.sepaAv && change.sepaAv===true && change.isEur===true && change.trybe !== 'TARGET'){
+                    manualChangeToEnableSepa = true;
+                }
+                if(change.sepaAv===true && !old.isEur && change.isEur===true && change.trybe !== 'TARGET'){
+                    manualChangeToEnableSepa = true;
+                }
+                if(change.sepaAv===true && change.isEur===true && old.trybe==='TARGET' && change.trybe !== 'TARGET'){
+                    manualChangeToEnableSepa = true;
+                }
+
+
+                if(manualChangeToEnableSepa){//prevents change when redirecting from another state
                     $scope.payment.formData.foreignType=$scope.FOREIGN_TYPES.SEPA;
-                //}
+                }
             }else{
                 $scope.payment.smart.sepaLock = true;
                 if($scope.payment.formData.foreignType===$scope.FOREIGN_TYPES.SEPA){
@@ -619,11 +633,13 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.swift_bic.$$parseAndValidate();
             }
 
+            /* may be not needed - same logic in watch
             if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR' && d.sepa && $scope.payment.formData.paymentType!=='TARGET'){
                 $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.SEPA;
             }else{
                 $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
             }
+            */
         };
 
         $scope.smartBankResolve = function(){
@@ -705,5 +721,11 @@ angular.module('raiffeisen-payments')
         if($scope.payment.smart.data.countryCode){
             $scope.smartFill();
         }
+
+        $scope.$on('$destroy', function() {
+            if($scope.payment.referer){
+                $scope.payment.referer = undefined;
+            }
+        });
 
     });
