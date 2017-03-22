@@ -29,12 +29,19 @@ angular.module('raiffeisen-payments')
                     return out;
                 };
 
-                var initialSelection = function(){
+                var initialSelection = function(optionToSelect){
                     var selected = false;
                     angular.forEach(s.rbTrybes, function(tr){
                         if (!selected && tr.active) {
-                            tr.selected = true;
-                            selected = true;
+                            if(optionToSelect){
+                                if(tr.TRYBE_NAME===optionToSelect){
+                                    tr.selected = true;
+                                    selected = true;
+                                }
+                            }else{
+                                tr.selected = true;
+                                selected = true;
+                            }
                         }
                     });
                 };
@@ -66,7 +73,7 @@ angular.module('raiffeisen-payments')
                 });
 
                 if(!isSelectedAny()){
-                    initialSelection();
+                    initialSelection(s.rbModel);
                 }else{
                     angular.forEach(s.rbTrybes, function(tr){
                         if(tr.selected && tr.active){
