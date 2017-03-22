@@ -151,6 +151,7 @@ angular.module('raiffeisen-payments')
                     $scope.payment.formData.recipientSwiftOrBic = recipient.details.recipientSwift;
 
                 };
+                //$scope.smartFill("BIC")
             }
 
             $scope.payment.formData.recipientCountry = lodash.find($scope.countries.data, {code: recipient.details.foreignCountryCode});
@@ -159,7 +160,11 @@ angular.module('raiffeisen-payments')
             $scope.payment.options.ibanLength = null;
             $timeout(function(){
                 timeoutFunction();
-                $scope.smartBankResolve();
+                $scope.smartBankResolve(function(){
+                    if(recipient.details.informationProvider!=='MANUAL' && $scope.paymentForm){
+                        $scope.paymentForm.swift_bic.$$parseAndValidate();
+                    }
+                });
             });
         };
 
@@ -222,8 +227,19 @@ angular.module('raiffeisen-payments')
 
             $scope.foreignIbanValidationRegex = new RegExp('.*');
 
-            $scope.payment.options.ibanLength = $scope.payment.formData.recipientBankCountry.ibanLength;
-            $scope.payment.formData.recipientBankCountry.ibanLength = null;
+            $scope.payment.options.ibanLength = null;
+
+            angular.extend($scope.payment.smart, {
+                promise: null,
+                swiftbicPromise: null,
+                data: {},
+                source: null,
+                bicAutoInserted: false,
+                ourCostsLock: false,
+                sepaLock: true
+            });
+            $scope.smartFill();
+
         };
 
         //---------------------------------------------countries -------------------------------------
@@ -615,7 +631,8 @@ angular.module('raiffeisen-payments')
             }
         };
 
-        $scope.smartBankResolve = function(){
+        $scope.smartBankResolve = function(onNotResolvedCallback){
+
             if($scope.payment.smart.source==='IBAN'){//if triggered recipient account has changed
                 $scope.payment.smart.data = {};
                 $scope.payment.smart.source = null;
@@ -632,6 +649,10 @@ angular.module('raiffeisen-payments')
                                 $scope.paymentForm.recipientAccountNo.$setValidity('maxlength', true);
                             }
                             $scope.smartFill();
+                        }else{
+                            if(onNotResolvedCallback){
+                                onNotResolvedCallback();
+                            }
                         }
                     }).catch(function (e) {
                         var toShort = true;
