@@ -249,13 +249,13 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.onAccountSelected = function (account, oldAccount) {
-            if (account && oldAccount) {
+            /*if (account && oldAccount) {
                 var oldOwnerCustId = notEmptyArray(oldAccount.ownersList)[0].customerId;
                 var newOwnerCustId = notEmptyArray(account.ownersList)[0].customerId;
                 if (oldOwnerCustId !== newOwnerCustId) {
                     $scope.clearRecipient();
                 }
-            }
+            }*/
 
             if ($scope.paymentForm) {
                 _.forEach(zusPaymentInsurances, function(val, key) {
