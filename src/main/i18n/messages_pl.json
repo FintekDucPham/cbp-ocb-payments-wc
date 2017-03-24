@@ -795,7 +795,7 @@
 
     "raiff.payments.taxpayers.fill.custom_name": "Twoja nazwa płatnika",
     "raiff.payments.taxpayers.fill.custom_name.required": "Twoja nazwa płatnika jest wymagana",
-    "raiff.payments.taxpayers.fill.custom_name.pattern": "Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? ~ ` ' , /.",
+    "raiff.payments.taxpayers.fill.custom_name.pattern": "Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? ~ ` ' /. _",
     "raiff.payments.taxpayers.fill.custom_name.placeholder": "Wpisz nazwę płatnika",
     "raiff.payments.taxpayers.fill.taxpayer_type": "Typ płatnika",
     "raiff.payments.taxpayers.fill.type.insurance": "ZUS",

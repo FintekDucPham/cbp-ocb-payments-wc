@@ -20,3 +20,4 @@ bin
 *.log
 npm-debug.log
 sum.md5
+dist/
