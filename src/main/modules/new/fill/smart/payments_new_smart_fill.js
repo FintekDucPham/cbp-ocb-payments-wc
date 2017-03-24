@@ -479,18 +479,20 @@ angular.module('raiffeisen-payments')
                 type: $scope.payment.formData.foreignType === $scope.FOREIGN_TYPES.SEPA,
                 sepaAv: $scope.payment.smart.data && $scope.payment.smart.data.sepa
             };
-        }, function(changed){
+        }, function(changed, old){
             //dependencies changed scenario
-            if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR'){
-                $scope.payment.formData.transferCost = 'SHA';
-            }else{
-                $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
-            }
+            if(!angular.equals(changed, old)){
+                if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR'){
+                    $scope.payment.formData.transferCost = 'SHA';
+                }else{
+                    $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
+                }
 
-            if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR' && $scope.payment.formData.foreignType === $scope.FOREIGN_TYPES.SEPA && $scope.payment.smart.data.sepa){
-                $scope.payment.smart.ourCostsLock = true;
-            }else{
-                $scope.payment.smart.ourCostsLock = false;
+                if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR' && $scope.payment.formData.foreignType === $scope.FOREIGN_TYPES.SEPA && $scope.payment.smart.data.sepa){
+                    $scope.payment.smart.ourCostsLock = true;
+                }else{
+                    $scope.payment.smart.ourCostsLock = false;
+                }
             }
         }, true);
 
