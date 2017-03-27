@@ -29,7 +29,7 @@ angular.module('raiffeisen-payments')
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
         }
-        if ($stateParams.payment) {
+        if ($stateParams.payment && $stateParams.payment.beneficiaryAccountNo) {
             $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
         }
         bdFillStepInitializer($scope, {
