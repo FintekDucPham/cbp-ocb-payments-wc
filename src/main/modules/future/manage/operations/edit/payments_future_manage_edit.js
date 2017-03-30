@@ -80,7 +80,7 @@ angular.module('raiffeisen-payments')
             data.secondaryIdType = idTypesMap[data.secondIDType];
             data.declarationDate = data.declaration;
             data.realizationDate = new Date(data.realizationDate);
-            data.recipientName = data.recipientName.join("\n");
+            data.recipientName = data.recipientName.join("");
             data.remitterAccountId = data.accountId;
             data.additionalInfo = data.decisionNo;
             return insuranceAccounts.search().then(function(accounts){
@@ -98,7 +98,7 @@ angular.module('raiffeisen-payments')
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.TAX.code, function(data){
-            data.taxpayerData = data.senderName.join("\n");
+            data.taxpayerData = data.senderName.join();
             data.idType = idTypesMap[data.paymentDetails.idtype];
             data.idNumber = data.paymentDetails.idnumber;
             data.formCode = data.paymentDetails.formCode;
@@ -182,6 +182,7 @@ angular.module('raiffeisen-payments')
             data.description = data.title;
             $scope.payment.rbPaymentsStepParams.visibility.addAsStandingOrder = data.transferType == 'OWN' || data.transferType == 'DOMESTIC';
             $scope.payment.meta.transferType = data.transferType;
+            $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
             $q.when(paymentDataResolveStrategy(data.transferType)(data)).then(function(){
                 lodash.extend($scope.payment.formData, data, $scope.payment.formData);
                 $scope.payment.type = rbPaymentTypes[angular.uppercase(data.transferType)];
