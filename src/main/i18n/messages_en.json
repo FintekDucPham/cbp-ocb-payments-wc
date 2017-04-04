@@ -1051,7 +1051,7 @@
 "raiff.payments.standing.list.details.senderAccount": "From account",
 "raiff.payments.standing.list.details.senderAccountOwner": "Owner",
 "raiff.payments.standing.list.details.recipientAccount": "To account",
-"raiff.payments.standing.list.details.recipientAccount_new": "Bank name",
+    "raiff.payments.standing.list.details.recipientAccount_new": "Bank name",
 "raiff.payments.standing.list.details.recipientData": "Recipient",
 "raiff.payments.standing.list.details.amount": "Amount",
 "raiff.payments.standing.list.details.title": "Title",
