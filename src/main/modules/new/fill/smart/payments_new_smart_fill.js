@@ -140,10 +140,13 @@ angular.module('raiffeisen-payments')
             var timeoutFunction;
 
             if(recipient.details.informationProvider==='MANUAL'){
-                $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
                 timeoutFunction = function(){
-                    $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {code: recipient.details.bankCountry});
-                    $scope.payment.formData.recipientBankName= recipient.details.bankDetails.join('');
+                    $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
+                    //can cause troubles
+                    $timeout(function(){
+                        $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {code: recipient.details.bankCountry});
+                        $scope.payment.formData.recipientBankName= recipient.details.bankDetails.join('');
+                    });
                 };
             }else{
                 $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
