@@ -41,12 +41,14 @@ angular.module('raiffeisen-payments')
                 $scope.$watch('recipient.token.model.view.name', function(newValue, oldValue){
                     var params = $scope.recipient.multiStepParams;
                     if(newValue){
+                        params.visibility.change = true;
                         if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
                             var backendErrors = $scope.recipient.token.model.currentToken.$backendErrors;
                             if(backendErrors.TOKEN_AUTH_BLOCKED){
                                 params.labels.cancel = 'raiff.payments.new.btn.finalize';
                                 params.visibility.finalize = false;
                                 params.visibility.accept = false;
+                                params.visibility.change = false;
                             }else if(backendErrors.TOKEN_NOT_SEND){
                                 params.labels.cancel = 'raiff.payments.new.btn.cancel';
                                 params.visibility.finalize = false;
@@ -55,8 +57,9 @@ angular.module('raiffeisen-payments')
                                 params.labels.cancel = 'raiff.payments.new.btn.cancel';
                                 params.visibility.finalize = false;
                                 params.visibility.accept = false;
+                            }else if(backendErrors.INCORRECT_TOKEN_PASSWORD){
+                                params.visibility.change = false;
                             }
-                            params.visibility.change = false;
                         }else{
                             if($scope.recipient.manageAction === "REMOVE"){
                                 params.visibility.clear = false;

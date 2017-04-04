@@ -80,7 +80,16 @@ angular.module('raiffeisen-payments')
 
         $scope.countries.promise.then(function(data){
             var countryCode;
-            if ($scope.recipient.formData.recipientBankCountry && !$scope.recipient.formData.recipientSwiftOrBic) {
+
+            var isSwiftOrBicEmpty = function(swiftorbic){
+                if(swiftorbic){
+                    return angular.isString(swiftorbic) && swiftorbic.trim().length<1;
+                }else{
+                    return true;
+                }
+            };
+
+            if ($scope.recipient.formData.recipientBankCountry && isSwiftOrBicEmpty($scope.recipient.formData.recipientSwiftOrBic)) {
                 countryCode = $scope.recipient.formData.recipientBankCountry.code || $scope.recipient.formData.recipientBankCountry;
                 $scope.recipient.formData.recipientBankCountry = angular.copy(findCountryByCode(data.countryList, countryCode));
             }
@@ -152,12 +161,6 @@ angular.module('raiffeisen-payments')
                         $scope.recipientForm.swift_bic.$setValidity("recipientBankIncorrectSwift", isSwiftNotUsed());
                     }
                 });
-            }
-        });
-
-        $scope.$watch('recipient.formData.recipientAccountNo', function(n,o){
-            if(n!==o && angular.isString(n)){
-                $scope.recipient.formData.recipientAccountNo = n.toUpperCase().replace(/\s+/g,'');
             }
         });
 

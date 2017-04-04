@@ -7,6 +7,10 @@
         {{ ::'raiff.payments.future.delete.status.label.status.' + $data.operationStatus | translate }}
     </bd-item-property>
 
+    <bd-item-property class="bd-item-property--text"  ng-show="$data.details.originalCustomerVisible" label="{{ :: 'raiff.payments.reject.original_customer' | translate }}">
+        {{ $data.details.originalCustomerName}}
+    </bd-item-property>
+
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.accountName'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
         {{ $data.details.accountName }} <br/>
         {{ $data.details.accountNo | nrbIbanFilter }}<br/>
@@ -61,7 +65,5 @@
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.own.deliveryDate'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
         {{ $data.deliveryDate | date:'shortDate' }}
     </bd-item-property>
-    <bd-item-property  ng-show="$data.details.originalCustomerVisible" label="{{ :: 'raiff.payments.reject.original_customer' | translate }}">
-        {{ $data.details.originalCustomerName}}
-    </bd-item-property>
+
 </div>

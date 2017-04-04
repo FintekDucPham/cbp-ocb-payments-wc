@@ -140,10 +140,13 @@ angular.module('raiffeisen-payments')
             var timeoutFunction;
 
             if(recipient.details.informationProvider==='MANUAL'){
-                $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
                 timeoutFunction = function(){
-                    $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {code: recipient.details.bankCountry});
-                    $scope.payment.formData.recipientBankName= recipient.details.bankDetails.join('');
+                    $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
+                    //can cause troubles
+                    $timeout(function(){
+                        $scope.payment.formData.recipientBankCountry = lodash.find($scope.countries.data, {code: recipient.details.bankCountry});
+                        $scope.payment.formData.recipientBankName= recipient.details.bankDetails.join('');
+                    });
                 };
             }else{
                 $scope.payment.formData.recipientIdentityType=RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
@@ -405,15 +408,26 @@ angular.module('raiffeisen-payments')
                 trybe.selected = trybe.TRYBE_NAME==='STANDARD';
             });
             delete $scope.payment.items.senderAccount;
-            $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
+            $timeout(function(){
+                $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
+            });
             $scope.accountSelectorRemote.resetToDefault();
-            $scope.payment.smart = {
-                data: {}
-            };
+
             if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
                 $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
                 $scope.payment.formData.addToBasket = true;
             }
+
+            angular.extend($scope.payment.smart, {
+                promise: null,
+                swiftbicPromise: null,
+                data: {},
+                source: null,
+                bicAutoInserted: false,
+                ourCostsLock: false,
+                sepaLock: true
+            });
+            $scope.smartFill();
         });
 
         $scope.$watch('payment.formData.paymentType', function(n,o){
@@ -468,18 +482,20 @@ angular.module('raiffeisen-payments')
                 type: $scope.payment.formData.foreignType === $scope.FOREIGN_TYPES.SEPA,
                 sepaAv: $scope.payment.smart.data && $scope.payment.smart.data.sepa
             };
-        }, function(changed){
+        }, function(changed, old){
             //dependencies changed scenario
-            if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR'){
-                $scope.payment.formData.transferCost = 'SHA';
-            }else{
-                $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
-            }
+            if(!angular.equals(changed, old)){
+                if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR'){
+                    $scope.payment.formData.transferCost = 'SHA';
+                }else{
+                    $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
+                }
 
-            if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR' && $scope.payment.formData.foreignType === $scope.FOREIGN_TYPES.SEPA && $scope.payment.smart.data.sepa){
-                $scope.payment.smart.ourCostsLock = true;
-            }else{
-                $scope.payment.smart.ourCostsLock = false;
+                if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR' && $scope.payment.formData.foreignType === $scope.FOREIGN_TYPES.SEPA && $scope.payment.smart.data.sepa){
+                    $scope.payment.smart.ourCostsLock = true;
+                }else{
+                    $scope.payment.smart.ourCostsLock = false;
+                }
             }
         }, true);
 
@@ -494,9 +510,23 @@ angular.module('raiffeisen-payments')
             //dependencies changed scenario
             if(change.sepaAv && change.isEur && change.trybe !== 'TARGET'){
                 $scope.payment.smart.sepaLock = false;
-                //if(old.trybe==='TARGET' && change.trybe==='STANDARD'){
+
+                //needs to be accurate to detect a manual change and avoid autoload issues
+                var manualChangeToEnableSepa = false;
+                if(!old.sepaAv && change.sepaAv===true && change.isEur===true && change.trybe !== 'TARGET'){
+                    manualChangeToEnableSepa = true;
+                }
+                if(change.sepaAv===true && !old.isEur && change.isEur===true && change.trybe !== 'TARGET'){
+                    manualChangeToEnableSepa = true;
+                }
+                if(change.sepaAv===true && change.isEur===true && old.trybe==='TARGET' && change.trybe !== 'TARGET'){
+                    manualChangeToEnableSepa = true;
+                }
+
+
+                if(manualChangeToEnableSepa){//prevents change when redirecting from another state
                     $scope.payment.formData.foreignType=$scope.FOREIGN_TYPES.SEPA;
-                //}
+                }
             }else{
                 $scope.payment.smart.sepaLock = true;
                 if($scope.payment.formData.foreignType===$scope.FOREIGN_TYPES.SEPA){
@@ -612,8 +642,8 @@ angular.module('raiffeisen-payments')
                             $scope.paymentForm.swift_bic.$setValidity("recipientBankIncorrectSwift", false);
                         }
                     }
-
                 }
+
             }
 
             if($scope.payment.smart.source==='IBAN' && !d.swift && !d.noMatch){
@@ -624,11 +654,13 @@ angular.module('raiffeisen-payments')
                 $scope.paymentForm.swift_bic.$$parseAndValidate();
             }
 
+            /* may be not needed - same logic in watch
             if($scope.payment.formData.currency && $scope.payment.formData.currency.currency === 'EUR' && d.sepa && $scope.payment.formData.paymentType!=='TARGET'){
                 $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.SEPA;
             }else{
                 $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
             }
+            */
         };
 
         $scope.smartBankResolve = function(onNotResolvedCallback){
@@ -680,7 +712,7 @@ angular.module('raiffeisen-payments')
             //view to model only
             $timeout(function(){
                 $scope.paymentForm.swift_bic.$parsers.push(function(n){
-                    if(n.length >=8){
+                    if(n.length >=8 && $scope.payment.smart.source!=='IBAN'){//if data already set
                         $scope.payment.smart.swiftbicPromise = recipientGeneralService.utils.getBankInformation.getInformation(
                             n,
                             recipientGeneralService.utils.getBankInformation.strategies.SWIFT
@@ -715,5 +747,11 @@ angular.module('raiffeisen-payments')
         if($scope.payment.smart.data.countryCode){
             $scope.smartFill();
         }
+
+        $scope.$on('$destroy', function() {
+            if($scope.payment.referer){
+                $scope.payment.referer = undefined;
+            }
+        });
 
     });

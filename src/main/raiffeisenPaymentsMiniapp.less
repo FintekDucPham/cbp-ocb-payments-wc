@@ -280,6 +280,15 @@
       padding-top: 25px;
       .bd-list-item__properties-group-cell {
         width:50%;
+        @media(max-width: 767px) {
+          width:100%;
+          .bd-list-item__properties-group-cell__item{
+            div {
+              float:none;
+
+            }
+          }
+        }
       }
     }
     &__table-section {
