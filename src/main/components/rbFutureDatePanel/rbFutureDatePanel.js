@@ -98,7 +98,8 @@ angular.module('raiffeisen-payments')
                             break;
                         }
                         case FUTURE_DATE_RANGES.MONTHS: {
-                            periodDate = new Date(periodDate.getTime() + (period * 3600 * 24 * 1000 * 30));
+                            periodDate.setMonth(periodDate.getMonth() + period);
+                            //periodDate = new Date(periodDate.getTime() + (period * 3600 * 24 * 1000 * 30));
                             break;
                         }
                     }
