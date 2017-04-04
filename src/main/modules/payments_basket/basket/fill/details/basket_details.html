@@ -36,8 +36,13 @@
         <span ng-if="$data.payment.recipientAccountNo!='ZUS_ACCOUNTS'">
             {{$data.payment.recipientAccountNo| nrbIbanFilter }}
         </span>
-        <div>{{$data.payment.recipientName.join(' ') }}</div>
-        <div>{{$data.payment.recipientAddress.join(' ') }}</div>
+        <div ng-if="$data.payment.transferType == 'INSURANCE'">
+            <span eb-msg="raiff.payments.new.zus.verify.tmp.zus_name"></span>
+        </div>
+        <div ng-if="$data.payment.transferType != 'INSURANCE'">
+            <div>{{$data.payment.recipientName.join(' ') }}</div>
+            <div>{{$data.payment.recipientAddress.join(' ') }}</div>
+        </div>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'raiff.payments.basket.list.details.historyAction'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" ng-show="userContext == 'MICRO'">
         <div class="basket-vew__details__action-history">

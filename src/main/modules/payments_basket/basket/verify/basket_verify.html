@@ -82,8 +82,13 @@
                                             <span class="hidden-md hidden-lg">{{item.payment.recipientAccountNo | nrbIbanShortFilter}}</span>
                                         </span>
                                     </div>
-                                    <div class="bd-table__breakword">{{item.payment.recipientName.join(' ') }}</div>
-                                    <div class="bd-table__breakword">{{item.payment.recipientAddress.join(' ') }}</div>
+                                    <div ng-if="item.payment.transferType == 'INSURANCE'">
+                                        <span eb-msg="raiff.payments.new.zus.verify.tmp.zus_name"></span>
+                                    </div>
+                                    <div ng-if="item.payment.transferType != 'INSURANCE'">
+                                        <div class="bd-table__breakword">{{item.payment.recipientName.join(' ') }}</div>
+                                        <div class="bd-table__breakword">{{item.payment.recipientAddress.join(' ') }}</div>
+                                    </div>
                                 </div>
                             </div>
                     </div>

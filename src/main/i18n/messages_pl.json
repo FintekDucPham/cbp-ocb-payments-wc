@@ -533,7 +533,6 @@
     "raiff.payments.recipients.new.type.TAX": "US/IC",
     "raiff.payments.recipients.new.type.SWIFT": "Walutowy",
 
-
     "raiff.payments.recipients.currency.recipientBankName": "Nazwa banku odbiorcy",
     "raiff.payments.recipients.currency.accountNr": "Numer rachunku",
     "raiff.payments.recipients.currency.recipientAddress": "Nazwa i adres",
@@ -547,10 +546,6 @@
     "raiff.payments.recipients.new.currency.fill.recipientCountry": "Kraj odbiorcy",
     "raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder": "Wybierz kraj",
     "raiff.payments.recipients.new.currency.verify.bank_data.label": "Nazwa i adres banku",
-    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
-    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
-    "raiff.payments.recipients.new.currency.fill.TODO": "TODO",
-
 
     "raiff.payments.recipients.new.domestic.fill.account_related": "Z rachunku",
     "raiff.payments.recipients.new.domestic.fill.bankName": "Nazwa banku",
@@ -605,7 +600,6 @@
     "raiff.payments.recipients.new.zus.fill.taxpayer_supplementary_id.placeholder.PASSPORT": "Wpisz numer paszportu",
     "raiff.payments.recipients.new.zus.fill.payment_type": "Typ wpłaty",
     "raiff.payments.recipients.new.zus.fill.payment_type.placeholder": "Wybierz typ wpłaty",
-
 
     "raiff.payments.recipients.new.zus.verify.micro_name": "Nazwa firmy",
     "raiff.payments.recipients.new.zus.verify.remitter_account": "Z rachunku",
@@ -873,11 +867,9 @@
     "raiff.payments.components.futureDatePanel.dateTypes.PERIOD": "Najbliższe",
     "raiff.payments.components.futureDatePanel.dateTypes.RANGE": "Okres",
 
-
     "raiff.payments.components.futureDatePanel.labels.from": "od",
     "raiff.payments.components.futureDatePanel.labels.to": "do",
     "raiff.payments.components.futureDatePanel.labels.search": "Szukaj",
-
 
     "raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_DAYS": "Musisz wprowadzić liczbę najbliższych dni",
     "raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_WEEKS": "Musisz wprowadzić liczbę najbliższych tygodni",
@@ -887,20 +879,16 @@
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_WEEKS": "Nieprawidłowa liczba najbliższych tygodni",
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_MONTHS": "Nieprawidłowa liczba najbliższych miesięcy",
 
-
     "raiff.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE": "Musisz wprowadzić datę początkową okresu wyszukiwania",
     "raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE": "Musisz wprowadzić datę końcową okresu wyszukiwania",
 
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE": "Nieprawidłowa data początkowa okresu wyszukiwania",
     "raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE": "Nieprawidłowa data końcowa okresu wyszukiwania",
 
-
-
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE": "Data końcowa okresu wyszukiwania jest późniejsza niż ##MONTHS## miesięcy w przód. Można wyszukiwać tylko operacje zaplanowane na najbliższe ##MONTHS## miesięcy.",
     "raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
     "raiff.payments.components.futureDatePanel.validation.TOO_EARLY_FINISH_DATE": "Data początkowa nie może być wcześniejsza niż data bieżąca",
     "raiff.payments.components.futureDatePanel.validation.AMNT_EXCEEDED_MODIFY_NON_RESID": "Modyfikacja danych tego przelewu w internecie nie jest możliwa ze względu na wymogi sprawozdawcze Banku wobec NBP (płatność z rachunku  nierezydenta). Aby zmodyfikować ten przelew, skontaktuj się z Operatorem Centrum Telefonicznego lub doradcą bankowym w Oddziale Banku.",
-
 
     "raiff.payments.future.list.details.domestic.transferType": "Typ płatności",
     "raiff.payments.future.list.details.domestic.status": "Status płatności",
@@ -915,7 +903,6 @@
     "raiff.payments.future.list.details.domestic.buttons.edit": "Edytuj",
     "raiff.payments.future.list.details.domestic.buttons.delete": "Usuń",
     "raiff.payments.future.list.details.domestic.buttons.backToList": "Powrót",
-
 
     "raiff.payments.future.list.details.domestic.transferTypes.TAX": "Przelew do US/IC",
     "raiff.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Przelew krajowy w PLN",
@@ -949,13 +936,9 @@
     "raiff.payments.future.list.details.tax.obligationId": "Identyfikacja zobowiazania",
 
     "raiff.payments.future.list.tax.insurance.amount": "Kwota",
-
     "raiff.payments.future.list.tax.insurance.date": "Data realizacji",
 
-
     "raiff.payments.future.list.details.insurance.statuses.null": "",
-
-
     "raiff.payments.future.list.details.insurance.transferType": "Typ płatności",
     "raiff.payments.future.list.details.insurance.status": "Status płatności",
     "raiff.payments.future.list.details.insurance.accountName": "Z rachunku",
@@ -987,7 +970,6 @@
     "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.2": "Paszport",
     "raiff.payments.future.list.details.insurance.payerSecondaryIdTypes.3": "Inny dokument tożsamości",
 
-
     "raiff.payments.future.list.details.insurance.senderName": "Płatnik",
     "raiff.payments.future.list.details.insurance.senderNip": "NIP płatnika",
     "raiff.payments.future.list.details.insurance.identityType": "Typ drugiego identyfikatora",
@@ -1009,8 +991,6 @@
     "raiff.payments.future.list.details.foreign.commision.label": "Koszty przelewu",
 
     "raiff.payments.future.list.details.standing_order.name": "Nazwa zlecenia stałego",
-
-
 
     "raiff.payments.future.edit.status.error": "Operacja nie powiodła się",
     "raiff.payments.future.edit.status.success": "Dane zostały zmienione",
@@ -1036,7 +1016,6 @@
     "raiff.payments.future.delete.buttons.returnToList": "Powrót do listy",
 
     "raiff.payments.future.manage.delete.header": "Usuń przelew zaplanowany",
-
 
     "raiff.payments.future.delete.status.label.status.1": "Zlecenie przyjęte do realizacji ",
     "raiff.payments.future.delete.status.label.status.20": "Zlecenie przyjęte do realizacji ",
@@ -1076,12 +1055,9 @@
     "raiff.payments.standing.list.details.closestRealizationDate": "Data najbliższej realizacji",
     "raiff.payments.standing.list.details.endDate": "Data zakończenia",
 
-
     "raiff.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
     "raiff.payments.new.error.description.NotNull":"Tytuł przelewu nie może być pusty",
     "raiff.payments.new.standing.edit.order_id": "Numer zlecenia",
-
-
 
     "raiff.payments.new.standing.fill.custom_name": "Twoja nazwa zlecenia",
     "raiff.payments.new.standing.fill.custom_name.placeholder": "Wpisz Twoją nazwę zlecenia",
@@ -1185,7 +1161,6 @@
     "raiff.payments.new.standing.verify.first_execution_date": "Data pierwszej realizacji",
     "raiff.payments.new.standing.verify.finish_date": "Data zakończenia",
     "raiff.payments.new.standing.verify.frequency": "Częstotliwość co",
-
 
   "raiff.payments.new.standing.fill.EMPTY_ORDER_NAME": "Nazwa zlecenia nie może być pusta",
   "raiff.payments.new.standing.fill.INCORRECT_ORDER_NAME": "Nazwa zlecenia nie może przekraczać 35 znaków i powinno zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
