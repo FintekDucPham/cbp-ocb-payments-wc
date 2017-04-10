@@ -407,6 +407,8 @@ angular.module('raiffeisen-payments')
             angular.forEach($scope.payment.items.paymentTrybes, function(trybe){
                 trybe.selected = trybe.TRYBE_NAME==='STANDARD';
             });
+            $scope.payment.formData.foreignType = $scope.FOREIGN_TYPES.STANDARD;
+
             delete $scope.payment.items.senderAccount;
             $timeout(function(){
                 $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
