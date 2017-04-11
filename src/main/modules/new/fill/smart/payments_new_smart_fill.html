@@ -51,7 +51,8 @@
                        bd-matches-none-of="recipientAccountValidators"
                        ng-change="unlockField()"
                        ng-blur="smartBankResolve()"
-                       placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}">
+                       placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}"
+                       rb-remove-space-parser="UPPERCASE">
             </rb-item-property-data-preloader>
             <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
             <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
