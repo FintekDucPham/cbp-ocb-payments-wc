@@ -53,11 +53,11 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.canEdit = function($data){
-            return ['SEPA', 'SWIFT', 'E_FAKTURA'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
+            return ['SEPA', 'SWIFT', 'E_FAKTURA', 'INVOOBILL'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
         };
 
         $scope.canDelete = function($data){
-            return $data.details.transferType.toUpperCase()!=='E_FAKTURA' && parseFloat($data.operationStatus) < 60;
+            return ['E_FAKTURA', 'INVOOBILL'].indexOf($data.details.transferType.toUpperCase()) && parseFloat($data.operationStatus) < 60;
         };
         $scope.model = {
             dateRangeValidity: false
@@ -71,7 +71,11 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.resolveTemplateType = function (transferType) {
-            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
+            var tType = transferType.toLowerCase();
+            if(tType === 'invoobill'){
+                tType = 'domestic';
+            }
+            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), tType);
         };
 
         $scope.onEdit = function(payment) {
