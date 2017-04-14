@@ -8,7 +8,7 @@ angular.module('raiffeisen-payments').directive('rbRemoveSpaceParser', function(
 
             modelCtrl.$parsers.push(function (inputValue) {
 
-                var transformedInput = inputValue.toLowerCase().replace(/ /g, '');
+                var transformedInput = attrs.rbRemoveSpaceParser === "UPPERCASE" ? inputValue.toUpperCase().replace(/ /g, '') : inputValue.toLowerCase().replace(/ /g, '');
 
                 if (transformedInput!=inputValue) {
                     modelCtrl.$setViewValue(transformedInput);

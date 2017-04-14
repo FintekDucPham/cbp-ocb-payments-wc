@@ -5,19 +5,20 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/payments_future_list.html",
             controller: "PaymentsFuturePaymentsListController",
             resolve: {
-                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
+                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "utilityService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, utilityService) {
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getValueForCurrentContext("plannedOperationList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getValueForCurrentContext("plannedOperationList.max.offset"),
                         currencyOrder: systemParameterService.getValueForCurrentContext("nib.accountList.currency.order"),
-                        customerDetails: customerService.getCustomerDetails()
+                        customerDetails: customerService.getCustomerDetails(),
+                        CURRENT_DATE: utilityService.getCurrentDateWithTimezone()
                     }).then(function (data) {
                         var result = {
                             currencyOrder: data.currencyOrder.split(","),
                             offset: parseInt(data.defaultOffsetInDays, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
-                            dateFrom: new Date(),
-                            dateTo: new Date(),
+                            dateFrom: data.CURRENT_DATE.time,
+                            dateTo: data.CURRENT_DATE.time,
                             context: data.customerDetails.customerDetails.context
                         };
                         result.period = result.offset;
@@ -53,11 +54,11 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.canEdit = function($data){
-            return ['SEPA', 'SWIFT', 'E_FAKTURA'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
+            return ['SEPA', 'SWIFT', 'E_FAKTURA', 'INVOOBILL'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
         };
 
         $scope.canDelete = function($data){
-            return $data.details.transferType.toUpperCase()!=='E_FAKTURA' && parseFloat($data.operationStatus) < 60;
+            return ['E_FAKTURA', 'INVOOBILL'].indexOf($data.details.transferType.toUpperCase()) && parseFloat($data.operationStatus) < 60;
         };
         $scope.model = {
             dateRangeValidity: false
@@ -71,7 +72,11 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.resolveTemplateType = function (transferType) {
-            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
+            var tType = transferType.toLowerCase();
+            if(tType === 'invoobill'){
+                tType = 'domestic';
+            }
+            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), tType);
         };
 
         $scope.onEdit = function(payment) {
