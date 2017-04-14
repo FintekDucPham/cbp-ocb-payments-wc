@@ -5,19 +5,20 @@ angular.module('raiffeisen-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/payments_future_list.html",
             controller: "PaymentsFuturePaymentsListController",
             resolve: {
-                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES) {
+                parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "utilityService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, utilityService) {
                     return $q.all({
                         defaultOffsetInDays: systemParameterService.getValueForCurrentContext("plannedOperationList.default.offset"),
                         maxOffsetInMonths: systemParameterService.getValueForCurrentContext("plannedOperationList.max.offset"),
                         currencyOrder: systemParameterService.getValueForCurrentContext("nib.accountList.currency.order"),
-                        customerDetails: customerService.getCustomerDetails()
+                        customerDetails: customerService.getCustomerDetails(),
+                        CURRENT_DATE: utilityService.getCurrentDateWithTimezone()
                     }).then(function (data) {
                         var result = {
                             currencyOrder: data.currencyOrder.split(","),
                             offset: parseInt(data.defaultOffsetInDays, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
-                            dateFrom: new Date(),
-                            dateTo: new Date(),
+                            dateFrom: data.CURRENT_DATE.time,
+                            dateTo: data.CURRENT_DATE.time,
                             context: data.customerDetails.customerDetails.context
                         };
                         result.period = result.offset;
