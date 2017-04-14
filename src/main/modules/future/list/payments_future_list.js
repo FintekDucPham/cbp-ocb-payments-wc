@@ -237,7 +237,7 @@ angular.module('raiffeisen-payments')
             payment.loadDetails = function() {
                 // unfortunatelly for standing orders we have different service
                 if (payment.transferType == rbPaymentTypes.STANDING.code) {
-                    payment.promise = standingTransferService.get(payment.id).then(function(resp) {
+                    payment.promise = standingTransferService.get(payment.paymentDetails.standingOrderId).then(function(resp) {
                         payment.details = resp;
                         payment.details.transferType = rbPaymentTypes.STANDING.code;
                     });
