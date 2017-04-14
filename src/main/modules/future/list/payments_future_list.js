@@ -141,7 +141,7 @@ angular.module('raiffeisen-payments')
                     $state.go('payments.standing.error');
                 } else {
                     viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                        payment: payment.details,
+                        payment: angular.extend({}, payment.details, {id: payment.details.paymentDetails.standingOrderId}),
                         returnToPage: $scope.table.tableConfig.currentPage
                     });
 
@@ -242,7 +242,7 @@ angular.module('raiffeisen-payments')
             payment.loadDetails = function() {
                 // unfortunatelly for standing orders we have different service
                 if (payment.transferType == rbPaymentTypes.STANDING.code) {
-                    payment.promise = standingTransferService.get(payment.paymentDetails.standingOrderId).then(function(resp) {
+                    payment.promise = standingTransferService.get(payment.details.paymentDetails.standingOrderId).then(function(resp) {
                         payment.details = resp;
                         payment.details.transferType = rbPaymentTypes.STANDING.code;
                     });
