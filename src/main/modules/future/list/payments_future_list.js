@@ -141,7 +141,7 @@ angular.module('raiffeisen-payments')
                     $state.go('payments.standing.error');
                 } else {
                     viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                        payment: angular.extend({}, payment.details, {id: payment.details.paymentDetails.standingOrderId}),
+                        payment: payment.details,
                         returnToPage: $scope.table.tableConfig.currentPage
                     });
 
