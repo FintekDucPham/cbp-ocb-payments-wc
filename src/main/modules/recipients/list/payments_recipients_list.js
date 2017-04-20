@@ -163,6 +163,29 @@ angular.module('raiffeisen-payments')
                 return result;
             }, {});
         }
+
+        function prepareQueryParams($params) {
+            var params = {};
+            params.pageSize = $params.pageSize;
+            params.pageNumber = $params.currentPage;
+
+            if($scope.types.currentType !== recipientFilterType.ALL){
+                params.filerTemplateType = $scope.types.currentType.code;
+            }
+            if(params.filerTemplateType==='FOREIGN'){
+                params.filerTemplateType = 'SWIFT';
+            }
+
+            if($scope.table.tableData.newSearch){
+                $scope.table.tableData.newSearch = false;
+                $scope.table.tableConfig.currentPage = 1;
+                params.pageNumber = 1;
+                params.queryString = $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle;
+            }
+
+            return params;
+        }
+
         $scope.table = {
             tableConfig : new bdTableConfig({
                 placeholderText: translate.property("raiff.payments.recipients.label.empty_list"),
@@ -171,25 +194,8 @@ angular.module('raiffeisen-payments')
             tableData : {
                 getData: function ($promise, $params) {
                     $timeout(function() {
-                        var params = {
-                            queryString: $scope.table.operationTitle ? encodeURIComponent($scope.table.operationTitle) : $scope.table.operationTitle
-                        };
 
-                        if($scope.table.tableData.newSearch){
-                            params.pageNumber = 1;
-                            $scope.table.tableData.newSearch = false;
-                        }else{
-                            params.pageSize = $params.pageSize;
-                            params.pageNumber = $params.currentPage;
-                        }
-
-                        if($scope.types.currentType !== recipientFilterType.ALL){
-                            params.filerTemplateType = $scope.types.currentType.code;
-                        }
-
-                        if(params.filerTemplateType==='FOREIGN'){
-                            params.filerTemplateType = 'SWIFT';
-                        }
+                        var params = prepareQueryParams($params);
 
                         $scope.recipientListPromise = recipientsService.search(params).then(function (data) {
                             var list = $scope.recipientList = lodash.map(data.content, function (recipient) {
