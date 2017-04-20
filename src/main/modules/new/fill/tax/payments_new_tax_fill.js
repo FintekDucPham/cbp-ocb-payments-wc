@@ -269,7 +269,7 @@ angular.module('raiffeisen-payments')
             });
         });
 
-        $scope.payment.options.isFromRecipient = false;
+        $scope.payment.options.isFromRecipient = !!$scope.payment.items.recipient;
 
         $scope.$on('clearForm', function () {
             $scope.payment.options.isFromRecipient = false;

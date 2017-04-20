@@ -17,8 +17,8 @@ angular.module('raiffeisen-payments')
                     isSelected: false
                 };
 
-                $scope.$watch('recipientId', function(recipientId, oldId) {
-                   if (recipientId && recipientId != oldId) {
+                $scope.$watch('recipientId', function(recipientId) {
+                   if (recipientId) {
                        $scope.searchRecipientsPromise.then(function() {
                            var recipient = lodash.find($scope.recipientList, {
                                templateId: recipientId
@@ -48,7 +48,7 @@ angular.module('raiffeisen-payments')
                 $scope.selectRecipient = function($item) {
                     if($item && $item !== nullOption) {
                         var oldRecipient = $scope.recipient;
-                        if ($item == oldRecipient) {
+                        if (oldRecipient && ($item.recipientId == oldRecipient.recipientId)) {
                             return;
                         }
                         $scope.selection.isSelected = true;
