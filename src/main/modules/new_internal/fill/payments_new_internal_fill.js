@@ -145,6 +145,9 @@ angular.module('raiffeisen-payments')
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            if(!$scope.remote.model_to.loaded){
+                return;
+            }
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 delete $scope.payment.token.params.resourceId;
                 var form = $scope.paymentForm;

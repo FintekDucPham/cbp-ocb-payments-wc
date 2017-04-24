@@ -23,7 +23,7 @@ angular.module('raiffeisen-payments')
 
         });
     })
-    .controller('PaymentsBasketNewController', function ($scope, bdMainStepInitializer, pathService, translate, $stateParams, $state, lodash, validationRegexp, downloadService, systemParameterService,  lodash, systemParameterService, parameters) {
+    .controller('PaymentsBasketNewController', function ($scope, bdMainStepInitializer, pathService, translate, $stateParams, $state, lodash, validationRegexp, downloadService, systemParameterService, parameters) {
 
         bdMainStepInitializer($scope, 'basket',{
             formName: 'basketForm',
