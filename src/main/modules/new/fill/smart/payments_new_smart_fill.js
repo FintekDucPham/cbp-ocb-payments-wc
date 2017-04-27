@@ -332,6 +332,11 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
+            if($scope.payment.formData.foreignType==='STANDARD'){
+                $scope.payment.cotType = 'SWIFT';
+            }else{
+                $scope.payment.cotType = 'SEPA';
+            }
             var recipient = lodash.find($scope.payment.meta.recipientList, {
                     templateType: 'SWIFT',
                     accountNo: $scope.payment.formData.recipientAccountNo.replace(/\s+/g, "")
