@@ -332,7 +332,9 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            if($scope.payment.formData.foreignType==='STANDARD'){
+            if ($scope.payment.formData.paymentType === 'TARGET') {
+                $scope.payment.cotType = 'TARGET';
+            } else if($scope.payment.formData.foreignType==='STANDARD'){
                 $scope.payment.cotType = 'SWIFT';
             }else{
                 $scope.payment.cotType = 'SEPA';
