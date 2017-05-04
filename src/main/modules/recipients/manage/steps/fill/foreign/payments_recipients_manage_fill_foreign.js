@@ -6,7 +6,7 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsRecipientsManageFillCurrencyController', function ($q, $timeout, $scope, recipientGeneralService, notInsuranceAccountGuard,
                                                                             notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams,
                                                                             translate, customerService, accountsService, validationRegexp, RECIPIENT_IDENTITY_TYPES,
-                                                                            bdRadioSelectEvents, countriesService, utilityService, $stateParams) {
+                                                                            bdRadioSelectEvents, countriesService, utilityService, $stateParams, ZUS_ACCOUNTS) {
 
         if($stateParams.nrb) {
             $scope.recipient.formData.debitAccountNo = $stateParams.nrb;
@@ -57,6 +57,13 @@ angular.module('raiffeisen-payments')
 
         $scope.BANK_NAME_VALIDATION_REGEX = validationRegexp('BANK_NAME_VALIDATION_REGEX');
         $scope.recipient.meta.forbiddenAccounts = [];
+
+        angular.forEach(ZUS_ACCOUNTS ,function(v){
+            $scope.recipient.meta.forbiddenAccounts.push({
+                code: 'notZus',
+                value: v
+            });
+        });
 
         $scope.regex = {};
         $scope.regex.INTERNATIONAL_ACCOUNT_REGEX = validationRegexp('INTERNATIONAL_ACCOUNT_REGEX');
@@ -131,7 +138,9 @@ angular.module('raiffeisen-payments')
             },
             bankAndSwiftCountryNotTheSame: function(accountNo){
                 return validateSwiftAndAccountNo(accountNo);
-            }
+            },
+            notUs: recipientValidators.tax.getValidator(),
+            notZus: recipientValidators.insurance.getValidator()
         };
 
         $scope.getAccountByNrb = function(accountNumber){
