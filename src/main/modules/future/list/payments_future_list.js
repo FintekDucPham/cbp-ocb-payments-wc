@@ -18,7 +18,7 @@ angular.module('raiffeisen-payments')
                             offset: parseInt(data.defaultOffsetInDays, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
                             dateFrom: data.CURRENT_DATE.time,
-                            dateTo: data.CURRENT_DATE.time,
+                            dateTo: angular.copy(data.CURRENT_DATE.time),
                             context: data.customerDetails.customerDetails.context
                         };
                         result.period = result.offset;

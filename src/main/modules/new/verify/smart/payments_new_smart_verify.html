@@ -3,11 +3,11 @@
         <rb-cut-off-time
                 response-value="meta.responseCutOffTime"
                 account-no="payment.formData.recipientAccountNo"
-                transfer-kind="payment.type.code"
+                transfer-kind="payment.cotType"
                 transfer-type="SWIFT"
                 realization-date="payment.formData.realizationDate"
                 cut-off-time-promise="meta.cutOffTimePromise"
-                end-of-day-warning="payment.endOfDayWarning"
+                end-of-day-warning=""
                 is-holiday="payment.holiday"
                 add-to-basket="payment.formData.addToBasket">
             <bd-msg-panel ng-if="meta.responseCutOffTime" bd-msg-type="warning" class="message-inline">{{::'raiff.payments.cut.off.time.'+meta.responseCutOffTime | translate}}</bd-msg-panel>
