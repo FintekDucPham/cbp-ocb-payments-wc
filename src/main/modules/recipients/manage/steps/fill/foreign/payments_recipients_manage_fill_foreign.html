@@ -177,9 +177,14 @@
                         {{::'raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT'|translate}}
                     </div>
                     <div eb-message-key="simpleIncorrectIban" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
+                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
                     </div>
-
+                    <div eb-message-key="notUs" class="validation-message animate-on">
+                        {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_US'|translate}}
+                    </div>
+                    <div eb-message-key="notZus" class="validation-message animate-on">
+                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
+                    </div>
                 </eb-validation-messages>
 
             </bd-item-property>
