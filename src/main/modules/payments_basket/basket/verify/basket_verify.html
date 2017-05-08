@@ -65,7 +65,7 @@
                                       <span class="hidden-xs hidden-sm">{{item.payment.accountNo | nrbIbanFilter}}</span>
                                       <span class="hidden-md hidden-lg">{{item.payment.accountNo | nrbIbanShortFilter}}</span>
                                   </div>
-                                  <div>{{item.payment.owner}}</div>
+                                  <div><bd-multiline-text bd-text="item.payment.senderAddress"> </bd-multiline-text></div>
                                 </div>
                             </div>
                             <div class="bd-table__row-line bd-table__row-line--sm-tight">

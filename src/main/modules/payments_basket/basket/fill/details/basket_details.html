@@ -27,7 +27,7 @@
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'raiff.payments.basket.list.sourceAccount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
         <div>{{$data.payment.accountNo| nrbIbanFilter }}</div>
-        <div>{{$data.payment.owner}}</div>
+        <bd-multiline-text bd-text="$data.payment.senderAddress"> </bd-multiline-text>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'raiff.payments.basket.list.targetAccount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
         <span ng-if="$data.payment.recipientAccountNo=='ZUS_ACCOUNTS'">
