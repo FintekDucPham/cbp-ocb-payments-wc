@@ -613,6 +613,7 @@
     "raiff.payments.recipients.new.us.fill.recipient_account.search": "Search",
     "raiff.payments.recipients.new.us.fill.recipient_account.clear": "Clear",
     "raiff.payments.recipients.new.us.fill.recipient_account.EMPTY_US_ACC": "Revenue Office account cannot be empty",
+    "raiff.payments.recipients.new.us.fill.recipient_account.EMPTY_US_IC_ACC": "Revenue Office account cannot be empty",
     "raiff.payments.recipients.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US": "Revenue Office account number must be compliant with the NRB format [CCBBBBBBBBAAAAAAAAAAAAAAAA or CC BBBB BBBB AAAA AAAA AAAA AAAA]",
     "raiff.payments.recipients.new.us.fill.recipient_account.NOT_FOUND_US_ACC": "No Revenue Office/Customs Chamber account matching the provided account number has been found",
     "raiff.payments.recipients.new.us.fill.recipient_account.NOT_FROM_LIST_US": "The Revenue Office must be chosen from the picklist.",

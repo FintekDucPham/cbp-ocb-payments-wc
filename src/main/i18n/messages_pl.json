@@ -620,6 +620,7 @@
     "raiff.payments.recipients.new.us.fill.recipient_account.search": "Szukaj",
     "raiff.payments.recipients.new.us.fill.recipient_account.clear": "Wyczyść",
     "raiff.payments.recipients.new.us.fill.recipient_account.EMPTY_US_ACC": "Rachunek Urzędu Skarbowego nie może być pusty",
+    "raiff.payments.recipients.new.us.fill.recipient_account.EMPTY_US_IC_ACC": "Rachunek Urzędu Skarbowego/Izby Celnej nie może być pusty",
     "raiff.payments.recipients.new.us.fill.recipient_account.INCORRECT_FORMAT_ACC_US": "Rachunek Urzędu Skarbowego musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]",
     "raiff.payments.recipients.new.us.fill.recipient_account.NOT_FOUND_US_ACC": "Nie znaleziono Urzędu Skarbowego/Izby Celnej o podanym numerze rachunku",
     "raiff.payments.recipients.new.us.fill.recipient_account.NOT_FROM_LIST_US": "Urząd skarbowy musi zostać wybrany z listy wyboru.",

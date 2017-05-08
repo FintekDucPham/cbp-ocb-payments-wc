@@ -5,9 +5,11 @@
                 search-enabled="true"
                 on-select="select($item)"
                 theme="bootstrap"
+                name="recipientAccountNo"
                 placeholder="{{::'raiff.payments.tax.tax_account_select.placeholder'|translate}}"
                 ng-pattern="patterns.nrbPattern"
-                ui-select-popup-trigger="taxAccountSearched">
+                ui-select-popup-trigger="taxAccountSearched"
+                ng-required="true">
             <ui-select-match
                     placeholder="{{::'raiff.payments.tax.tax_account_select.placeholder'|translate}}"
                     ng-click="changeFocus(true)"
@@ -27,9 +29,6 @@
     <div style="color: #F4390B;font-size: 14px;font-weight: 300;" ng-if="showResultNotFound || showRequiredError">
         <div ng-if="showResultNotFound">
             {{:: 'raiff.payments.new.us.fill.recipient_account.NOT_FOUND_US_ACC' | translate}}
-        </div>
-        <div ng-if="showRequiredError">
-            {{ ::'raiff.payments.tax.tax_account_select.error.empty' | translate }}
         </div>
     </div>
     <div class="rb-tax-account-select__name">
