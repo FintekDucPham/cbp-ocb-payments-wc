@@ -87,9 +87,14 @@ angular.module('raiffeisen-payments')
                 var matchedInsurance = lodash.find(accounts.content, {'accountNo': data.recipientAccountNo});
                 if(matchedInsurance){
                     data.insurancePremiums = {};
+                    data.defaultInsurancePremius = {};
                     data.insurancePremiums[matchedInsurance.insuranceCode] = {
                         currency: data.currency,
                         amount: data.amount
+                    };
+                    data.defaultInsurancePremius[matchedInsurance.insuranceCode] = {
+                        currency: data.currency,
+                        amount: null
                     };
                 }
                 return true;

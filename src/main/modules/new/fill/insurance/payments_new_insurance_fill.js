@@ -352,7 +352,7 @@ angular.module('raiffeisen-payments')
         var defaultInsurancePremium = angular.copy($scope.payment.formData.insurancePremiums);
         $scope.setClearFormFunction(function(){
             angular.forEach($scope.payment.formData, function(v,k){
-                if(k!=='insurancePremiums'){
+                if(k!=='insurancePremiums' && k!=='defaultInsurancePremius'){
                     delete $scope.payment.formData[k];
                 }
             });
@@ -363,7 +363,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.formData.secondaryIdType = 'PESEL';
             $scope.payment.formData.paymentType = 'TYPE_S';
             if($scope.payment.operation.code==='EDIT'){
-                $scope.payment.formData.insurancePremiums = angular.copy(defaultInsurancePremium);
+                $scope.payment.formData.insurancePremiums = angular.copy($scope.payment.formData.defaultInsurancePremius || defaultInsurancePremium);
                 angular.forEach($scope.payment.formData.insurancePremiums, function(v,k){
                     v.amount = null;
                 });
