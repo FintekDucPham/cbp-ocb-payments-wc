@@ -212,6 +212,7 @@
     "raiff.payments.new.domestic.verify.amount": "Kwota",
     "raiff.payments.new.domestic.verify.description": "Tytułem",
     "raiff.payments.new.domestic.verify.execution_date": "Data realizacji",
+    "raiff.payments.new.domestic.verify.MSG-0661_SAME_STANDING_ORDER": "Dla podanej pary rachunków istnieje już ustanowione zlecenie stałe. Jeśli chcesz kontynuować, wybierz \"Dalej\"",
 
     "raiff.payments.new.internal.fill.default_description": "Przelew środków",
     "raiff.payments.new.internal.fill.sender_account": "Z rachunku",

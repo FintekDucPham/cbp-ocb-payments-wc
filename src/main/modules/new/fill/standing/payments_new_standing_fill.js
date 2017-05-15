@@ -174,6 +174,7 @@ angular.module('raiffeisen-payments')
             recalculateCurrency();
             $scope.validateBalance();
             recipientFilter.filter();
+            checkStandingOrder();
         };
 
         $scope.$on('clearForm', function () {
@@ -278,6 +279,27 @@ angular.module('raiffeisen-payments')
                 $scope.validationErrors.firstRealizationDate = undefined;
                 $scope.$broadcast('validationErrorsChanged');
             }
+        });
+
+        var lastProm;
+
+        function checkStandingOrder() {
+            if (!$scope.standingOrderId) {
+                var prom = standingTransferService.search({
+                    recipientAccountNo: $scope.payment.formData.recipientAccountNo.replace(/ /g, ''),
+                    accountNo: $scope.payment.items.senderAccount.accountNo
+                });
+                lastProm = prom;
+                prom.then(function (data) {
+                    if (lastProm == prom) {
+                        $scope.payment.sameStandingOrder = data.content.length > 0;
+                    }
+                });
+            }
+        }
+
+        $scope.$watch('payment.formData.recipientAccountNo', function () {
+            checkStandingOrder();
         });
 
     });

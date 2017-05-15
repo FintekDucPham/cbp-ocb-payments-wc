@@ -445,5 +445,10 @@
         <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket" rb-options="addToBasketSelectOptions"></rb-add-to-basket-select>
     </div>
 
+    <bd-item-property class="bd-item-property--multirow" ng-show="payment.items.senderAccount.accountNo && payment.formData.recipientAccountNo && payment.sameStandingOrder">
+        <bd-msg-panel bd-msg-type="warning">
+            {{::'raiff.payments.new.domestic.verify.MSG-0661_SAME_STANDING_ORDER'|translate}}
+        </bd-msg-panel>
+    </bd-item-property>
 
 </div>
