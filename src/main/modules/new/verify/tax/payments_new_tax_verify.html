@@ -27,7 +27,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.recipient_account_no'|translate}}">
-        {{payment.items.recipientAccount.accountNo | nrbIbanFilter }} | {{payment.items.recipientAccount.officeName}}
+        {{payment.items.recipientAccount.accountNo | nrbIbanFilter }}<br/>{{payment.items.recipientAccount.officeName}}<span ng-if="payment.items.recipientAccount.officeAddress.length > 0">, {{payment.items.recipientAccount.officeAddress}}</span>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.us.verify.taxpayer_data'|translate}}">
