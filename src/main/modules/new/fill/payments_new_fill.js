@@ -239,8 +239,10 @@ angular.module('raiffeisen-payments')
         $scope.$watch('payment.items.senderAccount', function(account) {
             if(account && $scope.payment.type.code !== rbPaymentTypes.SWIFT.code && $scope.payment.type.code !== rbPaymentTypes.SEPA.code) {
                 $scope.payment.meta.isFuturePaymentAllowed = isFuturePaymentAllowed(account);
-                var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
-                $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, ''+account.category);
+                if($scope.payment.meta.customerContext && $scope.payment.meta.customerContext === 'MICRO'){
+                    var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
+                    $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, ''+account.category);
+                }
             } else {
                 $scope.payment.meta.dateSetByCategory = false;
                 $scope.payment.meta.isFuturePaymentAllowed = true;
