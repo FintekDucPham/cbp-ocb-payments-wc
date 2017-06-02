@@ -103,7 +103,7 @@ angular.module('raiffeisen-payments')
         });
 
         paymentDataResolveStrategy(rbPaymentTypes.TAX.code, function(data){
-            data.taxpayerData = data.senderName.join();
+            data.taxpayerData = data.senderName;
             data.idType = idTypesMap[data.paymentDetails.idtype];
             data.idNumber = data.paymentDetails.idnumber;
             data.formCode = data.paymentDetails.formCode;

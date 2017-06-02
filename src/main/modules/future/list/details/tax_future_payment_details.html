@@ -17,7 +17,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.future.list.details.insurance.recipientAccountNo'|translate}}" ng-class="{'bd-item-property--disabled': $data.operationType === 'DELETE'}">
-        <bd-multiline-text bd-text="$data.details.recipientName"></bd-multiline-text>
+        {{$data.details.recipientName | arrayFilter}}<br/>
         {{ $data.details.recipientAccountNo | nrbIbanFilter}}
     </bd-item-property>
 
