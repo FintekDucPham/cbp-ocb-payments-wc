@@ -1,5 +1,7 @@
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
-    <bd-header>{{ 'raiff.payments.new.types.'+payment.type.code | translate }}</bd-header>
+    <div ng-show="payment.type.code">
+        <bd-header>{{ 'raiff.payments.new.types.'+payment.type.code | translate }}</bd-header>
+    </div>
 
     <eb-preloader class="rb-content-view__preloader--main" eb-promise="payment.initData.promise"></eb-preloader>
     <bd-form-panel ng-if="payment.initData.promise.$$state.status!==0" class="bd-form-panel--responsive">
