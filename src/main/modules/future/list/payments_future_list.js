@@ -19,7 +19,8 @@ angular.module('raiffeisen-payments')
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths, 10),
                             dateFrom: data.CURRENT_DATE.time,
                             dateTo: angular.copy(data.CURRENT_DATE.time),
-                            context: data.customerDetails.customerDetails.context
+                            context: data.customerDetails.customerDetails.context,
+                            currentDate: angular.copy(data.CURRENT_DATE.time)
                         };
                         result.period = result.offset;
                         if (result.context === 'DETAL') {
@@ -48,6 +49,7 @@ angular.module('raiffeisen-payments')
     })
     .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, countriesResolved) {
         $scope.dateRange = {};
+        $scope.currentDate = parameters.currentDate;
         $scope.countryList = countriesResolved;
         $scope.options = {
             "futureDatePanelConfig": parameters

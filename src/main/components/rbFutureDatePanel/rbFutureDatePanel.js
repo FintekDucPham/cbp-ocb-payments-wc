@@ -41,14 +41,16 @@ angular.module('raiffeisen-payments')
                 "dateRange": "=",
                 "options": "=",
                 "onSubmit": "&?",
-                "valid": "=?"
+                "valid": "=?",
+                "currentDate":"="
             },
             controller: function($scope, rbFutureDateRangeParams, FUTURE_DATE_RANGES, FUTURE_DATE_TYPES, translate) {
+
                 $scope.rbDatePickerParams = {
-                    dateFrom: new Date()
+                    dateFrom: $scope.currentDate
                 };
                 // max date, based on now and business parameter
-                var now     = new Date(),
+                var now     = $scope.currentDate,
                     maxDate,
                     options = rbFutureDateRangeParams($scope.options);
 
@@ -128,7 +130,7 @@ angular.module('raiffeisen-payments')
 
                 var validateRange = function() {
                     var dateFrom, dateTo;
-                    var todayMidnight = new Date();
+                    var todayMidnight = $scope.currentDate;
                     todayMidnight.setHours(0);
                     todayMidnight.setMinutes(0);
                     todayMidnight.setSeconds(0);
