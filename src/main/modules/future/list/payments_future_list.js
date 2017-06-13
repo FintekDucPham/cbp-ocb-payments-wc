@@ -20,7 +20,8 @@ angular.module('raiffeisen-payments')
                             dateFrom: data.CURRENT_DATE.time,
                             dateTo: angular.copy(data.CURRENT_DATE.time),
                             context: data.customerDetails.customerDetails.context,
-                            currentDate: angular.copy(data.CURRENT_DATE.time)
+                            currentDate: angular.copy(data.CURRENT_DATE.time),
+                            CURRENT_DATE: data.CURRENT_DATE
                         };
                         result.period = result.offset;
                         if (result.context === 'DETAL') {
@@ -47,9 +48,10 @@ angular.module('raiffeisen-payments')
             }
         });
     })
-    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, countriesResolved) {
+    .controller('PaymentsFuturePaymentsListController', function ($scope, $state, bdTableConfig, $timeout, $q, translate, paymentsService, $filter, parameters, pathService, viewStateService, lodash, rbPaymentTypes, standingTransferService, STANDING_FREQUENCY_TYPES, rbPaymentOperationTypes, initialState, countriesResolved, utilityService) {
         $scope.dateRange = {};
         $scope.currentDate = parameters.currentDate;
+        $scope.currentDateWithTimezone = parameters.CURRENT_DATE;
         $scope.countryList = countriesResolved;
         $scope.options = {
             "futureDatePanelConfig": parameters
@@ -221,6 +223,9 @@ angular.module('raiffeisen-payments')
                                 if (payment.transferType == 'STANDING_ORDER') {
                                     payment.transferType = rbPaymentTypes.STANDING.code;
                                 }
+
+                                payment.deliveryDate = utilityService.convertDateInMillisToCurrentTimezone(payment.deliveryDate, $scope.currentDateWithTimezone.zone, 'DD.MM.YYYY');
+                                payment.realizationDate = utilityService.convertDateInMillisToCurrentTimezone(payment.realizationDate, $scope.currentDateWithTimezone.zone, 'DD.MM.YYYY');
                                 linkDetailsLoading(payment);
                             });
                             defer.resolve(response.content);
