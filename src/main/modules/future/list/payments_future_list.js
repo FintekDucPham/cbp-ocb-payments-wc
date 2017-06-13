@@ -224,8 +224,8 @@ angular.module('raiffeisen-payments')
                                     payment.transferType = rbPaymentTypes.STANDING.code;
                                 }
 
-                                payment.deliveryDate = utilityService.convertDateInMillisToCurrentTimezone(payment.deliveryDate, $scope.currentDateWithTimezone.zone, 'DD.MM.YYYY');
-                                payment.realizationDate = utilityService.convertDateInMillisToCurrentTimezone(payment.realizationDate, $scope.currentDateWithTimezone.zone, 'DD.MM.YYYY');
+                                payment.deliveryDatePre = utilityService.convertDateInMillisToCurrentTimezone(payment.deliveryDate, $scope.currentDateWithTimezone.zone, 'DD.MM.YYYY');
+                                payment.realizationDatePre = utilityService.convertDateInMillisToCurrentTimezone(payment.realizationDate, $scope.currentDateWithTimezone.zone, 'DD.MM.YYYY');
                                 linkDetailsLoading(payment);
                             });
                             defer.resolve(response.content);
