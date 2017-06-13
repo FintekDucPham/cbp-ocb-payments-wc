@@ -20,6 +20,7 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsFutureManageDeleteController', function ($scope, paymentsService, pathService, $state, gate, viewStateService, RB_TOKEN_AUTHORIZATION_CONSTANTS, CODE_TO_ICONS_PA, initialState, rbPaymentTypes, $q, lodash, transferService) {
         // TODO: ideka from initialState wyciagnac
         //$scope.paymentDetailsPromise = paymentsService.get(initialState.paymentId, {});
+        $scope.countryList = (initialState || {}).countryList;
 
         $scope.RB_TOKEN_AUTHORIZATION_CONSTANTS = RB_TOKEN_AUTHORIZATION_CONSTANTS;
         $scope.tokenParams = {
