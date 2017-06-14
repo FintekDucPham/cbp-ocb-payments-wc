@@ -1,16 +1,5 @@
 <div class="form-body" ng-controller="NewDomesticPaymentVerifyController">
-    <span ng-show="meta.cutOffTimePromise.$$state.status  !== 0">
-    <rb-cut-off-time
-            response-value="meta.responseCutOffTime"
-            account-no="payment.formData.recipientAccountNo"
-            transfer-kind="payment.type.code"
-            transfer-type="{{payment.formData.sendBySorbnet?'SORBNET':'ELIXIR'}}"
-            realization-date="payment.formData.realizationDate"
-            cut-off-time-promise="meta.cutOffTimePromise"
-            end-of-day-warning=""
-            is-holiday="payment.holiday"
-            add-to-basket="payment.formData.addToBasket">
-    </rb-cut-off-time>
+    <div ng-show="meta.cutOffTimePromise.$$state.status !== 0">
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'raiff.payments.new.domestic.verify.sender_account_name'|translate}}">
         <div class="hidden-sm hidden-xs hidden-md">
             <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
@@ -64,11 +53,6 @@
         <a href="{{transferCost.link}}" target="_blank">{{::'raiff.payments.new.verify.transfer_cost.info'|translate}}</a>
     </bd-item-property>
      <span class="eb-validation-messages">
-         <span class="messages" ng-if="payment.holiday">
-             <span class="validation-message">
-                 {{::'raiff.payments.new.domestic.fill.execution_date.holiday'|translate}}
-             </span>
-         </span>
          <span class="messages" ng-if="payment.formData.addToBasket && !payment.items.modifyFromBasket">
              <span class="validation-message">
                  {{::'raiff.payments.basket.add.verify'|translate}}
@@ -85,6 +69,22 @@
              </span>
          </span>
     </span>
-    </span>
+
+        <div ng-show="payment.holiday">
+            <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">{{::'raiff.payments.new.domestic.fill.execution_date.holiday' | translate }}</bd-msg-panel>
+        </div>
+
+        <rb-cut-off-time
+                response-value="meta.responseCutOffTime"
+                account-no="payment.formData.recipientAccountNo"
+                transfer-kind="payment.type.code"
+                transfer-type="{{payment.formData.sendBySorbnet?'SORBNET':'ELIXIR'}}"
+                realization-date="payment.formData.realizationDate"
+                cut-off-time-promise="meta.cutOffTimePromise"
+                end-of-day-warning=""
+                is-holiday="payment.holiday"
+                add-to-basket="payment.formData.addToBasket">
+        </rb-cut-off-time>
+    </div>
     <eb-preloader class="eb-list-preloader" eb-promise="meta.cutOffTimePromise"></eb-preloader>
 </div>
