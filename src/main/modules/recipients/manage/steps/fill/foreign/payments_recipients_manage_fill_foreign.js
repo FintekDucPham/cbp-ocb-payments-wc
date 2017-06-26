@@ -274,7 +274,7 @@ angular.module('raiffeisen-payments')
 
             return {
                 shortName: copiedFormData.customName,
-                creditAccount: copiedFormData.recipientAccountNo,
+                creditAccount: copiedFormData.recipientAccountNo.toUpperCase(),
                 beneficiary: utilityService.splitTextEveryNSigns(angular.isArray(copiedFormData.recipientData) ? copiedFormData.recipientData.join(' ') : copiedFormData.recipientData),
                 remarks: utilityService.splitTextEveryNSigns(angular.isArray(copiedFormData.description) ? copiedFormData.description.join(' ') : copiedFormData.description),
                 swift_bic: copiedFormData.recipientSwiftOrBic,
