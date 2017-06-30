@@ -131,7 +131,6 @@
 .new-standing-payment-fill {
   & .frequency {
     width: 134px;
-    // padding-right: 16px; 
   }
 }
 .tooltipFix{
@@ -150,8 +149,7 @@
     color: green;
   }
 }
-.payments-recipients{
-}
+
 .message-inline{
   padding: 10px 0;
   .bd-msg-panel__message {
@@ -324,6 +322,9 @@
     }
   }
   &__summary{
+    &__currency_quantity {
+      clear: left;
+    }
     &__height .bd-table__row-line{
       height: 46px;
     }
