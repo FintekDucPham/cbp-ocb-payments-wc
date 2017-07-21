@@ -1,9 +1,9 @@
 {
   "author": "Asseco Poland SA",
-  "name": "raiffeisen-payments",
-  "version": "0.2.0",
+  "name": "ocb-payments",
+  "version": "0.0.1",
   "type": "miniapp",
-  "description": "Raiffeisen Payments miniapplication",
+  "description": "OCB Payments miniapplication",
   "dependencies": [
     {
       "name": "raiffeisen-shared",

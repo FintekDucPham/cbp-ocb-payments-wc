@@ -1,7 +1,7 @@
 {
-  "name": "cbp-raiffeisen-payments-wc",
-  "version": "0.0.18",
-  "description": "DB NEXT Payments miniapp",
+  "name": "cbp-ocb-payments-wc",
+  "version": "0.0.1",
+  "description": "OCB Payments miniapp",
   "keywords": [
     "raiffeisen",
     "payments"

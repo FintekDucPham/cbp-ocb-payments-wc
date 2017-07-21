@@ -1,6 +1,6 @@
 {
-  "name": "cbp-raiffeisen-payments-wc",
-  "version": "0.0.18",
+  "name": "cbp-ocb-payments-wc",
+  "version": "0.0.1",
   "private": true,
   "main": "Gruntfile.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://repopbk.poland.asseco.corp/cbp-raiffeisen/cbp-raiffeisen-payments-wc.git"
+    "url": "https://repopbk.poland.asseco.corp/ocp-ocb/cbp-ocb-payments-wc.git"
   },
   "keywords": [
     "raiffeisen",
