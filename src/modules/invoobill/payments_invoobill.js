@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill', {
             url: "/invoobill",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/payments_invoobill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/payments_invoobill.html",
             controller: "PaymentsInvoobillController",
             abstract: true,
             resolve: {
@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
 
         $scope.invbName = parameters.invbName;
 
-        $scope.invbHeader = translate.property('raiff.payments.invoobill.activation.header', [$scope.invbName]);
+        $scope.invbHeader = translate.property('ocb.payments.invoobill.activation.header', [$scope.invbName]);
 
 
 

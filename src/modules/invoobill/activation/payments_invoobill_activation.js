@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.activation', {
             url: "/activation",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/activation/payments_invoobill_activation.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/activation/payments_invoobill_activation.html",
             controller: "PaymentsInvoobillActivationController",
             params: {
                 referenceId: null
@@ -30,7 +30,7 @@ angular.module('raiffeisen-payments')
                 }]
             },
             data: {
-                analyticsTitle: "raiff.payments.invoobill.activation.header"
+                analyticsTitle: "ocb.payments.invoobill.activation.header"
             }
         });
     })
@@ -38,9 +38,9 @@ angular.module('raiffeisen-payments')
 
 
         $scope.labels = {
-            showCreditors: translate.property('raiff.payments.invoobill.show_creditors', [$scope.invbName]),
-            termOfUse: translate.property('raiff.payments.invoobill.activation.link.label', [$scope.invbName]),
-            termOfUseRequired: translate.property('raiff.payments.invoobill.activation.regulamins.reqiured', [$scope.invbName])
+            showCreditors: translate.property('ocb.payments.invoobill.show_creditors', [$scope.invbName]),
+            termOfUse: translate.property('ocb.payments.invoobill.activation.link.label', [$scope.invbName]),
+            termOfUseRequired: translate.property('ocb.payments.invoobill.activation.regulamins.reqiured', [$scope.invbName])
         };
 
         $scope.model = {
@@ -56,16 +56,16 @@ angular.module('raiffeisen-payments')
                     status: "ACTIVE"
                 };
                 invoobillPaymentsService.setStatus(params);
-                menuService.removeMenuItem('raiffeisen-payments', 'payments.invoobill');
+                menuService.removeMenuItem('ocb-payments', 'payments.invoobill');
 
                 var menuItem = {
                     id: "payments.invoobill",
                     label: $scope.invbName,
-                    icon: "raiff-icons invoobill",
+                    icon: "ocb-icons invoobill",
                     action: "payments.invoobill.list",
                     priority: 8
                 };
-                menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                menuService.pushMenuItems('ocb-payments', menuItem);
 
                 $state.go("payments.invoobill.activationSuccessful");
             }

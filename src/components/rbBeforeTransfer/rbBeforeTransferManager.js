@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant('rbBeforeTransferConstants', {
         PROTOTYPE: {
             SUGGESTION: {

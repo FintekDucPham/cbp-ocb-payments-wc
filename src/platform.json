@@ -6,18 +6,17 @@
   "description": "OCB Payments miniapplication",
   "dependencies": [
     {
-      "name": "raiffeisen-shared",
-      "version": "0.2.0"
+      "name": "ocb-shared",
+      "version": "0.0.2"
     }
   ],
-  "main": "raiffeisenPaymentsMiniapp.js",
-  "namespace": "raiffeisen",
+  "main": "ocbPaymentsMiniapp.js",
+  "namespace": "ocb",
   "settings":[
     {
-      "name": "raiffeisen-payments-AdvertisingSlots.settings",
-      "src": "/settings/raiffeisen-payments-AdvertisingSlots.settings.json",
-      "src-schema": "/settings/raiffeisen-payments-AdvertisingSlots.settings_schema.json",
-      "src-permissions": "/settings/raiffeisen-payments-AdvertisingSlots.settings_permissions.json"
+      "name": "ocb-payments-AdvertisingSlots.settings",
+      "src": "/settings/ocb-payments-AdvertisingSlots.settings.json",
+      "src-permissions": "/settings/ocb-payments-AdvertisingSlots.settings_permissions.json"
     }
   ]
 }

@@ -1,11 +1,11 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers.list', {
             url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/list/payments_taxpayers_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/list/payments_taxpayers_list.html",
             controller: "PaymentsTaxpayersListController",
             data: {
-                analyticsTitle: "raiff.payments.taxpayers.label"
+                analyticsTitle: "ocb.payments.taxpayers.label"
             }
         });
     })
@@ -73,7 +73,7 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig: new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.taxpayers.label.empty_list")
+                placeholderText: translate.property("ocb.payments.taxpayers.label.empty_list")
             }),
             tableData: {
                 getData: function ($promise, $params) {
@@ -98,7 +98,7 @@ angular.module('raiffeisen-payments')
                             var list = $scope.taxpayerList = lodash.map(data.content, function (taxpayer) {
                                 return {
                                     taxpayerType: rbTaxpayerTypes[taxpayer.payerType],
-                                    taxpayerTypeMessage: translate.property('raiff.payments.taxpayers.list.type.{0}'.format(taxpayer.payerType)),
+                                    taxpayerTypeMessage: translate.property('ocb.payments.taxpayers.list.type.{0}'.format(taxpayer.payerType)),
                                     customerName: taxpayer.name,
                                     taxpayerId: taxpayer.id,
                                     secondaryIdType: taxpayer.secondaryIdType,

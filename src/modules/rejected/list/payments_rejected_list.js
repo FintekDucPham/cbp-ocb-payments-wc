@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.rejected.list', {
             url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/rejected/list/payments_rejected_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/rejected/list/payments_rejected_list.html",
             controller: "PaymentsRejectedListController",
             params: {
                 referenceId: null
@@ -35,7 +35,7 @@ angular.module('raiffeisen-payments')
                 }]
             },
             data: {
-                analyticsTitle: "raiff.payments.rejected.label"
+                analyticsTitle: "ocb.payments.rejected.label"
             }
         });
     })
@@ -165,7 +165,7 @@ angular.module('raiffeisen-payments')
 
         //table config
         $scope.tableConfig = new bdTableConfig({
-            placeholderText: translate.property("raiff.payments.rejected.list.empty.label"),
+            placeholderText: translate.property("ocb.payments.rejected.list.empty.label"),
             model: $scope.rejectedList
         });
 

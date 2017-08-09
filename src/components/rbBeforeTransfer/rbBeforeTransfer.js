@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbBeforeTransfer', function (pathService) {
         return {
             restrict: 'E',

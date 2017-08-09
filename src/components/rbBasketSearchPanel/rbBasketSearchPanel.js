@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant('FUTURE_DATE_RANGES', {
         'DAYS': 'DAYS',
         'WEEKS': 'WEEKS',
@@ -43,7 +43,7 @@ angular.module('raiffeisen-payments')
     .directive('rbBasketSearchPanel', function(pathService, lodash) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbBasketSearchPanel/rbBasketSearchPanel.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbBasketSearchPanel/rbBasketSearchPanel.html",
             scope: {
                 "data": "=",
                 "options": "=",
@@ -149,7 +149,7 @@ angular.module('raiffeisen-payments')
                 $scope.PAYMENT_BASKET_STATUS = PAYMENT_BASKET_STATUS;
                 $scope.PAYMENT_BASKET_STATUS_LIST = [];
                 angular.forEach(PAYMENT_BASKET_STATUS, function(value, key) {
-                    this.push({id: value, label: translate.property('raiff.payments.basket.transaction.status.'+value)});
+                    this.push({id: value, label: translate.property('ocb.payments.basket.transaction.status.'+value)});
                 }, $scope.PAYMENT_BASKET_STATUS_LIST);
 
                 $scope.FUTURE_DATE_RANGES = FUTURE_DATE_RANGES;
@@ -159,7 +159,7 @@ angular.module('raiffeisen-payments')
                 $scope.options = options;
 
                 $scope.messages = {
-                    'INCORRECT_END_DATE': translate.property('raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
+                    'INCORRECT_END_DATE': translate.property('ocb.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
                 };
 
                 maxDate = new Date(now.getTime());

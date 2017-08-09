@@ -1,12 +1,12 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('TaxpayersManageRemoveStatusController', function ($scope, bdStepStateEvents, translate) {
         $scope.taxpayerClone = angular.copy($scope.taxpayer);
 
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
             if ($scope.taxpayer.result.type == 'success') {
-                prepareResult('raiff.payments.taxpayers.manage.remove.status.ok');
+                prepareResult('ocb.payments.taxpayers.manage.remove.status.ok');
             } else {
-                prepareResult('raiff.payments.taxpayers.manage.remove.status.fail');
+                prepareResult('ocb.payments.taxpayers.manage.remove.status.fail');
             }
 
         });

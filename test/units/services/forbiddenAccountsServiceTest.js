@@ -10,7 +10,7 @@ describe('forbiddenAccountsService', function() {
 
     beforeEach(module('ngLodash'));
     beforeEach(module('ebSessionModule'));
-    beforeEach(module('raiffeisen-payments'));
+    beforeEach(module('ocb-payments'));
     beforeEach(initPlatform);
 
     beforeEach(inject(function (_forbiddenAccounts_, $httpBackend) {

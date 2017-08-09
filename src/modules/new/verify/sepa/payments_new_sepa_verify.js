@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('NewSepaPaymentVerifyController', function ($scope, lodash) {
 
     });

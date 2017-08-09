@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments').service('rbAccountOwnNrbService', function(RAIFF_NRB_CONSTANTS) {
+angular.module('ocb-payments').service('rbAccountOwnNrbService', function(BANK_NRB_CONSTANTS) {
     'use strict';
 
     var checkNrbOwn = function(string, prefixArray){
@@ -17,7 +17,7 @@ angular.module('raiffeisen-payments').service('rbAccountOwnNrbService', function
     };
     return {
         startsWithPrefix: function(n) {
-            return checkNrbOwn(n, RAIFF_NRB_CONSTANTS.insternal_prefix);
+            return checkNrbOwn(n, BANK_NRB_CONSTANTS.internal_prefix);
         }
     };
 });

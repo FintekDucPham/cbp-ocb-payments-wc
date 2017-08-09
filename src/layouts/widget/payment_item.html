@@ -1,12 +1,12 @@
 <div class="widget-content-paddings">
     <div class="widget__title">{{ item.title[0] }}</div>
-    <bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.recipient_name' | translate }}">
+    <bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'ocb.payments.widget.recipient_name' | translate }}">
         {{ item.recipientName[0] }}
     </bd-item-property>
-    <bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.realization_date' | translate }}">
+    <bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'ocb.payments.widget.realization_date' | translate }}">
         {{ item.realizationDate | date : 'shortDate' }}
     </bd-item-property>
-    <bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'raiff.payments.widget.amount' | translate }}">
+    <bd-item-property class="bd-item-property--always-stacked bd-item-property--clear-heading" label="{{ ::'ocb.payments.widget.amount' | translate }}">
         <bd-amount style="float: right;" amount="item.amount" currency="{{ item.currency }}"></bd-amount>
     </bd-item-property>
 </div>

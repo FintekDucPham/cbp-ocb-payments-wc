@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.reject_payment.fill', {
             url: "/fill",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/reject_payment/fill/payments_reject_invoobill_fill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/list/reject_payment/fill/payments_reject_invoobill_fill.html",
             controller: "PaymentsRejectInvoobillFillController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"

@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new.fill', {
             url: "/fill/:accountId/:nrb",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new/fill/payments_new_fill.html",
             controller: "NewPaymentFillController",
             params: {
                 accountId: null,
@@ -78,7 +78,7 @@ angular.module('raiffeisen-payments')
             readDataFromServer: false
         });
         $scope.payment.meta.extraVerificationAccountList = paymentRulesResolved.extraVerificationAccountList;
-        $scope.payment.meta.laterExecutedDateMsg = translate.property('raiff.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
+        $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
 
         //validation regexp
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
@@ -201,24 +201,24 @@ angular.module('raiffeisen-payments')
                         var errorMsg = null;
                         lodash.forEach(errorReason.errors, function(error){
                             var currentError = error;
-                            if(currentError.field == 'raiff.transfer.limit.exceeed'){
+                            if(currentError.field == 'ocb.transfer.limit.exceeed'){
                                 $scope.limitExeeded = {
                                     show: true,
-                                    messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                                    messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
                                 };
-                            }else if(currentError.field == 'raiff.transfer.limit.nonres'){
+                            }else if(currentError.field == 'ocb.transfer.limit.nonres'){
                                 $scope.limitNonResExeeded = {
                                     show: true,
-                                    messages: translate.property("raiff.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
+                                    messages: translate.property("ocb.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
                                 };
-                            }else if(currentError.field == 'raiff.basket.transfers.limit.exceeed'){
+                            }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed'){
                                 $scope.limitBasketExeeded = {
                                     show: true,
-                                    messages: translate.property("raiff.payments.basket.add.validation.amount_exceeded")
+                                    messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
                                 };
                             }else{
                                 if(currentError.codes[2]){
-                                    errorMsg = 'raiff.payments.new.error.'+currentError.field+"."+currentError.codes[2];
+                                    errorMsg = 'ocb.payments.new.error.'+currentError.field+"."+currentError.codes[2];
                                 }else{
                                     errorMsg = currentError.defaultMessage;
                                 }

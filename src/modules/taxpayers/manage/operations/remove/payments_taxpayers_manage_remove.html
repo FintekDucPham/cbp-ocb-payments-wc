@@ -1,9 +1,9 @@
 <rb-content-view class="rb-content-view--framed form">
-    <bd-header>{{ ::'raiff.payments.taxpayers.manage.remove.title' | translate }}</bd-header>
+    <bd-header>{{ ::'ocb.payments.taxpayers.manage.remove.title' | translate }}</bd-header>
 
     <bd-form-panel>
 
-        <rb-verify-wizard bd-active-step="activeStep" rb-step-params="{ footerType: 'simple', completeState: 'payments.taxpayers.list', onEdit: editForm, cancelState: 'payments.taxpayers.list', labels:{cancel:'raiff.payments.taxpayers.manage.remove.cancel_btn', accept:'raiff.payments.taxpayers.manage.remove.remove_btn'} }">
+        <rb-verify-wizard bd-active-step="activeStep" rb-step-params="{ footerType: 'simple', completeState: 'payments.taxpayers.list', onEdit: editForm, cancelState: 'payments.taxpayers.list', labels:{cancel:'ocb.payments.taxpayers.manage.remove.cancel_btn', accept:'ocb.payments.taxpayers.manage.remove.remove_btn'} }">
             <div ui-view></div>
         </rb-verify-wizard>
 

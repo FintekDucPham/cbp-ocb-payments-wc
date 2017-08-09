@@ -1,9 +1,9 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.standing.manage.remove.verify', {
             url: "/verify",
             templateUrl: function($stateParams){
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/manage/remove/verify/payments_standing_manage_remove_verify.html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/standing/manage/remove/verify/payments_standing_manage_remove_verify.html";
             },
             controller: "PaymentsStandingManageRemoveVerifyController",
             data: {

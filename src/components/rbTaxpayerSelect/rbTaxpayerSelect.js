@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbTaxpayerSelect', function (pathService, taxpayersService, rbTaxpayerTypes, lodash, systemParameterService) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxpayerSelect/rbTaxpayerSelect.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbTaxpayerSelect/rbTaxpayerSelect.html",
             scope: {
                 taxpayerId: '=rbTaxpayerId',
                 taxpayer: '=rbTaxpayer',

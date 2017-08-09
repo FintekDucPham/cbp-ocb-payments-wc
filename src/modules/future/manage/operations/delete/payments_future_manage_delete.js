@@ -1,12 +1,12 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.future.manage.delete', {
             url: "/delete",
 //            abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/delete/payments_future_manage_delete.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/manage/operations/delete/payments_future_manage_delete.html",
             controller: "PaymentsFutureManageDeleteController",
             data: {
-                analyticsTitle: "raiff.payments.future.remove.label"
+                analyticsTitle: "ocb.payments.future.remove.label"
             }
         });
     })
@@ -31,7 +31,7 @@ angular.module('raiffeisen-payments')
         lodash.extend($scope.$data, {
             operationType: 'DELETE'
         });
-        $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/details/"+$scope.$data.details.transferType.toLowerCase()+"_future_payment_details.html";
+        $scope.detailsTemplatePath = pathService.generateTemplatePath("ocb-payments") + "/modules/future/list/details/"+$scope.$data.details.transferType.toLowerCase()+"_future_payment_details.html";
         $scope.payment = {
             formData: {},
             meta: {}
@@ -40,7 +40,7 @@ angular.module('raiffeisen-payments')
             console.debug(details);
             details.referenceId = initialState.paymentId;
             // we need such structure and naming because we reuse some templates
-            $scope.detailsTemplatePath = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/details/"+details.transferType+"_future_payment_details.html";
+            $scope.detailsTemplatePath = pathService.generateTemplatePath("ocb-payments") + "/modules/future/list/details/"+details.transferType+"_future_payment_details.html";
             $scope.$data = {
                 operationType: 'DELETE',
                 details: details

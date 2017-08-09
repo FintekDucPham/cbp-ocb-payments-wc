@@ -1,16 +1,16 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage', {
             url: "/manage",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/payments_recipients_manage.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/payments_recipients_manage.html",
             controller: "PaymentsRecipientsManageController",
             params: {
                 recipientType: 'domestic',
                 operation: 'new'
             },
             data: {
-                analyticsTitle: "raiff.payments.recipients.label"
+                analyticsTitle: "ocb.payments.recipients.label"
             },
             resolve: {
                 paymentRulesResolved: ['paymentRules', function(paymentRules){
@@ -86,12 +86,12 @@ angular.module('raiffeisen-payments')
                 footerType: 'recipient',
                 cancelState: 'payments.recipients.list',
                 labels:{
-                    cancel:'raiff.payments.new.btn.cancel',
-                    clear:'raiff.payments.new.btn.clear',
-                    next: 'raiff.payments.new.btn.next',
-                    change:'raiff.payments.new.btn.change',
-                    accept:'raiff.payments.new.btn.accept',
-                    finalize:'raiff.payments.new.btn.finalize'
+                    cancel:'ocb.payments.new.btn.cancel',
+                    clear:'ocb.payments.new.btn.clear',
+                    next: 'ocb.payments.new.btn.next',
+                    change:'ocb.payments.new.btn.change',
+                    accept:'ocb.payments.new.btn.accept',
+                    finalize:'ocb.payments.new.btn.finalize'
                 },
                 visibility:{
                     cancel: true,

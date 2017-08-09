@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments').directive('rbNrbInputFormatter', function () {
+angular.module('ocb-payments').directive('rbNrbInputFormatter', function () {
     return {
         require: 'ngModel',
         link: function (s,e,a, model) {

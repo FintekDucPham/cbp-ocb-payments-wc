@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('RecipientsManageRemoveStatusController', function ($scope, bdStepStateEvents, translate) {
         $scope.recipient.formData = {};
         $scope.recipient.items = {};

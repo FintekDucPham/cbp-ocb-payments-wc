@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.activationSuccessful', {
             url: "/activationSuccessful",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/activation/payments_invoobill_activation_successful.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/activation/payments_invoobill_activation_successful.html",
             controller: "PaymentsInvoobillAcctivationSuccessfulController",
             params: {
                 referenceId: null
@@ -15,6 +15,6 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.labels = {
-            successful: translate.property('raiff.payments.invoobill.activation.successful', [$scope.invbName])
+            successful: translate.property('ocb.payments.invoobill.activation.successful', [$scope.invbName])
         };
     });

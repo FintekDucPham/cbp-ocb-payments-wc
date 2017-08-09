@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('NewSepaPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
                                                           validationRegexp, recipientGeneralService, transferService, utilityService, currencyExchangeService,
                                                           exchangeRates, rbAccountOwnNrbService, forbiddenAccounts, formService, translate) {
@@ -262,7 +262,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
-                customName: translate.property('raiff.new.recipient.custom_name'),
+                customName: translate.property('ocb.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,

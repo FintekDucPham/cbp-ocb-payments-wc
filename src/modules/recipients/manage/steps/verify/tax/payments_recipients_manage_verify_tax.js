@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('RecipientsManageVerifyTaxController', function ($scope, taxOffices, $state, $timeout, lodash) {
         $scope.showVerify = false;
         if(angular.isUndefined($scope.recipient.formData) || lodash.isEmpty($scope.recipient.formData)){

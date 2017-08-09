@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers.manage.remove', {
             url: "/:operation/:taxpayerType",
@@ -6,15 +6,15 @@ angular.module('raiffeisen-payments')
             params: {
                 taxpayer: null
             },
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/remove/payments_taxpayers_manage_remove.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/operations/remove/payments_taxpayers_manage_remove.html",
             controller: "PaymentsTaxpayersManageRemoveController",
             data: {
-                analyticsTitle: "raiff.payments.taxpayers.manage.remove.title"
+                analyticsTitle: "ocb.payments.taxpayers.manage.remove.title"
             }
         }).state('payments.taxpayers.manage.remove.verify', {
             url: "/verify",
             templateUrl: function () {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
             },
             controller: "TaxpayersManageVerifyController",
             data: {
@@ -22,7 +22,7 @@ angular.module('raiffeisen-payments')
             }
         }).state('payments.taxpayers.manage.remove.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/remove/status/payments_taxpayers_manage_remove_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/operations/remove/status/payments_taxpayers_manage_remove_status.html",
             controller: "TaxpayersManageRemoveStatusController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step3"

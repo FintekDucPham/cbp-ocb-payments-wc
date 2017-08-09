@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.basket.new.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/status/basket_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payments_basket/basket/status/basket_status.html",
             controller: "PaymentsBasketStatusController"
         });
     })
@@ -101,34 +101,34 @@ angular.module('raiffeisen-payments')
             initAmount($scope.basket.item.result.notAcceptedTransactions, $scope.basket.item.result.readyTransactions, $scope.basket.item.result.messages);
 
             registerMessage(1,
-                translate.property('raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.error)
+                translate.property('ocb.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.error)
                 .showRules
                 .add(showRules.isMicro())
                 .add(showRules.hasKey("AMOUNT_EXCEEDED_FUNDS"));
             registerMessage(2,
-                translate.property('raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.error)
+                translate.property('ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.error)
                 .showRules
                 .add(showRules.isMicro())
                 .add(showRules.hasKey("DAILY_LIMIT_EXCEEDED"));
             registerMessage(3,
-                translate.property('raiff.payments.basket.status.NOT_ACCEPTED_TRANSACTIONS', [paymentsAmount.notAccepted, paymentsAmount.sum]), messageType.warning)
+                translate.property('ocb.payments.basket.status.NOT_ACCEPTED_TRANSACTIONS', [paymentsAmount.notAccepted, paymentsAmount.sum]), messageType.warning)
                 .showRules
                 .add(showRules.isMicro())
                 .add(showRules.notAccepted($scope.basket.item.result.notAcceptedTransactions));
             registerMessage(4,
-                translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.success)
+                translate.property('ocb.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO', [paymentsAmount.ready, paymentsAmount.sum]), messageType.success)
                 .showRules
                 .add(showRules.isMicro())
                 .add(showRules.transactionsSubmited($scope.basket.item.result.transactionsSubmited));
             registerMessage(5,
-                translate.property('raiff.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'), messageType.success)
+                translate.property('ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL'), messageType.success)
                 .showRules
                 .add(showRules.transactionsSubmited($scope.basket.item.result.transactionsSubmited));
 
             resolveMessage();
         }else {
             registerMessage(1,
-                translate.property('raiff.payments.basket.delete.status.messages.error'), messageType.error);
+                translate.property('ocb.payments.basket.delete.status.messages.error'), messageType.error);
         }
 
     });

@@ -1,7 +1,7 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('PaymentsWidgetContentController', function($scope, $rootScope, viewStateService, $location, $timeout,$state, pathService, paymentsService, transactionService, paymentsWidgetMode, rbPaymentTypes) {
 
-        $scope.paymentItemContent = pathService.generateTemplatePath("raiffeisen-payments") + '/layouts/widget/payment_item.html';
+        $scope.paymentItemContent = pathService.generateTemplatePath("ocb-payments") + '/layouts/widget/payment_item.html';
 
         $scope.paymentsWidgetMode = paymentsWidgetMode;
 

@@ -1,11 +1,11 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.standing.list', {
             url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/payments_standing_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/standing/list/payments_standing_list.html",
             controller: "PaymentsStandingPaymentsListController",
             data: {
-                analyticsTitle: "raiff.payments.standing.label"
+                analyticsTitle: "ocb.payments.standing.label"
             }
         });
     })
@@ -21,7 +21,7 @@ angular.module('raiffeisen-payments')
             "returnToItem": (initialState && initialState.returnToItem) ? initialState.returnToItem : null
         };
 
-        $scope.paymentDetailsTemplate = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
+        $scope.paymentDetailsTemplate = pathService.generateTemplatePath("ocb-payments") + "/modules/standing/list/details/payments_standing_list_detail.html";
 
         $scope.onOperationsDateSubmit = function() {
             $scope.table.tableData.newSearch = true;
@@ -105,7 +105,7 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig: new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.standing.list.empty"),
+                placeholderText: translate.property("ocb.payments.standing.list.empty"),
                 currentPage: (initialState && initialState.returnToPage) ? initialState.returnToPage : 1
             }),
             tableData: {

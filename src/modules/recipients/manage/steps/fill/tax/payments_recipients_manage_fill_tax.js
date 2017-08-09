@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('RecipientsManageFillUsController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, usSupplementaryIds, usPeriodTypes, translate, validationRegexp) {
 
         angular.extend($scope.recipient.meta, {
@@ -48,7 +48,7 @@ angular.module('raiffeisen-payments')
         });
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.us.fill.remitter_account.none_available'),
+            messageWhenNoAvailable: translate.property('ocb.payments.recipients.new.us.fill.remitter_account.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
             showCustomNames: true,

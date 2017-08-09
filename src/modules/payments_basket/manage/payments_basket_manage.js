@@ -1,12 +1,12 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.basket.manage', {
             url: "/manage",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/manage/payments_basket_manage.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payments_basket/manage/payments_basket_manage.html",
             controller: "PaymentsBasketManageController",
             data: {
-                analyticsTitle: "raiff.payments.future.label"
+                analyticsTitle: "ocb.payments.future.label"
             }
         });
     })
@@ -24,8 +24,8 @@ angular.module('raiffeisen-payments')
             footerType: 'simple',
             labels : {
                 prev: 'config.multistepform.buttons.cancel',
-                next: 'raiff.payments.basket.multistepform.buttons.delete',
-                finalize: 'raiff.payments.new.btn.finalize'
+                next: 'ocb.payments.basket.multistepform.buttons.delete',
+                finalize: 'ocb.payments.new.btn.finalize'
             },
             visibility:{
                 next: true,

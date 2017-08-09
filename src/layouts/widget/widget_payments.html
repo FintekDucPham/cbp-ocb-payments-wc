@@ -10,20 +10,20 @@
 
         <div ng-show="paymentsPromise.$$state.status === 1 && !paymentSummary.content.length" style="height: 100px;">
             <div class="widget-content-inner info-text" style="margin: 100px auto; text-align: center;">
-                {{::'raiff.payments.widget.no_content'|translate}}
+                {{::'ocb.payments.widget.no_content'|translate}}
             </div>
         </div>
 
         <div ng-show="paymentsPromise.$$state.status === 2" style="height: 100px;">
             <div class="widget-content-inner info-text" style="margin: 100px auto; text-align: center;">
-                {{::'raiff.payments.widget.error'|translate}}
+                {{::'ocb.payments.widget.error'|translate}}
             </div>
         </div>
 
         <div ng-show="!paymentsWidgetMode.fullMode && !paymentSummary.content.length">
             <div style="position:absolute; bottom:0px; width:100%; padding:5px;">
                 <bd-button ui-sref="payments.recipients.list" class="bd-form-footer__button bd-form-footer__button--positive bd-button__primary" style="line-height: 14px;">
-                    {{::'raiff.payments.widget.new'|translate}}
+                    {{::'ocb.payments.widget.new'|translate}}
                 </bd-button>
             </div>
         </div>

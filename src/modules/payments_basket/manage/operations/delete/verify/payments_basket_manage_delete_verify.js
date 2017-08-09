@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('PaymentsBasketManageDeleteVerifyController', function($scope, $stateParams, pathService, bdStepStateEvents, $state, initialState, paymentsBasketService, RB_TOKEN_AUTHORIZATION_CONSTANTS){
         $scope.payment.token.params.rbOperationType="REMOVE_TRANSFER_FROM_BASKET";
 
-        $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
+        $scope.templateDetails = pathService.generateTemplatePath("ocb-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
 
 
         if (initialState && initialState.basketItem) {

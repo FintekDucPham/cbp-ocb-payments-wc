@@ -1,6 +1,6 @@
 <form name="paymentForm" novalidate>
     <div>
-        <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.sender_account' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.new.internal.fill.sender_account' | translate }}">
             <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
             <rb-account-select rb-account="payment.items.senderAccount"
                                rb-account-id="payment.formData.remitterAccountId"
@@ -14,13 +14,13 @@
         </bd-item-property>
 
         <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
-                          label="{{ ::'raiff.payments.new.internal.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+                          label="{{ ::'ocb.payments.new.internal.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
 
         <input name="recipientAcc" hidden ng-model="payment.formData.beneficiaryAccountId" required/>
-        <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.recipient_account' | translate }}" ng-if="payment.formData.remitterAccountId">
+        <bd-item-property label="{{ ::'ocb.payments.new.internal.fill.recipient_account' | translate }}" ng-if="payment.formData.remitterAccountId">
             <rb-account-select
                     rb-account="payment.items.recipientAccount"
                     rb-account-id="payment.formData.beneficiaryAccountId"
@@ -29,27 +29,27 @@
                     rb-product-list-name="TRANSFER_OWN_TO_LIST"
                     rb-remote="remote.model_to"
                     rb-init-select-value = "{{payment.formData.recipientAccountNo}}"
-                    placeholder-value="{{ ::'raiff.payments.new.internal.fill.choose' | translate }}"></rb-account-select>
+                    placeholder-value="{{ ::'ocb.payments.new.internal.fill.choose' | translate }}"></rb-account-select>
 
             <eb-validation-messages eb-name="recipientAcc">
                 <div eb-message-key="sameAccounts" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
                 </div>
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.recipient_account.required'|translate}}
+                    {{::'ocb.payments.new.internal.fill.recipient_account.required'|translate}}
                 </div>
             </eb-validation-messages>
 
         </bd-item-property>
 
         <bd-item-property ng-if="payment.formData.recipientAccountId && remote.model_from.loaded &&  payment.operation.code !='EDIT'"
-                          label="{{ ::'raiff.payments.new.internal.fill.recipient_account.accessible_assets' | translate }}">
+                          label="{{ ::'ocb.payments.new.internal.fill.recipient_account.accessible_assets' | translate }}">
             <bd-amount amount="payment.items.recipientAccount.accessibleAssets"
                        currency="{{ payment.items.recipientAccount.currency }}"></bd-amount>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multi"
-                          label="{{ ::'raiff.payments.new.internal.fill.amount' | translate }}">
+                          label="{{ ::'ocb.payments.new.internal.fill.amount' | translate }}">
 
             <div class="bd-item-property--multi__values">
                 <div class="bd-item-property__value--primary">
@@ -73,7 +73,7 @@
                                theme="bootstrap"
                                ng-disabled="payment.options.currencyLocked"
                                required>
-                        <ui-select-match placeholder="{{::'raiff.payments.currency.placeholder' | translate }}">
+                        <ui-select-match placeholder="{{::'ocb.payments.currency.placeholder' | translate }}">
                             {{$select.selected}}
                         </ui-select-match>
                         <ui-select-choices repeat="currency in currencyList track by $index">
@@ -85,23 +85,23 @@
 
             <eb-validation-messages eb-name="amount">
                 <div eb-message-key="convertedBalance" class="validation-message animate-on">
-                    {{ 'raiff.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
+                    {{ 'ocb.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
                 </div>
 
                 <div eb-message-key="number" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
                 <div eb-message-key="ngMin" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
                 <div eb-message-key="amount" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
                 </div>
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
+                    {{::'ocb.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
                 </div>
             </eb-validation-messages>
             <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
@@ -111,29 +111,29 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
-                          label="{{ ::'raiff.payments.new.internal.fill.description' | translate }}">
+                          label="{{ ::'ocb.payments.new.internal.fill.description' | translate }}">
     <textarea name="description"
               ng-model="payment.formData.description"
               ng-pattern="PAYMENT_DESCRIPTION_REGEX"
               split-text-max-length-validators="140"
               required
               class="input-area input-area--party-data"
-              placeholder="{{ ::'raiff.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
+              placeholder="{{ ::'ocb.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
 
             <eb-validation-messages eb-name="description">
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.description.EMPTY_TITLE'|translate}}
+                    {{::'ocb.payments.new.internal.fill.description.EMPTY_TITLE'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
+                    {{::'ocb.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
                 <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
+                    {{::'ocb.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
                 </div>
             </eb-validation-messages>
 
         </bd-item-property>
-        <bd-item-property label="{{ ::'raiff.payments.new.internal.fill.execution_date' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.new.internal.fill.execution_date' | translate }}">
 
             <rb-datepicker rb-form="paymentForm"
                            rb-name="realizationDate"
@@ -146,16 +146,16 @@
 
             <eb-validation-messages eb-name="realizationDate">
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
+                    {{::'ocb.payments.new.internal.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
                 </div>
                 <div eb-message-key="date" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                    {{::'ocb.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
                 </div>
                 <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                    {{::'ocb.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
                 </div>
                 <div eb-message-key="bdMinDate" class="validation-message animate-on">
-                    {{::'raiff.payments.new.internal.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
+                    {{::'ocb.payments.new.internal.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
                 </div>
                 <div eb-message-key="bdMaxDate" class="validation-message animate-on">
                     {{ payment.meta.laterExecutedDateMsg }}

@@ -1,10 +1,10 @@
 <rb-content-view class="rb-content-view--framed form">
-    <bd-header>{{::'raiff.payments.recipients.new.label'|translate}}</bd-header>
+    <bd-header>{{::'ocb.payments.recipients.new.label'|translate}}</bd-header>
 
     <bd-form-panel class="bd-form-panel--responsive">
 
         <bd-item-property ng-show="activeStep.id !== 'status'"
-                          label="{{::'raiff.payments.recipients.new.type.select'|translate}}">
+                          label="{{::'ocb.payments.recipients.new.type.select'|translate}}">
 
             <ui-select ng-model="recipient.type"
                        theme="bootstrap"
@@ -12,11 +12,11 @@
                        ng-disabled="activeStep.id !== 'fill'"
                        reset-search-input="false"
                        required>
-                <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.type.select.placeholder'|translate }}">
-                    {{'raiff.payments.recipients.select.type.' + $select.selected.code | translate}}
+                <ui-select-match placeholder="{{ ::'ocb.payments.recipients.new.type.select.placeholder'|translate }}">
+                    {{'ocb.payments.recipients.select.type.' + $select.selected.code | translate}}
                 </ui-select-match>
                 <ui-select-choices repeat="recipientType in recipient.meta.recipientTypes">
-                    <div ng-bind-html="::'raiff.payments.recipients.select.type.' + recipientType.code | translate | highlight: $select.search"></div>
+                    <div ng-bind-html="::'ocb.payments.recipients.select.type.' + recipientType.code | translate | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select>
 

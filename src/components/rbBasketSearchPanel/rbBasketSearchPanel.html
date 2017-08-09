@@ -14,7 +14,7 @@
                         <div class="select-account__row" style="padding-right: 34px">
                             <div ng-if="$select.selected.accountId=='ALL'">
                                 <div class="select-account__row__cell">
-                                    {{::'raiff.payments.basket.search.panel.account.all'|translate}}
+                                    {{::'ocb.payments.basket.search.panel.account.all'|translate}}
                                 </div>
                             </div>
                             <div class="select-account__row__cell account-icon"  ng-if="$select.selected.customerData.icon >= 0  && getIcon($select.selected.accountId)"><img
@@ -28,7 +28,7 @@
                     <ui-select-choices repeat="item in accountList track by $index">
                         <div ng-if="item.accountId=='ALL'">
                             <div class="select-account__row__cell">
-                                {{::'raiff.payments.basket.search.panel.account.all'|translate}}
+                                {{::'ocb.payments.basket.search.panel.account.all'|translate}}
                             </div>
                         </div>
                         <div class="select-account__row">
@@ -54,13 +54,13 @@
         </div>
 
         <div class="col-md-2 col-sm-12" style="text-align: right;">
-            <bd-button class="bd-button__primary bd-md-button-margin" type="submit">{{::'raiff.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
+            <bd-button class="bd-button__primary bd-md-button-margin" type="submit">{{::'ocb.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
         </div>
     </div>
 
     <div class="row" ng-show="!advancedSearch">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <bd-item-property label="{{::'raiff.payments.basket.search.panel.advanced.label'|translate}}" id="historyRange">
+            <bd-item-property label="{{::'ocb.payments.basket.search.panel.advanced.label'|translate}}" id="historyRange">
                 <div class="rb-transaction-filter__container" ng-click="showAdvanced()">
                     <div class="rb-transaction-filter__container__last">
                         <div class="arrow expand" style="display: inline-block;"></div>
@@ -81,7 +81,7 @@
             <bd-radio-select bd-model="inputData.selectedMode">
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.PERIOD">
                     <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{:: 'raiff.payments.components.futureDatePanel.dateTypes.PERIOD' | translate}}
+                        {{:: 'ocb.payments.components.futureDatePanel.dateTypes.PERIOD' | translate}}
                     </div>
                     <div class="row__inline-block--middle row__inline-block--adjacent" style="width:37px;">
                         <input
@@ -97,10 +97,10 @@
                                    theme="bootstrap"
                                    reset-search-input="false">
                             <ui-select-match placeholder="">
-                                {{ 'raiff.payments.components.futureDatePanel.dateRanges.'+ $select.selected | translate }}
+                                {{ 'ocb.payments.components.futureDatePanel.dateRanges.'+ $select.selected | translate }}
                             </ui-select-match>
                             <ui-select-choices repeat="item in FUTURE_DATE_RANGES_LIST">
-                                {{ :: 'raiff.payments.components.futureDatePanel.dateRanges.'+ item | translate }}
+                                {{ :: 'ocb.payments.components.futureDatePanel.dateRanges.'+ item | translate }}
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="dateRange">
                             <div style="display: inline-flex; ">
-                                <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.from'|translate}}</div>&nbsp;
+                                <div class="dateRangeLabel">{{::'ocb.payments.components.futureDatePanel.labels.from'|translate}}</div>&nbsp;
                                 <rb-datepicker ng-model="inputData.dateFrom"
                                                ng-model-options="{ allowInvalid: false }"
                                                rb-name="dateFromInput"
@@ -121,7 +121,7 @@
                                         ></rb-datepicker>
                         </div>
                             <div style="display: inline-flex; ">
-                                <div class="dateRangeLabel">{{::'raiff.payments.components.futureDatePanel.labels.to'|translate}}</div>&nbsp;
+                                <div class="dateRangeLabel">{{::'ocb.payments.components.futureDatePanel.labels.to'|translate}}</div>&nbsp;
                                 <rb-datepicker ng-model="inputData.dateTo"
                                                ng-model-options="{ allowInvalid: false }"
                                                rb-name="dateToInput"
@@ -142,13 +142,13 @@
 
             <div class="basketSearchPanel__advanced-section__right-panel__item">
                 <div ng-show="options.context == 'MICRO'" class="basketSearchPanel__advanced-section__right-panel__item__status">
-                    <bd-item-property label="{{::'raiff.payments.basket.search.panel.status'|translate}}">
+                    <bd-item-property label="{{::'ocb.payments.basket.search.panel.status'|translate}}">
                         <div ng-dropdown-multiselect="" options="PAYMENT_BASKET_STATUS_LIST" selected-model="inputData.status" style=" position: relative;" events="onItemSelect();onItemDeselect()" extra-settings="filterStatusExtraSettings"></div>
                     </bd-item-property>
                 </div>
                 <div class="basketSearchPanel__advanced-section__right-panel__item__button">
                     <bd-button class="bd-button" ng-click="clearFilter()" bd-id="clear_filter_desktop" eb-analytics-disabled type="button">
-                        <i class="eb-icon eb-ico-filter-applied eb-raiffeisen-theme"></i>
+                        <i class="eb-icon eb-ico-filter-applied eb-ocb-theme"></i>
                         {{::'account.transactions.select.filter.button.clear'|translate}}
                     </bd-button>
                 </div>
@@ -176,29 +176,29 @@
 
     <div class="eb-validation-messages">
         <div ng-messages="futureDatePanelForm.dateFromInput.$error" class="messages">
-            <div ng-message="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE' | translate}}</div>
-            <div ng-message="date" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
-            <div ng-message="parse" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
-            <div ng-message="rbDatepickerFormat" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
-            <div ng-message="TOO_LATE_FINISH_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}</div>
-            <div ng-message="TOO_EARLY_FIRST_DATE" class="validation-message animate-on">{{::'raiff.payments.basket.search.panel.validation.TOO_EARLY_FIRST_DATE' | translate | regexReplace:'##DAYS##':options.storageDaysPayments}}</div>
+            <div ng-message="required" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE' | translate}}</div>
+            <div ng-message="date" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
+            <div ng-message="parse" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
+            <div ng-message="rbDatepickerFormat" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
+            <div ng-message="TOO_LATE_FINISH_DATE" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}</div>
+            <div ng-message="TOO_EARLY_FIRST_DATE" class="validation-message animate-on">{{::'ocb.payments.basket.search.panel.validation.TOO_EARLY_FIRST_DATE' | translate | regexReplace:'##DAYS##':options.storageDaysPayments}}</div>
         </div>
     </div>
     <div class="eb-validation-messages">
         <div ng-messages="futureDatePanelForm.dateToInput.$error" class="messages">
-            <div ng-message="required" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
-            <div ng-message="date" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
-            <div ng-message="parse" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
-            <div ng-message="rbDatepickerFormat" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
-            <div ng-message="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
+            <div ng-message="required" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
+            <div ng-message="date" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
+            <div ng-message="parse" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
+            <div ng-message="rbDatepickerFormat" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
+            <div ng-message="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
         </div>
     </div>
     <div class="eb-validation-messages">
         <div ng-messages="futureDatePanelForm.period.$error" class="messages">
-            <div ng-message="required" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange | translate}}</div>
-            <div ng-message="pattern" class="validation-message animate-on">{{'raiff.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange | translate}}</div>
+            <div ng-message="required" class="validation-message animate-on">{{'ocb.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange | translate}}</div>
+            <div ng-message="pattern" class="validation-message animate-on">{{'ocb.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange | translate}}</div>
             <div ng-message="INCORRECT_END_DATE" class="validation-message animate-on">{{::messages.INCORRECT_END_DATE}}</div>
-            <div ng-message="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'raiff.payments.basket.search.panel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
+            <div ng-message="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'ocb.payments.basket.search.panel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
         </div>
     </div>
     <div class="eb-validation-messages">

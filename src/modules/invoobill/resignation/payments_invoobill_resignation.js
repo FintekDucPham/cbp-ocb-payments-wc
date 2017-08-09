@@ -1,14 +1,14 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.resignation', {
             url: "/resignation",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/resignation/payments_invoobill_resignation.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/resignation/payments_invoobill_resignation.html",
             controller: "PaymentsInvoobillResignationController",
             params: {
                 referenceId: null
             },
             data: {
-                analyticsTitle: "raiff.payments.invoobill.activation.header"
+                analyticsTitle: "ocb.payments.invoobill.activation.header"
             }
         });
     })
@@ -19,7 +19,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.labels = {
-            resignationDescription: translate.property('raiff.payments.invoobill.resignation.descrition', [$scope.invbName])
+            resignationDescription: translate.property('ocb.payments.invoobill.resignation.descrition', [$scope.invbName])
         };
 
 
@@ -33,16 +33,16 @@ angular.module('raiffeisen-payments')
 
                     invoobillPaymentsService.setStatus(params).then(function(change) {
                         if(change) {
-                            menuService.removeMenuItem('raiffeisen-payments', 'payments.invoobill');
+                            menuService.removeMenuItem('ocb-payments', 'payments.invoobill');
 
                             var menuItem = {
                                 id: "payments.invoobill",
                                 label: $scope.invbName,
-                                icon: "raiff-icons invoobill",
+                                icon: "ocb-icons invoobill",
                                 action: "payments.invoobill.activation",
                                 priority: 8
                             };
-                            menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                            menuService.pushMenuItems('ocb-payments', menuItem);
 
                             $state.go("payments.invoobill.resignationSuccessful");
                         }

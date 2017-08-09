@@ -1,11 +1,11 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.standing.error', {
             url: "/error",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/manage/remove/error/payments_standing_manage_remove_error.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/standing/manage/remove/error/payments_standing_manage_remove_error.html",
             controller: "PaymentsStandingManageRemoveErrorController",
             data: {
-                analyticsTitle: "raiff.payments.standing.manage.remove.title"
+                analyticsTitle: "ocb.payments.standing.manage.remove.title"
             }
         });
     })

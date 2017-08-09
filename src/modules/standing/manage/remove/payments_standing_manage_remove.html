@@ -1,9 +1,9 @@
 <rb-content-view class="rb-content-view--framed form">
-    <bd-header>{{ ::'raiff.payments.standing.manage.remove.title' | translate }}</bd-header>
+    <bd-header>{{ ::'ocb.payments.standing.manage.remove.title' | translate }}</bd-header>
 
     <bd-form-panel>
 
-        <rb-verify-wizard bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.standing.list', onEdit: editForm, onClear: clearForm, footerType: 'standing', cancelState: 'payments.standing.list', labels:{cancel:'raiff.payments.standing.btn.cancel', modify:'raiff.payments.new.standing.change',accept:'raiff.payments.new.standing.accept'}}">
+        <rb-verify-wizard bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.standing.list', onEdit: editForm, onClear: clearForm, footerType: 'standing', cancelState: 'payments.standing.list', labels:{cancel:'ocb.payments.standing.btn.cancel', modify:'ocb.payments.new.standing.change',accept:'ocb.payments.new.standing.accept'}}">
             <div ui-view></div>
         </rb-verify-wizard>
 

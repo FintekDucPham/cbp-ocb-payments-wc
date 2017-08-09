@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES, paymentsBasketService, STANDING_FREQUENCY_TYPES) {
         'use strict';
         var paymentDataResolveStrategyStrategies = {};

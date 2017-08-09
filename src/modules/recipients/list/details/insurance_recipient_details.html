@@ -1,4 +1,4 @@
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.custom_name'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.zus.custom_name'|translate}}">
     <div>
         {{ $data.customerName }}
     </div>
@@ -6,36 +6,36 @@
 
 <div style="border-top:1px solid #ddd; border-bottom:1px solid #ddd;">
     <div ng-repeat="(code, premium) in $data.insurancePremiums | insurancesDisplayOrder  ">
-        <bd-item-property class="eb-item-property--text" label="{{ ::'raiff.payments.new.zus.fill.payment_option.' + premium.code | translate }}">
+        <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.new.zus.fill.payment_option.' + premium.code | translate }}">
             {{premium.nrb|nrbIbanFilter}}
         </bd-item-property>
-        <bd-item-property class="eb-item-property--text" label="{{ ::'raiff.payments.invoobil.list.details.amount' | translate }}">
+        <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.invoobil.list.details.amount' | translate }}">
             {{ premium.amount | number: 2}} {{ premium.currency }} {{premium.order}}
         </bd-item-property>
     </div>
 
-    <bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipient.details.insurance.amount_summary'|translate}}">
+    <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipient.details.insurance.amount_summary'|translate}}">
         {{ $data.insurancePremiusSumary | number: 2}} PLN
     </bd-item-property>
 </div>
 
 
-<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'raiff.payments.recipients.details.zus.recipient_name'|translate}}">
+<!--<bd-item-property class="eb-item-property&#45;&#45;text"  label="{{::'ocb.payments.recipients.details.zus.recipient_name'|translate}}">
     <div style="word-break: break-all;">{{ $data.recipientName }}</div>
 </bd-item-property>-->
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.nip'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.zus.nip'|translate}}">
     {{ $data.nip }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.secondary_id_type'|translate}}">
-    {{ ::'raiff.payments.id_type.' + $data.secondaryIdType | translate }}
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.zus.secondary_id_type'|translate}}">
+    {{ ::'ocb.payments.id_type.' + $data.secondaryIdType | translate }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.secondary_id'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.zus.secondary_id'|translate}}">
     {{ $data.secondaryId }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.zus.payment_type'|translate}}">
-    {{ ::'raiff.payments.zus.payment_type.' + $data.paymentType | translate }}
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.zus.payment_type'|translate}}">
+    {{ ::'ocb.payments.zus.payment_type.' + $data.paymentType | translate }}
 </bd-item-property>

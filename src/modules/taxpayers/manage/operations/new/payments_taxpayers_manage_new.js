@@ -1,17 +1,17 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers.manage.new', {
             url: "/new",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/new/payments_taxpayers_manage_new.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/operations/new/payments_taxpayers_manage_new.html",
             controller: "PaymentsTaxpayersManageNewController",
             data: {
-                analyticsTitle: "raiff.payments.taxpayers.new.label"
+                analyticsTitle: "ocb.payments.taxpayers.new.label"
             }
         }).state('payments.taxpayers.manage.new.fill', {
             url: "/fill",
             templateUrl: function () {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/fill/payments_taxpayers_fill.html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/steps/fill/payments_taxpayers_fill.html";
             },
             controller: 'paymentTaxpayersFillController',
             data: {
@@ -20,7 +20,7 @@ angular.module('raiffeisen-payments')
         }).state('payments.taxpayers.manage.new.verify', {
             url: "/verify",
             templateUrl: function () {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/steps/verify/payments_taxpayers_verify.html";
             },
             controller: 'TaxpayersManageVerifyController',
             data: {
@@ -28,7 +28,7 @@ angular.module('raiffeisen-payments')
             }
         }).state('payments.taxpayers.manage.new.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/operations/new/status/payments_taxpayers_manage_new_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/operations/new/status/payments_taxpayers_manage_new_status.html",
             controller: "TaxpayersManageNewStatusController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step3"

@@ -1,9 +1,9 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbPaymentRecipientsVerify', function (pathService) {
         return {
             restrict: 'E',
             transclude: true,
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/payments_recipients_verify.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/steps/verify/payments_recipients_verify.html",
             controller: function (bdVerifyStepInitializer, translate, dateFilter, $scope, pathService, recipientGeneralService, authorizationService,
                                   formService, transferService, bdStepStateEvents, lodash, RB_TOKEN_AUTHORIZATION_CONSTANTS, $state) {
 
@@ -12,7 +12,7 @@ angular.module('raiffeisen-payments')
                     $scope.showVerify = false;
                 }
 
-                $scope.recipientAuthUrl = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
+                $scope.recipientAuthUrl = pathService.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/verify/payments_recipients_auth.html";
 
                 $scope.recipientAuthForm = {};
 
@@ -45,16 +45,16 @@ angular.module('raiffeisen-payments')
                         if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
                             var backendErrors = $scope.recipient.token.model.currentToken.$backendErrors;
                             if(backendErrors.TOKEN_AUTH_BLOCKED){
-                                params.labels.cancel = 'raiff.payments.new.btn.finalize';
+                                params.labels.cancel = 'ocb.payments.new.btn.finalize';
                                 params.visibility.finalize = false;
                                 params.visibility.accept = false;
                                 params.visibility.change = false;
                             }else if(backendErrors.TOKEN_NOT_SEND){
-                                params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                                params.labels.cancel = 'ocb.payments.new.btn.cancel';
                                 params.visibility.finalize = false;
                                 params.visibility.accept = false;
                             }else if(backendErrors.TOKEN_EXPIRED){
-                                params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                                params.labels.cancel = 'ocb.payments.new.btn.cancel';
                                 params.visibility.finalize = false;
                                 params.visibility.accept = false;
                             }else if(backendErrors.INCORRECT_TOKEN_PASSWORD){
@@ -67,8 +67,8 @@ angular.module('raiffeisen-payments')
                             params.visibility.finalize = true;
                             params.visibility.cancel = true;
                             params.visibility.accept = true;
-                            params.labels.finalize = 'raiff.payments.new.btn.finalize';
-                            params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                            params.labels.finalize = 'ocb.payments.new.btn.finalize';
+                            params.labels.cancel = 'ocb.payments.new.btn.cancel';
                         }
                     }
                 });

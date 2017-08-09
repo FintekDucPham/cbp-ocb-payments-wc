@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams, rbRecipientOperationType) {
 
         if($stateParams.nrb) {
@@ -61,7 +61,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.domestic.fill.account_related.none_available'),
+            messageWhenNoAvailable: translate.property('ocb.payments.recipients.new.domestic.fill.account_related.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
             showCustomNames: true,

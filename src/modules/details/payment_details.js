@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.details', {
             url: "/:id/details",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/details/payment_details.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/details/payment_details.html",
             controller: "CardDetailsController",
             data: {
                 analyticsTitle: undefined

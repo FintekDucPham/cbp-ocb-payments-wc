@@ -1,11 +1,11 @@
 <div class="rb-insurance-account-select">
     <ui-select ng-model="selection.model" theme="bootstrap" on-select="select($item)">
         <ui-select-match placeholder="{{placeholder}}">
-            {{ 'raiff.payments.insurances.type.' + $select.selected.insuranceCode | translate }} {{ $select.selected.accountNo | nrbIbanShortFilter }}
+            {{ 'ocb.payments.insurances.type.' + $select.selected.insuranceCode | translate }} {{ $select.selected.accountNo | nrbIbanShortFilter }}
         </ui-select-match>
         <ui-select-choices repeat="insuranceAccount in insuranceAccountList track by $index | unique: 'accountNo'">
             <div ng-bind-html="insuranceAccount.accountNo | nrbIbanFilter | highlight: $select.search"></div>
-            <div ng-bind-html="::'raiff.payments.insurances.type.' + insuranceAccount.insuranceCode | translate | highlight: $select.search"></div>
+            <div ng-bind-html="::'ocb.payments.insurances.type.' + insuranceAccount.insuranceCode | translate | highlight: $select.search"></div>
         </ui-select-choices>
     </ui-select>
 </div>

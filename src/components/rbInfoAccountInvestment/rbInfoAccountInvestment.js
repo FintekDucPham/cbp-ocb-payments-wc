@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbInfoAccountInvestment', function (pathService, rbAccountOwnNrbService) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbInfoAccountInvestment/rbInfoAccountInvestment.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbInfoAccountInvestment/rbInfoAccountInvestment.html",
             scope: {
                 sourceChoose: '=rbSourceChoose',
                 destinationNrb: '=rbDestinationNrb'

@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('RecipientsManageVerifyForeignDomesticController', function ($scope, accountsService, customerService, lodash, $state, $timeout) {
         $scope.showVerify = false;
         if(angular.isUndefined($scope.recipient.formData) || lodash.isEmpty($scope.recipient.formData)){

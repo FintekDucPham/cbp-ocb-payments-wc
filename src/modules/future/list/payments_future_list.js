@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.future.list', {
             url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/list/payments_future_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/list/payments_future_list.html",
             controller: "PaymentsFuturePaymentsListController",
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "utilityService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, utilityService) {
@@ -44,7 +44,7 @@ angular.module('raiffeisen-payments')
                 }]
             },
             data: {
-                analyticsTitle: "raiff.payments.future.label"
+                analyticsTitle: "ocb.payments.future.label"
             }
         });
     })
@@ -80,7 +80,7 @@ angular.module('raiffeisen-payments')
             if(tType === 'invoobill'){
                 tType = 'domestic';
             }
-            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), tType);
+            return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("ocb-payments"), tType);
         };
 
         $scope.onEdit = function(payment) {
@@ -174,7 +174,7 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig: new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.future.list.empty")
+                placeholderText: translate.property("ocb.payments.future.list.empty")
             }),
             tableData: {
                 getData: function (defer, $params) {

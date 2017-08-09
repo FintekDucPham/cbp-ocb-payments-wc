@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.content', {
             url: "/content",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payments_list.html",
             controller: "PaymentsListController",
             data: {
                 analyticsTitle: "payments.submenu.options.new.header"

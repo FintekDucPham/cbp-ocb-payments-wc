@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.new_payment.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/make_payment/status/payments_new_invoobill_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/list/make_payment/status/payments_new_invoobill_status.html",
             controller: "PaymentNewInvoobillStatusController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step3"

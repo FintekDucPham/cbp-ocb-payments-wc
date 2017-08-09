@@ -1,9 +1,9 @@
 /*
-angular.module('raiffeisen-cards')
+angular.module('ocb-cards')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoices', {
             url: "/transactions/:accountId",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-cards") + "/modules/transactions/transactions_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-cards") + "/modules/transactions/transactions_list.html",
             controller: "ErInvoicesController"
         });
     })

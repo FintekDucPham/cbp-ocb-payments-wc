@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments').constant('ZUS_ACCOUNTS', [
+angular.module('ocb-payments').constant('ZUS_ACCOUNTS', [
     "83101010230000261395100000",
     "78101010230000261395200000",
     "73101010230000261395300000",

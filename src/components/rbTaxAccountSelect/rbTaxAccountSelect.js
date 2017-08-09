@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function ($provide) {
         $provide.decorator('uiSelectDirective', function ($delegate) {
 
@@ -22,7 +22,7 @@ angular.module('raiffeisen-payments')
     .directive('rbTaxAccountSelect', function (pathService, attrBinder, taxOffices, lodash, validationRegexp, $q) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbTaxAccountSelect/rbTaxAccountSelect.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbTaxAccountSelect/rbTaxAccountSelect.html",
             scope: {
                 taxOffice: '=?rbTaxOffice',
                 taxOfficeId: '=?rbTaxOfficeId',

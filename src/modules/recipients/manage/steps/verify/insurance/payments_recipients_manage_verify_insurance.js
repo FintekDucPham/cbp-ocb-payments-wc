@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('RecipientsManageVerifyZusController', function ($scope, lodash, zusPaymentInsurances, $state, $timeout) {
         $scope.showVerify = false;
         if(angular.isUndefined($scope.recipient.formData) || lodash.isEmpty($scope.recipient.formData)){

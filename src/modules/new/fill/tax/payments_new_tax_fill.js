@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant('usSupplementaryIds', ['NIP', 'PESEL', 'REGON', 'ID_CARD', 'PASSPORT', 'OTHER'])
     .constant('usPeriodTypes', {
         'J': {},
@@ -49,7 +49,7 @@ angular.module('raiffeisen-payments')
          });
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
-                customName: translate.property('raiff.new.recipient.custom_name'),
+                customName: translate.property('ocb.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 selectedTaxOfficeId: $scope.payment.items.recipientAccount.accountNo,
                 secondaryIdType:  $scope.payment.formData.idType,

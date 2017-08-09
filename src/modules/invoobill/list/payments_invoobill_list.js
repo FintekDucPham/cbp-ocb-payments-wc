@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.list', {
             url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/payments_invoobill_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/list/payments_invoobill_list.html",
             controller: "PaymentsInvoobillListController",
             params: {
                 referenceId: null
@@ -38,7 +38,7 @@ angular.module('raiffeisen-payments')
                 }]
             },
             data: {
-                analyticsTitle: "raiff.payments.invoobill.list.header"
+                analyticsTitle: "ocb.payments.invoobill.list.header"
             }
         });
     })
@@ -47,8 +47,8 @@ angular.module('raiffeisen-payments')
         $scope.forms = {};
 
         $scope.labels = {
-            header: translate.property('raiff.payments.invoobill.list.header', [$scope.invbName]),
-            showCreditors: translate.property('raiff.payments.invoobill.show_creditors', [$scope.invbName]),
+            header: translate.property('ocb.payments.invoobill.list.header', [$scope.invbName]),
+            showCreditors: translate.property('ocb.payments.invoobill.show_creditors', [$scope.invbName]),
         };
 
         var PERIOD_TYPES = {
@@ -188,7 +188,7 @@ angular.module('raiffeisen-payments')
             $scope.invoobillPayments.creditors.list = data.creditors;
 
             // and item 'All'
-            var all = translate.property('raiff.payments.invoobill.creditors.all'),
+            var all = translate.property('ocb.payments.invoobill.creditors.all'),
                 allItem = {
                     id: null,
                     fullName: all,

@@ -1,11 +1,11 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.list', {
             url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/list/payments_recipients_list.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/recipients/list/payments_recipients_list.html",
             controller: "PaymentsRecipientsListController",
             data: {
-                analyticsTitle: "raiff.payments.recipients.label"
+                analyticsTitle: "ocb.payments.recipients.label"
             },
             resolve: {
                 insuranceAccountList : ["insuranceAccounts", function(insuranceAccounts) {
@@ -128,7 +128,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.resolveTemplateType = function (recipientType) {
-            return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), recipientType.toLowerCase());
+            return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("ocb-payments"), recipientType.toLowerCase());
         };
 
         $scope.trimTable = lodash.memoize(function(table) {
@@ -188,7 +188,7 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig : new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.recipients.label.empty_list"),
+                placeholderText: translate.property("ocb.payments.recipients.label.empty_list"),
                 makeTransfer: $scope.onRecipientTransfer
             }),
             tableData : {
@@ -205,7 +205,7 @@ angular.module('raiffeisen-payments')
                                 }
                                 return lodash.extend({
                                     recipientType: template.templateType,
-                                    recipientTypeMessage: translate.property('raiff.payments.recipients.new.type.{0}'.format(template.templateType)),
+                                    recipientTypeMessage: translate.property('ocb.payments.recipients.new.type.{0}'.format(template.templateType)),
                                     customerName: $filter('arrayFilter')(recipient.recipientName),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,

@@ -13,42 +13,42 @@
                   bd-table-promise="table.promise"
                   bd-table-meta="{
                     'first': {
-                        'title': '##raiff.payments.basket.list.header.operation_date',
+                        'title': '##ocb.payments.basket.list.header.operation_date',
                         'data': 'realizationDate'
                     },
                     'second': {
-                        'title': '##raiff.payments.basket.list.header.status',
+                        'title': '##ocb.payments.basket.list.header.status',
                         'data': 'signedStatus'
                     },
                     'third': {
-                        'title': '##raiff.payments.basket.list.header.operation_type',
+                        'title': '##ocb.payments.basket.list.header.operation_type',
                         'data': 'transferType'
                     },
                     'fourth': {
-                        'title': '##raiff.payments.basket.list.header.recipient_name',
+                        'title': '##ocb.payments.basket.list.header.recipient_name',
                         'data': 'recipientName'
                     },
                     'fifth': {
-                        'title': '##raiff.payments.basket.list.header.operation_title',
+                        'title': '##ocb.payments.basket.list.header.operation_title',
                         'data': 'title'
                     },
                     'sixth': {
-                        'title': '##raiff.payments.basket.list.header.targetAccount',
+                        'title': '##ocb.payments.basket.list.header.targetAccount',
                         'data': 'recipientAccountNo'
                     },
                     'seventh': {
-                        'title': '##raiff.payments.basket.list.header.operation_amount',
+                        'title': '##ocb.payments.basket.list.header.operation_amount',
                         'data': [
                             'amount',
                             'currency'
                         ]
                     },
                     'thirdfourth':{
-                        'title':'##raiff.payments.basket.list.header.status_operation_type',
+                        'title':'##ocb.payments.basket.list.header.status_operation_type',
                         'data':''
                     },
                      'fifthsixth':{
-                        'title':'##raiff.payments.basket.list.header.recipient_name_operation_title',
+                        'title':'##ocb.payments.basket.list.header.recipient_name_operation_title',
                         'data':''
                     }
                 }">
@@ -60,10 +60,10 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-12">
                                 <bd-button ng-if="$data.signedStatus != 'DELETED' && $data.signedStatus != 'SUBMITTED' " ng-click="onDelete($data)" class="bd-button">
-                                    {{::'raiff.payments.basket.list.details.buttons.delete' | translate}}
+                                    {{::'ocb.payments.basket.list.details.buttons.delete' | translate}}
                                 </bd-button>
                                 <bd-button ng-if="$data.actions.indexOf('BASKET_TRANSFER_EDIT_ACCESS') >-1 && $data.signedStatus != 'SUBMITTED' " ng-click="onEdit($data)" class="bd-button">
-                                    {{::'raiff.payments.basket.list.details.buttons.modify' | translate}}
+                                    {{::'ocb.payments.basket.list.details.buttons.modify' | translate}}
                                 </bd-button>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                         <div class="bd-table__row-line bd-table__row-line--sm-tight">
                             <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-6">
                                 <div class="summary-item__label" style="border-bottom: 0px;">
-                                    {{::"raiff.payments.basket.list.summary.chose"|translate}}
+                                    {{::"ocb.payments.basket.list.summary.chose"|translate}}
                                 </div>
                             </div>
                             <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-10">
@@ -94,12 +94,12 @@
                                     <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="basket-vew__summary__currency_quantity bd-table__cell--sm-8 bd-table__cell--md-8">
                                             <div style="padding-top: 10px;">
-                                                {{::"raiff.payments.basket.list.summary.amount"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
+                                                {{::"ocb.payments.basket.list.summary.amount"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
                                             </div>
                                         </div>
                                         <div bd-table-cell="first"
                                              class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px; text-align: right;">
-                                            {{::"raiff.payments.basket.list.summary.sum"|translate}}&nbsp;
+                                            {{::"ocb.payments.basket.list.summary.sum"|translate}}&nbsp;
                                             <br class="bd-hide-md"/>
                                             <bd-amount amount="currencySummary.sum"
                                                        currency="{{currencySummary.currency}}"></bd-amount>
@@ -118,7 +118,7 @@
                         <div class="basket-vew__summary__height bd-table__row-line bd-table__row-line--sm-tight">
                             <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-6">
                                 <div class="summary-item__label" style="border-bottom: 0px;">
-                                    {{::"raiff.payments.basket.list.summary.all"|translate}}
+                                    {{::"ocb.payments.basket.list.summary.all"|translate}}
                                 </div>
                             </div>
                             <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-10">
@@ -126,12 +126,12 @@
                                     <div class="basket-vew__summary__height bd-table__row-line bd-table__row-line--sm-tight">
                                         <div bd-table-cell="first" class="basket-vew__summary__currency_quantity bd-table__cell--sm-8 bd-table__cell--md-8">
                                             <div style="padding-top: 10px;">
-                                                {{::"raiff.payments.basket.list.summary.amount"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
+                                                {{::"ocb.payments.basket.list.summary.amount"|translate}}&nbsp;{{currencySummary.currency}}:&nbsp;{{currencySummary.amount}}
                                             </div>
                                         </div>
                                         <div bd-table-cell="first"
                                              class="bd-table__cell--sm-8 bd-table__cell--md-8 text-right" style="padding-top: 8px; text-align: right;">
-                                            {{::"raiff.payments.basket.list.summary.sum"|translate}}&nbsp;
+                                            {{::"ocb.payments.basket.list.summary.sum"|translate}}&nbsp;
                                             <br class="bd-hide-md"/>
                                             <bd-amount amount="currencySummary.sum"
                                                        currency="{{currencySummary.currency}}"></bd-amount>

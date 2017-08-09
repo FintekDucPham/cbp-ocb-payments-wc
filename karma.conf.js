@@ -4,8 +4,8 @@ var __PATHS__ = {
     "karma-shared" : "../cbp-karma-shared-wc/src/main/",
     "vendor" : "../cbp-platform-web-component/src/vendor/",
     "platform" : "../cbp-platform-web-component/src/",
-    "raiffeisen-shared" : "../cbp-raiffeisen-shared-wc/src/main/",
-    "static-api" : "../cbp-raiffeisen-static-api-wc/src/",
+    "ocb-shared" : "../cbp-ocb-shared-wc/src/main/",
+    "static-api" : "../cbp-ocb-static-api-wc/src/",
     "bootapp" : "../cbp-bootapp-web-component/src/"
 };
 
@@ -30,7 +30,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [].concat(shared_vendor_files, shared_platform_minimalistic_files, [
-        'src/main/raiffeisenPaymentsMiniapp.js',
+        'src/main/ocbPaymentsMiniapp.js',
         'src/main/**/*.js'
             ],
         shared_data.bootapp,

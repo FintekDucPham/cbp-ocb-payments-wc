@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbSorbnetSelection', function (pathService, lodash, rbAccountOwnNrbService, paymentsService, dateFilter, utilityService) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbSorbnetSelection/rbSorbnetSelection.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbSorbnetSelection/rbSorbnetSelection.html",
             scope: {
                 rbModel: '=rbModel',
                 destinationNrb: '=rbDestinationNrb'

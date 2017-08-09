@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant('rbTaxpayerOperationType', {
         "NEW": {
             code: 'NEW',
@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers', {
             url: "/taxpayers",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/payments_taxpayers.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/payments_taxpayers.html",
             data: {
                 analyticsTitle: null
             }

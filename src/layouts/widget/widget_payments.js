@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .value("paymentsWidgetMode", {
         fullMode: false
     }).controller('PaymentsWidgetController', function($scope, $rootScope, $location, $timeout,$state, pathService, paymentsService, transactionService, paymentsWidgetMode) {
@@ -26,7 +26,7 @@ angular.module('raiffeisen-payments')
         $scope.paymentSummary = $scope.paymentSummaryList(paymentSummary);
     });
 
-    $scope.widgetContent = pathService.generateTemplatePath("raiffeisen-payments") + '/layouts/widget/widget_payments_content.html';
+    $scope.widgetContent = pathService.generateTemplatePath("ocb-payments") + '/layouts/widget/widget_payments_content.html';
     $scope.context = {};
     $scope.context.options = {
         detailsShown: false

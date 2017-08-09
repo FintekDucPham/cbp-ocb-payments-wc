@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbUsFormSymbolSelect', function (pathService, attrBinder, lodash, taxFormSymbols) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbUsFormSymbolSelect/rbUsFormSymbolSelect.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbUsFormSymbolSelect/rbUsFormSymbolSelect.html",
             scope: {
                 formSymbolId: '=rbFormSymbolId',
                 formSymbol: '=rbFormSymbol',

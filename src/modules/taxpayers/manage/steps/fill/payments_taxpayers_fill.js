@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('paymentTaxpayersFillController', function ($scope, lodash, bdFillStepInitializer, bdStepStateEvents,
                                                             zusSuplementaryIds, usSupplementaryIds, formService,
                                                             validationRegexp, utilityService) {

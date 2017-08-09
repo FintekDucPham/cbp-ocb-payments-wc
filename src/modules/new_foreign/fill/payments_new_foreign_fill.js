@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_foreign.fill', {
             url: "/fill/:accountId/:nrb",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new/fill/payments_new_fill.html",
             controller: "NewPaymentFillController",
             params: {
                 accountId: null,

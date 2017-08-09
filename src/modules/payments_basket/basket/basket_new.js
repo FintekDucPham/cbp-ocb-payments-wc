@@ -1,9 +1,9 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.basket.new', {
             url: "/new",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/basket_new.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payments_basket/basket/basket_new.html",
             controller: "PaymentsBasketNewController",
 
             resolve: {
@@ -69,10 +69,10 @@ angular.module('raiffeisen-payments')
             completeState: 'payments.basket.new.fill',
             footerType: 'basket',
             labels : {
-                prev: 'raiff.payments.basket.multistepform.buttons.cancel',
+                prev: 'ocb.payments.basket.multistepform.buttons.cancel',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
-                finalize: 'raiff.payments.new.btn.finalize'
+                finalize: 'ocb.payments.new.btn.finalize'
             },
             visibility:{
                 change: true,

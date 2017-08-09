@@ -1,9 +1,9 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbPaymentRecipientsFill', function (pathService) {
         return {
             restrict: 'E',
             transclude: true,
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/fill/payments_recipients_fill.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/steps/fill/payments_recipients_fill.html",
             controller: function (bdFillStepInitializer, $scope, formService, bdStepStateEvents, rbRecipientOperationType, lodash) {
                 $scope.blockadesForward = angular.extend({
                     isBlock : false

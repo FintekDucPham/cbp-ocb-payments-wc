@@ -1,50 +1,50 @@
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderNo'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.orderNo'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{ $data.id }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.orderName'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.orderName'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{$data.shortName }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"   label="{{::'raiff.payments.standing.list.details.senderAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"   label="{{::'ocb.payments.standing.list.details.senderAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{$data.debitAccountName}}<br/>
     {{$data.debitAccount | nrbIbanFilter }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.senderAccountOwner'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.senderAccountOwner'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
      <bd-multiline-text bd-text="$data.orderingCustomer"></bd-multiline-text>
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientAccount_new'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.recipientAccount_new'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     <rb-bank-name account-no="$data.creditAccount"
                   bank-name-promise="standingBankNamePromise">
     </rb-bank-name>
     {{$data.creditAccount | nrbIbanFilter }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.recipientData'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.recipientData'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     <bd-multiline-text bd-text="$data.beneficiary"></bd-multiline-text>
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.amount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.amount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{ $data.amount | number:2 }} {{ $data.currency }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.title'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.title'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     <bd-multiline-text bd-text="$data.remarks"></bd-multiline-text>
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.frequencyDescription'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.frequencyDescription'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     <span ng-show="$data.frequency.periodUnit != 'B'">{{ $data.frequency.periodCount }}&nbsp;</span>
-    <span ng-show="$data.frequency.periodCount <= 1 || !$data.frequency.periodCount">{{'raiff.payments.new.standing.fill.frequencyType.types.1.' + $data.frequency.periodUnit | translate}}</span>
-    <span ng-show="$data.frequency.periodCount >= 2 && $data.frequency.periodCount < 5">{{'raiff.payments.new.standing.fill.frequencyType.types.2-4.' + $data.frequency.periodUnit | translate}}</span>
-    <span ng-show="$data.frequency.periodCount >= 5">{{'raiff.payments.new.standing.fill.frequencyType.types.5more.' + $data.frequency.periodUnit | translate}}</span>
+    <span ng-show="$data.frequency.periodCount <= 1 || !$data.frequency.periodCount">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + $data.frequency.periodUnit | translate}}</span>
+    <span ng-show="$data.frequency.periodCount >= 2 && $data.frequency.periodCount < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + $data.frequency.periodUnit | translate}}</span>
+    <span ng-show="$data.frequency.periodCount >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + $data.frequency.periodUnit | translate}}</span>
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.closestRealizationDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.closestRealizationDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{ $data.frequency.nextDate | date:'shortDate' }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'raiff.payments.standing.list.details.endDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.endDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{ $data.endDate | date: 'shortDate' }}
 </bd-item-property>

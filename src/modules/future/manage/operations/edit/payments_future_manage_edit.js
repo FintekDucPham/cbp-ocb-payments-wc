@@ -1,17 +1,17 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.future.manage.edit', {
             url: "/edit",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/payments_future_manage_edit.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/manage/operations/edit/payments_future_manage_edit.html",
             controller: "PaymentsFutureManageEditController",
             data: {
-                analyticsTitle: "raiff.payments.future.edit.label"
+                analyticsTitle: "ocb.payments.future.edit.label"
             }
         }).state('payments.future.manage.edit.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/fill/payments_new_fill.html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new/fill/payments_new_fill.html";
             },
             controller: 'NewPaymentFillController',
             resolve: {
@@ -28,7 +28,7 @@ angular.module('raiffeisen-payments')
         }).state('payments.future.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/payments_new_verify.html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new/verify/payments_new_verify.html";
             },
             controller: 'NewPaymentVerifyController',
             data: {
@@ -36,7 +36,7 @@ angular.module('raiffeisen-payments')
             }
         }).state('payments.future.manage.edit.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/edit/status/payments_future_manage_edit_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/manage/operations/edit/status/payments_future_manage_edit_status.html",
             controller: "NewPaymentStatusController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step3"
@@ -173,8 +173,8 @@ angular.module('raiffeisen-payments')
             cancelState: 'payments.future.list',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
-                finalAction: 'raiff.payments.new.btn.final_action',
-                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
+                finalAction: 'ocb.payments.new.btn.final_action',
+                addAsStandingOrder: 'ocb.payments.new.btn.add_as_standing_order'
             },
             visibility:{
                 next: true,

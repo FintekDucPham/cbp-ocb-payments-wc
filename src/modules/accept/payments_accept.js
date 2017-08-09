@@ -1,11 +1,11 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.accept', {
             url: "/accept",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/accept/payments_accept.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/accept/payments_accept.html",
             controller: "PaymentsAcceptController",
             data: {
-                analyticsTitle: "raiff.payments.new.confirmation.text"
+                analyticsTitle: "ocb.payments.new.confirmation.text"
             }
         });
     })

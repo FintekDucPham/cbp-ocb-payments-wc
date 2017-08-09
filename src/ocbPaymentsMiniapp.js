@@ -1,16 +1,16 @@
-angular.module('raiffeisen-payments', [
-    'raiffeisen-shared'
+angular.module('ocb-payments', [
+    'ocb-shared'
 ]).config(function (menuServiceProvider, translationsLoaderProvider, $urlRouterProvider, miniappServiceProvider, pathServiceProvider, stateServiceProvider, privilegesServiceProvider, PRIVILEGES_FUNCTIONALITY) {
     'use strict';
 
     function registerModule() {
-        webComponentRegistry['raiffeisen-payments'].simpleName = "payments";
-        webComponentRegistry['raiffeisen-payments'].startState = "payments.recipients.list";
+        webComponentRegistry['ocb-payments'].simpleName = "payments";
+        webComponentRegistry['ocb-payments'].startState = "payments.recipients.list";
     }
 
     function registerComponents() {
-        miniappServiceProvider.registerWidget("raiffeisen-payments");
-        translationsLoaderProvider.addTranslationsPath(pathServiceProvider.generateRootPath("raiffeisen-payments") + "/i18n/messages_{{language}}.json");
+        miniappServiceProvider.registerWidget("ocb-payments");
+        translationsLoaderProvider.addTranslationsPath(pathServiceProvider.generateRootPath("ocb-payments") + "/i18n/messages_{{language}}.json");
     }
 
     function registerBaseState() {
@@ -19,26 +19,26 @@ angular.module('raiffeisen-payments', [
             .state('payments', {
                 url: "/payments",
                 abstract: true,
-                templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/layouts/fullscreen/fullscreen_payments.html",
+                templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/layouts/fullscreen/fullscreen_payments.html",
                 controller: "PaymentsViewController",
                 data: {
-                    analyticsTitle: "raiff.menu.transfer"
+                    analyticsTitle: "ocb.menu.transfer"
                 }
             });
     }
 
     function registerNavigation() {
         menuServiceProvider.registerMenu({
-            id: 'raiffeisen-payments',
+            id: 'ocb-payments',
             priority: 200,
             showMain: true,
             baseItem: "payments.recipients.list",
-            title: 'raiff.menu.transfer',
+            title: 'ocb.menu.transfer',
             items:[
                 {
                     id: "payments.new.fill",
                     label: 'payments.submenu.options.new.header',
-                    icon: "raiff-icons raiff_przelew",
+                    icon: "ocb-icons ocb_przelew",
                     action: function(item, scope, state){
                         state.reload('payments.new.fill').then(function(){
                             state.transitionTo("payments.new.fill",{ paymentType: 'domestic', referenceId: undefined }, {reload: true}).finally(function() {
@@ -54,56 +54,56 @@ angular.module('raiffeisen-payments', [
                 {
                     id: "payments.new_foreign.fill",
                     label: 'payments.submenu.options.new_foreign.header',
-                    icon: "raiff-icons raiff_przelew",
+                    icon: "ocb-icons ocb_przelew",
                     action: "payments.new_foreign.fill({ paymentType: 'smart' })",
                     priority: 2
                 },
                 {
                     id: "payments.new_internal.fill",
                     label: 'payments.submenu.options.new_internal.header',
-                    icon: "raiff-icons raiff_przelew",
+                    icon: "ocb-icons ocb_przelew",
                     action: "payments.new_internal.fill",
                     priority: 1
                 },
                 {
                     id: "payments.recipients.list",
-                    label: 'raiff.payments.recipients.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    label: 'ocb.payments.recipients.label',
+                    icon: "ocb-icons ocb_odbiorcy",
                     action: "payments.recipients.list",
 					priority: 3
                 },
                 {
                     id: "payments.taxpayers.list",
-                    label: 'raiff.payments.taxpayers.label',
-                    icon: "raiff-icons raiff_odbiorcy",
+                    label: 'ocb.payments.taxpayers.label',
+                    icon: "ocb-icons ocb_odbiorcy",
                     action: "payments.taxpayers.list",
                     priority: 4
                 },
                 {
                     id: "payments.future.list",
-                    label: 'raiff.payments.future.label',
-                    icon: "raiff-icons payments_waiting",
+                    label: 'ocb.payments.future.label',
+                    icon: "ocb-icons payments_waiting",
                     action: "payments.future.list",
                     priority: 5
                 },
                 {
                     id: "payments.rejected.list",
-                    label: 'raiff.payments.rejected.label',
-                    icon: "raiff-icons operation_rejected",
+                    label: 'ocb.payments.rejected.label',
+                    icon: "ocb-icons operation_rejected",
                     action: "payments.rejected.list",
                     priority: 6
                 },
                 {
                     id: "payments.standing.list",
-                    label: 'raiff.payments.standing.label',
-                    icon: "raiff-icons raiff_zlecenie_stale",
+                    label: 'ocb.payments.standing.label',
+                    icon: "ocb-icons ocb_zlecenie_stale",
                     action: "payments.standing.list",
                     priority: 7
                 },
                 {
                     id: "payments.basket.fill",
-                    label: 'raiff.payments.basket.label',
-                    icon: "raiff-icons basket",
+                    label: 'ocb.payments.basket.label',
+                    icon: "ocb-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 9
                 }
@@ -120,11 +120,10 @@ angular.module('raiffeisen-payments', [
     registerNavigation();
     registerRestrictedState();
 
-}).run(function (RAIFF_NRB_CONSTANTS, systemParameterService, customerService, SEGMENT_TYPES, menuService, invoobillPaymentsService) {
+}).run(function (BANK_NRB_CONSTANTS, systemParameterService, customerService, SEGMENT_TYPES, menuService, invoobillPaymentsService) {
     systemParameterService.getParameterByName("account.bank.prefix.rbpl").then(function(data){
-        RAIFF_NRB_CONSTANTS.insternal_prefix = data.value.split(',');/*przy mergu poprawna nazwa to RAIFF_NRB_CONSTANTS*/
+        BANK_NRB_CONSTANTS.internal_prefix = data.value.split(',');
     });
-
 
     systemParameterService.getParameterByName("INVB.name").then(function(paramName) {
         customerService.getCustomerDetails().then(function (userDetails) {
@@ -134,7 +133,7 @@ angular.module('raiffeisen-payments', [
             var menuItem = {
                 id: "payments.invoobill",
                 label: paramName.value,
-                icon: "raiff-icons invoobill",
+                icon: "ocb-icons invoobill",
                 priority: 8
             };
 
@@ -160,7 +159,7 @@ angular.module('raiffeisen-payments', [
                                 var action = "";
                                 if (status) {
                                     menuItem.action = "payments.invoobill.list";
-                                    menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                                    menuService.pushMenuItems('ocb-payments', menuItem);
                                 } else {
                                     invoobillPaymentsService.isAccess().then(function (access) {
                                         if (access) {
@@ -169,7 +168,7 @@ angular.module('raiffeisen-payments', [
                                             action = "payments.invoobill.formalIdLack";
                                         }
                                         menuItem.action = action;
-                                        menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                                        menuService.pushMenuItems('ocb-payments', menuItem);
                                     });
 
                                 }
@@ -191,7 +190,7 @@ angular.module('raiffeisen-payments', [
                         var action = "";
                         if (status) {
                             menuItem.action = "payments.invoobill.list";
-                            menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                            menuService.pushMenuItems('ocb-payments', menuItem);
                         } else {
                             invoobillPaymentsService.isAccess().then(function (access) {
                                 if (access) {
@@ -200,7 +199,7 @@ angular.module('raiffeisen-payments', [
                                     action = "payments.invoobill.formalIdLack";
                                 }
                                 menuItem.action = action;
-                                menuService.pushMenuItems('raiffeisen-payments', menuItem);
+                                menuService.pushMenuItems('ocb-payments', menuItem);
                             });
 
                         }
@@ -212,8 +211,8 @@ angular.module('raiffeisen-payments', [
         });
     });
 
-}).value('RAIFF_NRB_CONSTANTS', {
-    insternal_prefix: null
+}).value('BANK_NRB_CONSTANTS', {
+    internal_prefix: null
 }).filter('arrayFilter', function(){
     return function(items){
         return angular.isArray(items) ? items.join("") : items;

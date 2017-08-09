@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('NewUsPaymentVerifyController', function ($scope, lodash) {
 
     }).filter('arrayToString', function(lodash){

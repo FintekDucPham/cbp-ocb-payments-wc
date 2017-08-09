@@ -1,5 +1,5 @@
 <rb-content-view class="rb-content-view--framed form taxpayers-view">
-    <bd-header>{{::"raiff.payments.taxpayers.label"|translate}}</bd-header>
+    <bd-header>{{::"ocb.payments.taxpayers.label"|translate}}</bd-header>
 
     <div class="section-wrapper">
 
@@ -7,17 +7,17 @@
             <div class="row-line">
 
                 <div class="row-line__cell">
-                    <bd-item-property label="{{::'raiff.payments.taxpayers.type.label'|translate}}">
+                    <bd-item-property label="{{::'ocb.payments.taxpayers.type.label'|translate}}">
                         <ui-select ng-model="types.currentType"
                                    theme="bootstrap"
                                    reset-search-input="false"
                                    on-select="table.tableControl.invalidate()"
                                    required>
-                            <ui-select-match placeholder="{{:: 'raiff.payments.taxpayers.select.type.placeholder' | translate }}">
-                                {{ 'raiff.payments.taxpayers.select.type.' + $select.selected.code | translate }}
+                            <ui-select-match placeholder="{{:: 'ocb.payments.taxpayers.select.type.placeholder' | translate }}">
+                                {{ 'ocb.payments.taxpayers.select.type.' + $select.selected.code | translate }}
                             </ui-select-match>
                             <ui-select-choices repeat="type in types.availableTypesList">
-                                {{ :: 'raiff.payments.taxpayers.select.type.' + type.code | translate }}
+                                {{ :: 'ocb.payments.taxpayers.select.type.' + type.code | translate }}
                             </ui-select-choices>
                         </ui-select>
 
@@ -26,7 +26,7 @@
 
                 <div class="row-line__cell row-line__cell--right-button">
                     <bd-button class="bd-button__primary" ng-click="onTaxpayerCreate()" type="button">
-                        {{::'raiff.payments.taxpayers.new.button'|translate}}
+                        {{::'ocb.payments.taxpayers.new.button'|translate}}
                     </bd-button>
                 </div>
             </div>
@@ -34,12 +34,12 @@
             <div class="accounts-transaction-list-filter">
                 <div class="row-line">
                     <div class="row-line__cell">
-                        <bd-item-property label="{{::'raiff.payments.taxpayers.select.filter.text.label' | translate}}">
+                        <bd-item-property label="{{::'ocb.payments.taxpayers.select.filter.text.label' | translate}}">
                             <input class="input-field" bd-type="text" ng-model="table.operationTitle" name="contentText" style="width: 100%; height: 34px;"/>
                         </bd-item-property>
                     </div>
                     <div class="row-line__cell row-line__cell--right-button">
-                        <bd-button class="bd-button" ng-click="table.tableControl.invalidate()" type="submit">{{::'raiff.payments.taxpayers.select.filter.button.action'|translate}}</bd-button>
+                        <bd-button class="bd-button" ng-click="table.tableControl.invalidate()" type="submit">{{::'ocb.payments.taxpayers.select.filter.button.action'|translate}}</bd-button>
                     </div>
                 </div>
             </div>
@@ -51,31 +51,31 @@
                   bd-table-control="table.tableControl"
                   bd-table-data="table.tableData"
                   bd-table-promise="taxpayerListPromise"
-                  bd-table-meta="{ 'first' : { 'title': '##raiff.payments.taxpayers.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##raiff.payments.taxpayers.list.header.data.label', 'data' : 'dataShort' }, 'third' : { 'title': '##raiff.payments.taxpayers.list.header.type.label', 'data' : 'taxpayerTypeMessage' } }">
+                  bd-table-meta="{ 'first' : { 'title': '##ocb.payments.taxpayers.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##ocb.payments.taxpayers.list.header.data.label', 'data' : 'dataShort' }, 'third' : { 'title': '##ocb.payments.taxpayers.list.header.type.label', 'data' : 'taxpayerTypeMessage' } }">
 
             <bd-details-section bd-table-row-details>
 
-                <bd-item-property class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.name.label' | translate }}">
+                <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.taxpayers.details.name.label' | translate }}">
                     {{ $data.customerName }}
                 </bd-item-property>
 
-                <bd-item-property class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.type.label' | translate }}">
-                    {{ 'raiff.payments.taxpayers.details.type.' + $data.taxpayerType.code | translate }}
+                <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.taxpayers.details.type.label' | translate }}">
+                    {{ 'ocb.payments.taxpayers.details.type.' + $data.taxpayerType.code | translate }}
                 </bd-item-property>
 
-                <bd-item-property class="eb-item-property--text" label="{{::'raiff.payments.taxpayers.details.data.label'|translate}}">
+                <bd-item-property class="eb-item-property--text" label="{{::'ocb.payments.taxpayers.details.data.label'|translate}}">
                     {{$data.data | arrayFilter}}
                 </bd-item-property>
 
-                <bd-item-property ng-if="$data.taxpayerType.code === 'INSURANCE'" class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.nip.label' | translate }}">
+                <bd-item-property ng-if="$data.taxpayerType.code === 'INSURANCE'" class="eb-item-property--text" label="{{ ::'ocb.payments.taxpayers.details.nip.label' | translate }}">
                     {{ $data.nip }}
                 </bd-item-property>
 
-                <bd-item-property class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.supplementary_id_type.label' | translate }}">
-                    {{ ::'raiff.payments.taxpayers.details.supplementary_id_type.' + $data.secondaryIdType | translate }}
+                <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.taxpayers.details.supplementary_id_type.label' | translate }}">
+                    {{ ::'ocb.payments.taxpayers.details.supplementary_id_type.' + $data.secondaryIdType | translate }}
                 </bd-item-property>
 
-                <bd-item-property class="eb-item-property--text" label="{{ ::'raiff.payments.taxpayers.details.supplementary_id.label' | translate }}">
+                <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.taxpayers.details.supplementary_id.label' | translate }}">
                     {{ $data.secondaryId }}
                 </bd-item-property>
 
@@ -84,19 +84,19 @@
                     <div class="bd-grid">
                         <div class="bd-grid__row">
                             <div class="bd-grid__col--sm-12 desktop-only">
-                                <bd-button ng-click="onBack(this)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.back' | translate}}</bd-button>
-                                <bd-button ng-click="onTaxpayerEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.edit' | translate}}</bd-button>
-                                <bd-button ng-click="onTaxpayerRemove($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.remove' | translate}}</bd-button>
+                                <bd-button ng-click="onBack(this)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.back' | translate}}</bd-button>
+                                <bd-button ng-click="onTaxpayerEdit($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.edit' | translate}}</bd-button>
+                                <bd-button ng-click="onTaxpayerRemove($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.remove' | translate}}</bd-button>
                             </div>
                             <div class="bd-grid__col--sm-4 desktop-only">
-                                <bd-button ng-click="onTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.transfer' | translate}}</bd-button>
+                                <bd-button ng-click="onTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.transfer' | translate}}</bd-button>
                             </div>
 
                             <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
-                                <bd-button ng-click="onBack(this)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.back' | translate}}</bd-button><br/>
-                                <bd-button ng-click="onTaxpayerEdit($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.edit' | translate}}</bd-button><br/>
-                                <bd-button ng-click="onTaxpayerRemove($data)" class="bd-button bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.remove' | translate}}</bd-button><br/>
-                                <bd-button ng-click="onTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm">{{::'raiff.payments.taxpayers.list.details.transfer' | translate}}</bd-button>
+                                <bd-button ng-click="onBack(this)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.back' | translate}}</bd-button><br/>
+                                <bd-button ng-click="onTaxpayerEdit($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.edit' | translate}}</bd-button><br/>
+                                <bd-button ng-click="onTaxpayerRemove($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.remove' | translate}}</bd-button><br/>
+                                <bd-button ng-click="onTransfer($data)" class="bd-button bd-button__primary bd-hmargin-sm">{{::'ocb.payments.taxpayers.list.details.transfer' | translate}}</bd-button>
                             </div>
                         </div>
                     </div>

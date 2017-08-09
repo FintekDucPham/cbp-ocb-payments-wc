@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('NewZusPaymentVerifyController', function ($scope, lodash, zusPaymentInsurances) {
 
         $scope.insurances = lodash.sortBy(lodash.forEach($scope.payment.formData.insurancePremiums, function(insurance, insurance_type) {

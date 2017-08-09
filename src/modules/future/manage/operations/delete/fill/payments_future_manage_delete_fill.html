@@ -14,16 +14,16 @@
     <bd-button class="bd-button__primary delete-future"
                ng-click="onProceedButtonClick()">
         <span ng-hide="token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION">
-            {{::'raiff.payments.future.delete.buttons.proceed' | translate}}
+            {{::'ocb.payments.future.delete.buttons.proceed' | translate}}
         </span>
         <span ng-show="token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION">
-            {{::'raiff.payments.future.bad_token.buttons.proceed' | translate}}
-            <i class="eb-icon eb-raiffeisen-theme eb-ico-next"></i>
+            {{::'ocb.payments.future.bad_token.buttons.proceed' | translate}}
+            <i class="eb-icon eb-ocb-theme eb-ico-next"></i>
         </span>
     </bd-button>
 
     <bd-button class="bd-button cancel-delete-future"
-               ng-click="onCancelButtonClick()">{{::'raiff.payments.future.delete.buttons.cancel' | translate}}
+               ng-click="onCancelButtonClick()">{{::'ocb.payments.future.delete.buttons.cancel' | translate}}
     </bd-button>
 
 </bd-form-footer>

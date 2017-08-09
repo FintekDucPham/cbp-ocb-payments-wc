@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant("RECIPIENT_IDENTITY_TYPES", {
         "SWIFT_OR_BIC": "SWIFT_OR_BIC",
         "NAME_AND_COUNTRY": "NAME_AND_COUNTRY"
@@ -254,7 +254,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.domestic.fill.account_related.none_available'),
+            messageWhenNoAvailable: translate.property('ocb.payments.recipients.new.domestic.fill.account_related.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
             showCustomNames: true,

@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_internal.verify', {
             url: "/verify",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/verify/payments_new_internal_verify.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_internal/verify/payments_new_internal_verify.html",
             controller: "NewPaymentInternalVerifyController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"

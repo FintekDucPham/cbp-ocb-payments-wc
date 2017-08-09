@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('RecipientsManageFillZusController', function ($scope, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, zusSuplementaryIds, zusPaymentTypes, translate, zusPaymentInsurances, insuranceAccounts, $timeout, validationRegexp) {
 
 
@@ -163,7 +163,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
-            messageWhenNoAvailable: translate.property('raiff.payments.recipients.new.zus.fill.remitter_account.none_available'),
+            messageWhenNoAvailable: translate.property('ocb.payments.recipients.new.zus.fill.remitter_account.none_available'),
             useFirstByDefault: true,
             alwaysSelected: false,
             showCustomNames: true,

@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .factory('rbPaymentTrybeFactory', function () {
 
         var createModel = function(trybesList){

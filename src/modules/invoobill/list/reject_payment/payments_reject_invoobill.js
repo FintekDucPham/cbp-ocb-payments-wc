@@ -1,9 +1,9 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.reject_payment', {
             url: "/reject-payment",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/reject_payment/payments_reject_invoobill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/list/reject_payment/payments_reject_invoobill.html",
             controller: "PaymentsRejectInvoobillController",
             params: {
                 payment: {},
@@ -17,14 +17,14 @@ angular.module('raiffeisen-payments')
                 }]
             },
             data: {
-                analyticsTitle: "raiff.payments.invoobill.reject_payment.header"
+                analyticsTitle: "ocb.payments.invoobill.reject_payment.header"
             }
         });
     })
     .controller('PaymentsRejectInvoobillController', function ($scope, bdMainStepInitializer, initialState, lodash, translate) {
 
         $scope.labels = {
-            rejectHeader: translate.property('raiff.payments.invoobill.reject_payment.header', [$scope.invbName])
+            rejectHeader: translate.property('ocb.payments.invoobill.reject_payment.header', [$scope.invbName])
         };
 
         bdMainStepInitializer($scope, 'payment', lodash.extend({
@@ -51,7 +51,7 @@ angular.module('raiffeisen-payments')
                 cancel: 'config.multistepform.buttons.cancel',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.invoobill.buttons.accept',
-                finalize: 'raiff.payments.new.btn.finalize'
+                finalize: 'ocb.payments.new.btn.finalize'
             },
             visibility:{
                 cancel: true,

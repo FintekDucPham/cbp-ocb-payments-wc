@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.future', {
             url: "/future",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/payments_future.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/payments_future.html",
             controller: "PaymentsFutureController",
             abstract: true,
             resolve: {
@@ -26,6 +26,6 @@ angular.module('raiffeisen-payments')
             var foundElement = _.find($scope.insuranceAccounts, {
                 accountNo: accountNo
             });
-            return translate.property("raiff.payments.insurances.type."+foundElement.insuranceCode);
+            return translate.property("ocb.payments.insurances.type."+foundElement.insuranceCode);
         };
     });

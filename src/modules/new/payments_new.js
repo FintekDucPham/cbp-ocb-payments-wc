@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant('rbPaymentOperationTypes', {
         "NEW": {
             code: 'NEW',
@@ -77,7 +77,7 @@ angular.module('raiffeisen-payments')
         stateServiceProvider.state('payments.new', {
             url: "/new/:paymentType/:referenceId",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/payments_new.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new/payments_new.html",
             controller: "PaymentsNewController",
             params: {
                 paymentType: 'domestic',
@@ -86,7 +86,7 @@ angular.module('raiffeisen-payments')
             },
             data: {
                 analyticsTitle: ["$stateParams", function($stateParams) {
-                    return "raiff.payments.new.types." + $stateParams.paymentType.toUpperCase();
+                    return "ocb.payments.new.types." + $stateParams.paymentType.toUpperCase();
                 }]
             }
         });
@@ -194,7 +194,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.getTemplateName = function (stepName) {
-            return "{0}/modules/new/{1}/{2}/payments_new_{2}_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName, $stateParams.paymentType);
+            return "{0}/modules/new/{1}/{2}/payments_new_{2}_{1}.html".format(pathService.generateTemplatePath("ocb-payments"), stepName, $stateParams.paymentType);
         };
 
         $scope.changePaymentType = function (type) {
@@ -274,9 +274,9 @@ angular.module('raiffeisen-payments')
                 prev: 'config.multistepform.buttons.prev',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
-                finalize: 'raiff.payments.new.btn.finalize',
-                finalAction: 'raiff.payments.new.btn.final_action',
-                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
+                finalize: 'ocb.payments.new.btn.finalize',
+                finalAction: 'ocb.payments.new.btn.final_action',
+                addAsStandingOrder: 'ocb.payments.new.btn.add_as_standing_order'
             },
             visibility:{
                 fillReturn: false,
@@ -296,7 +296,7 @@ angular.module('raiffeisen-payments')
             $scope.payment.rbPaymentsStepParams.visibility.fillReturn = false;
             $scope.payment.rbPaymentsStepParams.completeState = 'payments.standing.list';
             $scope.payment.rbPaymentsStepParams.cancelState = 'payments.standing.list';
-            $scope.payment.rbPaymentsStepParams.labels.finalize = 'raiff.payments.standing.new.btn.finalize';
+            $scope.payment.rbPaymentsStepParams.labels.finalize = 'ocb.payments.standing.new.btn.finalize';
             var currentMenuItems = menuService.getCurrentMenuItem().items;
             var subItem = lodash.find(currentMenuItems,{
                 id: 'payments.standing.list'
@@ -326,13 +326,13 @@ angular.module('raiffeisen-payments')
             var code = $scope.payment.type.code;
             if (code == 'STANDING') {
                 if ($scope.payment.operation.code == 'EDIT') {
-                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".EDIT.header");
+                    $scope.payment.header = translate.property("ocb.payments.new.label." + code + ".EDIT.header");
                 } else {
-                    $scope.payment.header = translate.property("raiff.payments.new.label." + code + ".NEW.header");
+                    $scope.payment.header = translate.property("ocb.payments.new.label." + code + ".NEW.header");
                 }
                 return;
             }
-            $scope.payment.header = translate.property("raiff.payments.new.types." + code);
+            $scope.payment.header = translate.property("ocb.payments.new.types." + code);
             return;
         };
 

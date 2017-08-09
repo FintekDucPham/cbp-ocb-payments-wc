@@ -1,16 +1,16 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.taxpayers.manage', {
             url: "/manage",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/taxpayers/manage/payments_taxpayers_manage.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/taxpayers/manage/payments_taxpayers_manage.html",
             controller: "PaymentsTaxpayersManageController",
             params: {
                 taxpayerType: 'zus',
                 operation: 'new'
             },
             data: {
-                analyticsTitle: "raiff.payments.taxpayers.label"
+                analyticsTitle: "ocb.payments.taxpayers.label"
             }
         });
     })

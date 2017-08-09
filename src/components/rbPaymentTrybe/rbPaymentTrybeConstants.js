@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments').constant('rbPaymentTrybeConstants', {
+angular.module('ocb-payments').constant('rbPaymentTrybeConstants', {
     DEFAULT_TRYBES:{
         SWIFT:{
             TRYBES:[

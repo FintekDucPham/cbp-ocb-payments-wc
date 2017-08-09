@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.reject_payment.verify', {
             url: "/verify",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/reject_payment/verify/payments_reject_invoobill_verify.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/list/reject_payment/verify/payments_reject_invoobill_verify.html",
             controller: "PaymentsRejectInvoobillVerifyController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
@@ -74,22 +74,22 @@ angular.module('raiffeisen-payments')
                 if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
                     var backendErrors = $scope.payment.token.model.currentToken.$backendErrors;
                     if(backendErrors.TOKEN_AUTH_BLOCKED){
-                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.labels.prev = 'ocb.payments.new.btn.finalize';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }else if(backendErrors.TOKEN_NOT_SEND){
-                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.labels.prev = 'ocb.payments.new.btn.finalize';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }else if(backendErrors.TOKEN_EXPIRED){
-                        params.labels.prev = 'raiff.payments.new.btn.finalize';
+                        params.labels.prev = 'ocb.payments.new.btn.finalize';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }
                 }else{
                     params.visibility.finalize = true;
                     params.visibility.accept = true;
-                    params.labels.prev = 'raiff.payments.basket.multistepform.buttons.cancel';
+                    params.labels.prev = 'ocb.payments.basket.multistepform.buttons.cancel';
                 }
             }
         });

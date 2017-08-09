@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.basket.new.fill', {
             url: "/fill",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/basket_fill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payments_basket/basket/fill/basket_fill.html",
             controller: "PaymentsBasketFillController",
             resolve: {
                 parameters: ["$q", "customerService", "systemParameterService", "FUTURE_DATE_TYPES", "transferService", "utilityService", function ($q, customerService, systemParameterService, FUTURE_DATE_TYPES, transferService, utilityService) {
@@ -51,7 +51,7 @@ angular.module('raiffeisen-payments')
             $scope.basket.validator={};
         }
 
-        $scope.templateDetails = pathService.generateTemplatePath("raiffeisen-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
+        $scope.templateDetails = pathService.generateTemplatePath("ocb-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";
 
         parameters.context = $scope.userContext;
 
@@ -108,7 +108,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.resolveTemplateType = function (transferType) {
-            return "{0}/modules/payments_basket/basket/fill/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("raiffeisen-payments"), transferType.toLowerCase());
+            return "{0}/modules/payments_basket/basket/fill/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("ocb-payments"), transferType.toLowerCase());
         };
 
         $scope.onEdit = function (data) {
@@ -137,7 +137,7 @@ angular.module('raiffeisen-payments')
 
         $scope.table = {
             tableConfig : new bdTableConfig({
-                placeholderText: translate.property("raiff.payments.basket.list.empty")
+                placeholderText: translate.property("ocb.payments.basket.list.empty")
             }),
             tableData : {
                 getData: function (defer, $params) {
@@ -241,28 +241,28 @@ angular.module('raiffeisen-payments')
                 if(errorReason.subType == 'validation'){
                     for(var i=0; i<=errorReason.errors.length; i++){
                         var currentError = errorReason.errors[i];
-                        if(currentError.field == 'raiff.basket.transfers.proceed.limit.exceed') {
+                        if(currentError.field == 'ocb.basket.transfers.proceed.limit.exceed') {
                             $scope.limitBasketExeeded = {
                                 show: true,
-                                messages: translate.property("raiff.payments.basket.process.validation.amount_exceeded", [currentError.code])
+                                messages: translate.property("ocb.payments.basket.process.validation.amount_exceeded", [currentError.code])
                             };
                         }
-                        if(currentError.field == 'raiff.basket.transfers.proceed.amount.exceed') {
+                        if(currentError.field == 'ocb.basket.transfers.proceed.amount.exceed') {
                             $scope.amountBasketExeeded = {
                                 show: true,
-                                messages: translate.property("raiff.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.DETAL")
+                                messages: translate.property("ocb.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.DETAL")
                             };
                         }
-                        if(currentError.field == 'raiff.basket.transfers.proceed.daily.exceed') {
+                        if(currentError.field == 'ocb.basket.transfers.proceed.daily.exceed') {
                             $scope.dailyBasketExeeded = {
                                 show: true,
-                                messages: translate.property("raiff.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL")
+                                messages: translate.property("ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL")
                             };
                         }
-                        if(currentError.field == 'raiff.basket.transfers.standingOrder.startDate.exceed') {
+                        if(currentError.field == 'ocb.basket.transfers.standingOrder.startDate.exceed') {
                             $scope.standingOrderStartDateExceed = {
                                 show: true,
-                                messages: translate.property("raiff.payments.basket.status.MSG_MSIG_0139")
+                                messages: translate.property("ocb.payments.basket.status.MSG_MSIG_0139")
                             };
                         }
                     }

@@ -1,12 +1,12 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.standing.manage', {
             url: "/manage",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/standing/manage/payments_standing_manage.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/standing/manage/payments_standing_manage.html",
             controller: "PaymentsStandingManageController",
             data: {
-                analyticsTitle: "raiff.payments.standing.label"
+                analyticsTitle: "ocb.payments.standing.label"
             }
         });
     })

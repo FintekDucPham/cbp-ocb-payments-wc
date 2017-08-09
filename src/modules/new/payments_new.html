@@ -6,7 +6,7 @@
         <bd-form-panel class="bd-form-panel--responsive">
 
             <bd-item-property ng-if="!payment.type.hidePaymentOptions"
-                    label="{{::'raiff.payments.new.payment_type'|translate}}"
+                    label="{{::'ocb.payments.new.payment_type'|translate}}"
                     ng-show="payment.type.code != 'STANDING'"
                     >
 
@@ -17,11 +17,11 @@
                            reset-search-input="false"
                            required
                         >
-                    <ui-select-match placeholder="{{ ::'raiff.payments.new.payment_type.select'|translate }}">
-                        {{'raiff.payments.new.types.' + $select.selected.code | translate}}
+                    <ui-select-match placeholder="{{ ::'ocb.payments.new.payment_type.select'|translate }}">
+                        {{'ocb.payments.new.types.' + $select.selected.code | translate}}
                     </ui-select-match>
                     <ui-select-choices repeat="paymentType in payment.meta.paymentTypes">
-                        <div ng-bind-html="::'raiff.payments.new.types.' + paymentType.code | translate | highlight: $select.search"></div>
+                        <div ng-bind-html="::'ocb.payments.new.types.' + paymentType.code | translate | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
 

@@ -1,9 +1,9 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.new_payment', {
             url: "/new",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/make_payment/payments_new_invoobill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/list/make_payment/payments_new_invoobill.html",
             controller: "PaymentsNewInvoobillController",
             params: {
                 payment: {},
@@ -17,7 +17,7 @@ angular.module('raiffeisen-payments')
                 }]
             },
             data: {
-                analyticsTitle: "raiff.payments.invoobill.new_payment.header"
+                analyticsTitle: "ocb.payments.invoobill.new_payment.header"
             }
         });
     })
@@ -58,7 +58,7 @@ angular.module('raiffeisen-payments')
                 cancel: 'config.multistepform.buttons.cancel',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
-                finalize: 'raiff.payments.new.btn.finalize'
+                finalize: 'ocb.payments.new.btn.finalize'
             },
             visibility:{
                 cancel: true,

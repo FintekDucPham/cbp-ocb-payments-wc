@@ -1,9 +1,9 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_internal', {
             url: "/new-internal/:referenceId",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new_internal/payments_new_internal.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_internal/payments_new_internal.html",
             controller: "PaymentsNewInternalController",
             params: {
                 payment: {},
@@ -112,9 +112,9 @@ angular.module('raiffeisen-payments')
                 prev: 'config.multistepform.buttons.prev',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
-                finalize: 'raiff.payments.new.btn.finalize',
-                finalAction: 'raiff.payments.new.btn.final_action',
-                addAsStandingOrder: 'raiff.payments.new.btn.add_as_standing_order'
+                finalize: 'ocb.payments.new.btn.finalize',
+                finalAction: 'ocb.payments.new.btn.final_action',
+                addAsStandingOrder: 'ocb.payments.new.btn.add_as_standing_order'
             },
             visibility:{
                 fillReturn: false,

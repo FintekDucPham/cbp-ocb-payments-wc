@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant('zusPaymentInsurances', ['SOCIAL', 'HEALTH', 'FPIFGSP', 'PENSION'])
     .constant('zusSuplementaryIds', ['PESEL', 'REGON', 'ID_CARD', 'PASSPORT'])
     .constant('zusPaymentTypes', "TYPE_S TYPE_M TYPE_U TYPE_T TYPE_E TYPE_A TYPE_B TYPE_D".split(' '))
@@ -420,7 +420,7 @@ angular.module('raiffeisen-payments')
             }*/
 
             var recipientData2 = angular.copy({
-                customName: translate.property('raiff.new.recipient.custom_name'),
+                customName: translate.property('ocb.new.recipient.custom_name'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 nip: $scope.payment.formData.nip,
                 secondaryIdType:  $scope.payment.formData.secondaryIdType,

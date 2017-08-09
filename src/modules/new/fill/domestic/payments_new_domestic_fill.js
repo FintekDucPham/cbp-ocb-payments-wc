@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
                                                               validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet, $q, utilityService,
                                                               rbBeforeTransferManager) {
@@ -18,7 +18,7 @@ angular.module('raiffeisen-payments')
         };
 
         $scope.setDefaultValues({
-            description: translate.property('raiff.payments.new.internal.fill.default_description'),
+            description: translate.property('ocb.payments.new.internal.fill.default_description'),
             realizationDate: $scope.CURRENT_DATE.time
         });
 
@@ -63,7 +63,7 @@ angular.module('raiffeisen-payments')
             $timeout(function(){
                 recalculateCurrency();
                 $scope.paymentForm.recipientAccountNo = $setPristine();
-                $scope.payment.formData.description = translate.property('raiff.payments.new.internal.fill.default_description');
+                $scope.payment.formData.description = translate.property('ocb.payments.new.internal.fill.default_description');
                 $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
             });
         });
@@ -82,7 +82,7 @@ angular.module('raiffeisen-payments')
 
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function(event, control){
             var recipientData = angular.copy({
-                customName: translate.property('raiff.payments.recipients.new.label'),
+                customName: translate.property('ocb.payments.recipients.new.label'),
                 remitterAccountId: $scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,

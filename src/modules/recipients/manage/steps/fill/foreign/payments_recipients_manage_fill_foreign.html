@@ -1,7 +1,7 @@
 <rb-payment-recipients-fill>
     <div ng-controller="PaymentsRecipientsManageFillCurrencyController">
 
-        <bd-item-property ng-hide="recipient.operation.code === 'EDIT'" label="{{ ::'raiff.payments.recipients.new.currency.fill.account_related.label' | translate }}">
+        <bd-item-property ng-hide="recipient.operation.code === 'EDIT'" label="{{ ::'ocb.payments.recipients.new.currency.fill.account_related.label' | translate }}">
             <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
             <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
                                rb-account="recipient.items.senderAccount"
@@ -14,24 +14,24 @@
                                rb-init-select-value="{{ recipient.formData.debitAccountNo || undefined }}"></rb-account-select>
             <eb-validation-messages eb-name="remitterAccountId">
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.remitterAccount.EMPTY'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.remitterAccount.EMPTY'|translate}}
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.custom_name.label' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.recipients.new.currency.fill.custom_name.label' | translate }}">
             <input name="customName"
                    ng-model="recipient.formData.customName"
                    required
                    ng-pattern="RECIPIENT_NAME_REGEX"
                    class="input-field"
-                   placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.custom_name.placeholder' | translate }}"/>
+                   placeholder="{{ ::'ocb.payments.recipients.new.currency.fill.custom_name.placeholder' | translate }}"/>
 
             <eb-validation-messages eb-name="customName"><!--max 35-->
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.customName.EMPTY'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.customName.EMPTY'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.customName.ILLEGAL'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.customName.ILLEGAL'|translate}}
                 </div>
             </eb-validation-messages>
 
@@ -39,16 +39,16 @@
         <!-- custom name end -->
 
 
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankData' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.recipients.new.currency.fill.bankData' | translate }}">
 
             <bd-radio-select bd-model="recipient.formData.recipientIdentityType" ng-init="onInited()">
-                <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.swfitbic'|translate}}</bd-radio-option>
-                <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'raiff.payments.recipients.new.currency.fill.recipientBankData'|translate}}</bd-radio-option>
+                <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC" class="row__inline-block--middle">{{::'ocb.payments.recipients.new.currency.fill.swfitbic'|translate}}</bd-radio-option>
+                <bd-radio-option bd-option-value="RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY" class="row__inline-block--middle">{{::'ocb.payments.recipients.new.currency.fill.recipientBankData'|translate}}</bd-radio-option>
             </bd-radio-select>
 
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.recipients.new.currency.fill.swift_or_bic.select.label' | translate }}">
             <rb-item-property-data-preloader rb-promise="searchBankPromise">
                 <input ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                        class="input-field"
@@ -58,26 +58,26 @@
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                        name="swift_bic"
                        ng-minlength="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC ? 8 : 0"
-                       placeholder="{{::'raiff.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
+                       placeholder="{{::'ocb.payments.recipients.new.currency.fill.swift_or_bic.select.placeholder'|translate}}" />
             </rb-item-property-data-preloader>
             <eb-validation-messages eb-name="swift_bic" ng-if="recipient.formData.recipientIdentityType === RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"><!--max 35-->
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.MSG-0609_EMPTY_SWIFT' |translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.MSG-0609_EMPTY_SWIFT' |translate}}
                 </div>
                 <div eb-message-key="recipientBankSwiftOrBicNonEmpty" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.swift_bic.EMPTY_SWIFT'|translate}}
                 </div>
                 <div eb-message-key="recipientBankIncorrectSwift" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
                 </div>
                 <div eb-message-key="minlength" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.MSG-0610_INCORRECT_SWIFT'|translate}}
                 </div>
             </eb-validation-messages>
 
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankName' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.recipients.new.currency.fill.bankName' | translate }}">
             <textarea   ng-disabled="recipient.formData.recipientIdentityType != RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY"
                         class="input-field input-area--party-data"
                         ng-model="recipient.formData.recipientBankName"
@@ -91,20 +91,20 @@
 
             <eb-validation-messages eb-name="recipientBankName" ><!--max 35-->
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.new.domestic.fill.bank_data.TOO_LONG_BNF_DATA'|translate}}
+                    {{::'ocb.payments.new.domestic.fill.bank_data.TOO_LONG_BNF_DATA'|translate}}
                 </div>
                 <div eb-message-key="recipientBankNameNonEmpty" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_BANK'|translate}}
                 </div>
                 <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
-                    {{::'raiff.payments.new.domestic.fill.bank_data.TOO_LONG_BNF_DATA'|translate}}
+                    {{::'ocb.payments.new.domestic.fill.bank_data.TOO_LONG_BNF_DATA'|translate}}
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.bankCountry' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.recipients.new.currency.fill.bankCountry' | translate }}">
 
             <eb-preloader ng-if="countries.promise" ng-hide="countries.data" class="eb-inline-preloader" eb-promise="countries.promise"></eb-preloader>
 
@@ -114,7 +114,7 @@
                        ng-required="recipient.formData.recipientIdentityType !== RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC"
                        bd-matches-none-of="recipientBankCountryValidators"
                        theme="bootstrap">
-                <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">
+                <ui-select-match placeholder="{{ ::'ocb.payments.recipients.new.currency.fill.country.select.placeholder' | translate }}">
                     {{ $select.selected.name | uppercase}}
                 </ui-select-match>
 
@@ -125,10 +125,10 @@
 
             <eb-validation-messages eb-name="recipientBankCountry"><!--max 35-->
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
                 </div>
                 <div eb-message-key="recipientBankCountryNonEmpty" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_account.EMPTY_COUNTRY_BANK'|translate}}
                 </div>
             </eb-validation-messages>
 
@@ -139,7 +139,7 @@
         <!-- account label -->
         <rb-paste-warning>
             <bd-item-property
-                    label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
+                    label="{{ ::'ocb.payments.recipients.new.currency.fill.recipient_account.label' | translate }}">
                 <input name="recipientAccountNo"
                        ng-model="recipient.formData.recipientAccountNo"
                        ng-required = "true"
@@ -152,92 +152,92 @@
                        ng-keyup="unlockField()"
                        type="text"
                        bd-matches-none-of="recipientAccountValidators"
-                       placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}" rb-remove-space-parser>
+                       placeholder="{{ ::'ocb.payments.recipients.new.currency.fill.recipient_account.placeholder' | translate }}" rb-remove-space-parser>
                 <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX" ng-show="showHide" class="input-field">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                     <div class="validation-message animate-on">
-                        {{::'raiff.payments.new.domestic.fill.errorPaste'|translate}}
+                        {{::'ocb.payments.new.domestic.fill.errorPaste'|translate}}
                     </div>
 
                 </eb-validation-messages>
                 <eb-validation-messages eb-name="recipientAccountNo"  ng-show="!showHide && !isErrorPaste">
                     <div eb-message-key="required" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
+                        {{::'ocb.payments.recipients.new.currency.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
                     </div>
                     <div eb-message-key="pattern" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
+                        {{::'ocb.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
                     </div>
                     <div eb-message-key="minlength" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
+                        {{::'ocb.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
                     </div>
                     <div eb-message-key="maxlength" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
+                        {{::'ocb.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN'|translate}}
                     </div>
                     <div eb-message-key="bankAndSwiftCountryNotTheSame" class="validation-message animate-on">
-                        {{::'raiff.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT'|translate}}
+                        {{::'ocb.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT'|translate}}
                     </div>
                     <div eb-message-key="simpleIncorrectIban" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
+                        {{::'ocb.payments.recipients.new.currency.fill.recipient_account.INCORRECT_CHARACTER_ACC'|translate}}
                     </div>
                     <div eb-message-key="notUs" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_US'|translate}}
+                        {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.ADD_BNF_ACC_NOT_US'|translate}}
                     </div>
                     <div eb-message-key="notZus" class="validation-message animate-on">
-                        {{::'raiff.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
+                        {{::'ocb.payments.recipients.new.currency.fill.recipient_account.BNF_ACC_NOT_ZUS'|translate}}
                     </div>
                 </eb-validation-messages>
 
             </bd-item-property>
             <span ng-show="isOk || showHide">
-                <span>{{::'raiff.payments.new.domestic.fill.account.warning1'|translate}}</span>
+                <span>{{::'ocb.payments.new.domestic.fill.account.warning1'|translate}}</span>
                 <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
-                <span>{{properties2}}{{::'raiff.payments.new.domestic.fill.account.warning3'|translate}}</span>
+                <span>{{properties2}}{{::'ocb.payments.new.domestic.fill.account.warning3'|translate}}</span>
                 <span class="" style="position: relative">
                 <input id="maskNumer"  ng-required="!isOk && showHide" name="nrbCheck" type="text" ng-model="nrbCheck" size="{{digit}}" ng-change="rbCheckNrb(this)" maxlength="{{digit}}" ng-paste="$event.stopPropagation();$event.preventDefault();">
                     <span class="tooltipFix__tooltip">
-                        <i ng-show="isOk" class="raiff-icons ok_rounded tooltipFix__icon" tooltip="{{::'raiff.payments.new.fill.tooltip'|translate}}"></i>
+                        <i ng-show="isOk" class="ocb-icons ok_rounded tooltipFix__icon" tooltip="{{::'ocb.payments.new.fill.tooltip'|translate}}"></i>
                      </span>
                 </span>
             </span>
             <eb-validation-messages eb-name="nrbCheck">
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.new.domestic.fill.error.paste.required'|translate}}
+                    {{::'ocb.payments.new.domestic.fill.error.paste.required'|translate}}
                 </div>
             </eb-validation-messages>
         </rb-paste-warning>
         <bd-item-property class="bd-item-property--multirow"
-                          label="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_name_address' | translate }}">
+                          label="{{ ::'ocb.payments.recipients.new.currency.fill.recipient_name_address' | translate }}">
             <textarea name="recipientData"
                       ng-model="recipient.formData.recipientData"
                       split-text-max-length-validators="140"
                       ng-pattern="RECIPIENT_DATA_REGEX"
                       required
                       class="input-field input-area--party-data"
-                      placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipient_data.placeholder' | translate }}"></textarea>
+                      placeholder="{{ ::'ocb.payments.recipients.new.currency.fill.recipient_data.placeholder' | translate }}"></textarea>
 
             <eb-validation-messages eb-name="recipientData">
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_data.EMPTY'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_data.EMPTY'|translate}}
                 </div>
                 <!--<div eb-message-key="splitTextLength" class="validation-message animate-on">-->
-                <!-- {{::'raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}} -->
+                <!-- {{::'ocb.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}} -->
                 <!--</div>-->
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
                 </div>
                 <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
                 </div>
             </eb-validation-messages>
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.recipients.new.currency.fill.recipientCountry' | translate }}">
             <eb-preloader ng-if="countries.promise" ng-hide="countries.data" class="eb-inline-preloader" eb-promise="countries.promise"></eb-preloader>
             <ui-select ng-show="countries.data" ng-model="recipient.formData.recipientCountry"
                        ng-change="onRecipientCountryChange()"
                        name="recipientCountry"
                        theme="bootstrap">
-                <ui-select-match placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
+                <ui-select-match placeholder="{{ ::'ocb.payments.recipients.new.currency.fill.recipientCountry.select.placeholder' | translate }}">
                     {{ $select.selected.name  | uppercase}}
                 </ui-select-match>
 
@@ -248,7 +248,7 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
-                          label="{{ ::'raiff.payments.recipients.new.currency.fill.description.label' | translate }}">
+                          label="{{ ::'ocb.payments.recipients.new.currency.fill.description.label' | translate }}">
 
             <textarea name="description"
                       ng-model="recipient.formData.description"
@@ -256,17 +256,17 @@
                       ng-pattern="PAYMENT_TITLE_REGEX"
                       class="input-field input-area--payment-description"
                       required
-                      placeholder="{{ ::'raiff.payments.recipients.new.currency.fill.description.placeholder' | translate }}"></textarea>
+                      placeholder="{{ ::'ocb.payments.recipients.new.currency.fill.description.placeholder' | translate }}"></textarea>
 
             <eb-validation-messages eb-name="description">
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.description.EMPTY'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.description.EMPTY'|translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA'|translate}}
                 </div>
                 <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
-                    {{::'raiff.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA'|translate}}
+                    {{::'ocb.payments.recipients.new.currency.fill.recipient_title.TOO_LONG_TITLE_DATA'|translate}}
                 </div>
             </eb-validation-messages>
 

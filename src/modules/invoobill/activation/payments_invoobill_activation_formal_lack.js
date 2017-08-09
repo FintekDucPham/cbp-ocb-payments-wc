@@ -1,14 +1,14 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.formalIdLack', {
             url: "/formalIdLack",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/activation/payments_invoobill_activation_formal_lack.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/activation/payments_invoobill_activation_formal_lack.html",
             controller: "PaymentsInvoobillFormalLackController",
             params: {
                 referenceId: null
             },
             data: {
-                analyticsTitle: "raiff.payments.invoobill.activation.header"
+                analyticsTitle: "ocb.payments.invoobill.activation.header"
             }
         });
     })

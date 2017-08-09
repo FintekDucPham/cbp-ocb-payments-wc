@@ -1,29 +1,29 @@
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.custom_name'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.us.custom_name'|translate}}">
     <div>{{ $data.customerName }}</div>
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.account_no'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.us.account_no'|translate}}">
     {{ $data.nrb | nrbIbanFilter }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.recipient_name_address'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.us.recipient_name_address'|translate}}">
     {{$data.nameAndAddress}}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.secondary_id_type'|translate}}">
-    {{ ::'raiff.payments.id_type.' + $data.secondaryIdType | translate }}
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.us.secondary_id_type'|translate}}">
+    {{ ::'ocb.payments.id_type.' + $data.secondaryIdType | translate }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.secondary_id'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.us.secondary_id'|translate}}">
     {{ $data.secondaryId }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text"  label="{{::'raiff.payments.recipients.details.us.form_symbol'|translate}}">
+<bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.details.us.form_symbol'|translate}}">
     {{ $data.formSymbol }}
 </bd-item-property>
 
-<bd-item-property class="eb-item-property--text" ng-if="$data.periodType !== undefined && $data.periodType !== null " label="{{::'raiff.payments.recipients.details.us.period_type'|translate}}">
-    {{ ::'raiff.payments.us.period_type.' + $data.periodType | translate }}
+<bd-item-property class="eb-item-property--text" ng-if="$data.periodType !== undefined && $data.periodType !== null " label="{{::'ocb.payments.recipients.details.us.period_type'|translate}}">
+    {{ ::'ocb.payments.us.period_type.' + $data.periodType | translate }}
 </bd-item-property>
 
 

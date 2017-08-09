@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new.verify', {
             url: "/verify",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/new/verify/payments_new_verify.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new/verify/payments_new_verify.html",
             controller: "NewPaymentVerifyController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
@@ -123,15 +123,15 @@ angular.module('raiffeisen-payments')
                 if(newValue===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION){
                     var backendErrors = $scope.payment.token.model.currentToken.$backendErrors;
                     if(backendErrors.TOKEN_AUTH_BLOCKED){
-                        params.labels.cancel = 'raiff.payments.new.btn.finalize';
+                        params.labels.cancel = 'ocb.payments.new.btn.finalize';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }else if(backendErrors.TOKEN_NOT_SEND){
-                        params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                        params.labels.cancel = 'ocb.payments.new.btn.cancel';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }else if(backendErrors.TOKEN_EXPIRED){
-                        params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                        params.labels.cancel = 'ocb.payments.new.btn.cancel';
                         params.visibility.finalize = false;
                         params.visibility.accept = false;
                     }
@@ -141,9 +141,9 @@ angular.module('raiffeisen-payments')
                     params.visibility.finalize = true;
                     params.visibility.cancel = true;
                     params.visibility.accept = true;
-                    params.labels.change = 'raiff.payments.new.btn.change';
-                    params.labels.finalize = 'raiff.payments.new.btn.finalize';
-                    params.labels.cancel = 'raiff.payments.new.btn.cancel';
+                    params.labels.change = 'ocb.payments.new.btn.change';
+                    params.labels.finalize = 'ocb.payments.new.btn.finalize';
+                    params.labels.cancel = 'ocb.payments.new.btn.cancel';
                 }
            }
         });

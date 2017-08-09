@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.new_payment.fill', {
             url: "/fill",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/list/make_payment/fill/payments_new_invoobill_fill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/list/make_payment/fill/payments_new_invoobill_fill.html",
             controller: "PaymentsNewInvoobillFillController",
             params: {
                 accountId: null,
@@ -49,7 +49,7 @@ angular.module('raiffeisen-payments')
         var setAmountExceedMessage = function(){
             $scope.payment.meta.validators.fundsExeed = {
                 show: true,
-                messages: translate.property("raiff.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS")
+                messages: translate.property("ocb.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS")
             };
         };
 
@@ -92,13 +92,13 @@ angular.module('raiffeisen-payments')
             if(errorReason.subType == 'validation') {
                 for (var i = 0; i < errorReason.errors.length; i++) {
                     var currentError = errorReason.errors[i];
-                    if(currentError.field == 'raiff.transfer.amount.exceed') {
+                    if(currentError.field == 'ocb.transfer.amount.exceed') {
                         setAmountExceedMessage();
                     }
-                    if(currentError.field == 'raiff.transfer.limit.exceeed') {
+                    if(currentError.field == 'ocb.transfer.limit.exceeed') {
                         $scope.payment.meta.validators.limitExceed = {
                             show: true,
-                            messages: translate.property("raiff.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                            messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
                         };
                     }
                 }

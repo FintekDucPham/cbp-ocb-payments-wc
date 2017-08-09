@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.recipients.manage.edit', {
             url: "/edit/:recipientType",
@@ -7,20 +7,20 @@ angular.module('raiffeisen-payments')
                 recipient: null,
                 dataConverted: false
             },
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/edit/payments_recipients_manage_edit.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/operations/edit/payments_recipients_manage_edit.html",
             controller: "PaymentsRecipientsManageEditController",
             data: {
                 analyticsTitle: ["$stateParams", function($stateParams) {
                     var keys = [];
-                    keys.push("raiff.payments.recipients.edit.label");
-                    keys.push("raiff.payments.recipients.select.type." + $stateParams.recipientType.toUpperCase());
+                    keys.push("ocb.payments.recipients.edit.label");
+                    keys.push("ocb.payments.recipients.select.type." + $stateParams.recipientType.toUpperCase());
                     return keys;
                 }]
             }
         }).state('payments.recipients.manage.edit.fill', {
             url: "/fill",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/fill/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_fill_" + angular.lowercase($stateParams.recipientType) + ".html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/steps/fill/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_fill_" + angular.lowercase($stateParams.recipientType) + ".html";
             },
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"
@@ -28,14 +28,14 @@ angular.module('raiffeisen-payments')
         }).state('payments.recipients.manage.edit.verify', {
             url: "/verify",
             templateUrl: function ($stateParams) {
-                return pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/steps/verify/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_verify_" + angular.lowercase($stateParams.recipientType) + ".html";
+                return pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/steps/verify/" + angular.lowercase($stateParams.recipientType) + "/payments_recipients_manage_verify_" + angular.lowercase($stateParams.recipientType) + ".html";
             },
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
             }
         }).state('payments.recipients.manage.edit.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/recipients/manage/operations/edit/status/payments_recipients_manage_edit_status.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/recipients/manage/operations/edit/status/payments_recipients_manage_edit_status.html",
             controller: "RecipientsManageEditStatusController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step3"

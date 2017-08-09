@@ -1,11 +1,11 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('TaxpayersManageNewStatusController', function ($scope, bdStepStateEvents, translate) {
         $scope.taxpayerClone = angular.copy($scope.taxpayer);
         $scope.$on(bdStepStateEvents.ON_STEP_ENTERED, function () {
             if ($scope.taxpayer.result.type == 'success') {
-                prepareResult('raiff.payments.taxpayers.manage.new.status.ok');
+                prepareResult('ocb.payments.taxpayers.manage.new.status.ok');
             } else {
-                prepareResult('raiff.payments.taxpayers.manage.new.status.fail');
+                prepareResult('ocb.payments.taxpayers.manage.new.status.fail');
             }
 
         });

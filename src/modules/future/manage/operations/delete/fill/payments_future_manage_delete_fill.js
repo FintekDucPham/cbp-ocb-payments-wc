@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.future.manage.delete.fill', {
             url: "/fill",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/operations/delete/fill/payments_future_manage_delete_fill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/manage/operations/delete/fill/payments_future_manage_delete_fill.html",
             controller: "PaymentsFutureManageDeleteFillController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"

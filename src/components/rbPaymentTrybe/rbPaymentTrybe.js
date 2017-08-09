@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .directive('rbPaymentTrybe', function (pathService) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbPaymentTrybe/rbPaymentTrybe.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbPaymentTrybe/rbPaymentTrybe.html",
             scope: {
                 rbTrybes: '=',
                 rbModel: '=',

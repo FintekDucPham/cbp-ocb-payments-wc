@@ -1,8 +1,8 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.invoobill.resignationSuccessful', {
             url: "/resignationSuccessful",
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/invoobill/resignation/payments_invoobill_resignation_successful.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/invoobill/resignation/payments_invoobill_resignation_successful.html",
             controller: "PaymentsInvoobillResignationSuccessfulController",
             params: {
                 referenceId: null
@@ -12,7 +12,7 @@ angular.module('raiffeisen-payments')
     .controller('PaymentsInvoobillResignationSuccessfulController', function ($scope, $state, translate) {
 
         $scope.labels = {
-            successful: translate.property('raiff.payments.invoobill.resignation.successful', [$scope.invbName])
+            successful: translate.property('ocb.payments.invoobill.resignation.successful', [$scope.invbName])
         };
 
         $scope.back = function() {

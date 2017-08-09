@@ -29,11 +29,11 @@
             <div class="tableGG__table-section">
                 <div class="bd-table bd-table__fixed">
                     <div bd-table-header>
-                        <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_date"|translate}}</div>
-                        <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-2" ng-show="userContext=='MICRO'">{{::'raiff.payments.basket.list.header.status'|translate}}</div>
-                        <div bd-table-heading="third" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::"raiff.payments.basket.list.header.operation_type"|translate}}</div>
-                        <div bd-table-heading="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'">{{::"raiff.payments.basket.list.header.operation_title"|translate}}</div>
-                        <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-3 text-right">{{::"raiff.payments.basket.list.header.operation_amount"|translate}}</div>
+                        <div bd-table-heading="first" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-4">{{::"ocb.payments.basket.list.header.operation_date"|translate}}</div>
+                        <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-2" ng-show="userContext=='MICRO'">{{::'ocb.payments.basket.list.header.status'|translate}}</div>
+                        <div bd-table-heading="third" class="bd-table__cell bd-hide-sm bd-table__cell--md-4">{{::"ocb.payments.basket.list.header.operation_type"|translate}}</div>
+                        <div bd-table-heading="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'">{{::"ocb.payments.basket.list.header.operation_title"|translate}}</div>
+                        <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-8 bd-table__cell--md-3 text-right">{{::"ocb.payments.basket.list.header.operation_amount"|translate}}</div>
                     </div>
 
                     <div bd-table-row
@@ -44,10 +44,10 @@
                                     {{ item.payment.realizationDate | date:'shortDate'}}
                                 </div>
                                 <div bd-table-cell="second" class="bd-hide-sm bd-table__cell--md-2" ng-show="userContext=='MICRO'">
-                                    {{'raiff.payments.basket.transaction.status.'+item.signedStatus | translate}}
+                                    {{'ocb.payments.basket.transaction.status.'+item.signedStatus | translate}}
                                 </div>
                                 <div bd-table-cell="third" class="bd-hide-sm bd-table__cell--md-4"> 
-                                    {{ ::'raiff.payments.new.types.'+item.payment.transferType | translate}}
+                                    {{ ::'ocb.payments.new.types.'+item.payment.transferType | translate}}
                                 </div>
                                 <div bd-table-cell="fourth" ng-class="userContext=='MICRO'?'bd-table__cell bd-hide-sm bd-table__cell--md-3':'bd-table__cell bd-hide-sm bd-table__cell--md-5'" style="word-break: break-word;">
                                     {{item.payment.title.join(' ') }}
@@ -58,7 +58,7 @@
                             </div>
                             <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                 <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-8 bd-table__cell--md-9 text-right" style="font-weight: bold;">
-                                    {{::"raiff.payments.basket.list.sourceAccount"|translate|uppercase}}
+                                    {{::"ocb.payments.basket.list.sourceAccount"|translate|uppercase}}
                                 </div>
                                 <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-7">
                                   <div>
@@ -70,12 +70,12 @@
                             </div>
                             <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                 <div bd-table-cell="first" class="bd-table__cell-index bd-table__cell--sm-8 bd-table__cell--md-9 text-right" style="font-weight: bold;">
-                                    {{::"raiff.payments.basket.list.targetAccount"|translate|uppercase}}
+                                    {{::"ocb.payments.basket.list.targetAccount"|translate|uppercase}}
                                 </div>
                                 <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-7">
                                     <div>
                                          <span ng-if="item.payment.recipientAccountNo=='ZUS_ACCOUNTS'">
-                                             {{'raiff.payments.basket.list.account.zus.ZUS_ACCOUNTS' | translate}}
+                                             {{'ocb.payments.basket.list.account.zus.ZUS_ACCOUNTS' | translate}}
                                         </span>
                                         <span ng-if="item.payment.recipientAccountNo!='ZUS_ACCOUNTS'">
                                             <span class="hidden-xs hidden-sm">{{item.payment.recipientAccountNo | nrbIbanFilter}}</span>
@@ -83,7 +83,7 @@
                                         </span>
                                     </div>
                                     <div ng-if="item.payment.transferType == 'INSURANCE'">
-                                        <span eb-msg="raiff.payments.new.zus.verify.tmp.zus_name"></span>
+                                        <span eb-msg="ocb.payments.new.zus.verify.tmp.zus_name"></span>
                                     </div>
                                     <div ng-if="item.payment.transferType != 'INSURANCE'">
                                         <div class="bd-table__breakword">{{item.payment.recipientName.join(' ') }}</div>
@@ -105,7 +105,7 @@
                     <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-16">
 
                         <div class="summary-item__label" style="border-bottom: 0px;">
-                        {{::"raiff.payments.basket.list.verify.summary"|translate}}
+                        {{::"ocb.payments.basket.list.verify.summary"|translate}}
                         </div>
                     </div>
                     </div>
@@ -114,12 +114,12 @@
                             <div class="bd-table__row-line bd-table__row-line--sm-tight">
                                 <div bd-table-cell="first" class="basket-vew__summary__currency_quantity bd-table__cell--sm-16 bd-table__cell--md-5">
                                     <div>
-                                        {{::"raiff.payments.basket.list.verify.summary.currency"|translate}} &nbsp;{{currencySummary.currency}}:
+                                        {{::"ocb.payments.basket.list.verify.summary.currency"|translate}} &nbsp;{{currencySummary.currency}}:
                                     </div>
                                 </div>
                                 <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-5 text-right">
                                     <div>
-                                        {{::"raiff.payments.basket.list.verify.summary.currency.transactions"|translate}} &nbsp;{{currencySummary.currency}}
+                                        {{::"ocb.payments.basket.list.verify.summary.currency.transactions"|translate}} &nbsp;{{currencySummary.currency}}
                                     </div>
                                     <div class="transaction-count">
                                         &nbsp;{{currencySummary.amount}}
@@ -127,7 +127,7 @@
                                 </div>
                                 <div bd-table-cell="third"
                                      class="bd-table__cell--sm-8 bd-table__cell--md-6 text-right">
-                                    <div>{{::"raiff.payments.basket.list.verify.summary.currency.transactions.amount"|translate}}</div>
+                                    <div>{{::"ocb.payments.basket.list.verify.summary.currency.transactions.amount"|translate}}</div>
                                     <bd-amount amount="currencySummary.sum"
                                                currency="{{currencySummary.currency}}"></bd-amount>
                                 </div>
@@ -141,12 +141,12 @@
      <span class="eb-validation-messages">
              <span class="messages"  ng-if="basket.validator.realizationDateExceed">
                  <span class="validation-message">
-                   {{::"raiff.payments.basket.status.REALIZATION_DATE_EXCEEDED"|translate}}
+                   {{::"ocb.payments.basket.status.REALIZATION_DATE_EXCEEDED"|translate}}
                  </span>
              </span>
             <span class="messages"  ng-if="basket.validator.cutOffTimePresent">
                  <span class="validation-message">
-                   {{::"raiff.payments.basket.status.CUT_OFF_TIME.DETAL"|translate}}
+                   {{::"ocb.payments.basket.status.CUT_OFF_TIME.DETAL"|translate}}
                  </span>
              </span>
         </span>

@@ -1,12 +1,12 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.future.manage', {
             url: "/manage",
             abstract: true,
-            templateUrl: pathServiceProvider.generateTemplatePath("raiffeisen-payments") + "/modules/future/manage/payments_future_manage.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/manage/payments_future_manage.html",
             controller: "PaymentsFutureManageController",
             data: {
-                analyticsTitle: "raiff.payments.future.label"
+                analyticsTitle: "ocb.payments.future.label"
             }
         });
     })
@@ -44,9 +44,9 @@ angular.module('raiffeisen-payments')
         $scope.getTemplateName = function (stepName) {
             if($scope.payment.type){
                 if($scope.payment.type.code === rbPaymentTypes.OWN.code){
-                    return "{0}/modules/future/manage/operations/edit/payments_future_manage_edit_internal.html".format(pathService.generateTemplatePath("raiffeisen-payments"));
+                    return "{0}/modules/future/manage/operations/edit/payments_future_manage_edit_internal.html".format(pathService.generateTemplatePath("ocb-payments"));
                 }else{
-                    return "{0}/modules/new/{1}/{2}/payments_new_{2}_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName, $scope.payment.type.state);
+                    return "{0}/modules/new/{1}/{2}/payments_new_{2}_{1}.html".format(pathService.generateTemplatePath("ocb-payments"), stepName, $scope.payment.type.state);
                 }
             }else{
                 return undefined;
@@ -63,7 +63,7 @@ angular.module('raiffeisen-payments')
 
         $scope.step = 'fill';
         $scope.getInternalProxyTemplate = function(stepName){
-            return "{0}/modules/new_internal/{1}/payments_new_internal_{1}.html".format(pathService.generateTemplatePath("raiffeisen-payments"), stepName);
+            return "{0}/modules/new_internal/{1}/payments_new_internal_{1}.html".format(pathService.generateTemplatePath("ocb-payments"), stepName);
         };
 
         $scope.getProperPaymentService = function() {

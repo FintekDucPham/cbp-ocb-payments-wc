@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .controller('TaxpayersManageVerifyController', function ($scope, bdVerifyStepInitializer, taxpayerManagementService, bdStepStateEvents, formService, RB_TOKEN_AUTHORIZATION_CONSTANTS, $timeout, $state, lodash) {
 
         $scope.showVerify = false;

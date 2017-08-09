@@ -1,4 +1,4 @@
-angular.module('raiffeisen-payments')
+angular.module('ocb-payments')
     .constant('FUTURE_DATE_RANGES', {
         'DAYS': 'DAYS',
         'WEEKS': 'WEEKS',
@@ -36,7 +36,7 @@ angular.module('raiffeisen-payments')
     .directive('rbFutureDatePanel', function(pathService, lodash) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("raiffeisen-payments") + "/components/rbFutureDatePanel/rbFutureDatePanel.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbFutureDatePanel/rbFutureDatePanel.html",
             scope: {
                 "dateRange": "=",
                 "options": "=",
@@ -72,7 +72,7 @@ angular.module('raiffeisen-payments')
                 $scope.options = options;
 
                 $scope.messages = {
-                    'INCORRECT_END_DATE': translate.property('raiff.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
+                    'INCORRECT_END_DATE': translate.property('ocb.payments.components.futureDatePanel.validation.INCORRECT_END_DATE').replace(/##MONTHS##/ig, options.maxOffsetInMonths)
                 };
 
                 maxDate = new Date(now.getTime());

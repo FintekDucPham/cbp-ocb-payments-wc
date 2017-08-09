@@ -1,7 +1,7 @@
 /**
  * Created by marek.koronski on 2017-03-02.
  */
-angular.module('raiffeisen-payments').directive('rbRemoveSpaceParser', function(){
+angular.module('ocb-payments').directive('rbRemoveSpaceParser', function(){
     return {
         require: 'ngModel',
         link: function(scope, element, attrs, modelCtrl) {
