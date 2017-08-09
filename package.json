@@ -1,11 +1,7 @@
 {
   "name": "cbp-ocb-payments-wc",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
-  "main": "Gruntfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://repopbk.poland.asseco.corp/ocp-ocb/cbp-ocb-payments-wc.git"
@@ -13,10 +9,5 @@
   "keywords": [
     "ocb",
     "payments"
-  ],
-  "author": "Grzegorz Gurgul <grzegorz.gurgul@asseco.pl>",
-  "license": "ISC",
-  "devDependencies": {
-    "grunt": "^0.4.5"
-  }
+  ]
 }
