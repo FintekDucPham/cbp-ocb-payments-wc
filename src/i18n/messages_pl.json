@@ -189,7 +189,6 @@
     "ocb.payments.new.domestic.fill.execution_date.BLOCKED_SMS":"Autoryzacja hasłem SMS została zablokowana.",
     "ocb.payments.new.domestic.fill.execution_date.INCORRECT_BLOCKED_SMS":"Podałeś niepoprawne hasło SMS. Autoryzacja hasłem SMS została zablokowana.",
     "ocb.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT":"Nieprawidłowa kwota przelewu",
-    "ocb.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Orient Commercial Joint Stock Bank jest możliwy tylko jako przelew własny.",
     "ocb.payments.new.internal.fill.choose":"Wybierz",
 
     "ocb.payments.new.domestic.fill.account.warning1":"Wpisz ręcznie ",
@@ -445,7 +444,6 @@
     "ocb.payments.recipients.new.currency.fill.swift.recipentAccount.INCORRECT_CHARACTER_ACC": "Pole Rachunek odbiorcy nie może być dłuższe niż 34 znaki i powinno zawierać tylko: litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "ocb.payments.recipients.new.currency.fill.description.EMPTY":"Tytuł przelewu nie może być pusty",
     "ocb.payments.recipients.edit.currency.verify.company.name":"Nazwa firmy",
-    "ocb.payments.recipients.new.currency.fill.recipient_data.EMPTY": "Nazwa i adres odbiorcy nie mogą być puste",
     "ocb.payments.recipients.new.currency.fill.recipient_data.TOO_LONG_BANK": "Dane banku odbiorcy nie mogą przekraczać 140 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki / - ? : ( ) . , ' +",
     "ocb.payments.recipients.new.currency.fill.recipient_account.INCORRECT_IBAN": "Rachunek odbiorcy nie jest zgodny z formatem IBAN.",
     "ocb.payments.recipients.new.currency.fill.MSG-0609_EMPTY_SWIFT":"Kod SWIFT banku nie może być pusty",
@@ -606,7 +604,6 @@
     "ocb.payments.recipients.new.zus.verify.custom_name": "Twoja nazwa odbiorcy",
     "ocb.payments.recipients.new.zus.verify.recipient_account": "Numer rachunku",
     "ocb.payments.recipients.new.zus.verify.recipient_name": "Nazwa rachunku",
-    "ocb.payments.recipients.new.zus.verify.micro_name": "Nazwa firmy",
     "ocb.payments.recipients.new.zus.verify.taxpayer_nip": "NIP płatnika",
     "ocb.payments.recipients.new.zus.verify.taxpayer_supplementary_id_type": "Typ drugiego identyfikatora",
     "ocb.payments.recipients.new.zus.verify.taxpayer_supplementary_id": "Drugi identyfikator",
@@ -975,11 +972,8 @@
     "ocb.payments.future.list.details.insurance.senderNip": "NIP płatnika",
     "ocb.payments.future.list.details.insurance.identityType": "Typ drugiego identyfikatora",
     "ocb.payments.future.list.details.insurance.identityNumber": "Numer identyfikatora",
-    "ocb.payments.future.list.details.insurance.paymentType": "Typ wpłaty",
-    "ocb.payments.future.list.details.insurance.declarationDate": "Deklaracja",
     "ocb.payments.future.list.details.insurance.declarationNumber": "Numer deklaracji",
     "ocb.payments.future.list.details.insurance.additionalInformation": "Additional information",
-    "ocb.payments.future.list.details.insurance.amount": "Kwota całkowita",
     "ocb.payments.future.list.own.deliveryDate": "Data realizacji",
 
     "ocb.payments.future.list.details.insurance.buttons.edit": "Edytuj",
@@ -1056,7 +1050,6 @@
     "ocb.payments.standing.list.details.closestRealizationDate": "Data najbliższej realizacji",
     "ocb.payments.standing.list.details.endDate": "Data zakończenia",
 
-    "ocb.payments.new.error.ELIXIRCharactersOnly":"Pole zawiera niedozwolone znaki Elixir",
     "ocb.payments.new.error.description.NotNull":"Tytuł przelewu nie może być pusty",
     "ocb.payments.new.standing.edit.order_id": "Numer zlecenia",
 
@@ -1208,7 +1201,6 @@
     "ocb.payments.cut.off.time.MSG-0657_COT_SORBNET": "Realizacja w najbliższym dniu roboczym",
     "ocb.payments.recipient.new.error.MSG-0660_SAME_BNF":"Dla podanej pary rachunków istnieje już zdefiniowany Odbiorca. Jeśli chcesz kontynuować, wybierz \"Dalej\"",
 "ocb.payments.sepa.validation.error.MSG-0654_NOT_CORRECT_EU_SWIFT":"Kraj banku odbiorcy nie jest zgodny z podanym kodem SWIFT banku odbiorcy.",
-    "ocb.payments.swift.validation.error.incorrect_country_code":"Kraj banku jest niezgodny z numerem rachunku",
     "ocb.payments.swift.validation.error.incorrect_country_code":"Kraj banku jest niezgodny z numerem rachunku",
     "ocb.payments.currency.placeholder":"Waluta",
     "ocb.payments.new.currency.fill.currency.error.required": "Waluta nie może być pusta",
