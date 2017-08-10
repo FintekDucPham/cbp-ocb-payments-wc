@@ -120,97 +120,10 @@ angular.module('ocb-payments', [
     registerNavigation();
     registerRestrictedState();
 
-}).run(function (BANK_NRB_CONSTANTS, systemParameterService, customerService, SEGMENT_TYPES, menuService, invoobillPaymentsService) {
+}).run(function (BANK_NRB_CONSTANTS, systemParameterService) {
     systemParameterService.getParameterByName("account.bank.prefix.rbpl").then(function(data){
         BANK_NRB_CONSTANTS.internal_prefix = data.value.split(',');
     });
-
-    systemParameterService.getParameterByName("INVB.name").then(function(paramName) {
-        customerService.getCustomerDetails().then(function (userDetails) {
-            var customerDetails = userDetails.customerDetails;
-            var customerBusinessLine = customerDetails.businessLine;
-
-            var menuItem = {
-                id: "payments.invoobill",
-                label: paramName.value,
-                icon: "ocb-icons invoobill",
-                priority: 8
-            };
-
-            //pobranie parametru access.invb
-            systemParameterService.getParameterByName("access.invb").then(function (param) {
-                var acceessParameter = param.value.split(',').map(function (item) {
-                    return item.trim();
-                });
-
-                var visible = false;
-
-                //kontekst DETAL
-                if (acceessParameter.indexOf('D') != -1 &&
-                    (customerBusinessLine == SEGMENT_TYPES.DETAIL_AFFLUENT ||
-                    customerBusinessLine == SEGMENT_TYPES.DETAIL_CSB)) {
-                    visible = true;
-                    //kontekst MICRO
-                } else if (acceessParameter.indexOf('M') != -1 &&
-                    customerBusinessLine == SEGMENT_TYPES.MICRO) {
-                    invoobillPaymentsService.getVisibleInvoobill().then(function (visible) {
-                        if (visible) {
-                            invoobillPaymentsService.getStatus().then(function (status) {
-                                var action = "";
-                                if (status) {
-                                    menuItem.action = "payments.invoobill.list";
-                                    menuService.pushMenuItems('ocb-payments', menuItem);
-                                } else {
-                                    invoobillPaymentsService.isAccess().then(function (access) {
-                                        if (access) {
-                                            action = "payments.invoobill.activation";
-                                        } else {
-                                            action = "payments.invoobill.formalIdLack";
-                                        }
-                                        menuItem.action = action;
-                                        menuService.pushMenuItems('ocb-payments', menuItem);
-                                    });
-
-                                }
-                            });
-                        }
-                    });
-                    //FWR
-                } else if (acceessParameter.indexOf('F') != -1 &&
-                    customerBusinessLine == SEGMENT_TYPES.DETAIL_FWR) {
-                    visible = true;
-                    //Pracownik
-                } else if (acceessParameter.indexOf('P') != -1 &&
-                    customerDetails.isEmployee) {
-                    visible = true;
-                }
-
-                if (visible) {
-                    invoobillPaymentsService.getStatus().then(function (status) {
-                        var action = "";
-                        if (status) {
-                            menuItem.action = "payments.invoobill.list";
-                            menuService.pushMenuItems('ocb-payments', menuItem);
-                        } else {
-                            invoobillPaymentsService.isAccess().then(function (access) {
-                                if (access) {
-                                    action = "payments.invoobill.activation";
-                                } else {
-                                    action = "payments.invoobill.formalIdLack";
-                                }
-                                menuItem.action = action;
-                                menuService.pushMenuItems('ocb-payments', menuItem);
-                            });
-
-                        }
-                    });
-                }
-
-            });
-
-        });
-    });
-
 }).value('BANK_NRB_CONSTANTS', {
     internal_prefix: null
 }).filter('arrayFilter', function(){

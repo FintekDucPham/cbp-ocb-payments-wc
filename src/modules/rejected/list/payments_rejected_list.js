@@ -39,7 +39,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter, viewStateService) {
+    .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter) {
 
         var TYPE_ID_MAPPER = {
             P: "PESEL",
@@ -252,8 +252,6 @@ angular.module('ocb-payments')
             }
             if(paymentType === 'internal') {
                 goPage = "payments.new_internal.fill";
-            } else if(paymentType === 'e_faktura') {
-                goPage = "payments.invoobill.new_payment.fill";
             } else {
                 goPage = "payments.new.fill";
             }
@@ -317,19 +315,6 @@ angular.module('ocb-payments')
                                 amount: details.amount,
                                 currency: details.currency
                             };
-                        case 'e_faktura':
-                            var invoobill = {
-                                beneficiaryAccount: details.recipientAccountNo,
-                                creditorFullName: $filter('arrayFilter')(details.recipientName),
-                                title: $filter('arrayFilter')(cropArray(details.title)),
-                                amount: details.amount,
-                                currency: details.currency,
-                                paymentDate: new Date()
-                            };
-                            viewStateService.setInitialState('payments.invoobill.new_payment', {
-                                invoobillPayment: invoobill
-                            });
-                            return {};
                         default:
                             throw "Payment type {0} not supported.".format(paymentType);
                     }

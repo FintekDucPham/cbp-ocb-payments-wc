@@ -58,11 +58,11 @@ angular.module('ocb-payments')
         };
 
         $scope.canEdit = function($data){
-            return ['SEPA', 'SWIFT', 'E_FAKTURA', 'INVOOBILL'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
+            return ['SEPA', 'SWIFT'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
         };
 
         $scope.canDelete = function($data){
-            return ['E_FAKTURA', 'INVOOBILL'].indexOf($data.details.transferType.toUpperCase()) && parseFloat($data.operationStatus) < 60;
+            return parseFloat($data.operationStatus) < 60;
         };
         $scope.model = {
             dateRangeValidity: false
@@ -77,9 +77,6 @@ angular.module('ocb-payments')
 
         $scope.resolveTemplateType = function (transferType) {
             var tType = transferType.toLowerCase();
-            if(tType === 'invoobill'){
-                tType = 'domestic';
-            }
             return "{0}/modules/future/list/details/{1}_future_payment_details.html".format(pathService.generateTemplatePath("ocb-payments"), tType);
         };
 

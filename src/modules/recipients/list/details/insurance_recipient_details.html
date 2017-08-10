@@ -9,7 +9,7 @@
         <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.new.zus.fill.payment_option.' + premium.code | translate }}">
             {{premium.nrb|nrbIbanFilter}}
         </bd-item-property>
-        <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.invoobil.list.details.amount' | translate }}">
+        <bd-item-property class="eb-item-property--text" label="{{ ::'ocb.payments.recipient.details.insurance.amount' | translate }}">
             {{ premium.amount | number: 2}} {{ premium.currency }} {{premium.order}}
         </bd-item-property>
     </div>
