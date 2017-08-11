@@ -129,7 +129,6 @@
     "ocb.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – SORBNET transfer",
     "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Recipient account is kept with Orient Commercial Joint Stock Bank – the transfer cannot be made via SORBNET, internal settlement will be applied",
     "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO": "Recipient account is kept with Orient Commercial Joint Stock Bank – the transfer will be made as part of internal settlement",
-    "ocb.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Transfer from investment account to another account kept with Orient Commercial Joint Stock Bank is possible only as an own transfer",
 
     "ocb.payments.new.foreign.fill.recipient_data": "Recipient name and address",
     "ocb.payments.new.foreign.fill.recipient_country.error.required": "You must select the recipient country",

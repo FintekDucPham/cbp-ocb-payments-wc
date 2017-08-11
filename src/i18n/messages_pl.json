@@ -130,7 +130,6 @@
     "ocb.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – przelew SORBNET",
     "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Rachunek odbiorcy jest prowadzony przez Orient Commercial Joint Stock Bank – nie może być zrealizowany jako SORBNET, zostanie zrealizowany w rozliczeniu wewnętrznym",
     "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO": "Rachunek odbiorcy jest prowadzony przez Orient Commercial Joint Stock Bank – zostanie zrealizowany w rozliczeniu wewnętrznym",
-    "ocb.payments.new.realization_investment.IT_MUST_BE_INTERNAL_TRANSFER":"Przelew z rachunku inwestycyjnego na inny prowadzony w Orient Commercial Joint Stock Bank jest możliwy tylko jako przelew własny",
     "ocb.payments.new.realization_type_sorbnet.sorbnet_hours": "Realizacja w dniu dzisiejszym",
 
     "ocb.payments.new.foreign.fill.recipient_data": "Nazwa i adres odbiorcy",
