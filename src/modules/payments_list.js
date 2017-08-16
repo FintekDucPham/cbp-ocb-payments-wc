@@ -9,6 +9,6 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsListController', function ($scope, $rootScope, paymentsService, $filter, transactionService, transactionFilterCriteria, gate, $timeout, customerProductService, blockadesService, $state, $stateParams, searchWrapperService, domService, viewStateService) {
+    .controller('PaymentsListController', function ($state) {
         $state.go('payments.recipients.list');
     });
