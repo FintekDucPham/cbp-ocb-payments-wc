@@ -216,7 +216,6 @@
 
     "ocb.new.recipient.custom_name": "Nowy odbiorca",
     "ocb.payments.recipients.label": "Odbiorcy zdefiniowani",
-    "ocb.payments.recipients.type.label": "Typ odbiorcy",
     "ocb.payments.recipients.search.label": "Szukaj odbiorcy",
     "ocb.payments.recipients.new.button": "Nowy odbiorca",
     "ocb.payments.recipients.new.label": "Nowy odbiorca",
@@ -226,17 +225,9 @@
     "ocb.payments.recipients.list.header.customName.label": "Twoja nazwa odbiorcy",
     "ocb.payments.recipients.list.header.recipient.label": "Odbiorca",
     "ocb.payments.recipients.list.header.nrb.label": "Nr rachunku",
-    "ocb.payments.recipients.list.header.type.label": "Typ",
     "ocb.payments.recipients.list.details.edit": "Edytuj",
     "ocb.payments.recipients.list.details.remove": "Usuń",
     "ocb.payments.recipients.list.details.transfer": "Przelew",
-    "ocb.payments.recipients.select.type.placeholder": "Wybierz typ...",
-    "ocb.payments.recipients.select.type.ALL": "Wszyscy",
-    "ocb.payments.recipients.select.type.DOMESTIC": "Krajowy",
-
-    "ocb.payments.recipients.new.type.select": "Typ odbiorcy",
-    "ocb.payments.recipients.new.type.select.placeholder": "Wybierz typ odbiorcy",
-    "ocb.payments.recipients.new.type.DOMESTIC": "Krajowy",
 
     "ocb.payments.recipients.new.currency.fill.bankName": "Nazwa banku",
 
@@ -268,7 +259,6 @@
     "ocb.payments.recipients.new.domestic.fill.description.PATTERN":"Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , / _",
     "ocb.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Tytuł przelewu nie może przekraczać 140 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , / _",
 
-    "ocb.payments.recipients.manage.status.taxpayer_type": "Typ odbiorcy",
     "ocb.payments.recipients.manage.status.recipient_shortname": "Nazwa skrócona odbiorcy",
 
     "ocb.payments.recipients.manage.remove.title": "Usuń odbiorcę",

@@ -207,7 +207,6 @@
     "ocb.payments.new.status.":"Transfer/transaction rejected",
 
     "ocb.payments.recipients.label": "Defined recipients",
-    "ocb.payments.recipients.type.label": "Recipient type",
     "ocb.payments.recipients.search.label": "Search recipient",
     "ocb.payments.recipients.new.button": "New recipient",
     "ocb.payments.recipients.new.label": "New recipient",
@@ -217,17 +216,9 @@
     "ocb.payments.recipients.list.header.customName.label": "Your recipient name",
     "ocb.payments.recipients.list.header.recipient.label": "Recipient",
     "ocb.payments.recipients.list.header.nrb.label": "Account no.",
-    "ocb.payments.recipients.list.header.type.label": "Type",
     "ocb.payments.recipients.list.details.edit": "Edit",
     "ocb.payments.recipients.list.details.remove": "Delete",
     "ocb.payments.recipients.list.details.transfer": "Transfer",
-    "ocb.payments.recipients.select.type.placeholder": "Select type...",
-    "ocb.payments.recipients.select.type.ALL": "All",
-    "ocb.payments.recipients.select.type.DOMESTIC": "Country",
-
-    "ocb.payments.recipients.new.type.select": "Recipient type",
-    "ocb.payments.recipients.new.type.select.placeholder": "Select recipient type",
-    "ocb.payments.recipients.new.type.DOMESTIC": "Domestic",
 
     "ocb.payments.recipients.new.currency.fill.bankName": "Bank name",
 
@@ -259,7 +250,6 @@
     "ocb.payments.recipients.new.domestic.fill.description.PATTERN":"Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
     "ocb.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
 
-    "ocb.payments.recipients.manage.status.taxpayer_type": "Recipient type",
     "ocb.payments.recipients.manage.status.recipient_shortname": "Abbreviated recipient name",
 
     "ocb.payments.recipients.manage.remove.title": "Remove recipient",

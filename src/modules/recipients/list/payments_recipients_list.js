@@ -160,7 +160,6 @@ angular.module('ocb-payments')
                                 }
                                 return lodash.extend({
                                     recipientType: template.templateType,
-                                    recipientTypeMessage: translate.property('ocb.payments.recipients.new.type.{0}'.format(template.templateType)),
                                     customerName: $filter('arrayFilter')(recipient.recipientName),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
