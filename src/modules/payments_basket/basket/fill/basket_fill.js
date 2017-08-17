@@ -114,9 +114,6 @@ angular.module('ocb-payments')
         $scope.onEdit = function (data) {
             var copiedData = angular.copy(data);
             var paymentType = angular.lowercase(copiedData.payment.transferType) == "standing_order" ? "standing" : angular.lowercase(copiedData.payment.transferType);
-            if(paymentType === 'swift' || paymentType === 'sepa'){
-                paymentType = 'smart';
-            }
             viewStateService.setInitialState('payments.new', {
                 paymentOperationType: copiedData.operationType == 'MODIFY_OPERATION' ? rbPaymentOperationTypes.EDIT : rbPaymentOperationTypes.NEW
             });

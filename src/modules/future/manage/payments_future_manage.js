@@ -75,9 +75,6 @@ angular.module('ocb-payments')
         $scope.saveRecipient = function() {
             if($scope.resolveRecipientData) {
                 var recipientType = $scope.payment.type.state.toLowerCase();
-                if(recipientType==='swift' || recipientType==='sepa'){
-                    recipientType = 'foreign';
-                }
                 $state.go("payments.recipients.manage.new.fill", {
                     recipientType: recipientType,
                     operation: 'new',

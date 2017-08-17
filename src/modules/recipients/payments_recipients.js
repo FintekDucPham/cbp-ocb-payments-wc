@@ -25,10 +25,6 @@ angular.module('ocb-payments')
         "TAX": {
             code: 'TAX',
             state: 'tax'
-        },
-        "FOREIGN": {
-            code: 'FOREIGN',
-            state: 'foreign'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {

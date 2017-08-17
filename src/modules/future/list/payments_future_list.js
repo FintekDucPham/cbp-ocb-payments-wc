@@ -58,7 +58,7 @@ angular.module('ocb-payments')
         };
 
         $scope.canEdit = function($data){
-            return ['SEPA', 'SWIFT'].indexOf($data.details.transferType.toUpperCase()) === -1 && parseFloat($data.operationStatus) < 60;
+            return parseFloat($data.operationStatus) < 60;
         };
 
         $scope.canDelete = function($data){

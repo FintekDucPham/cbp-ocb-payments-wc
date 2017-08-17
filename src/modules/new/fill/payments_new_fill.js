@@ -237,7 +237,7 @@ angular.module('ocb-payments')
         });
 
         $scope.$watch('payment.items.senderAccount', function(account) {
-            if(account && $scope.payment.type.code !== rbPaymentTypes.SWIFT.code && $scope.payment.type.code !== rbPaymentTypes.SEPA.code) {
+            if (account) {
                 $scope.payment.meta.isFuturePaymentAllowed = isFuturePaymentAllowed(account);
                 var lockDateAccountCategories = $scope.payment.meta.extraVerificationAccountList ? $scope.payment.meta.extraVerificationAccountList : [];
                 $scope.payment.meta.dateSetByCategory = lodash.contains(lockDateAccountCategories, ''+account.category);

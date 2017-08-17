@@ -12,12 +12,6 @@
         "url": "/index.html#/payments/new-internal/fill//",
         "clickSelectors": [".bd-button__primary"]
     },{
-        "url": "/index.html#/payments/new-foreign/sepa/fill//",
-        "clickSelectors": [".bd-button__primary"]
-    },{
-        "url": "/index.html#/payments/new-foreign/swift/fill//",
-        "clickSelectors": [".bd-button__primary"]
-    },{
         "url": "/index.html#/payments/recipients/list",
         "clickSelectors": [".bd-table__row-entry"]
     },{

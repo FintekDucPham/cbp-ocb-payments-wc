@@ -195,19 +195,6 @@ angular.module('ocb-payments')
                     }
                 }, recipient);
             },
-            foreign: function (recipient) {
-                return wrapWithCommonData({
-                    formData: {
-                        recipientData: $filter('arrayFilter')(recipient.recipientAddress),
-                        description: $filter('arrayFilter')(recipient.transferTitleTable),
-                        recipientIdentityType: recipient.recipientIdentityType,
-                        recipientBankName: recipient.bankData,
-                        recipientBankCountry: recipient.recipientBankCountry,
-                        recipientCountry: recipient.recipientCountry,
-                        recipientSwiftOrBic: recipient.swift_bic
-                    }
-                }, recipient);
-            },
             insurance: function (recipient) {
                 return wrapWithCommonData({
                     formData: {

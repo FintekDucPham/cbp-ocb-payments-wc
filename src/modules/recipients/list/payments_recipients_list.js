@@ -67,9 +67,6 @@ angular.module('ocb-payments')
         $scope.onRecipientEdit = function(data){
             var recipientType = data.recipientType.toLowerCase();
             data.bankName = $scope.recipient.item.recipientBankName;
-            if(recipientType==='swift'){
-                recipientType='foreign';
-            }
             $state.go("payments.recipients.manage.edit.fill", {
                 recipientType: recipientType,
                 operation: 'edit',
@@ -85,9 +82,6 @@ angular.module('ocb-payments')
                 description: data.transferTitle
             });
             var recipientType = data.recipientType.toLowerCase();
-            if(recipientType==='swift'){
-                recipientType='foreign';
-            }
             if(recipientType === 'insurance'){
                 var senderAccount = $scope.getAccountByNrb(data.debitNrb);
                 items = {
@@ -111,20 +105,10 @@ angular.module('ocb-payments')
 
 
         $scope.onRecipientTransfer = function(data) {
-            // dla przelewow do odbiorcow walutowych potrzebna osobna logika
-            if (data.recipientType.toLowerCase() == 'swift') {
-                $state.go('payments.new_foreign.fill', {
-                    paymentType: 'SMART'.toLowerCase(),
-                    recipientId: data.recipientId
-                });
-            }
-            else {
                 $state.go("payments.new.fill", {
                     paymentType: data.recipientType.toLowerCase(),
                     recipientId: data.recipientId
                 });
-            }
-
         };
 
         $scope.resolveTemplateType = function (recipientType) {
@@ -172,10 +156,6 @@ angular.module('ocb-payments')
             if($scope.types.currentType !== recipientFilterType.ALL){
                 params.filerTemplateType = $scope.types.currentType.code;
             }
-            if(params.filerTemplateType==='FOREIGN'){
-                params.filerTemplateType = 'SWIFT';
-            }
-
             if($scope.table.tableData.newSearch){
                 $scope.table.tableData.newSearch = false;
                 $scope.table.tableConfig.currentPage = 1;
@@ -216,18 +196,6 @@ angular.module('ocb-payments')
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
-                                        case "SWIFT":
-                                            return {
-                                                transferTitle: $filter('arrayFilter')(template.title),
-                                                bankName: template.paymentDetails.bankDetails[0],
-                                                bankData:$filter('arrayFilter')(template.paymentDetails.bankDetails),
-                                                recipientIdentityType: template.paymentDetails.informationProvider,
-                                                recipientBankCountry: template.paymentDetails.bankCountry,
-                                                recipientCountry: template.paymentDetails.foreignCountryCode,
-                                                recipientAddress: $filter('arrayFilter')(recipient.recipientAddress),
-                                                nrb: template.beneficiaryAccountNo,
- 												transferTitleTable: $filter('arrayFilter')(template.title),                                                swift_bic: template.paymentDetails.recipientSwift
-                                            };
                                         case "DOMESTIC":
                                             return {
                                                 transferTitle: $filter('arrayFilter')(template.title),

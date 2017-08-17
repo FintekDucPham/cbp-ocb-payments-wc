@@ -37,22 +37,6 @@ angular.module('ocb-payments')
             state: 'tax',
             parentState: 'new'
         },
-        "SWIFT": {
-            code: 'SWIFT',
-            state: 'swift',
-            parentState: 'new_foreign'
-        },
-        "SEPA": {
-            code: 'SEPA',
-            state: 'sepa',
-            parentState: 'new_foreign'
-        },
-        "SMART": {
-            code: 'SMART',
-            state: 'smart',
-            parentState: 'new_foreign',
-            hidePaymentOptions: true
-        },
         "OWN": {
             code: 'OWN',
             state: 'own',
@@ -61,16 +45,6 @@ angular.module('ocb-payments')
         "STANDING": {
             code: 'STANDING',
             state: 'standing'
-        }
-    })
-    .constant("rbForeignTransferConstants", {
-        TRANSFER_COSTS:{
-            OUR: "OUR",
-            SHA: "SHA"
-        },
-        PAYMENT_TYPES:{
-            STANDARD: "STANDARD",
-            EXPRESS: "EXPRESS"
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -210,9 +184,6 @@ angular.module('ocb-payments')
         $scope.saveRecipient = function() {
             if($scope.resolveRecipientData) {
                 var recipientType = $scope.payment.type.state.toLowerCase();
-                if(recipientType==='swift' || recipientType==='sepa' || recipientType==='smart'){
-                    recipientType = 'foreign';
-                }
                 $state.go("payments.recipients.manage.new.fill", {
                     recipientType: recipientType,
                     operation: 'new',
@@ -306,11 +277,7 @@ angular.module('ocb-payments')
             $scope.payment.type.code == rbPaymentTypes.INSURANCE.code ||
             $scope.payment.type.code == rbPaymentTypes.TAX.code){
             menuService.updateActiveItem('payments.new.fill');
-        }else if($scope.payment.type.code == rbPaymentTypes.SWIFT.code ||
-            $scope.payment.type.code == rbPaymentTypes.SEPA.code){
-            menuService.updateActiveItem('payments.new_foreign.fill');
         }
-
 
         $scope.getProperPaymentService = function(paymentType) {
             // unfortunatelly we have different services for different transfer types

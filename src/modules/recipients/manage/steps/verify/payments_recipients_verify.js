@@ -151,8 +151,6 @@ angular.module('ocb-payments')
                         return "TRANSFER_ZUS_FROM_LIST";
                     }else if(code === 'TAX'){
                         return "TRANSFER_US_FROM_LIST";
-                    }else if(code === 'FOREIGN'){
-                        return "TRANSFER_FOREIGN_FROM_LIST";
                     }
                     return "TRANSFER_FROM_LIST";
                 }

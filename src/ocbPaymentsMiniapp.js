@@ -52,13 +52,6 @@ angular.module('ocb-payments', [
                     priority: 1
                 },
                 {
-                    id: "payments.new_foreign.fill",
-                    label: 'payments.submenu.options.new_foreign.header',
-                    icon: "ocb-icons ocb_przelew",
-                    action: "payments.new_foreign.fill({ paymentType: 'smart' })",
-                    priority: 2
-                },
-                {
                     id: "payments.new_internal.fill",
                     label: 'payments.submenu.options.new_internal.header',
                     icon: "ocb-icons ocb_przelew",

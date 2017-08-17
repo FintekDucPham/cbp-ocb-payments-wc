@@ -15,7 +15,6 @@ angular.module('ocb-payments')
         $scope.payment.items = {};
         $scope.payment.options = {};
         $scope.payment.meta = {};
-        $scope.payment.smart = undefined;
         $scope.payment.rbPaymentsStepParams.visibility.finalAction = !$scope.payment.meta.hideSaveRecipientButton && ($scope.payment.type.code != rbPaymentTypes.OWN.code) && ($scope.payment.type.code != rbPaymentTypes.STANDING.code);
 
         // dodaj jako zlecenie stale tylko dla krajowego / wlasnego

@@ -1,5 +1,5 @@
 angular.module('ocb-payments')
-    .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, zusPaymentInsurances, RECIPIENT_IDENTITY_TYPES, paymentsBasketService, STANDING_FREQUENCY_TYPES) {
+    .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, paymentsService, rbPaymentTypes, paymentsBasketService, STANDING_FREQUENCY_TYPES) {
         'use strict';
         var paymentDataResolveStrategyStrategies = {};
 
@@ -77,48 +77,6 @@ angular.module('ocb-payments')
                 paymentDataResolveStrategy(rbPaymentTypes.OWN.code, function (data) {
                     data.description = data.title.join('');
                     data.realizationDate = new Date(data.realizationDate);
-                    return $q.when(true);
-                });
-
-                paymentDataResolveStrategy(rbPaymentTypes.SWIFT.code, function (data) {
-                    if (data.paymentDetails.recipientSwift == null) {
-                        data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
-                        data.recipientBankName = data.paymentDetails.bankName.join('');
-                        data.recipientBankCountry = data.paymentDetails.bankCountry;
-                    } else {
-                        data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
-                        data.recipientSwiftOrBic = data.paymentDetails.recipientSwift;
-                        data.recipientBankCountry = data.paymentDetails.bankCountry;
-                    }
-                    data.recipientCountry = data.paymentDetails.foreignCountryCode;
-                    data.realizationDate = new Date(data.realizationDate);
-                    data.remitterAccountId = data.accountId;
-                    data.recipientBankName = data.paymentDetails.bankName.join('');
-                    data.currency = {
-                        currency : data.currency
-                    };
-
-                    return $q.when(true);
-                });
-
-                paymentDataResolveStrategy(rbPaymentTypes.SEPA.code, function (data) {
-                    if (data.paymentDetails.recipientSwift == null) {
-                        data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.NAME_AND_COUNTRY;
-                        data.recipientBankName = data.paymentDetails.bankName.join('');
-                        data.recipientBankCountry = data.paymentDetails.bankCountry;
-                    } else {
-                        data.recipientIdentityType = RECIPIENT_IDENTITY_TYPES.SWIFT_OR_BIC;
-                        data.recipientSwiftOrBic = data.paymentDetails.recipientSwift;
-                        data.recipientBankCountry = data.paymentDetails.bankCountry;
-                    }
-                    data.recipientCountry = data.paymentDetails.foreignCountryCode;
-                    data.remitterAccountId = data.accountId;
-                    data.realizationDate = new Date(data.realizationDate);
-                    data.recipientBankName = data.paymentDetails.bankName.join('');
-                    data.currency = {
-                        currency : data.currency
-                    };
-
                     return $q.when(true);
                 });
 
