@@ -5,28 +5,6 @@
 
         <bd-form-panel class="bd-form-panel--responsive">
 
-            <bd-item-property ng-if="!payment.type.hidePaymentOptions"
-                    label="{{::'ocb.payments.new.payment_type'|translate}}"
-                    ng-show="payment.type.code != 'STANDING'"
-                    >
-
-                <ui-select ng-model="payment.type"
-                           theme="bootstrap"
-                           on-select="changePaymentType($item)"
-                           ng-disabled="activeStep.id !== 'fill'"
-                           reset-search-input="false"
-                           required
-                        >
-                    <ui-select-match placeholder="{{ ::'ocb.payments.new.payment_type.select'|translate }}">
-                        {{'ocb.payments.new.types.' + $select.selected.code | translate}}
-                    </ui-select-match>
-                    <ui-select-choices repeat="paymentType in payment.meta.paymentTypes">
-                        <div ng-bind-html="::'ocb.payments.new.types.' + paymentType.code | translate | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-
-            </bd-item-property>
-
             <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
                 <div ng-if="payment.initData.promise.$$state.status!==0">
                     <div ui-view></div>

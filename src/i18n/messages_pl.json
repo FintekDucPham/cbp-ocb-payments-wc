@@ -15,7 +15,7 @@
     "payments.submenu.close_text": "Zwiń",
     "payments.submenu.open_text": "Rozwiń",
     "payments.submenu.options.list.header": "Lista płatności",
-    "payments.submenu.options.new.header": "Przelew w PLN",
+    "payments.submenu.options.new.header": "Przelew krajowy",
     "payments.submenu.options.new_internal.header": "Przelew własny",
 
     "ocb.payments.widget.view.new_payment": "Nowa płatność",
@@ -62,11 +62,10 @@
     "ocb.payments.recipient.new.error.exist":"Odbiorca o takim numerze rachunku znajduje się na liście.",
     "ocb.payments.new_internal.label.header": "Przelew własny",
     "ocb.payments.new.payment_type": "Typ przelewu",
-    "ocb.payments.new.payment_type.select": "Wybierz typ przelewu",
     "ocb.payments.new.types.loading": "",
     "ocb.payments.new.types.INTERNAL": "Przelew na rachunek własny",
     "ocb.payments.new.types.OWN": "Przelew własny",
-    "ocb.payments.new.types.DOMESTIC": "Przelew krajowy w PLN",
+    "ocb.payments.new.types.DOMESTIC": "Przelew krajowy",
     "ocb.payments.new.types.STANDING": "Zlecenie stałe",
     "ocb.payments.new.types.STANDING_ORDER": "Zlecenie stałe",
     "ocb.payments.new.btn.change": "Popraw",
@@ -393,7 +392,7 @@
     "ocb.payments.future.list.details.domestic.buttons.delete": "Usuń",
     "ocb.payments.future.list.details.domestic.buttons.backToList": "Powrót",
 
-    "ocb.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Przelew krajowy w PLN",
+    "ocb.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Przelew krajowy",
     "ocb.payments.future.list.details.domestic.transferTypes.OWN": "Przelew własny",
 
     "ocb.payments.future.list.details.insurance.transferType": "Typ płatności",
