@@ -1,5 +1,5 @@
 angular.module('ocb-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams, rbRecipientOperationType) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams, rbRecipientOperationType) {
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -11,7 +11,6 @@ angular.module('ocb-payments')
         });
 
         var recipientValidators = {
-            tax: notTaxAccountGuard($scope.recipient.meta),
             insurance:  notInsuranceAccountGuard($scope.recipient.meta)
         };
         $scope.accountListPromise = accountsService.search({
@@ -42,10 +41,8 @@ angular.module('ocb-payments')
                         control.holdOn();
                         var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
                         recipientValidators.insurance.validate(recipientAccountNo, function () {
-                            recipientValidators.tax.validate(recipientAccountNo, function () {
                                 $scope.recipientForm.recipientAccountNo.$validate();
                                 control.done();
-                            });
                         });
                     }        
             }
@@ -56,7 +53,6 @@ angular.module('ocb-payments')
                 var senderAccount = $scope.recipient.items.senderAccount;
                 return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(/ /g, '');
             },
-            notUs: recipientValidators.tax.getValidator(),
             notZus: recipientValidators.insurance.getValidator()
         };
 

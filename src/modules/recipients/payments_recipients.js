@@ -21,10 +21,6 @@ angular.module('ocb-payments')
         "INSURANCE": {
             code: 'INSURANCE',
             state: 'insurance'
-        },
-        "TAX": {
-            code: 'TAX',
-            state: 'tax'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {

@@ -301,20 +301,6 @@ angular.module('ocb-payments')
                                 currency: details.currency,
                                 description: $filter('arrayFilter')(cropArray(details.title))
                             };
-                        case 'tax':
-                            return {
-                                recipientAccountNo: details.recipientAccountNo,
-                                taxpayerData: details.senderName,
-                                idType: TYPE_ID_MAPPER[details.paymentDetails.idtype],
-                                idNumber: details.paymentDetails.idnumber,
-                                formCode: details.paymentDetails.formCode,
-                                periodType: details.paymentDetails.periodType,
-                                periodNo: details.paymentDetails.periodNumber,
-                                periodYear: details.paymentDetails.periodYear,
-                                obligationId: details.paymentDetails.obligationId,
-                                amount: details.amount,
-                                currency: details.currency
-                            };
                         default:
                             throw "Payment type {0} not supported.".format(paymentType);
                     }

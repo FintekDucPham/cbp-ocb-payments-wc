@@ -1,6 +1,6 @@
 angular.module('ocb-payments')
-    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices, bdStepStateEvents, rbAccountSelectParams,
-                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, promiseSet, $q, utilityService,
+    .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams,
+                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, utilityService,
                                                               rbBeforeTransferManager) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
@@ -103,19 +103,6 @@ angular.module('ocb-payments')
             $scope.payment.rbPaymentsStepParams.visibility.finalAction = !!recipient;
 
             control.holdOn();
-            if($scope.payment.formData.recipientAccountNo) {
-                $q.all(promiseSet.getPendingPromises('usValidation')).finally(function(){
-                    if($scope.payment.beforeTransfer){//future doesnt use it
-                        rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function(){
-                            control.done();
-                        }).catch(function(){
-                            console.log('false');
-                        });
-                    }else{
-                        control.done();
-                    }
-                });
-            }else{
                 if($scope.payment.beforeTransfer) {//future doesnt use it
                     rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, control).then(function () {
                         control.done();
@@ -125,7 +112,6 @@ angular.module('ocb-payments')
                 }else{
                     control.done();
                 }
-            }
         });
 
         function isAccountInvestmentFulfilsRules(account){
@@ -147,22 +133,6 @@ angular.module('ocb-payments')
         });
 
         $scope.recipientAccountValidators = {
-            notUs: function (accountNo) {
-                if (!accountNo || !$scope.paymentForm.recipientAccountNo.$validators.bbanNrb(accountNo)) {
-                    return true;
-                }
-                accountNo = accountNo.replace(/ /g, '');
-                var usAccount = promiseSet.getResult({
-                    set: 'usValidation',
-                    key: accountNo,
-                    expected: false,
-                    promise: function() {
-                        return forbiddenAccounts.isUsAccount(accountNo);
-                    },
-                    callback: $scope.paymentForm.recipientAccountNo.$validate
-                });
-                return !usAccount;
-            },
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);
             },

@@ -3,9 +3,6 @@
         "url": "/index.html#/payments/new/domestic/fill//",
         "clickSelectors": [".bd-button__primary"]
     },{
-        "url": "/index.html#/payments/new/tax/fill//",
-        "clickSelectors": [".bd-button__primary"]
-    },{
         "url": "/index.html#/payments/new/insurance/fill//",
         "clickSelectors": [".bd-button__primary"]
     },{

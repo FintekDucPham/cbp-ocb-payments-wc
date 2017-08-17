@@ -32,11 +32,6 @@ angular.module('ocb-payments')
             state: 'insurance',
             parentState: 'new'
         },
-        "TAX": {
-            code: 'TAX',
-            state: 'tax',
-            parentState: 'new'
-        },
         "OWN": {
             code: 'OWN',
             state: 'own',
@@ -274,8 +269,7 @@ angular.module('ocb-payments')
             });
             menuService.setActiveItem(subItem);
         }else if($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code ||
-            $scope.payment.type.code == rbPaymentTypes.INSURANCE.code ||
-            $scope.payment.type.code == rbPaymentTypes.TAX.code){
+            $scope.payment.type.code == rbPaymentTypes.INSURANCE.code) {
             menuService.updateActiveItem('payments.new.fill');
         }
 

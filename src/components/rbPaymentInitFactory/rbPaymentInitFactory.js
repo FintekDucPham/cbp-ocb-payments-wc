@@ -53,20 +53,6 @@ angular.module('ocb-payments')
                     });
                 });
 
-                paymentDataResolveStrategy(rbPaymentTypes.TAX.code, function (data) {
-                    data.taxpayerData = data.senderName.join("\n");
-                    data.idType = data.paymentDetails.idtype;
-                    data.idNumber = data.paymentDetails.idnumber;
-                    data.formCode = data.paymentDetails.formCode;
-                    data.periodType = data.paymentDetails.periodType;
-                    data.periodNo = data.paymentDetails.periodNumber;
-                    data.periodYear = data.paymentDetails.periodYear;
-                    data.obligationId = data.paymentDetails.obligationId;
-                    data.realizationDate = new Date(data.realizationDate);
-                    data.remitterAccountId = data.accountId;
-                    return $q.when(true);
-                });
-
                 paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function (data) {
                     data.recipientName = data.recipientName.join('');
                     data.realizationDate = new Date(data.realizationDate);

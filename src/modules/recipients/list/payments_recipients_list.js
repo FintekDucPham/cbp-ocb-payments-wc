@@ -133,13 +133,6 @@ angular.module('ocb-payments')
             });
         };
 
-        $scope.prepareNameAndAddress = function(name, address){
-          var parsedName = $filter('arrayFilter')(name);
-            if(address){
-                parsedName += ", "+address;
-            }
-            return parsedName;
-        };
         function getInsurancePremiums(recipient){
            return lodash.reduce(recipient.paymentTemplates, function(result, value){
                 var insuranceCode = lodash.find(insuranceAccountList, {accountNo : value.beneficiaryAccountNo}).insuranceCode;
@@ -222,16 +215,6 @@ angular.module('ocb-payments')
                                                     });
                                                     return sum;
                                                 })()
-                                            };
-                                        case "TAX":
-                                            return {
-                                                nameAndAddress: $scope.prepareNameAndAddress(paymentDetails.taxAccountName, recipient.recipientAddress),
-                                                secondaryIdType: paymentDetails.idtype,
-                                                secondaryId: paymentDetails.idnumber,
-                                                nrb: template.beneficiaryAccountNo,
-                                                formSymbol: paymentDetails.formCode,
-                                                periodType: paymentDetails.periodType,
-                                                obligationId: paymentDetails.obligationId
                                             };
                                     }
                                 })());

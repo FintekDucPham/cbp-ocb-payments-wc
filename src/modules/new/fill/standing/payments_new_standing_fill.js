@@ -13,11 +13,11 @@ angular.module('ocb-payments')
             symbol: "M"
         }
     })
-    .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, taxOffices,
+    .controller('NewStandingPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout,
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
-                                                              STANDING_FREQUENCY_TYPES, rbDatepickerOptions, $q, viewStateService,
+                                                              STANDING_FREQUENCY_TYPES, rbDatepickerOptions, viewStateService,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
-                                                              standingTransferService, forbiddenAccounts, promiseSet, utilityService, translate) {
+                                                              standingTransferService, forbiddenAccounts, utilityService, translate) {
         var initialState = viewStateService.getInitialState('payments.new');
         $scope.modification = initialState && initialState.paymentOperationType === rbPaymentOperationTypes.EDIT;
         $scope.standingOrderId = null;
@@ -198,11 +198,6 @@ angular.module('ocb-payments')
             if ($scope.payment.formData.amount) {
                 $scope.payment.formData.amount = ("" + $scope.payment.formData.amount).replace(",", ".");
             }
-
-            if ($scope.payment.formData.recipientAccountNo && !$scope.modification) {
-                control.holdOn();
-                $q.all(promiseSet.getPendingPromises('usValidation')).finally(control.done);
-            }
         });
 
         function isAccountInvestmentFulfilsRules(account) {
@@ -224,22 +219,6 @@ angular.module('ocb-payments')
         });
 
         $scope.recipientAccountValidators = {
-            notUs: function (accountNo) {
-                if (!accountNo || !$scope.paymentForm.recipientAccountNo.$validators.bbanNrb(accountNo)) {
-                    return true;
-                }
-                accountNo = accountNo.replace(/ /g, '');
-                var usAccount = promiseSet.getResult({
-                    set: 'usValidation',
-                    key: accountNo,
-                    expected: false,
-                    promise: function () {
-                        return forbiddenAccounts.isUsAccount(accountNo);
-                    },
-                    callback: $scope.paymentForm.recipientAccountNo.$validate
-                });
-                return !usAccount;
-            },
             notZus: function (accountNo) {
                 return !forbiddenAccounts.isZusAccount(accountNo);
             }

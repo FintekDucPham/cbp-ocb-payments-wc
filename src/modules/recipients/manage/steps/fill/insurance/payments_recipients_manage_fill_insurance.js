@@ -1,5 +1,5 @@
 angular.module('ocb-payments')
-    .controller('RecipientsManageFillZusController', function ($scope, notTaxAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, zusSuplementaryIds, zusPaymentTypes, translate, zusPaymentInsurances, insuranceAccounts, $timeout, validationRegexp) {
+    .controller('RecipientsManageFillZusController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, zusSuplementaryIds, zusPaymentTypes, translate, zusPaymentInsurances, insuranceAccounts, $timeout, validationRegexp) {
 
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');

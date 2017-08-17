@@ -209,19 +209,6 @@ angular.module('ocb-payments')
                         amountSummary: calculateInsurancesSummary(recipient.insurancePremiums)
                     }
                 }, recipient);
-            },
-            tax: function (recipient) {
-                return wrapWithCommonData({
-                    formData: {
-                        paymentType: recipient.paymentType,
-                        secondaryIdType: recipient.secondaryIdType,
-                        idNumber: recipient.secondaryId,
-                        periodType: recipient.periodType,
-                        formCode: recipient.formSymbol,
-                        selectedTaxOfficeId: recipient.nrb,
-                        obligationId: recipient.obligationId
-                    }
-                }, recipient);
             }
         };
 
@@ -256,47 +243,6 @@ angular.module('ocb-payments')
                 } else {
                     return false;
                 }
-            }
-
-            return {
-                getValidator: function () {
-                    return validator;
-                },
-                validate: validate
-            };
-
-        };
-
-    }).factory('notTaxAccountGuard', function (lodash, taxOffices) {
-
-        return function (context) {
-
-            function validator(accountNo) {
-                if (accountNo) {
-                    return !lodash.some(context.forbiddenAccounts, {
-                        code: 'notUs',
-                        value: accountNo.replace(/ */g, '')
-                    });
-                } else {
-                    return false;
-                }
-            }
-
-            function validate(account, doneFn) {
-                taxOffices.search({
-                    accountNo: account.replace(/ */g, '')
-                }).then(function (result) {
-                    if (result.length > 0) {
-                        lodash.forEach(result, function (value) {
-                            context.forbiddenAccounts = lodash.union(context.forbiddenAccounts, [
-                                {
-                                    code: 'notUs',
-                                    value: value.accountNo
-                                }
-                            ]);
-                        });
-                    }
-                }).finally(doneFn);
             }
 
             return {

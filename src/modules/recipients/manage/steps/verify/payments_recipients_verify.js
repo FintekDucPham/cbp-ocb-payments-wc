@@ -149,8 +149,6 @@ angular.module('ocb-payments')
                 function getProperTransferList(code) {
                     if(code === 'INSURANCE'){
                         return "TRANSFER_ZUS_FROM_LIST";
-                    }else if(code === 'TAX'){
-                        return "TRANSFER_US_FROM_LIST";
                     }
                     return "TRANSFER_FROM_LIST";
                 }

@@ -206,11 +206,6 @@ angular.module('ocb-payments')
                                     show: true,
                                     messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
                                 };
-                            }else if(currentError.field == 'ocb.transfer.limit.nonres'){
-                                $scope.limitNonResExeeded = {
-                                    show: true,
-                                    messages: translate.property("ocb.payments.new.us.fill.amount.AMOUNT_EXCEEDED_FUNDS_NON_RESID")
-                                };
                             }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed'){
                                 $scope.limitBasketExeeded = {
                                     show: true,
