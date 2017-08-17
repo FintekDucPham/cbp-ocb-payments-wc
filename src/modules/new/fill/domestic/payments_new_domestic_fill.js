@@ -1,6 +1,6 @@
 angular.module('ocb-payments')
     .controller('NewDomesticPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams,
-                                                              validationRegexp, systemParameterService, translate, forbiddenAccounts, utilityService,
+                                                              validationRegexp, systemParameterService, translate, utilityService,
                                                               rbBeforeTransferManager) {
 
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
@@ -133,9 +133,6 @@ angular.module('ocb-payments')
         });
 
         $scope.recipientAccountValidators = {
-            notZus: function (accountNo) {
-                return !forbiddenAccounts.isZusAccount(accountNo);
-            },
             sameSourceAccount: function(accountNo){
                 if(!$scope.payment.items.senderAccount || !accountNo){
                     return true;

@@ -27,11 +27,6 @@ angular.module('ocb-payments')
             state: 'internal',
             parentState: 'new_internal'
         },
-        "INSURANCE": {
-            code: 'INSURANCE',
-            state: 'insurance',
-            parentState: 'new'
-        },
         "OWN": {
             code: 'OWN',
             state: 'own',
@@ -268,8 +263,7 @@ angular.module('ocb-payments')
                 id: 'payments.standing.list'
             });
             menuService.setActiveItem(subItem);
-        }else if($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code ||
-            $scope.payment.type.code == rbPaymentTypes.INSURANCE.code) {
+        } else if ($scope.payment.type.code == rbPaymentTypes.DOMESTIC.code) {
             menuService.updateActiveItem('payments.new.fill');
         }
 

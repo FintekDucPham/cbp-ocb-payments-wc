@@ -17,7 +17,7 @@ angular.module('ocb-payments')
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, viewStateService,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
-                                                              standingTransferService, forbiddenAccounts, utilityService, translate) {
+                                                              standingTransferService, utilityService, translate) {
         var initialState = viewStateService.getInitialState('payments.new');
         $scope.modification = initialState && initialState.paymentOperationType === rbPaymentOperationTypes.EDIT;
         $scope.standingOrderId = null;
@@ -219,9 +219,6 @@ angular.module('ocb-payments')
         });
 
         $scope.recipientAccountValidators = {
-            notZus: function (accountNo) {
-                return !forbiddenAccounts.isZusAccount(accountNo);
-            }
         };
 
         var recipientFilter = $scope.recipientFilter = {

@@ -42,7 +42,6 @@ angular.module('ocb-payments')
         $scope.CUSTOM_NAME_REGEX = new RegExp(CUSTOM_NAME_REGEX);
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.RECIPIENT_NAME_REGEX = validationRegexp('RECIPIENT_NAME');//CR_318
-        $scope.RECIPIENT_NAME_ZUS_REGEX = validationRegexp('RECIPIENT_NAME_ZUS');//CR_318 doesn't contain insurance
         $scope.PAYMENT_TITLE_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
         bdMainStepInitializer($scope, 'recipient', {
             formName: 'recipientForm',
@@ -217,41 +216,4 @@ angular.module('ocb-payments')
                 makeEditable: dataConverters[type.toLowerCase()]
             };
         };
-
-    }).factory('notInsuranceAccountGuard', function (lodash, insuranceAccounts) {
-
-        return function (context) {
-
-            function validate(account, doneFn) {
-                insuranceAccounts.search().then(function (insuranceAccounts) {
-                    context.forbiddenAccounts = lodash.union(context.forbiddenAccounts,
-                        lodash.map(insuranceAccounts.content, function (val) {
-                            return {
-                                code: 'notZus',
-                                value: val.accountNo
-                            };
-                        }));
-                }).finally(doneFn);
-            }
-
-            function validator(accountNo) {
-                if (accountNo) {
-                    return !lodash.some(context.forbiddenAccounts, {
-                        code: 'notZus',
-                        value: accountNo.replace(/ */g, '')
-                    });
-                } else {
-                    return false;
-                }
-            }
-
-            return {
-                getValidator: function () {
-                    return validator;
-                },
-                validate: validate
-            };
-
-        };
-
     });

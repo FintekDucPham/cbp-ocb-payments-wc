@@ -15,10 +15,7 @@
         {{ $data.payment.recipientName.join(' ') }}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'ocb.payments.basket.list.header.operation_title'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        <span ng-if="$data.payment.title.join('')=='ZUSPayment'">
-             {{'ocb.payments.basket.list.description.zus.ZUSPayment' | translate}}
-        </span>
-        <span ng-if="$data.payment.title.join('')!='ZUSPayment'" style="word-break: break-word;">
+        <span style="word-break: break-word;">
             {{ $data.payment.title.join(' ') }}
         </span>
     </bd-item-property>
@@ -30,16 +27,10 @@
         <bd-multiline-text bd-text="$data.payment.senderAddress"> </bd-multiline-text>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'ocb.payments.basket.list.targetAccount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        <span ng-if="$data.payment.recipientAccountNo=='ZUS_ACCOUNTS'">
-             {{'ocb.payments.basket.list.account.zus.ZUS_ACCOUNTS' | translate}}
-        </span>
-        <span ng-if="$data.payment.recipientAccountNo!='ZUS_ACCOUNTS'">
+        <span>
             {{$data.payment.recipientAccountNo| nrbIbanFilter }}
         </span>
-        <div ng-if="$data.payment.transferType == 'INSURANCE'">
-            <span eb-msg="ocb.payments.new.zus.verify.tmp.zus_name"></span>
-        </div>
-        <div ng-if="$data.payment.transferType != 'INSURANCE'">
+        <div>
             <div>{{$data.payment.recipientName.join(' ') }}</div>
             <div>{{$data.payment.recipientAddress.join(' ') }}</div>
         </div>

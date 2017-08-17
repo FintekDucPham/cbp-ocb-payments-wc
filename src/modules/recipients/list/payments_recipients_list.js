@@ -6,21 +6,11 @@ angular.module('ocb-payments')
             controller: "PaymentsRecipientsListController",
             data: {
                 analyticsTitle: "ocb.payments.recipients.label"
-            },
-            resolve: {
-                insuranceAccountList : ["insuranceAccounts", function(insuranceAccounts) {
-                    return insuranceAccounts.search().then(function (insuranceAccounts) {
-                        return insuranceAccounts.content;
-                    });
-                }]
             }
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, insuranceAccountList, $filter) {
-
-
-
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, $filter) {
         $scope.recipient = {
             item: {}
         };
@@ -133,14 +123,6 @@ angular.module('ocb-payments')
             });
         };
 
-        function getInsurancePremiums(recipient){
-           return lodash.reduce(recipient.paymentTemplates, function(result, value){
-                var insuranceCode = lodash.find(insuranceAccountList, {accountNo : value.beneficiaryAccountNo}).insuranceCode;
-                result[insuranceCode] = {amount : value.amount, code:insuranceCode, currency : value.currency, nrb : value.beneficiaryAccountNo};
-                return result;
-            }, {});
-        }
-
         function prepareQueryParams($params) {
             var params = {};
             params.pageSize = $params.pageSize;
@@ -195,27 +177,6 @@ angular.module('ocb-payments')
                                                 recipientAddress: $filter('arrayFilter')(recipient.recipientAddress),
                                                 transferTitleTable: $filter('arrayFilter')(template.title),
  												nrb: template.beneficiaryAccountNo                                            };
-                                        case "INSURANCE":
-
-                                            return {
-                                                nip: paymentDetails.nip,
-                                                secondaryIdType: paymentDetails.secondIDType,
-                                                secondaryId: paymentDetails.secondIDNo,
-                                                paymentType: paymentDetails.paymentType,
-                                                nrb: (function(){
-                                                    var insurancePremiums = getInsurancePremiums(recipient);
-                                                    var recipientListFiltered  = $filter('insurancesDisplayOrder')(insurancePremiums);
-                                                    return recipientListFiltered[0].nrb;
-                                                })(),
-                                                insurancePremiums: getInsurancePremiums(recipient),
-                                                insurancePremiusSumary: (function(){
-                                                    var sum = 0;
-                                                    angular.forEach(recipient.paymentTemplates, function(v){
-                                                        sum+= v.amount;
-                                                    });
-                                                    return sum;
-                                                })()
-                                            };
                                     }
                                 })());
                             });
@@ -232,21 +193,4 @@ angular.module('ocb-payments')
         };
 
     }
-).filter('insurancesDisplayOrder', function() {
-    return function(items) {
-        var codeOrders={
-            SOCIAL: 1,
-            HEALTH: 2,
-            FPIFGSP:3,
-            PENSION:4
-        };
-        var filtered = [];
-        angular.forEach(items, function(item) {
-            filtered.push(item);
-        });
-        filtered.sort(function (a, b) {
-            return (codeOrders[a.code] > codeOrders[b.code] ? 1 : -1);
-        });
-        return filtered;
-    };
-});
+);

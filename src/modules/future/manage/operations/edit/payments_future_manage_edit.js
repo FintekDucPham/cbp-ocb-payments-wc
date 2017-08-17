@@ -43,16 +43,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, insuranceAccounts, formService, recipientManager, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState, zusPaymentInsurances) {
-
-        var idTypesMap = {
-            "P": "PESEL",
-            "N": "NIP",
-            "R": "REGON",
-            "1": "ID_CARD",
-            "2": "PASSPORT",
-            "3": "OTHER"
-        };
+    .controller('PaymentsFutureManageEditController', function ($scope, $q, lodash, formService, recipientManager, authorizationService, $stateParams, paymentsService, rbPaymentOperationTypes, rbPaymentTypes, initialState) {
 
         //dispatcher
         var paymentDataResolveStrategyStrategies = {};
@@ -71,37 +62,6 @@ angular.module('ocb-payments')
         }
 
         //set strategies
-        paymentDataResolveStrategy(rbPaymentTypes.INSURANCE.code, function(data){
-            angular.forEach(data.paymentDetails, function(val, key){
-                data[key] = val;
-            });
-            data.paymentType = 'TYPE_'+data.paymentType;
-            data.secondaryIdNo = data.secondIDNo;
-            data.secondaryIdType = idTypesMap[data.secondIDType];
-            data.declarationDate = data.declaration;
-            data.realizationDate = new Date(data.realizationDate);
-            data.recipientName = data.recipientName.join("");
-            data.remitterAccountId = data.accountId;
-            data.additionalInfo = data.decisionNo;
-            return insuranceAccounts.search().then(function(accounts){
-                var matchedInsurance = lodash.find(accounts.content, {'accountNo': data.recipientAccountNo});
-                if(matchedInsurance){
-                    data.insurancePremiums = {};
-                    data.defaultInsurancePremius = {};
-                    data.insurancePremiums[matchedInsurance.insuranceCode] = {
-                        currency: data.currency,
-                        amount: data.amount
-                    };
-                    data.defaultInsurancePremius[matchedInsurance.insuranceCode] = {
-                        currency: data.currency,
-                        amount: null
-                    };
-                }
-                return true;
-            });
-
-        });
-
         paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function(data){
             data.recipientName = data.recipientName.join('');
             data.description = data.title.join('');

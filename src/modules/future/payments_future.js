@@ -5,27 +5,13 @@ angular.module('ocb-payments')
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/future/payments_future.html",
             controller: "PaymentsFutureController",
             abstract: true,
-            resolve: {
-                insuranceAccountList : ['insuranceAccounts', function(insuranceAccounts){
-                    return insuranceAccounts.search().then(function(insuranceAccounts) {
-                        return insuranceAccounts.content;
-                    });
-                }]
-            },
             data: {
                 analyticsTitle: null
             }
         });
     })
-    .controller("PaymentsFutureController", function($scope, translate, insuranceAccountList) {
-        $scope.insuranceAccounts = insuranceAccountList;
+    .controller("PaymentsFutureController", function($scope) {
         $scope.setClearFormFunction = function(fn){
             $scope.clearFormFunction = fn;
-        };
-        $scope.getInsuranceAccountName = function(accountNo){
-            var foundElement = _.find($scope.insuranceAccounts, {
-                accountNo: accountNo
-            });
-            return translate.property("ocb.payments.insurances.type."+foundElement.insuranceCode);
         };
     });

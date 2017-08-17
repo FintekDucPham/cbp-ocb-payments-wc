@@ -8,14 +8,13 @@ angular.module('ocb-payments')
                 referenceId: null
             },
             resolve: {
-                parameters: ["$q", "customerService", "systemParameterService", 'insuranceAccounts', function ($q, customerService, systemParameterService, insuranceAccounts) {
+                parameters: ["$q", "customerService", "systemParameterService", function ($q, customerService, systemParameterService) {
                     return $q.all({
                         detalOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.detal"),
                         microOffsetMax: systemParameterService.getParameterByName("rejectedOperationList.max.offset.micro"),
                         detalOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.detal"),
                         microOffsetDefault: systemParameterService.getParameterByName("rejectedOperationList.default.offset.micro"),
-                        customerDetails: customerService.getCustomerDetails(),
-                        insuranceAccounts: insuranceAccounts.search()
+                        customerDetails: customerService.getCustomerDetails()
                     }).then(function (data) {
                         return {
                             micro: {
@@ -28,8 +27,7 @@ angular.module('ocb-payments')
                             },
                             customerDetails: {
                                 context: data.customerDetails.customerDetails.context
-                            },
-                            insuranceAccounts: data.insuranceAccounts.content
+                            }
                         };
                     });
                 }]
@@ -41,14 +39,6 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsRejectedListController', function ($scope, $q, $timeout, bdTableConfig, translate, parameters, paymentsService, lodash, $state, $stateParams, $filter) {
 
-        var TYPE_ID_MAPPER = {
-            P: "PESEL",
-            N: "NIP",
-            R: "REGON",
-            1: "ID_CARD",
-            2: "PASSPORT",
-            3: "OTHER"
-        };
         var PERIOD_TYPES = {
             LAST: 'LAST',
             RANGE: 'RANGE'
@@ -263,28 +253,6 @@ angular.module('ocb-payments')
                     realizationDate: dateTodayOrInFuture(details.realizationDate)
                 }, (function() {
                     switch(paymentType) {
-                        case 'insurance':
-                            var selectedInsurance = lodash.find(parameters.insuranceAccounts, {
-                                accountNo: details.recipientAccountNo
-                            });
-                            var insurancePremium = [];
-                            insurancePremium[selectedInsurance.insuranceCode] = {
-                                amount: details.amount,
-                                nrb: details.recipientAccountNo,
-                                currency: "PLN"
-                            };
-                            return {
-                                nip: details.paymentDetails.nip,
-                                secondaryIdType: TYPE_ID_MAPPER[details.paymentDetails.secondIDType],
-                                secondaryIdNo: details.paymentDetails.secondIDNo,
-                                paymentType: details.paymentType,
-                                declarationDate: details.paymentDetails.declaration,
-                                declarationNo: details.paymentDetails.declarationNo,
-                                additionalInfo: details.paymentDetails.decisionNo,
-                                insurancePremiums: insurancePremium,
-                                amount: details.amount,
-                                insuranceAccount: details.recipientAccountNo
-                            };
                         case 'domestic':
                             return {
                                 recipientAccountNo: details.recipientAccountNo,

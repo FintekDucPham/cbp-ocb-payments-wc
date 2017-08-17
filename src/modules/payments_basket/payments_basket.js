@@ -6,11 +6,6 @@ angular.module('ocb-payments')
             controller: "PaymentsBasketController",
             abstract: true,
             resolve: {
-                insuranceAccountList : ['insuranceAccounts', function(insuranceAccounts){
-                    return insuranceAccounts.search().then(function(insuranceAccounts) {
-                        return insuranceAccounts.content;
-                    });
-                }],
                 userContext : ['customerService', function(customerService){
                     return customerService.getCustomerDetails().then(function(context){
                         return context.customerDetails.context;
@@ -19,20 +14,11 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller("PaymentsBasketController", function($scope, translate, insuranceAccountList, bdMainStepInitializer, userContext) {
-
+    .controller("PaymentsBasketController", function($scope, userContext) {
 
         $scope.userContext = userContext;
 
-
-        $scope.insuranceAccounts = insuranceAccountList;
         $scope.setClearFormFunction = function(fn){
             $scope.clearFormFunction = fn;
-        };
-        $scope.getInsuranceAccountName = function(accountNo){
-            var foundElement = _.find($scope.insuranceAccounts, {
-                accountNo: accountNo
-            });
-            return translate.property("ocb.payments.insurances.type."+foundElement.insuranceCode);
         };
     });

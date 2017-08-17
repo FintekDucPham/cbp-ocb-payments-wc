@@ -1,5 +1,5 @@
 angular.module('ocb-payments')
-    .factory('rbPaymentInitFactory', function ($state, $q, lodash, insuranceAccounts, paymentsService, rbPaymentTypes, paymentsBasketService, STANDING_FREQUENCY_TYPES) {
+    .factory('rbPaymentInitFactory', function ($state, $q, lodash, paymentsService, rbPaymentTypes, paymentsBasketService, STANDING_FREQUENCY_TYPES) {
         'use strict';
         var paymentDataResolveStrategyStrategies = {};
 
@@ -23,36 +23,6 @@ angular.module('ocb-payments')
 
         function init($scope, params) {
             if ($state.params.referenceId) {
-
-                //set strategies
-                paymentDataResolveStrategy(rbPaymentTypes.INSURANCE.code, function (data) {
-                    angular.forEach(data.paymentDetails, function (val, key) {
-                        data[key] = val;
-                    });
-                    data.secondaryIdNo = data.secondIDNo;
-                    data.secondaryIdType = data.secondIDType;
-                    data.declarationDate = data.declaration;
-                    data.additionalInfo = data.additionalInfo;
-                    data.realizationDate = new Date(data.realizationDate);
-                    data.recipientName = data.recipientName.join("");
-                    data.remitterAccountId = data.accountId;
-                    return $q.all({
-                        insuranceAccounts : insuranceAccounts.search(),
-                        zusAccounts : paymentsBasketService.getEditZusFromBasketAdditionalInfo($state.params.referenceId)
-                    }).then(function(dataZusInfo){
-                        data.insurancePremiums = {};
-                        lodash.forEach(dataZusInfo.zusAccounts.zusAccountsInfoList, function(accountInfo){
-                            var matchedInsurance = lodash.find(dataZusInfo.insuranceAccounts.content, {'accountNo': accountInfo.accountNr});
-                            if (matchedInsurance) {
-                                data.insurancePremiums[matchedInsurance.insuranceCode] = {
-                                    currency: accountInfo.currency,
-                                    amount: accountInfo.amount
-                                };
-                            }
-                        });
-                    });
-                });
-
                 paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function (data) {
                     data.recipientName = data.recipientName.join('');
                     data.realizationDate = new Date(data.realizationDate);

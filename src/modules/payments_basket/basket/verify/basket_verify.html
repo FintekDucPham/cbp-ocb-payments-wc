@@ -74,18 +74,12 @@
                                 </div>
                                 <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-7">
                                     <div>
-                                         <span ng-if="item.payment.recipientAccountNo=='ZUS_ACCOUNTS'">
-                                             {{'ocb.payments.basket.list.account.zus.ZUS_ACCOUNTS' | translate}}
-                                        </span>
-                                        <span ng-if="item.payment.recipientAccountNo!='ZUS_ACCOUNTS'">
+                                         <span>
                                             <span class="hidden-xs hidden-sm">{{item.payment.recipientAccountNo | nrbIbanFilter}}</span>
                                             <span class="hidden-md hidden-lg">{{item.payment.recipientAccountNo | nrbIbanShortFilter}}</span>
                                         </span>
                                     </div>
-                                    <div ng-if="item.payment.transferType == 'INSURANCE'">
-                                        <span eb-msg="ocb.payments.new.zus.verify.tmp.zus_name"></span>
-                                    </div>
-                                    <div ng-if="item.payment.transferType != 'INSURANCE'">
+                                    <div>
                                         <div class="bd-table__breakword">{{item.payment.recipientName.join(' ') }}</div>
                                         <div class="bd-table__breakword">{{item.payment.recipientAddress.join(' ') }}</div>
                                     </div>

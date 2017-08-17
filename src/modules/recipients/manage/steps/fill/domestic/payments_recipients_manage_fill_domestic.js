@@ -1,5 +1,5 @@
 angular.module('ocb-payments')
-    .controller('RecipientsManageFillDomesticController', function ($scope, notInsuranceAccountGuard, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams, rbRecipientOperationType) {
+    .controller('RecipientsManageFillDomesticController', function ($scope, lodash, bdStepStateEvents, formService, rbAccountSelectParams, translate, accountsService, $stateParams, rbRecipientOperationType) {
 
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -10,9 +10,6 @@ angular.module('ocb-payments')
             forbiddenAccounts: []
         });
 
-        var recipientValidators = {
-            insurance:  notInsuranceAccountGuard($scope.recipient.meta)
-        };
         $scope.accountListPromise = accountsService.search({
             productList: 'BENEFICIARY_CREATE_FROM_LIST'
         }).then(function(accountList){
@@ -37,14 +34,7 @@ angular.module('ocb-payments')
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
             if ($scope.recipient.operation.code !== 'EDIT') {
-                    if ($scope.recipientForm.recipientAccountNo.$valid) {
-                        control.holdOn();
-                        var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
-                        recipientValidators.insurance.validate(recipientAccountNo, function () {
                                 $scope.recipientForm.recipientAccountNo.$validate();
-                                control.done();
-                        });
-                    }        
             }
         });
 
@@ -52,8 +42,7 @@ angular.module('ocb-payments')
             sameAccount: function (accountNo) {
                 var senderAccount = $scope.recipient.items.senderAccount;
                 return !accountNo || !senderAccount || senderAccount.accountNo !== accountNo.replace(/ /g, '');
-            },
-            notZus: recipientValidators.insurance.getValidator()
+            }
         };
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
