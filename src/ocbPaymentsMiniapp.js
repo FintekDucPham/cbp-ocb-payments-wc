@@ -66,13 +66,6 @@ angular.module('ocb-payments', [
 					priority: 3
                 },
                 {
-                    id: "payments.taxpayers.list",
-                    label: 'ocb.payments.taxpayers.label',
-                    icon: "ocb-icons ocb_odbiorcy",
-                    action: "payments.taxpayers.list",
-                    priority: 4
-                },
-                {
                     id: "payments.future.list",
                     label: 'ocb.payments.future.label',
                     icon: "ocb-icons payments_waiting",

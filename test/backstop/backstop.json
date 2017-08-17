@@ -39,12 +39,6 @@
         "clickSelectors": [".bd-table__row-entry", ".bd-details-section .bd-button__primary"],
         "label": "form.transfer"
     },{
-    	"url": "/index.html#/payments/taxpayers/list",
-    	"clickSelectors": [".taxpayers-view .ui-select-toggle"]
-    },{
-    	"url": "/index.html#/payments/taxpayers/manage/new/fill",
-    	"clickSelectors": [".bd-button__primary"]
-    },{
         "url": "/index.html#/payments/future/list",
         "clickSelectors": [".bd-table__row-entry"]
     },{
