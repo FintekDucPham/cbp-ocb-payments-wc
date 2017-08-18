@@ -600,15 +600,9 @@
     "ocb.payments.new.verify.transfer_cost": "Koszt przelewu",
     "ocb.payments.new.verify.transfer_cost.info" : "Informacja o koszcie przelewu",
 
-  "ocb.payments.cut.off.time.MSG-0662_POSSIBILITY_OF_REALIZATION_EARLY": "Realizacja w dniu dzisiejszym",
-  "ocb.payments.cut.off.time.MSG-0659_POSSIBILITY_OF_REALIZATION_NOT_TODAY": "Realizacja w najbliższym dniu roboczym",
-    "ocb.payments.cut.off.time.MSG-0657_COT_SORBNET": "Realizacja w najbliższym dniu roboczym",
     "ocb.payments.recipient.new.error.MSG-0660_SAME_BNF":"Dla podanej pary rachunków istnieje już zdefiniowany Odbiorca. Jeśli chcesz kontynuować, wybierz \"Dalej\"",
     "ocb.payments.currency.placeholder":"Waluta",
 
-    "ocb.payments.cut.off.time.MSG-0656_SORBNET_HOURS": "Realizacja w dniu dzisiejszym",
-    "ocb.payments.cut.off.time.MSG-1304_COT_TARGET": "Realizacja w najbliższym dniu roboczym",
-    "ocb.payments.cut.off.time.MSG-1303_TARGET_HOURS": "Realizacja w dniu dzisiejszym",
   "ocb.payments.basket.submit.button":"Złóż podpis",
   "ocb.payments.basket.manage.sign.header": "Podpisz przelew",
   "ocb.payments.basket.label": "Koszyk płatności",

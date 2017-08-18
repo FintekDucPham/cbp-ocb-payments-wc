@@ -579,13 +579,7 @@
 "ocb.payments.new.verify.transfer_cost": "Transfer costs",
 "ocb.payments.new.verify.transfer_cost.info" : "Transfer cost information",
 
-"ocb.payments.cut.off.time.MSG-0662_POSSIBILITY_OF_REALIZATION_EARLY": "Realization today",
-"ocb.payments.cut.off.time.MSG-0659_POSSIBILITY_OF_REALIZATION_NOT_TODAY": "Realization on next working day",
 "ocb.payments.recipient.new.error.MSG-0660_SAME_BNF":"A defined recipient already exists for the provided pair of accounts. To continue, select \"Next\"",
-
-    "ocb.payments.cut.off.time.MSG-0656_SORBNET_HOURS": "Realization today",
-    "ocb.payments.cut.off.time.MSG-1304_COT_TARGET": "Realization on next working day",
-    "ocb.payments.cut.off.time.MSG-1303_TARGET_HOURS": "Realization today",
 
 "ocb.payments.new.types.STANDING_ORDER": "Standing order",
 "ocb.payments.new.realization_type_sorbnet.sorbnet_hours": "Realization today",
@@ -596,7 +590,6 @@
 "ocb.payments.standing_order.nextRealizationDate.to_late": "The next execution date for the order cannot be later than ##0##",
 "ocb.payments.remove.standing.error.already_deleted": "The selected standing order cannot be removed. The removal of this order is awaiting execution.",
 "ocb.standing_order.endDate.to_early": "Invalid order completion date",
-"ocb.payments.cut.off.time.MSG-0657_COT_SORBNET": "Realization tomorrow",
     "ocb.payments.currency.placeholder":"Currency",
 
     "ocb.payments.new.status.1": "Order denied",
