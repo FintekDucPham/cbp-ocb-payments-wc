@@ -76,13 +76,6 @@
     "ocb.payments.new.btn.finalize": "Powrót do listy",
     "ocb.payments.new.btn.final_action": "Zapisz odbiorcę",
     "ocb.payments.new.btn.add_as_standing_order": "Dodaj jako zlecenie stałe",
-    "ocb.payments.new.realization_type_sorbnet.label": "Realizacja poprzez SORBNET",
-    "ocb.payments.new.realization_type_sorbnet.verify.label": "Tryb realizacji",
-    "ocb.payments.new.realization_type_sorbnet.option.elixir": "ELIXIR – przelew standardowy",
-    "ocb.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – przelew SORBNET",
-    "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Rachunek odbiorcy jest prowadzony przez Orient Commercial Joint Stock Bank – nie może być zrealizowany jako SORBNET, zostanie zrealizowany w rozliczeniu wewnętrznym",
-    "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO": "Rachunek odbiorcy jest prowadzony przez Orient Commercial Joint Stock Bank – zostanie zrealizowany w rozliczeniu wewnętrznym",
-    "ocb.payments.new.realization_type_sorbnet.sorbnet_hours": "Realizacja w dniu dzisiejszym",
 
     "ocb.payments.new.verify.smscode": "Podaj haslo SMS dla operacji",
     "ocb.payments.new.verify.smscode.value": "Podaj hasło SMS dla operacji numer ##number## z dnia ##date##",

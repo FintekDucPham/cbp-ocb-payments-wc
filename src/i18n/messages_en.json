@@ -75,12 +75,6 @@
     "ocb.payments.new.btn.finalize": "Back to list",
     "ocb.payments.new.btn.final_action": "Save recipient",
     "ocb.payments.new.btn.add_as_standing_order": "Add as standing order",
-    "ocb.payments.new.realization_type_sorbnet.label": "Execution via SORBNET",
-    "ocb.payments.new.realization_type_sorbnet.verify.label": "Execution type",
-    "ocb.payments.new.realization_type_sorbnet.option.elixir": "ELIXIR – standard transfer",
-    "ocb.payments.new.realization_type_sorbnet.option.sorbnet": "SORBNET – SORBNET transfer",
-    "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_SORBNET": "Recipient account is kept with Orient Commercial Joint Stock Bank – the transfer cannot be made via SORBNET, internal settlement will be applied",
-    "ocb.payments.new.realization_type_sorbnet.INTERNAL_TRANSFER_NOT_EURO": "Recipient account is kept with Orient Commercial Joint Stock Bank – the transfer will be made as part of internal settlement",
 
     "ocb.payments.new.verify.smscode": "Enter SMS password for the operation",
     "ocb.payments.new.verify.smscode.value": "Enter the SMS code for the transaction number ##number## of ##date##",
