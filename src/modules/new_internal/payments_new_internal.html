@@ -3,10 +3,6 @@
         <bd-header>{{::"ocb.payments.new_internal.label.header"|translate}}</bd-header>
         <bd-form-panel class="bd-form-panel--responsive">
 
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.payment_type'|translate}}">
-                {{ ::'ocb.payments.new.types.INTERNAL' | translate }}
-            </bd-item-property>
-
             <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
                 <div ng-if="payment.initData.promise.$$state.status!==0">
                     <div ui-view></div>
