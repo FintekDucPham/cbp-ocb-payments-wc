@@ -3,11 +3,6 @@ angular.module('ocb-payments')
         'use strict';
         var paymentDataResolveStrategyStrategies = {};
 
-        var sorbnetSelection = {
-            'ELIXIR': false,
-            'SORBNET': true
-        };
-
         function paymentDataResolveStrategy(transferType, strategy) {
             if (strategy) {
                 paymentDataResolveStrategyStrategies[transferType] = strategy;
@@ -26,7 +21,6 @@ angular.module('ocb-payments')
                 paymentDataResolveStrategy(rbPaymentTypes.DOMESTIC.code, function (data) {
                     data.recipientName = data.recipientName.join('');
                     data.realizationDate = new Date(data.realizationDate);
-                    data.sendBySorbnet = sorbnetSelection[data.paymentDetails.clearingNetwork];
                     return $q.when(true);
                 });
 

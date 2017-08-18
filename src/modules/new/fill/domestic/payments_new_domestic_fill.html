@@ -158,7 +158,7 @@
                        class="input-field"
                        ng-model="payment.formData.amount"
                        ng-pattern="AMOUNT_PATTERN"
-                       bd-no-more-than="{ 'elixir' : payment.formData.sendBySorbnet ? 99999999999999999 : payment.meta.maxElixirAmount, 'balance': payment.options.futureRealizationDate || payment.formData.addToBasket ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
+                       bd-no-more-than="{ 'balance': payment.options.futureRealizationDate || payment.formData.addToBasket ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
                        required
                        placeholder="{{ ::'ocb.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
             </div>
@@ -225,7 +225,7 @@
                 ng-model="payment.formData.realizationDate"
                 rb-form="paymentForm"
                 rb-name="realizationDate"
-                rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory || payment.formData.sendBySorbnet"
+                rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory"
                 rb-datepicker-options="payment.meta.rbRealizationDateOptions"
                 rb-required="true">
 

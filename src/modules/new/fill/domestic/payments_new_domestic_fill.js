@@ -150,15 +150,4 @@ angular.module('ocb-payments')
                 //return senderAccount && recipient.srcAccountNo === senderAccount.accountNo.replace(/ /g, '');
             }
         };
-
-        $scope.$watch('payment.formData.sendBySorbnet', function(n, o){
-            if(n===true && o===false){//to sorbnet
-                    $scope.payment.formData.realizationDate = $scope.CURRENT_DATE.time;
-            }
-
-            // quick fix - OZK224542
-            $timeout(function() {
-                $scope.paymentForm.amount.$validate();
-            });
-        });
     });
