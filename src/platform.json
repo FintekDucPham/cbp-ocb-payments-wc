@@ -7,7 +7,16 @@
   "dependencies": [
     {
       "name": "ocb-shared",
-      "version": "0.0.2"
+      "version": ">=0.1.2"
+    }, {
+      "name": "ui-components",
+      "version": ">=0.1.2"
+    }, {
+      "name": "eb-ui",
+      "version": "*"
+    }, {
+      "name": "platform",
+      "version": "^2.0.20"
     }
   ],
   "main": "ocbPaymentsMiniapp.js",

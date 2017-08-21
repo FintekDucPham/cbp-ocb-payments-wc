@@ -1,5 +1,5 @@
 {
-  "name": "cbp-ocb-payments-wc",
+  "name": "@acp/cbp-ocb-payments-wc",
   "version": "0.1.0",
   "repository": {
     "type": "git",
@@ -8,5 +8,11 @@
   "keywords": [
     "ocb",
     "payments"
-  ]
+  ],
+  "dependencies": {
+    "@acp/cbp-ocb-shared-wc": ">=0.1.2",
+    "@acp/cbp-ocb-ui-components": ">=0.1.2",
+    "@acp/ocp-eb-ui-web-component": "*",
+    "@acp/cbp-platform-web-component": "^2.0.20"
+  }
 }
