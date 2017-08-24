@@ -1,31 +1,34 @@
 {
-  "author": "Asseco Poland SA",
-  "name": "ocb-payments",
-  "version": "0.1.0",
-  "type": "miniapp",
-  "description": "OCB Payments miniapplication",
-  "dependencies": [
-    {
-      "name": "ocb-shared",
-      "version": ">=0.1.2"
-    }, {
-      "name": "ui-components",
-      "version": ">=0.1.2"
-    }, {
-      "name": "eb-ui",
-      "version": "*"
-    }, {
-      "name": "platform",
-      "version": "^2.0.20"
-    }
-  ],
-  "main": "ocbPaymentsMiniapp.js",
-  "namespace": "ocb",
-  "settings":[
-    {
-      "name": "ocb-payments-AdvertisingSlots.settings",
-      "src": "/settings/ocb-payments-AdvertisingSlots.settings.json",
-      "src-permissions": "/settings/ocb-payments-AdvertisingSlots.settings_permissions.json"
-    }
-  ]
+	"author": "Asseco Poland SA",
+	"name": "ocb-payments",
+	"version": "0.1.1",
+	"type": "miniapp",
+	"description": "OCB Payments miniapplication",
+	"dependencies": [
+		{
+			"name": "ocb-shared",
+			"version": ">=0.1.2"
+		},
+		{
+			"name": "ui-components",
+			"version": ">=0.1.2"
+		},
+		{
+			"name": "eb-ui",
+			"version": "*"
+		},
+		{
+			"name": "platform",
+			"version": "^2.0.20"
+		}
+	],
+	"main": "ocbPaymentsMiniapp.js",
+	"namespace": "ocb",
+	"settings": [
+		{
+			"name": "ocb-payments-AdvertisingSlots.settings",
+			"src": "/settings/ocb-payments-AdvertisingSlots.settings.json",
+			"src-permissions": "/settings/ocb-payments-AdvertisingSlots.settings_permissions.json"
+		}
+	]
 }
