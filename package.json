@@ -10,9 +10,9 @@
 		"payments"
 	],
 	"dependencies": {
-		"@acp/cbp-ocb-shared-wc": ">=0.1.2",
-		"@acp/cbp-ocb-ui-components": ">=0.1.2",
-		"@acp/ocp-eb-ui-web-component": "*",
-		"@acp/cbp-platform-web-component": "^2.0.20"
+		"@acp/cbp-ocb-shared-wc": "1.0.0",
+		"@acp/cbp-ocb-ui-components": "1.0.0",
+		"@acp/ocp-eb-ui-web-component": "0.0.14",
+		"@acp/cbp-platform-web-component": "2.1.4"
 	}
 }
