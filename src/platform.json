@@ -1,7 +1,7 @@
 {
 	"author": "Asseco Poland SA",
 	"name": "ocb-payments",
-	"version": "0.1.1",
+	"version": "1.0.0",
 	"type": "miniapp",
 	"description": "OCB Payments miniapplication",
 	"dependencies": [
