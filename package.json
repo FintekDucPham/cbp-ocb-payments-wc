@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"repository": {
 		"type": "git",
-		"url": "https://repopbk.poland.asseco.corp/ocp-ocb/cbp-ocb-payments-wc.git"
+		"url": "https://partner-repo.asseco.pl/CBP-OCB/cbp-ocb-payments-wc.git"
 	},
 	"keywords": [
 		"ocb",
