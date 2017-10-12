@@ -312,7 +312,7 @@ angular.module('ocb-payments')
                 var validator = function (arg) {
                     var date = s.modelDate;
 
-                    if (s.ngRequired && date.getTime() < s.minDate.getTime()) {
+                    if (s.ngRequired && (!date || (date.getTime() < s.minDate.getTime()))) {
                         model.$setValidity('mindate', false);
                     } else {
                         model.$setValidity('mindate', true);
