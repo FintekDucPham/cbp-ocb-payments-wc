@@ -15,7 +15,7 @@
     "payments.submenu.close_text": "Close",
     "payments.submenu.open_text": "Open",
     "payments.submenu.options.list.header": "List of payments",
-    "payments.submenu.options.new.header": "Domestic transfer",
+    "payments.submenu.options.new.header": "bill payment",
     "payments.submenu.options.new_internal.header": "Own transfer",
 
     "ocb.payments.widget.view.new_payment": "New payment",
@@ -37,7 +37,7 @@
     "ocb.payments.content.list.collapse.transfer_type.repayment": "Instalment repayment",
     "ocb.payments.content.list.collapse.transfer_type.pay_by_link": "db Transfer",
     "ocb.payments.content.list.collapse.transfer_type.card_debt": "Card repayment",
-    "ocb.payments.content.list.collapse.transfer_type.domestic": "Domestic transfer",
+    "ocb.payments.content.list.collapse.transfer_type.domestic": "bill payment",
     "ocb.payments.content.list.collapse.transfer_type.own": "Own transfer",
     "ocb.payments.content.list.empty": "No payments to display",
     "ocb.payments.content.list.insurance_type.100000": "Social insurance",
@@ -65,7 +65,7 @@
     "ocb.payments.new.types.loading": "",
     "ocb.payments.new.types.INTERNAL": "Transfer to own account",
     "ocb.payments.new.types.OWN": "Own transfer",
-    "ocb.payments.new.types.DOMESTIC": "Domestic transfer",
+    "ocb.payments.new.types.DOMESTIC": "bill payment",
     "ocb.payments.new.types.STANDING": "Standing order",
     "ocb.payments.new.btn.change": "Change",
     "ocb.payments.new.btn.cancel": "Cancel",
@@ -135,6 +135,7 @@
 
     "ocb.payments.new.domestic.verify.sender_account_name": "From account",
     "ocb.payments.new.domestic.verify.sender_data": "Owner",
+    "ocb.payments.new.domestic.verify.recipient_account_no": "To account",
     "ocb.payments.new.domestic.verify.recipient_account_no": "To account",
     "ocb.payments.new.domestic.verify.recipient_data": "Recipient name",
     "ocb.payments.new.domestic.verify.amount": "Amount",
@@ -362,7 +363,7 @@
 "ocb.payments.future.list.details.domestic.buttons.edit": "Edit",
 "ocb.payments.future.list.details.domestic.buttons.delete": "Delete",
 "ocb.payments.future.list.details.domestic.buttons.backToList": "Back",
-"ocb.payments.future.list.details.domestic.transferTypes.DOMESTIC": "Domestic transfer",
+"ocb.payments.future.list.details.domestic.transferTypes.DOMESTIC": "bill payment",
 "ocb.payments.future.list.details.domestic.transferTypes.OWN": "Own transfer",
 
 "ocb.payments.future.list.details.insurance.transferType": "Payment type",
