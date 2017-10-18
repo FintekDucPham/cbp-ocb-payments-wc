@@ -92,7 +92,30 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 9
+                },
+                {
+                    id: "payments.new_bill.fill",
+                    label: 'payments.submenu.options.new_internal.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: "payments.new_bill.fill",
+                    priority: 9
                 }
+                // {
+                //     id: "payments.bill.new",
+                //     label: 'payments.submenu.options.new.header',
+                //     icon: "ocb-icons ocb_przelew",
+                //     action: function(item, scope, state){
+                //         state.reload('payments.bill.new').then(function(){
+                //             state.transitionTo("payments.bill.new",{ paymentType: 'fill', referenceId: undefined }, {reload: true}).finally(function() {
+                //                 state.go('payments.bill.new', {
+                //                     paymentType: 'fill',
+                //                     referenceId: undefined
+                //                 });
+                //             });
+                //         });
+                //     },
+                //     priority: 9
+                // }
             ]
         });
     }

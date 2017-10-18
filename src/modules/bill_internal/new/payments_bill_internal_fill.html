@@ -1,0 +1,180 @@
+<form name="paymentForm" novalidate>
+    <div>
+        <bd-item-property label="{{ ::'ocb.payments.new.internal.fill.sender_account' | translate }}">
+            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
+            <rb-account-select rb-account="payment.items.senderAccount"
+                               rb-account-id="payment.formData.remitterAccountId"
+                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                               rb-product-list-name="TRANSFER_OWN_FROM_LIST"
+                               rb-account-select-params="senderSelectParams"
+                               rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                               rb-on-account-select="onSenderAccountSelect($accountId)"
+                               rb-remote="remote.model_from"
+                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
+        </bd-item-property>
+
+        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
+                          label="{{ ::'ocb.payments.new.internal.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+        </bd-item-property>
+
+        <input name="recipientAcc" hidden ng-model="payment.formData.beneficiaryAccountId" required/>
+        <bd-item-property label="{{ ::'ocb.payments.new.internal.fill.recipient_account' | translate }}" ng-if="payment.formData.remitterAccountId">
+            <rb-account-select
+                    rb-account="payment.items.recipientAccount"
+                    rb-account-id="payment.formData.beneficiaryAccountId"
+                    rb-account-select-params="recipientSelectParams"
+                    rb-account-restrictions="ACCOUNT_RESTRICTION_CREDIT"
+                    rb-product-list-name="TRANSFER_OWN_TO_LIST"
+                    rb-remote="remote.model_to"
+                    rb-init-select-value = "{{payment.formData.recipientAccountNo}}"
+                    placeholder-value="{{ ::'ocb.payments.new.internal.fill.choose' | translate }}"></rb-account-select>
+
+            <eb-validation-messages eb-name="recipientAcc">
+                <div eb-message-key="sameAccounts" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
+                </div>
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.recipient_account.required'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+        <bd-item-property ng-if="payment.formData.recipientAccountId && remote.model_from.loaded &&  payment.operation.code !='EDIT'"
+                          label="{{ ::'ocb.payments.new.internal.fill.recipient_account.accessible_assets' | translate }}">
+            <bd-amount amount="payment.items.recipientAccount.accessibleAssets"
+                       currency="{{ payment.items.recipientAccount.currency }}"></bd-amount>
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--multi"
+                          label="{{ ::'ocb.payments.new.internal.fill.amount' | translate }}">
+
+            <div class="bd-item-property--multi__values">
+                <div class="bd-item-property__value--primary">
+                    <input type="text"
+                           name="amount"
+                           class="input-field"
+                           ng-min="0.01"
+                           ng-pattern="AMOUNT_PATTERN"
+                           rb-number-type-input
+                           ng-model="payment.formData.amount"
+                           required
+                           placeholder=""
+                           rb-foreign-amount-validator
+                           rb-source-account-currency="payment.items.senderAccount.currency"
+                           rb-transaction-currency="payment.formData.currency"
+
+                       />
+                </div>
+                <div class="bd-item-property__value--secondary">
+                    <ui-select ng-model="payment.formData.currency"
+                               theme="bootstrap"
+                               ng-disabled="payment.options.currencyLocked"
+                               required>
+                        <ui-select-match placeholder="{{::'ocb.payments.currency.placeholder' | translate }}">
+                            {{$select.selected}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="currency in currencyList track by $index">
+                            <div ng-bind-html="currency | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+
+            <eb-validation-messages eb-name="amount">
+                <div eb-message-key="convertedBalance" class="validation-message animate-on">
+                    {{ 'ocb.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
+                </div>
+
+                <div eb-message-key="number" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="ngMin" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="amount" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
+                </div>
+            </eb-validation-messages>
+            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
+                 ng-if="limitExeeded !== undefined && limitExeeded.show">
+                {{limitExeeded.messages}}
+            </div>
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--multirow"
+                          label="{{ ::'ocb.payments.new.internal.fill.description' | translate }}">
+    <textarea name="description"
+              ng-model="payment.formData.description"
+              ng-pattern="PAYMENT_DESCRIPTION_REGEX"
+              split-text-max-length-validators="140"
+              required
+              class="input-area input-area--party-data"
+              placeholder="{{ ::'ocb.payments.new.internal.fill.description.placeholder' | translate }}"></textarea>
+
+            <eb-validation-messages eb-name="description">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.description.EMPTY_TITLE'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
+                </div>
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.description.TOO_LONG_TITLE'|translate}}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.new.internal.fill.execution_date' | translate }}">
+
+            <rb-datepicker rb-form="paymentForm"
+                           rb-name="realizationDate"
+                           ng-model="payment.formData.realizationDate"
+                           rb-datepicker-options="payment.meta.rbRealizationDateOptions"
+                           rb-date-disabled="!payment.meta.isFuturePaymentAllowed || payment.meta.dateSetByCategory || payment.meta.blockByCurrency"
+                           rb-required="true">
+
+            </rb-datepicker>
+
+            <eb-validation-messages eb-name="realizationDate">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.execution_date.EMPTY_EXECUTED_DATE'|translate}}
+                </div>
+                <div eb-message-key="date" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                </div>
+                <div eb-message-key="rbDatepickerFormat" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.execution_date.INCORRECT_EXECUTED_DATE'|translate}}
+                </div>
+                <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                    {{::'ocb.payments.new.internal.fill.execution_date.EARLIER_EXECUTED_DATE'|translate}}
+                </div>
+                <div eb-message-key="bdMaxDate" class="validation-message animate-on">
+                    {{ payment.meta.laterExecutedDateMsg }}
+                </div>
+            </eb-validation-messages>
+
+        </bd-item-property>
+
+        <div ng-if="!payment.meta.editFuturePayment">
+            <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-basket-select>
+        </div>
+
+        <span class="eb-validation-messages">
+             <span class="messages"  ng-if="limitBasketExeeded !== undefined && limitBasketExeeded.show">
+                 <span class="validation-message">
+                    {{limitBasketExeeded.messages}}
+                 </span>
+             </span>
+        </span>
+
+    </div>
+</form>

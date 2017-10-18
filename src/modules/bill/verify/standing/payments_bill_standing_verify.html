@@ -1,0 +1,97 @@
+<div class="form-body" ng-controller="NewStandingPaymentVerifyController">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'ocb.payments.new.standing.edit.order_id' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.formData.id }}
+    </bd-item-property>
+
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.custom_name'|translate}}">
+        {{ payment.formData.shortName }}
+    </bd-item-property>
+
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.sender_account_name'|translate}}">
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
+            <div>
+                {{payment.items.senderAccount.accountNo | nrbIbanFilter }}
+            </div>
+        </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.senderAccount.customName || payment.items.senderAccount.accountName" rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
+        </div>
+    </bd-item-property>
+
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.sender_data'|translate}}">
+        <p ng-bind-html="payment.items.senderAccount | accountOwners"></p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ :: 'ocb.payments.new.standing.edit.bank_recipient_name' | translate }}" ng-if="payment.operation.code == 'EDIT'">
+        <rb-bank-name
+                account-no="payment.formData.recipientAccountNo"
+                bank-name-promise="payment.items.bankNamePromise"
+                ng-show="payment.items.bankNamePromise.$$state.status === 1"
+                >
+        </rb-bank-name>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.recipient_account_no'|translate}}">
+        {{payment.formData.recipientAccountNo | nrbIbanFilter }} <!-- | nrb -->
+        <!--| <span eb-domestic-bank-details nrb="{{payment.formData.recipientAccountNo}}"></span>-->
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.recipient_data'|translate}}">
+        <p>{{payment.formData.recipientName | arrayFilter}}</p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.description'|translate}}">
+        <p>{{payment.formData.description | arrayFilter}}</p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.amount'|translate}}">
+        <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.first_execution_date'|translate}}" ng-if="payment.operation.code == 'NEW'">
+        {{ payment.formData.firstRealizationDate | date:'shortDate' }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.fill.earliest_execution_date'|translate}}" ng-if="payment.operation.code == 'EDIT'">
+        {{ payment.formData.nextRealizationDate | date:'shortDate' }}
+    </bd-item-property>
+   <!-- <bd-item-property ng-show="transferCost.link != null" class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'ocb.payments.new.verify.transfer_cost'|translate}}">
+        <a href="{{transferCost.link}}" target="_blank">{{::'ocb.payments.new.verify.transfer_cost.info'|translate}}</a>
+    </bd-item-property>--><!--OZK231012-->
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.frequency'|translate}}">
+        {{ payment.formData.frequency }}&nbsp;
+
+        <span ng-show="payment.formData.frequency <= 1 || !payment.formData.frequency">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[payment.formData.frequencyType].symbol | translate}}</span>
+        <span ng-show="payment.formData.frequency >= 2 && payment.formData.frequency < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[payment.formData.frequencyType].symbol | translate}}</span>
+        <span ng-show="payment.formData.frequency >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[payment.formData.frequencyType].symbol | translate}}</span>
+    </bd-item-property>
+
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.standing.verify.finish_date'|translate}}">
+        {{payment.formData.finishDate | date:'shortDate' }}
+    </bd-item-property>
+     <span class="eb-validation-messages">
+         <span class="messages" ng-if="payment.holiday">
+             <span class="validation-message">
+                 {{::'ocb.payments.new.domestic.fill.execution_date.holiday'|translate}}
+             </span>
+         </span>
+         <span class="messages" ng-if="payment.items.modifyFromBasket">
+             <span class="validation-message">
+                 {{::'ocb.payments.basket.modify.verify.'+payment.meta.customerContext|translate}}
+             </span>
+         </span>
+         <span class="messages" ng-if="payment.items.modifyFromBasket && payment.meta.customerContext=='MICRO'">
+             <span class="validation-message">
+                 {{::'ocb.payments.basket.modify.signRemove.verify'|translate}}
+             </span>
+         </span>
+    </span>
+
+
+</div>
