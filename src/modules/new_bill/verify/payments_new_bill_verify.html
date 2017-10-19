@@ -5,7 +5,7 @@
                 <bd-msg-panel bd-msg-type="warning">{{::'ocb.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>
             </div>
         </div>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.internal.verify.sender_account_name'|translate}}">
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_account_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
                 <div class="break-force">{{ payment.items.senderAccount.customName || payment.items.senderAccount.accountName }}</div>
                 <div>
@@ -17,11 +17,11 @@
             </div>
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.internal.verify.sender_data'|translate}}">
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_data'|translate}}">
             <p ng-bind-html="payment.items.recipientAccount | accountOwners"></p>
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.internal.verify.recipient_account_name'|translate}}">
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.recipient_account_name'|translate}}">
         <span class="desktop-only-payments">
         <div class="break-force">{{ payment.items.recipientAccount.customName || payment.items.recipientAccount.accountName }}</div>
         {{payment.items.recipientAccount.accountNo | nrbIbanFilter }}
@@ -31,15 +31,15 @@
             </div>
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.internal.verify.amount'|translate}}">
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.amount'|translate}}">
             {{payment.formData.amount}}&nbsp;{{payment.formData.currency}} <!-- | nrb -->
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.internal.verify.description'|translate}}">
+        <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.description'|translate}}">
             <p class="break-force">{{payment.formData.description | arrayFilter}}</p>
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.internal.verify.execution_date'|translate}}">
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.execution_date'|translate}}">
             {{payment.formData.realizationDate | date:'shortDate' }}
         </bd-item-property>
 

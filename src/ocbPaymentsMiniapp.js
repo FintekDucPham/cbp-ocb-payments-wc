@@ -95,7 +95,7 @@ angular.module('ocb-payments', [
                 },
                 {
                     id: "payments.new_bill.fill",
-                    label: 'payments.submenu.options.new_internal.header',
+                    label: 'payments.submenu.options.new_bill.header',
                     icon: "ocb-icons ocb_przelew",
                     action: "payments.new_bill.fill",
                     priority: 9
