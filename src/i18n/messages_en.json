@@ -62,7 +62,7 @@
 
     "ocb.payments.recipient.new.error.exist":"A recipient with that account number is already present on the list.",
     "ocb.payments.new_internal.label.header": "Own transfer",
-    "ocb.payments.new_bill.label.header": "Bill payment",
+    "ocb.payments.new_bill.label.header": "Personal / Ordering Customer",
     "ocb.payments.new.payment_type": "Transfer type",
     "ocb.payments.new.types.loading": "",
     "ocb.payments.new.types.INTERNAL": "Transfer to own account",
@@ -176,7 +176,10 @@
     "ocb.payments.new.internal.verify.execution_date": "Execution date",
 
     "ocb.payments.new.bill.fill.default_description": "Transfer of funds",
-    "ocb.payments.new.bill.fill.sender_account": "From account",
+    "ocb.payments.new.bill.fill.sender_account": "Account number",
+    "ocb.payments.new.bill.fill.accountName": "Name",
+    "ocb.payments.new.bill.fill.ocbBranch": "OCB Branch",
+    "ocb.payments.new.bill.fill.dailyLimit": "Remaining daily limit",
     "ocb.payments.new.bill.fill.sender_account.accessible_assets": "Available funds",
     "ocb.payments.new.bill.fill.recipient_account": "To account",
      "ocb.payments.new.bill.fill.recipient_account.required": "Recipient account is required",
