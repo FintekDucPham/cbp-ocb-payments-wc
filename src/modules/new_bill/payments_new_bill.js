@@ -1,10 +1,10 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_bill', {
-            url: "/new-bill/:referenceId",
+            url: "/bill",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_bill/payments_new_bill.html",
-            controller: "PaymentsNewBillController",
+            controller: "NewBillPaymentController",
             params: {
                 payment: {},
                 items: {}
@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsNewBillController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE) {
+    .controller('NewBillPaymentController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
         $scope.CURRENT_DATE = CURRENT_DATE;
@@ -95,8 +95,6 @@ angular.module('ocb-payments')
                 });
             });
         };
-
-
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',

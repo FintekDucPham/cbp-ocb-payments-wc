@@ -1,7 +1,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_bill.fill', {
-            url: "/fill/:accountId/:nrb",
+            url: "/fill",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_bill/fill/payments_new_bill_fill.html",
             controller: "NewBillPaymentFillController",
             params: {

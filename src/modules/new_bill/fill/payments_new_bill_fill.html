@@ -62,7 +62,7 @@
             <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
-        <div ng-if="!payment.meta.editFuturePayment">
+        <div>
         <rb-add-to-beneficiary rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-beneficiary>
         </div>
     </div>
