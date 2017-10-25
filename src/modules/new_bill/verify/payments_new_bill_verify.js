@@ -3,13 +3,13 @@ angular.module('ocb-payments')
         stateServiceProvider.state('payments.new_bill.verify', {
             url: "/verify",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_bill/verify/payments_new_bill_verify.html",
-            controller: "NewPaymentBillVerifyController",
+            controller: "PaymentBillVerifyController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
             }
         });
     })
-    .controller('NewPaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash) {
+    .controller('PaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash) {
 
         $scope.showVerify =  false;
         if(angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)){

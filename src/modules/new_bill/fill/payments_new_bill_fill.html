@@ -14,10 +14,10 @@
                                rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
-                    {{ payment.items.senderAccount.accountName }}
+            {{ payment.items.senderAccount.accountName }}
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.ocbBranch'|translate}}">
-               {{  }}
+            TAN BINH
         </bd-item-property>
         <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
                           label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
@@ -25,45 +25,21 @@
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
-                    {{  }}
+            5 000 000 VND
         </bd-item-property>
     </div>
     <div>
         <bd-header>{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</bd-header>
-        <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
-            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
-            <rb-service-select rb-account="payment.items.senderAccount"
-                               rb-account-id="payment.formData.remitterAccountId"
-                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                               rb-product-list-name="TRANSFER_OWN_FROM_LIST"
-                               rb-account-select-params="senderSelectParams"
-                               rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                               rb-on-account-select="onSenderAccountSelect($accountId)"
-                               rb-remote="remote.model_from"
-                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-service-select>
-        </bd-item-property>
-        <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.provider' | translate }}">
-            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
-            <rb-service-select rb-account="payment.items.senderAccount"
-                               rb-account-id="payment.formData.remitterAccountId"
-                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                               rb-product-list-name="TRANSFER_OWN_FROM_LIST"
-                               rb-account-select-params="senderSelectParams"
-                               rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                               rb-on-account-select="onSenderAccountSelect($accountId)"
-                               rb-remote="remote.model_from"
-                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-service-select>
+        <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.service' | translate }}">
+            <rb-service-select rb-service="xxxxx"
+                               rb-service-id="yyyyy">
+            </rb-service-select>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
-            {{  }}
+            032023007753
         </bd-item-property>
-        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
-                          label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount amount="payment.items.senderAccount.accessibleAssets"
-                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
-        </bd-item-property>
-        <div>
-        <rb-add-to-beneficiary rb-model="payment.formData" rb-modify-from-basket="payment.items.modifyFromBasket"></rb-add-to-beneficiary>
+        <div ng-if="!payment.meta.editFuturePayment">
+            <rb-add-to-beneficiary-select rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
         </div>
     </div>
 </div>

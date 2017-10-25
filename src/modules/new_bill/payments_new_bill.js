@@ -4,7 +4,7 @@ angular.module('ocb-payments')
             url: "/bill",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_bill/payments_new_bill.html",
-            controller: "NewBillPaymentController",
+            controller: "PaymentNewBillController",
             params: {
                 payment: {},
                 items: {}
@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewBillPaymentController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE) {
+    .controller('PaymentNewBillController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
         $scope.CURRENT_DATE = CURRENT_DATE;
@@ -43,12 +43,12 @@ angular.module('ocb-payments')
                 }
             },
             items: {
-                modifyFromBasket : false
+                modifyFromBeneficiary : false
             },
             type: rbPaymentTypes.OWN
         }), {
             formData: {
-                addToBasket: false
+                addToBeneficiary: false
             }
         });
 
@@ -62,9 +62,9 @@ angular.module('ocb-payments')
         }
         $scope.clearForm = function () {
             $scope.payment.formData = {};
-            if($scope.payment.meta && $scope.payment.meta.modifyFromBasket){
+            if($scope.payment.meta && $scope.payment.meta.modifyFromBeneficiary){
                 $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
-                $scope.payment.formData.addToBasket = true;
+                $scope.payment.formData.addToBeneficiary = true;
             }
             //$scope.payment.items = {};
             $scope.$broadcast('clearForm');

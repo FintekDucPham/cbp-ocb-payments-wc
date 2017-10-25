@@ -1,8 +1,8 @@
 angular.module('ocb-payments')
-    .directive('rbAddToBeneficiary.html', function (pathService, lodash, rbAccountOwnNrbService) {
+    .directive('rbAddToBeneficiarySelect', function (pathService) {
         return {
             restrict: 'E',
-            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbAddToBeneficiary/rbAddToBeneficiary.html",
+            templateUrl: pathService.generateTemplatePath("ocb-payments") + "/components/rbAddToBeneficiarySelect/rbAddToBeneficiarySelect.html",
             scope: {
                 rbModel: '=rbModel',
                 rbModifyFromBeneficiary: '=rbModifyFromBeneficiary',
@@ -10,7 +10,7 @@ angular.module('ocb-payments')
             },
             controller: function($scope){
                 if ($scope.rbModifyFromBeneficiary === true) {
-                        $scope.rbModel.AddToBeneficiary = true;
+                    $scope.rbModel.addToBeneficiary = true;
                 }
 
                 $scope.settings = {
