@@ -43,6 +43,14 @@ angular.module('ocb-payments')
                 }
             },
             items: {
+                senderService : {
+                    serviceId: "NET",
+                    serviceName: "ADSL – Internet ADSL bill",
+                    providers: {
+                        providerId: "VNPTLD",
+                        providerName: "Lam Dong VNPT"
+                    }
+                },
                 modifyFromBeneficiary : false
             },
             type: rbPaymentTypes.OWN
