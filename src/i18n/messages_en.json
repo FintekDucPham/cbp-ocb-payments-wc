@@ -679,5 +679,12 @@
     "ocb.ng_dropdown_multiselect.option.buttonDefaultText":"All",
     "ocb.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
     "ocb.ng_dropdown_multiselect.option.waiting":"Waiting",
-    "EOF": ""
+    "EOF": "",
+
+    "ocb.payments.pending.label": "CB Pending Transaction",
+    "ocb.payments.pending.transactionInitiationDate": "Transaction initiation date",
+    "ocb.payments.pending.creator": "Creator",
+    "ocb.payments.pending.amount": "Amount",
+    "ocb.payments.pending.status": "Status",
+    "ocb.payments.pending.approve": "Approve"
 }

@@ -92,6 +92,13 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 9
+                },
+                {
+                    id: "ocb_payments_pending_list",
+                    label: "ocb.payments.pending.label",
+                    icon: "ocb-icons basket",
+                    action: "ocb_payments_pending_list",
+                    priority: 11
                 }
             ]
         });

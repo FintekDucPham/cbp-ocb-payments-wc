@@ -1,8 +1,8 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.pending.list', {
-            url: "/list",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/pending/list/payments_pending_list.html",
+        stateServiceProvider.state('ocb_payments_pending_list', {
+            url: "/payments/pending/list",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/pending/payments_pending_list.html",
             controller: "PaymentPendingListController",
             data: {
                 analyticsTitle: "ocb.payments.recipients.label"
@@ -13,12 +13,12 @@ angular.module('ocb-payments')
                                                               viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, $filter) {
         /*$scope.recipient = {
             item: {}
-        };
+        };*/
 
         accountsService.search().then(function(accountList){
             $scope.accountList = accountList.content;
         });
-        customerService.getCustomerDetails().then(function(customerDetails){
+        /*customerService.getCustomerDetails().then(function(customerDetails){
             $scope.customerDetails = customerDetails.customerDetails;
         });
 
