@@ -94,10 +94,10 @@ angular.module('ocb-payments', [
                     priority: 9
                 },
                 {
-                    id: "ocb_payments_pending_list",
+                    id: "payments.pending.list",
                     label: "ocb.payments.pending.label",
                     icon: "ocb-icons basket",
-                    action: "ocb_payments_pending_list",
+                    action: "payments.pending.list",
                     priority: 11
                 }
             ]

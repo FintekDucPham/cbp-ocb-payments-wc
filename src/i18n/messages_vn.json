@@ -682,9 +682,10 @@
     "EOF": "",
 
     "ocb.payments.pending.label": "CB Pending Transaction",
-    "ocb.payments.pending.transactionInitiationDate": "Transaction initiation date",
-    "ocb.payments.pending.creator": "Creator",
-    "ocb.payments.pending.amount": "Amount",
-    "ocb.payments.pending.status": "Status",
-    "ocb.payments.pending.approve": "Approve"
+    "ocb.payments.pending.list.header.transactionInitiationDate.label" : "Transaction initiation date",
+    "ocb.payments.pending.list.header.creator.label" : "Creator",
+    "ocb.payments.pending.list.header.amount.label" : "Amount",
+    "ocb.payments.pending.list.header.status.label" : "Status",
+    "ocb.payments.pending.list.header.approve.label" : "Approve",
+    "ocb.payments.pending.list.header.transactionType.label" : "Transaction type"
 }
