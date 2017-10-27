@@ -1,4 +1,5 @@
 <div ng-controller="NewBillPaymentFillController">
+    <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
     <div>
         <bd-header>{{::"ocb.payments.new_bill.label.header.customer"|translate}}</bd-header>
         <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
@@ -37,5 +38,50 @@
         <div ng-if="!payment.meta.editFuturePayment">
             <rb-add-to-beneficiary-select rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
         </div>
+
+    </div>
+    <bd-button  class="{{ :: classes }}"  ng-click="showBillInfoSearch()">
+                <span ng-show="!billInfoSearch">
+                                            {{::'account.transactions.select.filter.advanced.openText'|translate}}
+            </span>
+        <span ng-show="billInfoSearch">
+                                            {{::'account.transactions.select.filter.advanced.hideText'|translate}}
+            </span>
+    </bd-button>
+    <div ng-show="billInfoSearch">
+        <bd-header>{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</bd-header>
+        <rb-service-select></rb-service-select>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
+            032023007753
+        </bd-item-property>
+        <div ng-if="!payment.meta.editFuturePayment">
+            <rb-add-to-beneficiary-select rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
+        </div>
+        <bd-table
+                bd-type="typeI1"
+                bd-table-params="table.tableConfig"
+                bd-table-control="table.tableControl"
+                bd-table-data="table.tableData"
+                bd-table-promise="blockadesPromise"
+                bd-table-meta="{ 'first' : { 'title': '##account.blockades.header.date', 'data' : 'dateFrom|dateFilter' }, 'firstSecondFusion' : { 'title': '##account.blockades.header.transaction_date_type' }, 'second' : { 'title': '##account.blockades.header.transaction_type', 'data' : 'type' }, 'third' : { 'title': '##account.blockades.header.merchant', 'data' : 'merchant'}, 'fourth' : { 'title': '##account.blockades.header.amount', 'data' : ['amount', 'currency'] } }">
+
+            <bd-details-section
+                    bd-table-row-details>
+
+                <bd-item-property label="{{::'account.blockades.list.details.card_name'|translate}}" class="delayed-sm-resize">
+                    Credit Card
+                </bd-item-property>
+
+                <bd-item-property label="{{::'account.blockades.list.details.card_user_name'|translate}}" class="delayed-sm-resize">
+                    User6883688
+                </bd-item-property>
+
+                <bd-item-property label="{{::'account.blockades.list.details.description'|translate}}" class="delayed-sm-resize">
+                    debit
+                </bd-item-property>
+
+            </bd-details-section>
+
+        </bd-table>
     </div>
 </div>

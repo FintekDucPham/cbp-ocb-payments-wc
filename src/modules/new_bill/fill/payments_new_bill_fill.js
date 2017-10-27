@@ -9,7 +9,8 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager) {
+    .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
+                                                           bdTableConfig, blockadesService) {
 
         var senderAccountInitDefer = $q.defer();
 
@@ -46,6 +47,83 @@ angular.module('ocb-payments')
             });
             $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
+        $scope.billInfoSearch = false;
+        $scope.showBillInfoSearch = function() {
+            $scope.billInfoSearch = !$scope.billInfoSearch;
+        };
+
+        $scope.table = {
+            tableControl: undefined, // will be set by the table
+            tableConfig: new bdTableConfig({
+                placeholderText: translate.property('account.blockades.search.empty_list')
+            }),
+            tableData: {
+                getData: getBlockades
+            },
+            newSearch: true
+        };
+
+        $scope.getIcon = downloadService.downloadIconImage;
+
+        $scope.refreshList = function () {
+            $scope.table.newSearch = true;
+            $scope.table.tableControl.invalidate();
+        };
+
+        $scope.setSelectedAccount = function(selectedAccount) {
+            $scope.selectedAccount = selectedAccount;
+        };
+
+        $scope.promise = accountsService.search({pageSize: 10000, productList: "ACCOUNT_UNCLEARED_FROM_LIST"}).then(function(accountList) {
+            $scope.accountList = accountList.content;
+            if ($scope.accountList.length > 0) {
+                accountsService.loadAccountIcons($scope.accountList);
+                $scope.selectedAccount = findAccountOnList($stateParams.accountId || $scope.accountList[0].accountId);
+                $scope.refreshList();
+            }
+        });
+
+        function findAccountOnList(accId) {
+            return lodash.find($scope.accountList, function(acc) {
+                return acc.accountId == accId;
+            });
+        }
+
+        $scope.noData = function() {
+            return !$scope.table.anyData;
+        };
+
+        function dataNotLoading() {
+            return !!$scope.promise.$$state.status;
+        }
+
+        $scope.noDataLoaded = function() {
+            return dataNotLoading() && $scope.noData();
+        };
+
+        function getBlockades(deferred, $params) {
+            if($scope.table.newSearch){
+                $scope.table.newSearch = false;
+                $scope.table.tableConfig.currentPage = 1;
+                $scope.table.tableConfig.pageCount = 1;
+                $params.currentPage = 1;
+            }
+            var pageSize = $params.pageSize = 10;
+            if (!$scope.selectedAccount) {
+                deferred.resolve([]);
+                return;
+            }
+            $scope.table.anyData = false;
+            $scope.blockadesPromise = blockadesService.searchAccountBlockades({
+                accountId: $scope.selectedAccount.accountId,
+                pageNumber: $params.currentPage,
+                pageSize: pageSize
+            }).then(function(blockadeList) {
+                $params.pageCount = blockadeList.totalPages;
+                deferred.resolve(blockadeList.content);
+                $scope.table.anyData = blockadeList.content.length > 0;
+            });
+        }
 
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
