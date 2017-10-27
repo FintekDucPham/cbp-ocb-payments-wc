@@ -47,10 +47,10 @@ angular.module('ocb-payments')
             });
             $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
-        $scope.billInfoSearch = false;
-        $scope.showBillInfoSearch = function() {
-            $scope.billInfoSearch = !$scope.billInfoSearch;
-        };
+        // $scope.billInfoSearch = false;
+        // $scope.showBillInfoSearch = function() {
+        //     $scope.billInfoSearch = !$scope.billInfoSearch;
+        // };
 
         $scope.table = {
             tableControl: undefined, // will be set by the table
@@ -392,7 +392,7 @@ angular.module('ocb-payments')
             }
             $scope.recipientSelectParams.update(accountId);
         };
-
+        $scope.updateServiceId = "12345";
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);
     });

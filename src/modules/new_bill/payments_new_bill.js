@@ -77,6 +77,18 @@ angular.module('ocb-payments')
             //$scope.payment.items = {};
             $scope.$broadcast('clearForm');
         };
+        $scope.billInfoSearch = false;
+        //$scope.updateServiceId = "12345";
+        // $scope.callBack = function(serviceId) {
+        //     $scope.updateServiceId = serviceId;
+        //    // console.log("-bbb:" + $scope.updateServiceId);
+        // };
+        $scope.showBillInfoSearch = function() {
+            $scope.billInfoSearch = !$scope.billInfoSearch;
+            $scope.payment.rbPaymentsStepParams.visibility.search = false;
+            $scope.payment.rbPaymentsStepParams.visibility.next = true;
+            //console.log("----serviceId: " + $scope.billInfoSearch + "" + $scope.serviceId + $stateParams.items.senderAccount + $scope.callBack());
+        };
 
         var alreadySet = false;
         $scope.setDefaultValues = function (value) {
@@ -106,12 +118,14 @@ angular.module('ocb-payments')
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.recipients.list',
-            footerType: 'payment',
+            footerType: 'billpayment',
             onClear: $scope.clearForm,
+            onSearch: $scope.showBillInfoSearch,
             cancelState: 'payments.recipients.list',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
+                search: 'config.multistepform.buttons.search',
                 change: 'config.multistepform.buttons.change',
                 edit: 'config.multistepform.buttons.edit',
                 clear: 'config.multistepform.buttons.clear',
@@ -125,9 +139,10 @@ angular.module('ocb-payments')
             visibility:{
                 fillReturn: false,
                 cancel: true,
+                search: true,
                 change: true,
                 clear: true,
-                next: true,
+                next: false,
                 accept: true,
                 finalAction: false,
                 finalize: true,
