@@ -1,0 +1,84 @@
+<div ng-controller="NewBillPaymentFillController">
+    <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
+    <div>
+        <bd-header>{{::"ocb.payments.new_bill.label.header.customer"|translate}}</bd-header>
+        <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
+            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
+            <rb-account-select rb-account="payment.items.senderAccount"
+                               rb-account-id="payment.formData.remitterAccountId"
+                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                               rb-product-list-name="TRANSFER_OWN_FROM_LIST"
+                               rb-account-select-params="senderSelectParams"
+                               rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                               rb-on-account-select="onSenderAccountSelect($accountId)"
+                               rb-remote="remote.model_from"
+                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
+        </bd-item-property>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
+            {{ payment.items.senderAccount.accountName }}
+        </bd-item-property>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.ocbBranch'|translate}}">
+            {{ payment.items.senderService.serviceId }}
+        </bd-item-property>
+        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
+                          label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+        </bd-item-property>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
+            5 000 000 VND
+        </bd-item-property>
+    </div>
+    <div>
+        <bd-header>{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</bd-header>
+        <bd-header>{{updateServiceId}}</bd-header>
+        <rb-service-select></rb-service-select>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
+            032023007753
+        </bd-item-property>
+        <div ng-if="!payment.meta.editFuturePayment">
+            <rb-add-to-beneficiary-select rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
+        </div>
+
+    </div>
+
+    <div ng-show="billInfoSearch">
+        <bd-header>{{::"ocb.payments.new_bill.label.header.showBillInfo" |translate}}</bd-header>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoName'|translate}}">
+            {{ payment.items.senderAccount.accountName }}
+        </bd-item-property>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoAddress'|translate}}">
+            {{ payment.items.senderAccount.accountName }}
+        </bd-item-property>
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
+            032023007753
+        </bd-item-property>
+
+        <bd-table
+                bd-type="typeI1"
+                bd-table-params="table.tableConfig"
+                bd-table-control="table.tableControl"
+                bd-table-data="table.tableData"
+                bd-table-promise="blockadesPromise"
+                bd-table-meta="{ 'first' : { 'title': '##account.blockades.header.date', 'data' : 'dateFrom|dateFilter' }, 'firstSecondFusion' : { 'title': '##account.blockades.header.transaction_date_type' }, 'second' : { 'title': '##account.blockades.header.transaction_type', 'data' : 'type' }, 'third' : { 'title': '##account.blockades.header.merchant', 'data' : 'merchant'}, 'fourth' : { 'title': '##account.blockades.header.amount', 'data' : ['amount', 'currency'] } }">
+
+            <bd-details-section
+                    bd-table-row-details>
+
+                <bd-item-property label="{{::'account.blockades.list.details.card_name'|translate}}" class="delayed-sm-resize">
+                    Credit Card
+                </bd-item-property>
+
+                <bd-item-property label="{{::'account.blockades.list.details.card_user_name'|translate}}" class="delayed-sm-resize">
+                    User6883688
+                </bd-item-property>
+
+                <bd-item-property label="{{::'account.blockades.list.details.description'|translate}}" class="delayed-sm-resize">
+                    debit
+                </bd-item-property>
+
+            </bd-details-section>
+
+        </bd-table>
+    </div>
+</div>
