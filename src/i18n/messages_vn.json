@@ -716,6 +716,14 @@
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Enter the number of planned months",
     "ocb.layout.basket.tooltip": "Payment basket",
 
+    "ocb.payments.pending.label": "CB Pending Transaction",
+    "ocb.payments.pending.list.header.transactionInitiationDate.label" : "Transaction initiation date",
+    "ocb.payments.pending.list.header.creator.label" : "Creator",
+    "ocb.payments.pending.list.header.amount.label" : "Amount",
+    "ocb.payments.pending.list.header.status.label" : "Status",
+    "ocb.payments.pending.list.header.approve.label" : "Approve",
+    "ocb.payments.pending.list.header.transactionType.label" : "Transaction type",
+
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
     "ocb.ng_dropdown_multiselect.option.selectionCount":"selected",
