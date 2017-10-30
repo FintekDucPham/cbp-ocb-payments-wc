@@ -32,7 +32,7 @@
     <div>
         <bd-header>{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</bd-header>
         <bd-header>{{updateServiceId}}</bd-header>
-        <rb-service-select></rb-service-select>
+        <rb-service-select ></rb-service-select>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
             032023007753
         </bd-item-property>
@@ -49,7 +49,6 @@
         </div>
 
     </div>
-
     <div ng-show="billInfoSearch">
         <bd-header>{{::"ocb.payments.new_bill.label.header.showBillInfo" |translate}}</bd-header>
     </div>
@@ -72,12 +71,12 @@
     </div>
     <div ng-if="billInfoSearch && updateServiceId !=='DTCDCD'">
             <bd-table
-                bd-type="typeI1"
+                bd-type="typeI2"
                 bd-table-params="table.tableConfig"
                 bd-table-control="table.tableControl"
                 bd-table-data="table.tableData"
                 bd-table-promise="blockadesPromise"
-                bd-table-meta="{ 'first' : { 'title': '##account.blockades.header.date', 'data' : 'dateFrom|dateFilter' }, 'firstSecondFusion' : { 'title': '##account.blockades.header.transaction_date_type' }, 'second' : { 'title': '##account.blockades.header.transaction_type', 'data' : 'type' }, 'third' : { 'title': '##account.blockades.header.merchant', 'data' : 'merchant'}, 'fourth' : { 'title': '##account.blockades.header.amount', 'data' : ['amount', 'currency'] } }">
+                bd-table-meta="{ 'first' : { 'title': '##account.blockades.header.date', 'data' : 'dateFrom|dateFilter' }, 'firstSecondFusion' : { 'title': '##account.blockades.header.transaction_date_type' }, 'second' : { 'title': '##account.blockades.header.transaction_type', 'data' : 'type' }, 'third' : { 'title': '##account.blockades.header.merchant', 'data' : 'merchant'}, 'fourth' : { 'title': '##account.blockades.header.amount', 'data' : ['amount', 'currency'] },'fifth': {'title': '##account.invoices.button.download'} }">
 
             <bd-details-section
                     bd-table-row-details>

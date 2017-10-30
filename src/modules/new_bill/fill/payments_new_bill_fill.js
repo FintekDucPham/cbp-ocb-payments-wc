@@ -69,7 +69,23 @@ angular.module('ocb-payments')
             $scope.table.newSearch = true;
             $scope.table.tableControl.invalidate();
         };
-
+        $scope.initBDTable = function() {
+            $scope.table = {
+                tableControl: undefined, // will be set by the table
+                tableConfig: new bdTableConfig({
+                    placeholderText: translate.property('account.blockades.search.empty_list'),
+                    downloadFile: function(item) {
+                        var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
+                            url = exportService.prepareHref(downloadLink);
+                        fileDownloadService.startFileDownload(url);
+                    }
+                }),
+                tableData: {
+                    getData: getBlockades
+                },
+                newSearch: true
+            };
+        };
         $scope.setSelectedAccount = function(selectedAccount) {
             $scope.selectedAccount = selectedAccount;
         };
@@ -102,12 +118,13 @@ angular.module('ocb-payments')
         };
 
         function getBlockades(deferred, $params) {
-            if($scope.table.newSearch){
-                $scope.table.newSearch = false;
+           if($scope.table.newSearch){
+               $scope.table.newSearch = false;
+           //$scope.table.tableControl.invalidate();
                 $scope.table.tableConfig.currentPage = 1;
                 $scope.table.tableConfig.pageCount = 1;
                 $params.currentPage = 1;
-            }
+           }
             var pageSize = $params.pageSize = 10;
             if (!$scope.selectedAccount) {
                 deferred.resolve([]);
