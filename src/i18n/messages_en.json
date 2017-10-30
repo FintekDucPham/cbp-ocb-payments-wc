@@ -630,7 +630,7 @@
     "ocb.payments.basket.status.AMOUNT_EXCEEDED_FUNDS.DETAL": "The total amount of transfers exceeds the available means.",
     "ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO": "In {0} out of {1} transfers ready for implementation, the daily limit of transfers has been exceeded. Please refer to \"Settings - e-banking - daily limits\" to see the applicable limit and the remaining amount.",
     "ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL": "Daily transfer limit has been exceeded. Please refer to \"Settings - e-banking - daily limits\" to see the applicable limit and the remaining amount.",
-    "ocb.payments.basket.status.NOT_ACCEPTED_TRANSACTIONS": "{0} out of {1} awaits acceptance in the Payment basket arising out of the configured acceptance schemes.",
+    "ocb.payments.git statusbasket.status.NOT_ACCEPTED_TRANSACTIONS": "{0} out of {1} awaits acceptance in the Payment basket arising out of the configured acceptance schemes.",
     "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO": "{0} out of {1} transfers were submitted for implementation.",
     "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "The transfers were submitted for implementation in line with the selected transaction manner.",
     "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Some transfers may be made in the next business day.",
@@ -670,6 +670,9 @@
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_DAYS": "Enter the number of planned days",
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_WEEKS": "Enter the number of planned weekds",
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Enter the number of planned months",
+
+    "ocb.payments.batch_processing.label": "Batch Processing",
+
     "ocb.layout.basket.tooltip": "Payment basket",
 
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
