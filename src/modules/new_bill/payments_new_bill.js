@@ -78,16 +78,10 @@ angular.module('ocb-payments')
             $scope.$broadcast('clearForm');
         };
         $scope.billInfoSearch = false;
-        //$scope.updateServiceId = "12345";
-        // $scope.callBack = function(serviceId) {
-        //     $scope.updateServiceId = serviceId;
-        //    // console.log("-bbb:" + $scope.updateServiceId);
-        // };
         $scope.showBillInfoSearch = function() {
             $scope.billInfoSearch = !$scope.billInfoSearch;
             $scope.payment.rbPaymentsStepParams.visibility.search = false;
             $scope.payment.rbPaymentsStepParams.visibility.next = true;
-            //console.log("----serviceId: " + $scope.billInfoSearch + "" + $scope.serviceId + $stateParams.items.senderAccount + $scope.callBack());
         };
 
         var alreadySet = false;
