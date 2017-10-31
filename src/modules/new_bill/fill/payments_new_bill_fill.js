@@ -10,7 +10,7 @@ angular.module('ocb-payments')
         });
     })
     .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
-                                                           bdTableConfig, blockadesService) {
+                                                           bdTableConfig, blockadesService, billPaymentService) {
 
         var senderAccountInitDefer = $q.defer();
 
@@ -58,7 +58,7 @@ angular.module('ocb-payments')
                 placeholderText: translate.property('account.blockades.search.empty_list')
             }),
             tableData: {
-                getData: getBlockades
+                getData: getBills//getBlockades
             },
             newSearch: true
         };
@@ -81,7 +81,7 @@ angular.module('ocb-payments')
                     }
                 }),
                 tableData: {
-                    getData: getBlockades
+                    getData: getBills//getBlockades
                 },
                 newSearch: true
             };
@@ -116,7 +116,30 @@ angular.module('ocb-payments')
         $scope.noDataLoaded = function() {
             return dataNotLoading() && $scope.noData();
         };
-
+        function getBills(deferred, $params) {
+            if($scope.table.newSearch){
+                $scope.table.newSearch = false;
+                //$scope.table.tableControl.invalidate();
+                $scope.table.tableConfig.currentPage = 1;
+                $scope.table.tableConfig.pageCount = 1;
+                $params.currentPage = 1;
+            }
+            var pageSize = $params.pageSize = 10;
+            if (!$scope.selectedAccount) {
+                deferred.resolve([]);
+                return;
+            }
+            $scope.billsPromise = billPaymentService.getBills({
+                providerId: "123456",
+                billCode: "654321",
+                pageNumber: $params.currentPage,
+                pageSize:pageSize
+            }).then(function(billsList) {
+                $params.pageCount = billsList.totalPages;
+                deferred.resolve(billsList.content[0].billDetail);
+                $scope.table.anyData = billsList.content[0].billDetail.length > 0;
+            });
+        }
         function getBlockades(deferred, $params) {
            if($scope.table.newSearch){
                $scope.table.newSearch = false;

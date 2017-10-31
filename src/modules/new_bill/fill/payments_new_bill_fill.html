@@ -70,30 +70,20 @@
             </bd-item-property>
     </div>
     <div ng-if="billInfoSearch && updateServiceId !=='DTCDCD'">
-            <bd-table
+        <bd-table
                 bd-type="typeI2"
                 bd-table-params="table.tableConfig"
                 bd-table-control="table.tableControl"
                 bd-table-data="table.tableData"
-                bd-table-promise="blockadesPromise"
-                bd-table-meta="{ 'first' : { 'title': '##account.blockades.header.date', 'data' : 'dateFrom|dateFilter' }, 'firstSecondFusion' : { 'title': '##account.blockades.header.transaction_date_type' }, 'second' : { 'title': '##account.blockades.header.transaction_type', 'data' : 'type' }, 'third' : { 'title': '##account.blockades.header.merchant', 'data' : 'merchant'}, 'fourth' : { 'title': '##account.blockades.header.amount', 'data' : ['amount', 'currency'] },'fifth': {'title': '##account.invoices.button.download'} }">
-
-            <bd-details-section
-                    bd-table-row-details>
-
-                <bd-item-property label="{{::'account.blockades.list.details.card_name'|translate}}" class="delayed-sm-resize">
-                    Credit Card
-                </bd-item-property>
-
-                <bd-item-property label="{{::'account.blockades.list.details.card_user_name'|translate}}" class="delayed-sm-resize">
-                    User6883688
-                </bd-item-property>
-
-                <bd-item-property label="{{::'account.blockades.list.details.description'|translate}}" class="delayed-sm-resize">
-                    debit
-                </bd-item-property>
-
-            </bd-details-section>
+                bd-table-promise="billsPromise"
+                bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },
+                'second' : { 'title': '##payments.new.bill.fill.info.header.order_id', 'data' : 'orderId' },
+                'third' : { 'title': '##payments.new.bill.fill.info.header.description', 'data' : 'description'},
+                'fourth' : { 'title': '##payments.new.bill.fill.info.header.amount', 'data' : ['amount', 'currency'] },
+                'fifth' : { 'title': '##payments.new.bill.fill.info.header.from_date', 'data' : 'fromDate' },
+                'sixth' : { 'title': '##payments.new.bill.fill.info.header.to_date', 'data' : 'toDate' },
+                'seventh' : { 'title': '##payments.new.bill.fill.info.header.formula_rates', 'data' : 'formulaRates' } ,
+                'eighth': {'title': '##account.invoices.button.download'} }">
 
         </bd-table>
     </div>
