@@ -33,43 +33,27 @@
     <div>
         <bd-header>{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</bd-header>
         <bd-header>{{updateServiceId}}</bd-header>
-        <rb-service-select ></rb-service-select>
+        <rb-service-select rb-service="payment.items.senderService">
+
+        </rb-service-select>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
             <div class="bd-item-property__value--primary">
                 <input type="text"
                        name="amount"
                        class="input-field"
                        ng-min="0.01"
-                       ng-pattern="BILL_CODE"
                        rb-number-type-input
                        ng-model="payment.formData.amount"
                        required
                        placeholder=""
-                       rb-foreign-amount-validator
-                       rb-source-account-currency="payment.items.senderAccount.currency"
-                       rb-transaction-currency="payment.formData.currency"
-
                 />
             </div>
             <eb-validation-messages eb-name="amount">
-                <div eb-message-key="convertedBalance" class="validation-message animate-on">
-                    {{ 'ocb.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
-                </div>
-
                 <div eb-message-key="number" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
-                </div>
-                <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
-                </div>
-                <div eb-message-key="ngMin" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
-                </div>
-                <div eb-message-key="amount" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    {{::'ocb.payments.new.bill.fill.billCode.INCORRECT_BILLCODE'|translate}}
                 </div>
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
+                    {{::'ocb.payments.new.bill.fill.billCode.EMPTY_BILLCODE'|translate}}
                 </div>
             </eb-validation-messages>
         </bd-item-property>

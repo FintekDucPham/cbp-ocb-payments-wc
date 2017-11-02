@@ -1,7 +1,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_bill', {
-            url: "/bill",
+            url: "/new-bill/:referenceId",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_bill/payments_new_bill.html",
             controller: "PaymentNewBillController",
@@ -43,14 +43,14 @@ angular.module('ocb-payments')
                 }
             },
             items: {
-                senderService : {
-                    serviceId: "NET",
-                    serviceName: "ADSL – Internet ADSL bill",
-                    providers: {
-                        providerId: "VNPTLD",
-                        providerName: "Lam Dong VNPT"
-                    }
-                },
+                // senderService : {
+                //     serviceId: "NET",
+                //     serviceName: "ADSL – Internet ADSL bill",
+                //     providers: {
+                //         providerId: "VNPTLD",
+                //         providerName: "Lam Dong VNPT"
+                //     }
+                // },
                 modifyFromBeneficiary : false
             },
             type: rbPaymentTypes.OWN

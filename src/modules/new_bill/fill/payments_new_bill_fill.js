@@ -22,10 +22,15 @@ angular.module('ocb-payments')
             },
             model_to:{}
         };
-        $scope.BILL_CODE = validationRegexp('NEW_MOBILE_PASSWORD');
+        //$scope.BILL_CODE = validationRegexp('NEW_MOBILE_PASSWORD');
         if ($stateParams.payment && $stateParams.payment.beneficiaryAccountNo) {
             $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
         }
+        // $scope.payment.formData.description = "542546";
+        // $scope.payment.formData.beneficiaryAccountId = "19175000120000000012432445";
+        // $scope.payment.formData.realizationDate = "03.11.2017";
+        // $scope.payment.formData.currency = "PLN";
+
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -228,9 +233,9 @@ angular.module('ocb-payments')
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if(!$scope.remote.model_to.loaded){
-                return;
-            }
+            // if(!$scope.remote.model_to.loaded){
+            //     return;
+            // }
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 delete $scope.payment.token.params.resourceId;
                 var form = $scope.paymentForm;
@@ -238,9 +243,9 @@ angular.module('ocb-payments')
                     show: false
                 };
 
-                if(!$scope.payment.items.recipientAccount){
-                    form.recipientAcc.$setValidity('required', false);
-                }
+                // if(!$scope.payment.items.recipientAccount){
+                //     form.recipientAcc.$setValidity('required', false);
+                // }
                 if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
                     form.recipientAcc.$setValidity('sameAccounts', false);
                 }
@@ -248,40 +253,40 @@ angular.module('ocb-payments')
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                    var createTransfer = function(){
-                        transferService.create('INTERNAL', angular.extend({
-                            "remitterId": 0
-                        }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
-                            $scope.payment.transferId = transfer.referenceId;
-                            $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                            $scope.payment.holiday = transfer.holiday;
+                //     var createTransfer = function(){
+                //         transferService.create('INTERNAL', angular.extend({
+                //             "remitterId": 0
+                //         }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
+                //             $scope.payment.transferId = transfer.referenceId;
+                //             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                //             $scope.payment.holiday = transfer.holiday;
                             actions.proceed();
-                        }).catch(function(errorReason){
-                            if(errorReason.subType == 'validation'){
-                                for(var i=0; i<=errorReason.errors.length; i++){
-                                    var currentError = errorReason.errors[i];
-                                    if(currentError.field == 'ocb.transfer.limit.exceeed'){
-                                        $scope.limitExeeded = {
-                                            show: true,
-                                            messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
-                                        };
-                                    }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
-                                        $scope.limitBasketExeeded = {
-                                            show: true,
-                                            messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
-                                        };
-                                    }
-                                }
-                            }
-                        });
-                    };
+                //         }).catch(function(errorReason){
+                //             if(errorReason.subType == 'validation'){
+                //                 for(var i=0; i<=errorReason.errors.length; i++){
+                //                     var currentError = errorReason.errors[i];
+                //                     if(currentError.field == 'ocb.transfer.limit.exceeed'){
+                //                         $scope.limitExeeded = {
+                //                             show: true,
+                //                             messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                //                         };
+                //                     }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
+                //                         $scope.limitBasketExeeded = {
+                //                             show: true,
+                //                             messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
+                //                         };
+                //                     }
+                //                 }
+                //             }
+                //         });
+                //     };
 
                     var fakeControl = {
                         done: createTransfer
                     };
                     rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, fakeControl).then(createTransfer);
                 }
-            }
+           }
         });
 
         $scope.$watch('payment.items.senderAccount', function(account) {
