@@ -1,0 +1,166 @@
+<div ng-controller="PaymentsBatchProcessingStep1Controller">
+    <div >
+        <span ><b>{{ ::'ocb.payments.batch_processing.personal' | translate }}</b></span>
+        <bd-item-property label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
+            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
+            <rb-account-select
+                    rb-product-list-name="TRANSFER_FROM_LIST"
+                    rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                    rb-account="selectedAccount"
+                    rb-account-id="paymentsBatchProcessingForm.items.senderAccountId"
+                    rb-on-account-select="onSenderAccountSelect($accountId)"
+                    bd-attr-required="true"
+                    rb-account-list="payment.bacthprocessing.accountList"
+                    rb-account-select-params="senderSelectParams"
+            ></rb-account-select>
+            <!--rb-remote="remote.model"-->
+            <!--rb-init-select-value = "{{ payment.formData.accountNo || selectNrb}}"-->
+
+            <!--rb-account-no="payment1.items.recipient.srcAccountNo"-->
+        </bd-item-property>
+        <bd-item-property ng-if="selectedAccount"
+                          label="{{ ::'ocb.payments.batch_processing.name' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
+                <span class="bd-amount__value">{{selectedAccount.accountName| uppercase}}</span><span class="bd-amount__currency" ng-show="!showDash"></span>
+                <span class="dash" ng-show="showDash">-</span>
+            </div>
+        </bd-item-property>
+        <bd-item-property ng-if="selectedAccount"
+                          label="{{ ::'ocb.payments.batch_processing.ocbbranch' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
+                <span class="bd-amount__value">Tan Binh???</span><span class="bd-amount__currency" ng-show="!showDash"></span>
+                <span class="dash" ng-show="showDash">-</span>
+            </div>
+        </bd-item-property>
+
+        <bd-item-property ng-if="selectedAccount"
+                          label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="selectedAccount.accessibleAssets"
+                       currency="{{ selectedAccount.currency }}">???</bd-amount>
+        </bd-item-property>
+
+        <bd-item-property ng-if="selectedAccount"
+                          label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="selectedAccount.accessibleAssets"
+                       currency="{{ selectedAccount.currency }}">???</bd-amount>
+        </bd-item-property>
+
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
+            <ui-select ng-model="selectedTransactionType"
+                       theme="bootstrap"
+                       on-select="onTransactionTypeChanged($select.selected)"
+                       required>
+                <ui-select-match placeholder="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
+                    {{$select.selected}}
+                </ui-select-match>
+                <ui-select-choices repeat="transactionType in selectionQuerry($select.search, transaction_types) | filter: $select.search">
+                    <div ng-bind="transactionType"></div>
+                </ui-select-choices>
+            </ui-select>
+        </bd-item-property>
+
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.subaccount' | translate | uppercase }}">
+            <ui-select ng-model="selectedSubAccount"
+                       theme="bootstrap"
+                       on-select="onSubAccountChanged($select.selected)"
+                       required>
+                <ui-select-match placeholder="Sub Account">
+                    {{$select.selected}}
+                </ui-select-match>
+                <ui-select-choices repeat="subAccount in selectionQuerry($select.search, subAccounts) | filter: $select.search">
+                    <div ng-bind="subAccount"></div>
+                </ui-select-choices>
+            </ui-select>
+        </bd-item-property>
+    </div>
+    <div >
+        <span ><b>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</b></span>
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
+            <div class="input-group">
+                <input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">
+                <span class="input-group-btn">
+                    <bd-button class="bd-button">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
+                </span>
+            </div>
+        </bd-item-property>
+    </div>
+
+
+</div>
+
+
+
+<!--<div  class="animate-on am-fade-and-scale">-->
+    <!--<b>{{::"ocb.payments.batch_processing.personal"|translate}}</b>-->
+    <!--<input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>-->
+    <!--<bd-item-property label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">-->
+        <!--<input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>-->
+        <!--<rb-account-select rb-account-id="payment.formData.remitterAccountId"-->
+                           <!--rb-account-no="payment.items.recipient.srcAccountNo"-->
+                           <!--rb-account="payment.items.senderAccount"-->
+                           <!--bd-attr-required="true"-->
+                           <!--rb-account-list="payment.meta.accountList"-->
+                           <!--rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"-->
+                           <!--rb-product-list-name="TRANSFER_FROM_LIST"-->
+                           <!--rb-on-account-select="onSenderAccountSelect()"-->
+                           <!--rb-account-select-params="remitterAccountSelectParams"-->
+                           <!--rb-remote="remote.model"-->
+                           <!--rb-init-select-value = "{{ payment.formData.accountNo || selectNrb}}"></rb-account-select>-->
+    <!--</bd-item-property>-->
+
+    <!--<bd-item-property ng-if="payment.formData.remitterAccountId"-->
+                      <!--label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">-->
+        <!--<bd-amount amount="payment.items.senderAccount.accessibleAssets"-->
+                   <!--currency="{{ payment.items.senderAccount.currency }}"></bd-amount>-->
+    <!--</bd-item-property>-->
+
+    <!--&lt;!&ndash;-->
+            <!--<bd-item-property label="{{::'ocb.payments.batch_processing.accountnumber'|translate}}">-->
+                <!--<ui-select ng-model="selectedAccount"-->
+                           <!--theme="bootstrap"-->
+                           <!--reset-search-input="false"-->
+                           <!--on-select="setSelectedAccount(selectedAccount)"-->
+                           <!--class="iconized"-->
+                           <!--required>-->
+                    <!--<ui-select-match placeholder="{{::'account.statement.select.placeholder'|translate}}">-->
+                        <!--<div class="select-account__row__cell account-icon" ng-if="$select.selected.customerData.icon >= 0 && getIcon($select.selected.accountId)"><img ng-if="$select.selected.customerData.icon >= 0" ng-src="{{getIcon($select.selected.customerData.icon)}}" class="select-account__icon"/></div>-->
+                        <!--<div class="select-account__row__cell account-desc">-->
+                            <!--<rb-account-responsive-line rb-allow-long-nrb="true" rb-account-name="$select.selected.customerData.name || $select.selected.accountName" rb-account-nrb="$select.selected.accountNo"></rb-account-responsive-line>-->
+                        <!--</div>-->
+                    <!--</ui-select-match>-->
+                    <!--<ui-select-choices repeat="item in accountList track by $index">-->
+                        <!--<div class="select-account__row">-->
+                            <!--<div class="select-account__row__cell account-icon" ng-if="item.customerData.icon >= 0 && getIcon(item.accountId)">-->
+                                <!--<img ng-if="item.customerData.icon >= 0" ng-src="{{getIcon(item.customerData.icon)}}" class="select-account__icon" />-->
+                            <!--</div>-->
+                            <!--<div class="select-account__row__cell account-desc">-->
+                                <!--<div class="rb-account-select__account-name-row" ng-bind="(item.customName || item.accountName) | highlight: $select.search"></div>-->
+                                <!--<div class="rb-account-select__account-desc-row">-->
+                                    <!--<span class="rb-account-select__account-desc-row__nrb hidden-xs hidden-sm" ng-bind="item.accountNo | nrbIbanFilter | highlight: $select.search"></span>-->
+                                    <!--<span class="rb-account-select__account-desc-row__nrb hidden-md hidden-lg" ng-bind="item.accountNo | nrbIbanShortFilter | highlight: $select.search"></span>-->
+                                    <!--<span class="rb-account-select__account-desc-row__amount" ng-bind="((item.accessibleAssets | currency:'') + ' ' + item.currency)  | highlight: $select.search"></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</ui-select-choices>-->
+                <!--</ui-select>-->
+            <!--</bd-item-property>-->
+            <!--{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}-->
+            <!--<bd-item-property ng-if="payment.formData.remitterAccountId"-->
+                              <!--label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">-->
+                <!--<bd-amount amount="payment.items.senderAccount.accessibleAssets"-->
+                           <!--currency="{{ payment.items.senderAccount.currency }}"></bd-amount>-->
+            <!--</bd-item-property>-->
+    <!--&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;<tr><td>{{::"ocb.payments.batch_processing.name"|translate}}</td><td></td></tr>&ndash;&gt;-->
+        <!--&lt;!&ndash;<tr><td>{{::"ocb.payments.batch_processing.ocbbranch"|translate}}</td><td></td></tr>&ndash;&gt;-->
+        <!--&lt;!&ndash;<tr><td>{{::"ocb.payments.batch_processing.availablefunds"|translate}}</td><td></td></tr>&ndash;&gt;-->
+        <!--&lt;!&ndash;<tr><td>{{::"ocb.payments.batch_processing.remainingdailylimit"|translate}}</td><td></td></tr>&ndash;&gt;-->
+        <!--&lt;!&ndash;<tr><td>{{::"ocb.payments.batch_processing.transactiontype"|translate}}</td><td></td></tr>&ndash;&gt;-->
+        <!--&lt;!&ndash;<tr><td>{{::"ocb.payments.batch_processing.subaccount"|translate}}</td><td></td></tr>&ndash;&gt;-->
+<!--</div>-->
+<!--<div  class="animate-on am-fade-and-scale">-->
+    <!--{{::"ocb.payments.batch_processing.beneficiarylist"|translate}}-->
+<!--</div>-->

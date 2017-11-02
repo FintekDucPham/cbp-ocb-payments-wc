@@ -13,8 +13,43 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller("PaymentsBatchProcessingController", function($scope) {
-        $scope.setClearFormFunction = function(fn){
-            $scope.clearFormFunction = fn;
+    .controller('PaymentsBatchProcessingController', function ($scope, bdMainStepInitializer) {
+
+        bdMainStepInitializer($scope, 'paymentsBatchProcessingForm', {
+            formName: 'paymentsBatchProcessingFormForm',
+            formData: {},
+            options: {},
+            meta: {},
+            validation: {}
+        });
+
+        $scope.modify = {
+            verify:{
+                data: null
+            }
         };
+
+        $scope.clearForm = function(){
+            $scope.paymentsBatchProcessingForm.formData = {};
+            $scope.paymentsBatchProcessingForm.items = {};
+            $scope.$broadcast('clearForm');
+        };
+        $scope.testFormAction = function() {
+            console.log("CLick");
+        }
+        $scope.paymentsBatchProcessingFormParams = {
+            completeState:'payments.new.fill',
+            onClear:$scope.clearForm,
+            cancelState:'dashboard',
+            footerType:'batchprocessing',
+            labels:{
+                prev:'ocb.payment.prev',
+                //testFormButton:'ocb.payments.batch_processing.custom.button',
+                next:"ocb.payments.new.btn.next",
+                finalize:"ocb.payments.new.btn.finalize"
+            },
+            visibility:{
+            },
+            testFormAction: $scope.testFormAction
+        }
     });

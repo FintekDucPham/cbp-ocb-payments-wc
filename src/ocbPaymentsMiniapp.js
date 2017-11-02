@@ -87,11 +87,18 @@ angular.module('ocb-payments', [
                     priority: 7
                 },
                 {
+                    id: "payments.basket.fill",
+                    label: "ocb.payments.basket.label",
+                    icon: "ocb-icons basket",
+                    action: "payments.basket.new.fill",
+                    priority: 9
+                },
+                {
                     id: "payments.batch_processing",
                     label: "ocb.payments.batch_processing.label",
                     icon: "ocb-icons basket",
                     action: "payments.batch_processing.fill",
-                    priority: 9
+                    priority: 11
                 }
             ]
         });

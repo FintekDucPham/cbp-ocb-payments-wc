@@ -670,10 +670,21 @@
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_DAYS": "Enter the number of planned days",
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_WEEKS": "Enter the number of planned weekds",
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Enter the number of planned months",
+    "ocb.layout.basket.tooltip": "Payment basket",
 
     "ocb.payments.batch_processing.label": "Batch Processing",
-
-    "ocb.layout.basket.tooltip": "Payment basket",
+    "ocb.payments.batch_processing.personal": "Personnal/Ordering Custommer",
+    "ocb.payments.batch_processing.beneficiarylist": "Beneficiary List",
+    "ocb.payments.batch_processing.accountnumber": "Account number",
+    "ocb.payments.batch_processing.name": "Name",
+    "ocb.payments.batch_processing.ocbbranch": "OCB branch",
+    "ocb.payments.batch_processing.availablefunds": "Available funds",
+    "ocb.payments.batch_processing.remainingdailylimit": "Remaining Daily Limit",
+    "ocb.payments.batch_processing.transactiontype": "Transaction Type",
+    "ocb.payments.batch_processing.subaccount": "Sub account",
+    "ocb.payments.batch_processing.uploadfile": "Upload file",
+    "ocb.payments.batch_processing.beneficiarylist": "Beneficiary list",
+    "ocb.payments.batch_processing.upload": "Upload",
 
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",

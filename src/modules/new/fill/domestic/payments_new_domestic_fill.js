@@ -41,9 +41,10 @@ angular.module('ocb-payments')
             if($scope.paymentForm){
                 $scope.paymentForm.amount.$validate();
             }
+
         }
 
-        $scope.onSenderAccountSelect = function () {
+       $scope.onSenderAccountSelect = function () {
             recalculateCurrency();
             $scope.validateBalance();
             recipientFilter.filter();
