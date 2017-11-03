@@ -60,7 +60,13 @@ angular.module('ocb-payments')
         $scope.table = {
             tableControl: undefined, // will be set by the table
             tableConfig: new bdTableConfig({
-                placeholderText: translate.property('account.blockades.search.empty_list')
+                placeholderText: translate.property('account.blockades.search.empty_list'),
+                checkBoxIBAction: function(length, item, idx) {
+                    // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
+                    //     url = exportService.prepareHref(downloadLink);
+                    // fileDownloadService.startFileDownload(url);
+                    console.log("++++:" + item + "-" + item.amount);
+                }
             }),
             tableData: {
                 getData: getBills//getBlockades
@@ -79,10 +85,18 @@ angular.module('ocb-payments')
                 tableControl: undefined, // will be set by the table
                 tableConfig: new bdTableConfig({
                     placeholderText: translate.property('account.blockades.search.empty_list'),
-                    downloadFile: function(item) {
-                        var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
-                            url = exportService.prepareHref(downloadLink);
-                        fileDownloadService.startFileDownload(url);
+                    checkBoxIBAction: function(length, item, idx) {
+                        // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
+                        //     url = exportService.prepareHref(downloadLink);
+                        // fileDownloadService.startFileDownload(url);
+                        if ($scope.payment.items[item.orderId] === undefined) {
+                            $scope.payment.items[item.orderId] = {};
+                            $scope.payment.items[item.orderId].count = 1;
+                            $scope.payment.items[item.orderId].amount = item.amount;
+                        } else {
+                            $scope.payment.items[item.orderId].count += 1;
+                        }
+                        console.log("++++:" + item + "-" + length + "-" + idx + "-" + item.amount + "-" + ($scope.payment.items[item.orderId].count % 2) + "-" + (($scope.payment.items[item.orderId].count % 2)) * $scope.payment.items[item.orderId].amount);
                     }
                 }),
                 tableData: {
