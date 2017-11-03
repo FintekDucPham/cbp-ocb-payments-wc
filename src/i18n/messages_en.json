@@ -686,6 +686,15 @@
     "ocb.payments.batch_processing.beneficiarylist": "Beneficiary list",
     "ocb.payments.batch_processing.upload": "Upload",
 
+    "ocb.payments.batch_processing.table.fullname": "Full Name",
+    "ocb.payments.batch_processing.table.accountno": "Account No",
+    "ocb.payments.batch_processing.table.bankcode": "Bank Code",
+    "ocb.payments.batch_processing.table.amount": "Amount",
+    "ocb.payments.batch_processing.table.remarks": "Remarks",
+    "ocb.payments.batch_processing.table.total": "Total",
+
+
+
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
     "ocb.ng_dropdown_multiselect.option.selectionCount":"selected",

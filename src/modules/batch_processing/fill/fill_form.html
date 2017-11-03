@@ -1,5 +1,19 @@
+<style>
+    .account-collapse-item {
+        float: left;
+        width: 100%;
+        background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
+        background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
+        background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
+        box-shadow: 0 0 15px 0 rgba(0,0,0,0.11);
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
 <div ng-controller="PaymentsBatchProcessingStep1Controller">
-    <div >
+    <div class="account-collapse-item">
         <span ><b>{{ ::'ocb.payments.batch_processing.personal' | translate }}</b></span>
         <bd-item-property label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
             <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
@@ -36,13 +50,13 @@
         <bd-item-property ng-if="selectedAccount"
                           label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <bd-amount amount="selectedAccount.accessibleAssets"
-                       currency="{{ selectedAccount.currency }}">???</bd-amount>
+                       currency="{{ selectedAccount.currency }}"></bd-amount>
         </bd-item-property>
 
         <bd-item-property ng-if="selectedAccount"
                           label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <bd-amount amount="selectedAccount.accessibleAssets"
-                       currency="{{ selectedAccount.currency }}">???</bd-amount>
+                       currency="{{ selectedAccount.currency }}???"></bd-amount>
         </bd-item-property>
 
         <bd-item-property label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
@@ -59,7 +73,7 @@
             </ui-select>
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'ocb.payments.batch_processing.subaccount' | translate | uppercase }}">
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.subaccount' | translate  }}">
             <ui-select ng-model="selectedSubAccount"
                        theme="bootstrap"
                        on-select="onSubAccountChanged($select.selected)"
@@ -73,7 +87,7 @@
             </ui-select>
         </bd-item-property>
     </div>
-    <div >
+    <div class="account-collapse-item">
         <span ><b>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</b></span>
         <bd-item-property label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
             <div class="input-group">
@@ -85,7 +99,46 @@
         </bd-item-property>
     </div>
 
+    <!--Table section-->
+    <div class="account-collapse-item">
+        <!--<rb-content-view>-->
+            <!--<bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>-->
+            <!--<div class="table">-->
+                <bd-table
+                        bd-type="typeBP"
+                        bd-table-params="table.tableConfig"
+                        bd-table-control="table.tableControl"
+                        bd-table-data="table.tableData"
+                        bd-table-promise="testDataPromise"
+                        bd-table-meta="{
+                            'first':{
+                                'title': '##ocb.payments.batch_processing.table.fullname',
+                                'data': 'fullName'
+                            },
+                            'second':{
+                                'title': '##ocb.payments.batch_processing.table.accountno',
+                                'data': 'accountNo'
+                            },
+                            'third':{
+                                'title': '##ocb.payments.batch_processing.table.bankcode',
+                                'data': 'bankCode'
+                            },
+                            'fourth':{
+                                'title': '##ocb.payments.batch_processing.table.amount',
+                                'data': 'amount'
+                            },
+                            'fifth':{
+                                'title': '##ocb.payments.batch_processing.table.remarks',
+                                'data': 'description'
+                            }
 
+                        }"
+                >
+                    details of table
+                </bd-table>
+            <!--</div>-->
+        <!--</rb-content-view>-->
+    </div>
 </div>
 
 

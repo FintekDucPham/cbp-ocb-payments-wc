@@ -12,7 +12,8 @@ angular.module('ocb-payments')
     .controller('PaymentsBatchProcessingStep1Controller'
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService,
-                                                              rbBeforeTransferManager) {
+                                                              rbBeforeTransferManager,
+                                bdTableConfig) {
 
             $scope.senderSelectParams = new rbAccountSelectParams({});
             $scope.senderSelectParams.payments = true;
@@ -40,7 +41,7 @@ angular.module('ocb-payments')
                 return lodash.find(list, {
                     accountId: accountId,
                 });
-            }
+            };
 
             $scope.onTransactionTypeChanged = function (index) {
                 console.log("index:" + index);
@@ -54,7 +55,7 @@ angular.module('ocb-payments')
 
             $scope.onSubAccountChanged = function (index) {
                 console.log("index:" + index);
-            }
+            };
 
             $scope.subAccounts = [
                 "No sub account",
@@ -72,7 +73,56 @@ angular.module('ocb-payments')
                     result.unshift(search);
                 }
                 return result;
-            }
+            };
+
+            $scope.table = {
+                tableConfig: new bdTableConfig({
+                    placeholderText: $filter("translate")("ocb.payments.batch_processing.beneficiarylis")
+
+                }),
+                tableData: {
+                    getData:function ( defer, $params) {
+                        defer.resolve($scope.tableTestData.content);
+                        $params.pageCount = $scope.tableTestData.totalPages;
+
+                    }
+                },
+                tableControl: undefined
+            };
+            $scope.tableTestData = {
+                content: [
+                    {
+                        fullName:"Mr. A",
+                        accountNo: "ACBD",
+                        bankCode:"ACBD",
+                        amount:1000000,
+                        description:"Test 1"
+                    },
+                    {
+                        fullName:"Mr. B",
+                        accountNo: "ACBC",
+                        bankCode:"ACBC",
+                        amount:2000000,
+                        description:"Test 2"
+                    },
+                    {
+                        fullName:"Mr. C",
+                        accountNo: "ACBK",
+                        bankCode:"ACBK",
+                        amount:3000000,
+                        description:"Test C"
+                    }
+                ],
+                totalElements:1,
+                pageNumber:0,
+                pageSize:0,
+                totalPages:0,
+                sortOrder: null,
+                sortDirection: null,
+                firstPage: false,
+                lastPage:true,
+                numberOfElements: 3
+            };
 
 
         });
