@@ -691,7 +691,9 @@
     "ocb.payments.batch_processing.table.bankcode": "Bank Code",
     "ocb.payments.batch_processing.table.amount": "Amount",
     "ocb.payments.batch_processing.table.remarks": "Remarks",
-    "ocb.payments.batch_processing.table.total": "Total",
+    "ocb.payments.batch_processing.table.totalamountinfigures": "Total amount in figures",
+    "ocb.payments.batch_processing.table.totalamountinwords": "Total amount in words",
+    "ocb.payments.batch_processing.table.totalnumberoflines": "Total number of lines",
 
 
 

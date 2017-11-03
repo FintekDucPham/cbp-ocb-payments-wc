@@ -1,7 +1,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.batch_processing.fill', {
-            url: "/fill/:accountId",
+            url: "/fill/",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/batch_processing/fill/fill_form.html",
             controller: "PaymentsBatchProcessingStep1Controller",
             data: {
@@ -13,7 +13,7 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig) {
+                                bdTableConfig, ocbConvert) {
 
             $scope.senderSelectParams = new rbAccountSelectParams({});
             $scope.senderSelectParams.payments = true;
@@ -21,6 +21,7 @@ angular.module('ocb-payments')
             $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
                 return accounts;
             };
+
 
             $scope.onSenderAccountSelect = function (accountId) {
                 $scope.paymentsBatchProcessingForm.items.senderAccountId = accountId;
@@ -123,6 +124,11 @@ angular.module('ocb-payments')
                 lastPage:true,
                 numberOfElements: 3
             };
+            $scope.totalamountinfigures = 0;
+            $scope.totalamountinwords =  ocbConvert.convertNumberToText(2365000, false);
+            $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(2365000, true);
+
+            $scope.totalnumberoflines = 3;
 
 
         });
