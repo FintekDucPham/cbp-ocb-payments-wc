@@ -15,6 +15,13 @@ angular.module('ocb-payments')
                                                               rbBeforeTransferManager,
                                 bdTableConfig, ocbConvert) {
 
+            $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+                actions.proceed();
+                //
+                //
+                console.log("Fintek: Move next");
+            });
+/*
             $scope.senderSelectParams = new rbAccountSelectParams({});
             $scope.senderSelectParams.payments = true;
             $scope.senderSelectParams.showCustomNames = true;
@@ -48,7 +55,7 @@ angular.module('ocb-payments')
                 console.log("index:" + index);
             };
 
-            $scope.transaction_types = [
+             $scope.transaction_types = [
                 "Internal / Nội Bộ",
                 "External / Liên Ngân Hàng"
             ];
@@ -129,7 +136,7 @@ angular.module('ocb-payments')
             $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(2365000, true);
 
             $scope.totalnumberoflines = 3;
-
+*/
 
         });
 
