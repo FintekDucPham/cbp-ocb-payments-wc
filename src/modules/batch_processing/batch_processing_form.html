@@ -1,0 +1,11 @@
+<rb-content-view class="form">
+    <bd-header >{{::"ocb.payments.batch_processing.label"|translate}}</bd-header>
+    <bd-form-panel class="statements_cancel">
+        <rb-multistep-form
+                bd-active-step="activeStep"
+                rb-step-params="paymentsBatchProcessingFormParams" >
+            <div ui-view></div>
+        </rb-multistep-form>
+
+    </bd-form-panel>
+</rb-content-view>

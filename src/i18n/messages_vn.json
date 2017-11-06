@@ -17,7 +17,9 @@
     "payments.submenu.options.list.header": "List of payments",
     "payments.submenu.options.new.header": "Domestic transfer",
     "payments.submenu.options.new_internal.header": "Own transfer",
+
     "payments.submenu.options.new_bill.header": "Bill payment",
+
 
     "ocb.payments.widget.view.new_payment": "New payment",
     "ocb.payments.widget.content.total_payments": "Total payments",
@@ -62,11 +64,17 @@
 
     "ocb.payments.recipient.new.error.exist":"A recipient with that account number is already present on the list.",
     "ocb.payments.new_internal.label.header": "Own transfer",
+
     "ocb.payments.new_bill.label.header": "Bill payment",
     "ocb.payments.new.payment_type": "Transfer type",
     "ocb.payments.new.types.loading": "",
     "ocb.payments.new.types.INTERNAL": "Transfer to own account",
     "ocb.payments.new.types.BILL": "Transfer to own account",
+
+    "ocb.payments.new.payment_type": "Transfer type",
+    "ocb.payments.new.types.loading": "",
+    "ocb.payments.new.types.INTERNAL": "Transfer to own account",
+
     "ocb.payments.new.types.OWN": "Own transfer",
     "ocb.payments.new.types.DOMESTIC": "Domestic transfer",
     "ocb.payments.new.types.STANDING": "Standing order",
@@ -175,6 +183,7 @@
     "ocb.payments.new.internal.verify.description": "Description",
     "ocb.payments.new.internal.verify.execution_date": "Execution date",
 
+
     "ocb.payments.new.bill.fill.default_description": "Transfer of funds",
     "ocb.payments.new_bill.label.header.customer": "Personal / Ordering Customer",
     "ocb.payments.new.bill.fill.sender_account": "Account number",
@@ -214,6 +223,7 @@
      "ocb.payments.new.bill.verify.amount": "Amount",
      "ocb.payments.new.bill.verify.description": "Description",
      "ocb.payments.new.bill.verify.execution_date": "Execution date",
+
 
     "ocb.payments.new.foreign.fill.transfer_cost.label": "Transfer costs",
 
@@ -715,6 +725,29 @@
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Enter the number of planned months",
     "ocb.layout.basket.tooltip": "Payment basket",
 
+
+    "ocb.payments.batch_processing.label": "Batch Processing",
+    "ocb.payments.batch_processing.personal": "Personnal/Ordering Custommer",
+    "ocb.payments.batch_processing.beneficiarylist": "Beneficiary List",
+    "ocb.payments.batch_processing.accountnumber": "Account number",
+    "ocb.payments.batch_processing.name": "Name",
+    "ocb.payments.batch_processing.ocbbranch": "OCB branch",
+    "ocb.payments.batch_processing.availablefunds": "Available funds",
+    "ocb.payments.batch_processing.remainingdailylimit": "Remaining Daily Limit",
+    "ocb.payments.batch_processing.transactiontype": "Transaction Type",
+    "ocb.payments.batch_processing.subaccount": "Sub account",
+    "ocb.payments.batch_processing.uploadfile": "Upload file",
+    "ocb.payments.batch_processing.beneficiarylist": "Beneficiary list",
+    "ocb.payments.batch_processing.upload": "Upload",
+
+    "ocb.payments.batch_processing.table.fullname": "Full Name",
+    "ocb.payments.batch_processing.table.accountno": "Account No",
+    "ocb.payments.batch_processing.table.bankcode": "Bank Code",
+    "ocb.payments.batch_processing.table.amount": "Amount",
+    "ocb.payments.batch_processing.table.remarks": "Remarks",
+    "ocb.payments.batch_processing.table.total": "Total",
+
+
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
     "ocb.ng_dropdown_multiselect.option.selectionCount":"selected",
@@ -722,5 +755,17 @@
     "ocb.ng_dropdown_multiselect.option.buttonDefaultText":"All",
     "ocb.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
     "ocb.ng_dropdown_multiselect.option.waiting":"Waiting",
+
     "EOF": ""
 }
+
+    "EOF": "",
+
+    "ocb.payments.pending.label": "CB Pending Transaction",
+    "ocb.payments.pending.transactionInitiationDate": "Transaction initiation date",
+    "ocb.payments.pending.creator": "Creator",
+    "ocb.payments.pending.amount": "Amount",
+    "ocb.payments.pending.status": "Status",
+    "ocb.payments.pending.approve": "Approve"
+}
+

@@ -88,17 +88,25 @@ angular.module('ocb-payments', [
                 },
                 {
                     id: "payments.basket.fill",
-                    label: 'ocb.payments.basket.label',
+                    label: "ocb.payments.basket.label",
                     icon: "ocb-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 9
                 },
                 {
+
                     id: "payments.new_bill.fill",
                     label: 'payments.submenu.options.new_bill.header',
                     icon: "ocb-icons ocb_przelew",
                     action: "payments.new_bill.fill",
                     priority: 9
+                },
+                {
+                    id: "payments.batch_processing",
+                    label: "ocb.payments.batch_processing.label",
+                    icon: "ocb-icons basket",
+                    action: "payments.batch_processing.fill",
+                    priority: 11
                 }
                 // {
                 //     id: "payments.bill.new",
