@@ -69,7 +69,7 @@
             {{ payment.items.senderAccount.accessibleAssets }}
         </bd-item-property>
         </div>
-        <rb-add-to-beneficiary-select-test ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select-test>
+        <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
 
     </div>
     <div class ="pane-bd pane-above" ng-show="billInfoSearch">
