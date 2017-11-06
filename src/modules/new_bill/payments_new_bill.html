@@ -5,11 +5,11 @@
 
         <bd-form-panel class="bd-form-panel--responsive">
 
-            <rb-multistep-form-test bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
+            <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams">
                 <div ng-if="payment.initData.promise.$$state.status!==0">
                     <div ui-view></div>
                 </div>
-            </rb-multistep-form-test>
+            </rb-multistep-form>
 
         </bd-form-panel>
     </section>
