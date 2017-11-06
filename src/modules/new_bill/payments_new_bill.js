@@ -78,10 +78,13 @@ angular.module('ocb-payments')
             $scope.$broadcast('clearForm');
         };
         $scope.billInfoSearch = false;
-        $scope.showBillInfoSearch = function(searchBool, nextPool ) {
-            $scope.billInfoSearch = !$scope.billInfoSearch;
-            $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
-            $scope.payment.rbPaymentsStepParams.visibility.next = nextPool;//true;
+        $scope.payment.formData.billCode = undefined;
+        $scope.showBillInfoSearch = function(searchBool, nextBool ) {
+            if ($scope.payment.formData.billCode !== undefined) {
+                $scope.billInfoSearch = !$scope.billInfoSearch;
+                $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
+                $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;//true;
+            }
         };
 
         var alreadySet = false;

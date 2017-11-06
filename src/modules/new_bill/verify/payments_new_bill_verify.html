@@ -49,7 +49,7 @@
 
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{::'ocb.payments.new.bill.verify.execution_date'|translate}}">
-            {{payment.formData.realizationDate | date:'shortDate' }}
+            {{payment.formData.senderCustomer.fullName }}
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_service_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">

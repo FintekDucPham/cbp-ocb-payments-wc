@@ -18,18 +18,18 @@
                                rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
-            {{ payment.items.senderAccount.accountName }}
+            {{ payment.formData.senderCustomer.fullName }}
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.ocbBranch'|translate}}">
-            {{ payment.items.senderService.serviceId }}
+            {{ payment.formData.senderCustomer.branch }}
         </bd-item-property>
         <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
                           label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+            <bd-amount amount="payment.items.senderAccount.workingAvailableFunds"
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
-            5 000 000 VND
+            {{payment.items.senderAccount.limitReference}}
         </bd-item-property>
     </div>
     <div class ="pane-above">
@@ -42,14 +42,15 @@
         </rb-service-select>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
             <div class="bd-item-property__value--primary">
-                <input type="text"
-                       name="billCode"
-                       class="input-field"
-                       ng-min="0.01"
-                       rb-number-type-input
-                       ng-model="payment.formData.billCode"
-                       required
-                       placeholder=""
+                <input      ng-disabled="billInfoSearch"
+                            type="text"
+                           name="billCode"
+                           class="input-field"
+                           ng-min="0.01"
+                           rb-number-type-input
+                           ng-model="payment.formData.billCode"
+                           required
+                           placeholder=""
                 />
             </div>
             <eb-validation-messages eb-name="billCode">
@@ -77,13 +78,13 @@
     </div>
     <div class="pane-bd deposit-form" ng-if="billInfoSearch && updateServiceId !=='CAP'">
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoName'|translate}}">
-                {{ payment.items.senderAccount.accountName }}
+                {{ payment.formData.senderCustomer.fullName }}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoAddress'|translate}}">
-                {{ payment.items.senderAccount.accountName }}
+                {{ payment.formData.senderCustomer.address.house + ' ' + payment.formData.senderCustomer.address.street + ' ' + payment.formData.senderCustomer.address.town  }}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
-                032023007753
+                {{payment.formData.billCode}}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billMeterNumber'|translate}}">
                 {{ "1027"}}

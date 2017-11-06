@@ -13,11 +13,6 @@ angular.module('ocb-payments')
                                                            bdTableConfig, blockadesService, billPaymentService) {
 
         var senderAccountInitDefer = $q.defer();
-         // $scope.tmp = function() {
-         //     billPaymentService.getCustomer({"customerId": "12123"}).then(function (customer) {
-         //         $scope.payment.formData.customer = customer;
-         //     })
-         // };
         $scope.remote = {
             model_from:{
                 initLoadingDefer:senderAccountInitDefer,
@@ -56,6 +51,11 @@ angular.module('ocb-payments')
             });
             $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
+        // 05 services call promise auto.
+        billPaymentService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
+                $scope.payment.formData.senderCustomer = customerDictionary.content[0];
+            });
+
         // $scope.billInfoSearch = false;
         // $scope.showBillInfoSearch = function() {
         //     $scope.billInfoSearch = !$scope.billInfoSearch;
@@ -93,14 +93,29 @@ angular.module('ocb-payments')
                         // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
                         //     url = exportService.prepareHref(downloadLink);
                         // fileDownloadService.startFileDownload(url);
-                        if ($scope.payment.items[item.orderId] === undefined) {
-                            $scope.payment.items[item.orderId] = {};
-                            $scope.payment.items[item.orderId].count = 1;
-                            $scope.payment.items[item.orderId].amount = item.amount;
+                        if ($scope.payment.items.checkBoxList === undefined) {
+                            // $scope.payment.items[item.orderId] = {};
+                            // $scope.payment.items[item.orderId].count = 1;
+                            // $scope.payment.items[item.orderId].amount = item.amount;
+                            $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
+                            $scope.payment.items.checkBoxList[idx].amount = item.amount;
+                            $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                         } else {
-                            $scope.payment.items[item.orderId].count += 1;
+                           // $scope.payment.items[item.orderId].count += 1;
+                            $scope.payment.items.checkBoxList[idx].amount = item.amount;
+                            $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                         }
-                        console.log("++++:" + item + "-" + length + "-" + idx + "-" + item.amount + "-" + ($scope.payment.items[item.orderId].count % 2) + "-" + (($scope.payment.items[item.orderId].count % 2)) * $scope.payment.items[item.orderId].amount);
+                        //console.log("++++:" + item + "-" + length + "-" + idx + "-" + item.amount + "-" + ($scope.payment.items[item.orderId].count % 2) + "-" + (($scope.payment.items[item.orderId].count % 2)) * $scope.payment.items[item.orderId].amount);
+                        for (var i = 0; i < $scope.payment.items.checkBoxList.length; ++i) {
+                            console.log("+++:" + $scope.payment.items.checkBoxList.length + i +  $scope.payment.items.checkBoxList[i] );
+
+                        }
+                        angular.forEach($scope.payment.items.checkBoxList,function(val,key){
+                            console.log(key + val);
+                            angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
+                                console.log(k1+":"+v1);
+                            });
+                        });
                     }
                 }),
                 tableData: {
@@ -111,6 +126,7 @@ angular.module('ocb-payments')
         };
         $scope.setSelectedAccount = function(selectedAccount) {
             $scope.selectedAccount = selectedAccount;
+
         };
 
         $scope.promise = accountsService.search({pageSize: 10000, productList: "ACCOUNT_UNCLEARED_FROM_LIST"}).then(function(accountList) {
@@ -415,9 +431,6 @@ angular.module('ocb-payments')
         $scope.senderSelectParams.payments = true;
         $scope.senderSelectParams.showCustomNames = true;
         $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
-            billPaymentService.getCustomer({customerId: "12123"}).then(function (customer) {
-                        $scope.payment.formData.customer = customer;
-                    });
             return lodash.filter(accounts, function(account){
                 return isAccountInvestmentFulfilsRules(account);
             });
