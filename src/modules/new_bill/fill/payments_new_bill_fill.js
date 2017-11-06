@@ -13,7 +13,11 @@ angular.module('ocb-payments')
                                                            bdTableConfig, blockadesService, billPaymentService) {
 
         var senderAccountInitDefer = $q.defer();
-
+         // $scope.tmp = function() {
+         //     billPaymentService.getCustomer({"customerId": "12123"}).then(function (customer) {
+         //         $scope.payment.formData.customer = customer;
+         //     })
+         // };
         $scope.remote = {
             model_from:{
                 initLoadingDefer:senderAccountInitDefer,
@@ -69,7 +73,7 @@ angular.module('ocb-payments')
                 }
             }),
             tableData: {
-                getData: getBills//getBlockades
+                getData: getBill//getBlockades
             },
             newSearch: true
         };
@@ -100,7 +104,7 @@ angular.module('ocb-payments')
                     }
                 }),
                 tableData: {
-                    getData: getBills//getBlockades
+                    getData: getBill//getBlockades
                 },
                 newSearch: true
             };
@@ -135,7 +139,7 @@ angular.module('ocb-payments')
         $scope.noDataLoaded = function() {
             return dataNotLoading() && $scope.noData();
         };
-        function getBills(deferred, $params) {
+        function getBill(deferred, $params) {
             if($scope.table.newSearch){
                 $scope.table.newSearch = false;
                 //$scope.table.tableControl.invalidate();
@@ -148,15 +152,15 @@ angular.module('ocb-payments')
                 deferred.resolve([]);
                 return;
             }
-            $scope.billsPromise = billPaymentService.getBills({
+            $scope.billsPromise = billPaymentService.getBill({
                 providerId: "123456",
                 billCode: "654321",
                 pageNumber: $params.currentPage,
                 pageSize:pageSize
             }).then(function(billsList) {
                 $params.pageCount = billsList.totalPages;
-                deferred.resolve(billsList.content[0].billDetail);
-                $scope.table.anyData = billsList.content[0].billDetail.length > 0;
+                deferred.resolve(billsList.content[0].billItem);
+                $scope.table.anyData = billsList.content[0].billItem.length > 0;
             });
         }
         function getBlockades(deferred, $params) {
@@ -403,13 +407,17 @@ angular.module('ocb-payments')
         }
 
         function isAccountInvestmentFulfilsRules(account){
-            return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0 || account.actions.indexOf('create_between_own_accounts_transfer') > -1;
+            //return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0 || account.actions.indexOf('create_between_own_accounts_transfer') > -1;
+            return account;
         }
 
         $scope.senderSelectParams = new rbAccountSelectParams({});
         $scope.senderSelectParams.payments = true;
         $scope.senderSelectParams.showCustomNames = true;
         $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
+            billPaymentService.getCustomer({customerId: "12123"}).then(function (customer) {
+                        $scope.payment.formData.customer = customer;
+                    });
             return lodash.filter(accounts, function(account){
                 return isAccountInvestmentFulfilsRules(account);
             });
