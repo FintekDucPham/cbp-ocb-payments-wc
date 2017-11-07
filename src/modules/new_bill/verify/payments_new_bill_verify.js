@@ -95,11 +95,21 @@ angular.module('ocb-payments')
                 // else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
                 //     $scope.payment.token.model.$proceed();
                 // }
-                transferBillService.create()
-                    var createTransfer = function(){
-                        transferService.create('bill', angular.extend({
+               // transferBillService.create()
+               //  $scope.payment.formData = {
+               //      "businessLine" : "RETAIL",
+               //      "billCode" : "123456",
+               //      "serviceCode" : "WATER",
+               //      "providerCode" : "CNTA",
+               //      "createdDateTime" : "2017-11-07 02:57:00",
+               //      "amount" : "200000",
+               //      "currency" : "VND",
+               //      "description" : "No description"
+               //  };
+                   // var createTransfer = function(){
+                        transferBillService.create('bill', angular.extend({
                             "remitterId": 0
-                        }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (status) {
+                        }, $scope.payment.formData), $scope.payment.operation.link || false ).then(function (status) {
                             // $scope.payment.transferId = transfer.referenceId;
                             // $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                             // $scope.payment.holiday = transfer.holiday;
@@ -124,7 +134,7 @@ angular.module('ocb-payments')
                             // }
                             console.log("+++ex:" + errorReason);
                         });
-                    };
+                   // };
                 actions.proceed();
             }
         });

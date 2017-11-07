@@ -113,6 +113,7 @@ angular.module('ocb-payments')
                         });
                         $scope.payment.items.totalBill = totalAmount;
                         $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.items.totalBill, true);
+                        console.log("-0-"+ $scope.table.tableData);
                     }
                 }),
                 tableData: {
@@ -312,10 +313,10 @@ angular.module('ocb-payments')
                 //         });
                 //     };
 
-                    var fakeControl = {
-                        done: createTransfer
-                    };
-                    rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, fakeControl).then(createTransfer);
+                    // var fakeControl = {
+                    //     done: createTransfer
+                    // };
+                    // rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, fakeControl).then(createTransfer);
                 }
            }
         });
