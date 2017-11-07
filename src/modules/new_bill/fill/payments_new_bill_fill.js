@@ -10,7 +10,7 @@ angular.module('ocb-payments')
         });
     })
     .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
-                                                           bdTableConfig, blockadesService, billPaymentService, ocbConvert) {
+                                                           bdTableConfig, blockadesService, transferBillService, ocbConvert) {
 
 
         var senderAccountInitDefer = $q.defer();
