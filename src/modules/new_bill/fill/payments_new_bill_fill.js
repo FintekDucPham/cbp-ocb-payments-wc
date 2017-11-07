@@ -10,7 +10,7 @@ angular.module('ocb-payments')
         });
     })
     .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
-                                                           bdTableConfig, blockadesService, billPaymentService) {
+                                                           bdTableConfig, blockadesService, billPaymentService, ocbConvert) {
 
         var senderAccountInitDefer = $q.defer();
         $scope.remote = {
@@ -90,32 +90,28 @@ angular.module('ocb-payments')
                 tableConfig: new bdTableConfig({
                     placeholderText: translate.property('account.blockades.search.empty_list'),
                     checkBoxIBAction: function(length, item, idx) {
-                        // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
-                        //     url = exportService.prepareHref(downloadLink);
-                        // fileDownloadService.startFileDownload(url);
                         if ($scope.payment.items.checkBoxList === undefined) {
-                            // $scope.payment.items[item.orderId] = {};
-                            // $scope.payment.items[item.orderId].count = 1;
-                            // $scope.payment.items[item.orderId].amount = item.amount;
                             $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
                             $scope.payment.items.checkBoxList[idx].amount = item.amount;
                             $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                            $scope.payment.items.checkBoxList[idx].userClick = 1;
                         } else {
-                           // $scope.payment.items[item.orderId].count += 1;
-                            $scope.payment.items.checkBoxList[idx].amount = item.amount;
+                            $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? ($scope.payment.items.checkBoxList[idx].userClick  + 1) : 1;
+                            $scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
                             $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                         }
-                        //console.log("++++:" + item + "-" + length + "-" + idx + "-" + item.amount + "-" + ($scope.payment.items[item.orderId].count % 2) + "-" + (($scope.payment.items[item.orderId].count % 2)) * $scope.payment.items[item.orderId].amount);
-                        for (var i = 0; i < $scope.payment.items.checkBoxList.length; ++i) {
-                            console.log("+++:" + $scope.payment.items.checkBoxList.length + i +  $scope.payment.items.checkBoxList[i] );
-
-                        }
+                        var totalAmount = 0;
                         angular.forEach($scope.payment.items.checkBoxList,function(val,key){
-                            console.log(key + val);
-                            angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
-                                console.log(k1+":"+v1);
-                            });
+                            totalAmount += ((val.amount !== undefined) ? val.amount : 0);
+                            // console.log(key + val);
+                            // console.log(val.amount);
+                            // console.log("-+-" + totalAmount);
+                            // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
+                            //     console.log(k1+":"+v1);
+                            // });
                         });
+                        $scope.payment.items.totalBill = totalAmount;
+                        $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.items.totalBill, true);
                     }
                 }),
                 tableData: {

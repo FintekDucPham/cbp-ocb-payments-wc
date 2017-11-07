@@ -87,10 +87,10 @@
                 {{payment.formData.billCode}}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billMeterNumber'|translate}}">
-                {{ "1027"}}
+                {{ payment.formData.senderCustomer.meterNumber}}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billPhoneNumber'|translate}}">
-                {{"0983323567"}}
+                {{payment.formData.senderCustomer.phoneNumber}}
             </bd-item-property>
     </div>
     <div class="pane-bd deposit-form" ng-if="billInfoSearch && updateServiceId !=='DTCDCD'">
