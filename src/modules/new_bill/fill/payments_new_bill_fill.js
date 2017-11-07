@@ -12,6 +12,7 @@ angular.module('ocb-payments')
     .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
                                                            bdTableConfig, blockadesService, billPaymentService, ocbConvert) {
 
+
         var senderAccountInitDefer = $q.defer();
         $scope.remote = {
             model_from:{
@@ -52,7 +53,7 @@ angular.module('ocb-payments')
             $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
         // 05 services call promise auto.
-        billPaymentService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
+        transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
                 $scope.payment.formData.senderCustomer = customerDictionary.content[0];
             });
 
@@ -164,7 +165,7 @@ angular.module('ocb-payments')
                 deferred.resolve([]);
                 return;
             }
-            $scope.billsPromise = billPaymentService.getBill({
+            $scope.billsPromise = transferBillService.getBill({
                 providerId: "123456",
                 billCode: "654321",
                 pageNumber: $params.currentPage,
