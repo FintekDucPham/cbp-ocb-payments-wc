@@ -29,25 +29,7 @@ angular.module('ocb-payments')
 
 
             $scope.onSenderAccountSelect = function (accountId) {
-/*                $scope.paymentsBatchProcessingForm.items.senderAccountId = accountId;
-                console.log("========onSenderAccountSelect:" + accountId);
-                console.log("========senderSelectParams:" + JSON.stringify($scope.senderSelectParams));
-                console.log("========$stateParams:");
-                console.log(JSON.stringify($stateParams));
-                console.log("========AccountList:");
-                console.log(JSON.stringify(this.payment.bacthprocessing.accountList));
-                console.log("========SelectedAccount:");
-                $scope.selectedAccount = this.selectedAccount;
 
-                console.log(JSON.stringify($scope.selectedAccount));*/
-                console.log(t);
-            };
-
-            function getSelectedAccount(accountId) {
-                var list = this.payment.bacthprocessing.accountList;
-                return lodash.find(list, {
-                    accountId: accountId,
-                });
             };
 
             $scope.onTransactionTypeChanged = function (selectedItem) {
@@ -58,7 +40,6 @@ angular.module('ocb-payments')
                 for(var i=0; i<bankCodeRowElements.length; i++) {
                     bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
                 }
-
             };
 
              $scope.transaction_types = [
@@ -71,20 +52,34 @@ angular.module('ocb-payments')
                      name : "External / Liên Ngân Hàng"
                  }
             ];
-            $scope.selectedTransactionType = $scope.transaction_types[0];
+            $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
 
             $scope.onSubAccountChanged = function (index) {
                 console.log("index:" + index);
             };
-
             $scope.subAccounts = [
-                "No sub account",
-                "Sub-Account 1",
-                "Sub-Account 2",
-                "...",
-                "Sub-Account 3",
+                {
+                    index: 1,
+                    name: "No"
+                },
+                {
+                    index: 2,
+                    name: "Sub-Account 1"
+                },
+                {
+                    index: 3,
+                    name: "Sub-Account 2"
+                },
+                {
+                    index: 4,
+                    name: "..."
+                },
+                {
+                    index: 5,
+                    name: "Sub-Account n"
+                }
             ];
-            $scope.paymentsBatchProcessingForm.formData.selectedAccount = $scope.subAccounts[0];
+            $scope.paymentsBatchProcessingForm.formData.selectedSubAccount= $scope.subAccounts[0];
             $scope.selectedFilename ="Fintek";
 
             $scope.selectionQuerry = function (search, mList) {

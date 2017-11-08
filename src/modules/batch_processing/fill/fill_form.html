@@ -61,7 +61,7 @@
             </bd-item-property>
 
             <bd-item-property label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
-                <ui-select ng-model="paymentsBatchProcessingForm.formData.selectedTransactionType.name"
+                <ui-select ng-model="paymentsBatchProcessingForm.formData.selectedTransactionType"
                            theme="bootstrap"
                            on-select="onTransactionTypeChanged($select.selected)"
                            required>
@@ -80,10 +80,10 @@
                            on-select="onSubAccountChanged($select.selected)"
                            required>
                     <ui-select-match placeholder="Sub Account">
-                        {{$select.selected}}
+                        {{$select.selected.name}}
                     </ui-select-match>
-                    <ui-select-choices repeat="subAccount in selectionQuerry($select.search, subAccounts) | filter: $select.search">
-                        <div ng-bind="subAccount"></div>
+                    <ui-select-choices repeat="subAccount in selectionQuerry($select.search, subAccounts) | filter: $select.search.name">
+                        <div ng-bind="subAccount.name"></div>
                     </ui-select-choices>
                 </ui-select>
             </bd-item-property>
