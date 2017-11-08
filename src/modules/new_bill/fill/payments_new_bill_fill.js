@@ -23,6 +23,7 @@ angular.module('ocb-payments')
             model_to:{}
         };
         //$scope.BILL_CODE = validationRegexp('NEW_MOBILE_PASSWORD');
+        $scope.BILL_CODE = validationRegexp('BILL_CODE');
         if ($stateParams.payment && $stateParams.payment.beneficiaryAccountNo) {
             $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
         }
@@ -53,9 +54,9 @@ angular.module('ocb-payments')
             $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
         // 05 services call promise auto.
-        transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
-                $scope.payment.formData.senderCustomer = customerDictionary.content[0];
-            });
+        // transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
+        //         $scope.payment.formData.senderCustomer = customerDictionary.content[0];
+        //     });
 
         // $scope.billInfoSearch = false;
         // $scope.showBillInfoSearch = function() {
@@ -468,7 +469,11 @@ angular.module('ocb-payments')
             if (accountId == $scope.payment.formData.beneficiaryAccountId) {
                 $scope.payment.formData.beneficiaryAccountId = undefined;
             }
-            $scope.recipientSelectParams.update(accountId);
+            //$scope.recipientSelectParams.update(accountId);
+
+            transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
+                $scope.payment.formData.senderCustomer = customerDictionary.content[0];
+            });
         };
         $scope.updateServiceId = "12345";
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);

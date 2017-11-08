@@ -23,7 +23,7 @@ angular.module('ocb-payments')
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
         $scope.CURRENT_DATE = CURRENT_DATE;
-
+        $scope.billPayment = "billPayment";
         bdMainStepInitializer($scope, 'payment', lodash.extend({
             formName: 'paymentForm',
             options: {
@@ -76,6 +76,7 @@ angular.module('ocb-payments')
             }
             //$scope.payment.items = {};
             $scope.$broadcast('clearForm');
+            //$scope.billInfoSearch = false;
         };
         $scope.billInfoSearch = false;
         $scope.payment.formData.billCode = undefined;
@@ -84,6 +85,7 @@ angular.module('ocb-payments')
                 $scope.billInfoSearch = !$scope.billInfoSearch;
                 $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
                 $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;//true;
+                //$scope.initBDTable();
             }
         };
 

@@ -15,7 +15,8 @@
                                rb-init-select-fn="getAccountByNrb($accountList, $select)"
                                rb-on-account-select="onSenderAccountSelect($accountId)"
                                rb-remote="remote.model_from"
-                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
+                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"
+                               rb-only-bill-payment="billPayment" ></rb-account-select>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
             {{ payment.formData.senderCustomer.fullName }}
@@ -47,17 +48,18 @@
                            name="billCode"
                            class="input-field"
                            ng-min="0.01"
-                           rb-number-type-input
+                           ng-pattern="BILL_CODE"
+                            rb-number-type-input
                            ng-model="payment.formData.billCode"
                            required
                            placeholder=""
                 />
             </div>
             <eb-validation-messages eb-name="billCode">
-                <div eb-message-key="number" class="validation-message animate-on">
-                    {{::'ocb.payments.new.bill.fill.billCode.INCORRECT_BILLCODE'|translate}}
-                </div>
                 <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.bill.fill.billCode.EMPTY_BILLCODE'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
                     {{::'ocb.payments.new.bill.fill.billCode.EMPTY_BILLCODE'|translate}}
                 </div>
             </eb-validation-messages>
