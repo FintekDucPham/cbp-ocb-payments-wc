@@ -99,6 +99,13 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.batch_processing.fill",
                     priority: 11
+                } ,
+                {
+                    id: "payments.test",
+                    label: "Test",
+                    icon: "ocb-icons basket",
+                    action: "payments.test_form.fill",
+                    priority: 13
                 }
             ]
         });

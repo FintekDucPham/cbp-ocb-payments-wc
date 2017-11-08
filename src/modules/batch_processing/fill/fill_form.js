@@ -17,21 +17,19 @@ angular.module('ocb-payments')
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 actions.proceed();
-                //
-                //
-                console.log("Fintek: Move next");
             });
-/*
+
             $scope.senderSelectParams = new rbAccountSelectParams({});
             $scope.senderSelectParams.payments = true;
             $scope.senderSelectParams.showCustomNames = true;
             $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
                 return accounts;
             };
+            $scope.paymentsBatchProcessingForm.items.selectedFilename = "Fintek";
 
 
             $scope.onSenderAccountSelect = function (accountId) {
-                $scope.paymentsBatchProcessingForm.items.senderAccountId = accountId;
+/*                $scope.paymentsBatchProcessingForm.items.senderAccountId = accountId;
                 console.log("========onSenderAccountSelect:" + accountId);
                 console.log("========senderSelectParams:" + JSON.stringify($scope.senderSelectParams));
                 console.log("========$stateParams:");
@@ -41,7 +39,8 @@ angular.module('ocb-payments')
                 console.log("========SelectedAccount:");
                 $scope.selectedAccount = this.selectedAccount;
 
-                console.log(JSON.stringify($scope.selectedAccount));
+                console.log(JSON.stringify($scope.selectedAccount));*/
+                console.log(t);
             };
 
             function getSelectedAccount(accountId) {
@@ -51,13 +50,26 @@ angular.module('ocb-payments')
                 });
             };
 
-            $scope.onTransactionTypeChanged = function (index) {
-                console.log("index:" + index);
+            $scope.onTransactionTypeChanged = function (selectedItem) {
+                var isInternal = selectedItem.index === 1;
+                var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
+                bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
+                var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
+                for(var i=0; i<bankCodeRowElements.length; i++) {
+                    bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
+                }
+
             };
 
              $scope.transaction_types = [
-                "Internal / Nội Bộ",
-                "External / Liên Ngân Hàng"
+                 {
+                     index : 1,
+                     name : "Internal / Nội Bộ"
+                 },
+                 {
+                     index : 2,
+                     name : "External / Liên Ngân Hàng"
+                 }
             ];
             $scope.selectedTransactionType = $scope.transaction_types[0];
 
@@ -72,8 +84,8 @@ angular.module('ocb-payments')
                 "...",
                 "Sub-Account 3",
             ];
-            $scope.selectedSubAccount = $scope.subAccounts[0];
-            $scope.selectedFilename ="";
+            $scope.paymentsBatchProcessingForm.formData.selectedAccount = $scope.subAccounts[0];
+            $scope.selectedFilename ="Fintek";
 
             $scope.selectionQuerry = function (search, mList) {
                 var result = mList.slice();
@@ -136,7 +148,7 @@ angular.module('ocb-payments')
             $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(2365000, true);
 
             $scope.totalnumberoflines = 3;
-*/
+
 
         });
 
