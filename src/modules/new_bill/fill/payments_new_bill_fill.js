@@ -10,7 +10,7 @@ angular.module('ocb-payments')
         });
     })
     .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
-                                                           bdTableConfig, blockadesService, transferBillService, ocbConvert) {
+                                                            blockadesService) {
 
 
         var senderAccountInitDefer = $q.defer();
@@ -63,22 +63,7 @@ angular.module('ocb-payments')
         //     $scope.billInfoSearch = !$scope.billInfoSearch;
         // };
 
-        $scope.table = {
-            tableControl: undefined, // will be set by the table
-            tableConfig: new bdTableConfig({
-                placeholderText: translate.property('account.blockades.search.empty_list'),
-                checkBoxIBAction: function(length, item, idx) {
-                    // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
-                    //     url = exportService.prepareHref(downloadLink);
-                    // fileDownloadService.startFileDownload(url);
-                    console.log("++++:" + item + "-" + item.amount);
-                }
-            }),
-            tableData: {
-                getData: getBill//getBlockades
-            },
-            newSearch: true
-        };
+
 
         $scope.getIcon = downloadService.downloadIconImage;
 
@@ -86,43 +71,7 @@ angular.module('ocb-payments')
             $scope.table.newSearch = true;
             $scope.table.tableControl.invalidate();
         };
-        $scope.initBDTable = function() {
-            $scope.table = {
-                tableControl: undefined, // will be set by the table
-                tableConfig: new bdTableConfig({
-                    placeholderText: translate.property('account.blockades.search.empty_list'),
-                    checkBoxIBAction: function(length, item, idx) {
-                        if ($scope.payment.items.checkBoxList === undefined) {
-                            $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
-                            $scope.payment.items.checkBoxList[idx].amount = item.amount;
-                            $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
-                            $scope.payment.items.checkBoxList[idx].userClick = 1;
-                        } else {
-                            $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? ($scope.payment.items.checkBoxList[idx].userClick  + 1) : 1;
-                            $scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
-                            $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
-                        }
-                        var totalAmount = 0;
-                        angular.forEach($scope.payment.items.checkBoxList,function(val,key){
-                            totalAmount += ((val.amount !== undefined) ? val.amount : 0);
-                            // console.log(key + val);
-                            // console.log(val.amount);
-                            // console.log("-+-" + totalAmount);
-                            // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
-                            //     console.log(k1+":"+v1);
-                            // });
-                        });
-                        $scope.payment.items.totalBill = totalAmount;
-                        $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.items.totalBill, true);
-                        console.log("-0-"+ $scope.table.tableData);
-                    }
-                }),
-                tableData: {
-                    getData: getBill//getBlockades
-                },
-                newSearch: true
-            };
-        };
+
         $scope.setSelectedAccount = function(selectedAccount) {
             $scope.selectedAccount = selectedAccount;
 
@@ -154,30 +103,7 @@ angular.module('ocb-payments')
         $scope.noDataLoaded = function() {
             return dataNotLoading() && $scope.noData();
         };
-        function getBill(deferred, $params) {
-            if($scope.table.newSearch){
-                $scope.table.newSearch = false;
-                //$scope.table.tableControl.invalidate();
-                $scope.table.tableConfig.currentPage = 1;
-                $scope.table.tableConfig.pageCount = 1;
-                $params.currentPage = 1;
-            }
-            var pageSize = $params.pageSize = 10;
-            if (!$scope.selectedAccount) {
-                deferred.resolve([]);
-                return;
-            }
-            $scope.billsPromise = transferBillService.getBill({
-                providerId: "123456",
-                billCode: "654321",
-                pageNumber: $params.currentPage,
-                pageSize:pageSize
-            }).then(function(billsList) {
-                $params.pageCount = billsList.totalPages;
-                deferred.resolve(billsList.content[0].billItem);
-                $scope.table.anyData = billsList.content[0].billItem.length > 0;
-            });
-        }
+
         function getBlockades(deferred, $params) {
            if($scope.table.newSearch){
                $scope.table.newSearch = false;
@@ -464,17 +390,6 @@ angular.module('ocb-payments')
             },
             payments: true
         });
-
-        $scope.onSenderAccountSelect = function(accountId) {
-            if (accountId == $scope.payment.formData.beneficiaryAccountId) {
-                $scope.payment.formData.beneficiaryAccountId = undefined;
-            }
-            //$scope.recipientSelectParams.update(accountId);
-
-            transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
-                $scope.payment.formData.senderCustomer = customerDictionary.content[0];
-            });
-        };
         $scope.updateServiceId = "12345";
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);
