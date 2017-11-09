@@ -113,4 +113,22 @@
 
         </bd-table>
     </div>
+    <div class="pane-bd deposit-form" ng-if="billInfoSearch && updateServiceId ==='DTCDCD'">
+        <bd-table
+                bd-type="typeI3"
+                bd-table-params="table.tableConfig"
+                bd-table-control="table.tableControl"
+                bd-table-data="table.tableData"
+                bd-table-promise="billsPromise"
+                bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },
+                'second' : { 'title': '##payments.new.bill.fill.info.header.customer_id', 'data' : 'orderId' },
+                'third' : { 'title': '##payments.new.bill.fill.info.header.customer_name', 'data' : 'description'},
+                'fourth' : { 'title': '##payments.new.bill.fill.info.header.product_type', 'data' : ['amount', 'currency'] },
+                'fifth' : { 'title': '##payments.new.bill.fill.info.header.bill_code', 'data' : 'fromDate' },
+                'sixth' : { 'title': '##payments.new.bill.fill.info.header.amount_per_month', 'data' : 'toDate' },
+                'seventh' : { 'title': '##payments.new.bill.fill.info.header.number_month', 'data' : 'formulaRates' } ,
+                'eighth': {'title': '##account.invoices.button.download'} }">
+
+        </bd-table>
+    </div>
 </form>
