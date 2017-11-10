@@ -121,6 +121,7 @@ angular.module('ocb-payments')
                 newSearch: true
             };
         };
+        $scope.updateBillTypeID = "NO_DETAIL";
         function getBill(deferred, $params) {
             if($scope.table.newSearch){
                 $scope.table.newSearch = false;
@@ -143,6 +144,8 @@ angular.module('ocb-payments')
                 $params.pageCount = billsList.totalPages;
                 deferred.resolve(billsList.content[0].billItem);
                 $scope.table.anyData = billsList.content[0].billItem.length > 0;
+                $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
+                //$scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
             });
         };
         $scope.onSenderAccountSelect = function(accountId) {
@@ -174,7 +177,7 @@ angular.module('ocb-payments')
         $scope.payment.formData.billCode = undefined;
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
             $scope.initBDTable();
-            console.log("+++senderProv:" + $scope.payment.items.senderProvider.providerName);
+            //console.log("+++senderProv:" + $scope.payment.items.senderProvider.providerName);
             if ($scope.payment.formData.billCode !== undefined) {
                 $scope.billInfoSearch = !$scope.billInfoSearch;
                 $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
