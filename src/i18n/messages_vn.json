@@ -756,9 +756,6 @@
     "ocb.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
     "ocb.ng_dropdown_multiselect.option.waiting":"Waiting",
 
-    "EOF": ""
-}
-
     "EOF": "",
 
     "ocb.payments.pending.label": "CB Pending Transaction",

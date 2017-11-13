@@ -106,6 +106,13 @@ angular.module('ocb-payments', [
                     label: "ocb.payments.batch_processing.label",
                     icon: "ocb-icons basket",
                     action: "payments.batch_processing.fill",
+                    priority: 10
+                },
+                {
+                    id: "payments.pending.list",
+                    label: "ocb.payments.pending.label",
+                    icon: "ocb-icons basket",
+                    action: "payments.pending.list",
                     priority: 11
                 }
                 // {
