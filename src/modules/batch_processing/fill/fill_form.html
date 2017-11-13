@@ -1,3 +1,5 @@
+<script src="util.js"></script>
+<script src="xls.js"></script>
 <style>
     .account-collapse-item {
         float: left;
@@ -94,7 +96,7 @@
                 <div class="input-group">
                     <input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">
                     <span class="input-group-btn">
-                        <bd-button class="bd-button">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
+                        <bd-button class="bd-button" >{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
                     </span>
                 </div>
             </bd-item-property>
@@ -146,6 +148,7 @@
                 <div bd-table-heading="second" class="header-always-left bd-table__cell hidden-xs col-sm-4 col-md-2">{{totalnumberoflines}}</div>
             </div>
         </div>
+        <div file-browser>Thai Bui Test</div>
     </form>
 </div>
 

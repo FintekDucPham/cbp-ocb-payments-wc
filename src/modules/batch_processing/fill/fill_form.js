@@ -40,6 +40,7 @@ angular.module('ocb-payments')
                 for(var i=0; i<bankCodeRowElements.length; i++) {
                     bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
                 }
+                $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = selectedItem;
             };
 
              $scope.transaction_types = [
@@ -52,10 +53,10 @@ angular.module('ocb-payments')
                      name : "External / Liên Ngân Hàng"
                  }
             ];
-            $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
 
-            $scope.onSubAccountChanged = function (index) {
-                console.log("index:" + index);
+
+            $scope.onSubAccountChanged = function (selectedSubAccount) {
+                $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = selectedSubAccount;
             };
             $scope.subAccounts = [
                 {
@@ -79,7 +80,10 @@ angular.module('ocb-payments')
                     name: "Sub-Account n"
                 }
             ];
-            $scope.paymentsBatchProcessingForm.formData.selectedSubAccount= $scope.subAccounts[0];
+            if($scope.paymentsBatchProcessingForm.formData.selectedSubAccount === undefined) {
+                $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccounts[0];
+                $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
+            }
             $scope.selectedFilename ="Fintek";
 
             $scope.selectionQuerry = function (search, mList) {

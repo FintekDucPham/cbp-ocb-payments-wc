@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('TestFormlStep1Controller', function ($scope, bdStepStateEvents) {
+    .controller('TestFormlStep1Controller', function ($scope, bdStepStateEvents, angularFileUpload) {
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             actions.proceed();
@@ -17,3 +17,4 @@ angular.module('ocb-payments')
         });
 
     });
+//temp.$inject = angularFileUpload;
