@@ -20,7 +20,8 @@ angular.module('ocb-payments')
             formData: {},
             options: {},
             meta: {},
-            validation: {}
+            validation: {},
+            items :{}
         });
 
         $scope.modify = {
@@ -41,10 +42,10 @@ angular.module('ocb-payments')
             completeState:'payments.new.fill',
             onClear:$scope.clearForm,
             cancelState:'dashboard',
-            footerType:'batchprocessing',
+            footerType: 'batchprocessing',
             labels:{
-                prev:'ocb.payment.prev',
-                //testFormButton:'ocb.payments.batch_processing.custom.button',
+                prev:"ocb.payments.buttons.prev",
+                testFormButton:'ocb.payments.batch_processing.custom.button',
                 next:"ocb.payments.new.btn.next",
                 finalize:"ocb.payments.new.btn.finalize"
             },

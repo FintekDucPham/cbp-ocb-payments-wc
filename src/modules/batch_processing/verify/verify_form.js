@@ -10,10 +10,31 @@ angular.module('ocb-payments')
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
             }
+
         });
     })
-    .controller("PaymentsBatchProcessingStep2Controller", function($scope, bdStepStateEvents) {
-        // $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-        //     actions.proceed();
-        // });
+    .controller("PaymentsBatchProcessingStep2Controller"
+        , function($scope, bdStepStateEvents, formService, translate, $filter) {
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            actions.proceed();
+            console.log("PaymentsBatchProcessingStep2Controller FORWARD_MOVE");
+        });
+        $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
+            actions.proceed();
+            var acoount = paymentsBatchProcessingForm.formData.selectedAccount;
+            console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
+        });
+
+        $scope.getCurrentDate = function(isEn) {
+            var result = "";
+            var date = new Date();
+            if(isEn ===true) {
+                result =  $filter('date')(date, "MM/dd/yyyy");
+            }else {
+                result =  $filter('date')(date, "dd/MM/yyyy");
+            }
+            return result;
+        }
+
+
     });

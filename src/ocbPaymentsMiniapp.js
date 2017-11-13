@@ -114,6 +114,13 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.pending.list",
                     priority: 11
+                } ,
+                {
+                    id: "payments.test",
+                    label: "Test",
+                    icon: "ocb-icons basket",
+                    action: "payments.test_form.fill",
+                    priority: 13
                 }
                 // {
                 //     id: "payments.bill.new",
