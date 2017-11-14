@@ -109,7 +109,7 @@ angular.module('ocb-payments')
                             // $scope.payment.transferId = transfer.referenceId;
                             // $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                             // $scope.payment.holiday = transfer.holiday;
-                            console.log("+++stt:" + status);
+                            console.log("+++stt:" + status.content);
                 // actions.proceed();
                         }).catch(function(errorReason){
                             // if(errorReason.subType == 'validation'){
