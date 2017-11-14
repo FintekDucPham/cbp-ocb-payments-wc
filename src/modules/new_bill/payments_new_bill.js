@@ -229,11 +229,11 @@ angular.module('ocb-payments')
         };
 
         $scope.payment.rbPaymentsStepParams = {
-            completeState: 'payments.recipients.list',
+            completeState: 'payments.basket.new.fill',
             footerType: 'billpayment',
             onClear: $scope.clearForm,
             onSearch: $scope.showBillInfoSearch,
-            cancelState: 'payments.recipients.list',
+            cancelState: 'payments.basket.new.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
