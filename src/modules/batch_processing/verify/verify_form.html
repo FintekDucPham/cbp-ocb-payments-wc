@@ -1,0 +1,67 @@
+<style>
+    .detail-item {
+        float: left;
+        width: 100%;
+        background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
+        background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
+        background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
+        box-shadow: 0 0 15px 0 rgba(0,0,0,0.11);
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div>
+    <div class="detail-item">
+        <bd-header>{{ ::'ocb.payments.batch_processing.dataverify.label' | translate }}</bd-header>
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.accountnumber' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedAccount.accountNo}}</span>
+                <span class="bd-amount__currency" ng-show="!showDash"></span>
+                <span class="dash" ng-show="showDash">-</span>
+            </div>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.name' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedAccount.accountName| uppercase}}</span>
+                <span class="bd-amount__currency" ng-show="!showDash"></span>
+                <span class="dash" ng-show="showDash">-</span>
+            </div>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
+                       currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.ocbbranch' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
+                <span class="bd-amount__value">Tan Binh???</span><span class="bd-amount__currency" ng-show="!showDash"></span>
+                <span class="dash" ng-show="showDash">-</span>
+            </div>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
+                       currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
+        </bd-item-property>
+
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
+                       currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}???"></bd-amount>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedTransactionType}}</span>
+            </div>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.batch_processing.dataverify.date' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
+                <span class="bd-amount__value">{{getCurrentDate(true)}}</span>
+            </div>
+        </bd-item-property>
+
+
+    </div>
+    <div class="detail-item">
+        <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
+    </div>
+</div>
