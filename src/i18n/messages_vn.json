@@ -18,8 +18,6 @@
     "payments.submenu.options.new.header": "Domestic transfer",
     "payments.submenu.options.new_internal.header": "Own transfer",
 
-<<<<<<< HEAD
-=======
     "ocb.payments.batch_processing.label": "Batch Processing",
     "ocb.payments.batch_processing.personal": "Personnal/Ordering Custommer",
     "ocb.payments.batch_processing.beneficiarylist": "Beneficiary List",
@@ -40,7 +38,6 @@
     "ocb.payments.batch_processing.table.remarks": "Remarks",
     "ocb.payments.batch_processing.table.total": "Total",
 
->>>>>>> refs/remotes/origin/fintek_develop
     "payments.submenu.options.new_bill.header": "Bill payment",
 
     "ocb.payments.widget.view.new_payment": "New payment",
