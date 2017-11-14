@@ -107,22 +107,6 @@ angular.module('ocb-payments', [
                     action: "payments.pending.list",
                     priority: 11
                 }
-                // {
-                //     id: "payments.bill.new",
-                //     label: 'payments.submenu.options.new.header',
-                //     icon: "ocb-icons ocb_przelew",
-                //     action: function(item, scope, state){
-                //         state.reload('payments.bill.new').then(function(){
-                //             state.transitionTo("payments.bill.new",{ paymentType: 'fill', referenceId: undefined }, {reload: true}).finally(function() {
-                //                 state.go('payments.bill.new', {
-                //                     paymentType: 'fill',
-                //                     referenceId: undefined
-                //                 });
-                //             });
-                //         });
-                //     },
-                //     priority: 9
-                // }
             ]
         });
     }
