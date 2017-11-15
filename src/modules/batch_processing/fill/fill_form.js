@@ -79,7 +79,6 @@ angular.module('ocb-payments')
                 $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccounts[0];
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
             }
-            $scope.selectedFilename ="C:\\t.xls";
 
             $scope.selectionQuerry = function (search, mList) {
                 var result = mList.slice();
@@ -89,20 +88,6 @@ angular.module('ocb-payments')
                 return result;
             };
 
-            $scope.table = {
-                tableConfig: new bdTableConfig({
-                    placeholderText: $filter("translate")("ocb.payments.batch_processing.beneficiarylis")
-
-                }),
-                tableData: {
-                    getData:function ( defer, $params) {
-                        defer.resolve($scope.tableTestData.content);
-                        $params.pageCount = $scope.tableTestData.totalPages;
-
-                    }
-                },
-                tableControl: undefined
-            };
             $scope.tableTestData = {
                 content: [
                     {
@@ -127,21 +112,36 @@ angular.module('ocb-payments')
                         description:"Test C"
                     }
                 ],
-                totalElements:1,
-                pageNumber:0,
-                pageSize:0,
-                totalPages:0,
-                sortOrder: null,
-                sortDirection: null,
-                firstPage: false,
-                lastPage:true,
-                numberOfElements: 3
+                totalElements : 3,
+                pageNumber : 0,
+                pageSize : 1,
+                totalPages : 3,
+                sortOrder : null,
+                sortDirection : null,
+                firstPage : true,
+                lastPage : true,
+                numberOfElements : 3
             };
 
-
-            $scope.totalnumberoflines = 3;
+            $scope.table = {
+                tableConfig: new bdTableConfig({
+                    pageSize: 1,
+                    placeholderText: $filter('translate')('ocb.payments.batch_processing')
+                }),
+                tableData: {
+                    getData:function ( defer, $params) {
+                        var selectedItem = $scope.tableTestData.content[$params.currentPage - 1];
+                        $scope.targetList = angular.copy($scope.tableTestData);
+                        $scope.targetList.content = [selectedItem];
+                        defer.resolve($scope.tableTestData.content);
+                        $params.pageCount = $scope.tableTestData.totalPages;
+                    }
+                },
+                tableControl: undefined
+            };
 
             $scope.tienTest = function(){
+                $scope.table.tableControl.invalidate();
                 var file = $('#uploadFile')[0].files[0];
 
                 var sFilename = file.name;
@@ -163,12 +163,11 @@ angular.module('ocb-payments')
                     }
                     var rs = readExcelFile(data, readerObj);
 
-                    console.log(rs);
                     var flag = 1;
                     var totalAmount = 0;
+                    var count = 0;
                     for(var i = 0; i < rs.length; i++) {
                         var obj = rs[i];
-                        console.log(obj["description"]);
                         var g = obj["bankCode"];
                         if(g || g != null){
                             flag = 0;
@@ -176,6 +175,7 @@ angular.module('ocb-payments')
                         var amount = Number(obj["amount"]);
                         if(amount && amount > 0){
                             totalAmount += amount;
+                            count++;
                         }
                     }
                     if(flag == 1){
@@ -183,28 +183,31 @@ angular.module('ocb-payments')
                     }else{
                         console.log("Loại : liên ngân hàng");
                     }
-                    hideColumnTable(flag);
                     $scope.tableTestData = {
                         content: rs,
-                        totalElements:1,
-                        pageNumber:0,
-                        pageSize:0,
-                        totalPages:0,
-                        sortOrder: null,
-                        sortDirection: null,
-                        firstPage: false,
-                        lastPage:true,
-                        numberOfElements: 3
+                        totalElements : 3,
+                        pageNumber : 0,
+                        pageSize : 0,
+                        totalPages : 3,
+                        sortOrder : null,
+                        sortDirection : null,
+                        firstPage : true,
+                        lastPage : true,
+                        numberOfElements : 3
                     };
+                    $scope.table.tableControl.invalidate();
+                    hideColumnTable(flag);
                     $scope.totalamountinfigures = numberWithCommas(totalAmount);
                     $scope.totalamountinwords =  ocbConvert.convertNumberToText(totalAmount, false);
                     $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(totalAmount, true);
-                    $scope.table.tableControl.invalidate();
+                    $scope.totalnumberoflines = count;
                 };
 
                 // Tell JS To Start Reading The File.. You could delay this if desired
                 reader.readAsBinaryString(file);
             };
+
+
         });
 
 function hideColumnTable(isInternal) {
