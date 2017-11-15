@@ -39,8 +39,7 @@
             <h3 class="pn-tt">{{updateServiceId}}</h3>
     </div>
     <div class="pane-bd deposit-form">
-        <rb-service-select rb-update-disabled-state="billInfoSearch" rb-service="payment.items.senderService" rb-provider="payment.items.senderProvider">
-
+        <rb-service-select rb-update-disabled-state="billInfoSearch" rb-service="payment.items.senderService" rb-provider="payment.items.senderProvider" rb-service-code="payment.formData.serviceCode" rb-provider-code="payment.formData.providerCode">
         </rb-service-select>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
             <div class="bd-item-property__value--primary">

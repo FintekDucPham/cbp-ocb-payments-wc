@@ -115,6 +115,7 @@ angular.module('ocb-payments')
                             //     console.log(k1+":"+v1);
                             // });
                         });
+                        $scope.payment.formData.amount = 3434324;
                         $scope.payment.items.totalBill = totalAmount;
                         $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.items.totalBill, true);
                         console.log("-0-"+ $scope.table.tableData);

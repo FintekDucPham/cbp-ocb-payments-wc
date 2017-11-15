@@ -96,20 +96,34 @@ angular.module('ocb-payments')
                 //     $scope.payment.token.model.$proceed();
                 // }
                // transferBillService.create()
-                $scope.payment.formData = {
-                    "remitterAccountId":"0060100006103007",
-                    "realizationDate": "2017-11-14",
-                    "amount": "111.11",
-                    "currency": "VND"
-                };
+               //  $scope.payment.formData = {
+               //      "remitterAccountId":"0060100006103007",
+               //      "realizationDate": "2017-11-16",
+               //      "amount": "111.11",
+               //      "currency": "VND"
+               //  "bookingDate": "2017-11-16",
+                    // "serviceCode":"ADSL",
+                    // "providerCode":"FPT"
+                // "amount": "48"
+               //  };
+                angular.forEach($scope.payment.formData,function(v1,k1){
+                    console.log(k1+":"+v1);
+                });
+                angular.forEach($scope.payment.formData.senderCustomer,function(v1,k1){
+                    console.log(k1+":"+v1);
+                });
                    // var createTransfer = function(){
-                        transferBillService.create('CORPORATE', angular.extend({
-                            "remitterId": "1314175"
+                        transferBillService.create('RETAIL', angular.extend({
+                            "remitterId": "1314175",
+                            "amount": "48"
                         }, $scope.payment.formData), $scope.payment.operation.link || false ).then(function (status) {
                             // $scope.payment.transferId = transfer.referenceId;
                             // $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                             // $scope.payment.holiday = transfer.holiday;
-                            console.log("+++stt:" + status.content);
+                            angular.forEach(status,function(v1,k1){
+                                console.log(k1+":"+v1);
+                            });
+                            console.log("+++stt:" + status);
                 // actions.proceed();
                         }).catch(function(errorReason){
                             // if(errorReason.subType == 'validation'){
@@ -128,7 +142,7 @@ angular.module('ocb-payments')
                             //         }
                             //     }
                             // }
-                            angular.forEach(errorReason,function(v1,k1){//this is nested angular.forEach loop
+                            angular.forEach(errorReason,function(v1,k1){
                                     console.log(k1+":"+v1);
                                 });
                             console.log("+++ex:" + errorReason.message);
