@@ -137,9 +137,7 @@ angular.module('ocb-payments')
                 lastPage:true,
                 numberOfElements: 3
             };
-            $scope.totalamountinfigures = 0;
-            $scope.totalamountinwords =  ocbConvert.convertNumberToText(2365000, false);
-            $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(2365000, true);
+
 
             $scope.totalnumberoflines = 3;
 
@@ -167,12 +165,17 @@ angular.module('ocb-payments')
 
                     console.log(rs);
                     var flag = 1;
+                    var totalAmount = 0;
                     for(var i = 0; i < rs.length; i++) {
                         var obj = rs[i];
                         console.log(obj["description"]);
                         var g = obj["bankCode"];
                         if(g || g != null){
                             flag = 0;
+                        }
+                        var amount = Number(obj["amount"]);
+                        if(amount && amount > 0){
+                            totalAmount += amount;
                         }
                     }
                     if(flag == 1){
@@ -193,6 +196,9 @@ angular.module('ocb-payments')
                         lastPage:true,
                         numberOfElements: 3
                     };
+                    $scope.totalamountinfigures = numberWithCommas(totalAmount);
+                    $scope.totalamountinwords =  ocbConvert.convertNumberToText(totalAmount, false);
+                    $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(totalAmount, true);
                     $scope.table.tableControl.invalidate();
                 };
 
@@ -208,4 +214,8 @@ function hideColumnTable(isInternal) {
     for(var i=0; i<bankCodeRowElements.length; i++) {
         bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
     }
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
