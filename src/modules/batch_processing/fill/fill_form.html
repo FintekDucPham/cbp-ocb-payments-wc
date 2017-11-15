@@ -1,5 +1,3 @@
-<script src="util.js"></script>
-<script src="xls.js"></script>
 <style>
     .account-collapse-item {
         float: left;
@@ -94,9 +92,10 @@
             <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
             <bd-item-property label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group">
-                    <input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">
+                    <!--<input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">-->
+                    <input style="cursor: pointer" type="file" id="uploadFile"/>
                     <span class="input-group-btn">
-                        <bd-button class="bd-button" >{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
+                        <bd-button class="bd-button" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
                     </span>
                 </div>
             </bd-item-property>

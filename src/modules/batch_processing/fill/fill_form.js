@@ -34,12 +34,7 @@ angular.module('ocb-payments')
 
             $scope.onTransactionTypeChanged = function (selectedItem) {
                 var isInternal = selectedItem.index === 1;
-                var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
-                bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
-                var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
-                for(var i=0; i<bankCodeRowElements.length; i++) {
-                    bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
-                }
+                hideColumnTable(isInternal);
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = selectedItem;
             };
 
@@ -84,7 +79,7 @@ angular.module('ocb-payments')
                 $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccounts[0];
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
             }
-            $scope.selectedFilename ="Fintek";
+            $scope.selectedFilename ="C:\\t.xls";
 
             $scope.selectionQuerry = function (search, mList) {
                 var result = mList.slice();
@@ -122,7 +117,7 @@ angular.module('ocb-payments')
                         accountNo: "ACBC",
                         bankCode:"ACBC",
                         amount:2000000,
-                        description:"Test 2"
+                        description:"Testt 2"
                     },
                     {
                         fullName:"Mr. C",
@@ -148,6 +143,69 @@ angular.module('ocb-payments')
 
             $scope.totalnumberoflines = 3;
 
+            $scope.tienTest = function(){
+                var file = $('#uploadFile')[0].files[0];
 
+                var sFilename = file.name;
+                // Create A File Reader HTML5
+                var reader = new FileReader();
+
+                var tempArray = sFilename.split(".");
+                var ext = tempArray[tempArray.length -1];
+                // Ready The Event For When A File Gets Selected
+
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    var readerObj = null;
+                    if(ext === 'xls') {
+                        readerObj = XLS;
+                    }
+                    if(ext === 'xlsx') {
+                        readerObj = XLSX;
+                    }
+                    var rs = readExcelFile(data, readerObj);
+
+                    console.log(rs);
+                    var flag = 1;
+                    for(var i = 0; i < rs.length; i++) {
+                        var obj = rs[i];
+                        console.log(obj["description"]);
+                        var g = obj["bankCode"];
+                        if(g || g != null){
+                            flag = 0;
+                        }
+                    }
+                    if(flag == 1){
+                        console.log("Loại : nội bộ");
+                    }else{
+                        console.log("Loại : liên ngân hàng");
+                    }
+                    hideColumnTable(flag);
+                    $scope.tableTestData = {
+                        content: rs,
+                        totalElements:1,
+                        pageNumber:0,
+                        pageSize:0,
+                        totalPages:0,
+                        sortOrder: null,
+                        sortDirection: null,
+                        firstPage: false,
+                        lastPage:true,
+                        numberOfElements: 3
+                    };
+                    $scope.table.tableControl.invalidate();
+                };
+
+                // Tell JS To Start Reading The File.. You could delay this if desired
+                reader.readAsBinaryString(file);
+            };
         });
 
+function hideColumnTable(isInternal) {
+    var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
+    bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
+    var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
+    for(var i=0; i<bankCodeRowElements.length; i++) {
+        bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
+    }
+}
