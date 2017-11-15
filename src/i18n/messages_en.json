@@ -202,7 +202,6 @@
      "ocb.payments.new.bill.fill.description.placeholder": "Enter transfer description",
      "ocb.payments.new.bill.fill.description.EMPTY_TITLE": "Transfer description cannot be empty",
      "ocb.payments.new.bill.fill.description.TOO_LONG_TITLE": "Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( )   + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
-     "ocb.payments.new.bill.fill.billCode": "Bill code",
      "ocb.payments.new.bill.fill.billCode_placeholder": "Enter transfer bill code",
      "ocb.payments.new.bill.fill.billCode.EMPTY_BILLCODE": "Bill code cannot be empty",
      "ocb.payments.new.bill.fill.billCode.INCORRECT_BILLCODE": "Invalid bill code",
@@ -742,8 +741,6 @@
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Enter the number of planned months",
     "ocb.layout.basket.tooltip": "Payment basket",
 
-    "ocb.payments.pending.label": "CB Pending Transaction",
-
     "ocb.payments.batch_processing.label": "Batch Processing",
     "ocb.payments.batch_processing.personal": "Personnal/Ordering Custommer",
     "ocb.payments.batch_processing.beneficiarylist": "Beneficiary List",
@@ -755,7 +752,6 @@
     "ocb.payments.batch_processing.transactiontype": "Transaction Type",
     "ocb.payments.batch_processing.subaccount": "Sub account",
     "ocb.payments.batch_processing.uploadfile": "Upload file",
-    "ocb.payments.batch_processing.beneficiarylist": "Beneficiary list",
     "ocb.payments.batch_processing.upload": "Upload",
 
     "ocb.payments.batch_processing.table.fullname": "Full Name",
@@ -771,6 +767,8 @@
     "ocb.payments.batch_processing.dataverify.accountnumber": "Account number",
     "ocb.payments.batch_processing.dataverify.date": "Date",
 
+
+    "ocb.payments.pending.label": "CB Pending Transaction",
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
     "ocb.ng_dropdown_multiselect.option.selectionCount":"selected",
