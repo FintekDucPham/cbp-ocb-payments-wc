@@ -96,24 +96,20 @@ angular.module('ocb-payments')
                 //     $scope.payment.token.model.$proceed();
                 // }
                // transferBillService.create()
-               //  $scope.payment.formData = {
-               //      "businessLine" : "RETAIL",
-               //      "billCode" : "123456",
-               //      "serviceCode" : "WATER",
-               //      "providerCode" : "CNTA",
-               //      "createdDateTime" : "2017-11-07 02:57:00",
-               //      "amount" : "200000",
-               //      "currency" : "VND",
-               //      "description" : "No description"
-               //  };
+                $scope.payment.formData = {
+                    "remitterAccountId":"0060100006103007",
+                    "realizationDate": "2017-11-14",
+                    "amount": "111.11",
+                    "currency": "VND"
+                };
                    // var createTransfer = function(){
-                        transferBillService.create('bill', angular.extend({
-                            "remitterId": 0
+                        transferBillService.create('CORPORATE', angular.extend({
+                            "remitterId": "1314175"
                         }, $scope.payment.formData), $scope.payment.operation.link || false ).then(function (status) {
                             // $scope.payment.transferId = transfer.referenceId;
                             // $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                             // $scope.payment.holiday = transfer.holiday;
-                            console.log("+++stt:" + status);
+                            console.log("+++stt:" + status.content);
                 // actions.proceed();
                         }).catch(function(errorReason){
                             // if(errorReason.subType == 'validation'){
@@ -132,7 +128,10 @@ angular.module('ocb-payments')
                             //         }
                             //     }
                             // }
-                            console.log("+++ex:" + errorReason);
+                            angular.forEach(errorReason,function(v1,k1){//this is nested angular.forEach loop
+                                    console.log(k1+":"+v1);
+                                });
+                            console.log("+++ex:" + errorReason.message);
                         });
                    // };
                 actions.proceed();
