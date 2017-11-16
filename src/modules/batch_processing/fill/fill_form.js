@@ -87,45 +87,15 @@ angular.module('ocb-payments')
                 }
                 return result;
             };
+            var pageSize_ = 2;
 
             $scope.tableTestData = {
-                content: [
-                    {
-                        fullName:"Mr. A",
-                        accountNo: "ACBD",
-                        bankCode:"ACBD",
-                        amount:1000000,
-                        description:"Test 1"
-                    },
-                    {
-                        fullName:"Mr. B",
-                        accountNo: "ACBC",
-                        bankCode:"ACBC",
-                        amount:2000000,
-                        description:"Testt 2"
-                    },
-                    {
-                        fullName:"Mr. C",
-                        accountNo: "ACBK",
-                        bankCode:"ACBK",
-                        amount:3000000,
-                        description:"Test C"
-                    }
-                ],
-                totalElements : 3,
-                pageNumber : 0,
-                pageSize : 1,
-                totalPages : 3,
-                sortOrder : null,
-                sortDirection : null,
-                firstPage : true,
-                lastPage : true,
-                numberOfElements : 3
+                content: []
             };
 
             $scope.table = {
                 tableConfig: new bdTableConfig({
-                    pageSize: 1,
+                    pageSize: pageSize_,
                     placeholderText: $filter('translate')('ocb.payments.batch_processing')
                 }),
                 tableData: {
@@ -133,7 +103,7 @@ angular.module('ocb-payments')
                         var selectedItem = $scope.tableTestData.content[$params.currentPage - 1];
                         $scope.targetList = angular.copy($scope.tableTestData);
                         $scope.targetList.content = [selectedItem];
-                        defer.resolve($scope.tableTestData.content);
+                        defer.resolve($scope.targetList.content);
                         $params.pageCount = $scope.tableTestData.totalPages;
                     }
                 },
@@ -141,7 +111,6 @@ angular.module('ocb-payments')
             };
 
             $scope.tienTest = function(){
-                $scope.table.tableControl.invalidate();
                 var file = $('#uploadFile')[0].files[0];
 
                 var sFilename = file.name;
@@ -185,15 +154,15 @@ angular.module('ocb-payments')
                     }
                     $scope.tableTestData = {
                         content: rs,
-                        totalElements : 3,
+                        totalElements : count,
                         pageNumber : 0,
-                        pageSize : 0,
-                        totalPages : 3,
+                        pageSize : pageSize_,
+                        totalPages : Math.floor(count/pageSize_) + count%pageSize_,
                         sortOrder : null,
                         sortDirection : null,
                         firstPage : true,
                         lastPage : true,
-                        numberOfElements : 3
+                        numberOfElements : count
                     };
                     $scope.table.tableControl.invalidate();
                     hideColumnTable(flag);
