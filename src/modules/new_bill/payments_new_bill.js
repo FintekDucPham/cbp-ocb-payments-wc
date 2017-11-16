@@ -115,6 +115,7 @@ angular.module('ocb-payments')
                             //     console.log(k1+":"+v1);
                             // });
                         });
+                        $scope.payment.formData.amount = 3434324;
                         $scope.payment.items.totalBill = totalAmount;
                         $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.items.totalBill, true);
                         console.log("-0-"+ $scope.table.tableData);
@@ -229,11 +230,11 @@ angular.module('ocb-payments')
         };
 
         $scope.payment.rbPaymentsStepParams = {
-            completeState: 'payments.recipients.list',
+            completeState: 'payments.basket.new.fill',
             footerType: 'billpayment',
             onClear: $scope.clearForm,
             onSearch: $scope.showBillInfoSearch,
-            cancelState: 'payments.recipients.list',
+            cancelState: 'payments.basket.new.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
