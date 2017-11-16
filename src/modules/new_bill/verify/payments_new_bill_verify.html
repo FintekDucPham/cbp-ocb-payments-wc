@@ -31,10 +31,10 @@
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_service_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
-                <div class="break-force">{{ payment.items.senderService.serviceName || payment.items.senderService.serviceId }}</div>
+                <div class="break-force">{{ payment.items.senderService.serviceName || payment.items.senderService.serviceCode }}</div>
             </div>
             <div class="hidden-lg">
-                <rb-account-responsive-line rb-account-name="payment.items.senderService.serviceName " rb-account-nrb="payment.items.senderService.serviceId"></rb-account-responsive-line>
+                <rb-account-responsive-line rb-account-name="payment.items.senderService.serviceName " rb-account-nrb="payment.items.senderService.serviceCode"></rb-account-responsive-line>
             </div>
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.domestic.verify.amount'|translate}}">

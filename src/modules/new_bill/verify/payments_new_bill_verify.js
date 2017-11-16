@@ -97,7 +97,7 @@ angular.module('ocb-payments')
                 // }
                // transferBillService.create()
                //  $scope.payment.formData = {
-               //      "remitterAccountId":"0060100006103007",
+               //      "remitterAccountId":"0060100006103007",  "1314175"
                //      "realizationDate": "2017-11-16",
                //      "amount": "111.11",
                //      "currency": "VND"
@@ -114,7 +114,7 @@ angular.module('ocb-payments')
                 });
                    // var createTransfer = function(){
                         transferBillService.create('RETAIL', angular.extend({
-                            "remitterId": "1314175",
+                            "remitterId": $scope.payment.formData.senderCustomer.globusId,
                             "amount": "48"
                         }, $scope.payment.formData), $scope.payment.operation.link || false ).then(function (status) {
                             // $scope.payment.transferId = transfer.referenceId;
@@ -123,7 +123,7 @@ angular.module('ocb-payments')
                             angular.forEach(status,function(v1,k1){
                                 console.log(k1+":"+v1);
                             });
-                            console.log("+++stt:" + status);
+                            console.log("+++stt:" + status + "---" + $scope.payment.formData.senderCustomer.globusId + "---" +   $scope.payment.formData.senderCustomer.businessLine);
                             $scope.payment.result.code = (status.toLowerCase() === "accepted") ? "" : "0";//"0": "99" ;
                             //$scope.payment.result.type = (status.toLowerCase() === "accepted") ? "success": "error" ;
                             console.log("+++stt:" + $scope.payment.result.code + $scope.payment.result.type );

@@ -172,7 +172,7 @@ angular.module('ocb-payments')
             //$scope.recipientSelectParams.update(accountId);
 
             transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
-                $scope.payment.formData.senderCustomer = customerDictionary.content[0];
+                $scope.payment.formData.senderCustomer =  (customerDictionary.content !== undefined) ? customerDictionary.content[0] : [];
             });
         };
         $scope.clearForm = function () {

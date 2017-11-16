@@ -70,12 +70,20 @@
         </bd-item-property>
         </div>
         <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
-
+        <div>
+            <rb-widget-banner-container rb-slot-name="ACCOUNT_WIDGET" rb-target-type="CURRENT_USER">
+                <div class="widget-content-inner info-text">
+                    <a href="{{::'ocb.payments.new.bill.fill.serviceList.link_url'|translate}}"
+                       target="_blank"
+                       bd-widget-click>{{::'ocb.payments.new.bill.fill.serviceList.link_name'|translate}}</a>
+                </div>
+            </rb-widget-banner-container>
+        </div>
     </div>
     <div class ="pane-bd pane-above" ng-show="billInfoSearch">
         <h3 class="pn-tt">{{::"ocb.payments.new_bill.label.header.showBillInfo" |translate}}</h3>
     </div>
-    <div class="pane-bd deposit-form" ng-if="billInfoSearch && updateBillTypeID !=='CAP'">
+    <div class="pane-bd deposit-form" ng-if="billInfoSearch">
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoName'|translate}}">
                 {{ payment.formData.senderCustomer.fullName }}
             </bd-item-property>
@@ -85,12 +93,14 @@
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
                 {{payment.formData.billCode}}
             </bd-item-property>
-            <bd-item-property label="{{::'ocb.payments.new.bill.fill.billMeterNumber'|translate}}">
-                {{ payment.formData.senderCustomer.meterNumber}}
-            </bd-item-property>
-            <bd-item-property label="{{::'ocb.payments.new.bill.fill.billPhoneNumber'|translate}}">
-                {{payment.formData.senderCustomer.phoneNumber}}
-            </bd-item-property>
+            <div ng-show="payment.items.senderService.serviceCode === 'POWE'">
+                <bd-item-property label="{{::'ocb.payments.new.bill.fill.billMeterNumber'|translate}}">
+                    {{ payment.formData.senderCustomer.meterNumber}}
+                </bd-item-property>
+                <bd-item-property label="{{::'ocb.payments.new.bill.fill.billPhoneNumber'|translate}}">
+                    {{payment.formData.senderCustomer.phoneNumber}}
+                </bd-item-property>
+            </div>
     </div>
     <div class="pane-bd deposit-form" ng-show="billInfoSearch && updateBillTypeID ==='MASTER_DETAIL'">
         <bd-table
