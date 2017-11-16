@@ -97,22 +97,32 @@ angular.module('ocb-payments')
                 // }
                // transferBillService.create()
                //  $scope.payment.formData = {
-               //      "businessLine" : "RETAIL",
-               //      "billCode" : "123456",
-               //      "serviceCode" : "WATER",
-               //      "providerCode" : "CNTA",
-               //      "createdDateTime" : "2017-11-07 02:57:00",
-               //      "amount" : "200000",
-               //      "currency" : "VND",
-               //      "description" : "No description"
+               //      "remitterAccountId":"0060100006103007",
+               //      "realizationDate": "2017-11-16",
+               //      "amount": "111.11",
+               //      "currency": "VND"
+               //  "bookingDate": "2017-11-16",
+                    // "serviceCode":"ADSL",
+                    // "providerCode":"FPT"
+                // "amount": "48"
                //  };
+                angular.forEach($scope.payment.formData,function(v1,k1){
+                    console.log(k1+":"+v1);
+                });
+                angular.forEach($scope.payment.formData.senderCustomer,function(v1,k1){
+                    console.log(k1+":"+v1);
+                });
                    // var createTransfer = function(){
-                        transferBillService.create('bill', angular.extend({
-                            "remitterId": 0
+                        transferBillService.create('RETAIL', angular.extend({
+                            "remitterId": "1314175",
+                            "amount": "48"
                         }, $scope.payment.formData), $scope.payment.operation.link || false ).then(function (status) {
                             // $scope.payment.transferId = transfer.referenceId;
                             // $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                             // $scope.payment.holiday = transfer.holiday;
+                            angular.forEach(status,function(v1,k1){
+                                console.log(k1+":"+v1);
+                            });
                             console.log("+++stt:" + status);
                 // actions.proceed();
                         }).catch(function(errorReason){
@@ -132,7 +142,10 @@ angular.module('ocb-payments')
                             //         }
                             //     }
                             // }
-                            console.log("+++ex:" + errorReason);
+                            angular.forEach(errorReason,function(v1,k1){
+                                    console.log(k1+":"+v1);
+                                });
+                            console.log("+++ex:" + errorReason.message);
                         });
                    // };
                 actions.proceed();

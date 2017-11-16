@@ -53,18 +53,21 @@ angular.module('ocb-payments')
             });
             $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
-        // 05 services call promise auto.
+        // 04 services call promise auto: (paynewbill)
+        // 5. transferBillService.create : execute +++ create_bill_transfer.j
+        // 4. transferBillService.search (BE) serviceList   +++ tranfer_service_providers.j
+        //    transferBillService.getServiceProviders (BE) providerList
+        // 3. transferService.getTransferAccounts : acc list +++ transfer_acc.j
+        // 2. transferBillService,getCustomer -- senderCustomer: name, branch, addr +++ transfer_customer.j
+        // 1.transferBillService.getBill -- meterNumber + phonenmuber + tbl +++ transfer_bill.j
         // transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
         //         $scope.payment.formData.senderCustomer = customerDictionary.content[0];
         //     });
-
+        // ???: customerService, accountService, downloadService, blockadesService
         // $scope.billInfoSearch = false;
         // $scope.showBillInfoSearch = function() {
         //     $scope.billInfoSearch = !$scope.billInfoSearch;
         // };
-
-
-
         $scope.getIcon = downloadService.downloadIconImage;
 
         $scope.refreshList = function () {

@@ -115,6 +115,7 @@ angular.module('ocb-payments')
                             //     console.log(k1+":"+v1);
                             // });
                         });
+                        $scope.payment.formData.amount = 3434324;
                         $scope.payment.items.totalBill = totalAmount;
                         $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.items.totalBill, true);
                         console.log("-0-"+ $scope.table.tableData);
@@ -146,12 +147,22 @@ angular.module('ocb-payments')
                 pageNumber: $params.currentPage,
                 pageSize:pageSize
             }).then(function(billsList) {
-                $params.pageCount = billsList.totalPages;
-                deferred.resolve(billsList.content[0].billItem);
-                //deferred.resolve([]);
-                $scope.table.anyData = billsList.content[0].billItem.length > 0;
-                $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
-                // $scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
+                // var totalPages =
+
+
+                if (billsList.content !== undefined) {
+                    $params.pageCount = billsList.totalPages;
+                    deferred.resolve((billsList.content.length > 0) ? billsList.content[0].billItem : []);
+                    //deferred.resolve([]);
+                    $scope.table.anyData = billsList.content[0].billItem.length > 0;
+                    $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
+                    // $scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
+                }
+                // else {
+                //
+                // }
+
+
             });
         };
         $scope.onSenderAccountSelect = function(accountId) {
@@ -219,11 +230,11 @@ angular.module('ocb-payments')
         };
 
         $scope.payment.rbPaymentsStepParams = {
-            completeState: 'payments.recipients.list',
+            completeState: 'payments.basket.new.fill',
             footerType: 'billpayment',
             onClear: $scope.clearForm,
             onSearch: $scope.showBillInfoSearch,
-            cancelState: 'payments.recipients.list',
+            cancelState: 'payments.basket.new.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
