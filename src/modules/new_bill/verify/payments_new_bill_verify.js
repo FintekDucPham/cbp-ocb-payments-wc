@@ -124,7 +124,10 @@ angular.module('ocb-payments')
                                 console.log(k1+":"+v1);
                             });
                             console.log("+++stt:" + status);
-                // actions.proceed();
+                            $scope.payment.result.code = (status.toLowerCase() === "accepted") ? "" : "0";//"0": "99" ;
+                            //$scope.payment.result.type = (status.toLowerCase() === "accepted") ? "success": "error" ;
+                            console.log("+++stt:" + $scope.payment.result.code + $scope.payment.result.type );
+                             actions.proceed();
                         }).catch(function(errorReason){
                             // if(errorReason.subType == 'validation'){
                             //     for(var i=0; i<=errorReason.errors.length; i++){
@@ -148,7 +151,7 @@ angular.module('ocb-payments')
                             console.log("+++ex:" + errorReason.message);
                         });
                    // };
-                actions.proceed();
+                 //actions.proceed();
             }
         });
 
