@@ -105,7 +105,7 @@ angular.module('ocb-payments')
                         var totalAmount = 0;
                         angular.forEach($scope.payment.items.checkBoxList,function(val,key){
                             var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
-                            var multiMonthAmount = ((val.amountMonth !== undefined) ? val.amountMonth : 1)*amountValidation;
+                            var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1)*amountValidation;
                             totalAmount += multiMonthAmount;
                             //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
                             // console.log(key + val);
@@ -128,8 +128,10 @@ angular.module('ocb-payments')
             };
         };
         $scope.updateBillTypeID = "NO_DETAIL";
+       // tempo dev env for list Bill response
+        $scope.mockEnv = true;
         function getBill(deferred, $params) {
-            if($scope.table.newSearch){
+            if ($scope.table.newSearch) {
                 $scope.table.newSearch = false;
                 //$scope.table.tableControl.invalidate();
                 $scope.table.tableConfig.currentPage = 1;
@@ -141,29 +143,98 @@ angular.module('ocb-payments')
             //     deferred.resolve([]);
             //     return;
             // }
+            if  (!$scope.mockEnv) {
+                $scope.billsPromise = transferBillService.getBill({
+                    providerId: "123456",
+                    billCode: "654321",
+                    pageNumber: $params.currentPage,
+                    pageSize: pageSize
+                }).then(function (billsList) {
+                    // var totalPages =
+
+
+                    if (billsList.content !== undefined) {
+                        $params.pageCount = billsList.totalPages;
+                        deferred.resolve((billsList.content.length > 0) ? billsList.content[0].billItem : []);
+                        //deferred.resolve([]);
+                        $scope.table.anyData = billsList.content[0].billItem.length > 0;
+                        $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
+                        // $scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
+                    }
+                    // else {
+                    //
+                    // }
+
+
+                });
+            }else {
+                    dummyBillList(deferred, $params, pageSize);
+            }
+        };
+
+        var dummyBillList = function(deferred, $params, pageSize) {
             $scope.billsPromise = transferBillService.getBill({
                 providerId: "123456",
                 billCode: "654321",
                 pageNumber: $params.currentPage,
-                pageSize:pageSize
-            }).then(function(billsList) {
-                // var totalPages =
+                pageSize: pageSize
+            }).then(function (billsList) {
+                $scope.tmpBillPaymentResponse = {
+                    "billCode" : "023032507753",
+                    "serviceProvider" : {
+                        "providerCode" : "VNPTLD",
+                        "providerName" : "Lam Dong VNPT",
+                        "service" : {
+                            "serviceCode" : "NUOC",
+                            "serviceName" : "Water Bill"
+                        }
+                    },
+                    "billType" : "MASTER_DETAIL",
+                    "customerName" : "TRAN THI KIEU CHINH",
+                    "customerCode" : "1234567",
+                    "address" : null,
+                    "phoneNumber" : null,
+                    "meterNumber" : "1027",
+                    "amount" : null,
+                    "paymentType" : null,
+                    "billSourceData" : null,
+                    "billItem" : [ {
+                        "orderId" : "170510",
+                        "description" : "05/17(1):xxxx",
+                        "amount" : 859.565,
+                        "fromDate" : "2017-04-15",
+                        "toDate" : "2017-05-15",
+                        "formulaRates" : "100",
+                        "billCodeItemNo" : null,
+                        "productType" : null,
+                        "amountMonth" : null,
+                        "customerId" : null,
+                        "customerName" : null,
+                        "qty" : null
+                    }, {
+                        "orderId" : "170511",
+                        "description" : "05/18(1):xxxx",
+                        "amount" : 1000.000,
+                        "fromDate" : "2017-04-15",
+                        "toDate" : "2017-05-15",
+                        "formulaRates" : "200",
+                        "billCodeItemNo" : null,
+                        "productType" : null,
+                        "amountMonth" : null,
+                        "customerId" : null,
+                        "customerName" : null,
+                        "qty" : null
+                    } ],
+                    "_links" : { }
 
-
-                //if (billsList.content !== undefined) {
-                    $params.pageCount = billsList.totalPages;
-                    deferred.resolve((billsList.content.length > 0) ? billsList.content[0].billItem : []);
-                    //deferred.resolve([]);
-                    $scope.table.anyData = billsList.content[0].billItem.length > 0;
-                    $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
-                    // $scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
-               // }
-                // else {
-                //
-                // }
-
-
+                } ;
+                $params.pageCount = billsList.totalPages;
+                deferred.resolve($scope.tmpBillPaymentResponse.billItem);
+                //deferred.resolve([]);
+                $scope.table.anyData = $scope.tmpBillPaymentResponse.billItem.length > 0;
+                $scope.updateBillTypeID = $scope.tmpBillPaymentResponse.billType ;
             });
+
         };
         $scope.onSenderAccountSelect = function(accountId) {
             if (accountId == $scope.payment.formData.beneficiaryAccountId) {
@@ -186,6 +257,7 @@ angular.module('ocb-payments')
             $scope.billInfoSearch = false;
             $scope.payment.rbPaymentsStepParams.visibility.search = true;
             $scope.payment.rbPaymentsStepParams.visibility.next = false;
+            $scope.payment.items.checkBoxList = undefined;
             //$scope.initBDTable();
             //$scope.payment.formData.billCode = undefined;
             //$scope.showBillInfoSearch(true, false);
@@ -194,6 +266,7 @@ angular.module('ocb-payments')
         $scope.payment.formData.billCode = undefined;
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
             $scope.initBDTable();
+            $scope.payment.items.checkBoxList = undefined;
             //console.log("+++senderProv:" + $scope.payment.items.senderProvider.providerName);
             if ($scope.payment.formData.billCode !== undefined) {
                 $scope.billInfoSearch = !$scope.billInfoSearch;
