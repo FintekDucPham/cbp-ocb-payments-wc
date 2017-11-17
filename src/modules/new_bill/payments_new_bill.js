@@ -150,14 +150,14 @@ angular.module('ocb-payments')
                 // var totalPages =
 
 
-                if (billsList.content !== undefined) {
+                //if (billsList.content !== undefined) {
                     $params.pageCount = billsList.totalPages;
                     deferred.resolve((billsList.content.length > 0) ? billsList.content[0].billItem : []);
                     //deferred.resolve([]);
                     $scope.table.anyData = billsList.content[0].billItem.length > 0;
                     $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
                     // $scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
-                }
+               // }
                 // else {
                 //
                 // }
