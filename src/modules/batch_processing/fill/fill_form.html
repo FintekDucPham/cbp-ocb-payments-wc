@@ -17,7 +17,7 @@
             <bd-header>{{ ::'ocb.payments.batch_processing.personal' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
                 <!--<input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>-->
-                <rb-account-select
+                <rb-account-select rb-batch-info-search="batchInfoSearch"
                         rb-product-list-name="TRANSFER_FROM_LIST"
                         rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                         rb-account="paymentsBatchProcessingForm.formData.selectedAccount"
@@ -32,7 +32,7 @@
 
                 <!--rb-account-no="payment1.items.recipient.srcAccountNo"-->
             </bd-item-property-form>
-            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount"
+            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="batchInfoSearch"
                               label="{{ ::'ocb.payments.batch_processing.name' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
                     <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedAccount.accountName| uppercase}}</span>
@@ -40,7 +40,7 @@
                     <span class="dash" ng-show="showDash">-</span>
                 </div>
             </bd-item-property-form>
-            <bd-item-property-form ng-if="paym0entsBatchProcessingForm.formData.selectedAccount"
+            <bd-item-property-form ng-if="paym0entsBatchProcessingForm.formData.selectedAccount" ng-disabled="batchInfoSearch"
                               label="{{ ::'ocb.payments.batch_processing.ocbbranch' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
                     <span class="bd-amount__value">Tan Binh???</span><span class="bd-amount__currency" ng-show="!showDash"></span>
@@ -48,20 +48,21 @@
                 </div>
             </bd-item-property-form>
 
-            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount"
+            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="batchInfoSearch"
                               label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
                            currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
             </bd-item-property-form>
 
-            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount"
+            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="batchInfoSearch"
                               label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
                            currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}???"></bd-amount>
             </bd-item-property-form>
 
-            <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
-                <ui-select ng-model="paymentsBatchProcessingForm.formData.selectedTransactionType"
+            <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}" ng-disabled="batchInfoSearch">
+                <ui-select ng-disabled="batchInfoSearch"
+                        ng-model="paymentsBatchProcessingForm.formData.selectedTransactionType"
                            theme="bootstrap"
                            on-select="onTransactionTypeChanged($select.selected)"
                            required>
@@ -74,8 +75,9 @@
                 </ui-select>
             </bd-item-property-form>
 
-            <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.subaccount' | translate  }}">
-                <ui-select ng-model="paymentsBatchProcessingForm.formData.selectedSubAccount"
+            <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.subaccount' | translate  }}" ng-disabled="batchInfoSearch">
+                <ui-select ng-disabled="batchInfoSearch"
+                        ng-model="paymentsBatchProcessingForm.formData.selectedSubAccount"
                            theme="bootstrap"
                            on-select="onSubAccountChanged($select.selected)"
                            required>
@@ -88,8 +90,8 @@
                 </ui-select>
             </bd-item-property-form>
         </div>
-        <div class="account-collapse-item form-horizontal">
-            <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
+        <div class="account-collapse-item form-horizontal" ng-show="batchInfoSearch">
+            <!--<bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>-->
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group">
                     <!--<input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">-->
@@ -102,7 +104,7 @@
         </div>
 
         <!--Table section-->
-        <div class="account-collapse-item">
+        <div class="account-collapse-item" ng-show="tableUpload">
             <bd-table
                     bd-type="typeBP"
                     bd-table-params="table.tableConfig"

@@ -25,8 +25,6 @@ angular.module('ocb-payments')
             $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
                 return accounts;
             };
-            $scope.paymentsBatchProcessingForm.items.selectedFilename = "Fintek";
-
 
             $scope.onSenderAccountSelect = function (accountId) {
 
@@ -87,7 +85,7 @@ angular.module('ocb-payments')
                 }
                 return result;
             };
-            var pageSize_ = 2;
+            var pageSize_ = 4;
 
             $scope.tableTestData = {
                 content: []
@@ -100,9 +98,15 @@ angular.module('ocb-payments')
                 }),
                 tableData: {
                     getData:function ( defer, $params) {
-                        var selectedItem = $scope.tableTestData.content[$params.currentPage - 1];
+                        var selectedListItem = [];
+                        for(var i = 0; i < pageSize_; i++){
+                            var t = $scope.tableTestData.content[$params.currentPage*pageSize_ - pageSize_ + i];
+                            if(t){
+                                selectedListItem[i] = t;
+                            }
+                        }
                         $scope.targetList = angular.copy($scope.tableTestData);
-                        $scope.targetList.content = [selectedItem];
+                        $scope.targetList.content = selectedListItem;
                         defer.resolve($scope.targetList.content);
                         $params.pageCount = $scope.tableTestData.totalPages;
                     }
@@ -152,24 +156,35 @@ angular.module('ocb-payments')
                     }else{
                         console.log("Loại : liên ngân hàng");
                     }
+                    var totalPages_ = Math.floor(count/pageSize_);
+                    if(count%pageSize_ > 0){
+                        totalPages_++;
+                    }
                     $scope.tableTestData = {
                         content: rs,
                         totalElements : count,
                         pageNumber : 0,
                         pageSize : pageSize_,
-                        totalPages : Math.floor(count/pageSize_) + count%pageSize_,
+                        totalPages : totalPages_,
                         sortOrder : null,
                         sortDirection : null,
                         firstPage : true,
                         lastPage : true,
                         numberOfElements : count
                     };
+                    if(count > 0){
+                        $scope.tableUpload = true;
+                        $scope.paymentsBatchProcessingFormParams.visibility.search = false;
+                        $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
+                        $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;
+                    }
                     $scope.table.tableControl.invalidate();
                     hideColumnTable(flag);
                     $scope.totalamountinfigures = numberWithCommas(totalAmount);
                     $scope.totalamountinwords =  ocbConvert.convertNumberToText(totalAmount, false);
                     $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(totalAmount, true);
                     $scope.totalnumberoflines = count;
+
                 };
 
                 // Tell JS To Start Reading The File.. You could delay this if desired
