@@ -53,6 +53,29 @@ angular.module('ocb-payments')
                 $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
             }
         };
+        $scope.tableContent = [];
+        $scope.tableCount = 0;
+        $scope.tableTotalPage = 0;
+        $scope.pageSize_ = 4;
+        $scope.displayBankCode = false;
+
+        $scope.hideColumnTable = function(isInternal) {
+            // var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
+            // bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
+            // var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
+            // for(var i=0; i<bankCodeRowElements.length; i++) {
+            //     bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
+            // }
+            if(isInternal === 1){
+                $scope.displayBankCode = false;
+            }else{
+                $scope.displayBankCode = true;
+            }
+        }
+
+        $scope.numberWithCommas = function (x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
         $scope.paymentsBatchProcessingFormParams = {
             completeState:'payments.batch_processing.fill',
@@ -81,5 +104,5 @@ angular.module('ocb-payments')
         $scope.paymentsBatchProcessingFormParams.visibility.search = true;
         $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
 
-
     });
+

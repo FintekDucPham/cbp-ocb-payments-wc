@@ -85,7 +85,6 @@ angular.module('ocb-payments')
                 }
                 return result;
             };
-            var pageSize_ = 4;
 
             $scope.tableTestData = {
                 content: []
@@ -93,14 +92,14 @@ angular.module('ocb-payments')
 
             $scope.table = {
                 tableConfig: new bdTableConfig({
-                    pageSize: pageSize_,
+                    pageSize: $scope.pageSize_,
                     placeholderText: $filter('translate')('ocb.payments.batch_processing')
                 }),
                 tableData: {
                     getData:function ( defer, $params) {
                         var selectedListItem = [];
-                        for(var i = 0; i < pageSize_; i++){
-                            var t = $scope.tableTestData.content[$params.currentPage*pageSize_ - pageSize_ + i];
+                        for(var i = 0; i < $scope.pageSize_; i++){
+                            var t = $scope.tableTestData.content[$params.currentPage*$scope.pageSize_ - $scope.pageSize_ + i];
                             if(t){
                                 selectedListItem[i] = t;
                             }
@@ -113,7 +112,7 @@ angular.module('ocb-payments')
                 },
                 tableControl: undefined
             };
-
+            $scope.paymentsBatchProcessingForm.flagType = 1;
             $scope.tienTest = function(){
                 var file = $('#uploadFile')[0].files[0];
 
@@ -125,6 +124,7 @@ angular.module('ocb-payments')
                 var ext = tempArray[tempArray.length -1];
                 // Ready The Event For When A File Gets Selected
 
+                $scope.paymentsBatchProcessingForm.flagType = 1
                 reader.onload = function(e) {
                     var data = e.target.result;
                     var readerObj = null;
@@ -134,56 +134,55 @@ angular.module('ocb-payments')
                     if(ext === 'xlsx') {
                         readerObj = XLSX;
                     }
-                    var rs = readExcelFile(data, readerObj);
+                    $scope.paymentsBatchProcessingForm.tableContent = readExcelFile(data, readerObj);
 
-                    var flag = 1;
                     var totalAmount = 0;
-                    var count = 0;
-                    for(var i = 0; i < rs.length; i++) {
-                        var obj = rs[i];
+                    $scope.paymentsBatchProcessingForm.tableCount = 0;
+                    for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableContent.length; i++) {
+                        var obj = $scope.paymentsBatchProcessingForm.tableContent[i];
                         var g = obj["bankCode"];
-                        if(g || g != null){
-                            flag = 0;
+                        if(g && g != null){
+                            $scope.paymentsBatchProcessingForm.flagType = 0;
                         }
                         var amount = Number(obj["amount"]);
                         if(amount && amount > 0){
                             totalAmount += amount;
-                            count++;
+                            $scope.paymentsBatchProcessingForm.tableCount++;
                         }
                     }
-                    if(flag == 1){
+                    $scope.hideColumnTable($scope.paymentsBatchProcessingForm.flagType);
+                    if($scope.paymentsBatchProcessingForm.flagType == 1){
                         console.log("Loại : nội bộ");
                     }else{
                         console.log("Loại : liên ngân hàng");
                     }
-                    var totalPages_ = Math.floor(count/pageSize_);
-                    if(count%pageSize_ > 0){
-                        totalPages_++;
+                    $scope.paymentsBatchProcessingForm.tableTotalPage = Math.floor($scope.paymentsBatchProcessingForm.tableCount/$scope.pageSize_);
+                    if($scope.paymentsBatchProcessingForm.tableCount%$scope.pageSize_ > 0){
+                        $scope.paymentsBatchProcessingForm.tableTotalPage++;
                     }
                     $scope.tableTestData = {
-                        content: rs,
-                        totalElements : count,
+                        content: $scope.paymentsBatchProcessingForm.tableContent,
+                        totalElements : $scope.paymentsBatchProcessingForm.tableCount,
                         pageNumber : 0,
-                        pageSize : pageSize_,
-                        totalPages : totalPages_,
+                        pageSize : $scope.pageSize_,
+                        totalPages : $scope.paymentsBatchProcessingForm.tableTotalPage,
                         sortOrder : null,
                         sortDirection : null,
                         firstPage : true,
                         lastPage : true,
-                        numberOfElements : count
+                        numberOfElements : $scope.paymentsBatchProcessingForm.tableCount
                     };
-                    if(count > 0){
+                    if($scope.paymentsBatchProcessingForm.tableCount > 0){
                         $scope.tableUpload = true;
                         $scope.paymentsBatchProcessingFormParams.visibility.search = false;
                         $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
                         $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;
                     }
                     $scope.table.tableControl.invalidate();
-                    hideColumnTable(flag);
-                    $scope.totalamountinfigures = numberWithCommas(totalAmount);
+                    $scope.totalamountinfigures = $scope.numberWithCommas(totalAmount);
                     $scope.totalamountinwords =  ocbConvert.convertNumberToText(totalAmount, false);
                     $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(totalAmount, true);
-                    $scope.totalnumberoflines = count;
+                    $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.tableCount;
 
                 };
 
@@ -193,16 +192,3 @@ angular.module('ocb-payments')
 
 
         });
-
-function hideColumnTable(isInternal) {
-    var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
-    bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
-    var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
-    for(var i=0; i<bankCodeRowElements.length; i++) {
-        bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
-    }
-}
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}

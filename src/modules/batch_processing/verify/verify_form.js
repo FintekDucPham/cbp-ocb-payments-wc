@@ -14,7 +14,7 @@ angular.module('ocb-payments')
         });
     })
     .controller("PaymentsBatchProcessingStep2Controller"
-        , function($scope, bdStepStateEvents, formService, translate, $filter) {
+        , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             actions.proceed();
             console.log("PaymentsBatchProcessingStep2Controller FORWARD_MOVE");
@@ -36,5 +36,54 @@ angular.module('ocb-payments')
             return result;
         }
 
+        $scope.tableTestData = {
+            content: $scope.paymentsBatchProcessingForm.tableContent,
+            totalElements : $scope.paymentsBatchProcessingForm.tableCount,
+            pageNumber : 0,
+            pageSize : $scope.pageSize_,
+            totalPages : $scope.paymentsBatchProcessingForm.tableTotalPage,
+            sortOrder : null,
+            sortDirection : null,
+            firstPage : true,
+            lastPage : true,
+            numberOfElements : $scope.paymentsBatchProcessingForm.tableCount
+        };
+
+        $scope.table = {
+            tableConfig: new bdTableConfig({
+                pageSize: $scope.pageSize_,
+                placeholderText: $filter('translate')('ocb.payments.batch_processing')
+            }),
+            tableData: {
+                getData:function ( defer, $params) {
+                    var selectedListItem = [];
+                    for(var i = 0; i < $scope.pageSize_; i++){
+                        var t = $scope.tableTestData.content[$params.currentPage*$scope.pageSize_ - $scope.pageSize_ + i];
+                        if(t){
+                            selectedListItem[i] = t;
+                        }
+                    }
+                    $scope.targetList = angular.copy($scope.tableTestData);
+                    $scope.targetList.content = selectedListItem;
+                    defer.resolve($scope.targetList.content);
+                    $params.pageCount = $scope.tableTestData.totalPages;
+                }
+            },
+            tableControl: undefined
+        };
 
     });
+
+
+function hideColumnTable(isInternal) {
+    var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
+    bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
+    var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
+    for(var i=0; i<bankCodeRowElements.length; i++) {
+        bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
+    }
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
