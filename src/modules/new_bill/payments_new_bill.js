@@ -115,9 +115,9 @@ angular.module('ocb-payments')
                             //     console.log(k1+":"+v1);
                             // });
                         });
-                        $scope.payment.formData.amount = 3434324;
-                        $scope.payment.items.totalBill = totalAmount;
-                        $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.items.totalBill, true);
+                        $scope.payment.formData.amount = totalAmount;
+                       // $scope.payment.items.totalBill = totalAmount;
+                        $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
                         console.log("-0-"+ $scope.table.tableData);
                     }
                 }),
@@ -241,13 +241,15 @@ angular.module('ocb-payments')
                 $scope.payment.formData.beneficiaryAccountId = undefined;
             }
             //$scope.recipientSelectParams.update(accountId);
-
-            transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
+            console.log("+++cuId:" + $scope.payment.items.senderAccount.ownersList[0].customerId);
+            transferBillService.getCustomer().then(function (customerDictionary) {
                 $scope.payment.formData.senderCustomer =  (customerDictionary.content !== undefined) ? customerDictionary.content[0] : [];
             });
+
         };
         $scope.clearForm = function () {
             $scope.payment.formData = {};
+            $scope.payment.items.checkBoxList = undefined;
             if($scope.payment.meta && $scope.payment.meta.modifyFromBeneficiary){
                 $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
                 $scope.payment.formData.addToBeneficiary = true;
@@ -257,7 +259,6 @@ angular.module('ocb-payments')
             $scope.billInfoSearch = false;
             $scope.payment.rbPaymentsStepParams.visibility.search = true;
             $scope.payment.rbPaymentsStepParams.visibility.next = false;
-            $scope.payment.items.checkBoxList = undefined;
             //$scope.initBDTable();
             //$scope.payment.formData.billCode = undefined;
             //$scope.showBillInfoSearch(true, false);
@@ -265,10 +266,10 @@ angular.module('ocb-payments')
         $scope.billInfoSearch = false;
         $scope.payment.formData.billCode = undefined;
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
-            $scope.initBDTable();
             $scope.payment.items.checkBoxList = undefined;
+            $scope.initBDTable();
             //console.log("+++senderProv:" + $scope.payment.items.senderProvider.providerName);
-            if ($scope.payment.formData.billCode !== undefined) {
+            if (($scope.payment.formData.billCode !== undefined) &&($scope.payment.formData.providerCode !== undefined)) {
                 $scope.billInfoSearch = !$scope.billInfoSearch;
                 $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
                 $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;//true;
