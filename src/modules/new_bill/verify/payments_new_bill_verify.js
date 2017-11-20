@@ -76,7 +76,25 @@ angular.module('ocb-payments')
                 formService.clearForm($scope.paymentAuthForm);
             });
         }
-
+        // Waiting transferType from customerService at login Web App.
+        var temporaryTransferType = function(businessLine) {
+                switch (businessLine) {
+                    case "33": return "RETAIL" ;
+                    default :   return "CORPORATE";
+                };
+        };
+        var temporaryResponse = function(status){
+            switch (status.toLowerCase()) {
+                case "pending": {
+                    $scope.payment.result.code = "60";//"0": "99" ;
+                    $scope.payment.result.type = "error" ;
+                };
+                default :  {
+                    $scope.payment.result.code = "0";
+                    $scope.payment.result.type = "success" ;
+                };
+            };
+        };
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
                 // if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
@@ -113,7 +131,7 @@ angular.module('ocb-payments')
                     console.log(k1+":"+v1);
                 });
                    // var createTransfer = function(){
-                        transferBillService.create('RETAIL', angular.extend({
+                        transferBillService.create(temporaryTransferType($scope.payment.formData.senderCustomer.businessLine), angular.extend({
                             "remitterId": $scope.payment.formData.senderCustomer.globusId,
                             "amount": "48"
                         }, $scope.payment.formData), $scope.payment.operation.link || false ).then(function (status) {
@@ -123,8 +141,10 @@ angular.module('ocb-payments')
                             angular.forEach(status,function(v1,k1){
                                 console.log(k1+":"+v1);
                             });
-                            console.log("+++stt:" + status + "---" + $scope.payment.formData.senderCustomer.globusId + "---" +   $scope.payment.formData.senderCustomer.businessLine);
-                            $scope.payment.result.code = (status.toLowerCase() === "accepted") ? "" : "0";//"0": "99" ;
+                            console.log("+++stt:" + status + "---" + $scope.payment.formData.senderCustomer.globusId + "---" +   $scope.payment.formData.senderCustomer.businessLine + temporaryTransferType($scope.payment.formData.senderCustomer.businessLine));
+                            //Waiting for official stt from OCB
+                           // $scope.payment.result.code = (status.toLowerCase() === "pending") ? "60" : "0";//"0": "99" ;
+                            temporaryResponse(status);
                             //$scope.payment.result.type = (status.toLowerCase() === "accepted") ? "success": "error" ;
                             console.log("+++stt:" + $scope.payment.result.code + $scope.payment.result.type );
                              actions.proceed();
