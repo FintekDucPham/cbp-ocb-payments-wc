@@ -9,8 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
-                                                            blockadesService) {
+    .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,  downloadService) {
 
 
         var senderAccountInitDefer = $q.defer();
@@ -63,7 +62,7 @@ angular.module('ocb-payments')
         // transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
         //         $scope.payment.formData.senderCustomer = customerDictionary.content[0];
         //     });
-        // ???: customerService, accountService, downloadService, blockadesService
+        // ???: customerService, accountsService, downloadService, blockadesService
         // $scope.billInfoSearch = false;
         // $scope.showBillInfoSearch = function() {
         //     $scope.billInfoSearch = !$scope.billInfoSearch;
@@ -79,15 +78,6 @@ angular.module('ocb-payments')
             $scope.selectedAccount = selectedAccount;
 
         };
-
-        $scope.promise = accountsService.search({pageSize: 10000, productList: "ACCOUNT_UNCLEARED_FROM_LIST"}).then(function(accountList) {
-            $scope.accountList = accountList.content;
-            if ($scope.accountList.length > 0) {
-                accountsService.loadAccountIcons($scope.accountList);
-                $scope.selectedAccount = findAccountOnList($stateParams.accountId || $scope.accountList[0].accountId);
-                $scope.refreshList();
-            }
-        });
 
         function findAccountOnList(accId) {
             return lodash.find($scope.accountList, function(acc) {
@@ -106,32 +96,6 @@ angular.module('ocb-payments')
         $scope.noDataLoaded = function() {
             return dataNotLoading() && $scope.noData();
         };
-
-        function getBlockades(deferred, $params) {
-           if($scope.table.newSearch){
-               $scope.table.newSearch = false;
-           //$scope.table.tableControl.invalidate();
-                $scope.table.tableConfig.currentPage = 1;
-                $scope.table.tableConfig.pageCount = 1;
-                $params.currentPage = 1;
-           }
-            var pageSize = $params.pageSize = 10;
-            if (!$scope.selectedAccount) {
-                deferred.resolve([]);
-                return;
-            }
-            $scope.table.anyData = false;
-            $scope.blockadesPromise = blockadesService.searchAccountBlockades({
-                accountId: $scope.selectedAccount.accountId,
-                pageNumber: $params.currentPage,
-                pageSize: pageSize
-            }).then(function(blockadeList) {
-                $params.pageCount = blockadeList.totalPages;
-                deferred.resolve(blockadeList.content);
-                $scope.table.anyData = blockadeList.content.length > 0;
-            });
-        }
-
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
 
@@ -222,6 +186,7 @@ angular.module('ocb-payments')
                 //             $scope.payment.transferId = transfer.referenceId;
                 //             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                 //             $scope.payment.holiday = transfer.holiday;
+                            setRealizationDateToCurrent();
                             actions.proceed();
                 //         }).catch(function(errorReason){
                 //             if(errorReason.subType == 'validation'){
