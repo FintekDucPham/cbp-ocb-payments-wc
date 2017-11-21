@@ -241,6 +241,8 @@
      "ocb.payments.new.bill.verify.recipient_account_name": "To account",
     "ocb.payments.new.bill.verify.billCode": "Bill code",
      "ocb.payments.new.bill.verify.amount": "Amount",
+    "ocb.payments.new.bill.fill.amount.EMPTY_AMOUNT": "Please click bill Payment checkbox.",
+    "ocb.payments.new.bill.fill.providerCode.EMPTY_PROVIDERCODE": "Both service and provider cannot be empty.",
      "ocb.payments.new.bill.verify.description": "Description",
      "ocb.payments.new.bill.verify.transactionType": "Transaction type",
 

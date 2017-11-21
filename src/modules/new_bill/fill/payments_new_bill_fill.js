@@ -98,10 +98,32 @@ angular.module('ocb-payments')
         };
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
-
+        $scope.$on('searchForm', function () {
+            var form = $scope.paymentForm;
+            if (!$scope.payment.formData.providerCode) {
+                form.providerCode.$setValidity('required', false);
+            }
+            if (!$scope.payment.formData.billCode) {
+                form.billCode.$setValidity('required', false);
+            }
+            if (form.$invalid) {
+                formService.dirtyFields(form);
+            }
+        });
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
             $scope.remote.model_from.resetToDefault();
+
+            var form = $scope.paymentForm;
+            if (!$scope.payment.formData.providerCode) {
+            form.providerCode.$setValidity('required', false);
+            }
+            if (!$scope.payment.formData.billCode) {
+            form.billCode.$setValidity('required', false);
+            }
+            if (form.$invalid) {
+            formService.dirtyFields(form);
+            }
         });
 
 
@@ -172,8 +194,11 @@ angular.module('ocb-payments')
                 // if(!$scope.payment.items.recipientAccount){
                 //     form.recipientAcc.$setValidity('required', false);
                 // }
-                if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
-                    form.recipientAcc.$setValidity('sameAccounts', false);
+                // if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                //     form.recipientAcc.$setValidity('sameAccounts', false);
+                // }
+                if (($scope.payment.formData.amount < 1) || ($scope.payment.formData.amount == undefined)) {
+                    form.checkBoxState.$setValidity('required', false);
                 }
 
                 if (form.$invalid) {
@@ -358,7 +383,7 @@ angular.module('ocb-payments')
             },
             payments: true
         });
-        $scope.updateServiceId = "12345";
+        // $scope.updateServiceId = "12345";
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);
     });
