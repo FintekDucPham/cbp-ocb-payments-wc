@@ -1,0 +1,44 @@
+<!--create by long.tran on 2017-11-21-->
+
+<rb-content-view class="rb-content-view--solid">
+    <div class="table">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+        <script src="script.js"></script>
+
+        <bd-table
+                bd-type="typeBH",
+                bd-table-params="table.tableConfig",
+                bd-table-control="table.tableControl",
+                bd-table-data="table.tableData",
+                bd-table-promise="billHistoryData",
+                bd-table-meta="{
+                    'first' : {
+                        'title': '##ocb.payments.bill.history.header.createDate.label',
+                        'data' : 'createDate'
+                    },
+                     'second' : {
+                        'title': '##ocb.payments.bill.history.header.services.label',
+                        'data' : 'service'
+                    },'third' : {
+                        'title': '##ocb.payments.bill.history.header.providers.label',
+                        'data' : 'provider'
+                    },'fourth' : {
+                        'title': '##ocb.payments.bill.history.header.currency.label',
+                        'data' : 'currency'
+                    },'fifth' : {
+                        'title': '##ocb.payments.bill.history.header.amount.label',
+                        'data' : 'amount'
+                    },'sixth' : {
+                        'title': '##ocb.payments.bill.history.header.status.label',
+                        'data' : 'status'
+                    },'seventh' : {
+                        'title': '',
+                        'data' : 'View'
+                    }}">
+
+
+        </bd-table>
+    </div>
+</rb-content-view>

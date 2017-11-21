@@ -357,6 +357,14 @@
     "ocb.payments.rejected.list.details.renew.button": "Renew",
     "ocb.payments.rejected.list.details.back": "Back",
 
+    "ocb.payments.bill.history.label": "Bills History",
+    "ocb.payments.bill.history.header.createDate.label": "Create date",
+    "ocb.payments.bill.history.header.services.label": "Services",
+    "ocb.payments.bill.history.header.providers.label": "Providers",
+    "ocb.payments.bill.history.header.currency.label": "Currency",
+    "ocb.payments.bill.history.header.amount.label": "Amount",
+    "ocb.payments.bill.history.header.status.label": "Status",
+
     "ocb.payments.rejected.select.filter.button.action": "Search",
     "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
     "ocb.payments.rejected.select.filter.INCORRECT_PERIOD": "Invalid number of last",

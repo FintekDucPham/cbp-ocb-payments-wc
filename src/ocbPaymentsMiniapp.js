@@ -120,6 +120,13 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.pending.list",
                     priority: 12
+                },
+                {
+                    id: "payments.bill_history.list",
+                    label: "ocb.payments.basket.list.details.historyAction",
+                    icon: "ocb-icons basket",
+                    action: "payments.bill_history.list",
+                    priority: 14
                 }
             ]
         });
