@@ -190,5 +190,25 @@ angular.module('ocb-payments')
                 reader.readAsBinaryString(file);
             };
 
+            $scope.resetTableTest = function(){
+                $scope.table.tableControl.invalidate();
+            };
 
+            $scope.paymentsBatchProcessingForm.resetTable = function(){
+                $scope.table.tableControl.invalidate();
+            };
+
+            $scope.paymentsBatchProcessingForm.checkTableContent = function(){
+                if($scope.paymentsBatchProcessingForm.tableCount > 0){
+                    $scope.tableUpload = true;
+                }
+            }
+
+            $scope.paymentsBatchProcessingForm.showTable = function(flag){
+                if(flag){
+                    $scope.tableUpload = true;
+                }else{
+                    $scope.tableUpload = false;
+                }
+            };
         });

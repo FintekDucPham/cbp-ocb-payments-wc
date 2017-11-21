@@ -21,7 +21,7 @@ angular.module('ocb-payments')
         });
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
-            var acoount = paymentsBatchProcessingForm.formData.selectedAccount;
+            var acoount = $scope.paymentsBatchProcessingForm.formData.selectedAccount;
             console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
         });
 
