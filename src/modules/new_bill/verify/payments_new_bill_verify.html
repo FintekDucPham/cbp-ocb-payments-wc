@@ -13,13 +13,13 @@
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_account_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
-                <div class="break-force">{{ payment.items.senderAccount.nrbNumber }}
+                <div class="break-force">{{ payment.items.senderAccount.accountNo }}
                 </div>
             </div>
             <div class="hidden-lg">
                 <rb-account-responsive-line
                         rb-account-name=""
-                        rb-account-nrb="payment.items.senderAccount.nrbNumber"></rb-account-responsive-line>
+                        rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
             </div>
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.billCode'|translate}}">
@@ -27,24 +27,27 @@
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{::'ocb.payments.new.bill.verify.execution_date'|translate}}">
-            {{payment.formData.senderCustomer.fullName }}
+            {{payment.formData.realizationDate | date:'shortDate' }}
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_service_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
-                <div class="break-force">{{ payment.items.senderService.serviceName || payment.items.senderService.serviceId }}</div>
+                <div class="break-force">{{ payment.items.senderService.serviceName || payment.items.senderService.serviceCode }}</div>
             </div>
             <div class="hidden-lg">
-                <rb-account-responsive-line rb-account-name="payment.items.senderService.serviceName " rb-account-nrb="payment.items.senderService.serviceId"></rb-account-responsive-line>
+                <rb-account-responsive-line rb-account-name="payment.items.senderService.serviceName " rb-account-nrb="payment.items.senderService.serviceCode"></rb-account-responsive-line>
             </div>
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.totalBill'|translate}}">
-            <div class="hidden-sm hidden-xs hidden-md">
-                <div class="break-force">{{ payment.items.totalBill }}</div>
-            </div>
-            <div class="hidden-lg">
-                <rb-account-responsive-line rb-account-name="" rb-account-nrb="payment.items.totalBill"></rb-account-responsive-line>
-            </div>
+            <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
         </bd-item-property>
+        <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'ocb.payments.new.bill.verify.totalBill'|translate}}">-->
+            <!--<div class="hidden-sm hidden-xs hidden-md">-->
+                <!--<div class="break-force">{{ payment.formData.amount }}</div>-->
+            <!--</div>-->
+            <!--<div class="hidden-lg">-->
+                <!--<rb-account-responsive-line rb-account-name="" rb-account-nrb="payment.formData.amount"></rb-account-responsive-line>-->
+            <!--</div>-->
+        <!--</bd-item-property>-->
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.totalBillInWord'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
                 <div class="break-force">{{ payment.items.totalBillInWord }}</div>

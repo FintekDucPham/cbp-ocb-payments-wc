@@ -30,27 +30,56 @@ angular.module('ocb-payments')
             }
         };
 
+        $scope.batchInfoSearch = false;
+        $scope.tableUpload = false;
+
         $scope.clearForm = function(){
-            $scope.paymentsBatchProcessingForm.formData = {};
-            $scope.paymentsBatchProcessingForm.items = {};
+            $scope.paymentsBatchProcessingFormParams.formData = {};
+            $scope.paymentsBatchProcessingFormParams.items = {};
             $scope.$broadcast('clearForm');
         };
         $scope.testFormAction = function() {
             console.log("CLick");
-        }
+        };
+        $scope.showBatchInfoSearch = function(searchBool, nextBool ) {
+            // if ($scope.payment.formData.billCode !== undefined) {
+            $scope.batchInfoSearch = !$scope.batchInfoSearch;
+            $scope.paymentsBatchProcessingFormParams.visibility.search = searchBool;//false;
+            $scope.paymentsBatchProcessingFormParams.visibility.accept = searchBool;//true;
+            $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = nextBool;//true;
+            // }
+            if(searchBool){
+                $scope.tableUpload = false;
+                $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
+            }
+        };
+
         $scope.paymentsBatchProcessingFormParams = {
-            completeState:'payments.new.fill',
-            onClear:$scope.clearForm,
+            completeState:'payments.batch_processing.fill',
+            onClear: $scope.clearForm,
             cancelState:'dashboard',
-            footerType: 'batchprocessing',
+            footerType: 'batchProcessing',
+            onSearch: $scope.showBatchInfoSearch,
             labels:{
                 prev:"ocb.payments.buttons.prev",
                 testFormButton:'ocb.payments.batch_processing.custom.button',
                 next:"ocb.payments.new.btn.next",
-                finalize:"ocb.payments.new.btn.finalize"
+                finalize:"ocb.payments.new.btn.finalize",
+                search: 'config.multistepform.buttons.search'
             },
             visibility:{
+                search: true,
+                change: true,
+                clear: true,
+                next: true,
+                accept: true,
+                prev_fill: false
             },
             testFormAction: $scope.testFormAction
         }
+
+        $scope.paymentsBatchProcessingFormParams.visibility.search = true;
+        $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
+
+
     });

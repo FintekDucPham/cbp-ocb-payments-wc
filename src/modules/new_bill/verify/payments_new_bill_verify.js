@@ -76,7 +76,25 @@ angular.module('ocb-payments')
                 formService.clearForm($scope.paymentAuthForm);
             });
         }
-
+        // Waiting transferType from customerService at login Web App.
+        var temporaryTransferType = function(businessLine) {
+                switch (businessLine) {
+                    case "33": return "RETAIL" ;
+                    default :   return "CORPORATE";
+                };
+        };
+        var temporaryResponse = function(status){
+            switch (status.toLowerCase()) {
+                case "pending": {
+                    $scope.payment.result.code = "60";//"0": "99" ;
+                    $scope.payment.result.type = "error" ;
+                };
+                default :  {
+                    $scope.payment.result.code = "0";
+                    $scope.payment.result.type = "success" ;
+                };
+            };
+        };
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
                 // if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
@@ -97,24 +115,39 @@ angular.module('ocb-payments')
                 // }
                // transferBillService.create()
                //  $scope.payment.formData = {
-               //      "businessLine" : "RETAIL",
-               //      "billCode" : "123456",
-               //      "serviceCode" : "WATER",
-               //      "providerCode" : "CNTA",
-               //      "createdDateTime" : "2017-11-07 02:57:00",
-               //      "amount" : "200000",
-               //      "currency" : "VND",
-               //      "description" : "No description"
+               //      "remitterAccountId":"0060100006103007",  "1314175"
+               //      "realizationDate": "2017-11-16",
+               //      "amount": "111.11",
+               //      "currency": "VND"
+               //  "bookingDate": "2017-11-16",
+                    // "serviceCode":"ADSL",
+                    // "providerCode":"FPT"
+                // "amount": "48"
                //  };
+                angular.forEach($scope.payment.formData,function(v1,k1){
+                    console.log(k1+":"+v1);
+                });
+                angular.forEach($scope.payment.formData.senderCustomer,function(v1,k1){
+                    console.log(k1+":"+v1);
+                });
                    // var createTransfer = function(){
-                        transferBillService.create('bill', angular.extend({
-                            "remitterId": 0
+                        transferBillService.create(temporaryTransferType($scope.payment.formData.senderCustomer.businessLine), angular.extend({
+                            "remitterId": $scope.payment.formData.senderCustomer.globusId,
+                            "amount": "48"
                         }, $scope.payment.formData), $scope.payment.operation.link || false ).then(function (status) {
                             // $scope.payment.transferId = transfer.referenceId;
                             // $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                             // $scope.payment.holiday = transfer.holiday;
-                            console.log("+++stt:" + status);
-                // actions.proceed();
+                            angular.forEach(status,function(v1,k1){
+                                console.log(k1+":"+v1);
+                            });
+                            console.log("+++stt:" + status + "---" + $scope.payment.formData.senderCustomer.globusId + "---" +   $scope.payment.formData.senderCustomer.businessLine + temporaryTransferType($scope.payment.formData.senderCustomer.businessLine));
+                            //Waiting for official stt from OCB
+                           // $scope.payment.result.code = (status.toLowerCase() === "pending") ? "60" : "0";//"0": "99" ;
+                            temporaryResponse(status);
+                            //$scope.payment.result.type = (status.toLowerCase() === "accepted") ? "success": "error" ;
+                            console.log("+++stt:" + $scope.payment.result.code + $scope.payment.result.type );
+                             actions.proceed();
                         }).catch(function(errorReason){
                             // if(errorReason.subType == 'validation'){
                             //     for(var i=0; i<=errorReason.errors.length; i++){
@@ -132,10 +165,13 @@ angular.module('ocb-payments')
                             //         }
                             //     }
                             // }
-                            console.log("+++ex:" + errorReason);
+                            angular.forEach(errorReason,function(v1,k1){
+                                    console.log(k1+":"+v1);
+                                });
+                            console.log("+++ex:" + errorReason.message);
                         });
                    // };
-                actions.proceed();
+                 //actions.proceed();
             }
         });
 

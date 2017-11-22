@@ -25,8 +25,6 @@ angular.module('ocb-payments')
             $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
                 return accounts;
             };
-            $scope.paymentsBatchProcessingForm.items.selectedFilename = "Fintek";
-
 
             $scope.onSenderAccountSelect = function (accountId) {
 
@@ -34,12 +32,7 @@ angular.module('ocb-payments')
 
             $scope.onTransactionTypeChanged = function (selectedItem) {
                 var isInternal = selectedItem.index === 1;
-                var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
-                bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
-                var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
-                for(var i=0; i<bankCodeRowElements.length; i++) {
-                    bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
-                }
+                hideColumnTable(isInternal);
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = selectedItem;
             };
 
@@ -84,7 +77,6 @@ angular.module('ocb-payments')
                 $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccounts[0];
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
             }
-            $scope.selectedFilename ="Fintek";
 
             $scope.selectionQuerry = function (search, mList) {
                 var result = mList.slice();
@@ -93,61 +85,124 @@ angular.module('ocb-payments')
                 }
                 return result;
             };
+            var pageSize_ = 4;
+
+            $scope.tableTestData = {
+                content: []
+            };
 
             $scope.table = {
                 tableConfig: new bdTableConfig({
-                    placeholderText: $filter("translate")("ocb.payments.batch_processing.beneficiarylis")
-
+                    pageSize: pageSize_,
+                    placeholderText: $filter('translate')('ocb.payments.batch_processing')
                 }),
                 tableData: {
                     getData:function ( defer, $params) {
-                        defer.resolve($scope.tableTestData.content);
+                        var selectedListItem = [];
+                        for(var i = 0; i < pageSize_; i++){
+                            var t = $scope.tableTestData.content[$params.currentPage*pageSize_ - pageSize_ + i];
+                            if(t){
+                                selectedListItem[i] = t;
+                            }
+                        }
+                        $scope.targetList = angular.copy($scope.tableTestData);
+                        $scope.targetList.content = selectedListItem;
+                        defer.resolve($scope.targetList.content);
                         $params.pageCount = $scope.tableTestData.totalPages;
-
                     }
                 },
                 tableControl: undefined
             };
-            $scope.tableTestData = {
-                content: [
-                    {
-                        fullName:"Mr. A",
-                        accountNo: "ACBD",
-                        bankCode:"ACBD",
-                        amount:1000000,
-                        description:"Test 1"
-                    },
-                    {
-                        fullName:"Mr. B",
-                        accountNo: "ACBC",
-                        bankCode:"ACBC",
-                        amount:2000000,
-                        description:"Test 2"
-                    },
-                    {
-                        fullName:"Mr. C",
-                        accountNo: "ACBK",
-                        bankCode:"ACBK",
-                        amount:3000000,
-                        description:"Test C"
-                    }
-                ],
-                totalElements:1,
-                pageNumber:0,
-                pageSize:0,
-                totalPages:0,
-                sortOrder: null,
-                sortDirection: null,
-                firstPage: false,
-                lastPage:true,
-                numberOfElements: 3
-            };
-            $scope.totalamountinfigures = 0;
-            $scope.totalamountinwords =  ocbConvert.convertNumberToText(2365000, false);
-            $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(2365000, true);
 
-            $scope.totalnumberoflines = 3;
+            $scope.tienTest = function(){
+                var file = $('#uploadFile')[0].files[0];
+
+                var sFilename = file.name;
+                // Create A File Reader HTML5
+                var reader = new FileReader();
+
+                var tempArray = sFilename.split(".");
+                var ext = tempArray[tempArray.length -1];
+                // Ready The Event For When A File Gets Selected
+
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    var readerObj = null;
+                    if(ext === 'xls') {
+                        readerObj = XLS;
+                    }
+                    if(ext === 'xlsx') {
+                        readerObj = XLSX;
+                    }
+                    var rs = readExcelFile(data, readerObj);
+
+                    var flag = 1;
+                    var totalAmount = 0;
+                    var count = 0;
+                    for(var i = 0; i < rs.length; i++) {
+                        var obj = rs[i];
+                        var g = obj["bankCode"];
+                        if(g || g != null){
+                            flag = 0;
+                        }
+                        var amount = Number(obj["amount"]);
+                        if(amount && amount > 0){
+                            totalAmount += amount;
+                            count++;
+                        }
+                    }
+                    if(flag == 1){
+                        console.log("Loại : nội bộ");
+                    }else{
+                        console.log("Loại : liên ngân hàng");
+                    }
+                    var totalPages_ = Math.floor(count/pageSize_);
+                    if(count%pageSize_ > 0){
+                        totalPages_++;
+                    }
+                    $scope.tableTestData = {
+                        content: rs,
+                        totalElements : count,
+                        pageNumber : 0,
+                        pageSize : pageSize_,
+                        totalPages : totalPages_,
+                        sortOrder : null,
+                        sortDirection : null,
+                        firstPage : true,
+                        lastPage : true,
+                        numberOfElements : count
+                    };
+                    if(count > 0){
+                        $scope.tableUpload = true;
+                        $scope.paymentsBatchProcessingFormParams.visibility.search = false;
+                        $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
+                        $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;
+                    }
+                    $scope.table.tableControl.invalidate();
+                    hideColumnTable(flag);
+                    $scope.totalamountinfigures = numberWithCommas(totalAmount);
+                    $scope.totalamountinwords =  ocbConvert.convertNumberToText(totalAmount, false);
+                    $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(totalAmount, true);
+                    $scope.totalnumberoflines = count;
+
+                };
+
+                // Tell JS To Start Reading The File.. You could delay this if desired
+                reader.readAsBinaryString(file);
+            };
 
 
         });
 
+function hideColumnTable(isInternal) {
+    var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
+    bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
+    var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
+    for(var i=0; i<bankCodeRowElements.length; i++) {
+        bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
+    }
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
