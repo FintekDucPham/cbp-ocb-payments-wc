@@ -1,7 +1,6 @@
 
     var oFileIn = document.getElementById('my_file_input');
-	console.log(oFileIn);
-    if(oFileIn.addEventListener) {
+    if(oFileIn != null && oFileIn.addEventListener) {
         oFileIn.addEventListener('change', filePicked, false);
     }
 
