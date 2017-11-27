@@ -10,230 +10,9 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsBillHistoryController', function ($scope,bdTableConfig, translate, $filter, exportService, fileDownloadService) {
+    .controller('PaymentsBillHistoryController', function ($scope,bdTableConfig, translate, $filter, exportService, fileDownloadService, transferBillService) {
         //Set data bill history table
-        $scope.billHistoryData= {
-            content: [
-                {
-                    createDate: '10.10.2017',
-                    service: 'EVN HCM',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '700 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Mai Ninh',
-                            createDate: '10.11.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim Chi',
-                            address: '612 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB12asdasd789',
-                            amount: '2 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'Truyen Hinh Cap',
-                    provider: 'HCM',
-                    currency: 'VND',
-                    amount: '100 000',
-                    status: 'Dang cho xu ly',
-                    detail:
-                        {
-                            account: '123123123798',
-                            creator: 'Tran Yen',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi',
-                            address: '12 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'Thuy cuc HCM',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '200 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'EVN HCM',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '700 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'RMIT',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '17 000 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'Internet',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '120 000',
-                    status: 'Dang cho xu ly',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },{
-                    createDate: '10.10.2017',
-                    service: 'EVN HCM',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '2 200 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '12123216798',
-                            creator: 'Tran Hai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'EVN HCM',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '700 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'Travel',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '9 000 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'Banking HCM',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '1 700 000',
-                    status: 'Dang cho xu ly',
-                    detail:
-                        {
-                            account: '123456798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                },
-                {
-                    createDate: '10.10.2017',
-                    service: 'Transfer HCM',
-                    provider: 'Thu Duc',
-                    currency: 'VND',
-                    amount: '900 000',
-                    status: 'Hoan thanh',
-                    detail:
-                        {
-                            account: '123412321351236798',
-                            creator: 'Tran Thi Mai',
-                            createDate: '10.10.2017',
-                            service: 'Thu Thiem - cty Dien Luc TP.HCM',
-                            fullName: 'Le Thi Kim An',
-                            address: '6 CMT8, P7, Q.Tan Binh',
-                            billCode: 'OCB123456789',
-                            amount: '1 000 000 VND'
-                        }
-                }
 
-            ],
-            totalElements : 11,
-            pageSize : 5,
-            pageNumber : 5,
-            totalPages : 3,
-            firstPage : false,
-            lastPage : true
-
-
-
-        };
         //table config
         $scope.tableConfig = new bdTableConfig({
 
@@ -261,11 +40,34 @@ angular.module('ocb-payments')
                             pdfMake.createPdf(docDefinition).download("test.pdf");
                         }
                     });
+                },
+                hideAddress: function (billType) {
+                    if (billType == "EXTENDED_DETAIL" || billType == "NO_DETAIL" ){
+                        return true;
+                    }
+                    return false;
+                },
+                hideQty: function (billType) {
+                    if (billType == "MASTER_DETAIL" || billType == "NO_DETAIL"){
+                        return true;
+                    }
+                    return false;
+                },
+                hideFullName: function (billType) {
+                    if (billType == "NO_DETAIL"){
+                        return true;
+                    }
+                    return false;
                 }
             }),
             tableData: {
+                // getData : $scope.billHistoryData
                 getData: function (defer, $params) {
-                    var totalItems = $scope.billHistoryData.content.length;
+                    $scope.billHistoryData = transferBillService.getBillHistory({fromDate : '2017-01-01', toDate: '2017-12-30'}).then(function(data) {
+                        defer.resolve(data.content);
+                        //$scope.table.anyData = data.content[0].length > 0;
+                    });
+                    /*                    var totalItems = $scope.billHistoryData.length;
                     // init page size
                     var pageSize = pageSize || 5;
                     var currentPage = $params.currentPage;
@@ -294,14 +96,15 @@ angular.module('ocb-payments')
                     var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
                     $scope.targetList = angular.copy($scope.billHistoryData);
-                    $scope.targetList.content = [];
+                    // $scope.targetList.content = [];
                     for ( i = startIndex; i <= endIndex ; i++ ){
-                        var selectedItem = $scope.billHistoryData.content[i];
-                        $scope.targetList.content.push(selectedItem);
-
-                    }
-                    defer.resolve($scope.targetList.content);
-                    $params.pageCount = $scope.billHistoryData.totalPages;
+                        var selectedItem = $scope.targetList[i];
+                        // TODO
+                        // $scope.targetList.push(selectedItem);
+                    }*/
+                   /* defer.resolve($scope.billHistoryData);
+                    $scope.table.anyData = billsList.content[0].billItem.length > 0;*/
+                    /*$params.pageCount = $scope.billHistoryData.totalPages;*/
 
 
                 }

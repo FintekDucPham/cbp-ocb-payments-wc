@@ -367,6 +367,12 @@
     "ocb.payments.bill.history.header.currency.label": "Currency",
     "ocb.payments.bill.history.header.amount.label": "Amount",
     "ocb.payments.bill.history.header.status.label": "Status",
+    "ocb.payments.bill.history.header.account.label": "Account",
+    "ocb.payments.bill.history.header.creator.label": "Creator",
+    "ocb.payments.bill.history.header.fullName.label": "Full Name",
+    "ocb.payments.bill.history.header.address.label": "Address",
+    "ocb.payments.bill.history.header.billID.label": "Bill Code",
+    "ocb.payments.bill.history.header.qty.label": "Number of months",
 
     "ocb.payments.rejected.select.filter.button.action": "Search",
     "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
