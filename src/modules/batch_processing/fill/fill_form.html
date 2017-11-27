@@ -21,7 +21,7 @@
                         rb-product-list-name="TRANSFER_FROM_LIST"
                         rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                         rb-account="paymentsBatchProcessingForm.formData.selectedAccount"
-                        rb-account-id="paymentsBatchProcessingForm.formData.senderAccountId"
+                        rb-account-no="paymentsBatchProcessingForm.formData.senderAccountId"
                         rb-on-account-select="onSenderAccountSelect($accountId)"
                         bd-attr-required="true"
                         rb-account-list="paymentsBatchProcessingForm.formData.accountList"
@@ -67,10 +67,10 @@
                            on-select="onTransactionTypeChanged($select.selected)"
                            required>
                     <ui-select-match placeholder="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
-                        {{$select.selected.name}}
+                        {{$select.selected.typeName}}
                     </ui-select-match>
-                    <ui-select-choices repeat="transactionType in selectionQuerry($select.search, transaction_types) | filter: $select.search.name">
-                        <div ng-bind="transactionType.name"></div>
+                    <ui-select-choices repeat="transactionType in selectionQuerry($select.search, transaction_types) | filter: $select.search.typeName">
+                        <div ng-bind="transactionType.typeName"></div>
                     </ui-select-choices>
                 </ui-select>
             </bd-item-property-form>
@@ -90,15 +90,12 @@
                 </ui-select>
             </bd-item-property-form>
         </div>
-        <div class="row">
-            <button type="button" class="btn-primary" ng-click="resetTableTest()">Reset table</button>
-        </div>
         <div class="account-collapse-item form-horizontal" ng-show="batchInfoSearch">
             <!--<bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>-->
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group">
                     <!--<input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">-->
-                    <input style="cursor: pointer" type="file" id="uploadFile"/>
+                    <input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                     <span class="input-group-btn">
                         <bd-button class="bd-button" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
                     </span>

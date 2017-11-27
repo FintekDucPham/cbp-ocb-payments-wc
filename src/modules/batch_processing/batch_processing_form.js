@@ -13,7 +13,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsBatchProcessingController', function ($scope, bdMainStepInitializer, bdTableConfig) {
+    .controller('PaymentsBatchProcessingController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
 
         bdMainStepInitializer($scope, 'paymentsBatchProcessingForm', {
             formName: 'paymentsBatchProcessingFormForm',
@@ -117,6 +117,7 @@ angular.module('ocb-payments')
 
         $scope.paymentsBatchProcessingFormParams.visibility.search = true;
         $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
+
 
     });
 

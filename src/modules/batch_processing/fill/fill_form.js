@@ -13,7 +13,7 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig, ocbConvert) {
+                                bdTableConfig, ocbConvert, transferBatchService) {
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 actions.proceed();
@@ -29,54 +29,55 @@ angular.module('ocb-payments')
             $scope.onSenderAccountSelect = function (accountId) {
 
             };
+            $scope.transaction_types = [];
+            transferBatchService.getTransferTypes({}).then(function (typeList) {
+                if (typeList.content !== undefined) {
+                    $scope.transaction_types = typeList.content;
+                    $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
+                }
+                if($scope.paymentsBatchProcessingForm.formData.selectedSubAccount === undefined) {
+                    $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccounts[0];
+                }
+            });
 
             $scope.onTransactionTypeChanged = function (selectedItem) {
+                $scope.transactionTypeList = transferBatchService.getTransferTypes({}).then(function (typeList) {
+                        console.log(typeList.content);
+                        if (typeList.content !== undefined) {
+                            return typeList.content;
+                        }
+                        return null;
+                });
                 var isInternal = selectedItem.index === 1;
                 hideColumnTable(isInternal);
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = selectedItem;
             };
-
-             $scope.transaction_types = [
-                 {
-                     index : 1,
-                     name : "Internal / Nội Bộ"
-                 },
-                 {
-                     index : 2,
-                     name : "External / Liên Ngân Hàng"
-                 }
-            ];
-
 
             $scope.onSubAccountChanged = function (selectedSubAccount) {
                 $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = selectedSubAccount;
             };
             $scope.subAccounts = [
                 {
-                    index: 1,
+                    type: 1,
                     name: "No"
                 },
                 {
-                    index: 2,
+                    type: 2,
                     name: "Sub-Account 1"
                 },
                 {
-                    index: 3,
+                    type: 3,
                     name: "Sub-Account 2"
                 },
                 {
-                    index: 4,
+                    type: 4,
                     name: "..."
                 },
                 {
-                    index: 5,
+                    type: 5,
                     name: "Sub-Account n"
                 }
             ];
-            if($scope.paymentsBatchProcessingForm.formData.selectedSubAccount === undefined) {
-                $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccounts[0];
-                $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
-            }
 
             $scope.selectionQuerry = function (search, mList) {
                 var result = mList.slice();
@@ -117,6 +118,7 @@ angular.module('ocb-payments')
                 var file = $('#uploadFile')[0].files[0];
 
                 var sFilename = file.name;
+
                 // Create A File Reader HTML5
                 var reader = new FileReader();
 
@@ -125,69 +127,27 @@ angular.module('ocb-payments')
                 // Ready The Event For When A File Gets Selected
 
                 $scope.paymentsBatchProcessingForm.flagType = 1
-                reader.onload = function(e) {
-                    var data = e.target.result;
-                    var readerObj = null;
+
+                reader.readAsDataURL(file);
+                reader.onload = function() {
                     if(ext === 'xls') {
-                        readerObj = XLS;
+
                     }
                     if(ext === 'xlsx') {
-                        readerObj = XLSX;
-                    }
-                    $scope.paymentsBatchProcessingForm.tableContent = readExcelFile(data, readerObj);
 
-                    var totalAmount = 0;
-                    $scope.paymentsBatchProcessingForm.tableCount = 0;
-                    for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableContent.length; i++) {
-                        var obj = $scope.paymentsBatchProcessingForm.tableContent[i];
-                        var g = obj["bankCode"];
-                        if(g && g != null){
-                            $scope.paymentsBatchProcessingForm.flagType = 0;
-                        }
-                        var amount = Number(obj["amount"]);
-                        if(amount && amount > 0){
-                            totalAmount += amount;
-                            $scope.paymentsBatchProcessingForm.tableCount++;
-                        }
                     }
-                    $scope.hideColumnTable($scope.paymentsBatchProcessingForm.flagType);
-                    if($scope.paymentsBatchProcessingForm.flagType == 1){
-                        console.log("Loại : nội bộ");
-                    }else{
-                        console.log("Loại : liên ngân hàng");
-                    }
-                    $scope.paymentsBatchProcessingForm.tableTotalPage = Math.floor($scope.paymentsBatchProcessingForm.tableCount/$scope.pageSize_);
-                    if($scope.paymentsBatchProcessingForm.tableCount%$scope.pageSize_ > 0){
-                        $scope.paymentsBatchProcessingForm.tableTotalPage++;
-                    }
-                    $scope.tableTestData = {
-                        content: $scope.paymentsBatchProcessingForm.tableContent,
-                        totalElements : $scope.paymentsBatchProcessingForm.tableCount,
-                        pageNumber : 0,
-                        pageSize : $scope.pageSize_,
-                        totalPages : $scope.paymentsBatchProcessingForm.tableTotalPage,
-                        sortOrder : null,
-                        sortDirection : null,
-                        firstPage : true,
-                        lastPage : true,
-                        numberOfElements : $scope.paymentsBatchProcessingForm.tableCount
-                    };
-                    if($scope.paymentsBatchProcessingForm.tableCount > 0){
-                        $scope.tableUpload = true;
-                        $scope.paymentsBatchProcessingFormParams.visibility.search = false;
-                        $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
-                        $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;
-                    }
-                    $scope.table.tableControl.invalidate();
-                    $scope.totalamountinfigures = $scope.numberWithCommas(totalAmount);
-                    $scope.totalamountinwords =  ocbConvert.convertNumberToText(totalAmount, false);
-                    $scope.totalamountinwordsen =  ocbConvert.convertNumberToText(totalAmount, true);
-                    $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.tableCount;
+                    var param = [{
+                        filename : sFilename,
+                        transferType : "IN",
+                        fileData : reader.result.split(',')[1]
+                    }];
+                    transferBatchService.validateRecipients(param).then(function(responseContent) {
+                        console.log("responseContent");
+                        console.log(responseContent);
+                    });
+                    $scope.paymentsBatchProcessingForm.tableContent = [];
 
                 };
-
-                // Tell JS To Start Reading The File.. You could delay this if desired
-                reader.readAsBinaryString(file);
             };
 
             $scope.resetTableTest = function(){
@@ -211,4 +171,6 @@ angular.module('ocb-payments')
                     $scope.tableUpload = false;
                 }
             };
+
         });
+
