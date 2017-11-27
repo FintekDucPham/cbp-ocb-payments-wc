@@ -240,6 +240,8 @@
      "ocb.payments.new.bill.verify.recipient_account_name": "To account",
     "ocb.payments.new.bill.verify.billCode": "Bill code",
      "ocb.payments.new.bill.verify.amount": "Amount",
+    "ocb.payments.new.bill.fill.amount.EMPTY_AMOUNT": "Please click bill Payment checkbox.",
+    "ocb.payments.new.bill.fill.providerCode.EMPTY_PROVIDERCODE": "Both service and provider cannot be empty.",
      "ocb.payments.new.bill.verify.description": "Description",
      "ocb.payments.new.bill.verify.transactionType": "Transaction type",
 
@@ -357,6 +359,14 @@
     "ocb.payments.rejected.list.details.realizationDate": "Execution date",
     "ocb.payments.rejected.list.details.renew.button": "Renew",
     "ocb.payments.rejected.list.details.back": "Back",
+
+    "ocb.payments.bill.history.label": "Bills History",
+    "ocb.payments.bill.history.header.createDate.label": "Create date",
+    "ocb.payments.bill.history.header.services.label": "Services",
+    "ocb.payments.bill.history.header.providers.label": "Providers",
+    "ocb.payments.bill.history.header.currency.label": "Currency",
+    "ocb.payments.bill.history.header.amount.label": "Amount",
+    "ocb.payments.bill.history.header.status.label": "Status",
 
     "ocb.payments.rejected.select.filter.button.action": "Search",
     "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
