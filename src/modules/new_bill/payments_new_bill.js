@@ -265,10 +265,13 @@ angular.module('ocb-payments')
         };
         $scope.billInfoSearch = false;
         $scope.payment.formData.billCode = undefined;
+        // $scope.payment.formData.amount = undefined;
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
             $scope.payment.items.checkBoxList = undefined;
+            // $scope.payment.formData.amount = undefined;
             $scope.initBDTable();
             //console.log("+++senderProv:" + $scope.payment.items.senderProvider.providerName);
+            $scope.$broadcast('searchForm');
             if (($scope.payment.formData.billCode !== undefined) &&($scope.payment.formData.providerCode !== undefined)) {
                 $scope.billInfoSearch = !$scope.billInfoSearch;
                 $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
