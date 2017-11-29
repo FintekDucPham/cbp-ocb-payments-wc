@@ -1,4 +1,3 @@
-<!--create by long.tran on 2017-11-21-->
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state("payments.bill_history", {
