@@ -30,6 +30,7 @@ angular.module('ocb-payments', [
     function registerNavigation() {
         menuServiceProvider.registerMenu({
             id: 'ocb-payments',
+            iconClass: 'payments-icon',
             priority: 200,
             showMain: true,
             baseItem: "payments.recipients.list",
