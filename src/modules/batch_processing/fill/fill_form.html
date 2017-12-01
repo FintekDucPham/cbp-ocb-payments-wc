@@ -94,14 +94,14 @@
             <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group">
-                    <div class="addfile-block" style="">
+                    <!--<div class="addfile-block" style="">
                         <div class="form-control file-name"></div>
                         <label class="filelb">
                             <input type="file">
                             <i class="ocb-icons logo dark"/>
                         </label>
-                    </div>
-                    <!--<input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>-->
+                    </div>-->
+                    <input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                     <span class="input-group-btn">
                         <bd-button class="bd-button" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
                     </span>
