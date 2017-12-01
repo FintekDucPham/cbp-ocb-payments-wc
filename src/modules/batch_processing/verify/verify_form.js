@@ -37,17 +37,22 @@ angular.module('ocb-payments')
         }
 
         $scope.tableTestData = {
-            content: $scope.paymentsBatchProcessingForm.tableContent,
-            totalElements : $scope.paymentsBatchProcessingForm.tableCount,
+            content: $scope.paymentsBatchProcessingForm.tableValidContent,
+            totalElements : $scope.paymentsBatchProcessingForm.tableValidCount,
             pageNumber : 0,
             pageSize : $scope.pageSize_,
-            totalPages : $scope.paymentsBatchProcessingForm.tableTotalPage,
+            totalPages : $scope.paymentsBatchProcessingForm.tableValidTotalPage,
             sortOrder : null,
             sortDirection : null,
             firstPage : true,
             lastPage : true,
-            numberOfElements : $scope.paymentsBatchProcessingForm.tableCount
+            numberOfElements : $scope.paymentsBatchProcessingForm.tableValidCount
         };
+
+        $scope.totalamountinfigures = $scope.paymentsBatchProcessingForm.totalamountinfigures;
+        $scope.totalamountinwords = $scope.paymentsBatchProcessingForm.totalamountinwords;
+        $scope.totalamountinwordsen = $scope.paymentsBatchProcessingForm.totalamountinwordsen;
+        $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.totalnumberoflines;
 
         $scope.table = {
             tableConfig: new bdTableConfig({

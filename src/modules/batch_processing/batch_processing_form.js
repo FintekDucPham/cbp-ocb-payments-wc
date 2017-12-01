@@ -32,8 +32,8 @@ angular.module('ocb-payments')
 
         $scope.batchProcessing = "batchProcessing";
 
-        $scope.tableContent = [];
-        $scope.tableCount = 0;
+        $scope.tableValidContent = [];
+        $scope.tableValidCount = 0;
         $scope.tableTotalPage = 0;
         $scope.pageSize_ = 4;
         $scope.displayBankCode = false;
@@ -59,12 +59,12 @@ angular.module('ocb-payments')
             if(searchBool){
                 $scope.paymentsBatchProcessingForm.showTable(false);
                 $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
-                // $scope.paymentsBatchProcessingForm.tableCount = 0;
-                // $scope.paymentsBatchProcessingForm.tableContent = [];
+                // $scope.paymentsBatchProcessingForm.tableValidCount = 0;
+                // $scope.paymentsBatchProcessingForm.tableValidContent = [];
                 // $scope.paymentsBatchProcessingForm.tableTotalPage = 0;
                 // $scope.paymentsBatchProcessingForm.resetTable();
             }
-            // if($scope.paymentsBatchProcessingForm.tableCount > 0){
+            // if($scope.paymentsBatchProcessingForm.tableValidCount > 0){
             //     $scope.tableUpload = true;
             //     $scope.batchInfoSearch = true;
             //     $scope.paymentsBatchProcessingFormParams.visibility.search = false;
@@ -81,8 +81,8 @@ angular.module('ocb-payments')
         }
 
         $scope.checkTable = function(){
-            $scope.paymentsBatchProcessingForm.tableCount = 0;
-            $scope.paymentsBatchProcessingForm.tableContent = [];
+            $scope.paymentsBatchProcessingForm.tableValidCount = 0;
+            $scope.paymentsBatchProcessingForm.tableValidContent = [];
             $scope.paymentsBatchProcessingForm.tableTotalPage = 0;
         };
 

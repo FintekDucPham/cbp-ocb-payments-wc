@@ -91,11 +91,17 @@
             </bd-item-property-form>
         </div>
         <div class="account-collapse-item form-horizontal" ng-show="batchInfoSearch">
-            <!--<bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>-->
+            <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group">
-                    <!--<input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">-->
-                    <input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                    <div class="addfile-block" style="">
+                        <div class="form-control file-name"></div>
+                        <label class="filelb">
+                            <input type="file">
+                            <i class="ocb-icons logo dark"/>
+                        </label>
+                    </div>
+                    <!--<input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>-->
                     <span class="input-group-btn">
                         <bd-button class="bd-button" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
                     </span>
@@ -108,9 +114,9 @@
             <bd-table
                     bd-display-bank-code="displayBankCode"
                     bd-type="typeBP"
-                    bd-table-params="table.tableConfig"
-                    bd-table-control="table.tableControl"
-                    bd-table-data="table.tableData"
+                    bd-table-params="tableValid.tableConfig"
+                    bd-table-control="tableValid.tableControl"
+                    bd-table-data="tableValid.tableData"
                     bd-table-promise="testDataPromise"
                     bd-table-meta="{
                         'first':{
@@ -142,6 +148,39 @@
                 <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">{{totalamountinwordsen}} {{ selectedAccount.currency }}</bd-item-property-form>
                 <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalnumberoflines' | translate }}">{{totalnumberoflines}}</bd-item-property-form>
             </div>
+
+            <bd-table
+                    ng-show="invalidTableShow"
+                    bd-display-bank-code="displayBankCode"
+                    bd-type="typeBP"
+                    bd-table-params="tableInvalid.tableConfig"
+                    bd-table-control="tableInvalid.tableControl"
+                    bd-table-data="tableInvalid.tableData"
+                    bd-table-promise="testDataPromise"
+                    bd-table-meta="{
+                        'first':{
+                            'title': '##ocb.payments.batch_processing.table.fullname',
+                            'data': 'fullName'
+                        },
+                        'second':{
+                            'title': '##ocb.payments.batch_processing.table.accountno',
+                            'data': 'accountNo'
+                        },
+                        'third':{
+                            'title': '##ocb.payments.batch_processing.table.bankcode',
+                            'data': 'bankCode'
+                        },
+                        'fourth':{
+                            'title': '##ocb.payments.batch_processing.table.amount',
+                            'data': 'amount'
+                        },
+                        'fifth':{
+                            'title': '##ocb.payments.batch_processing.table.remarks',
+                            'data': 'description'
+                        }
+                    }"
+            >
+            </bd-table>
         </div>
     </form>
 </div>

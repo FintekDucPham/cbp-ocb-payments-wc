@@ -13,7 +13,7 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig, ocbConvert, transferBatchService) {
+                                bdTableConfig, ocbConvert, transferBatchService, $cookies, $http, FileUploader) {
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 actions.proceed();
@@ -87,11 +87,11 @@ angular.module('ocb-payments')
                 return result;
             };
 
-            $scope.tableTestData = {
+            $scope.tableValidData = {
                 content: []
             };
 
-            $scope.table = {
+            $scope.tableValid = {
                 tableConfig: new bdTableConfig({
                     pageSize: $scope.pageSize_,
                     placeholderText: $filter('translate')('ocb.payments.batch_processing')
@@ -100,19 +100,110 @@ angular.module('ocb-payments')
                     getData:function ( defer, $params) {
                         var selectedListItem = [];
                         for(var i = 0; i < $scope.pageSize_; i++){
-                            var t = $scope.tableTestData.content[$params.currentPage*$scope.pageSize_ - $scope.pageSize_ + i];
+                            var t = $scope.tableValidData.content[$params.currentPage*$scope.pageSize_ - $scope.pageSize_ + i];
                             if(t){
                                 selectedListItem[i] = t;
                             }
                         }
-                        $scope.targetList = angular.copy($scope.tableTestData);
+                        $scope.targetList = angular.copy($scope.tableValidData);
                         $scope.targetList.content = selectedListItem;
                         defer.resolve($scope.targetList.content);
-                        $params.pageCount = $scope.tableTestData.totalPages;
+                        $params.pageCount = $scope.tableValidData.totalPages;
                     }
                 },
                 tableControl: undefined
             };
+
+            $scope.tableInvalid = {
+                tableConfig: new bdTableConfig({
+                    pageSize: $scope.pageSize_,
+                    placeholderText: $filter('translate')('ocb.payments.batch_processing')
+                }),
+                tableData: {
+                    getData:function ( defer, $params) {
+                        var selectedListItem = [];
+                        for(var i = 0; i < $scope.pageSize_; i++){
+                            var t = $scope.tableInvalidData.content[$params.currentPage*$scope.pageSize_ - $scope.pageSize_ + i];
+                            if(t){
+                                selectedListItem[i] = t;
+                            }
+                        }
+                        $scope.targetList = angular.copy($scope.tableInvalidData);
+                        $scope.targetList.content = selectedListItem;
+                        defer.resolve($scope.targetList.content);
+                        $params.pageCount = $scope.tableInvalidData.totalPages;
+                    }
+                },
+                tableControl: undefined
+            };
+
+            var tt = $cookies.get($http.defaults.xsrfCookieName);
+            console.log("tt = ");
+            console.log(tt);
+            var xsrfVal = $cookies.get($http.defaults.xsrfCookieName).replace(/[^a-z0-9-]/gi,''); // we need to pass xsrf token because it’s on iframe so platform will deny access
+            var uploader = $scope.uploader = new FileUploader({
+                alias: 'content',
+                formData: [],
+                headers: {
+                    "X-XSRF-TOKEN": xsrfVal
+                }
+            });
+            uploader.url = "/frontend-web/api/payments/actions/validate_recipients.json";
+
+            uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                console.log("onSuccessItem");
+            };
+            // function fired when server upload error occured
+            uploader.onErrorItem = function(fileItem, response, status, headers){
+                fileItem.showServerError = true;
+                fileItem.showPreloader = false;
+            };
+            // function which fires when adding file is corrupted
+            uploader.onWhenAddingFileFailed = function(fileItem) {
+                fileItem.showServerError = true;
+                fileItem.showPreloader = false;
+            };
+            // this function is fired when file is added to queue and before uploading it to backend
+            uploader.onBeforeUploadItem = function(fileItem) {
+                fileItem.showServerError = false;
+                fileItem.showPreloader = true;
+            };
+
+            // this function is fired when file has changed
+            FileUploader.FileSelect.prototype.onChange = function() {
+                console.log("FileSelect.prototype.onChange");
+                var files = this.uploader.isHTML5 ? this.element[0].files : this.element[0];
+                var options = this.getOptions();
+                var filters = this.getFilters();
+                if (!this.uploader.isHTML5){
+                    this.destroy();
+                }
+                this.uploader.addToQueue(files, options, filters);
+                if(this.element.parent()[0].localName != "form"){
+                    this.element.wrap("<form>");
+                }
+                this.element.parent()[0].reset();
+                uploader.readAsDataURL(files);
+                uploader.onload = function() {
+                    console.log(uploader.result.split(',')[1]);
+                    var param = [{
+                        filename : "test.xls",
+                        transferType : "IN",
+                        fileData : uploader.result.split(',')[1]
+                    }];
+                    transferBatchService.validateRecipients(param).then(function(responseContent) {
+                        console.log("responseContent");
+                        console.log(responseContent);
+                    });
+                    $scope.paymentsBatchProcessingForm.tableValidContent = [];
+                };
+            };
+
+            // here we can check some validations with file when it is added to uploader
+            uploader.onAfterAddingFile = function(file){
+                console.log("onAfterAddingFile");
+            };
+
             $scope.paymentsBatchProcessingForm.flagType = 1;
             $scope.tienTest = function(){
                 var file = $('#uploadFile')[0].files[0];
@@ -120,7 +211,13 @@ angular.module('ocb-payments')
                 var sFilename = file.name;
 
                 // Create A File Reader HTML5
-                var reader = new FileReader();
+                var reader = new FileReader({
+                    alias: 'content',
+                    formData: [],
+                    headers: {
+                        "X-XSRF-TOKEN": xsrfVal
+                    }
+                });
 
                 var tempArray = sFilename.split(".");
                 var ext = tempArray[tempArray.length -1];
@@ -136,30 +233,135 @@ angular.module('ocb-payments')
                     if(ext === 'xlsx') {
 
                     }
-                    var param = [{
+                    var param = {
                         filename : sFilename,
                         transferType : "IN",
                         fileData : reader.result.split(',')[1]
-                    }];
+                    };
                     transferBatchService.validateRecipients(param).then(function(responseContent) {
-                        console.log("responseContent");
-                        console.log(responseContent);
-                    });
-                    $scope.paymentsBatchProcessingForm.tableContent = [];
+                        //Valid table
+                        var validRecipients = responseContent.validRecipients;
+                        var arrayList = [];
+                        for(var i = 0; i < validRecipients.length; i++){
+                            var output = convertToTableJsonObject(validRecipients[i].recipient);
+                            arrayList[i] = output;
+                        }
+                        $scope.paymentsBatchProcessingForm.tableValidContent = arrayList;
+                        var totalAmount = 0;
+                        $scope.paymentsBatchProcessingForm.tableValidCount = 0;
+                        for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableValidContent.length; i++) {
+                            var obj = $scope.paymentsBatchProcessingForm.tableValidContent[i];
+                            var g = obj["bankCode"];
+                            if(g && g != null){
+                                $scope.paymentsBatchProcessingForm.flagType = 0;
+                            }
+                            var amount = Number(obj["amount"]);
+                            if(amount && amount > 0){
+                                totalAmount += amount;
+                                $scope.paymentsBatchProcessingForm.tableValidCount++;
+                            }
+                        }
+                        $scope.hideColumnTable($scope.paymentsBatchProcessingForm.flagType);
+                        $scope.paymentsBatchProcessingForm.tableValidTotalPage = Math.floor($scope.paymentsBatchProcessingForm.tableValidCount/$scope.pageSize_);
+                        if($scope.paymentsBatchProcessingForm.tableValidCount%$scope.pageSize_ > 0){
+                            $scope.paymentsBatchProcessingForm.tableValidTotalPage++;
+                        }
+                        $scope.tableValidData = {
+                            content: $scope.paymentsBatchProcessingForm.tableValidContent,
+                            totalElements : $scope.paymentsBatchProcessingForm.tableValidCount,
+                            pageNumber : 0,
+                            pageSize : $scope.pageSize_,
+                            totalPages : $scope.paymentsBatchProcessingForm.tableValidTotalPage,
+                            sortOrder : null,
+                            sortDirection : null,
+                            firstPage : true,
+                            lastPage : true,
+                            numberOfElements : $scope.paymentsBatchProcessingForm.tableValidCount
+                        };
 
+                        $scope.tableValid.tableControl.invalidate();
+                        
+                        $scope.paymentsBatchProcessingForm.totalamountinfigures = $scope.totalamountinfigures = $scope.numberWithCommas(totalAmount);
+                        $scope.paymentsBatchProcessingForm.totalamountinwords = $scope.totalamountinwords = ocbConvert.convertNumberToText(totalAmount, false);
+                        $scope.paymentsBatchProcessingForm.totalamountinwordsen = $scope.totalamountinwordsen = ocbConvert.convertNumberToText(totalAmount, true);
+                        $scope.paymentsBatchProcessingForm.totalnumberoflines = $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.tableValidCount;
+                        
+                        //Invalid table
+                        var invalidRecipients = responseContent.invalidRecipients;
+                        arrayList = [];
+                        $scope.invalidTableShow = false;
+                        if(invalidRecipients && invalidRecipients.length > 0){
+                            $scope.invalidTableShow = true;
+                        }
+                        for(var i = 0; i < invalidRecipients.length; i++){
+                            var output = convertToTableJsonObject(invalidRecipients[i].recipient);
+                            arrayList[i] = output;
+                        }
+                        $scope.paymentsBatchProcessingForm.tableInvalidContent = arrayList;
+                        totalAmount = 0;
+                        $scope.paymentsBatchProcessingForm.tableInvalidCount = 0;
+                        for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableInvalidContent.length; i++) {
+                            var obj = $scope.paymentsBatchProcessingForm.tableInvalidContent[i];
+                            var amount = Number(obj["amount"]);
+                            if(amount && amount > 0){
+                                totalAmount += amount;
+                                $scope.paymentsBatchProcessingForm.tableInvalidCount++;
+                            }
+                        }
+                        $scope.hideColumnTable($scope.paymentsBatchProcessingForm.flagType);
+                        $scope.paymentsBatchProcessingForm.tableInvalidTotalPage = Math.floor($scope.paymentsBatchProcessingForm.tableInvalidCount/$scope.pageSize_);
+                        if($scope.paymentsBatchProcessingForm.tableInvalidCount%$scope.pageSize_ > 0){
+                            $scope.paymentsBatchProcessingForm.tableInvalidTotalPage++;
+                        }
+                        $scope.tableInvalidData = {
+                            content: $scope.paymentsBatchProcessingForm.tableInvalidContent,
+                            totalElements : $scope.paymentsBatchProcessingForm.tableInvalidCount,
+                            pageNumber : 0,
+                            pageSize : $scope.pageSize_,
+                            totalPages : $scope.paymentsBatchProcessingForm.tableInvalidTotalPage,
+                            sortOrder : null,
+                            sortDirection : null,
+                            firstPage : true,
+                            lastPage : true,
+                            numberOfElements : $scope.paymentsBatchProcessingForm.tableInvalidCount
+                        };
+
+                        if($scope.paymentsBatchProcessingForm.tableValidCount > 0){
+                            $scope.tableUpload = true;
+                            $scope.paymentsBatchProcessingFormParams.visibility.search = false;
+                            $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
+                            $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;
+                        }
+                        
+                        $scope.tableInvalid.tableControl.invalidate();
+                        
+                    });
                 };
             };
 
+            function convertToTableJsonObject(input){
+                var output = {
+                    fullName : input.recipient,
+                    accountNo: input.recipientAccountNo,
+                    bankCode: input.bankCode,
+                    amount: input.amount.value,
+                    description: input.description
+                };
+                return output;
+            }
+
             $scope.resetTableTest = function(){
-                $scope.table.tableControl.invalidate();
+                $scope.tableValid.tableControl.invalidate();
+                $scope.tableInvalid.tableControl.invalidate();
             };
 
             $scope.paymentsBatchProcessingForm.resetTable = function(){
-                $scope.table.tableControl.invalidate();
+                $scope.tableValid.tableControl.invalidate();
+                $scope.tableInvalid.tableControl.invalidate();
             };
 
             $scope.paymentsBatchProcessingForm.checkTableContent = function(){
-                if($scope.paymentsBatchProcessingForm.tableCount > 0){
+                if($scope.paymentsBatchProcessingForm.tableValidCount > 0){
                     $scope.tableUpload = true;
                 }
             }
