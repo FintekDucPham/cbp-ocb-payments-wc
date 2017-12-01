@@ -13,7 +13,7 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig, ocbConvert, transferBatchService, $cookies, $http, FileUploader) {
+                                bdTableConfig, ocbConvert, transferBatchService, $cookies, $http, FileUploader, pathService, $location) {
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 actions.proceed();
@@ -205,6 +205,17 @@ angular.module('ocb-payments')
             };
 
             $scope.paymentsBatchProcessingForm.flagType = 1;
+
+            $scope.downloadTable = function(){
+                if($scope.paymentsBatchProcessingForm.tableValidContent){
+                    var arrayList = [];
+                    for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableValidContent.length; i++){
+                        arrayList[i] = convertJsonObjectToJsonCSV($scope.paymentsBatchProcessingForm.tableValidContent[i]);
+                    }
+                    downloadCSV("ValidTable", arrayList);
+                }
+            };
+
             $scope.tienTest = function(){
                 var file = $('#uploadFile')[0].files[0];
 
@@ -341,11 +352,21 @@ angular.module('ocb-payments')
 
             function convertToTableJsonObject(input){
                 var output = {
-                    fullName : input.recipient,
-                    accountNo: input.recipientAccountNo,
-                    bankCode: input.bankCode,
-                    amount: input.amount.value,
-                    description: input.description
+                    fullName : String(input.recipient),
+                    accountNo: String(input.recipientAccountNo),
+                    bankCode: String(input.bankCode),
+                    amount: String(input.amount.value),
+                    description: String(input.description)
+                };
+                return output;
+            }
+            function convertJsonObjectToJsonCSV(input){
+                var output = {
+                    fullName : String(input.fullName),
+                    accountNo: String(input.accountNo),
+                    bankCode: String(input.bankCode),
+                    amount: String(input.amount),
+                    description: String(input.description)
                 };
                 return output;
             }
@@ -373,6 +394,66 @@ angular.module('ocb-payments')
                     $scope.tableUpload = false;
                 }
             };
+            console.log($location.protocol() + "://" + $location.host() + ":" + $location.port());
+            $scope.svgPath = pathService.generateRootPath('ocb-theme')+"/elements/images/icon-loans.svg";
 
         });
 
+function convertJSONtoCSV(objArray){
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+    for (var i = 0; i < array.length; i++) {
+        var line = new Array();
+        for (var index in array[i]) {
+            line.push('"' + array[i][index] + '"');
+        }
+        str += line.join(',');
+        str += '\r\n';
+    }
+    return str;
+}
+function downloadCSV(fileName, jsonString){
+    //var csv = convertJSONtoCSV(jsonString);
+    var csv = JSONToCSVConvertor(jsonString, true);
+    var uri = 'data:text/csv;charset=utf-8,' + escape(csv);
+
+    var link = document.createElement("a");
+    link.href = uri;
+
+    link.style = "visibility:hidden";
+    link.download = fileName + ".csv";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function JSONToCSVConvertor(JSONData, ShowLabel) {
+    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+    var CSV = '';
+    if (ShowLabel) {
+        var row = "";
+        for (var index in arrData[0]) {
+            row += index + ',';
+        }
+        row = row.slice(0, -1);
+        CSV += row + '\r\n';
+    }
+    for (var i = 0; i < arrData.length; i++) {
+        var row = "";
+        for (var index in arrData[i]) {
+            if(index === 'accountNo' || index === 'amount') {
+                row += '="' + arrData[i][index] + '",';
+            }else{
+                row += '"' + arrData[i][index] + '",';
+            }
+
+        }
+        row.slice(0, row.length - 1);
+        CSV += row + '\r\n';
+    }
+    if (CSV == '') {
+        alert("Invalid data");
+    }
+    return CSV;
+}
