@@ -3,13 +3,13 @@ angular.module('ocb-payments')
         stateServiceProvider.state('payments.bill_history.list', {
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/bill_history/list/payments_bill_history_list.html",
-            controller: "PaymentsBillHistoryController",
+            controller: "PaymentsBillHistoryListController",
             data: {
                 analyticsTitle: null
             }
         });
     })
-    .controller('PaymentsBillHistoryController', function ($scope,bdTableConfig, translate, $filter, exportService, fileDownloadService, transferBillService) {
+    .controller('PaymentsBillHistoryListController', function ($scope,bdTableConfig, translate, $filter, exportService, fileDownloadService, transferBillService) {
         //Set data bill history table
 
         //table config
