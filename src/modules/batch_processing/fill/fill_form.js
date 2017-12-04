@@ -216,6 +216,16 @@ angular.module('ocb-payments')
                 }
             };
 
+            $scope.downloadTableInvalid = function(){
+                if($scope.paymentsBatchProcessingForm.tableInvalidContent){
+                    var arrayList = [];
+                    for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableInvalidContent.length; i++){
+                        arrayList[i] = convertJsonObjectToJsonCSV($scope.paymentsBatchProcessingForm.tableInvalidContent[i]);
+                    }
+                    downloadCSV("InvalidTable", arrayList);
+                }
+            };
+
             $scope.tienTest = function(){
                 var file = $('#uploadFile')[0].files[0];
 
@@ -396,7 +406,11 @@ angular.module('ocb-payments')
             };
             console.log($location.protocol() + "://" + $location.host() + ":" + $location.port());
             $scope.svgPath = pathService.generateRootPath('ocb-theme')+"/elements/images/icon-loans.svg";
+            $scope.templateExcel = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/frontend-web" + pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/BatchProcessingTemplate.xls";
 
+            $scope.downloadTemplate = function(){
+                downloadFile($scope.templateExcel, "BatchProcessingTemplate.xls");
+            };
         });
 
 function convertJSONtoCSV(objArray){
@@ -427,7 +441,17 @@ function downloadCSV(fileName, jsonString){
     link.click();
     document.body.removeChild(link);
 }
+function downloadFile(url, fileName){
+    var link = document.createElement("a");
+    link.href = url;
 
+    link.style = "visibility:hidden";
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 function JSONToCSVConvertor(JSONData, ShowLabel) {
     var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
     var CSV = '';

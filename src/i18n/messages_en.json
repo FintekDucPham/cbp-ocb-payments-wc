@@ -774,7 +774,8 @@
     "ocb.payments.batch_processing.subaccount": "Sub account",
     "ocb.payments.batch_processing.uploadfile": "Upload file",
     "ocb.payments.batch_processing.upload": "Upload",
-    "ocb.payments.batch_processing.download": "Download",
+    "ocb.payments.batch_processing.download.excelTable": "EXPORT FILE",
+    "ocb.payments.batch_processing.download.template": "Download the Payment List template",
 
     "ocb.payments.batch_processing.table.fullname": "Full Name",
     "ocb.payments.batch_processing.table.accountno": "Account No",

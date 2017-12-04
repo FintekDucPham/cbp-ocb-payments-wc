@@ -751,7 +751,8 @@
     "ocb.payments.batch_processing.subaccount": "Sub account",
     "ocb.payments.batch_processing.uploadfile": "Upload file",
     "ocb.payments.batch_processing.upload": "Tải lên",
-    "ocb.payments.batch_processing.download": "Tải về",
+    "ocb.payments.batch_processing.download.excelTable": "Xuất file",
+    "ocb.payments.batch_processing.download.template": "Tải file mẫu",
 
     "ocb.payments.batch_processing.table.fullname": "Full Name",
     "ocb.payments.batch_processing.table.accountno": "Account No",
