@@ -256,7 +256,7 @@ angular.module('ocb-payments')
                     }
                     var param = {
                         filename : sFilename,
-                        transferType : "IN",
+                        transferType : "EX",
                         fileData : reader.result.split(',')[1]
                     };
                     transferBatchService.validateRecipients(param).then(function(responseContent) {
