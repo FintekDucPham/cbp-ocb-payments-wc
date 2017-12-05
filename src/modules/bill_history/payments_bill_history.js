@@ -12,22 +12,11 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsBillHistoryController', function ($scope) {
 
-        bdMainStepInitializer($scope, 'paymentsBatchProcessingForm', {
-            formName: 'paymentsBatchProcessingFormForm',
-            formData: {},
-            options: {},
-            meta: {},
-            validation: {},
-            items :{}
-        });
-
         $scope.modify = {
-            verify:{
+            verify: {
                 data: null
             }
         };
-
-
 
 
     });
