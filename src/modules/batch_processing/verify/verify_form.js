@@ -14,7 +14,7 @@ angular.module('ocb-payments')
         });
     })
     .controller("PaymentsBatchProcessingStep2Controller"
-        , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig) {
+        , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig, transferBatchService) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             actions.proceed();
             console.log("PaymentsBatchProcessingStep2Controller FORWARD_MOVE");
@@ -76,7 +76,41 @@ angular.module('ocb-payments')
             },
             tableControl: undefined
         };
+        //console.log($scope.paymentsBatchProcessingForm.formData.selectedAccount);
+        var params = {};
+        params.account = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
+        params.transationType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
+        params.date = getDate();
+        params.totalAmount = $scope.paymentsBatchProcessingForm.totalAmount;
+        params.hasSubAccount = false;
+        params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
 
+        params.fullName = [];
+        params.accountNo = [];
+        params.bankCode = [];
+        params.amount = [];
+        params.bankName = [];
+        params.remark = [];
+        params.status = [];
+
+        var arrayValidTable = $scope.paymentsBatchProcessingForm.tableValidContent;
+        for(var i = 0; i < arrayValidTable.length; i++){
+            params.fullName[i] = arrayValidTable[i].fullName;
+            params.accountNo[i] = arrayValidTable[i].accountNo;
+            params.bankCode[i] = arrayValidTable[i].bankCode;
+            params.bankName[i] = "BIDV";
+            params.amount[i] = arrayValidTable[i].amount;
+            params.remark[i] = arrayValidTable[i].description;
+            params.status[i] = "PD";
+        }
+        //console.log(params);
+
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            console.log("FORWARD_MOVE");
+            transferBatchService.createBatchTransfer(params).then(function(data) {
+                console.log(data);
+            });
+        });
     });
 
 
@@ -91,4 +125,22 @@ function hideColumnTable(isInternal) {
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function getDate(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd = '0'+dd
+    }
+
+    if(mm<10) {
+        mm = '0'+mm
+    }
+
+    today = yyyy + '-' + mm + "-" + dd;
+    return today;
 }

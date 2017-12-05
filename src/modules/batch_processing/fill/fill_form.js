@@ -301,7 +301,9 @@ angular.module('ocb-payments')
                         };
 
                         $scope.tableValid.tableControl.invalidate();
-                        
+
+                        $scope.paymentsBatchProcessingForm.totalAmount = totalAmount;
+
                         $scope.paymentsBatchProcessingForm.totalamountinfigures = $scope.totalamountinfigures = $scope.numberWithCommas(totalAmount);
                         $scope.paymentsBatchProcessingForm.totalamountinwords = $scope.totalamountinwords = ocbConvert.convertNumberToText(totalAmount, false);
                         $scope.paymentsBatchProcessingForm.totalamountinwordsen = $scope.totalamountinwordsen = ocbConvert.convertNumberToText(totalAmount, true);
@@ -405,7 +407,8 @@ angular.module('ocb-payments')
                 }
             };
             console.log($location.protocol() + "://" + $location.host() + ":" + $location.port());
-            $scope.svgPath = pathService.generateRootPath('ocb-theme')+"/elements/images/icon-loans.svg";
+            $scope.svgPath = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/frontend-web" + pathService.generateRootPath('ocb-theme')+"/icons/accounts.svg";
+            console.log($scope.svgPath);
             $scope.templateExcel = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/frontend-web" + pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/BatchProcessingTemplate.xls";
 
             $scope.downloadTemplate = function(){
