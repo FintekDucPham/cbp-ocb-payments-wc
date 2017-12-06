@@ -128,7 +128,7 @@ angular.module('ocb-payments')
 
         function checkCurrency(){
             $scope.payment.meta.blockByCurrency = false;
-            var recipientAccount = $scope.payment.items.recipientAcc;
+            var recipientAccount = $scope.payment.items.recipientAccount;
             var senderAccount = $scope.payment.items.senderAccount;
             if(recipientAccount && senderAccount){
                 if(recipientAccount.currency !== senderAccount.currency){
