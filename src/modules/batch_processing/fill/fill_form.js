@@ -42,7 +42,6 @@ angular.module('ocb-payments')
 
             $scope.onTransactionTypeChanged = function (selectedItem) {
                 $scope.transactionTypeList = transferBatchService.getTransferTypes({}).then(function (typeList) {
-                        console.log(typeList.content);
                         if (typeList.content !== undefined) {
                             return typeList.content;
                         }
@@ -138,8 +137,6 @@ angular.module('ocb-payments')
             };
 
             var tt = $cookies.get($http.defaults.xsrfCookieName);
-            console.log("tt = ");
-            console.log(tt);
             var xsrfVal = $cookies.get($http.defaults.xsrfCookieName).replace(/[^a-z0-9-]/gi,''); // we need to pass xsrf token because it’s on iframe so platform will deny access
             var uploader = $scope.uploader = new FileUploader({
                 alias: 'content',
@@ -151,7 +148,7 @@ angular.module('ocb-payments')
             uploader.url = "/frontend-web/api/payments/actions/validate_recipients.json";
 
             uploader.onSuccessItem = function(fileItem, response, status, headers) {
-                console.log("onSuccessItem");
+
             };
             // function fired when server upload error occured
             uploader.onErrorItem = function(fileItem, response, status, headers){
@@ -171,7 +168,6 @@ angular.module('ocb-payments')
 
             // this function is fired when file has changed
             FileUploader.FileSelect.prototype.onChange = function() {
-                console.log("FileSelect.prototype.onChange");
                 var files = this.uploader.isHTML5 ? this.element[0].files : this.element[0];
                 var options = this.getOptions();
                 var filters = this.getFilters();
@@ -185,15 +181,13 @@ angular.module('ocb-payments')
                 this.element.parent()[0].reset();
                 uploader.readAsDataURL(files);
                 uploader.onload = function() {
-                    console.log(uploader.result.split(',')[1]);
                     var param = [{
                         filename : "test.xls",
                         transferType : "IN",
                         fileData : uploader.result.split(',')[1]
                     }];
                     transferBatchService.validateRecipients(param).then(function(responseContent) {
-                        console.log("responseContent");
-                        console.log(responseContent);
+
                     });
                     $scope.paymentsBatchProcessingForm.tableValidContent = [];
                 };
@@ -201,7 +195,7 @@ angular.module('ocb-payments')
 
             // here we can check some validations with file when it is added to uploader
             uploader.onAfterAddingFile = function(file){
-                console.log("onAfterAddingFile");
+
             };
 
             $scope.paymentsBatchProcessingForm.flagType = 1;
@@ -254,9 +248,10 @@ angular.module('ocb-payments')
                     if(ext === 'xlsx') {
 
                     }
+
                     var param = {
                         filename : sFilename,
-                        transferType : "EX",
+                        transferType : $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode,
                         fileData : reader.result.split(',')[1]
                     };
                     transferBatchService.validateRecipients(param).then(function(responseContent) {
@@ -406,9 +401,7 @@ angular.module('ocb-payments')
                     $scope.tableUpload = false;
                 }
             };
-            console.log($location.protocol() + "://" + $location.host() + ":" + $location.port());
             $scope.svgPath = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/frontend-web" + pathService.generateRootPath('ocb-theme')+"/icons/accounts.svg";
-            console.log($scope.svgPath);
             $scope.templateExcel = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/frontend-web" + pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/BatchProcessingTemplate.xls";
 
             $scope.downloadTemplate = function(){

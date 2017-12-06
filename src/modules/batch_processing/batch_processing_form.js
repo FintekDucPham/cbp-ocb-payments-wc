@@ -47,7 +47,7 @@ angular.module('ocb-payments')
             $scope.$broadcast('clearForm');
         };
         $scope.testFormAction = function() {
-            console.log("CLick");
+
         };
         $scope.showBatchInfoSearch = function(searchBool, nextBool ) {
             // if ($scope.payment.formData.billCode !== undefined) {
@@ -117,7 +117,6 @@ angular.module('ocb-payments')
 
         $scope.paymentsBatchProcessingFormParams.visibility.search = true;
         $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
-
 
     });
 

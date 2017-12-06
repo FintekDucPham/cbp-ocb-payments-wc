@@ -17,12 +17,12 @@ angular.module('ocb-payments')
         , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig, transferBatchService) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             actions.proceed();
-            console.log("PaymentsBatchProcessingStep2Controller FORWARD_MOVE");
+            //console.log("PaymentsBatchProcessingStep2Controller FORWARD_MOVE");
         });
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
             var acoount = $scope.paymentsBatchProcessingForm.formData.selectedAccount;
-            console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
+            //console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
         });
 
         $scope.getCurrentDate = function(isEn) {
@@ -76,7 +76,6 @@ angular.module('ocb-payments')
             },
             tableControl: undefined
         };
-        //console.log($scope.paymentsBatchProcessingForm.formData.selectedAccount);
         var params = {};
         params.account = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
         params.transationType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
@@ -106,9 +105,8 @@ angular.module('ocb-payments')
         //console.log(params);
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            console.log("FORWARD_MOVE");
             transferBatchService.createBatchTransfer(params).then(function(data) {
-                console.log(data);
+                //console.log(data);
             });
         });
     });
