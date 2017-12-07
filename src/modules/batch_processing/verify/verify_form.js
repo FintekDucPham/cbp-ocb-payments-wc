@@ -76,6 +76,17 @@ angular.module('ocb-payments')
             },
             tableControl: undefined
         };
+
+        $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;
+        $scope.paymentsBatchProcessingForm.tableValidContent_temp = $scope.paymentsBatchProcessingForm.tableValidContent;
+        $scope.paymentsBatchProcessingForm.tableValidCount_temp = $scope.paymentsBatchProcessingForm.tableValidCount;
+        $scope.paymentsBatchProcessingForm.tableValidTotalPage_temp = $scope.paymentsBatchProcessingForm.tableValidTotalPage;
+
+        $scope.paymentsBatchProcessingForm.totalamountinfigures_temp = $scope.paymentsBatchProcessingForm.totalamountinfigures;
+        $scope.paymentsBatchProcessingForm.totalamountinwords_temp = $scope.paymentsBatchProcessingForm.totalamountinwords;
+        $scope.paymentsBatchProcessingForm.totalamountinwordsen_temp = $scope.paymentsBatchProcessingForm.totalamountinwordsen;
+        $scope.paymentsBatchProcessingForm.totalnumberoflines_temp = $scope.paymentsBatchProcessingForm.totalnumberoflines;
+
         var params = {};
         params.account = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
         params.transationType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;

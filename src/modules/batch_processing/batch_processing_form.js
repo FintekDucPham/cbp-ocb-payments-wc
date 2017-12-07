@@ -39,7 +39,7 @@ angular.module('ocb-payments')
         $scope.displayBankCode = false;
 
         $scope.batchInfoSearch = false;
-        $scope.tableUpload = false;
+        $scope.validTableShow = false;
 
         $scope.clearForm = function(){
             $scope.paymentsBatchProcessingFormParams.formData = {};
@@ -51,6 +51,9 @@ angular.module('ocb-payments')
         };
         $scope.showBatchInfoSearch = function(searchBool, nextBool ) {
             // if ($scope.payment.formData.billCode !== undefined) {
+
+            $("#uploadFile").val("");
+
             $scope.batchInfoSearch = !$scope.batchInfoSearch;
             $scope.paymentsBatchProcessingFormParams.visibility.search = searchBool;//false;
             $scope.paymentsBatchProcessingFormParams.visibility.accept = searchBool;//true;
