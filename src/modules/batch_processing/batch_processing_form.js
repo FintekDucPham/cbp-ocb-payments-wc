@@ -1,5 +1,5 @@
 /**
- * Created by Thai Bui on 10/30/2017.
+ * Created by Tien Bui on 10/30/2017.
  */
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -38,8 +38,9 @@ angular.module('ocb-payments')
         $scope.pageSize_ = 4;
         $scope.displayBankCode = false;
 
-        $scope.batchInfoSearch = false;
-        $scope.validTableShow = false;
+        $scope.paymentsBatchProcessingForm.batchInfoSearch = false;
+        $scope.paymentsBatchProcessingForm.validTableShow = false;
+        $scope.paymentsBatchProcessingForm.invalidTableShow = false;
 
         $scope.clearForm = function(){
             $scope.paymentsBatchProcessingFormParams.formData = {};
@@ -54,7 +55,7 @@ angular.module('ocb-payments')
 
             $("#uploadFile").val("");
 
-            $scope.batchInfoSearch = !$scope.batchInfoSearch;
+            $scope.paymentsBatchProcessingForm.batchInfoSearch = !$scope.paymentsBatchProcessingForm.batchInfoSearch;
             $scope.paymentsBatchProcessingFormParams.visibility.search = searchBool;//false;
             $scope.paymentsBatchProcessingFormParams.visibility.accept = searchBool;//true;
             $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = nextBool;//true;
@@ -69,7 +70,7 @@ angular.module('ocb-payments')
             }
             // if($scope.paymentsBatchProcessingForm.tableValidCount > 0){
             //     $scope.tableUpload = true;
-            //     $scope.batchInfoSearch = true;
+            //     $scope.paymentsBatchProcessingForm.batchInfoSearch = true;
             //     $scope.paymentsBatchProcessingFormParams.visibility.search = false;
             //     $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
             // }

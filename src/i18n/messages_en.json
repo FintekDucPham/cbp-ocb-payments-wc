@@ -273,6 +273,12 @@
     "ocb.payments.new.status.success": "Transfer/transaction executed",
     "ocb.payments.new.status.":"Transfer/transaction rejected",
 
+    "ocb.payments.batchprocessing.status.0": "Mass transfer have successfully integrated to the system with the status of waiting for checking/approval",
+    "ocb.payments.batchprocessing.status.99": "Mass Transfer has been rejected",
+    "ocb.payments.batchprocessing.status.success": "Mass transfer have successfully integrated to the system with the status of waiting for checking/approval",
+    "ocb.payments.batchprocessing.status.error": "Mass Transfer has been rejected",
+    "ocb.payments.batchprocessing.status.": "Mass Transfer has been rejected",
+
     "ocb.payments.recipients.label": "Defined recipients",
     "ocb.payments.recipients.search.label": "Search recipient",
     "ocb.payments.recipients.new.button": "New recipient",
