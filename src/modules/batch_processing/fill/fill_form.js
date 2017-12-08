@@ -293,7 +293,24 @@ angular.module('ocb-payments')
                     for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableInvalidContent.length; i++){
                         arrayList[i] = convertJsonObjectToJsonCSV($scope.paymentsBatchProcessingForm.tableInvalidContent[i]);
                     }
-                    downloadCSV("InvalidTable", arrayList);
+                    //downloadCSV("InvalidTable", arrayList);
+                    $scope.paymentsBatchProcessingForm.exportExcel = {}
+                    if($scope.isInternal){
+                        var header = ['Beneficiary', 'Account', 'Amount', 'Payment details'];
+                        var type = 'IN';
+                        $scope.paymentsBatchProcessingForm.exportExcel.header = header;
+                        $scope.paymentsBatchProcessingForm.exportExcel.type = type;
+                    }else if($scope.isExternal){
+                        var header = ['Beneficiary', 'Account', 'Bank code', 'Amount', 'Payment details'];
+                        var type = 'EX';
+                        $scope.paymentsBatchProcessingForm.exportExcel.header = header;
+                        $scope.paymentsBatchProcessingForm.exportExcel.type = type;
+                    }
+                    $scope.paymentsBatchProcessingForm.exportExcel.jsonContent = JSON.stringify(arrayList);
+                    transferBatchService.createExcelFile($scope.paymentsBatchProcessingForm.exportExcel).then(function(data) {
+                        console.log(data.content);
+                        downloadXLS("InvalidTable", data.content);
+                    });
                 }
             };
 
