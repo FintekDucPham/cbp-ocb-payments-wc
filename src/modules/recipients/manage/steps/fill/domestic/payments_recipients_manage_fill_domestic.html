@@ -5,7 +5,7 @@
             <bd-item-property label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
                  <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
 
-                <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
+                <rb-account-select-v2 rb-account-id="recipient.formData.remitterAccountId"
                                    rb-account="recipient.items.senderAccount"
                                    rb-account-list="recipient.items.accountList"
                                    rb-on-account-select="onSenderAccountSelect()"
@@ -13,7 +13,7 @@
                                    rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                    rb-product-list-name="TRANSFER_FROM_LIST"
                                    rb-account-select-params="recipientSelectParams"
-                                   rb-init-select-value = "{{selectNrb}}"></rb-account-select>
+                                   rb-init-select-value = "{{selectNrb}}"></rb-account-select-v2>
 
                 <eb-validation-messages eb-name="remitterAccountId">
                     <div eb-message-key="required" class="validation-message animate-on">
@@ -176,6 +176,21 @@
             </eb-validation-messages>
 
         </bd-item-property>
+
+        <rb-recipient-location>
+            <bd-item-property label="Province">
+                <input name="province"/>
+            </bd-item-property>
+            <bd-item-property label="Bank name">
+                <input name="bankCode" hidden ng-model="recipient.formData.bankCode" required/>
+                <rb-bank-select rb-bank-code="recipient.formData.bankCode"
+                                rb-bank="recipient.items.bank"></rb-bank-select>
+            </bd-item-property>
+            <bd-item-property label="Branch name">
+                <input name="branchCode"/>
+            </bd-item-property>
+        </rb-recipient-location>
+
         <bd-msg-panel ng-if="recipient.meta.showRecipientExistInfo" bd-msg-type="warning">{{::'ocb.payments.recipient.new.error.MSG-0660_SAME_BNF'|translate}}</bd-msg-panel>
         </div>
 </rb-payment-recipients-fill>
