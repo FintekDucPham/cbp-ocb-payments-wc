@@ -18,8 +18,8 @@ angular.module('ocb-payments')
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             transferBatchService.createBatchTransfer(params).then(function(data) {
                 temporaryResponse(data.content);
+                actions.proceed();
             });
-            actions.proceed();
         });
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
