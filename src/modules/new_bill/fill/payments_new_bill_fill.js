@@ -22,7 +22,7 @@ angular.module('ocb-payments')
             model_to:{}
         };
         //$scope.BILL_CODE = validationRegexp('NEW_MOBILE_PASSWORD');
-        $scope.BILL_CODE = validationRegexp('BILL_CODE');
+        $scope.BILL_CODE = validationRegexp('NUMBER_AND_CHAR_ONLY');
         if ($stateParams.payment && $stateParams.payment.beneficiaryAccountNo) {
             $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
         }
