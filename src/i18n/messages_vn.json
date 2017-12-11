@@ -214,6 +214,8 @@
     "ocb.payments.new.bill.fill.execution_date.EARLIER_EXECUTED_DATE": "Transfer execution date cannot be earlier than current date",
     "ocb.payments.new.bill.fill.amount.INVALID_NUMBER_AMOUNT":"Invalid transfer amount",
 
+    "ocb.payments.new.bill.fill.serviceList.link_name": "Services and Provider Listing",
+
     "ocb.payments.new.bill.verify.sender_account_name": "From account",
     "ocb.payments.new.bill.verify.sender_data": "Recipient details",
     "ocb.payments.new.bill.verify.recipient_account_name": "To account",
@@ -745,7 +747,7 @@
 
 
     "ocb.payments.batch_processing.label": "Batch Processing",
-    "ocb.payments.batch_processing.personal": "Personnal/Ordering Custommer",
+    "ocb.payments.batch_processing.personal": "Personal/Ordering Customer",
     "ocb.payments.batch_processing.beneficiarylist": "Beneficiary List",
     "ocb.payments.batch_processing.accountnumber": "Account number",
     "ocb.payments.batch_processing.name": "Name",

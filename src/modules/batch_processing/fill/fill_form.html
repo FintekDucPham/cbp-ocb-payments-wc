@@ -1,17 +1,4 @@
 <!-- Created by Tien Bui on 10/30/2017 -->
-<style>
-    .account-collapse-item {
-        float: left;
-        width: 100%;
-        background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
-        box-shadow: 0 0 15px 0 rgba(0,0,0,0.11);
-        border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-</style>
 <div>
     <form name="paymentsBatchProcessingFormForm">
         <div class="account-collapse-item form-horizontal">
@@ -104,7 +91,7 @@
                     </div>-->
                     <input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                     <span class="display-group">
-                        <bd-button class="btn second-btn" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
+                        <bd-button class="bd-button__primary bd-button" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
                     </span>
                 </div>
             </bd-item-property-form>
@@ -119,7 +106,7 @@
         <!--Table section-->
         <div class="account-collapse-item form-btn" ng-show="paymentsBatchProcessingForm.validTableShow">
             <span class="display-group padding-bottom-5">
-                <bd-button class="btn second-btn" ng-click="downloadTable()">{{::'ocb.payments.batch_processing.download.excelTable'|translate}}</bd-button>
+                <bd-button class="bd-button__primary bd-button" ng-click="downloadTable()">{{::'ocb.payments.batch_processing.download.excelTable'|translate}}</bd-button>
             </span>
             <bd-table
                     bd-display-bank-code="displayBankCode"
@@ -160,7 +147,7 @@
             </div>
 
             <span class="display-group padding-bottom-5" ng-show="paymentsBatchProcessingForm.invalidTableShow">
-                <bd-button class="btn second-btn" ng-click="downloadTableInvalid()">{{::'ocb.payments.batch_processing.download.excelTable'|translate}}</bd-button>
+                <bd-button class="bd-button__primary bd-button" ng-click="downloadTableInvalid()">{{::'ocb.payments.batch_processing.download.excelTable'|translate}}</bd-button>
             </span>
             <bd-table
                     ng-show="paymentsBatchProcessingForm.invalidTableShow"

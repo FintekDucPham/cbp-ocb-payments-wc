@@ -1,7 +1,5 @@
 <div ng-show="showVerify" class="form-pane" id="pn-1">
-    <div class ="pane-above">
-        <h3 class="pn-tt">{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</h3>
-    </div>
+    <bd-header>{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</bd-header>
     <div class="row" ng-show="payment.endOfDayWarning && !payment.formData.addToBasket">
         <div class="col-xs-12 col-sm-12">
             <bd-msg-panel bd-msg-type="warning">{{::'ocb.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>
