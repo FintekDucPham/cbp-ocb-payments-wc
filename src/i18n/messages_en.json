@@ -51,6 +51,11 @@
     "ocb.payments.widget.empty_list.link_name":"Transfer cut off time >",
     "ocb.payments.widget.empty_list.link_url":"https://www.deutschebank.pl/klienci-indywidualni/konta/godziny-realizacji-przelewow.html?pm=submenu&pc=klienci-indywidualni-godziny-realizacji-przelewow",
 
+    "ocb.payments.bank.select.placeholder": "Select bank",
+    "ocb.payments.recipient_types.INTERNAL": "Internal",
+    "ocb.payments.recipient_types.EXTERNAL": "External",
+    "ocb.payments.recipient_types.FAST": "Fast 24/7",
+
     "ocb.payments.new.step2.row.info.costs_not_available": "Information on estimated order costs is currently unavailable. This does not affect the possibility of submitting the order for execution.",
     "ocb.payments.new.step2.row.charges": "Fees",
 
@@ -359,6 +364,19 @@
     "ocb.payments.recipients.new.domestic.fill.description.EMPTY":"Transfer description cannot be empty",
     "ocb.payments.recipients.new.domestic.fill.description.PATTERN":"Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
     "ocb.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
+
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.label": "Recipient type",
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.placeholder": "Select recipient type",
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.EMPTY":"Recipient type cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.province.label": "Province",
+    "ocb.payments.recipients.new.domestic.fill.province.placeholder": "Select recipient province",
+    "ocb.payments.recipients.new.domestic.fill.province.EMPTY":"Recipient province cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.bank.label": "Bank name",
+    "ocb.payments.recipients.new.domestic.fill.bank.placeholder": "Select recipient bank",
+    "ocb.payments.recipients.new.domestic.fill.bank.EMPTY":"Recipient bank cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.branch.label": "Branch name",
+    "ocb.payments.recipients.new.domestic.fill.branch.placeholder": "Select recipient branch",
+    "ocb.payments.recipients.new.domestic.fill.branch.EMPTY":"Recipient branch cannot be empty",
 
     "ocb.payments.recipients.manage.status.recipient_shortname": "Abbreviated recipient name",
 
