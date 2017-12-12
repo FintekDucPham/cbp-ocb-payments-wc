@@ -31,8 +31,13 @@ angular.module('ocb-payments')
             };
 
             $scope.onSenderAccountSelect = function (accountId) {
-
+                $scope.senderAccountId = accountId;
             };
+
+            if ($stateParams.accountId) {
+                $scope.remitterAccountId = $stateParams.accountId;
+            }
+
             $scope.transaction_types = [];
             transferBatchService.getTransferTypes({}).then(function (typeList) {
                 if (typeList.content !== undefined) {
@@ -264,7 +269,7 @@ angular.module('ocb-payments')
                 if($scope.paymentsBatchProcessingForm.formData.tableValidContent){
                     var arrayList = [];
                     for(var i = 0; i < $scope.paymentsBatchProcessingForm.formData.tableValidContent.length; i++){
-                        arrayList[i] = convertJsonObject($scope.paymentsBatchProcessingForm.formData.tableValidContent[i]);
+                        arrayList[i] = convertJsonObjectForDownload($scope.paymentsBatchProcessingForm.formData.tableValidContent[i]);
                     }
                     //downloadCSV("ValidTable", arrayList);
                     $scope.paymentsBatchProcessingForm.exportExcel = {}
@@ -274,7 +279,7 @@ angular.module('ocb-payments')
                         $scope.paymentsBatchProcessingForm.exportExcel.header = header;
                         $scope.paymentsBatchProcessingForm.exportExcel.type = type;
                     }else if($scope.isExternal){
-                        var header = ['Beneficiary', 'Account', 'Bank code', 'Amount', 'Payment details'];
+                        var header = ['Beneficiary', 'Account', 'Amount', 'Bank code', 'Payment details'];
                         var type = 'EX';
                         $scope.paymentsBatchProcessingForm.exportExcel.header = header;
                         $scope.paymentsBatchProcessingForm.exportExcel.type = type;
@@ -291,7 +296,7 @@ angular.module('ocb-payments')
                 if($scope.paymentsBatchProcessingForm.tableInvalidContent){
                     var arrayList = [];
                     for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableInvalidContent.length; i++){
-                        arrayList[i] = convertJsonObjectToJsonCSV($scope.paymentsBatchProcessingForm.tableInvalidContent[i]);
+                        arrayList[i] = convertJsonObjectForDownload($scope.paymentsBatchProcessingForm.tableInvalidContent[i]);
                     }
                     //downloadCSV("InvalidTable", arrayList);
                     $scope.paymentsBatchProcessingForm.exportExcel = {}
@@ -342,18 +347,24 @@ angular.module('ocb-payments')
                     if(ext === 'xlsx') {
 
                     }
-
+                    var validateDate = getDate();
                     var param = {
+                        remitterId : 0,
+                        remitterAccountId : 0,
+                        subAccount : 0,
+                        totalAmount: 0,
+                        currency: "VND",
+                        validateDate: validateDate,
                         filename : sFilename,
                         transferType : $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode,
                         fileData : reader.result.split(',')[1]
                     };
                     transferBatchService.validateRecipients(param).then(function(responseContent) {
                         //Valid table
-                        var validRecipients = responseContent.validRecipients;
+                        var validRecipients = responseContent.valids;
                         var arrayList = [];
                         for(var i = 0; i < validRecipients.length; i++){
-                            var output = convertToTableJsonObject(validRecipients[i].recipient);
+                            var output = convertToTableJsonObject(validRecipients[i]);
                             arrayList[i] = output;
                         }
                         $scope.paymentsBatchProcessingForm.formData.tableValidContent = arrayList;
@@ -399,14 +410,14 @@ angular.module('ocb-payments')
                         $scope.paymentsBatchProcessingForm.formData.totalnumberoflines = $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.tableValidCount;
                         
                         //Invalid table
-                        var invalidRecipients = responseContent.invalidRecipients;
+                        var invalidRecipients = responseContent.invalids;
                         arrayList = [];
                         $scope.paymentsBatchProcessingForm.invalidTableShow = false;
                         if(invalidRecipients && invalidRecipients.length > 0){
                             $scope.paymentsBatchProcessingForm.invalidTableShow = true;
                         }
                         for(var i = 0; i < invalidRecipients.length; i++){
-                            var output = convertToTableJsonObject(invalidRecipients[i].recipient);
+                            var output = convertToTableJsonObject(invalidRecipients[i]);
                             arrayList[i] = output;
                         }
                         $scope.paymentsBatchProcessingForm.tableInvalidContent = arrayList;
@@ -414,7 +425,8 @@ angular.module('ocb-payments')
                         $scope.paymentsBatchProcessingForm.tableInvalidCount = 0;
                         for(var i = 0; i < $scope.paymentsBatchProcessingForm.tableInvalidContent.length; i++) {
                             var obj = $scope.paymentsBatchProcessingForm.tableInvalidContent[i];
-                            var amount = Number(obj["amount"]);
+                            //var amount = Number(obj["amount"]);
+                            var amount = Number(obj.amount.value);
                             if(amount && amount > 0){
                                 totalAmount += amount;
                                 $scope.paymentsBatchProcessingForm.tableInvalidCount++;
@@ -453,33 +465,39 @@ angular.module('ocb-payments')
 
             function convertToTableJsonObject(input){
                 var output = {
-                    fullName : String(input.recipient),
-                    accountNo: String(input.recipientAccountNo),
+                    fullName : String(input.recipientName),
+                    accountNo: String(input.creditAccount),
                     bankCode: String(input.bankCode),
+                    bankBranchCode : String(input.bankBranchCode),
+                    provinceCode : String(input.provinceCode),
                     amount: String(input.amount.value),
-                    description: String(input.description)
+                    transactionFee: String(input.transactionFee.value),
+                    description: String(input.remarks),
                 };
                 return output;
             }
             function convertJsonObjectToJsonCSV(input){
                 var output = {
-                    fullName : String(input.fullName),
-                    accountNo: String(input.accountNo),
+                    fullName : String(input.recipientName),
+                    accountNo: String(input.creditAccount),
                     bankCode: String(input.bankCode),
-                    amount: String(input.amount),
-                    description: String(input.description)
+                    bankBranchCode : String(input.bankBranchCode),
+                    provinceCode : String(input.provinceCode),
+                    amount: String(input.amount.value),
+                    transactionFee: String(input.transactionFee.value),
+                    description: String(input.remarks),
                 };
                 return output;
             }
 
-            function convertJsonObject(input){
+            function convertJsonObjectForDownload(input){
                 var output = {};
                 if($scope.isInternal){
                     output = {
                         fullName : String(input.fullName),
                         accountNo: String(input.accountNo),
                         amount: String(input.amount),
-                        description: String(input.description)
+                        description: String(input.description),
                     };
                 }else{
                     output = {
@@ -487,7 +505,7 @@ angular.module('ocb-payments')
                         accountNo: String(input.accountNo),
                         bankCode: String(input.bankCode),
                         amount: String(input.amount),
-                        description: String(input.description)
+                        description: String(input.description),
                     };
                 }
                 return output;
@@ -519,8 +537,12 @@ angular.module('ocb-payments')
                 }
             };
             $scope.svgPath = createDownloadLink(pathService.generateRootPath('ocb-theme')+"/icons/accounts.svg");
-            $scope.templateExcelExternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/BatchProcessingTemplate_External.xls");
-            $scope.templateExcelInternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/BatchProcessingTemplate_Internal.xls");
+
+            //$scope.templateExcelExternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/BatchProcessingTemplate_External.xls");
+            //$scope.templateExcelInternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/BatchProcessingTemplate_Internal.xls");
+
+            $scope.templateExcelExternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/External_Batch_Processing.xlsx");
+            $scope.templateExcelInternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/Internal_Batch_Processing.xlsx");
 
             $scope.downloadTemplateExternal = function(){
                 downloadFile($scope.templateExcelExternal, "BatchProcessingTemplateExternal");
