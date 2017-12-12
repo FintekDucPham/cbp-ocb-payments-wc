@@ -349,13 +349,3 @@ angular.module('ocb-payments')
 
         rbPaymentInitFactory($scope);
     });
-
-jQuery(document).ready(function() {
-    $('.addfile-block').each(function (index, ele) {
-        var lbFileName = $(ele).find('.file-name');
-        $(ele).find('input[type="file"]').on('change', function (event) {
-            var fileName = event.target.value.split('\\').pop();
-            lbFileName.html(fileName);
-        });
-    });
-});
