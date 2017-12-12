@@ -1,7 +1,7 @@
 <form name="paymentForm" novalidate class="form-pane" id="pn-1">
     <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
 
-    <bd-header>{{::"ocb.payments.new_bill.label.header.customer"|translate}}</bd-header>
+    <div class="bd-form-header">{{::"ocb.payments.new_bill.label.header.customer"|translate}}</div>
     <div class="pane-bd deposit-form">
         <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
             <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
@@ -33,7 +33,7 @@
             {{666}}
         </bd-item-property>
     </div>
-    <bd-header>{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</bd-header>
+    <div class="bd-form-header">{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</div>
     <div class="pane-bd deposit-form">
         <input name="providerCode" hidden ng-model="payment.formData.providerCode" required/>
         <rb-service-select rb-update-disabled-state="billInfoSearch" rb-service="payment.items.senderService" rb-provider="payment.items.senderProvider" rb-service-code="payment.formData.serviceCode" rb-provider-code="payment.formData.providerCode">
@@ -72,7 +72,7 @@
         <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
         <rb-widget-banner-container rb-slot-name="ACCOUNT_WIDGET" rb-target-type="CURRENT_USER">
             <div class="widget-content-inner info-text margin-bottom-20">
-                <a class="yellow-label" href="{{::'ocb.payments.new.bill.fill.serviceList.link_url'|translate}}"
+                <a class="color" href="{{::'ocb.payments.new.bill.fill.serviceList.link_url'|translate}}"
                    target="_blank"
                    bd-widget-click>{{::'ocb.payments.new.bill.fill.serviceList.link_name'|translate}}</a>
             </div>

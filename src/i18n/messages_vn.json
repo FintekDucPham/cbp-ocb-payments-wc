@@ -214,7 +214,7 @@
     "ocb.payments.new.bill.fill.execution_date.EARLIER_EXECUTED_DATE": "Transfer execution date cannot be earlier than current date",
     "ocb.payments.new.bill.fill.amount.INVALID_NUMBER_AMOUNT":"Invalid transfer amount",
 
-    "ocb.payments.new.bill.fill.serviceList.link_name": "Services and Provider Listing",
+    "ocb.payments.new.bill.fill.serviceList.link_name": "Service & providers listing",
 
     "ocb.payments.new.bill.verify.sender_account_name": "From account",
     "ocb.payments.new.bill.verify.sender_data": "Recipient details",
