@@ -40,7 +40,7 @@ angular.module('ocb-payments')
         });
 
         $scope.types = {
-            currentType: recipientFilterType.DOMESTIC,
+            currentType: recipientFilterType.ALL,
             availableTypes: recipientFilterType,
             availableTypesList: lodash.map(recipientFilterType)
         };
@@ -55,10 +55,9 @@ angular.module('ocb-payments')
         $scope.recipientListPromise = {};
 
         $scope.onRecipientEdit = function(data){
-            var recipientType = data.recipientType.toLowerCase();
             data.bankName = $scope.recipient.item.recipientBankName;
             $state.go("payments.recipients.manage.edit.fill", {
-                recipientType: recipientType,
+                recipientType: data.recipientType.state,
                 operation: 'edit',
                 recipient: angular.extend(angular.copy(data), {debitAccountNo: data.debitNrb})
             });
@@ -71,15 +70,14 @@ angular.module('ocb-payments')
                 recipientData: data.recipientName,
                 description: data.transferTitle
             });
-            var recipientType = data.recipientType.toLowerCase();
-            if(recipientType === 'insurance'){
+            if (data.recipientType.code === 'insurance'){
                 var senderAccount = $scope.getAccountByNrb(data.debitNrb);
                 items = {
                     senderAccount: senderAccount
                 };
             }
             $state.go("payments.recipients.manage.remove.verify", {
-                recipientType: recipientType,
+                recipientType: data.recipientType.state,
                 operation: 'remove',
                 items: angular.copy(items),
                 recipient: angular.copy(data)
@@ -88,7 +86,6 @@ angular.module('ocb-payments')
 
         $scope.onRecipientCreate = function(){
             $state.go("payments.recipients.manage.new.fill", {
-                recipientType: rbRecipientTypes.DOMESTIC.code.toLowerCase(),
                 operation: rbRecipientOperationType.NEW.code
             });
         };
@@ -96,13 +93,13 @@ angular.module('ocb-payments')
 
         $scope.onRecipientTransfer = function(data) {
                 $state.go("payments.new.fill", {
-                    paymentType: data.recipientType.toLowerCase(),
+                    paymentType: data.recipientType.state,
                     recipientId: data.recipientId
                 });
         };
 
         $scope.resolveTemplateType = function (recipientType) {
-            return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("ocb-payments"), recipientType.toLowerCase());
+            return "{0}/modules/recipients/list/details/{1}_recipient_details.html".format(pathService.generateTemplatePath("ocb-payments"), recipientType.state);
         };
 
         $scope.trimTable = lodash.memoize(function(table) {
@@ -159,7 +156,7 @@ angular.module('ocb-payments')
                                     return {};
                                 }
                                 return lodash.extend({
-                                    recipientType: template.templateType,
+                                    recipientType: rbRecipientTypes[template.templateType],
                                     customerName: $filter('arrayFilter')(recipient.recipientName),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
@@ -170,12 +167,17 @@ angular.module('ocb-payments')
                                 }, (function () {
                                     var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
-                                        case "DOMESTIC":
+                                        case "EXTERNAL":
                                             return {
                                                 transferTitle: $filter('arrayFilter')(template.title),
                                                 recipientAddress: $filter('arrayFilter')(recipient.recipientAddress),
                                                 transferTitleTable: $filter('arrayFilter')(template.title),
- 												nrb: template.beneficiaryAccountNo                                            };
+ 												nrb: template.beneficiaryAccountNo,
+                                                province: template.province,
+                                                bankCode: template.bankCode,
+                                                branchCode: template.branchCode,
+                                                cardNumber: template.cardNumber
+                                            };
                                     }
                                 })());
                             });

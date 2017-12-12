@@ -14,8 +14,16 @@ angular.module('ocb-payments')
         }
     })
     .constant('rbRecipientTypes', {
-        "DOMESTIC": {
-            code: 'DOMESTIC',
+        "INTERNAL": {
+            code: 'INTERNAL',
+            state: 'domestic'
+        },
+        "EXTERNAL": {
+            code: "EXTERNAL",
+            state: 'domestic'
+        },
+        "FAST": {
+            code: "FAST",
             state: 'domestic'
         }
     })

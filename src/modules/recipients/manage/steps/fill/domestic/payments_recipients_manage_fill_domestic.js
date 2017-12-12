@@ -73,7 +73,11 @@ angular.module('ocb-payments')
                 debitAccount: copiedFormData.remitterAccountId,
                 creditAccount: copiedFormData.recipientAccountNo,
                 beneficiary: copiedFormData.recipientData,
-                remarks: copiedFormData.description
+                remarks: copiedFormData.description,
+                recipientType: copiedFormData.recipientType.code,
+                province: copiedFormData.province,
+                bankCode: copiedFormData.bankCode,
+                branchCode: copiedFormData.branchCode
             };
         });
 

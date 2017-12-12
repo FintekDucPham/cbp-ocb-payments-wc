@@ -67,6 +67,26 @@
                           label="{{ ::'ocb.payments.recipients.new.domestic.fill.description.label' | translate }}">
             <p style="word-wrap: break-word">{{recipient.formData.description | arrayFilter}}</p>
         </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_type.label' | translate }}">
+            {{'ocb.payments.recipient_types.' + recipient.formData.recipientType.code | translate}}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.province.label' | translate }}">
+            {{ recipient.items.province.name }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.bank.label' | translate }}">
+            {{ recipient.items.bank.bankName }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.branch.label' | translate }}">
+            {{ recipient.items.branch.branchName }}
+        </bd-item-property>
     </span>
     </div>
 </rb-payment-recipients-verify>

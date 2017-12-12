@@ -177,17 +177,62 @@
 
         </bd-item-property>
 
+        <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_type.label'|translate}}">
+            <ui-select name="recipientType" ng-model="recipient.formData.recipientType"
+                       theme="bootstrap"
+                       on-select="onRecipientTypeSelect($item)"
+                       search-enabled="true"
+                       required>
+                <ui-select-match placeholder="{{::'ocb.payments.recipients.new.domestic.fill.recipient_type.placeholder' | translate }}">
+                    <div>
+                        {{'ocb.payments.recipient_types.' + $select.selected.code | translate}}
+                    </div>
+                </ui-select-match>
+                <ui-select-choices repeat="recipientType in recipient.meta.recipientTypes">
+                    {{'ocb.payments.recipient_types.' + recipientType.code | translate}}
+                </ui-select-choices>
+            </ui-select>
+            <eb-validation-messages eb-name="recipientType">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_type.EMPTY'|translate}}
+                </div>
+            </eb-validation-messages>
+        </div>
+
         <rb-recipient-location>
-            <bd-item-property label="Province">
-                <input name="province"/>
+            <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.province.label'|translate}}">
+                <input name="province" hidden ng-model="recipient.formData.province" required/>
+                <rb-province-select rb-province="recipient.formData.province"
+                                rb-province-item="recipient.items.province"
+                                rb-placeholder="{{::'ocb.payments.recipients.new.domestic.fill.province.placeholder'|translate}}"></rb-province-select>
+                <eb-validation-messages eb-name="province">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.recipients.new.domestic.fill.province.EMPTY'|translate}}
+                    </div>
+                </eb-validation-messages>
             </bd-item-property>
-            <bd-item-property label="Bank name">
+            <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.bank.label'|translate}}">
                 <input name="bankCode" hidden ng-model="recipient.formData.bankCode" required/>
                 <rb-bank-select rb-bank-code="recipient.formData.bankCode"
-                                rb-bank="recipient.items.bank"></rb-bank-select>
+                                rb-bank="recipient.items.bank"
+                                rb-placeholder="{{::'ocb.payments.recipients.new.domestic.fill.bank.placeholder'|translate}}"></rb-bank-select>
+                <eb-validation-messages eb-name="bankCode">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.recipients.new.domestic.fill.bank.EMPTY'|translate}}
+                    </div>
+                </eb-validation-messages>
             </bd-item-property>
-            <bd-item-property label="Branch name">
-                <input name="branchCode"/>
+
+            <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.branch.label'|translate}}">
+                <input name="branchCode" hidden ng-model="recipient.formData.branchCode" required/>
+                <rb-branch-select rb-branch-code="recipient.formData.branchCode"
+                                  rb-branch="recipient.items.branch"
+                                    rb-placeholder="{{::'ocb.payments.recipients.new.domestic.fill.branch.placeholder'|translate}}"></rb-branch-select>
+                <eb-validation-messages eb-name="branchCode">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.recipients.new.domestic.fill.branch.EMPTY'|translate}}
+                    </div>
+                </eb-validation-messages>
             </bd-item-property>
         </rb-recipient-location>
 
