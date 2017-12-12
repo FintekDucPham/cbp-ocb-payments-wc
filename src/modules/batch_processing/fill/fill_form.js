@@ -286,7 +286,6 @@ angular.module('ocb-payments')
                     }
                     $scope.paymentsBatchProcessingForm.exportExcel.jsonContent = JSON.stringify(arrayList);
                     transferBatchService.createExcelFile($scope.paymentsBatchProcessingForm.exportExcel).then(function(data) {
-                        console.log(data.content);
                         downloadXLS("ValidTable", data.content);
                     });
                 }
@@ -313,7 +312,6 @@ angular.module('ocb-payments')
                     }
                     $scope.paymentsBatchProcessingForm.exportExcel.jsonContent = JSON.stringify(arrayList);
                     transferBatchService.createExcelFile($scope.paymentsBatchProcessingForm.exportExcel).then(function(data) {
-                        console.log(data.content);
                         downloadXLS("InvalidTable", data.content);
                     });
                 }
