@@ -176,6 +176,7 @@ angular.module('ocb-payments')
             /*$scope.tableInvalidData = {
                 content: []
             };*/
+			
             $scope.tableInvalid = {
                 tableConfig: new bdTableConfig({
                     pageSize: $scope.pageSize_,
