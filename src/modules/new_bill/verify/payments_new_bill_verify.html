@@ -60,6 +60,16 @@
             {{::payment.formData.transferCost}} <a ng-href="{{transferCost.link}}" target="_blank">{{::'ocb.payments.new.verify.transfer_cost.info'|translate}}</a>
         </bd-item-property>
     </div>
+    <div class="form-row">
+        <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
+            <bd-button class="left-txt" ng-click="getOTP()">Get OTP</bd-button>
+        </div>
+        <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
+            <input ng-model="smsOTP" type="text" placeholder="Insert OTP">
+        </div>
+    </div>
+
+
      <span class="eb-validation-messages">
         <span class="messages" ng-if="payment.formData.addToBeneficiary && !payment.items.modifyFromBeneficiary">
              <span class="validation-message">
