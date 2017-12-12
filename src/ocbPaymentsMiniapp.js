@@ -30,6 +30,7 @@ angular.module('ocb-payments', [
     function registerNavigation() {
         menuServiceProvider.registerMenu({
             id: 'ocb-payments',
+            iconClass: 'payments-icon',
             priority: 200,
             showMain: true,
             baseItem: "payments.recipients.list",
@@ -98,20 +99,6 @@ angular.module('ocb-payments', [
                     label: "ocb.payments.batch_processing.label",
                     icon: "ocb-icons basket",
                     action: "payments.batch_processing.fill",
-                    priority: 11
-                },
-                {
-                    id: "payments.test",
-                    label: "Test",
-                    icon: "ocb-icons basket",
-                    action: "payments.test_form.fill",
-                    priority: 13
-                },
-                {
-                    id: "payments.new_bill.fill",
-                    label: 'payments.submenu.options.new_bill.header',
-                    icon: "ocb-icons ocb_przelew",
-                    action: "payments.new_bill.fill",
                     priority: 10
                 },
                 {
@@ -119,7 +106,21 @@ angular.module('ocb-payments', [
                     label: "ocb.payments.pending.label",
                     icon: "ocb-icons basket",
                     action: "payments.pending.list",
+                    priority: 11
+                },
+                {
+                    id: "payments.new_bill.fill",
+                    label: 'payments.submenu.options.new_bill.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: "payments.new_bill.fill",
                     priority: 12
+                },
+                {
+                    id: "payments.bill_history.list",
+                    label: "ocb.payments.basket.list.details.historyAction",
+                    icon: "ocb-icons basket",
+                    action: "payments.bill_history.list",
+                    priority: 14
                 }
             ]
         });

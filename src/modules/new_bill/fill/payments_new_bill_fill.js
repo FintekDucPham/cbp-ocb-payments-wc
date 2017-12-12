@@ -9,8 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountsService, downloadService,
-                                                            blockadesService) {
+    .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,  downloadService, transferBillService) {
 
 
         var senderAccountInitDefer = $q.defer();
@@ -23,7 +22,7 @@ angular.module('ocb-payments')
             model_to:{}
         };
         //$scope.BILL_CODE = validationRegexp('NEW_MOBILE_PASSWORD');
-        $scope.BILL_CODE = validationRegexp('BILL_CODE');
+        $scope.BILL_CODE = validationRegexp('NUMBER_AND_CHAR_ONLY');
         if ($stateParams.payment && $stateParams.payment.beneficiaryAccountNo) {
             $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
         }
@@ -63,7 +62,7 @@ angular.module('ocb-payments')
         // transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
         //         $scope.payment.formData.senderCustomer = customerDictionary.content[0];
         //     });
-        // ???: customerService, accountService, downloadService, blockadesService
+        // ???: customerService, accountsService, downloadService, blockadesService
         // $scope.billInfoSearch = false;
         // $scope.showBillInfoSearch = function() {
         //     $scope.billInfoSearch = !$scope.billInfoSearch;
@@ -79,15 +78,6 @@ angular.module('ocb-payments')
             $scope.selectedAccount = selectedAccount;
 
         };
-
-        $scope.promise = accountsService.search({pageSize: 10000, productList: "ACCOUNT_UNCLEARED_FROM_LIST"}).then(function(accountList) {
-            $scope.accountList = accountList.content;
-            if ($scope.accountList.length > 0) {
-                accountsService.loadAccountIcons($scope.accountList);
-                $scope.selectedAccount = findAccountOnList($stateParams.accountId || $scope.accountList[0].accountId);
-                $scope.refreshList();
-            }
-        });
 
         function findAccountOnList(accId) {
             return lodash.find($scope.accountList, function(acc) {
@@ -106,38 +96,34 @@ angular.module('ocb-payments')
         $scope.noDataLoaded = function() {
             return dataNotLoading() && $scope.noData();
         };
-
-        function getBlockades(deferred, $params) {
-           if($scope.table.newSearch){
-               $scope.table.newSearch = false;
-           //$scope.table.tableControl.invalidate();
-                $scope.table.tableConfig.currentPage = 1;
-                $scope.table.tableConfig.pageCount = 1;
-                $params.currentPage = 1;
-           }
-            var pageSize = $params.pageSize = 10;
-            if (!$scope.selectedAccount) {
-                deferred.resolve([]);
-                return;
-            }
-            $scope.table.anyData = false;
-            $scope.blockadesPromise = blockadesService.searchAccountBlockades({
-                accountId: $scope.selectedAccount.accountId,
-                pageNumber: $params.currentPage,
-                pageSize: pageSize
-            }).then(function(blockadeList) {
-                $params.pageCount = blockadeList.totalPages;
-                deferred.resolve(blockadeList.content);
-                $scope.table.anyData = blockadeList.content.length > 0;
-            });
-        }
-
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
-
+        $scope.$on('searchForm', function () {
+            var form = $scope.paymentForm;
+            if (!$scope.payment.formData.providerCode) {
+                form.providerCode.$setValidity('required', false);
+            }
+            if (!$scope.payment.formData.billCode) {
+                form.billCode.$setValidity('required', false);
+            }
+            if (form.$invalid) {
+                formService.dirtyFields(form);
+            }
+        });
         $scope.$on('clearForm', function () {
             $scope.payment.options.fixedRecipientSelection = false;
             $scope.remote.model_from.resetToDefault();
+
+            var form = $scope.paymentForm;
+            if (!$scope.payment.formData.providerCode) {
+            form.providerCode.$setValidity('required', false);
+            }
+            if (!$scope.payment.formData.billCode) {
+            form.billCode.$setValidity('required', false);
+            }
+            if (form.$invalid) {
+            formService.dirtyFields(form);
+            }
         });
 
 
@@ -179,6 +165,7 @@ angular.module('ocb-payments')
 
         function checkCurrency(){
             $scope.payment.meta.blockByCurrency = false;
+            var recipientAccount = $scope.payment.items.recipientAcc;
             var senderAccount = $scope.payment.items.senderAccount;
             if(recipientAccount && senderAccount){
                 if(recipientAccount.currency !== senderAccount.currency){
@@ -194,10 +181,26 @@ angular.module('ocb-payments')
 
         setRealizationDateToCurrent();
 
+        // Waiting transferType from customerService at login Web App.
+        var temporaryTransferType = function (businessLine) {
+            switch (businessLine) {
+                case "33":
+                    return "RETAIL";
+                default :
+                    return "CORPORATE";
+            }
+            ;
+        };
+
+        var requestConverter = function (formData) {
+            var copiedForm = angular.copy(formData);
+            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
+            copiedForm.amount = (""+formData.amount).replace(",", ".");
+            copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
+            return copiedForm;
+        };
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            // if(!$scope.remote.model_to.loaded){
-            //     return;
-            // }
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 delete $scope.payment.token.params.resourceId;
                 var form = $scope.paymentForm;
@@ -208,45 +211,51 @@ angular.module('ocb-payments')
                 // if(!$scope.payment.items.recipientAccount){
                 //     form.recipientAcc.$setValidity('required', false);
                 // }
-                if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
-                    form.recipientAcc.$setValidity('sameAccounts', false);
+                // if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                //     form.recipientAcc.$setValidity('sameAccounts', false);
+                // }
+                if (($scope.payment.formData.amount < 1) || ($scope.payment.formData.amount == undefined)) {
+                    form.checkBoxState.$setValidity('required', false);
                 }
 
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
-                //     var createTransfer = function(){
-                //         transferService.create('INTERNAL', angular.extend({
-                //             "remitterId": 0
-                //         }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
-                //             $scope.payment.transferId = transfer.referenceId;
-                //             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
-                //             $scope.payment.holiday = transfer.holiday;
+                    var createTransfer = function(){
+                        $scope.payment.formData.currency = "PLN";
+                        transferBillService.create('bill', angular.extend({
+                            "remitterId": 0,
+                            "businessLine": "33"
+                        }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
+                            $scope.payment.transferId = transfer.referenceId;
+                            $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
+                            $scope.payment.holiday = transfer.holiday;
+                            setRealizationDateToCurrent();
                             actions.proceed();
-                //         }).catch(function(errorReason){
-                //             if(errorReason.subType == 'validation'){
-                //                 for(var i=0; i<=errorReason.errors.length; i++){
-                //                     var currentError = errorReason.errors[i];
-                //                     if(currentError.field == 'ocb.transfer.limit.exceeed'){
-                //                         $scope.limitExeeded = {
-                //                             show: true,
-                //                             messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
-                //                         };
-                //                     }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
-                //                         $scope.limitBasketExeeded = {
-                //                             show: true,
-                //                             messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
-                //                         };
-                //                     }
-                //                 }
-                //             }
-                //         });
-                //     };
+                        }).catch(function(errorReason){
+                            if(errorReason.subType == 'validation'){
+                                for(var i=0; i<=errorReason.errors.length; i++){
+                                    var currentError = errorReason.errors[i];
+                                    if(currentError.field == 'ocb.transfer.limit.exceeed'){
+                                        $scope.limitExeeded = {
+                                            show: true,
+                                            messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                                        };
+                                    }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
+                                        $scope.limitBasketExeeded = {
+                                            show: true,
+                                            messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
+                                        };
+                                    }
+                                }
+                            }
+                        });
+                    };
 
-                    // var fakeControl = {
-                    //     done: createTransfer
-                    // };
-                    // rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, fakeControl).then(createTransfer);
+                    var fakeControl = {
+                        done: createTransfer
+                    };
+                    rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, fakeControl).then(createTransfer);
                 }
            }
         });
@@ -393,7 +402,7 @@ angular.module('ocb-payments')
             },
             payments: true
         });
-        $scope.updateServiceId = "12345";
+        // $scope.updateServiceId = "12345";
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);
     });

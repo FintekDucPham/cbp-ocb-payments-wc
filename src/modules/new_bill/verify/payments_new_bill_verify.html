@@ -1,7 +1,5 @@
 <div ng-show="showVerify" class="form-pane" id="pn-1">
-    <div class ="pane-above">
-        <h3 class="pn-tt">{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</h3>
-    </div>
+    <bd-header>{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</bd-header>
     <div class="row" ng-show="payment.endOfDayWarning && !payment.formData.addToBasket">
         <div class="col-xs-12 col-sm-12">
             <bd-msg-panel bd-msg-type="warning">{{::'ocb.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>
@@ -13,13 +11,13 @@
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_account_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
-                <div class="break-force">{{ payment.items.senderAccount.nrbNumber }}
+                <div class="break-force">{{ payment.items.senderAccount.accountNo }}
                 </div>
             </div>
             <div class="hidden-lg">
                 <rb-account-responsive-line
                         rb-account-name=""
-                        rb-account-nrb="payment.items.senderAccount.nrbNumber"></rb-account-responsive-line>
+                        rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
             </div>
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.billCode'|translate}}">
@@ -27,24 +25,27 @@
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{::'ocb.payments.new.bill.verify.execution_date'|translate}}">
-            {{payment.formData.senderCustomer.fullName }}
+            {{payment.formData.realizationDate | date:'shortDate' }}
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_service_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
-                <div class="break-force">{{ payment.items.senderService.serviceName || payment.items.senderService.serviceId }}</div>
+                <div class="break-force">{{ payment.items.senderService.serviceName || payment.items.senderService.serviceCode }}</div>
             </div>
             <div class="hidden-lg">
-                <rb-account-responsive-line rb-account-name="payment.items.senderService.serviceName " rb-account-nrb="payment.items.senderService.serviceId"></rb-account-responsive-line>
+                <rb-account-responsive-line rb-account-name="payment.items.senderService.serviceName " rb-account-nrb="payment.items.senderService.serviceCode"></rb-account-responsive-line>
             </div>
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.totalBill'|translate}}">
-            <div class="hidden-sm hidden-xs hidden-md">
-                <div class="break-force">{{ payment.items.totalBill }}</div>
-            </div>
-            <div class="hidden-lg">
-                <rb-account-responsive-line rb-account-name="" rb-account-nrb="payment.items.totalBill"></rb-account-responsive-line>
-            </div>
+            <bd-amount amount="payment.formData.amount" currency="{{ payment.formData.currency }}" not-styled></bd-amount>
         </bd-item-property>
+        <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'ocb.payments.new.bill.verify.totalBill'|translate}}">-->
+            <!--<div class="hidden-sm hidden-xs hidden-md">-->
+                <!--<div class="break-force">{{ payment.formData.amount }}</div>-->
+            <!--</div>-->
+            <!--<div class="hidden-lg">-->
+                <!--<rb-account-responsive-line rb-account-name="" rb-account-nrb="payment.formData.amount"></rb-account-responsive-line>-->
+            <!--</div>-->
+        <!--</bd-item-property>-->
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.totalBillInWord'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
                 <div class="break-force">{{ payment.items.totalBillInWord }}</div>
@@ -57,6 +58,16 @@
             {{::payment.formData.transferCost}} <a ng-href="{{transferCost.link}}" target="_blank">{{::'ocb.payments.new.verify.transfer_cost.info'|translate}}</a>
         </bd-item-property>
     </div>
+    <div class="form-row">
+        <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
+            <bd-button class="left-txt" ng-click="getOTP()">Get OTP</bd-button>
+        </div>
+        <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
+            <input ng-model="smsOTP" type="text" placeholder="Insert OTP">
+        </div>
+    </div>
+
+
      <span class="eb-validation-messages">
         <span class="messages" ng-if="payment.formData.addToBeneficiary && !payment.items.modifyFromBeneficiary">
              <span class="validation-message">

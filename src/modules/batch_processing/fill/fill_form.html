@@ -1,30 +1,16 @@
-<script src="util.js"></script>
-<script src="xls.js"></script>
-<style>
-    .account-collapse-item {
-        float: left;
-        width: 100%;
-        background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
-        box-shadow: 0 0 15px 0 rgba(0,0,0,0.11);
-        border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-</style>
+<!-- Created by Tien Bui on 10/30/2017 -->
 <div>
     <form name="paymentsBatchProcessingFormForm">
-        <div class="account-collapse-item">
+        <div class="account-collapse-item form-horizontal">
             <bd-header>{{ ::'ocb.payments.batch_processing.personal' | translate }}</bd-header>
-            <bd-item-property label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
+            <bd-item-property-form label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
                 <!--<input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>-->
-                <rb-account-select
+                <rb-account-select rb-batch-info-search="paymentsBatchProcessingForm.batchInfoSearch"
                         rb-product-list-name="TRANSFER_FROM_LIST"
                         rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                         rb-account="paymentsBatchProcessingForm.formData.selectedAccount"
-                        rb-account-id="paymentsBatchProcessingForm.formData.senderAccountId"
-                        rb-on-account-select="onSenderAccountSelect($accountId)"
+                        rb-account-no="paymentsBatchProcessingForm.formData.senderAccountId"
+                        rb-on-account-select="onSenderAccountSelect($select.selected)"
                         bd-attr-required="true"
                         rb-account-list="paymentsBatchProcessingForm.formData.accountList"
                         rb-account-select-params="senderSelectParams"
@@ -33,51 +19,53 @@
                 <!--rb-init-select-value = "{{ payment.formData.accountNo || selectNrb}}"-->
 
                 <!--rb-account-no="payment1.items.recipient.srcAccountNo"-->
-            </bd-item-property>
-            <bd-item-property ng-if="paymentsBatchProcessingForm.formData.selectedAccount"
+            </bd-item-property-form>
+            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
                               label="{{ ::'ocb.payments.batch_processing.name' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
                     <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedAccount.accountName| uppercase}}</span>
                     <span class="bd-amount__currency" ng-show="!showDash"></span>
                     <span class="dash" ng-show="showDash">-</span>
                 </div>
-            </bd-item-property>
-            <bd-item-property ng-if="paym0entsBatchProcessingForm.formData.selectedAccount"
+            </bd-item-property-form>
+            <bd-item-property-form ng-if="paym0entsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
                               label="{{ ::'ocb.payments.batch_processing.ocbbranch' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
                     <span class="bd-amount__value">Tan Binh???</span><span class="bd-amount__currency" ng-show="!showDash"></span>
                     <span class="dash" ng-show="showDash">-</span>
                 </div>
-            </bd-item-property>
+            </bd-item-property-form>
 
-            <bd-item-property ng-if="paymentsBatchProcessingForm.formData.selectedAccount"
+            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
                               label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
                            currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
-            </bd-item-property>
+            </bd-item-property-form>
 
-            <bd-item-property ng-if="paymentsBatchProcessingForm.formData.selectedAccount"
+            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
                               label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
                            currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}???"></bd-amount>
-            </bd-item-property>
+            </bd-item-property-form>
 
-            <bd-item-property label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
-                <ui-select ng-model="paymentsBatchProcessingForm.formData.selectedTransactionType"
+            <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch">
+                <ui-select ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
+                        ng-model="paymentsBatchProcessingForm.formData.selectedTransactionType"
                            theme="bootstrap"
                            on-select="onTransactionTypeChanged($select.selected)"
                            required>
                     <ui-select-match placeholder="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
-                        {{$select.selected.name}}
+                        {{$select.selected.typeName}}
                     </ui-select-match>
-                    <ui-select-choices repeat="transactionType in selectionQuerry($select.search, transaction_types) | filter: $select.search.name">
-                        <div ng-bind="transactionType.name"></div>
+                    <ui-select-choices repeat="transactionType in transaction_types | filter: $select.search track by $index">
+                        <div ng-bind-html="transactionType.typeName | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
-            </bd-item-property>
+            </bd-item-property-form>
 
-            <bd-item-property label="{{ ::'ocb.payments.batch_processing.subaccount' | translate  }}">
-                <ui-select ng-model="paymentsBatchProcessingForm.formData.selectedSubAccount"
+            <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.subaccount' | translate  }}" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch">
+                <ui-select ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
+                        ng-model="paymentsBatchProcessingForm.formData.selectedSubAccount"
                            theme="bootstrap"
                            on-select="onSubAccountChanged($select.selected)"
                            required>
@@ -88,27 +76,44 @@
                         <div ng-bind="subAccount.name"></div>
                     </ui-select-choices>
                 </ui-select>
-            </bd-item-property>
+            </bd-item-property-form>
         </div>
-        <div class="account-collapse-item">
+        <div class="account-collapse-item form-horizontal" ng-show="paymentsBatchProcessingForm.batchInfoSearch">
             <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
-            <bd-item-property label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
-                <div class="input-group">
-                    <input bd-type="text" class="input-field ng-pristine ng-valid ng-empty ng-valid-minlength form-control" ng-model="selectedFilename" name="uploadFile" ng-minlength="3" maxlength="140">
-                    <span class="input-group-btn">
-                        <bd-button class="bd-button" >{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
+            <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
+                <div class="input-group form-btn">
+                    <!--<div class="addfile-block" style="">
+                        <div class="form-control file-name"></div>
+                        <label class="filelb">
+                            <input type="file">
+                            <img ng-src="{{svgPath}}" width="37" height="37"/>
+                        </label>
+                    </div>-->
+                    <input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                    <span class="display-group">
+                        <bd-button class="bd-button__primary bd-button" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
                     </span>
                 </div>
-            </bd-item-property>
+            </bd-item-property-form>
+            <bd-item-property-form>
+                <div class="input-group">
+                    <a class="bd-button" ng-show="isInternal" ng-click="downloadTemplateInternal()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
+                    <a class="bd-button" ng-show="isExternal" ng-click="downloadTemplateExternal()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
+                </div>
+            </bd-item-property-form>
         </div>
 
         <!--Table section-->
-        <div class="account-collapse-item">
+        <div class="account-collapse-item form-btn" ng-show="paymentsBatchProcessingForm.validTableShow">
+            <span class="display-group padding-bottom-5">
+                <bd-button class="bd-button__primary bd-button" ng-click="downloadTable()">{{::'ocb.payments.batch_processing.download.excelTable'|translate}}</bd-button>
+            </span>
             <bd-table
+                    bd-display-bank-code="displayBankCode"
                     bd-type="typeBP"
-                    bd-table-params="table.tableConfig"
-                    bd-table-control="table.tableControl"
-                    bd-table-data="table.tableData"
+                    bd-table-params="tableValid.tableConfig"
+                    bd-table-control="tableValid.tableControl"
+                    bd-table-data="tableValid.tableData"
                     bd-table-promise="testDataPromise"
                     bd-table-meta="{
                         'first':{
@@ -134,21 +139,49 @@
                     }"
             >
             </bd-table>
-            <div class="main" >
-                <div bd-table-heading="first" class="header-always-left bd-table__cell col-xs-12 col-sm-4 col-md-3">{{ ::'ocb.payments.batch_processing.table.totalamountinfigures' | translate }}</div>
-                <div bd-table-heading="second" class="header-always-left bd-table__cell hidden-xs col-sm-4 col-md-2">{{totalamountinfigures}} {{ selectedAccount.currency }}</div>
-                <br>
-                <div bd-table-heading="first" class="header-always-left bd-table__cell col-xs-12 col-sm-4 col-md-3">{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}</div>
-                <div bd-table-heading="second" class="header-always-left bd-table__cell hidden-xs col-sm-4 col-md-8">{{totalamountinwords}} {{ selectedAccount.currency }}</div>
-                <br>
-                <div bd-table-heading="first" class="header-always-left bd-table__cell col-xs-12 col-sm-4 col-md-3">{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}</div>
-                <div bd-table-heading="second" class="header-always-left bd-table__cell hidden-xs col-sm-4 col-md-8">{{totalamountinwordsen}} {{ selectedAccount.currency }}</div>
-                <br>
-                <div bd-table-heading="first" class="header-always-left bd-table__cell col-xs-12 col-sm-4 col-md-3">{{ ::'ocb.payments.batch_processing.table.totalnumberoflines' | translate }}</div>
-                <div bd-table-heading="second" class="header-always-left bd-table__cell hidden-xs col-sm-4 col-md-2">{{totalnumberoflines}}</div>
+            <div class="form-horizontal margin-top-10">
+                <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinfigures' | translate }}"><span class="yellow-label">{{totalamountinfigures}} {{ selectedAccount.currency }}</span></bd-item-property-form>
+                <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">{{totalamountinwords}} {{ selectedAccount.currency }}</bd-item-property-form>
+                <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">{{totalamountinwordsen}} {{ selectedAccount.currency }}</bd-item-property-form>
+                <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalnumberoflines' | translate }}">{{totalnumberoflines}}</bd-item-property-form>
             </div>
+
+            <span class="display-group padding-bottom-5" ng-show="paymentsBatchProcessingForm.invalidTableShow">
+                <bd-button class="bd-button__primary bd-button" ng-click="downloadTableInvalid()">{{::'ocb.payments.batch_processing.download.excelTable'|translate}}</bd-button>
+            </span>
+            <bd-table
+                    ng-show="paymentsBatchProcessingForm.invalidTableShow"
+                    bd-display-bank-code="displayBankCode"
+                    bd-type="typeBP"
+                    bd-table-params="tableInvalid.tableConfig"
+                    bd-table-control="tableInvalid.tableControl"
+                    bd-table-data="tableInvalid.tableData"
+                    bd-table-promise="testDataPromise"
+                    bd-table-meta="{
+                        'first':{
+                            'title': '##ocb.payments.batch_processing.table.fullname',
+                            'data': 'fullName'
+                        },
+                        'second':{
+                            'title': '##ocb.payments.batch_processing.table.accountno',
+                            'data': 'accountNo'
+                        },
+                        'third':{
+                            'title': '##ocb.payments.batch_processing.table.bankcode',
+                            'data': 'bankCode'
+                        },
+                        'fourth':{
+                            'title': '##ocb.payments.batch_processing.table.amount',
+                            'data': 'amount'
+                        },
+                        'fifth':{
+                            'title': '##ocb.payments.batch_processing.table.remarks',
+                            'data': 'description'
+                        }
+                    }"
+            >
+            </bd-table>
         </div>
-        <div file-browser>Thai Bui Test</div>
     </form>
 </div>
 
