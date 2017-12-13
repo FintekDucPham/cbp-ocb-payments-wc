@@ -1,35 +1,76 @@
-<rb-content-view class="rb-content-view--framed form recipients-view">
-    <bd-header>{{::"ocb.payments.recipients.label"|translate}}</bd-header>
+<rb-content-view class="rb-content-view--solid">
+    <bd-header>{{::"ocb.payments.pending.label"|translate}}</bd-header>
+    <br/>
+    <div class="section-wrapper" >
 
-    <div class="section-wrapper">
+        <form >
+                <div class="row" >
+                    <div class="col-md-2">
 
-        <form>
-            <div class="accounts-transaction-list-filter">
-                <div class="row-line">
-                    <div class="row-line__cell">
-                        <bd-item-property label="{{::'ocb.payments.recipients.select.filter.text.label' | translate}}">
-                            <input bd-type="text" ng-model="table.operationTitle" class="input-field" name="contentText" style="width: 100%; height: 34px;"/>
-                        </bd-item-property>
+                        <ui-select ng-model="status"
+                                   theme="bootstrap"
+                                   reset-search-input="false"
+                                   on-select="onStatusChange($select.selected)"
+                                  >
+                            <ui-select-match placeholder="{{:: 'ocb.payments.pending.status.placeHolder' | translate }}">
+                                {{'ocb.payments.pending.status.' +$select.selected |translate}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="st in statuses">
+                                <div ng-bind-html="'ocb.payments.pending.status.' +st |translate">  </div>
+                            </ui-select-choices>
+                        </ui-select>
+                     </div>
+
+                    <div class="col-md-2">
+                        <ui-select ng-model="account"
+                                   theme="bootstrap"
+                                   on-select="onAccountChange($select.selected)"
+                                   reset-search-input="false">
+                            <ui-select-match placeholder="{{:: 'ocb.payments.pending.account.placeHolder' | translate }}">
+                                {{ $select.selected}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="ac in accounts">
+                                {{ ac }}
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
-                    <div class="row-line__cell row-line__cell--right-button">
-                        <bd-button class="bd-button" ng-click="searchRecipient()" type="submit">{{::'ocb.payments.recipients.select.filter.button.action'|translate}}</bd-button>
-                    </div>
-                    <div class="row-line__cell row-line__cell--right-button">
-                        <bd-button class="bd-button__primary" ng-click="onRecipientCreate()" type="button">
-                            {{::'ocb.payments.recipients.new.button'|translate}}
-                        </bd-button>
+
+                    <div class="col-md-1" style="padding-top: 5px;">
+                        <bd-button class="bd-button__primary" ng-click="filterPendingTransaction()" type="submit">{{::'ocb.payments.pending.list.filter.button.filter.label'|translate}}</bd-button>
                     </div>
                 </div>
-            </div>
+
         </form>
+
     </div>
+
+    <br/>
     <div class="section-wrapper">
-        <bd-table bd-type="typeL"
+        <form>
+        <bd-table bd-type="typePL"
                   bd-table-params="table.tableConfig"
                   bd-table-control="table.tableControl"
                   bd-table-data="table.tableData"
-                  bd-table-promise="recipientListPromise"
-                  bd-table-meta="{ 'first' : { 'title': '##ocb.payments.recipients.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##ocb.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' }, 'third' : { 'title': '##ocb.payments.recipients.list.header.nrb.label', 'data' : 'nrb' }, 'button' : {'title': '##ocb.payments.recipients.list.details.transfer', 'data': '-'}}">
+                  bd-table-promise="pendingListPromise"
+                  bd-table-meta="{  'checkbox' : { 'title' :'','data' : ''},
+                                    'first' : {
+                                         'title': '##ocb.payments.pending.list.header.init_date.label', 'data' : 'init_date'
+                                    },
+                                    'second' : {
+                                        'title': '##ocb.payments.pending.list.header.creator.label', 'data' : 'creator' },
+                                    'third' : {
+                                        'title': '##ocb.payments.pending.list.header.amount.label', 'data' : 'amount'
+                                     },
+                                     'fourth' : {
+                                        'title': '##ocb.payments.pending.list.header.status.label', 'data' : 'status'
+                                     },
+                                     'fifth' : {
+                                        'title': '##ocb.payments.pending.list.header.approve.label', 'data' : 'approve'
+                                     },
+                                     'sixth' : {
+                                        'title': '##ocb.payments.pending.list.header.trans_type.label', 'data' : 'trans_type'
+                                     }
+                                  }">
 
             <bd-details-section bd-table-row-details>
 
@@ -38,14 +79,6 @@
 
                     <div class="bd-grid">
                         <div class="bd-grid__row">
-                            <div class="bd-grid__col--sm-12 desktop-only">
-                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm" style="margin-right: 5px;">{{::'ocb.payments.recipients.list.details.edit' | translate}}</bd-button>
-                                <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.recipients.list.details.remove' | translate}}</bd-button>
-                            </div>
-                            <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
-                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.recipients.list.details.edit' | translate}}</bd-button><br />
-                                <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.recipients.list.details.remove' | translate}}</bd-button>
-                            </div>
                         </div>
                     </div>
 
@@ -58,6 +91,21 @@
             </div>
 
         </bd-table>
+        <div class="row" style="float: right">
+            <div class="col-sm-3" >
+                <bd-button class="bd-button__primary" ng-click="return()" type="submit">{{::'ocb.payments.pending.list.filter.button.return.label'|translate}}</bd-button>
+            </div>
+            <div class="col-sm-3" >
+                <bd-button class="bd-button__primary" ng-click="approve()" type="submit">{{::'ocb.payments.pending.list.filter.button.approve.label'|translate}}</bd-button>
+            </div>
+            <div class="col-sm-3">
+                <bd-button class="bd-button__primary" ng-click="modify()" type="submit">{{::'ocb.payments.pending.list.filter.button.modify.label'|translate}}</bd-button>
+            </div>
+            <div class="col-sm-3">
+                <bd-button class="bd-button__primary" ng-click="delete()" type="submit">{{::'ocb.payments.pending.list.filter.button.delete.label'|translate}}</bd-button>
+            </div>
+        </div>
+        </form>
     </div>
 
 </rb-content-view>

@@ -27,4 +27,13 @@ angular.module('ocb-payments')
                 analyticsTitle: null
             }
         });
+    }) .controller('PaymentsPendingTransactionController', function ($scope, bdMainStepInitializer) {
+        bdMainStepInitializer($scope, 'paymentsPendingTransactionForm', {
+            formName: 'paymentsPendingTransactionForm',
+            formData: {},
+            options: {},
+            meta: {},
+            validation: {},
+            items :{}
+        });
     });

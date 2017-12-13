@@ -769,14 +769,33 @@
     "ocb.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
     "ocb.ng_dropdown_multiselect.option.waiting":"Waiting",
 
-    "EOF": "",
-
-    "ocb.payments.pending.label": "CB Pending Transaction",
+    "ocb.payments.pending.label": "CB Pending Transactions",
     "ocb.payments.pending.transactionInitiationDate": "Transaction initiation date",
     "ocb.payments.pending.creator": "Creator",
     "ocb.payments.pending.amount": "Amount",
     "ocb.payments.pending.status": "Status",
-    "ocb.payments.pending.approve": "Approve"
+    "ocb.payments.pending.approve": "Approve",
+    "ocb.payments.pending.list.filter.button.filter.label": "FILTER",
+    "ocb.payments.pending.list.filter.button.return.label": "RETURN",
+    "ocb.payments.pending.list.filter.button.approve.label": "APPROVE",
+    "ocb.payments.pending.list.filter.button.modify.label": "MODIFY",
+    "ocb.payments.pending.list.filter.button.delete.label": "DELETE",
+    "ocb.payments.pending.status.placeHolder": "Transaction Status",
+    "ocb.payments.pending.account.placeHolder": "Account",
+    "ocb.payments.pending.status.return": "Return",
+    "ocb.payments.pending.status.check1": "Waiting for check 1",
+    "ocb.payments.pending.status.check2": "Waiting for check 2",
+    "ocb.payments.pending.status.approve": "Waiting for approve",
+    "ocb.payments.pending.status.all": "All",
+    "ocb.payments.pending.list.header.init_date.label":"Transaction initiation date",
+    "ocb.payments.pending.list.header.creator.label":"Creator",
+    "ocb.payments.pending.list.header.amount.label":"Amount",
+    "ocb.payments.pending.list.header.status.label":"Status",
+    "ocb.payments.pending.list.header.approve.label":"Approve",
+    "ocb.payments.pending.list.header.trans_type.label":"Transaction type",
+
+    "EOF": ""
+
 }
 
 
