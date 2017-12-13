@@ -109,6 +109,8 @@
     "ocb.payments.tuition.table.classname": "Class Name",
     "ocb.payments.tuition.table.amount": "Amount",
     "ocb.payments.tuition.table.discount": "Discount",
+    "ocb.payments.tuition.table.figures": "Total amount in figures",
+    "ocb.payments.tuition.table.words": "Total amount in words",
 
     "ocb.payments.tuition.table.placeHolderTable": "No payments found",
 

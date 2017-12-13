@@ -121,6 +121,13 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.bill_history.list",
                     priority: 14
+                },
+                {
+                    id: "payments.tuition_fee.fill",
+                    label: "ocb.payments.new.list.details.historyAction",
+                    icon: "ocb-icons basket",
+                    action: "payments.tuition_fee.fill",
+                    priority: 15
                 }
             ]
         });

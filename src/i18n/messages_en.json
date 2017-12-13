@@ -99,6 +99,7 @@
     "ocb.payments.tuition.period.label": "Period",
     "ocb.payments.tuition.nationalid.label": "National ID",
     "ocb.payments.tuition.department.label": "Department",
+    "ocb.payments.tuition.semester.label": "Semester",
     "ocb.payments.tuition.balance.label": "Balance",
     "ocb.payments.tuition.limit.label": "Remaining Daily Limit",
 
@@ -107,6 +108,8 @@
     "ocb.payments.tuition.table.classname": "Class Name",
     "ocb.payments.tuition.table.amount": "Amount",
     "ocb.payments.tuition.table.discount": "Discount",
+    "ocb.payments.tuition.table.figures": "Total amount in figures",
+    "ocb.payments.tuition.table.words": "Total amount in words",
 
     "ocb.payments.tuition.table.placeHolderTable": "No payments found",
 
