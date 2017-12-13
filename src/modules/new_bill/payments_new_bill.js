@@ -306,11 +306,17 @@ angular.module('ocb-payments')
             });
         };
 
+        $scope.getOTP = function () {
+            return "success";
+        }
+
+
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.basket.new.fill',
             footerType: 'billpayment',
             onClear: $scope.clearForm,
             onSearch: $scope.showBillInfoSearch,
+            onGetOTP: $scope.getOTP,
             cancelState: 'payments.basket.new.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
