@@ -3,15 +3,15 @@ angular.module('ocb-payments')
         stateServiceProvider.state('payments.pending.list', {
             url: "/list",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/pending/list/payments_pending_list.html",
-            controller: "PaymentPendingListController",
+            controller: "PaymentsPendingListController",
             data: {
-                analyticsTitle: "ocb.payments.recipients.label"
+                analyticsTitle: "ocb.payments.pending.label"
             }
         });
     })
-    .controller('PaymentPendingListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
+    .controller('PaymentsPendingListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
                                                               viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, $filter) {
-        /*$scope.recipient = {
+        $scope.recipient = {
             item: {}
         };
 
@@ -190,6 +190,6 @@ angular.module('ocb-payments')
             },
             tableControl: undefined
         };
-        */
+
     }
 );
