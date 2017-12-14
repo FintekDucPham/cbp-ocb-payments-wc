@@ -1,5 +1,5 @@
 /**
- * Created by Thai Bui on 10/30/2017.
+ * Created by Tien Bui on 10/30/2017.
  */
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -16,12 +16,14 @@ angular.module('ocb-payments')
     .controller("PaymentsBatchProcessingStep2Controller"
         , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig, transferBatchService) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            actions.proceed();
-            //console.log("PaymentsBatchProcessingStep2Controller FORWARD_MOVE");
+            transferBatchService.createBatchTransfer(params).then(function(data) {
+                temporaryResponse(data.content);
+                actions.proceed();
+            });
         });
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
-            var acoount = $scope.paymentsBatchProcessingForm.formData.selectedAccount;
+
             //console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
         });
 
@@ -37,22 +39,22 @@ angular.module('ocb-payments')
         }
 
         $scope.tableTestData = {
-            content: $scope.paymentsBatchProcessingForm.tableValidContent,
-            totalElements : $scope.paymentsBatchProcessingForm.tableValidCount,
+            content: $scope.paymentsBatchProcessingForm.formData.tableValidContent,
+            totalElements : $scope.paymentsBatchProcessingForm.formData.tableValidCount,
             pageNumber : 0,
             pageSize : $scope.pageSize_,
-            totalPages : $scope.paymentsBatchProcessingForm.tableValidTotalPage,
+            totalPages : $scope.paymentsBatchProcessingForm.formData.tableValidTotalPage,
             sortOrder : null,
             sortDirection : null,
             firstPage : true,
             lastPage : true,
-            numberOfElements : $scope.paymentsBatchProcessingForm.tableValidCount
+            numberOfElements : $scope.paymentsBatchProcessingForm.formData.tableValidCount
         };
 
-        $scope.totalamountinfigures = $scope.paymentsBatchProcessingForm.totalamountinfigures;
-        $scope.totalamountinwords = $scope.paymentsBatchProcessingForm.totalamountinwords;
-        $scope.totalamountinwordsen = $scope.paymentsBatchProcessingForm.totalamountinwordsen;
-        $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.totalnumberoflines;
+        $scope.totalamountinfigures = $scope.paymentsBatchProcessingForm.formData.totalamountinfigures;
+        $scope.totalamountinwords = $scope.paymentsBatchProcessingForm.formData.totalamountinwords;
+        $scope.totalamountinwordsen = $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen;
+        $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.totalnumberoflines;
 
         $scope.table = {
             tableConfig: new bdTableConfig({
@@ -76,12 +78,24 @@ angular.module('ocb-payments')
             },
             tableControl: undefined
         };
+
+        $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;
+
+        $scope.paymentsBatchProcessingForm.formData.tableValidContent_temp = $scope.paymentsBatchProcessingForm.tableValidContent;
+        $scope.paymentsBatchProcessingForm.formData.tableValidCount_temp = $scope.paymentsBatchProcessingForm.tableValidCount;
+        $scope.paymentsBatchProcessingForm.formData.tableValidTotalPage_temp = $scope.paymentsBatchProcessingForm.tableValidTotalPage;
+
+        $scope.paymentsBatchProcessingForm.formData.totalamountinfigures_temp = $scope.paymentsBatchProcessingForm.totalamountinfigures;
+        $scope.paymentsBatchProcessingForm.formData.totalamountinwords_temp = $scope.paymentsBatchProcessingForm.totalamountinwords;
+        $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen_temp = $scope.paymentsBatchProcessingForm.totalamountinwordsen;
+        $scope.paymentsBatchProcessingForm.formData.totalnumberoflines_temp = $scope.paymentsBatchProcessingForm.totalnumberoflines;
+
         var params = {};
         params.account = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
         params.transationType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
         params.date = getDate();
-        params.totalAmount = $scope.paymentsBatchProcessingForm.totalAmount;
-        params.hasSubAccount = false;
+        params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
+        params.subAccount = "No SubAccount";
         params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
 
         params.fullName = [];
@@ -92,7 +106,7 @@ angular.module('ocb-payments')
         params.remark = [];
         params.status = [];
 
-        var arrayValidTable = $scope.paymentsBatchProcessingForm.tableValidContent;
+        var arrayValidTable = $scope.paymentsBatchProcessingForm.formData.tableValidContent;
         for(var i = 0; i < arrayValidTable.length; i++){
             params.fullName[i] = arrayValidTable[i].fullName;
             params.accountNo[i] = arrayValidTable[i].accountNo;
@@ -104,22 +118,19 @@ angular.module('ocb-payments')
         }
         //console.log(params);
 
-        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            transferBatchService.createBatchTransfer(params).then(function(data) {
-                //console.log(data);
-            });
-        });
+        var temporaryResponse = function(status){
+            switch (status.toLowerCase()) {
+                case "pending": {
+                    $scope.paymentsBatchProcessingForm.result.code = "0";
+                    $scope.paymentsBatchProcessingForm.result.type = "success" ;
+                };
+                default :  {
+                    $scope.paymentsBatchProcessingForm.result.code = "0";
+                    $scope.paymentsBatchProcessingForm.result.type = "success" ;
+                };
+            };
+        };
     });
-
-
-function hideColumnTable(isInternal) {
-    var bankCodeHeaderElement = document.querySelectorAll('[bd-table-heading=third]')[0];
-    bankCodeHeaderElement.style = isInternal?"display:none !important;":"display:block";
-    var bankCodeRowElements = document.querySelectorAll('[bd-table-cell=third]');
-    for(var i=0; i<bankCodeRowElements.length; i++) {
-        bankCodeRowElements[i].style = isInternal?"display:none !important;":"display:block";
-    }
-}
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -142,3 +153,4 @@ function getDate(){
     today = yyyy + '-' + mm + "-" + dd;
     return today;
 }
+
