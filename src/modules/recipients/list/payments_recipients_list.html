@@ -24,12 +24,17 @@
         </form>
     </div>
     <div class="section-wrapper">
-        <bd-table bd-type="typeL"
+        <bd-table bd-type="typeL1"
                   bd-table-params="table.tableConfig"
                   bd-table-control="table.tableControl"
                   bd-table-data="table.tableData"
                   bd-table-promise="recipientListPromise"
-                  bd-table-meta="{ 'first' : { 'title': '##ocb.payments.recipients.list.header.customName.label', 'data' : 'customerName' }, 'second' : { 'title': '##ocb.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' }, 'third' : { 'title': '##ocb.payments.recipients.list.header.nrb.label', 'data' : 'nrb' }, 'button' : {'title': '##ocb.payments.recipients.list.details.transfer', 'data': '-'}}">
+                  bd-table-meta="{ 'first' : { 'title': '##ocb.payments.recipients.list.header.customName.label', 'data' : 'customerName' },
+                  'second' : { 'title': '##ocb.payments.recipients.list.header.recipient_type.label', 'data' : 'recipientType' },
+                   'third' : { 'title': '##ocb.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' },
+                  'fourth' : { 'title': '##ocb.payments.recipients.list.header.bank.label', 'data' : 'bankCode' },
+                  'fifth' : { 'title': '##ocb.payments.recipients.list.header.nrb.label', 'data' : 'nrb' },
+                   'button' : {'title': '##ocb.payments.recipients.list.details.transfer', 'data': '-'}}">
 
             <bd-details-section bd-table-row-details>
 

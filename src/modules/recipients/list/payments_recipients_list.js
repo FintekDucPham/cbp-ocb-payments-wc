@@ -176,7 +176,8 @@ angular.module('ocb-payments')
                                                 province: template.province,
                                                 bankCode: template.bankCode,
                                                 branchCode: template.branchCode,
-                                                cardNumber: template.cardNumber
+                                                cardNumber: template.cardNumber,
+                                                recipientType:template.templateType,
                                             };
                                     }
                                 })());
