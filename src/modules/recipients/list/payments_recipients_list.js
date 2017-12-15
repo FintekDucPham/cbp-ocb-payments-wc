@@ -162,10 +162,10 @@ angular.module('ocb-payments')
                                     templateId: recipient.templateId,
                                     recipient: $filter('arrayFilter')(recipient.recipientName),
                                     recipientName: $filter('arrayFilter')(recipient.recipientAddress),
+                                    bankName: recipient.bankName,
                                     debitNrb: template.remitterAccountNo,
                                     ownerList: $scope.getAccountByNrb(template.remitterAccountNo)
                                 }, (function () {
-                                    var paymentDetails = template.paymentDetails;
                                     switch (template.templateType) {
                                         case "EXTERNAL":
                                             return {
@@ -176,8 +176,7 @@ angular.module('ocb-payments')
                                                 province: template.province,
                                                 bankCode: template.bankCode,
                                                 branchCode: template.branchCode,
-                                                cardNumber: template.cardNumber,
-                                                recipientType:template.templateType,
+                                                cardNumber: template.cardNumber
                                             };
                                     }
                                 })());
