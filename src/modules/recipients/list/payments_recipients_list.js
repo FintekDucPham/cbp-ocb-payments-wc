@@ -157,6 +157,7 @@ angular.module('ocb-payments')
                                 }
                                 return lodash.extend({
                                     recipientType: rbRecipientTypes[template.templateType],
+                                    recipientTypeCode:rbRecipientTypes[template.templateType].code,
                                     customerName: $filter('arrayFilter')(recipient.recipientName),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
@@ -176,7 +177,7 @@ angular.module('ocb-payments')
                                                 province: template.province,
                                                 bankCode: template.bankCode,
                                                 branchCode: template.branchCode,
-                                                cardNumber: template.cardNumber
+                                                cardNumber: template.cardNumber,
                                             };
                                     }
                                 })());
@@ -187,8 +188,8 @@ angular.module('ocb-payments')
                         });
                         $promise.resolve($scope.recipientListPromise);
                     });
-
                 }
+
             },
             tableControl: undefined
         };
