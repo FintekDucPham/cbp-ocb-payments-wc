@@ -199,7 +199,7 @@
             </eb-validation-messages>
         </div>
 
-        <rb-recipient-location>
+        <rb-recipient-location ng-if="recipient.formData.recipientType.code === 'EXTERNAL' || recipient.formData.recipientType.code === 'FAST'">
             <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.province.label'|translate}}">
                 <input name="province" hidden ng-model="recipient.formData.province" required/>
                 <rb-province-select rb-province="recipient.formData.province"
