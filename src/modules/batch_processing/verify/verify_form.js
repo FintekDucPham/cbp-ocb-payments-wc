@@ -80,6 +80,7 @@ angular.module('ocb-payments')
         };
 
         $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;
+        $scope.paymentsBatchProcessingForm.selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
 
         $scope.paymentsBatchProcessingForm.formData.tableValidContent_temp = $scope.paymentsBatchProcessingForm.tableValidContent;
         $scope.paymentsBatchProcessingForm.formData.tableValidCount_temp = $scope.paymentsBatchProcessingForm.tableValidCount;
@@ -95,7 +96,13 @@ angular.module('ocb-payments')
         params.transationType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
         params.date = getDate();
         params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
-        params.subAccount = "No SubAccount";
+
+        var selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
+        if(selectedSubAccount && selectedSubAccount.flag !== undefined && selectedSubAccount.flag === 0){
+            selectedSubAccount.accountNo = "0";
+        }
+        params.subAccount = selectedSubAccount.accountNo;
+
         params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
 
         params.fullName = [];

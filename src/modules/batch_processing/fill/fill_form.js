@@ -15,14 +15,14 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsBatchProcessingStep1Controller'
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
-                                                              validationRegexp, systemParameterService, translate, utilityService,
+                                                              validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
                                 bdTableConfig, ocbConvert, transferBatchService, $cookies, $http, FileUploader, pathService, $location) {
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 actions.proceed();
             });
-
+            console.log($scope.paymentsBatchProcessingForm.formData);
             $scope.senderSelectParams = new rbAccountSelectParams({});
             $scope.senderSelectParams.payments = true;
             $scope.senderSelectParams.showCustomNames = true;
@@ -38,14 +38,45 @@ angular.module('ocb-payments')
                 $scope.remitterAccountId = $stateParams.accountId;
             }
 
+            $scope.accountList = [];
+            $scope.subAccountList = [];
+            $scope.noSubAccount = false;
+            var noSubAccount = {
+                accountName : "No sub account",
+                accountNo : "",
+                flag : 0
+            };
+            accountsService.search().then(function(accountList){
+                if(accountList && accountList.content !== undefined){
+                    $scope.accountList = accountList.content;
+                    var k = 0;
+                    $scope.accountList.forEach(function(account) {
+                        if(account.category === 1033){
+                            $scope.subAccountList[k] = account;
+                            k++;
+                        }
+                    });
+                    if(k > 0){
+                        $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccountList[0];
+                        $scope.noSubAccount = true;
+                    }else{
+                        $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = noSubAccount;
+                    }
+                }
+                if($scope.paymentsBatchProcessingForm.selectedSubAccount){
+                    $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.paymentsBatchProcessingForm.selectedSubAccount;
+                }
+            });
+
+            $scope.onSubAccountChanged = function (selectedSubAccount) {
+                $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = selectedSubAccount;
+            };
+
             $scope.transaction_types = [];
             transferBatchService.getTransferTypes({}).then(function (typeList) {
                 if (typeList.content !== undefined) {
                     $scope.transaction_types = typeList.content;
                     $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[0];
-                }
-                if($scope.paymentsBatchProcessingForm.formData.selectedSubAccount === undefined) {
-                    $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccounts[0];
                 }
                 if($scope.paymentsBatchProcessingForm.selectedTransactionType){
                     $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.paymentsBatchProcessingForm.selectedTransactionType;
@@ -77,9 +108,6 @@ angular.module('ocb-payments')
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = selectedItem;
             };
 
-            $scope.onSubAccountChanged = function (selectedSubAccount) {
-                $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = selectedSubAccount;
-            };
             $scope.subAccounts = [
                 {
                     type: 1,
@@ -172,6 +200,16 @@ angular.module('ocb-payments')
                     $timeout(autoReloadValidTable, 500);
                 }
             }
+
+            /*function readAccountList() {
+                if($scope.accountList && $scope.accountList.length > 0){
+                    console.log("$scope.accountList");
+                    console.log($scope.accountList);
+                }else{
+                    $timeout(readAccountList, 500);
+                }
+            }
+            $timeout(readAccountList, 500);*/
 
             /*$scope.tableInvalidData = {
                 content: []

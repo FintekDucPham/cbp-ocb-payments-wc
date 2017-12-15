@@ -47,9 +47,6 @@ angular.module('ocb-payments')
             $scope.paymentsBatchProcessingFormParams.items = {};
             $scope.$broadcast('clearForm');
         };
-        $scope.testFormAction = function() {
-
-        };
         $scope.showBatchInfoSearch = function(searchBool, nextBool ) {
             // if ($scope.payment.formData.billCode !== undefined) {
 
@@ -93,7 +90,6 @@ angular.module('ocb-payments')
         $scope.numberWithCommas = function (x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-
         $scope.paymentsBatchProcessingFormParams = {
             completeState:'payments.batch_processing.fill',
             onClear: $scope.clearForm,
@@ -116,7 +112,6 @@ angular.module('ocb-payments')
                 accept: true,
                 prev_fill: false
             },
-            testFormAction: $scope.testFormAction
         }
 
         $scope.paymentsBatchProcessingFormParams.visibility.search = true;
