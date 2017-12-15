@@ -1053,6 +1053,18 @@
     "ocb.payments.auto_bill.list.details.finishDate": "Finish date",
     "ocb.payments.auto_bill.list.details.nextExecutionDate": "Next execution date",
 
+
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.placeholder":"Enter recipient type",
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.label":"Recipient type",
+    "ocb.payments.recipients.new.domestic.fill.province.placeholder":"Enter province",
+    "ocb.payments.recipients.new.domestic.fill.province.label":"Province",
+    "ocb.payments.recipients.new.domestic.fill.bank.placeholder":"Enter bank",
+    "ocb.payments.recipients.new.domestic.fill.bank.label":"Bank",
+    "ocb.payments.recipients.new.domestic.fill.branch.placeholder":"Enter branch",
+    "ocb.payments.recipients.new.domestic.fill.branch.label":"Branch",
+    "ocb.payments.recipients.list.header.recipient_type.label":"Type",
+    "ocb.payments.recipients.list.header.bank.label":"Bank",
+
     "EOF": ""
 
 
