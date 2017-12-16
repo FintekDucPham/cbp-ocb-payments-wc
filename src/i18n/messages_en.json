@@ -799,11 +799,12 @@
 
 
     "ocb.payments.pending.label": "CB Pending Transaction",
-    "ocb.payments.pending.list.filter.button.filter.label": "FILTER",
-    "ocb.payments.pending.list.filter.button.return.label": "RETURN",
-    "ocb.payments.pending.list.filter.button.approve.label": "APPROVE",
-    "ocb.payments.pending.list.filter.button.modify.label": "MODIFY",
-    "ocb.payments.pending.list.filter.button.delete.label": "DELETE",
+    "ocb.payments.pending.list.button.filter.label": "FILTER",
+    "ocb.payments.pending.list.button.return.label": "RETURN",
+    "ocb.payments.pending.list.button.approve.label": "APPROVE",
+    "ocb.payments.pending.list.button.modify.label": "MODIFY",
+    "ocb.payments.pending.list.button.delete.label": "DELETE",
+    "ocb.payments.pending.list.button.print.label": "PRINT REPORT",
     "ocb.payments.pending.list.header.init_date.label":"Initiation date",
     "ocb.payments.pending.list.header.creator.label":"Creator",
     "ocb.payments.pending.list.header.amount.label":"Amount",
@@ -817,6 +818,10 @@
     "ocb.payments.pending.status.check2": "Waiting for check 2",
     "ocb.payments.pending.status.approve": "Waiting for approve",
     "ocb.payments.pending.status.all": "All",
+    "ocb.payments.pending.empty_list.label" : "No transaction(s) found",
+    "ocb.payments.pending.verify.sender_account.label": "From account",
+    "ocb.payments.pending.verify.recipient_account.label": "To account",
+    "ocb.payments.pending.verify.title.label": "Title",
 
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",

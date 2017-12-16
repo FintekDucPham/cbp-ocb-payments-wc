@@ -783,11 +783,12 @@
     "ocb.payments.pending.amount": "Amount",
     "ocb.payments.pending.status": "Status",
     "ocb.payments.pending.approve": "Approve",
-    "ocb.payments.pending.list.filter.button.filter.label": "FILTER",
-    "ocb.payments.pending.list.filter.button.return.label": "RETURN",
-    "ocb.payments.pending.list.filter.button.approve.label": "APPROVE",
-    "ocb.payments.pending.list.filter.button.modify.label": "MODIFY",
-    "ocb.payments.pending.list.filter.button.delete.label": "DELETE",
+    "ocb.payments.pending.list.button.filter.label": "FILTER",
+    "ocb.payments.pending.list.button.return.label": "RETURN",
+    "ocb.payments.pending.list.button.approve.label": "APPROVE",
+    "ocb.payments.pending.list.button.modify.label": "MODIFY",
+    "ocb.payments.pending.list.button.delete.label": "DELETE",
+    "ocb.payments.pending.list.button.print.label": "PRINT REPORT",
     "ocb.payments.pending.status.placeHolder": "Transaction Status",
     "ocb.payments.pending.account.placeHolder": "Account",
     "ocb.payments.pending.status.return": "Return",
@@ -801,6 +802,8 @@
     "ocb.payments.pending.list.header.status.label":"Status",
     "ocb.payments.pending.list.header.approve.label":"Approve",
     "ocb.payments.pending.list.header.trans_type.label":"Transaction type",
+    "ocb.payments.pending.verify.sender_account.label": "From account",
+    "ocb.payments.pending.verify.recipient_account.label": "To account",
 
     "EOF": ""
 
