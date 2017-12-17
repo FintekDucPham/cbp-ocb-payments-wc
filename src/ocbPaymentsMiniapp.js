@@ -63,9 +63,9 @@ angular.module('ocb-payments', [
                     label: 'ocb.payments.future.saving.label',
                     icon: "ocb-icons ocb_odbiorcy",
                     action: function(item, scope, state){
-                        state.reload('payments.new.fill').then(function(){
-                            state.transitionTo("payments.new.fill",{ paymentType: 'saving', referenceId: undefined }, {reload: true}).finally(function() {
-                                state.go('payments.new.fill', {
+                        state.reload('payments.new.saving').then(function(){
+                            state.transitionTo("payments.new.saving",{ paymentType: 'saving', referenceId: undefined }, {reload: true}).finally(function() {
+                                state.go('payments.new.saving', {
                                     paymentType: 'saving',
                                     referenceId: undefined
                                 });
