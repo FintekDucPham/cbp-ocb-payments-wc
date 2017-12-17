@@ -10,7 +10,8 @@ angular.module('ocb-payments')
         });
     })
     .controller('PaymentsRecipientsListController', function ($scope, $state, bdTableConfig, $timeout, recipientsService,
-                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, $filter) {
+                                                              viewStateService, translate, rbRecipientTypes, rbRecipientOperationType, lodash, pathService, customerService, accountsService, bdFillStepInitializer, paymentsService, $filter,
+                                                              provincesService, domesticBanksService) {
         $scope.recipient = {
             item: {}
         };
@@ -64,12 +65,31 @@ angular.module('ocb-payments')
         };
 
         $scope.onRecipientRemove = function(data){
-            data.bankName = $scope.recipient.item.recipientBankName;
             var items = {};
             angular.extend(data, {
                 recipientData: data.recipientName,
                 description: data.transferTitle
             });
+            if (data.recipientType.code === 'EXTERNAL'){
+                data.items = angular.extend({
+                    province: {
+                        name: data.provinceName
+                    },
+                    bank: {
+                        bankName: data.bankName
+                    },
+                    branch: {
+                        branchName: data.branchName
+                    }
+                }, data.items);
+            }
+            if (data.recipientType.code === 'FAST' && data.bankCode) {
+                data.items = angular.extend({
+                    bank: {
+                        bankName: data.bankName
+                    }
+                }, data.items);
+            }
             if (data.recipientType.code === 'insurance'){
                 var senderAccount = $scope.getAccountByNrb(data.debitNrb);
                 items = {
@@ -120,6 +140,33 @@ angular.module('ocb-payments')
             });
         };
 
+        $scope.resolveProvinceName = function (data){
+            return provincesService.list().then(function (provincesList) {
+                provincesList.some(function (province) {
+                    if (province.code === data.province) {
+                        data.provinceName = province.name;
+                        return true;
+                    }
+                })
+            });
+        };
+
+        $scope.resolveBranchName = function (data){
+            return domesticBanksService.search({}).then(function (info) {
+                var banksList = info.content;
+                banksList.some(function (bank) {
+                    if (bank.unitNo === data.bankCode) {
+                        return bank.branches.some(function (branch) {
+                           if (branch.branchCode === data.branchCode) {
+                               data.branchName = branch.branchName;
+                               return true;
+                           }
+                        });
+                    }
+                });
+            });
+        };
+
         function prepareQueryParams($params) {
             var params = {};
             params.pageSize = $params.pageSize;
@@ -157,7 +204,6 @@ angular.module('ocb-payments')
                                 }
                                 return lodash.extend({
                                     recipientType: rbRecipientTypes[template.templateType],
-                                    recipientTypeCode:rbRecipientTypes[template.templateType].code,
                                     customerName: $filter('arrayFilter')(recipient.recipientName),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
@@ -168,7 +214,9 @@ angular.module('ocb-payments')
                                     ownerList: $scope.getAccountByNrb(template.remitterAccountNo)
                                 }, (function () {
                                     switch (template.templateType) {
-                                        case "EXTERNAL":
+                                        case 'EXTERNAL':
+                                        case 'INTERNAL':
+                                        case 'FAST':
                                             return {
                                                 transferTitle: $filter('arrayFilter')(template.title),
                                                 recipientAddress: $filter('arrayFilter')(recipient.recipientAddress),
@@ -178,6 +226,7 @@ angular.module('ocb-payments')
                                                 bankCode: template.bankCode,
                                                 branchCode: template.branchCode,
                                                 cardNumber: template.cardNumber,
+                                                paymentTarget: template.cardNumber ? 'CARD' : 'ACCOUNT'
                                             };
                                     }
                                 })());
@@ -188,8 +237,8 @@ angular.module('ocb-payments')
                         });
                         $promise.resolve($scope.recipientListPromise);
                     });
-                }
 
+                }
             },
             tableControl: undefined
         };
