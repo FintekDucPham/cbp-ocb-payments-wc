@@ -128,8 +128,7 @@ angular.module('ocb-payments')
             };
         };
         $scope.updateBillTypeID = "NO_DETAIL";
-       // tempo dev env for list Bill response
-        $scope.mockEnv = true;
+        $scope.mockEnv = false;
         function getBill(deferred, $params) {
             if ($scope.table.newSearch) {
                 $scope.table.newSearch = false;
@@ -145,30 +144,19 @@ angular.module('ocb-payments')
             // }
             if  (!$scope.mockEnv) {
                 $scope.billsPromise = transferBillService.getBill({
-                    providerId: "123456",
-                    billCode: "654321",
-                    pageNumber: $params.currentPage,
-                    pageSize: pageSize
+                    // TODO mock here
+                    providerCode: "EVNHN",
+                    billCode: "0001"
                 }).then(function (billsList) {
-                    // var totalPages =
-
-
-                    if (billsList.content !== undefined) {
+                    if (billsList !== undefined) {
                         $params.pageCount = billsList.totalPages;
-                        deferred.resolve((billsList.content.length > 0) ? billsList.content[0].billItem : []);
-                        //deferred.resolve([]);
-                        $scope.table.anyData = billsList.content[0].billItem.length > 0;
-                        $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
-                        // $scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
+                        deferred.resolve(billsList.billItem);
+                        $scope.table.anyData = billsList.billItem.length > 0;
+                        $scope.updateBillTypeID = billsList.billType;
                     }
-                    // else {
-                    //
-                    // }
-
-
                 });
-            }else {
-                    dummyBillList(deferred, $params, pageSize);
+            } else {
+                dummyBillList(deferred, $params, pageSize);
             }
         };
 
