@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsPendingListController', function ($scope,bdTableConfig,bdStepStateEvents,translate,lodash) {
+    .controller('PaymentsPendingListController', function ($scope,bdTableConfig,bdStepStateEvents,translate,lodash,$state) {
 
         //sample of accounts
         $scope.accounts = [
@@ -174,6 +174,7 @@ angular.module('ocb-payments')
         $scope.resetPage = false;
         $scope.addToList = false;
         $scope.items = {};
+        $scope.errMsg = "";
         //list data table define
         $scope.table = {
             tableConfig : new bdTableConfig({
@@ -222,8 +223,10 @@ angular.module('ocb-payments')
            //set return for list transaction in $scope.items.checkBoxList
             console.log($scope.pendingTransaction.selectedTrans);
             console.log("RETURN ACTION");
+
             $scope.table.tableControl.invalidate();
             $scope.resetPage = true;
+            $state.go('payments.pending.status');
         };
 
 
@@ -231,8 +234,13 @@ angular.module('ocb-payments')
             //delete for list transaction in $scope.items.checkBoxList
             console.log($scope.pendingTransaction.selectedTrans);
             console.log("DELETE ACTION");
+            if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
+                $scope.errMsg = translate.property("ocb.payments.pending.list.err_msg.select_0")
+                return;
+            }
             $scope.table.tableControl.invalidate();
             $scope.resetPage = true;
+            $state.go('payments.pending.status');
         };
 
 
@@ -240,10 +248,12 @@ angular.module('ocb-payments')
             //delete for list transaction in $scope.items.checkBoxList
             console.log('GO TO verify')
             if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
+                $scope.errMsg = translate.property("ocb.payments.pending.list.err_msg.select_0")
                 return;
             }
 
             if($scope.pendingTransaction.selectedTrans.length >= 2) {
+                $scope.errMsg = translate.property("ocb.payments.pending.list.err_msg.select_multi")
                 return;
             }
             console.log($scope.pendingTransaction.selectedTrans);
