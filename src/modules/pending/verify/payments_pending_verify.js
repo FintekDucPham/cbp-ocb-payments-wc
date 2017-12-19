@@ -9,12 +9,17 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentPendingVerifyController', function ($scope, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate) {
+    .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate) {
+
+        // if(_.isEmpty( $scope.pendingTransaction.selectedTrans)){
+        //     $state.go("payments.pending.fill");
+        //     //return;
+        // }
+
+        $scope.systemToken = "1234";
+        $scope.inputToken = "";
 
 
-        $scope.token = {
-            model: {}
-        };
         //list data table define
         $scope.table = {
             tableConfig : new bdTableConfig({
@@ -32,8 +37,35 @@ angular.module('ocb-payments')
 
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            //validate token
+            if( $scope.inputToken !==  $scope.systemToken){
+                //TODO error for mismatch token
+                return;
+            }
+            var url = exportService.prepareHref('/api/mass_payment/actions/realize');
+            console.log(url);
+            //TODO make approve transaction here
+            $http({
+                method: 'POST',
+                url:  url,
+                data : { "transferIDs": listTransID}
+            }).then(function successCallback(response) {
+                if(response.data.content == "EXECUTED"){
+                    console.log(response);
+                    $scope.table.tableControl.invalidate();
+                    $scope.resetPage = true;
+                    $state.go('payments.pending.status');
+                } else {
+                    $scope.serviceError = true;
+                }
+            }, function errorCallback(response) {
+                console.log(response);
+                $scope.serviceError = true;
+            });
             console.log("ON FORWARD")
             actions.proceed();
+            //reset after proceed OK
+            $scope.pendingTransaction.selectedTrans = []
         });
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
@@ -41,5 +73,8 @@ angular.module('ocb-payments')
             actions.proceed();
         });
 
-
+        $scope.pendingTransaction.cancelApprove = function () {
+            //reset data after cancel
+            $scope.pendingTransaction.selectedTrans = []
+        }
     });

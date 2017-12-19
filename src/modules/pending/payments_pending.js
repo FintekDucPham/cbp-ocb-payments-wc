@@ -1,24 +1,4 @@
 angular.module('ocb-payments')
-    .constant('rbRecipientOperationType', {
-        "NEW": {
-            code: 'NEW',
-            state: 'new'
-        },
-        "EDIT": {
-            code: 'EDIT',
-            state: 'edit'
-        },
-        "REMOVE": {
-            code: 'REMOVE',
-            state: 'remove'
-        }
-    })
-    .constant('rbRecipientTypes', {
-        "DOMESTIC": {
-            code: 'DOMESTIC',
-            state: 'domestic'
-        }
-    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.pending', {
             url: "/pending",
@@ -59,6 +39,9 @@ angular.module('ocb-payments')
     $scope.selectedTrans = function () {
         return $scope.pendingTransaction.selectedTrans();
     };
+    $scope.cancelApprove = function () {
+        $scope.pendingTransaction.cancelApprove();
+    };
     $scope.selectedTrans = [];
     $scope.paymentsPendingTransactionFormParams = {
         completeState:'payments.pending.fill',
@@ -70,6 +53,7 @@ angular.module('ocb-payments')
         modifyTrans: $scope.modifyTrans,
         deleteTrans: $scope.deleteTrans,
         selectedTrans: $scope.selectedTrans,
+        cancelApprove: $scope.cancelApprove,
         labels:{
             return:"ocb.payments.pending.list.button.return.label",
             approve:'ocb.payments.pending.list.button.approve.label',

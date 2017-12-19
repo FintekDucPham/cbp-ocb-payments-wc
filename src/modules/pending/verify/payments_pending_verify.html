@@ -10,40 +10,37 @@
                                          'title': '##ocb.payments.pending.list.header.trans_type.label', 'data' : 'trans_type'
                                     },
                                     'second' : {
-                                        'title': '##ocb.payments.pending.verify.title.label', 'data' : 'detail' },
+                                        'title': '##ocb.payments.pending.verify.header.title.label', 'data' : 'detail' },
                                     'third' : {
                                         'title': '##ocb.payments.pending.list.header.amount.label', 'data' : 'amount'
                                      },
                                      'fourth' : {
-                                        'title': '##ocb.payments.pending.list.header.status.label','data' : 'status'
+                                        'title': '##ocb.payments.pending.verify.header.remit.label','data' : 'status'
                                      }
                                   }">
 
-            <bd-details-section bd-table-row-details>
 
-                <div ng-include="::resolveTemplateType($data.recipientType)"></div>
-                <bd-details-action-section>
-
-                    <div class="bd-grid">
-                        <div class="bd-grid__row">
-                        </div>
-                    </div>
-
-                </bd-details-action-section>
-
-            </bd-details-section>
-            <eb-validation-messages eb-name="checkBoxState">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.new.bill.fill.amount.EMPTY_AMOUNT'|translate}}
-                </div>
-            </eb-validation-messages>
-            <div class="rb-authorization" >
-                <bd-item-property class="bd-item-property--multirow" label="{{ token.model.currentToken.label }}">
-                    <rb-token-authorization rb-operation-type="customer_modify_customer_personal_data" rb-model="token.model"></rb-token-authorization>
-                </bd-item-property>
-            </div>
 
         </bd-table>
 
+
     </form>
+</div>
+<br>
+<br>
+<div class="section-wrapper">
+    <div class="row">
+        <div class="col-xs-4 "><label for="token" style="font-weight: bold">{{::'ocb.payments.pending.verify.token_input.header.label' | translate}}</label></div>
+    </div>
+    <div class="row">
+        <br>
+        <div class="col-xs-1 lb" style="padding-top: 10px;width: 155px">{{::'ocb.payments.pending.verify.token_input.label' | translate}}</div><div class="col-xs-2"><input id="token" ng-model="inputToken" type="text" placeholder="{{::'ocb.payments.pending.verify.token_input.placeholder' | translate}}"></div>
+    </div>
+</div>
+<div>
+    <div class="rb-authorization" ng-show="token.model.$tokenRequired">
+        <bd-item-property class="bd-item-property--multirow" label="{{ token.model.currentToken.label }}">
+            <rb-token-authorization rb-operation-type="customer_modify_customer_personal_data" rb-model="token.model"></rb-token-authorization>
+        </bd-item-property>
+    </div>
 </div>
