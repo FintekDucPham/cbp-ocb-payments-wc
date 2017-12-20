@@ -17,7 +17,7 @@ angular.module('ocb-payments')
         , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig, transferBatchService) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             transferBatchService.createBatchTransfer(params).then(function(data) {
-                temporaryResponse(data.content);
+                resultResponse(data.content.referenceId);
                 actions.proceed();
             });
         });
@@ -92,9 +92,10 @@ angular.module('ocb-payments')
         $scope.paymentsBatchProcessingForm.formData.totalnumberoflines_temp = $scope.paymentsBatchProcessingForm.totalnumberoflines;
 
         var params = {};
-        params.account = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
-        params.transationType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
-        params.date = getDate();
+        params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
+        params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
+        params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
+        params.createDate = getDate();
         params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
 
         var selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
@@ -103,7 +104,8 @@ angular.module('ocb-payments')
         }
         params.subAccount = selectedSubAccount.accountNo;
 
-        params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
+        //params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
+        params.currency = "PLN";
 
         params.fullName = [];
         params.accountNo = [];
@@ -136,6 +138,15 @@ angular.module('ocb-payments')
                     $scope.paymentsBatchProcessingForm.result.type = "success" ;
                 };
             };
+        };
+        var resultResponse = function(referenceId){
+            if(referenceId !== null && referenceId !== undefined && referenceId !== 'null'){
+                $scope.paymentsBatchProcessingForm.result.code = "0";
+                $scope.paymentsBatchProcessingForm.result.type = "success" ;
+            }else{
+                $scope.paymentsBatchProcessingForm.result.code = "99";
+                $scope.paymentsBatchProcessingForm.result.type = "error" ;
+            }
         };
     });
 
