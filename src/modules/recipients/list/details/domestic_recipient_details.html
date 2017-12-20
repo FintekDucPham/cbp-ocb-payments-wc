@@ -24,7 +24,7 @@
     </bd-item-property>
 
     <bd-item-property ng-if="$data.province" class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.province.label'|translate}}">
-        <eb-preloader ng-if="!$data.provinceName" eb-promise="resolveProvinceName($data)" class="eb-inline-preloader"></eb-preloader>
+        <eb-preloader ng-if="!$data.provinceName" ng-init="promise=resolveProvinceName($data)" eb-promise="::promise" class="eb-inline-preloader"></eb-preloader>
         {{$data.provinceName}}
     </bd-item-property>
 
@@ -33,7 +33,7 @@
     </bd-item-property>
 
     <bd-item-property ng-if="$data.branchCode" class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.branch.label'|translate}}">
-        <eb-preloader ng-if="!$data.branchName" eb-promise="resolveBranchName($data)" class="eb-inline-preloader"></eb-preloader>
+        <eb-preloader ng-if="!$data.branchName" ng-init="promise=resolveBranchName($data)" eb-promise="::promise" class="eb-inline-preloader"></eb-preloader>
         {{ $data.branchName }}
     </bd-item-property>
 
