@@ -16,12 +16,14 @@ angular.module('ocb-payments')
             }
         });
         //sample of accounts
+        //todo
         $scope.accounts = [
             "All",
             "Account1",
             "Account2",
             "Account3"
         ];
+        //todo
         $scope.role_for_user = {
             "inputter" : ["modify","delete"],
             "check1" :["return","approve"],
@@ -60,9 +62,10 @@ angular.module('ocb-payments')
             CHECKER_1: "CHECKER_1",
             CHECKER_2: "CHECKER_2"
         };
-        console.log($scope.user_type)
         //check empty selection
         $scope.isEmpty = true;
+
+        //TODO load data from API
         $scope.listPendingTrans = {
             content: [
                 {   "id":1,
@@ -236,8 +239,6 @@ angular.module('ocb-payments')
 
         $scope.pendingTransaction.returnTrans = function(){
            //set return for list transaction in $scope.items.checkBoxList
-            console.log($scope.pendingTransaction.selectedTrans);
-            console.log("RETURN ACTION");
             $scope.checkBoxState = false;
             $scope.serviceError = false;
             if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
@@ -245,16 +246,13 @@ angular.module('ocb-payments')
                 return;
             }
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
-            console.log(listTransID);
             var url = exportService.prepareHref('/api/payments/actions/return');
-            console.log(url);
             $http({
                 method: 'POST',
                 url:  url,
                 data : { "transferIDs": listTransID}
             }).then(function successCallback(response) {
                 if(response.data.content == "EXECUTED"){
-                    console.log(response);
                     // $scope.table.tableControl.invalidate();
                     $scope.pendingTransaction.selectedTrans = []
                     $scope.resetPage = true;
@@ -263,7 +261,6 @@ angular.module('ocb-payments')
                     $scope.serviceError = true;
                 }
             }, function errorCallback(response) {
-                console.log(response);
                 $scope.serviceError = true;
             });
 
@@ -274,9 +271,6 @@ angular.module('ocb-payments')
             $scope.checkBoxState = false;
 
             //delete for list transaction in $scope.items.checkBoxList
-            console.log($scope.pendingTransaction.selectedTrans);
-            console.log("DELETE ACTION");
-
 
             if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
                 $scope.checkBoxState = true;
@@ -287,13 +281,12 @@ angular.module('ocb-payments')
             }
 
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
-            console.log(listTransID);
             var url = exportService.prepareHref('/api/payments/actions/cancel_corporate_transfer');
-            console.log(url);
             $http({
                 method: 'POST',
                 url:  url,
                 data : {
+                    //TODO
                     "remitterId" : "1314175",
                     "remitterAccountId" : "0060100006103007",
                     "description" :["cancel transfer to A"],
@@ -304,7 +297,7 @@ angular.module('ocb-payments')
                 }
             }).then(function successCallback(response) {
                 if(response.data.content == "EXECUTED"){
-                    console.log(response);
+
                     // $scope.table.tableControl.invalidate();
                     $scope.resetPage = true;
                     $scope.pendingTransaction.selectedTrans = []
@@ -313,7 +306,7 @@ angular.module('ocb-payments')
                     $scope.serviceError = true;
                 }
             }, function errorCallback(response) {
-                console.log(response);
+
                 $scope.serviceError = true;
             });
 
@@ -324,7 +317,7 @@ angular.module('ocb-payments')
 
         $scope.pendingTransaction.modifyTrans = function(){
             //delete for list transaction in $scope.items.checkBoxList
-            console.log('GO TO verify')
+
             $scope.checkBoxState = false;
             $scope.checkBoxState2 = false;
 
@@ -339,10 +332,9 @@ angular.module('ocb-payments')
                 $scope.checkBoxState2 = true;
                 return;
             }
-            console.log($scope.pendingTransaction.selectedTrans);
-            console.log("Modify ACTION");
             var transaction = $scope.pendingTransaction.selectedTrans[0];
             switch (transaction.trans_type) {
+                //todo
                 case "Automactic Pay Bill":
                     $state.go("payments.new_bill.fill", transaction);
                     break;
@@ -383,7 +375,6 @@ angular.module('ocb-payments')
                     $scope.targetList.content = $scope.listPendingTrans.content;
                 }
             }
-            console.log($scope.targetList.content);
             $scope.resetPage = true;
         }
 

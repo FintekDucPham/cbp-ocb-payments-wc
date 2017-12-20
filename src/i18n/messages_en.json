@@ -798,7 +798,7 @@
     "ocb.payments.batch_processing.dataverify.date": "Date",
 
 
-    "ocb.payments.pending.label": "CB Pending Transaction",
+    "ocb.payments.pending.label": "CB Pending Transactions",
     "ocb.payments.pending.list.button.filter.label": "FILTER",
     "ocb.payments.pending.list.button.return.label": "RETURN",
     "ocb.payments.pending.list.button.approve.label": "APPROVE",
@@ -830,6 +830,7 @@
     "ocb.payments.pending.verify.token_input.header.label": "Enter authentication code here(you received from sms or hard token)",
     "ocb.payments.pending.verify.token_input.label": "Authentication code",
     "ocb.payments.pending.verify.token_input.placeholder": "Enter authentication code here",
+
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
     "ocb.ng_dropdown_multiselect.option.selectionCount":"selected",

@@ -43,7 +43,7 @@ angular.module('ocb-payments')
         $scope.pendingTransaction.clearData();
     };
     // $scope.selectedTrans = [];
-
+    //todo get user type
     $scope.getUserType = function () {
         return "INPUTTER";
     };
