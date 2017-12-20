@@ -190,7 +190,7 @@ angular.module('ocb-payments')
                 //     console.log("+++ex:" + errorReason.message);
                 // });
                 // };
-                //actions.proceed();
+                actions.proceed();
             }
         });
 
