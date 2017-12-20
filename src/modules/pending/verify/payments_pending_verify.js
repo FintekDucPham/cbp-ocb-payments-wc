@@ -19,7 +19,9 @@ angular.module('ocb-payments')
         $scope.systemToken = "1234";
         $scope.inputToken = "";
 
-
+        $scope.token = {
+            model :{}
+        }
         //list data table define
         $scope.table = {
             tableConfig : new bdTableConfig({
@@ -37,35 +39,39 @@ angular.module('ocb-payments')
 
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            //validate token
-            if( $scope.inputToken !==  $scope.systemToken){
-                //TODO error for mismatch token
-                return;
-            }
+
+            //TODO handling token here
+            //........
+
+            //after token valid, send request to approve api
+            var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
             var url = exportService.prepareHref('/api/mass_payment/actions/realize');
             console.log(url);
-            //TODO make approve transaction here
             $http({
                 method: 'POST',
                 url:  url,
-                data : { "transferIDs": listTransID}
+                data : {
+                    transferId : "NIB-TRA065003121217ab4749d234afa3ff",
+                    credentials : "78962788"
+                }
             }).then(function successCallback(response) {
+                console.log("SUCCESS")
                 if(response.data.content == "EXECUTED"){
                     console.log(response);
-                    $scope.table.tableControl.invalidate();
-                    $scope.resetPage = true;
                     $state.go('payments.pending.status');
                 } else {
                     $scope.serviceError = true;
                 }
+                console.log("ON FORWARD")
+                actions.proceed();
+                //reset after proceed OK
+                $scope.pendingTransaction.selectedTrans = []
+
             }, function errorCallback(response) {
+                console.log("FAILED")
                 console.log(response);
                 $scope.serviceError = true;
             });
-            console.log("ON FORWARD")
-            actions.proceed();
-            //reset after proceed OK
-            $scope.pendingTransaction.selectedTrans = []
         });
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
@@ -73,8 +79,9 @@ angular.module('ocb-payments')
             actions.proceed();
         });
 
-        $scope.pendingTransaction.cancelApprove = function () {
+        $scope.pendingTransaction.clearData = function () {
             //reset data after cancel
             $scope.pendingTransaction.selectedTrans = []
+            $state.go('payments.pending.fill',{},{reload:true});
         }
     });

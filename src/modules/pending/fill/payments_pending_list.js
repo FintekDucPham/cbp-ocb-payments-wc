@@ -54,6 +54,13 @@ angular.module('ocb-payments')
         }
 
         $scope.listSelectedTrans = {};
+
+        $scope.user_type_arr = {
+            INPUTTER: "INPUTTER",
+            CHECKER_1: "CHECKER_1",
+            CHECKER_2: "CHECKER_2"
+        };
+        console.log($scope.user_type)
         //check empty selection
         $scope.isEmpty = true;
         $scope.listPendingTrans = {
@@ -182,6 +189,7 @@ angular.module('ocb-payments')
         $scope.checkBoxState = false;
         $scope.checkBoxState2 = false;
         $scope.serviceError = false;
+
         $scope.table = {
             tableConfig : new bdTableConfig({
                 placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
@@ -225,6 +233,7 @@ angular.module('ocb-payments')
             tableControl: undefined
         };
 
+
         $scope.pendingTransaction.returnTrans = function(){
            //set return for list transaction in $scope.items.checkBoxList
             console.log($scope.pendingTransaction.selectedTrans);
@@ -246,7 +255,8 @@ angular.module('ocb-payments')
             }).then(function successCallback(response) {
                 if(response.data.content == "EXECUTED"){
                     console.log(response);
-                    $scope.table.tableControl.invalidate();
+                    // $scope.table.tableControl.invalidate();
+                    $scope.pendingTransaction.selectedTrans = []
                     $scope.resetPage = true;
                     $state.go('payments.pending.status');
                 } else {
@@ -275,9 +285,40 @@ angular.module('ocb-payments')
             if (!confirm(translate.property("ocb.payments.pending.list.confirm_msg"))) {
                 return;
             }
+
+            var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
+            console.log(listTransID);
+            var url = exportService.prepareHref('/api/payments/actions/cancel_corporate_transfer');
+            console.log(url);
+            $http({
+                method: 'POST',
+                url:  url,
+                data : {
+                    "remitterId" : "1314175",
+                    "remitterAccountId" : "0060100006103007",
+                    "description" :["cancel transfer to A"],
+                    "realizationDate" : "2017-12-25",
+                    "amount" : "10",
+                    "currency" : "PLN",
+                    "referenceId" : "NIB-TRA065003121217ab4749d234afa3ff@waiting"
+                }
+            }).then(function successCallback(response) {
+                if(response.data.content == "EXECUTED"){
+                    console.log(response);
+                    // $scope.table.tableControl.invalidate();
+                    $scope.resetPage = true;
+                    $scope.pendingTransaction.selectedTrans = []
+                    $state.go('payments.pending.status');
+                } else {
+                    $scope.serviceError = true;
+                }
+            }, function errorCallback(response) {
+                console.log(response);
+                $scope.serviceError = true;
+            });
+
             $scope.table.tableControl.invalidate();
             $scope.resetPage = true;
-            $state.go('payments.pending.status');
         };
 
 
@@ -303,7 +344,7 @@ angular.module('ocb-payments')
             var transaction = $scope.pendingTransaction.selectedTrans[0];
             switch (transaction.trans_type) {
                 case "Automactic Pay Bill":
-                    $state.go("payments.bill_history.list", transaction);
+                    $state.go("payments.new_bill.fill", transaction);
                     break;
                 case "External Funds Transfer":
                 case "Internal Funds Transfer":

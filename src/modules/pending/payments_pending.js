@@ -26,9 +26,9 @@ angular.module('ocb-payments')
     };
 
 
-    $scope.approveTrans = function(){
-        $scope.pendingTransaction.approveTrans();
-    };
+    // $scope.approveTrans = function(){
+    //     $scope.pendingTransaction.approveTrans();
+    // };
     $scope.modifyTrans = function(){
         $scope.pendingTransaction.modifyTrans();
     };
@@ -39,10 +39,14 @@ angular.module('ocb-payments')
     $scope.selectedTrans = function () {
         return $scope.pendingTransaction.selectedTrans();
     };
-    $scope.cancelApprove = function () {
-        $scope.pendingTransaction.cancelApprove();
+    $scope.clearData = function () {
+        $scope.pendingTransaction.clearData();
     };
-    $scope.selectedTrans = [];
+    // $scope.selectedTrans = [];
+
+    $scope.getUserType = function () {
+        return "INPUTTER";
+    };
     $scope.paymentsPendingTransactionFormParams = {
         completeState:'payments.pending.fill',
         onClear: $scope.clearForm,
@@ -53,7 +57,8 @@ angular.module('ocb-payments')
         modifyTrans: $scope.modifyTrans,
         deleteTrans: $scope.deleteTrans,
         selectedTrans: $scope.selectedTrans,
-        cancelApprove: $scope.cancelApprove,
+        clearData: $scope.clearData,
+        getUserType: $scope.getUserType,
         labels:{
             return:"ocb.payments.pending.list.button.return.label",
             approve:'ocb.payments.pending.list.button.approve.label',

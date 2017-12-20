@@ -15,6 +15,11 @@ angular.module('ocb-payments')
             formName: 'pendingForm',
             dataObject: $scope.payment
         });
+        // $scope.pendingTransaction.clearData = function () {
+        //     //reset data after cancel
+        //     $scope.pendingTransaction.selectedTrans = []
+        //     $state.go('payments.pending.fill',{},{reload:true});
+        // }
         $scope.paymentsPendingTransactionFormParams.selectedTrans = [];
 
     });
