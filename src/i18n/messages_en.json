@@ -194,7 +194,7 @@
     "ocb.payments.new.bill.fill.provider": "Provider",
     "ocb.payments.new.bill.fill.billCode": "Bill code",
     "ocb.payments.new.bill.fill.serviceList.link_url": "https://www.ocb.com.vn/Upload/OCB-Online/DANH%20SACH%20DICH%20VU%20THANH%20TOAN%20HOA%20DON.pdf",
-    "ocb.payments.new.bill.fill.serviceList.link_name": "Services and Provider Listing",
+    "ocb.payments.new.bill.fill.serviceList.link_name": "Service & providers listing",
     "ocb.payments.new.bill.fill.placeHolderTable": "No bill found",
     "ocb.payments.new.bill.fill.checkbox.label": "Add to Beneficiary",
     "ocb.payments.new.bill.fill.recipient_account": "To account",
@@ -381,6 +381,8 @@
     "ocb.payments.bill.history.header.address.label": "Address",
     "ocb.payments.bill.history.header.billID.label": "Bill Code",
     "ocb.payments.bill.history.header.qty.label": "Number of months",
+    "ocb.payments.bill.history.period.label": "Period",
+    "ocb.payments.bill.history.period.to.label": "-",
 
     "ocb.payments.rejected.select.filter.button.action": "Search",
     "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
@@ -730,7 +732,7 @@
     "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "The transfers were submitted for implementation in line with the selected transaction manner.",
     "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Some transfers may be made in the next business day.",
     "ocb.payments.basket.list.details.addedToBasketDate": "Added to basket date",
-    "ocb.payments.basket.list.details.historyAction": "History action",
+    "ocb.payments.basket.list.details.historyAction": "Bills History",
     "ocb.payments.basket.multistepform.buttons.delete": "Delete",
     "ocb.payments.basket.multistepform.buttons.cancel": "Cancel",
     "ocb.payments.basket.modify.verify.MICRO": "The transfer will be modified in your Payment basket and it will be made in line with the scheduled operation date, but no sooner than on the date of its acceptance in the payment basket. Transfer modification deletes all prior acceptances.",
@@ -804,5 +806,13 @@
     "ocb.ng_dropdown_multiselect.option.buttonDefaultText":"All",
     "ocb.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
     "ocb.ng_dropdown_multiselect.option.waiting":"Waiting",
-    "EOF": ""
+    "EOF": "",
+
+    "ocb.payments.pending.label": "CB Pending Transaction",
+    "ocb.payments.pending.list.header.transactionInitiationDate.label" : "Transaction initiation date",
+    "ocb.payments.pending.list.header.creator.label" : "Creator",
+    "ocb.payments.pending.list.header.amount.label" : "Amount",
+    "ocb.payments.pending.list.header.status.label" : "Status",
+    "ocb.payments.pending.list.header.approve.label" : "Approve",
+    "ocb.payments.pending.list.header.transactionType.label" : "Transaction type"
 }
