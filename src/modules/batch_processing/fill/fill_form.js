@@ -22,7 +22,6 @@ angular.module('ocb-payments')
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 actions.proceed();
             });
-            console.log($scope.paymentsBatchProcessingForm.formData);
             $scope.senderSelectParams = new rbAccountSelectParams({});
             $scope.senderSelectParams.payments = true;
             $scope.senderSelectParams.showCustomNames = true;
