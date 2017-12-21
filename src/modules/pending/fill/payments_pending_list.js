@@ -109,7 +109,14 @@ angular.module('ocb-payments')
                         $scope.targetList.content = _.filter($scope.listPendingTrans.content,function(o){
                            // o.operationStatus = "WA";
                             if($scope.statuses.indexOf(o.operationStatus) !== -1) {
-                                return o;
+                                if($scope.account !== "" ) {
+                                    if($scope.account === o.accountNo) {
+                                        return o;
+                                    }
+                                } else {
+                                    return o;
+                                }
+
                             }
                         });
                         $scope.tmptargetList = lodash.clone($scope.targetList,true);
@@ -278,14 +285,14 @@ angular.module('ocb-payments')
         //get data by status and account condition
         function getData(status,account) {
             if(status != "all" && account != "All") {
-                $scope.targetList.content = lodash.filter($scope.listPendingTrans.content, {'operationStatus': status,'accountNo':account});
+                $scope.targetList.content = lodash.filter($scope.targetList.content, {'operationStatus': status,'accountNo':account});
             } else {
                 if(status != "all" && account == "All"){
-                    $scope.targetList.content = lodash.filter($scope.listPendingTrans.content, {'operationStatus': status});
+                    $scope.targetList.content = lodash.filter($scope.targetList.content, {'operationStatus': status});
                 } else if(account != "All" && status == "all" ) {
-                    $scope.targetList.content = lodash.filter($scope.listPendingTrans.content, {'accountNo': account});
+                    $scope.targetList.content = lodash.filter($scope.targetList.content, {'accountNo': account});
                 } else {
-                    $scope.targetList.content = $scope.listPendingTrans.content;
+                    $scope.targetList.content = $scope.targetList.content;
                 }
             }
             $scope.resetPage = true;

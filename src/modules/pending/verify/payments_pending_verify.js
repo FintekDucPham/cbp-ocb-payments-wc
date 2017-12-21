@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate,$http,exportService) {
+    .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate,$http,exportService,pendingTransactionService) {
 
         // if(_.isEmpty( $scope.pendingTransaction.selectedTrans)){
         //     $state.go("payments.pending.fill");
@@ -44,30 +44,30 @@ angular.module('ocb-payments')
             $scope.token = null;
             //after token valid, send request to approve api
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
-            var url = exportService.prepareHref('/api/mass_payment/actions/realize');
-            $http({
-                method: 'POST',
-                url:  url,
-                data : {
+            // var url = exportService.prepareHref('/api/mass_payment/actions/realize');
+            // $http({
+            //     method: 'POST',
+            //     url:  url,
+            //     data : {
+            //
+            //         transferId : listTransID,
+            //         credentials : $scope.token
+            //     }
+            // }).then(function successCallback(response) {
+            //     if(response.data.content == "EXECUTED"){
+            //         $state.go('payments.pending.status');
+            //     } else {
+            //         $scope.serviceError = true;
+            //     }
+            //     actions.proceed();
+            //     //reset after proceed OK
+            //     $scope.pendingTransaction.selectedTrans = []
+            //
+            // }, function errorCallback(response) {
+            //     $scope.serviceError = true;
+            // });
 
-                    transferId : listTransID,
-                    credentials : $scope.token
-                }
-            }).then(function successCallback(response) {
-                if(response.data.content == "EXECUTED"){
-                    $state.go('payments.pending.status');
-                } else {
-                    $scope.serviceError = true;
-                }
-                actions.proceed();
-                //reset after proceed OK
-                $scope.pendingTransaction.selectedTrans = []
-
-            }, function errorCallback(response) {
-                $scope.serviceError = true;
-            });
-
-            var approveResult = pendingTransactionService.approveResult(listTransID).then(function (d) {
+            var approveResult = pendingTransactionService.approveTransaction(listTransID,$scope.token).then(function (d) {
                 if(d !== undefined && d.content == "OK"){
 
                     // $scope.table.tableControl.invalidate();
