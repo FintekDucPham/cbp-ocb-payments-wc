@@ -16,21 +16,33 @@
                             <ui-select-choices repeat="st in statuses">
                                 <div ng-bind-html="'ocb.payments.pending.status.' +st |translate">  </div>
                             </ui-select-choices>
+
                         </ui-select>
                      </div>
 
                     <div class="col-md-2">
-                        <ui-select ng-model="account"
-                                   theme="bootstrap"
-                                   on-select="onAccountChange($select.selected)"
-                                   reset-search-input="false">
-                            <ui-select-match placeholder="{{:: 'ocb.payments.pending.account.placeHolder' | translate }}">
-                                {{ $select.selected}}
-                            </ui-select-match>
-                            <ui-select-choices repeat="ac in accounts">
-                                {{ ac }}
-                            </ui-select-choices>
-                        </ui-select>
+                        <!--<ui-select ng-model="account"-->
+                                   <!--theme="bootstrap"-->
+                                   <!--on-select="onAccountChange($select.selected)"-->
+                                   <!--reset-search-input="false">-->
+                            <!--<ui-select-match placeholder="{{:: 'ocb.payments.pending.account.placeHolder' | translate }}">-->
+                                <!--{{ $select.selected}}-->
+                            <!--</ui-select-match>-->
+                            <!--<ui-select-choices repeat="ac in accounts">-->
+                                <!--{{ ac }}-->
+                            <!--</ui-select-choices>-->
+                        <!--</ui-select>-->
+                        <rb-account-select rb-account="payment.items.senderAccount"
+                                           rb-account-no="remitterAccountId"
+                                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                           rb-product-list-name="TRANSFER_OWN_FROM_LIST"
+                                           rb-account-select-params="senderSelectParams"
+                                           rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                                           rb-on-account-select="onAccountChange($accountNo)"
+                                           rb-remote="remote.model_from"
+                                           rb-init-select-value = "{{account || selectNrb}}"
+                                           rb-only-pending-transaction="pendingTransaction"
+                                           rb-update-disabled-state="billInfoSearch"></rb-account-select>
                     </div>
 
                     <div class="col-md-1" style="padding-top: 5px;">
@@ -50,21 +62,18 @@
                   bd-table-data="table.tableData"
                   bd-table-meta="{  'checkbox' : { 'title' :'','data' : ''},
                                     'first' : {
-                                         'title': '##ocb.payments.pending.list.header.init_date.label', 'data' : 'init_date'
+                                         'title': '##ocb.payments.pending.list.header.init_date.label', 'data' : 'registrationDate'
                                     },
                                     'second' : {
-                                        'title': '##ocb.payments.pending.list.header.creator.label', 'data' : 'creator' },
+                                        'title': '##ocb.payments.pending.list.header.creator.label', 'data' : 'senderName' },
                                     'third' : {
                                         'title': '##ocb.payments.pending.list.header.amount.label', 'data' : 'amount'
                                      },
                                      'fourth' : {
-                                        'title': '##ocb.payments.pending.list.header.status.label','data' : 'status'
+                                        'title': '##ocb.payments.pending.list.header.status.label','data' : 'operationStatus'
                                      },
                                      'fifth' : {
-                                        'title': '##ocb.payments.pending.list.header.approve.label', 'data' : 'approve'
-                                     },
-                                     'sixth' : {
-                                        'title': '##ocb.payments.pending.list.header.trans_type.label', 'data' : 'trans_type'
+                                        'title': '##ocb.payments.pending.list.header.trans_type.label', 'data' : 'transactionTypeDesc'
                                      }
                                   }">
 
@@ -85,5 +94,8 @@
 </div>
 <div ng-show="serviceError" class="validation-message animate-on">
     <div class="messages">{{::'ocb.payments.pending.list.err_msg.service_error' | translate}}</div>
+</div>
+<div ng-show="invalidRT" class="validation-message animate-on">
+    <div class="messages">{{::'ocb.payments.pending.list.err_msg.invalid_rt' | translate}}</div>
 </div>
 </form>

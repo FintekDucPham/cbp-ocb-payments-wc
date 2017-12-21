@@ -8,7 +8,7 @@ angular.module('ocb-payments')
                 analyticsTitle: null
             }
         });
-    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer) {
+    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,pendingTransactionService) {
 
         bdMainStepInitializer($scope, 'pendingTransaction', {
             formName: 'pendingTransactionForm',
@@ -44,8 +44,103 @@ angular.module('ocb-payments')
     };
     // $scope.selectedTrans = [];
     //todo get user type
+    $scope.userRole = "INPUTTER";
+
     $scope.getUserType = function () {
-        return "INPUTTER";
+        var userActions = {};
+        switch ($scope.userRole) {
+
+            case "INPUTTER":
+                userActions = {
+                        MODIFY: true,
+                        RETURN: false,
+                        APPROVE: false,
+                        DELETE: true
+                    }
+                break;
+            case "CHECKER_1":
+                userActions = {
+                    MODIFY: false,
+                    RETURN: true,
+                    APPROVE: true,
+                    DELETE: false
+                }
+                break;
+            case "CHECKER_2":
+                userActions = {
+                    MODIFY: false,
+                    RETURN: true,
+                    APPROVE: true,
+                    DELETE: false
+                }
+                break;
+            case "MASTER":
+                userActions = {
+                    MODIFY: false,
+                    RETURN: true,
+                    APPROVE: true,
+                    DELETE: false
+                }
+                break;
+            default:
+                userActions = {
+                    MODIFY: true,
+                    RETURN: true,
+                    APPROVE: true,
+                    DELETE: true
+                }
+        }
+        return userActions;
+    };
+    $scope.getStatusByRole = function () {
+
+
+        var statusByUser= {};
+        switch ($scope.userRole) {
+
+            case "INPUTTER":
+                statusByUser = {
+                    C1:false,
+                    C2:false,
+                    RT:true,
+                    WA:false
+                }
+                break;
+            case "CHECKER_1":
+                statusByUser = {
+                    C1:true,
+                    C2:false,
+                    RT:false,
+                    WA:false
+                }
+                break;
+            case "CHECKER_2":
+                statusByUser = {
+                    C1:false,
+                    C2:true,
+                    RT:false,
+                    WA:false
+                }
+                break;
+            case "MASTER":
+                statusByUser = {
+                    C1:false,
+                    C2:false,
+                    RT:true,
+                    WA:true
+                }
+                break;
+            default:
+                statusByUser = {
+                    C1:true,
+                    C2:true,
+                    RT:true,
+                    WA:true
+                }
+        }
+        return statusByUser;
+
+
     };
     $scope.paymentsPendingTransactionFormParams = {
         completeState:'payments.pending.fill',
@@ -59,7 +154,9 @@ angular.module('ocb-payments')
         selectedTrans: $scope.selectedTrans,
         clearData: $scope.clearData,
         getUserType: $scope.getUserType,
+        getStatusByRole: $scope.getStatusByRole,
         labels:{
+
             return:"ocb.payments.pending.list.button.return.label",
             approve:'ocb.payments.pending.list.button.approve.label',
             modify:"ocb.payments.pending.list.button.modify.label",

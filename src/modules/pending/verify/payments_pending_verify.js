@@ -41,7 +41,7 @@ angular.module('ocb-payments')
 
             //TODO handling token here
             //........
-
+            $scope.token = null;
             //after token valid, send request to approve api
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
             var url = exportService.prepareHref('/api/mass_payment/actions/realize');
@@ -49,9 +49,9 @@ angular.module('ocb-payments')
                 method: 'POST',
                 url:  url,
                 data : {
-                    //TODO
-                    transferId : "NIB-TRA065003121217ab4749d234afa3ff",
-                    credentials : "78962788"
+
+                    transferId : listTransID,
+                    credentials : $scope.token
                 }
             }).then(function successCallback(response) {
                 if(response.data.content == "EXECUTED"){
@@ -65,6 +65,18 @@ angular.module('ocb-payments')
 
             }, function errorCallback(response) {
                 $scope.serviceError = true;
+            });
+
+            var approveResult = pendingTransactionService.approveResult(listTransID).then(function (d) {
+                if(d !== undefined && d.content == "OK"){
+
+                    // $scope.table.tableControl.invalidate();
+                    $scope.resetPage = true;
+                    $scope.pendingTransaction.selectedTrans = []
+                    $state.go('payments.pending.status');
+                } else {
+                    $scope.serviceError = true;
+                }
             });
         });
 
