@@ -27,17 +27,6 @@ angular.module('ocb-payments')
             //console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
         });
 
-        $scope.getCurrentDate = function(isEn) {
-            var result = "";
-            var date = new Date();
-            if(isEn ===true) {
-                result =  $filter('date')(date, "MM/dd/yyyy");
-            }else {
-                result =  $filter('date')(date, "dd/MM/yyyy");
-            }
-            return result;
-        }
-
         $scope.tableTestData = {
             content: $scope.paymentsBatchProcessingForm.formData.tableValidContent,
             totalElements : $scope.paymentsBatchProcessingForm.formData.tableValidCount,
@@ -94,7 +83,7 @@ angular.module('ocb-payments')
         var params = {};
         params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
         params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
-        params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
+        params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
         params.createDate = getDate();
         params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
 

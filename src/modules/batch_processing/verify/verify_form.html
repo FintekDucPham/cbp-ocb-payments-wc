@@ -56,7 +56,7 @@
         </bd-item-property-form>
         <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.dataverify.date' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                <span class="bd-amount__value">{{getCurrentDate(true)}}</span>
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.createDate}}</span>
             </div>
         </bd-item-property-form>
 
