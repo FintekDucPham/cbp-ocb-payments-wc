@@ -213,10 +213,44 @@ angular.module('ocb-payments')
                 if (data !== undefined) {
                     $scope.paymentTypeID = data.paymentType;
                     $scope.billTypeID = data.billType;
+                    // if ($scope.paymentTypeID == 'SELECT_ALL_AND_CANNOT_UNSELECT') {
+                    //     //$scope.payment.formData.isAllSelect = true;
+                    // }
                     $scope.payment.formData.billInfo = data;
                 }
             });
-
+            /*Handle checkbox*/
+            $scope.checkBoxIBAction =  function(length, item, idx) { // separated this func when more tbl???
+                if ($scope.payment.items.checkBoxList === undefined) {
+                    $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
+                    $scope.payment.items.checkBoxList[idx].amount = item.amount;
+                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                    $scope.payment.items.checkBoxList[idx].userClick = 1;
+                } else {
+                    $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? ($scope.payment.items.checkBoxList[idx].userClick  + 1) : 1;
+                    $scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
+                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                }
+                var totalAmount = 0;
+                angular.forEach($scope.payment.items.checkBoxList,function(val,key){
+                    var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
+                    var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1)*amountValidation;
+                    totalAmount += multiMonthAmount;
+                    //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
+                    // console.log(key + val);
+                    // console.log(val.amount);
+                    // console.log("-+-" + totalAmount);
+                    // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
+                    //     console.log(k1+":"+v1);
+                    // });
+                });
+                $scope.payment.formData.amount = totalAmount;
+                // $scope.payment.items.totalBill = totalAmount;
+                $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
+                console.log("-0-"+ $scope.table.tableData);
+            }
             $scope.$broadcast('searchForm');
             var deferred = $q.defer();
             deferred.reject();

@@ -181,7 +181,20 @@
                     <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1">
                         <!--{{ $eval('item.##fourthData##') }}-->
                         <!--<bd-button ng-click="$params.downloadFile(item)">##fifthTitle##</bd-button>-->
-                        <bd-checkbox ng-model="rbModel.addToBeneficiary" ng-checked="true" bd-change="$params.checkBoxIBAction($data.length, item, $index)"></bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     bd-disabled="true"
+                                     ng-init="payment.formData.isAllSelect=true"
+                                     ng-model="payment.formData.isAllSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID !== 'SELECT_ALL_AND_CANNOT_UNSELECT'&& paymentTypeID !== 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelectOldest">
+                        </bd-checkbox>
                     </div>
                 </div>
             </div>
@@ -267,7 +280,20 @@
                     <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1">
                         <!--{{ $eval('item.##fourthData##') }}-->
                         <!--<bd-button ng-click="$params.downloadFile(item)">##fifthTitle##</bd-button>-->
-                        <bd-checkbox ng-model="rbModel.addToBeneficiary" bd-change="$params.checkBoxIBAction($data.length, item, $index)"></bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length,, item, $index)"
+                                     bd-disabled="true"
+                                     ng-init="payment.formData.isAllSelect=true"
+                                     ng-model="payment.formData.isAllSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID !== 'SELECT_ALL_AND_CANNOT_UNSELECT' && paymentTypeID !== 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelectOldest">
+                        </bd-checkbox>
                     </div>
                 </div>
             </div>
