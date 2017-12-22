@@ -17,7 +17,10 @@ angular.module('ocb-payments')
         , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig, transferBatchService) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             transferBatchService.createBatchTransfer(params).then(function(data) {
-                resultResponse(data.content.referenceId);
+                if(data.content){
+                    var content = JSON.parse(data.content);
+                    resultResponse(content.referenceId);
+                }
                 actions.proceed();
             });
         });
@@ -81,6 +84,9 @@ angular.module('ocb-payments')
         $scope.paymentsBatchProcessingForm.formData.totalnumberoflines_temp = $scope.paymentsBatchProcessingForm.totalnumberoflines;
 
         var params = {};
+        if($scope.paymentsBatchProcessingForm.transferUpdated && $scope.paymentsBatchProcessingForm.transferUpdated.id){
+            params.id = $scope.paymentsBatchProcessingForm.transferUpdated.id;
+        }
         params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
         params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
         params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
