@@ -41,7 +41,7 @@ angular.module('ocb-payments')
 
             //TODO handling token here
             //........
-            $scope.token = null;
+            $scope.token = "ABC";
             //after token valid, send request to approve api
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
             // var url = exportService.prepareHref('/api/mass_payment/actions/realize');
