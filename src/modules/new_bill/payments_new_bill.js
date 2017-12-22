@@ -313,7 +313,7 @@ angular.module('ocb-payments')
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.basket.new.fill',
-            footerType: 'billpayment',
+            footerType: 'billPayment',
             onClear: $scope.clearForm,
             onSearch: $scope.showBillInfoSearch,
             onGetOTP: $scope.getOTP,
