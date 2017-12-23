@@ -839,6 +839,26 @@
     "ocb.ng_dropdown_multiselect.option.buttonDefaultText":"All",
     "ocb.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
     "ocb.ng_dropdown_multiselect.option.waiting":"Waiting",
+
+    "ocb.payments.payu_bku.label" : "Tuition payment for Bach Khoa University ",
+    "ocb.payments.payu_bku.std.label" : "Student data",
+    "ocb.payments.payu_bku.std_code.label": "Student code",
+    "ocb.payments.payu_bku.std_name.label" : "Student name",
+    "ocb.payments.payu_bku.std_gen.label" : "Gender",
+    "ocb.payments.payu_bku.std_birth.label" : "Date of birthday",
+    "ocb.payments.payu_bku.std_depart.label" : "Department/Faculty",
+    "ocb.payments.payu_bku.table.paymentCode.label" : "Payment code",
+    "ocb.payments.payu_bku.table.amount.label" : "Amount",
+    "ocb.payments.payu_bku.table.desc.label" : "Description",
+    "ocb.payments.payu_bku.table.dueDate.label" : "Due date",
+    "ocb.payments.payu_bku.remitter.label" : "Remitter",
+    "ocb.payments.payu_bku.remitter_number.label" : "Account number",
+    "ocb.payments.payu_bku.remitter_name.label" : "Account name",
+    "ocb.payments.payu_bku.remitter_branch.label" : "OCB Branch",
+    "ocb.payments.payu_bku.remitter_avail.label" : "Available fund",
+    "ocb.payments.payu_bku.remitter_remain.label" : "Remaining daily limit",
+    "ocb.payments.payu_hufi.label" : "Tuition payment for HUFI",
+    "ocb.payments.payu_hufi.label" : "Tuition payment VNPAY",
     "EOF": ""
 
 
