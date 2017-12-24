@@ -13,8 +13,8 @@ angular.module('ocb-payments')
     })
     .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
 
-        bdMainStepInitializer($scope, 'payUBKU', {
-            formName: 'payUBKUForm',
+        bdMainStepInitializer($scope, 'payuBku', {
+            formName: 'payuBkuForm',
             formData: {},
             options: {},
             meta: {},
@@ -88,11 +88,11 @@ angular.module('ocb-payments')
         // $scope.numberWithCommas = function (x) {
         //     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         // }
-        $scope.payUBKUForm = {
+        $scope.payuBkuFormParams = {
             completeState:'payments.payu_bku.fill',
             onClear: $scope.clearForm,
             cancelState:'payments.payu_bku.fill',
-            footerType: 'payUBKU',
+            footerType: 'payu',
             labels:{
                 prev:"ocb.payments.buttons.prev",
                 next:"ocb.payments.new.btn.next",
