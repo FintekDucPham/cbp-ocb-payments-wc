@@ -222,19 +222,54 @@ angular.module('ocb-payments')
             });
             /*checkbox to handle available funds*/
             $scope.oldestDate = [];
+            $scope.validCheck = false;
             $scope.checkBoxIBAction =  function(length, item, idx) { // separated this func when more tbl???
-                //push ToDate to list compare
-                $scope.oldestDate.push(item.toDate);
+                //Init Array when first click
                 if ($scope.payment.items.checkBoxList === undefined) {
-                    //checked
                     $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
                     //$scope.payment.items.checkBoxList[idx].amount = item.amount;
                     $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
                     $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
-                    $scope.payment.items.checkBoxList[idx].userClick = 1;
+                    $scope.payment.items.checkBoxList[idx].userClick = true;
+                    //checked oldest
+                    if (idx == 0){
+                        $scope.validCheck = false;
+                        $scope.oldestDate.push(item);
+                    } else {
+                        // Not oldest
+                        $scope.validCheck = true;
+                    }
                 } else {
-                    //unCheck
-                    $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? ($scope.payment.items.checkBoxList[idx].userClick  + 1) : 1;
+                    /*The second click and so on....*/
+                    $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                    // In the case of checked
+                    if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length == 0) {
+                        if (idx == 0){
+                            $scope.validCheck = false;
+                            $scope.oldestDate.push(item);
+                        } else {
+                            // Not oldest
+                            $scope.validCheck = true;
+                        }
+                    }
+                    else if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length > 0) {
+                        if (idx == $scope.oldestDate.length){
+                            $scope.validCheck = false;
+                            $scope.oldestDate.push(item);
+                        } else {
+                            // Not oldest
+                            $scope.validCheck = true;
+                        }
+                    }
+                    // In the case of uncheck
+                    if ($scope.payment.items.checkBoxList[idx].userClick == false && $scope.oldestDate.length > 0) {
+                        if (idx == $scope.oldestDate.length - 1) {
+                            $scope.validCheck = false;
+                            $scope.oldestDate.pop(item);
+                        } else {
+                            $scope.validCheck = true;
+                        }
+                    }
                     //$scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
                     $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
                     $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
@@ -321,12 +356,12 @@ angular.module('ocb-payments')
 
 
         $scope.payment.rbPaymentsStepParams = {
-            completeState: 'payments.basket.new.fill',
+            completeState: 'payments.bill_history.list',
             footerType: 'billPayment',
             onClear: $scope.clearForm,
             onSearch:  $scope.showBillInfoSearch,//getBillInfo,//$scope.showBillInfoSearch,
             onGetOTP: $scope.getOTP,
-            cancelState: 'payments.basket.new.fill',
+            cancelState: 'payments.new_bill.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
                 cancel: 'config.multistepform.buttons.cancel',
