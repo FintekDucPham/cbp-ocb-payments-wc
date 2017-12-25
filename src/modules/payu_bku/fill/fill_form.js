@@ -51,7 +51,12 @@ angular.module('ocb-payments')
                     "dueDate" : "25 May 2017",
                 }
             ]
+            $scope.amountInfo =
+                {
+                    "figure" : "1300000",
+                    "words" : "Một triệu ba trăm ngàn",
 
+                }
             $scope.remitterInfo =
                 {
                     "accName" : "Le Linh Phuong",
@@ -60,73 +65,29 @@ angular.module('ocb-payments')
                     "remainDaily" : "9999999999",
                 }
 
-
+            $scope.subjectSelected = [];
             $scope.table = {
                 tableConfig : new bdTableConfig({
                     placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
                     pageSize:3,
                     checkBoxIBAction: function(length, item, idx) {
                         // resetErrState();
-                        if($scope.pendingTransaction.selectedTrans  == undefined) {
-                            $scope.pendingTransaction.selectedTrans = [];
+                        if($scope.subjectSelected  == undefined) {
+                            $scope.subjectSelected = [];
                         }
                         //if item existed (unchecked) => remove from list
                         //if item not existed (checked) => add to list
-                        if(!_.some( $scope.pendingTransaction.selectedTrans,item)) {
-                            $scope.pendingTransaction.selectedTrans.push(item)
+                        if(!_.some( $scope.subjectSelected,item)) {
+                            $scope.subjectSelected.push(item)
                         } else {
-                            _.remove($scope.pendingTransaction.selectedTrans,{'id':item.id})
+                            _.remove($scope.subjectSelected,{'id':item.id})
                         }
                     }
                 }),
                 tableData : {
                      getData: function (defer, $params) {
                          defer.resolve($scope.subjectInfo);
-                    //     resetErrState();
-                    //     pendingTransactionService.getListPendingTransaction(null).then(function (d) {
-                    //         $scope.listPendingTrans = d;
-                    //         $scope.targetList = {}
-                    //         $scope.targetList.content = _.filter($scope.listPendingTrans.content,function(o){
-                    //             // o.operationStatus = "WA";
-                    //             if($scope.statuses.indexOf(o.operationStatus) !== -1) {
-                    //                 if($scope.account !== "" ) {
-                    //                     if($scope.account === o.accountNo) {
-                    //                         return o;
-                    //                     }
-                    //                 } else {
-                    //                     return o;
-                    //                 }
-                    //
-                    //             }
-                    //         });
-                    //         $scope.tmptargetList = lodash.clone($scope.targetList,true);
-                    //
-                    //         $scope.listAccount = _.map($scope.pendingTransaction.selectedTrans, 'id');
-                    //         if($scope.resetPage){
-                    //             $params.currentPage = 1;
-                    //         }
-                    //
-                    //         if($scope.targetList && $scope.targetList.content) {
-                    //             var selectedListItem = [];
-                    //             for (var i = 0; i < $scope.table.tableConfig.pageSize; i++) {
-                    //                 var t = $scope.targetList.content[$params.currentPage * $scope.table.tableConfig.pageSize - $scope.table.tableConfig.pageSize + i];
-                    //                 if (t) {
-                    //
-                    //                     // if($scope.statuses.indexOf(t.operationStatus) !== -1) {
-                    //                     selectedListItem[i] = t;
-                    //                     $scope.listCheckBox[t.id] = false;
-                    //                     //  }
-                    //                 }
-                    //             }
-                    //             //$scope.tmptargetList.content = selectedListItem;
-                    //             $scope.tmptargetList.totalPages = _.ceil($scope.targetList.content.length/$scope.table.tableConfig.pageSize);
-                    //             $scope.tmptargetList.content = selectedListItem;
-                    //
-                    //             defer.resolve($scope.tmptargetList.content);
-                    //             $params.pageCount = $scope.tmptargetList.totalPages;
-                    //             $scope.resetPage = false;
-                    //         }
-                    //     });
+
                     }
                 },
                 tableControl: undefined

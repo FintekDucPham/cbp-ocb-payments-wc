@@ -1,111 +1,65 @@
 <style>
-    .detail-item {
-        float: left;
-        width: 100%;
-        background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
-        box-shadow: 0 0 15px 0 rgba(0,0,0,0.11);
-        border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
+    .row {
+        min-height: 30px;
     }
 </style>
 
-<div>
-    <div class="detail-item form-horizontal">
-        <bd-header>{{ ::'ocb.payments.batch_processing.dataverify.label' | translate }}</bd-header>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.accountnumber' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedAccount.accountNo}}</span>
-                <span class="bd-amount__currency" ng-show="!showDash"></span>
-                <span class="dash" ng-show="showDash">-</span>
-            </div>
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.name' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedAccount.accountName| uppercase}}</span>
-                <span class="bd-amount__currency" ng-show="!showDash"></span>
-                <span class="dash" ng-show="showDash">-</span>
-            </div>
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
-                       currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.ocbbranch' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                <span class="bd-amount__value">Tan Binh???</span><span class="bd-amount__currency" ng-show="!showDash"></span>
-                <span class="dash" ng-show="showDash">-</span>
-            </div>
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
-                       currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
-        </bd-item-property-form>
-
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
-                       currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}???"></bd-amount>
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedTransactionType.typeName}}</span>
-            </div>
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.dataverify.date' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <div class="bd-amount" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                <span class="bd-amount__value">{{getCurrentDate(true)}}</span>
-            </div>
-        </bd-item-property-form>
-
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinfigures' | translate }}">
-            <span class="yellow-label">{{totalamountinfigures}} {{ selectedAccount.currency }}</span>
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">
-            {{totalamountinwords}} {{ selectedAccount.currency }}
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">
-            {{totalamountinwordsen}} {{ selectedAccount.currency }}
-        </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalnumberoflines' | translate }}">
-            {{totalnumberoflines}}
-        </bd-item-property-form>
-
-
+<div >
+    <div class="row" ><div class="col-md-4"><h1>{{::'ocb.payments.payu_bku.data_verify.label' | translate}}</h1></div></div>
+    <div class="row" >
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_code.label' | translate}}</div>
+        <div class="col-md-5">{{stdInfo.stdCode}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_name.label' | translate}}</div>
+        <div class="col-md-5">{{stdInfo.stdName}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_depart.label' | translate}}</div>
+        <div class="col-md-5">{{stdInfo.stdDepart}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.payment_for.label' | translate}}</div>
+        <div class="col-md-7">
+            <div class="row"  ng-repeat="p in paymentInfo track by $index"><div class="col-md-3">{{p.paymentCode}}</div><div class="col-md-9">{{ p.paymentDesc}}</div></div>
+        </div>
     </div>
 
-    <div class="account-collapse-item">
-        <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
-        <bd-table
-                bd-type="typeBP"
-                bd-table-params="table.tableConfig"
-                bd-table-control="table.tableControl"
-                bd-table-data="table.tableData"
-                bd-table-promise="testDataPromise"
-                bd-table-meta="{
-                        'first':{
-                            'title': '##ocb.payments.batch_processing.table.fullname',
-                            'data': 'fullName'
-                        },
-                        'second':{
-                            'title': '##ocb.payments.batch_processing.table.accountno',
-                            'data': 'accountNo'
-                        },
-                        'third':{
-                            'title': '##ocb.payments.batch_processing.table.bankcode',
-                            'data': 'bankCode'
-                        },
-                        'fourth':{
-                            'title': '##ocb.payments.batch_processing.table.amount',
-                            'data': 'amount'
-                        },
-                        'fifth':{
-                            'title': '##ocb.payments.batch_processing.table.remarks',
-                            'data': 'description'
-                        }
-                    }"
-        >
-        </bd-table>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_fg.label' | translate}}</div>
+        <div class="col-md-5">{{amountInfo.figure}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_word.label' | translate}}</div>
+        <div class="col-md-5">{{amountInfo.words}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_number.label' | translate}}</div>
+        <div class="col-md-5">{{remitterInfo.accNum}}</div>
+    </div>
+    <div class="row" >
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_name.label' | translate}}</div>
+        <div class="col-md-5">{{remitterInfo.accName}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_branch.label' | translate}}</div>
+        <div class="col-md-5">{{remitterInfo.ocbBranch}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_avail.label' | translate}}</div>
+        <div class="col-md-5">{{remitterInfo.availFund}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_remain.label' | translate}}</div>
+        <div class="col-md-5">{{remitterInfo.remainDaily}}</div>
+    </div>
+
+</div>
+<div class="row" >
+    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
+        <bd-button class="left-txt" ng-click="getOTP()">Get OTP</bd-button>
+    </div>
+    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
+        <input ng-model="smsOTP" type="text" placeholder="Insert OTP">
     </div>
 </div>

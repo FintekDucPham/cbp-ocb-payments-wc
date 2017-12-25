@@ -20,6 +20,35 @@ angular.module('ocb-payments')
             // });
             actions.proceed();
         });
+        $scope.paymentInfo = [
+            {
+            "paymentCode" : "1123545464",
+            "paymentDesc" : "Cau truc du lieu va giai thuat"
+            },
+            {
+                "paymentCode" : "32422323",
+                "paymentDesc" : "ngon ngu lap trinh huong doi tuong"
+            },
+
+            {
+                "paymentCode" : "32422323",
+                "paymentDesc" : "Automat"
+            }
+        ]
+        $scope.amountInfo =
+            {
+                "figure" : "1300000",
+                "words" : "Một triệu ba trăm ngàn",
+
+            }
+        $scope.remitterInfo =
+            {
+                "accNum" : "12121343434",
+                "accName" : "Le Linh Phuong",
+                "ocbBranch" : "Tan Binh",
+                "availFund" : "1350000",
+                "remainDaily" : "9999999999",
+            }
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
 

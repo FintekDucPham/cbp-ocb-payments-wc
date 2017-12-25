@@ -828,6 +828,10 @@
     "ocb.payments.payu_bku.remitter_branch.label" : "OCB Branch",
     "ocb.payments.payu_bku.remitter_avail.label" : "Available fund",
     "ocb.payments.payu_bku.remitter_remain.label" : "Remaining daily limit",
+    "ocb.payments.payu_bku.amount_in_fg.label" : "Amount in figure",
+    "ocb.payments.payu_bku.amount_in_word.label" : "Amount in words",
+    "ocb.payments.payu_bku.data_verify.label" : "Data verification",
+    "ocb.payments.payu_bku.payment_for.label": "Payment for",
     "ocb.payments.payu_hufi.label" : "Tuition payment for HUFI",
     "ocb.payments.payu_hufi.label" : "Tuition payment VNPAY",
     "EOF": ""
