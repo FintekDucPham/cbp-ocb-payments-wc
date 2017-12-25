@@ -27,8 +27,7 @@ angular.module('ocb-payments')
                 data: null
             }
         };
-
-        $scope.payuBkuFormParams = {
+       $scope.payuBkuFormParams = {
             completeState:'payments.payu_bku.fill',
             onClear: $scope.clearForm,
             cancelState:'payments.payu_bku.fill',
@@ -48,9 +47,6 @@ angular.module('ocb-payments')
                 prev_fill: false
             },
         }
-        //
-        // $scope.paymentsBatchProcessingFormParams.visibility.search = true;
-        // $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
 
     });
 
