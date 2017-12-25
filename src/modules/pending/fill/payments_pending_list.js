@@ -1,0 +1,302 @@
+angular.module('ocb-payments')
+    .config(function (pathServiceProvider, stateServiceProvider) {
+        stateServiceProvider.state('payments.pending.fill', {
+            url: "/fill",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/pending/fill/payments_pending_list.html",
+            controller: "PaymentsPendingListController",
+            data: {
+                analyticsTitle: "ocb.payments.pending.label"
+            }
+        });
+    })
+    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,pendingTransactionService) {
+        bdVerifyStepInitializer($scope, {
+            formName: 'pendingTransactionForm',
+            formData: {
+            }
+        });
+
+        $scope.statuses = []
+        //define list of status
+        var listStatus = $scope.getStatusByRole();
+        for (var k in listStatus){
+            if (listStatus.hasOwnProperty(k) && listStatus[k] == true) {
+               // alert("Key is " + k + ", value is" + target[k]);
+                $scope.statuses.push(k);
+            }
+        }
+
+
+      //init selected status and account
+        $scope.status =$scope.statuses[0];
+        $scope.account = "";
+
+        //set variable for account
+        $scope.onAccountChange = function (selectedAcc) {
+            $scope.account  = selectedAcc;
+
+        }
+
+        //set variable for status
+        $scope.onStatusChange = function (selectedStatus) {
+            $scope.status  = selectedStatus;
+        }
+        //return list of data filtering
+        $scope.filterPendingTransaction = function () {
+            $scope.listData = getData($scope.status,$scope.account);
+            $scope.table.tableControl.invalidate();
+
+        }
+
+        $scope.listSelectedTrans = {};
+
+
+        //check empty selection
+        $scope.isEmpty = true;
+
+        $scope.listCheckBox  = {}
+        $scope.resetPage = false;
+        $scope.addToList = false;
+        $scope.items = {};
+        $scope.errMsg = "";
+        $scope.checkBoxState = false;
+        $scope.checkBoxState2 = false;
+        $scope.serviceError = false;
+        $scope.invalidRT = false;
+
+        //prepare data for list account
+        $scope.remitterAccountId = $stateParams.accountId;
+        $scope.senderSelectParams = new rbAccountSelectParams({});
+        $scope.senderSelectParams.payments = true;
+        $scope.senderSelectParams.showCustomNames = true;
+        $scope.senderSelectParams.accountFilter = function (accounts, $accountId) {
+            return lodash.filter(accounts, function(account){
+                return isAccountInvestmentFulfilsRules(account);
+            });
+        };
+        $scope.getAccountByNrb = function(accountList, selectFn) {
+            if ($stateParams.accountId) {
+                selectFn(lodash.findWhere(accountList, {
+                    accountId: $stateParams.accountId
+                }));
+            }
+        };
+
+        $scope.table = {
+            tableConfig : new bdTableConfig({
+                placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
+                pageSize:3,
+                checkBoxIBAction: function(length, item, idx) {
+                        resetErrState();
+                        if($scope.pendingTransaction.selectedTrans  == undefined) {
+                            $scope.pendingTransaction.selectedTrans = [];
+                        }
+                        //if item existed (unchecked) => remove from list
+                        //if item not existed (checked) => add to list
+                        if(!_.some( $scope.pendingTransaction.selectedTrans,item)) {
+                            $scope.pendingTransaction.selectedTrans.push(item)
+                        } else {
+                            _.remove($scope.pendingTransaction.selectedTrans,{'id':item.id})
+                        }
+                }
+            }),
+            tableData : {
+                getData: function (defer, $params) {
+                    resetErrState();
+                    pendingTransactionService.getListPendingTransaction(null).then(function (d) {
+                        $scope.listPendingTrans = d;
+                        $scope.targetList = {}
+                        $scope.targetList.content = _.filter($scope.listPendingTrans.content,function(o){
+                           // o.operationStatus = "WA";
+                            if($scope.statuses.indexOf(o.operationStatus) !== -1) {
+                                if($scope.account !== "" ) {
+                                    if($scope.account === o.accountNo) {
+                                        return o;
+                                    }
+                                } else {
+                                    return o;
+                                }
+
+                            }
+                        });
+                        $scope.tmptargetList = lodash.clone($scope.targetList,true);
+
+                        $scope.listAccount = _.map($scope.pendingTransaction.selectedTrans, 'id');
+                        if($scope.resetPage){
+                            $params.currentPage = 1;
+                        }
+
+                        if($scope.targetList && $scope.targetList.content) {
+                            var selectedListItem = [];
+                            for (var i = 0; i < $scope.table.tableConfig.pageSize; i++) {
+                                var t = $scope.targetList.content[$params.currentPage * $scope.table.tableConfig.pageSize - $scope.table.tableConfig.pageSize + i];
+                                if (t) {
+
+                                   // if($scope.statuses.indexOf(t.operationStatus) !== -1) {
+                                        selectedListItem[i] = t;
+                                        $scope.listCheckBox[t.id] = false;
+                                  //  }
+                                }
+                            }
+                            //$scope.tmptargetList.content = selectedListItem;
+                            $scope.tmptargetList.totalPages = _.ceil($scope.targetList.content.length/$scope.table.tableConfig.pageSize);
+                            $scope.tmptargetList.content = selectedListItem;
+
+                            defer.resolve($scope.tmptargetList.content);
+                            $params.pageCount = $scope.tmptargetList.totalPages;
+                            $scope.resetPage = false;
+                        }
+                    });
+                }
+            },
+            tableControl: undefined
+        };
+
+
+        $scope.pendingTransaction.returnTrans = function(){
+           //set return for list transaction in $scope.items.checkBoxList
+            resetErrState();
+            if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
+                $scope.checkBoxState = true;
+                return;
+            }
+            var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
+            var returnResult = pendingTransactionService.returnTransaction(listTransID).then(function (d) {
+                if(d !== undefined && d.content == "EXECUTED"){
+
+                    // $scope.table.tableControl.invalidate();
+                    $scope.resetPage = true;
+                    $scope.pendingTransaction.selectedTrans = []
+                    $state.go('payments.pending.status');
+                } else {
+                    $scope.serviceError = true;
+                }
+            });
+
+
+        };
+
+
+
+        $scope.pendingTransaction.deleteTrans = function(){
+            resetErrState();
+            //delete for list transaction in $scope.items.checkBoxList
+
+            if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
+                $scope.checkBoxState = true;
+                return;
+            }
+
+            //valid ìf status not RT
+            var invalidRT = _.filter($scope.pendingTransaction.selectedTrans,function (o) {
+                return o.operationStatus !== "RT"
+            })
+
+            if(invalidRT.length > 0){
+                $scope.invalidRT = true;
+                return;
+            }
+            if (!confirm(translate.property("ocb.payments.pending.list.confirm_msg"))) {
+                return;
+            }
+
+            var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
+            // var url = exportService.prepareHref('/api/payments/actions/cancel_corporate_transfer');
+            var deleteResult = pendingTransactionService.deleteTransaction(listTransID).then(function (d) {
+                if(d !== undefined && d.content == "OK"){
+
+                    // $scope.table.tableControl.invalidate();
+                    $scope.resetPage = true;
+                    $scope.pendingTransaction.selectedTrans = []
+                    $state.go('payments.pending.status');
+                } else {
+                    $scope.serviceError = true;
+                }
+            });
+
+            $scope.table.tableControl.invalidate();
+            $scope.resetPage = true;
+        };
+
+        $scope.pendingTransaction.modifyTrans = function(){
+            //delete for list transaction in $scope.items.checkBoxList
+
+            resetErrState();
+            if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
+                //$scope.checkBoxState.$setValidity('required', false);
+                $scope.checkBoxState = true;
+                return;
+            }
+
+            if($scope.pendingTransaction.selectedTrans.length >= 2) {
+                $scope.checkBoxState2 = true;
+                return;
+            }
+            var transaction = $scope.pendingTransaction.selectedTrans[0];
+            switch (transaction.transactionTypeDesc) {
+                case "Bill Payment":
+                    $state.go("payments.new_bill.fill", transaction);
+                    break;
+                case "Batch Transfer":
+                    $state.go("payments.batch_processing.fill", transaction);
+                    break;
+                default:
+                    //todo for another transaction type
+                    break;
+            }
+            $scope.table.tableControl.invalidate();
+            $scope.resetPage = true;
+        };
+
+        //approve transactions
+        $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.checkBoxState = false;
+            if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
+                $scope.checkBoxState = true;
+                return;
+            }
+
+            $scope.pendingTransaction.selectedTrans = _.sortBy($scope.pendingTransaction.selectedTrans, 'id');
+            actions.proceed();
+        });
+
+        function isSenderAccountCategoryRestricted(account) {
+            if($scope.payment.items.senderAccount){
+                if ($scope.payment.meta.customerContext === 'DETAL') {
+                    return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
+                } else {
+                    return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
+                }
+            }
+        }
+
+        function isAccountInvestmentFulfilsRules(account){
+            //return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0 || account.actions.indexOf('create_between_own_accounts_transfer') > -1;
+            return account;
+        }
+        function  resetErrState() {
+            $scope.checkBoxState = false;
+            $scope.checkBoxState2 = false;
+            $scope.serviceError = false;
+            $scope.invalidRT = false;
+
+
+        }
+        //get data by status and account condition
+        function getData(status,account) {
+            if(status != "all" && account != "All") {
+                $scope.targetList.content = lodash.filter($scope.targetList.content, {'operationStatus': status,'accountNo':account});
+            } else {
+                if(status != "all" && account == "All"){
+                    $scope.targetList.content = lodash.filter($scope.targetList.content, {'operationStatus': status});
+                } else if(account != "All" && status == "all" ) {
+                    $scope.targetList.content = lodash.filter($scope.targetList.content, {'accountNo': account});
+                } else {
+                    $scope.targetList.content = $scope.targetList.content;
+                }
+            }
+            $scope.resetPage = true;
+        }
+
+    }
+);

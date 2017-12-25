@@ -1,0 +1,34 @@
+<div class="section-wrapper">
+    <form>
+        <input name="checkBoxState" hidden ng-model="isEmpty" required/>
+        <bd-table bd-type="typePL2"
+                  bd-table-params="table.tableConfig"
+                  bd-table-control="table.tableControl"
+                  bd-table-data="table.tableData"
+                  bd-table-meta="{  'checkbox' : { 'title' :'','data' : ''},
+                                    'first' : {
+                                         'title': '##ocb.payments.pending.list.header.trans_type.label', 'data' : 'transactionTypeDesc'
+                                    },
+                                    'second' : {
+                                        'title': '##ocb.payments.pending.verify.header.title.label', 'data' : 'accountNo' },
+                                    'third' : {
+                                        'title': '##ocb.payments.pending.list.header.amount.label', 'data' : 'amount'
+                                     },
+                                     'fourth' : {
+                                        'title': '##ocb.payments.pending.verify.header.remit.label','data' : 'status'
+                                     }
+                                  }">
+
+
+
+        </bd-table>
+        <div class="row">
+            <div class="col-xs-4 "><label  style="font-weight: bold">{{::'ocb.payments.pending.verify.token_input.header.label' | translate}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><rb-authorization></rb-authorization></div>
+        </div>
+
+    </form>
+</div>
+

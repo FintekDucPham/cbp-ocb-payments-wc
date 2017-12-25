@@ -1,0 +1,9 @@
+<rb-content-view class="rb-content-view--solid">
+    <bd-header>{{::"ocb.payments.pending.label"|translate}}</bd-header>
+    <br/>
+    <bd-form-panel>
+        <rb-multistep-form rb-hide-step-panel="true" bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="paymentsPendingTransactionFormParams" rb-only-pending-transaction="pendingTransaction">
+            <div ui-view></div>
+        </rb-multistep-form>
+    </bd-form-panel>
+</rb-content-view>

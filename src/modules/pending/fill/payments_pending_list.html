@@ -1,0 +1,101 @@
+<form name="pendingTransactionForm">
+
+<div class="section-wrapper" >
+
+                <div class="row" >
+                    <div class="col-md-2">
+
+                        <ui-select ng-model="status"
+                                   theme="bootstrap"
+                                   reset-search-input="false"
+                                   on-select="onStatusChange($select.selected)"
+                                  >
+                            <ui-select-match placeholder="{{:: 'ocb.payments.pending.status.placeHolder' | translate }}">
+                                {{'ocb.payments.pending.status.' +$select.selected |translate}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="st in statuses">
+                                <div ng-bind-html="'ocb.payments.pending.status.' +st |translate">  </div>
+                            </ui-select-choices>
+
+                        </ui-select>
+                     </div>
+
+                    <div class="col-md-2">
+                        <!--<ui-select ng-model="account"-->
+                                   <!--theme="bootstrap"-->
+                                   <!--on-select="onAccountChange($select.selected)"-->
+                                   <!--reset-search-input="false">-->
+                            <!--<ui-select-match placeholder="{{:: 'ocb.payments.pending.account.placeHolder' | translate }}">-->
+                                <!--{{ $select.selected}}-->
+                            <!--</ui-select-match>-->
+                            <!--<ui-select-choices repeat="ac in accounts">-->
+                                <!--{{ ac }}-->
+                            <!--</ui-select-choices>-->
+                        <!--</ui-select>-->
+                        <rb-account-select rb-account="payment.items.senderAccount"
+                                           rb-account-no="remitterAccountId"
+                                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                           rb-product-list-name="TRANSFER_OWN_FROM_LIST"
+                                           rb-account-select-params="senderSelectParams"
+                                           rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                                           rb-on-account-select="onAccountChange($accountNo)"
+                                           rb-remote="remote.model_from"
+                                           rb-init-select-value = "{{account || selectNrb}}"
+                                           rb-only-pending-transaction="pendingTransaction"
+                                           rb-update-disabled-state="billInfoSearch"></rb-account-select>
+                    </div>
+
+                    <div class="col-md-1" style="padding-top: 5px;">
+                        <bd-button class="bd-button__primary" ng-click="filterPendingTransaction()" type="submit">{{::'ocb.payments.pending.list.button.filter.label'|translate}}</bd-button>
+                    </div>
+                </div>
+
+        </form>
+
+    </div>
+
+    <br/>
+    <div class="section-wrapper">
+        <bd-table bd-type="typePL"
+                  bd-table-params="table.tableConfig"
+                  bd-table-control="table.tableControl"
+                  bd-table-data="table.tableData"
+                  bd-table-meta="{  'checkbox' : { 'title' :'','data' : ''},
+                                    'first' : {
+                                         'title': '##ocb.payments.pending.list.header.init_date.label', 'data' : 'registrationDate'
+                                    },
+                                    'second' : {
+                                        'title': '##ocb.payments.pending.list.header.creator.label', 'data' : 'senderName' },
+                                    'third' : {
+                                        'title': '##ocb.payments.pending.list.header.amount.label', 'data' : 'amount'
+                                     },
+                                     'fourth' : {
+                                        'title': '##ocb.payments.pending.list.header.status.label','data' : 'operationStatus'
+                                     },
+                                     'fifth' : {
+                                        'title': '##ocb.payments.pending.list.header.trans_type.label', 'data' : 'transactionTypeDesc'
+                                     }
+                                  }">
+
+            <div bd-table-footer>
+                <bd-table-pagination></bd-table-pagination>
+            </div>
+
+        </bd-table>
+            <input name="checkBoxState" hidden ng-model="checkBoxState" required/>
+
+    </div>
+
+<div ng-show="checkBoxState" class="validation-message animate-on">
+    {{::'ocb.payments.pending.list.err_msg.select_0' | translate}}
+</div>
+<div ng-show="checkBoxState2" class="validation-message animate-on">
+    <div class="messages">{{::'ocb.payments.pending.list.err_msg.select_multi' | translate}}</div>
+</div>
+<div ng-show="serviceError" class="validation-message animate-on">
+    <div class="messages">{{::'ocb.payments.pending.list.err_msg.service_error' | translate}}</div>
+</div>
+<div ng-show="invalidRT" class="validation-message animate-on">
+    <div class="messages">{{::'ocb.payments.pending.list.err_msg.invalid_rt' | translate}}</div>
+</div>
+</form>
