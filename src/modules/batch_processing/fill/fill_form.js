@@ -663,6 +663,23 @@ angular.module('ocb-payments')
             }
             listenToUpdatedFlag();
 
+            function scanInput(){
+                if( $("#addfile").val() !== undefined){
+                    $("#addfile").each(function(index,ele){
+                        var lbFileName = $(ele).find('.file-name');
+                        $(ele).find('input[type="file"]').on('change',function(event){
+                            var fileName = event.target.value.split( '\\' ).pop();
+                            lbFileName.html(fileName);
+                        });
+                    });
+                    if($('.file-name') && $('.file-name').html() === ''){
+                        $('.file-name').html('Choose file to upload');
+                    }
+                }else{
+                    $timeout(scanInput, 500);
+                }
+            }
+            scanInput();
         });
 function convert_toJsonTable(input){
     var output = {
@@ -758,3 +775,6 @@ function JSONToCSVConvertor(JSONData, ShowLabel) {
     }
     return CSV;
 }
+
+
+
