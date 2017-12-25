@@ -14,7 +14,7 @@
 
             </div>
         </div>
-        <div class="account-collapse-item form-horizontal">
+        <div class="account-collapse-item form-horizontal" ng-if="stdInfo != null">
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.std.label' | translate}}</p></div></div>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_name.label' | translate}}</div>
@@ -37,7 +37,7 @@
                 <div class="col-md-3">{{stdInfo.stdDepart}}</div>
             </div>
         </div>
-        <div class="account-collapse-item form-horizontal">
+        <div class="account-collapse-item form-horizontal" ng-if="subjectInfo != null">
         <bd-table
             bd-type="typePU"
             bd-table-params="table.tableConfig"
@@ -76,7 +76,7 @@
         </div>
 
 
-        <div class="account-collapse-item form-horizontal">
+        <div class="account-collapse-item form-horizontal" ng-if="remitterInfo != null">
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.remitter.label' | translate}}</p></div></div>
             <div class="row" style="display: flex;align-items: center;">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_number.label' | translate}}</div>

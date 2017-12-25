@@ -129,17 +129,17 @@ angular.module('ocb-payments', [
                     priority: 16
                 },
                 {
-                    id: "payments.payu.fill.hufi",
-                    label: "ocb.payments.payu.hufi.header.label",
+                    id: "payments.payu_hufi",
+                    label: "ocb.payments.payu_hufi.label",
                     icon: "ocb-icons basket",
-                    action: "payments.payu.fill.hufi",
+                    action: "payments.payu_hufi.fill",
                     priority: 17
                 },
                 {
-                    id: "payments.payu.fill.vnpay",
-                    label: "ocb.payments.payu.vnpay.header.label",
+                    id: "payments.payu_vnpay",
+                    label: "ocb.payments.payu_vnpay.label",
                     icon: "ocb-icons basket",
-                    action: "payments.payu.fill.vnpay",
+                    action: "payments.payu_vnpay.fill",
                     priority: 18
                 }
 

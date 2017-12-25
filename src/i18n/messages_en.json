@@ -865,7 +865,7 @@
     "ocb.payments.payu_bku.data_verify.label" : "Data verification",
     "ocb.payments.payu_bku.payment_for.label" : "Payment for",
     "ocb.payments.payu_hufi.label" : "Tuition payment for HUFI",
-    "ocb.payments.payu_hufi.label" : "Tuition payment VNPAY",
+    "ocb.payments.payu_vnpay.label" : "Tuition payment VNPAY",
     "EOF": ""
 
 

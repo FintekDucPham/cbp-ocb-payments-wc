@@ -14,85 +14,86 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig, ocbConvert, transferBatchService, $cookies, $http, FileUploader, pathService, $location) {
+                                bdTableConfig,ocbConvert) {
 
 
             //todo data test
             $scope.stdCode = "";
             $scope.searchStudent = function () {
                 console.log($scope.stdCode);
-            }
-            $scope.stdInfo = {
-                "stdName" : "Nguyen Thuan Phat",
-                "stdGen" : "Nam",
-                "stdCode" : "2233445566",
-                "stdBirth" : "06/10/1997",
-                "stdDepart" : "Khoa cong nghe co khi",
-                "stdPlaceBirth": "Tp. Ho Chi Minh"
-            }
-            $scope.account = "";
-            $scope.subjectInfo = [
-                {
-                "paymentCode" : "11111111",
-                "amount" : "666444",
-                "desc" : "Anh van 2",
-                "dueDate" : "18 Dec 2017",
-                },
-                {
-                    "paymentCode" : "22222222",
-                    "amount" : "77889",
-                    "desc" : "Giao duc quoc phong an ninh",
-                    "dueDate" : "15 May 2017",
-                },
-                {
-                    "paymentCode" : "333333",
-                    "amount" : "999999999",
-                    "desc" : "Ky thuat dien",
-                    "dueDate" : "25 May 2017",
-                }
-            ]
-            $scope.amountInfo =
-                {
-                    "figure" : "1300000",
-                    "words" : "Một triệu ba trăm ngàn",
-
-                }
-            $scope.remitterInfo =
-                {
-                    "accName" : "Le Linh Phuong",
-                    "ocbBranch" : "Tan Binh",
-                    "availFund" : "1350000",
-                    "remainDaily" : "9999999999",
+                $scope.stdInfo = {
+                    "stdName": "Nguyen Thuan Phat",
+                    "stdGen": "Nam",
+                    "stdCode": "2233445566",
+                    "stdBirth": "06/10/1997",
+                    "stdDepart": "Khoa cong nghe co khi",
+                    "stdPlaceBirth": "Tp. Ho Chi Minh"
                 }
 
-            $scope.subjectSelected = [];
-            $scope.table = {
-                tableConfig : new bdTableConfig({
-                    placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
-                    pageSize:3,
-                    checkBoxIBAction: function(length, item, idx) {
-                        // resetErrState();
-                        if($scope.subjectSelected  == undefined) {
-                            $scope.subjectSelected = [];
-                        }
-                        //if item existed (unchecked) => remove from list
-                        //if item not existed (checked) => add to list
-                        if(!_.some( $scope.subjectSelected,item)) {
-                            $scope.subjectSelected.push(item)
-                        } else {
-                            _.remove($scope.subjectSelected,{'id':item.id})
-                        }
+
+                $scope.account = "";
+                $scope.subjectInfo = [
+                    {
+                        "paymentCode": "11111111",
+                        "amount": "666444",
+                        "desc": "Anh van 2",
+                        "dueDate": "18 Dec 2017",
+                    },
+                    {
+                        "paymentCode": "22222222",
+                        "amount": "77889",
+                        "desc": "Giao duc quoc phong an ninh",
+                        "dueDate": "15 May 2017",
+                    },
+                    {
+                        "paymentCode": "333333",
+                        "amount": "999999999",
+                        "desc": "Ky thuat dien",
+                        "dueDate": "25 May 2017",
                     }
-                }),
-                tableData : {
-                     getData: function (defer, $params) {
-                         defer.resolve($scope.subjectInfo);
+                ]
+                $scope.amountInfo =
+                    {
+                        "figure":1300000,
+                        "words": ocbConvert.convertNumberToText( 1300000, false)
 
                     }
-                },
-                tableControl: undefined
-            };
+                $scope.remitterInfo =
+                    {
+                        "accName": "Le Linh Phuong",
+                        "ocbBranch": "Tan Binh",
+                        "availFund": "1350000",
+                        "remainDaily": "9999999999",
+                    }
 
+                $scope.subjectSelected = [];
+                $scope.table = {
+                    tableConfig: new bdTableConfig({
+                        placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
+                        pageSize: 3,
+                        checkBoxIBAction: function (length, item, idx) {
+                            // resetErrState();
+                            if ($scope.subjectSelected == undefined) {
+                                $scope.subjectSelected = [];
+                            }
+                            //if item existed (unchecked) => remove from list
+                            //if item not existed (checked) => add to list
+                            if (!_.some($scope.subjectSelected, item)) {
+                                $scope.subjectSelected.push(item)
+                            } else {
+                                _.remove($scope.subjectSelected, {'id': item.id})
+                            }
+                        }
+                    }),
+                    tableData: {
+                        getData: function (defer, $params) {
+                            defer.resolve($scope.subjectInfo);
+
+                        }
+                    },
+                    tableControl: undefined
+                };
+            }
             //set variable for account change
             $scope.onAccountChange = function (selectedAcc) {
                 $scope.account  = selectedAcc;
