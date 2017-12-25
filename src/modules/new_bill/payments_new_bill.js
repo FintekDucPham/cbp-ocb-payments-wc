@@ -187,6 +187,7 @@ angular.module('ocb-payments')
         };
         $scope.clearForm = function () {
             $scope.payment.formData = {};
+            $scope.billTypeID = undefined;
             $scope.payment.items.checkBoxList = undefined;
             if($scope.payment.meta && $scope.payment.meta.modifyFromBeneficiary){
                 $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
@@ -219,24 +220,29 @@ angular.module('ocb-payments')
                     $scope.payment.formData.billInfo = data;
                 }
             });
-            /*Handle checkbox*/
+            /*checkbox to handle available funds*/
+            $scope.oldestDate = [];
             $scope.checkBoxIBAction =  function(length, item, idx) { // separated this func when more tbl???
+                //push ToDate to list compare
+                $scope.oldestDate.push(item.toDate);
                 if ($scope.payment.items.checkBoxList === undefined) {
+                    //checked
                     $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
-                    $scope.payment.items.checkBoxList[idx].amount = item.amount;
+                    //$scope.payment.items.checkBoxList[idx].amount = item.amount;
                     $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
                     $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                     $scope.payment.items.checkBoxList[idx].userClick = 1;
                 } else {
+                    //unCheck
                     $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? ($scope.payment.items.checkBoxList[idx].userClick  + 1) : 1;
-                    $scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
+                    //$scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
                     $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
                     $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                 }
                 var totalAmount = 0;
                 angular.forEach($scope.payment.items.checkBoxList,function(val,key){
-                    var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
-                    var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1)*amountValidation;
+                   // var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
+                    var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1);//*amountValidation;
                     totalAmount += multiMonthAmount;
                     //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
                     // console.log(key + val);
@@ -246,7 +252,8 @@ angular.module('ocb-payments')
                     //     console.log(k1+":"+v1);
                     // });
                 });
-                $scope.payment.formData.amount = totalAmount;
+                // Set amount value to 1000 --> waiting for confirming
+                $scope.payment.formData.amount = 1000;//totalAmount;
                 // $scope.payment.items.totalBill = totalAmount;
                 $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
                 console.log("-0-"+ $scope.table.tableData);
