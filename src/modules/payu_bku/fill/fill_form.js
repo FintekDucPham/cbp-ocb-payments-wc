@@ -33,7 +33,6 @@ angular.module('ocb-payments')
                 if(_.trim($scope.payuBku.data.stdCode) == ''){
                    return;
                 }
-                console.log($scope.payuBku.data.stdCode);
                 $scope.stdInfo = {
                     "stdName": "Nguyen Thuan Phat",
                     "stdGen": "Nam",
@@ -44,7 +43,6 @@ angular.module('ocb-payments')
                 }
 
                 $scope.payuBku.data.stdInfo = $scope.stdInfo;
-                //$scope.account = "";
                 $scope.subjectInfo = [
                     {
                         "paymentCode": "11111111",
@@ -66,13 +64,6 @@ angular.module('ocb-payments')
                     }
                 ]
                 $scope.payuBku.data.subjectInfo = $scope.subjectInfo;
-                // $scope.amountInfo =
-                //     {
-                //         "figure":1300000,
-                //         "words": ocbConvert.convertNumberToText( 1300000, false)
-                //
-                //     }
-                // $scope.payuBku.data.amountInfo = $scope.amountInfo;
                 $scope.remitterInfo =
                     {
                         "accountNo": "Le Linh Phuong",
@@ -87,7 +78,6 @@ angular.module('ocb-payments')
                         placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
                         pageSize: 3,
                         checkBoxIBAction: function (length, item, idx) {
-                            // resetErrState();
                             if ($scope.payuBku.data.subjectSelected == undefined) {
                                 $scope.payuBku.data.subjectSelected = [];
                             }
@@ -139,7 +129,7 @@ angular.module('ocb-payments')
 
                 actions.proceed();
             });
-            // $scope.payuBkuForm.subjectSelected
+
             function isSenderAccountCategoryRestricted(account) {
                 if($scope.payment.items.senderAccount){
                     if ($scope.payment.meta.customerContext === 'DETAL') {
@@ -149,9 +139,7 @@ angular.module('ocb-payments')
                     }
                 }
             }
-            console.log($scope.$params)
             function isAccountInvestmentFulfilsRules(account){
-                //return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0 || account.actions.indexOf('create_between_own_accounts_transfer') > -1;
                 return account;
             }
         });

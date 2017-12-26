@@ -33,7 +33,7 @@ angular.module('ocb-payments')
                 if(_.trim($scope.payuHufi.data.stdCode) == ''){
                    return;
                 }
-                console.log($scope.payuHufi.data.stdCode);
+                //todo data test
                 $scope.stdInfo = {
                     "stdName": "Nguyen Thuan Phat",
                     "stdGen": "Nam",
@@ -44,7 +44,6 @@ angular.module('ocb-payments')
                 }
 
                 $scope.payuHufi.data.stdInfo = $scope.stdInfo;
-                //$scope.account = "";
                 $scope.subjectInfo = [
                     {
                         "paymentCode": "11111111",
@@ -66,13 +65,6 @@ angular.module('ocb-payments')
                     }
                 ]
                 $scope.payuHufi.data.subjectInfo = $scope.subjectInfo;
-                // $scope.amountInfo =
-                //     {
-                //         "figure":1300000,
-                //         "words": ocbConvert.convertNumberToText( 1300000, false)
-                //
-                //     }
-                // $scope.payuHufi.data.amountInfo = $scope.amountInfo;
                 $scope.remitterInfo =
                     {
                         "accountNo": "Le Linh Phuong",
