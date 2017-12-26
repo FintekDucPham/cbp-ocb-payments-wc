@@ -219,6 +219,8 @@ angular.module('ocb-payments')
                     // }
                     $scope.payment.formData.billInfo = data;
                 }
+            }).catch(function(response) {
+                $scope.serverError = true
             });
             /*checkbox to handle available funds*/
             $scope.oldestDate = [];
@@ -288,10 +290,15 @@ angular.module('ocb-payments')
                     // });
                 });
                 // Set amount value to 1000 --> waiting for confirming
-                $scope.payment.formData.amount = 1000;//totalAmount;
+                $scope.payment.formData.amount = 859.57;//totalAmount;
                 // $scope.payment.items.totalBill = totalAmount;
                 $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
                 console.log("-0-"+ $scope.table.tableData);
+            }
+
+            /*click x button*/
+            $scope.closeBtn = function () {
+                $scope.serverError = false;
             }
             $scope.$broadcast('searchForm');
             var deferred = $q.defer();
