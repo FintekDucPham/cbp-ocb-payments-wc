@@ -122,14 +122,13 @@ angular.module('ocb-payments', [
                     action: "payments.tuition_fee.fill",
                     priority: 13
                 },
+                {
                     id: "payments.pending.fill",
                     label: "ocb.payments.pending.label",
                     icon: "ocb-icons basket",
                     action: "payments.pending.fill",
                     priority: 14
                 }
-
-
             ]
         });
     }
