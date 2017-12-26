@@ -143,8 +143,6 @@ angular.module('ocb-payments', [
                     priority: 18
                 }
 
-
-
             ]
         });
     }

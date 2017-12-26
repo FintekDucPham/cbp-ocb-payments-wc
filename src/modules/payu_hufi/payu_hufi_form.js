@@ -1,20 +1,20 @@
 
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.payu_bku', {
-            url: "/payu_bku",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payu_bku/payu_bku_form.html",
-            controller: "PayUBKUController",
+        stateServiceProvider.state('payments.payu_hufi', {
+            url: "/payu_hufi",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payu_hufi/payu_hufi_form.html",
+            controller: "PayuHufiController",
             abstract: true,
             data: {
                 analyticsTitle: null
             }
         });
     })
-    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
+    .controller('PayuHufiController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
 
-        bdMainStepInitializer($scope, 'payuBku', {
-            formName: 'payuBkuForm',
+        bdMainStepInitializer($scope, 'payuHufi', {
+            formName: 'payuHufiForm',
             formData: {},
             options: {},
             meta: {},
@@ -28,20 +28,12 @@ angular.module('ocb-payments')
             }
         };
         $scope.subjectSelected = function () {
-            return $scope.payuBku.subjectSelected;
+            return $scope.payuHufi.subjectSelected;
         };
-
-        $scope.getOTP = function (event, actions) {
-            sendAuthorizationToken();
-        }
-
-        function sendAuthorizationToken() {
-            //TODO get otp
-        };
-       $scope.payuBkuFormParams = {
-            completeState:'payments.payu_bku.fill',
+       $scope.payuHufiFormParams = {
+            completeState:'payments.payu_hufi.fill',
             onClear: $scope.clearForm,
-            cancelState:'payments.payu_bku.fill',
+            cancelState:'payments.payu_hufi.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
             labels:{

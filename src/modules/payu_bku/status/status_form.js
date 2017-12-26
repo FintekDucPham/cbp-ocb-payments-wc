@@ -12,11 +12,5 @@ angular.module('ocb-payments')
     })
     .controller("PayUBKUStep3Controller", function($scope, bdStepStateEvents, bdStatusStepInitializer, $timeout) {
 
-
-        bdStatusStepInitializer($scope, {
-            formName: 'payUBKUFormParams',
-            dataObject: $scope.paymentsBatchProcessingForm
-        });
-        $scope.
-        $scope.payUBKUFormParams.formData = {};
+        $scope.payuBku.data = undefined;
     });
