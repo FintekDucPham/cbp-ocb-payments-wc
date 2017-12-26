@@ -5,7 +5,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.batch_processing.fill', {
-            url: "/fill/:transferId",
+            url: "/fill/:referenceId",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/batch_processing/fill/fill_form.html",
             controller: "PaymentsBatchProcessingStep1Controller",
             data: {
@@ -25,8 +25,8 @@ angular.module('ocb-payments')
             var updatedFlag = 0;
             $scope.transferParam = {};
             $scope.paymentsBatchProcessingForm.transferUpdated = {};
-            if($stateParams.transferId !== null && $stateParams.transferId !== undefined){
-                $scope.transferParam.transferId = $stateParams.transferId;
+            if($stateParams.referenceId !== null && $stateParams.referenceId !== undefined){
+                $scope.transferParam.referenceId = $stateParams.referenceId;
                 transferBatchService.getTransfer($scope.transferParam).then(function (transfer) {
                     if (transfer.content !== undefined) {
                         updatedFlag = 1;
@@ -191,6 +191,7 @@ angular.module('ocb-payments')
                     $timeout(autoReloadValidTable, 500);
                 }
             }
+            autoReloadValidTable();
 
             /*$scope.tableInvalidData = {
                 content: []
