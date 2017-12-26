@@ -17,7 +17,10 @@ angular.module('ocb-payments')
         , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig, transferBatchService) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             transferBatchService.createBatchTransfer(params).then(function(data) {
-                resultResponse(data.content.referenceId);
+                if(data.content){
+                    var content = JSON.parse(data.content);
+                    resultResponse(content.referenceId);
+                }
                 actions.proceed();
             });
         });
@@ -26,17 +29,6 @@ angular.module('ocb-payments')
 
             //console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
         });
-
-        $scope.getCurrentDate = function(isEn) {
-            var result = "";
-            var date = new Date();
-            if(isEn ===true) {
-                result =  $filter('date')(date, "MM/dd/yyyy");
-            }else {
-                result =  $filter('date')(date, "dd/MM/yyyy");
-            }
-            return result;
-        }
 
         $scope.tableTestData = {
             content: $scope.paymentsBatchProcessingForm.formData.tableValidContent,
@@ -56,7 +48,7 @@ angular.module('ocb-payments')
         $scope.totalamountinwordsen = $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen;
         $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.totalnumberoflines;
 
-        $scope.table = {
+        $scope.tableValid = {
             tableConfig: new bdTableConfig({
                 pageSize: $scope.pageSize_,
                 placeholderText: $filter('translate')('ocb.payments.batch_processing')
@@ -79,6 +71,10 @@ angular.module('ocb-payments')
             tableControl: undefined
         };
 
+        var isInternal = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode === 'IN';
+        $scope.hideColumnTable(isInternal === true ? 1 : 0);
+
+        $scope.paymentsBatchProcessingForm.transferUpdated;
         $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;
         $scope.paymentsBatchProcessingForm.selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
 
@@ -92,9 +88,12 @@ angular.module('ocb-payments')
         $scope.paymentsBatchProcessingForm.formData.totalnumberoflines_temp = $scope.paymentsBatchProcessingForm.totalnumberoflines;
 
         var params = {};
+        if($scope.paymentsBatchProcessingForm.transferUpdated && $scope.paymentsBatchProcessingForm.transferUpdated.id){
+            params.id = $scope.paymentsBatchProcessingForm.transferUpdated.id;
+        }
         params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
         params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
-        params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeName;
+        params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
         params.createDate = getDate();
         params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
 

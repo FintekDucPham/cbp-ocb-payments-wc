@@ -31,6 +31,7 @@ angular.module('ocb-payments')
         });
 
         $scope.paymentsBatchProcessingForm.formData = {};
+        $scope.paymentsBatchProcessingForm.transferUpdated = {};
         $scope.paymentsBatchProcessingForm.batchInfoSearch = false;
         $scope.paymentsBatchProcessingForm.validTableShow = false;
         $scope.paymentsBatchProcessingForm.inValidTableShow = false;
