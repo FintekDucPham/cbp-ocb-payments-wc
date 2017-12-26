@@ -685,13 +685,13 @@ angular.module('ocb-payments')
 function convert_toJsonTable(input){
     var output = {
         fullName : String(input.fullName),
-        accountNo: String(input.accountNumber),
+        accountNo: String(input.accountNo),
         bankCode: String(input.bankCode),
         bankBranchCode : String(input.bankName),
         provinceCode : String(input.provinceCode),
         amount: String(input.amount),
         transactionFee: String(input.transactionFee),
-        description: String(input.remark),
+        description: String(input.description),
     };
     return output;
 }
