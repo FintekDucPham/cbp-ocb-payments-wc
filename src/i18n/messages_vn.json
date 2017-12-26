@@ -244,6 +244,8 @@
     "ocb.payments.new.bill.fill.execution_date.EARLIER_EXECUTED_DATE": "Transfer execution date cannot be earlier than current date",
     "ocb.payments.new.bill.fill.amount.INVALID_NUMBER_AMOUNT":"Invalid transfer amount",
 
+    "ocb.payments.new.bill.fill.serviceList.link_name": "Service & providers listing",
+
     "ocb.payments.new.bill.verify.sender_account_name": "From account",
     "ocb.payments.new.bill.verify.sender_data": "Recipient details",
     "ocb.payments.new.bill.verify.recipient_account_name": "To account",
@@ -279,6 +281,11 @@
     "ocb.payments.new.status.error": "Transfer has been rejected",
     "ocb.payments.new.status.success": "Transfer/transaction executed",
     "ocb.payments.new.status.":"Transfer/transaction rejected",
+
+    "ocb.payments.batchprocessing.status.0": "Mass transfer have successfully integrated to the system with the status of waiting for checking/approval",
+    "ocb.payments.batchprocessing.status.99": "Mass Transfer has been rejected",
+    "ocb.payments.batchprocessing.status.success": "Mass transfer have successfully integrated to the system with the status of waiting for checking/approval",
+    "ocb.payments.batchprocessing.status.error": "Mass Transfer has been rejected",
 
     "ocb.payments.recipients.label": "Defined recipients",
     "ocb.payments.recipients.search.label": "Search recipient",
@@ -382,6 +389,8 @@
     "ocb.payments.bill.history.header.address.label": "Address",
     "ocb.payments.bill.history.header.billID.label": "Bill Code",
     "ocb.payments.bill.history.header.qty.label": "Number of months",
+    "ocb.payments.bill.history.period.label": "Period",
+    "ocb.payments.bill.history.period.to.label": "-",
 
     "ocb.payments.rejected.select.filter.button.action": "Search",
     "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
@@ -768,9 +777,8 @@
     "ocb.payments.basket.search.panel.validation.EMPTY_PERIOD_PLANNED_MONTHS": "Enter the number of planned months",
     "ocb.layout.basket.tooltip": "Payment basket",
 
-
     "ocb.payments.batch_processing.label": "Batch Processing",
-    "ocb.payments.batch_processing.personal": "Personnal/Ordering Custommer",
+    "ocb.payments.batch_processing.personal": "Personal/Ordering Customer",
     "ocb.payments.batch_processing.beneficiarylist": "Beneficiary List",
     "ocb.payments.batch_processing.accountnumber": "Account number",
     "ocb.payments.batch_processing.name": "Name",
@@ -791,6 +799,42 @@
     "ocb.payments.batch_processing.table.remarks": "Remarks",
     "ocb.payments.batch_processing.table.total": "Total",
 
+    "ocb.payments.pending.label": "CB Pending Transactions",
+    "ocb.payments.pending.list.button.filter.label": "FILTER",
+    "ocb.payments.pending.list.button.return.label": "RETURN",
+    "ocb.payments.pending.list.button.approve.label": "APPROVE",
+    "ocb.payments.pending.list.button.modify.label": "MODIFY",
+    "ocb.payments.pending.list.button.delete.label": "DELETE",
+    "ocb.payments.pending.list.button.print.label": "PRINT REPORT",
+    "ocb.payments.pending.list.header.init_date.label":"Transaction initiation date",
+    "ocb.payments.pending.list.header.creator.label":"Creator",
+    "ocb.payments.pending.list.header.amount.label":"Amount",
+    "ocb.payments.pending.list.header.status.label":"Status",
+    "ocb.payments.pending.list.header.approve.label":"Approve",
+    "ocb.payments.pending.list.header.trans_type.label":"Transaction Type",
+    "ocb.payments.pending.list.err_msg.select_0" : "Please select transaction to continue",
+    "ocb.payments.pending.list.err_msg.select_multi" : "Please select only one transaction for modify",
+    "ocb.payments.pending.list.err_msg.service_error" : "Error occurred.",
+    "ocb.payments.pending.list.err_msg.invalid_rt" : "Some transactions can not be delete",
+    "ocb.payments.pending.list.confirm_msg" : "Are you sure?",
+    "ocb.payments.pending.status.placeHolder": "Transaction Status",
+    "ocb.payments.pending.account.placeHolder": "Account",
+    "ocb.payments.pending.status.RT": "Returned",
+    "ocb.payments.pending.status.C1": "Waiting for check 1",
+    "ocb.payments.pending.status.C2": "Waiting for check 2",
+    "ocb.payments.pending.status.WA": "Waiting for approve",
+    "ocb.payments.pending.status.all": "All",
+    "ocb.payments.pending.empty_list.label" : "No transaction(s) found",
+    "ocb.payments.pending.verify.sender_account.label": "From account",
+    "ocb.payments.pending.verify.recipient_account.label": "To account",
+    "ocb.payments.pending.verify.header.title.label": "Account",
+    "ocb.payments.pending.verify.header.remit.label": "Remittance information",
+    "ocb.payments.pending.verify.token_input.header.label": "Enter authentication code here(you received from sms or hard token)",
+    "ocb.payments.pending.verify.token_input.label": "Authentication code",
+    "ocb.payments.pending.verify.token_input.placeholder": "Enter authentication code here",
+    "ocb.payments.pending.verify.header.trans_fee.label" : "Transaction fee",
+    "ocb.payments.pending.verify.header.exe_date.label" : "Execution date",
+
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
     "ocb.ng_dropdown_multiselect.option.selectionCount":"selected",
@@ -799,14 +843,9 @@
     "ocb.ng_dropdown_multiselect.option.dynamicButtonTextSuffix":"selected",
     "ocb.ng_dropdown_multiselect.option.waiting":"Waiting",
 
-    "EOF": "",
 
-    "ocb.payments.pending.label": "CB Pending Transaction",
-    "ocb.payments.pending.transactionInitiationDate": "Transaction initiation date",
-    "ocb.payments.pending.creator": "Creator",
-    "ocb.payments.pending.amount": "Amount",
-    "ocb.payments.pending.status": "Status",
-    "ocb.payments.pending.approve": "Approve"
-}
+    "EOF": ""
+
+}gi
 
 

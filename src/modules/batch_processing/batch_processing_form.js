@@ -1,5 +1,5 @@
 /**
- * Created by Thai Bui on 10/30/2017.
+ * Created by Tien Bui on 10/30/2017.
  */
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
@@ -38,20 +38,21 @@ angular.module('ocb-payments')
         $scope.pageSize_ = 4;
         $scope.displayBankCode = false;
 
-        $scope.batchInfoSearch = false;
-        $scope.tableUpload = false;
+        $scope.paymentsBatchProcessingForm.batchInfoSearch = false;
+        $scope.paymentsBatchProcessingForm.validTableShow = false;
+        $scope.paymentsBatchProcessingForm.invalidTableShow = false;
 
         $scope.clearForm = function(){
             $scope.paymentsBatchProcessingFormParams.formData = {};
             $scope.paymentsBatchProcessingFormParams.items = {};
             $scope.$broadcast('clearForm');
         };
-        $scope.testFormAction = function() {
-
-        };
         $scope.showBatchInfoSearch = function(searchBool, nextBool ) {
             // if ($scope.payment.formData.billCode !== undefined) {
-            $scope.batchInfoSearch = !$scope.batchInfoSearch;
+
+            $("#uploadFile").val("");
+
+            $scope.paymentsBatchProcessingForm.batchInfoSearch = !$scope.paymentsBatchProcessingForm.batchInfoSearch;
             $scope.paymentsBatchProcessingFormParams.visibility.search = searchBool;//false;
             $scope.paymentsBatchProcessingFormParams.visibility.accept = searchBool;//true;
             $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = nextBool;//true;
@@ -66,7 +67,7 @@ angular.module('ocb-payments')
             }
             // if($scope.paymentsBatchProcessingForm.tableValidCount > 0){
             //     $scope.tableUpload = true;
-            //     $scope.batchInfoSearch = true;
+            //     $scope.paymentsBatchProcessingForm.batchInfoSearch = true;
             //     $scope.paymentsBatchProcessingFormParams.visibility.search = false;
             //     $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
             // }
@@ -89,7 +90,6 @@ angular.module('ocb-payments')
         $scope.numberWithCommas = function (x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-
         $scope.paymentsBatchProcessingFormParams = {
             completeState:'payments.batch_processing.fill',
             onClear: $scope.clearForm,
@@ -112,7 +112,6 @@ angular.module('ocb-payments')
                 accept: true,
                 prev_fill: false
             },
-            testFormAction: $scope.testFormAction
         }
 
         $scope.paymentsBatchProcessingFormParams.visibility.search = true;
