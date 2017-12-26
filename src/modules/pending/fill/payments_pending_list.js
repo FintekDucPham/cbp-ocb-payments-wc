@@ -10,11 +10,12 @@ angular.module('ocb-payments')
         });
     })
     .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,pendingTransactionService) {
-        bdVerifyStepInitializer($scope, {
-            formName: 'pendingTransactionForm',
-            formData: {
-            }
-        });
+        // bdVerifyStepInitializer($scope, {
+        //     formName: 'pendingTransactionForm',
+        //     formData: {
+        //     }
+        //
+        // });
 
         $scope.statuses = []
         //define list of status
@@ -103,7 +104,13 @@ angular.module('ocb-payments')
             tableData : {
                 getData: function (defer, $params) {
                     resetErrState();
-                    pendingTransactionService.getListPendingTransaction(null).then(function (d) {
+                    var params = {
+                        pageNum: 10,
+                        pageSize: 3,
+                        accountNo: $scope.account,
+                        transStatus: 'WAITING_FOR_CHECK1'
+                    }
+                    pendingTransactionService.getListPendingTransaction(params).then(function (d) {
                         $scope.listPendingTrans = d;
                         $scope.targetList = {}
                         $scope.targetList.content = _.filter($scope.listPendingTrans.content,function(o){

@@ -17,6 +17,7 @@ angular.module('ocb-payments')
             meta: {},
             validation: {},
             items :[],
+            dataObject: $scope.payment
         });
 
 
