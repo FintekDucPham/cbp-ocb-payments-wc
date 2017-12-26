@@ -117,7 +117,7 @@ angular.module('ocb-payments', [
                 },
                 {
                     id: "payments.tuition_fee.fill",
-                    label: "ocb.payments.new.list.details.historyAction",
+                    label: "ocb.payments.tuition.label.header",
                     icon: "ocb-icons basket",
                     action: "payments.tuition_fee.fill",
                     priority: 13
