@@ -1,0 +1,156 @@
+<form name="paymentsTutitionForm">
+    <div class="account-collapse-item form-horizontal">
+        <bd-header>{{ ::'ocb.payments.tuition.entering' | translate }}</bd-header>
+
+        <bd-item-property label="University">
+            <ui-select ng-model="ocb.payments.tuition.university.selected" theme="bootstrap" title="Choose a university">
+                <ui-select-match placeholder="Choose a university in the list...">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="university in universities track by university.id">
+                    <span ng-bind="university.name"></span>
+                </ui-select-choices>
+            </ui-select>
+        </bd-item-property>
+
+        <bd-item-property label="Form">
+            <bd-radio-select bd-model="filterData.periodType">
+                <bd-radio-option bd-option-value="baseData.PERIOD_TYPES.LAST" class="row__inline-block--middle">
+                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                        {{ ::'ocb.payments.tuition.form.full' | translate }}
+                    </div>
+                </bd-radio-option>
+                <bd-radio-option bd-option-value="baseData.PERIOD_TYPES.LAST" class="row__inline-block--middle">
+                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                        {{ ::'ocb.payments.tuition.form.credit' | translate }}
+                    </div>
+                </bd-radio-option>
+                <bd-radio-option bd-option-value="baseData.PERIOD_TYPES.LAST" class="row__inline-block--middle">
+                    {{ ::'ocb.payments.tuition.form.post' | translate }}
+                </bd-radio-option>
+                <bd-radio-option bd-option-value="baseData.PERIOD_TYPES.LAST" class="row__inline-block--middle">
+                    {{ ::'ocb.payments.tuition.form.part' | translate }}
+                </bd-radio-option>
+            </bd-radio-select>
+        </bd-item-property>
+
+        <bd-item-property label="Semester">
+            <ui-select ng-model="paymentsTuitionFee.university.selected" theme="bootstrap" title="Choose a semester">
+                <ui-select-match placeholder="Choose a university in the list...">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="semester in semesters track by semester.id">
+                    <span ng-bind="semester.name"></span>
+                </ui-select-choices>
+            </ui-select>
+        </bd-item-property>
+
+        <bd-item-property label="Student Code/ID">
+            <div class="row">
+                <div class="col-sm-4" style="margin-left:-15px;">
+                    <ui-select ng-model="paymentsTuitionFee.studentCode.selected" theme="bootstrap" title="Choose a student code"  class="row__inline-block--middle">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="studentCode in studentCodes track by studentCode.id">
+                            <span ng-bind="studentCode.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="input-field" placeholder="Enter code here">
+                </div>
+            </div>
+        </bd-item-property>
+    </div>
+
+    <div class="account-collapse-item form-horizontal" ng-show="batchInfoSearch">
+        <bd-header>{{ ::'ocb.payments.tuition.studentInfo' | translate }}</bd-header>
+        <div class="row">
+            <div class="col-sm-6">
+                <bd-item-property label="{{::'ocb.payments.tuition.name.label'|translate}}">
+                    Tran Thi Kieu Chinh
+                </bd-item-property>
+            </div>
+            <div class="col-sm-6">
+                <bd-item-property label="{{::'ocb.payments.tuition.class.label'|translate}}">
+                    Thuong mai ngay
+                </bd-item-property>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <bd-item-property label="{{::'ocb.payments.tuition.dateofbirth.label'|translate}}">
+                    27/07/1987
+                </bd-item-property>
+            </div>
+            <div class="col-sm-6">
+                <bd-item-property label="{{::'ocb.payments.tuition.period.label'|translate}}">
+                    K21
+                </bd-item-property>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <bd-item-property label="{{::'ocb.payments.tuition.nationalid.label'|translate}}">
+                    123456789
+                </bd-item-property>
+            </div>
+            <bd-item-property label="{{::'ocb.payments.tuition.department.label'|translate}}">
+                Kinh doanh thuong mai
+            </bd-item-property>
+        </div>
+    </div>
+
+    <div class="account-collapse-item form-horizontal" ng-show="batchInfoSearch">
+        <bd-header>{{ ::'ocb.payments.tuition.detailPayment' | translate }}</bd-header>
+        <div class="bd-item-property">
+            <bd-table
+                    bd-type="typeAB"
+                    bd-table-params="table.tableConfig"
+                    bd-table-control="table.tableControl"
+                    bd-table-data="table.tableData"
+                    bd-table-promise="paymentPromise"
+                    bd-table-meta="{
+                        'first': {'title': '##ocb.payments.tuition.table.all', 'data' : ''},
+                        'second': {'title': '##ocb.payments.tuition.table.classid', 'data' : ''},
+                        'third': {'title': '##ocb.payments.tuition.table.classname', 'data' : ''},
+                        'fourth': {'title': '##ocb.payments.tuition.table.amount', 'data' : ''},
+                        'fifth': {'title': '##ocb.payments.tuition.table.discount', 'data' : ''}
+                    }">
+            </bd-table>
+        </div>
+        <div class="row">
+            <bd-item-property label="{{::'ocb.payments.tuition.table.figures'|translate}}:">
+                1 500 000 VND
+            </bd-item-property>
+        </div>
+        <div class="row">
+            <bd-item-property label="{{::'ocb.payments.tuition.table.words'|translate}}:">
+                Mot trieu nam tram nghin dong
+            </bd-item-property>
+        </div>
+    </div>
+
+    <div class="account-collapse-item form-horizontal" ng-show="batchInfoSearch">
+        <bd-header>{{ ::'ocb.payments.tuition.paymentAccount' | translate }}</bd-header>
+        <div class="bd-item-property row">
+            <div class="col-sm-12">
+                <bd-item-property-form label="{{::'ocb.payments.tuition.semester.label'|translate}}">
+                    <ui-select ng-model="paymentsTuitionFee.university.selected" theme="bootstrap" title="Choose a student code">
+                        <ui-select-match placeholder="Choose a semester in the list...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="semester in semesters track by semester.id">
+                            <span ng-bind="semester.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </bd-item-property-form>
+            </div>
+        </div>
+        <div class="bd-item-property row">
+            <div class="col-sm-6">
+                <bd-item-property label="{{::'ocb.payments.tuition.balance.label'|translate}}">
+                    15 000 000 VND
+                </bd-item-property>
+            </div>
+            <div class="col-sm-6">
+                <bd-item-property label="{{::'ocb.payments.tuition.limit.label'|translate}}">
+                    5 000 000 VND
+                </bd-item-property>
+            </div>
+        </div>
+    </div>
+</form>
