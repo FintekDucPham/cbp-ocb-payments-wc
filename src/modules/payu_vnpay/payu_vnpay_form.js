@@ -1,20 +1,20 @@
 
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.payment_vnpay', {
-            url: "/payment_vnpay",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payment_vnpay/payment_vnpay_form.html",
-            controller: "PayUBKUController",
+        stateServiceProvider.state('payments.payu_vnpay', {
+            url: "/payu_vnpay",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payu_vnpay/payu_vnpay_form.html",
+            controller: "PayuVnpayController",
             abstract: true,
             data: {
                 analyticsTitle: null
             }
         });
     })
-    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
+    .controller('PayuVnpayController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
 
-        bdMainStepInitializer($scope, 'payuBku', {
-            formName: 'payuBkuForm',
+        bdMainStepInitializer($scope, 'payuVnpay', {
+            formName: 'payuVnpayForm',
             formData: {},
             options: {},
             meta: {},
@@ -28,7 +28,7 @@ angular.module('ocb-payments')
             }
         };
         $scope.subjectSelected = function () {
-            return $scope.payuBku.subjectSelected;
+            return $scope.payuVnpay.subjectSelected;
         };
 
         $scope.getOTP = function (event, actions) {
@@ -38,10 +38,10 @@ angular.module('ocb-payments')
         function sendAuthorizationToken() {
             //TODO get otp
         };
-       $scope.payuBkuFormParams = {
-            completeState:'payments.payment_vnpay.fill',
+       $scope.payuVnpayFormParams = {
+            completeState:'payments.payu_vnpay.fill',
             onClear: $scope.clearForm,
-            cancelState:'payments.payment_vnpay.fill',
+            cancelState:'payments.payu_vnpay.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
             labels:{
