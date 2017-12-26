@@ -1,6 +1,6 @@
 <form name="paymentForm" novalidate class="form-pane" id="pn-1">
     <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
-
+    <!--Personal / Ordering Customer-->
     <div class="bd-form-header">{{::"ocb.payments.new_bill.label.header.customer"|translate}}</div>
     <div class="pane-bd deposit-form">
         <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
@@ -29,10 +29,10 @@
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
-            <!--{{payment.items.senderAccount.limitReference}}-->
-            {{666}}
+            <!--{{payment.items.senderAccount.limitReference}}-->TODO input data
         </bd-item-property>
     </div>
+    <!--Enter Bill Information-->
     <div class="bd-form-header">{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</div>
     <div class="pane-bd deposit-form">
         <input name="providerCode" hidden ng-model="payment.formData.providerCode" required/>
@@ -64,11 +64,27 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
-        <!--<div ng-if="updateServiceId=='DTCDCD'">-->
-        <!--<bd-item-property label="{{::'ocb.payments.new.bill.fill.billPaymentAmount'|translate}}">-->
-            <!--{{ payment.items.senderAccount.accessibleAssets }}-->
-        <!--</bd-item-property>-->
-        <!--</div>-->
+        <!--Add Payment amount-->
+        <bd-item-property label="{{::'ocb.payments.new.bill.fill.paymentAmount'|translate}}" ng-if="billTypeID === 'NO_DETAIL'">
+            <div class="bd-item-property__value--primary">
+                <input type="text"
+                       name="billCode"
+                       class="input-field"
+                       ng-pattern="PAYMENT_AMOUNT"
+                       ng-model="payment.formData.paymentAmount"
+                       required
+                       placeholder="Enter payment amount"
+                />
+            </div>
+            <eb-validation-messages eb-name="billCode">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.bill.fill.amount.EMPTY_AMOUNT'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'ocb.payments.new.bill.fill.amount.INCORRECT_AMOUNT'|translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
         <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
         <rb-widget-banner-container rb-slot-name="ACCOUNT_WIDGET" rb-target-type="CURRENT_USER">
             <div class="widget-content-inner info-text margin-bottom-20">
@@ -78,64 +94,228 @@
             </div>
         </rb-widget-banner-container>
     </div>
-    <bd-header>{{::"ocb.payments.new_bill.label.header.showBillInfo" |translate}}</bd-header>
-    <div class="pane-bd deposit-form" ng-if="billInfoSearch">
+    <!--Bill information-->
+    <div ng-if="billTypeID === 'MASTER_DETAIL'">
+        <div class="bd-form-header">{{::"ocb.payments.new_bill.label.header.showBillInfo" |translate}}</div>
+        <div class="pane-bd deposit-form">
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoName'|translate}}">
-                {{ payment.formData.senderCustomer.fullName }}
+                {{payment.formData.billInfo.customerName}}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoAddress'|translate}}">
-                {{ payment.formData.senderCustomer.ownersList[0].houseNo + ' ' + payment.formData.senderCustomer.ownersList[0].addressStreet + ' ' + payment.formData.senderCustomer.ownersList[0].town  }}
+                {{payment.formData.billInfo.address}}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
-                {{payment.formData.billCode}}
+                {{payment.formData.billInfo.billCode}}
             </bd-item-property>
-            <div ng-show="payment.items.senderService.serviceCode === 'POWE'">
-                <bd-item-property label="{{::'ocb.payments.new.bill.fill.billMeterNumber'|translate}}">
-                    {{ payment.formData.senderCustomer.meterNumber}}
-                </bd-item-property>
-                <bd-item-property label="{{::'ocb.payments.new.bill.fill.billPhoneNumber'|translate}}">
-                    {{payment.formData.senderCustomer.phoneNumber}}
-                </bd-item-property>
+            <bd-item-property label="{{::'ocb.payments.new.bill.fill.billMeterNumber'|translate}}">
+                {{payment.formData.billInfo.meterNumber}}
+            </bd-item-property>
+            <bd-item-property label="{{::'ocb.payments.new.bill.fill.billPhoneNumber'|translate}}">
+                {{payment.formData.billInfo.phoneNumber.value}}
+            </bd-item-property>
+        </div>
+    </div>
+    <!--<div class="pane-bd deposit-form" ng-show="billInfoSearch ">-->
+        <!--<bd-table-->
+                <!--bd-type="typeI2"-->
+                <!--bd-table-params="table.tableConfig"-->
+                <!--bd-table-control="table.tableControl"-->
+                <!--bd-table-data="table.tableData"-->
+                <!--bd-table-promise="payment.formData.billsPromise"-->
+                <!--bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },-->
+                <!--'second' : { 'title': '##payments.new.bill.fill.info.header.order_id', 'data' : 'orderId' },-->
+                <!--'third' : { 'title': '##payments.new.bill.fill.info.header.description', 'data' : 'description'},-->
+                <!--'fourth' : { 'title': '##payments.new.bill.fill.info.header.amount', 'data' : ['amount', 'currency'] },-->
+                <!--'fifth' : { 'title': '##payments.new.bill.fill.info.header.from_date', 'data' : 'fromDate' },-->
+                <!--'sixth' : { 'title': '##payments.new.bill.fill.info.header.to_date', 'data' : 'toDate' },-->
+                <!--'seventh' : { 'title': '##payments.new.bill.fill.info.header.formula_rates', 'data' : 'formulaRates' } ,-->
+                <!--'eighth': {'title': '##account.invoices.button.download'} }">-->
+
+        <!--</bd-table>-->
+    <!--</div>-->
+    <!--Show table Master Detail -->
+    <div class="bd-table"  ng-if="billTypeID === 'MASTER_DETAIL'">
+
+        <div bd-table-header>
+            <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1" label="{{::'payments.new.bill.fill.info.header.stt'|translate}}">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
+            <!--<div bd-table-heading="firstSecondFusion" class="bd-table__cell bd-table__cell&#45;&#45;sm-9 bd-hide-md">##firstSecondFusionTitle##</div>-->
+            <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-2" label="{{::'payments.new.bill.fill.info.header.order_id'|translate}}">{{::'payments.new.bill.fill.info.header.order_id'|translate}}</div>
+            <div bd-table-heading="third" class="bd-table__cell bd-table__cell--md-3 bd-hide-sm" label="{{::'payments.new.bill.fill.info.header.description'|translate}}">{{::'payments.new.bill.fill.info.header.description'|translate}}</div>
+            <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3 "label="{{::'payments.new.bill.fill.info.header.amount'|translate}}">{{::'payments.new.bill.fill.info.header.amount'|translate}}</div>
+            <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 "label="{{::'payments.new.bill.fill.info.header.from_date'|translate}}">{{::'payments.new.bill.fill.info.header.from_date'|translate}}</div>
+            <div bd-table-heading="sixth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 "label="{{::'payments.new.bill.fill.info.header.to_date'|translate}}">{{::'payments.new.bill.fill.info.header.to_date'|translate}}</div>
+            <div bd-table-heading="seventh" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 "label="{{::'payments.new.bill.fill.info.header.formula_rates'|translate}}">{{::'payments.new.bill.fill.info.header.formula_rates'|translate}}</div>
+            <div bd-table-heading="eighth" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-1"></div>
+        </div>
+        <!--<div ng-show="(promise.$$state.status === 1)"  bd-table-row bd-table-expandable ng-repeat="item in $data track by $index">-->
+        <div ng-repeat="item in payment.formData.billInfo.billItem">
+
+
+            <div class="bd-table__row-entry">
+                <div class="bd-table__row-line">
+                    <div bd-table-cell="first" class="bd-table__cell-index bd-hide-sm bd-table__cell--md-1">
+                        {{item.billCodeItemNo}}
+                    </div>
+                    <!--<div bd-table-cell="firstSecondFusion" class="bd-table__cell-index bd-table__cell&#45;&#45;sm-9 layout-first bd-hide-md">-->
+                    <!--{{ $eval('item.##firstData##') }}<br/>{{ $eval('item.##secondData##') }}-->
+                    <!--</div>-->
+                    <div bd-table-cell="second" class="eval('item.##secondData##') bd-hide-sm bd-table__cell--md-2">
+                        {{item.orderId}}
+                    </div>
+                    <div bd-table-cell="third" class="bd-table__cell bd-table__cell--md-3 bd-hide-sm">
+                        {{item.description}}
+                    </div>
+                    <div bd-table-cell="fourth" class="bd-table__cell--sm-7 bd-table__cell--md-3 ">
+                        <bd-amount amount="item.amountMonth.value"
+                                   currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+                    </div>
+                    <div bd-table-cell="fifth" class="bd-table__cell--sm-7 bd-table__cell--md-2 ">
+                        {{item.fromDate  | date : "dd/MM/yyyy"}}
+                    </div>
+                    <div bd-table-cell="sixth" class="bd-table__cell--sm-7 bd-table__cell--md-2">
+                        {{item.toDate  | date : "dd/MM/yyyy"}}
+                    </div>
+                    <div bd-table-cell="seventh" class="bd-table__cell--sm-7 bd-table__cell--md-2 ">
+                        {{item.formulaRates}}
+                    </div>
+                    <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1">
+                        <!--{{ $eval('item.##fourthData##') }}-->
+                        <!--<bd-button ng-click="$params.downloadFile(item)">##fifthTitle##</bd-button>-->
+                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     bd-disabled="true"
+                                     ng-init="payment.formData.isAllSelect=true"
+                                     ng-model="payment.formData.isAllSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID !== 'SELECT_ALL_AND_CANNOT_UNSELECT'&& paymentTypeID !== 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelectOldest">
+                        </bd-checkbox>
+                    </div>
+                </div>
             </div>
-    </div>
-    <div class="pane-bd deposit-form" ng-show="billInfoSearch ">
-        <bd-table
-                bd-type="typeI2"
-                bd-table-params="table.tableConfig"
-                bd-table-control="table.tableControl"
-                bd-table-data="table.tableData"
-                bd-table-promise="billsPromise"
-                bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },
-                'second' : { 'title': '##payments.new.bill.fill.info.header.order_id', 'data' : 'orderId' },
-                'third' : { 'title': '##payments.new.bill.fill.info.header.description', 'data' : 'description'},
-                'fourth' : { 'title': '##payments.new.bill.fill.info.header.amount', 'data' : ['amount', 'currency'] },
-                'fifth' : { 'title': '##payments.new.bill.fill.info.header.from_date', 'data' : 'fromDate' },
-                'sixth' : { 'title': '##payments.new.bill.fill.info.header.to_date', 'data' : 'toDate' },
-                'seventh' : { 'title': '##payments.new.bill.fill.info.header.formula_rates', 'data' : 'formulaRates' } ,
-                'eighth': {'title': '##account.invoices.button.download'} }">
 
-        </bd-table>
-    </div>
-    <div class="pane-bd deposit-form" ng-show="billInfoSearch && updateBillTypeID ==='EXTENDED_DETAIL'">
-        <input name="checkBoxState" hidden ng-model="payment.formData.amount" required/>
-        <bd-table
-                bd-type="typeI3"
-                bd-table-params="table.tableConfig"
-                bd-table-control="table.tableControl"
-                bd-table-data="table.tableData"
-                bd-table-promise="billsPromise"
-                bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },
-                'second' : { 'title': '##payments.new.bill.fill.info.header.customer_id', 'data' : 'customerId' },
-                'third' : { 'title': '##payments.new.bill.fill.info.header.customer_name', 'data' : 'customerName'},
-                'fourth' : { 'title': '##payments.new.bill.fill.info.header.product_type', 'data' : 'productType' },
-                'fifth' : { 'title': '##payments.new.bill.fill.info.header.bill_code', 'data' : 'billCodeItemNo' },
-                'sixth' : { 'title': '##payments.new.bill.fill.info.header.amount_per_month', 'data' : ['amount', 'currency'] },
-                'seventh' : { 'title': '##payments.new.bill.fill.info.header.number_month', 'data' : 'amountMonth' } ,
-                'eighth': {'title': '##account.invoices.button.download'} }">
+            <!--<div ng-if="$expanded">-->
+            <!--<ng-transclude></ng-transclude>-->
+            <!--</div>-->
 
-        </bd-table>
+        </div>
+
+        <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>
+
+        <div bd-table-footer>
+            <bd-pagination ng-show="$params.pageCount > 1"
+                           bd-on-page-switch="$switchPage"
+                           bd-page-count="$params.pageCount"
+                           bd-current-page="$params.currentPage"></bd-pagination>
+        </div>
 
     </div>
+
+    <!--Show table extended detail-->
+    <!--<div class="pane-bd deposit-form" ng-show="billInfoSearch && updateBillTypeID ==='EXTENDED_DETAIL'">-->
+        <!--<input name="checkBoxState" hidden ng-model="payment.formData.amount" required/>-->
+        <!--<bd-table-->
+                <!--bd-type="typeI3"-->
+                <!--bd-table-params="table.tableConfig"-->
+                <!--bd-table-control="table.tableControl"-->
+                <!--bd-table-data="tables.tableData"-->
+                <!--bd-table-promise="billsPromise"-->
+                <!--bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },-->
+                <!--'second' : { 'title': '##payments.new.bill.fill.info.header.customer_id', 'data' : 'customerId' },-->
+                <!--'third' : { 'title': '##payments.new.bill.fill.info.header.customer_name', 'data' : 'customerName'},-->
+                <!--'fourth' : { 'title': '##payments.new.bill.fill.info.header.product_type', 'data' : 'productType' },-->
+                <!--'fifth' : { 'title': '##payments.new.bill.fill.info.header.bill_code', 'data' : 'billCodeItemNo' },-->
+                <!--'sixth' : { 'title': '##payments.new.bill.fill.info.header.amount_per_month', 'data' : ['amount', 'currency'] },-->
+                <!--'seventh' : { 'title': '##payments.new.bill.fill.info.header.number_month', 'data' : 'amountMonth' } ,-->
+                <!--'eighth': {'title': '##account.invoices.button.download'} }">-->
+
+        <!--</bd-table>-->
+
+    <!--</div>-->
+    <div class="bd-table"  ng-if="billTypeID === 'EXTENDED_DETAIL'">
+
+        <div bd-table-header>
+            <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
+            <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-2">{{::'payments.new.bill.fill.info.header.customer_id'|translate}}</div>
+            <div bd-table-heading="third" class="bd-table__cell bd-table__cell--md-3 bd-hide-sm">{{::'payments.new.bill.fill.info.header.customer_name'|translate}}</div>
+            <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2">{{::'payments.new.bill.fill.info.header.product_type'|translate}}</div>
+            <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2">{{::'payments.new.bill.fill.info.header.bill_code'|translate}}</div>
+            <div bd-table-heading="sixth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3">{{::'payments.new.bill.fill.info.header.amount_per_month'|translate}}</div>
+            <div bd-table-heading="seventh" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2">{{::'payments.new.bill.fill.info.header.number_month'|translate}}</div>
+            <div bd-table-heading="eighth" class="bd-table__cell bd-table__cell--sm-16 bd-table__cell--md-1"></div>
+        </div>
+        <!--<div ng-show="(promise.$$state.status === 1)"  bd-table-row bd-table-expandable ng-repeat="item in $data track by $index">-->
+        <div ng-repeat="item in payment.formData.billInfo.billItem">
+
+
+            <div class="bd-table__row-entry">
+                <div class="bd-table__row-line">
+                    <div bd-table-cell="first" class="bd-table__cell-index bd-hide-sm bd-table__cell--md-1">
+                        {{item.billCodeItemNo}}
+                    </div>
+                    <div bd-table-cell="second" class="eval('item.##secondData##') bd-hide-sm bd-table__cell--md-2">
+                        {{item.customerCode}}
+                    </div>
+                    <div bd-table-cell="third" class="bd-table__cell bd-table__cell--md-3 bd-hide-sm">
+                        {{item.customerName}}
+                    </div>
+                    <div bd-table-cell="fourth" class="bd-table__cell--sm-7 bd-table__cell--md-2">
+                        {{item.productType}}
+                    </div>
+                    <div bd-table-cell="fifth" class="bd-table__cell--sm-7 bd-table__cell--md-2">
+                        {{payment.formData.billInfo.billCode}}
+                    </div>
+                    <div bd-table-cell="sixth" class="bd-table__cell--sm-7 bd-table__cell--md-3">
+                        <bd-amount amount="item.amountMonth.value"
+                                   currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+                    </div>
+                    <div bd-table-cell="seventh" class="bd-table__cell--sm-7 bd-table__cell--md-2">
+                        {{item.qty}}
+                    </div>
+                    <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1">
+                        <!--{{ $eval('item.##fourthData##') }}-->
+                        <!--<bd-button ng-click="$params.downloadFile(item)">##fifthTitle##</bd-button>-->
+                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length,, item, $index)"
+                                     bd-disabled="true"
+                                     ng-init="payment.formData.isAllSelect=true"
+                                     ng-model="payment.formData.isAllSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID !== 'SELECT_ALL_AND_CANNOT_UNSELECT' && paymentTypeID !== 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelect">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     ng-model="isSelectOldest">
+                        </bd-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div ng-if="$expanded">-->
+            <!--<ng-transclude></ng-transclude>-->
+            <!--</div>-->
+
+        </div>
+
+        <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>
+
+        <div bd-table-footer>
+            <bd-pagination ng-show="$params.pageCount > 1"
+                           bd-on-page-switch="$switchPage"
+                           bd-page-count="$params.pageCount"
+                           bd-current-page="$params.currentPage"></bd-pagination>
+        </div>
+
+    </div>
+
+<!--billType is No Detail-->
     <div class="pane-bd deposit-form" ng-show="billInfoSearch && updateBillTypeID !=='NO_DETAIL'"></div>
     <eb-validation-messages eb-name="checkBoxState">
         <div eb-message-key="required" class="validation-message animate-on">

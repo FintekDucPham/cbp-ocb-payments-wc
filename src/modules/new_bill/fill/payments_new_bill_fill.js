@@ -1,7 +1,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_bill.fill', {
-            url: "/fill/:accountId/:nrb",
+            url: "/fill/:referenceId",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_bill/fill/payments_new_bill_fill.html",
             controller: "NewBillPaymentFillController",
             data: {
@@ -10,8 +10,14 @@ angular.module('ocb-payments')
         });
     })
     .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,  downloadService, transferBillService) {
-
-
+        /*Call move back function when referenceId has value*/
+        if ($stateParams.referenceId != undefined) {
+            $scope.$parent.$broadcast(bdStepStateEvents.BACKWARD_MOVE, {
+                proceed: function () {
+                    $scope.stepRemote.prev();
+                }
+            });
+        }
         var senderAccountInitDefer = $q.defer();
         $scope.remote = {
             model_from:{
@@ -222,10 +228,9 @@ angular.module('ocb-payments')
                     formService.dirtyFields(form);
                 } else {
                     var createTransfer = function(){
-                        $scope.payment.formData.currency = "PLN";
                         transferBillService.create('bill', angular.extend({
-                            "remitterId": 0,
-                            "businessLine": "33"
+                            "remitterId": $scope.payment.items.globusId,
+
                         }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                             $scope.payment.transferId = transfer.referenceId;
                             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;

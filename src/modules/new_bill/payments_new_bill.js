@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentNewBillController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE , bdTableConfig, transferBillService, ocbConvert) {
+    .controller('PaymentNewBillController', function ($scope, $q, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE , bdTableConfig, transferBillService, ocbConvert) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
         $scope.CURRENT_DATE = CURRENT_DATE;
@@ -127,115 +127,53 @@ angular.module('ocb-payments')
                 newSearch: true
             };
         };
-        $scope.updateBillTypeID = "NO_DETAIL";
-       // tempo dev env for list Bill response
-        $scope.mockEnv = true;
-        function getBill(deferred, $params) {
-            if ($scope.table.newSearch) {
-                $scope.table.newSearch = false;
-                //$scope.table.tableControl.invalidate();
-                $scope.table.tableConfig.currentPage = 1;
-                $scope.table.tableConfig.pageCount = 1;
-                $params.currentPage = 1;
-            }
-            var pageSize = $params.pageSize = 10;
+        //$scope.updateBillTypeID = "NO_DETAIL";
+        function getBill(defer, $params) {
+            console.log("######Start getBill#####");
+            // if ($scope.table.newSearch) {
+            //     $scope.table.newSearch = false;
+            //     //$scope.table.tableControl.invalidate();
+            //     $scope.table.tableConfig.currentPage = 1;
+            //     $scope.table.tableConfig.pageCount = 1;
+            //     $params.currentPage = 1;
+            // }
+            //var pageSize = $params.pageSize = 10;
             // if (!$scope.selectedAccount) {
             //     deferred.resolve([]);
             //     return;
             // }
-            if  (!$scope.mockEnv) {
-                $scope.billsPromise = transferBillService.getBill({
-                    providerId: "123456",
-                    billCode: "654321",
-                    pageNumber: $params.currentPage,
-                    pageSize: pageSize
-                }).then(function (billsList) {
-                    // var totalPages =
-
-
-                    if (billsList.content !== undefined) {
-                        $params.pageCount = billsList.totalPages;
-                        deferred.resolve((billsList.content.length > 0) ? billsList.content[0].billItem : []);
-                        //deferred.resolve([]);
-                        $scope.table.anyData = billsList.content[0].billItem.length > 0;
-                        $scope.updateBillTypeID = (billsList.content.length > 0) ? billsList.content[0].billType : "NO_DETAIL";
-                        // $scope.updateBillTypeID = (billsList.content.length === 0) ? billsList.content[0].billType : "EXTENDED_DETAIL";
-                    }
-                    // else {
-                    //
-                    // }
-
-
-                });
-            }else {
-                    dummyBillList(deferred, $params, pageSize);
-            }
+            // $scope.payment.formData.billsPromise = transferBillService.getBill({
+            //     // TODO mock here
+            //     providerCode: "EVNHN",//$scope.payment.formData.providerCode,//"EVNHN",
+            //     billCode: "0001"//$scope.payment.formData.billCode//"0001"
+            // }).then(function (billsList) {
+            //     if (billsList == undefined){
+            //         console.warn("The BillsList undefined");
+            //         defer.resolve([]);
+            //         //defer.reject({ message: "Really bad" });
+            //     }
+            //     else if (billsList !== undefined) {
+            //         //$params.pageCount = billsList.totalPages;
+            //
+            //         $scope.table.anyData = billsList.billItem.length > 0;
+            //         $scope.updateBillTypeID = billsList.billType;
+            //         console.warn("Xuat Bill List: " + billsList.billItem);
+            //         defer.resolve(billsList.billItem);
+            //         //return defer.promise;
+            //         //return defer;
+            //         //$rootScope.$apply();
+            //     } else {
+            //         defer.reject(billsList);
+            //     }
+            // },
+            // function (errors) {
+            //     defer.reject(errors)
+            // });
+            // console.warn("Xuat ProviderCode: " + $scope.payment.formData.providerCode);
+            // console.warn("Xuat BillCode: " + $scope.payment.formData.billCode);
+            // //return defer.promise;
         };
 
-        var dummyBillList = function(deferred, $params, pageSize) {
-            $scope.billsPromise = transferBillService.getBill({
-                providerId: "123456",
-                billCode: "654321",
-                pageNumber: $params.currentPage,
-                pageSize: pageSize
-            }).then(function (billsList) {
-                $scope.tmpBillPaymentResponse = {
-                    "billCode" : "023032507753",
-                    "serviceProvider" : {
-                        "providerCode" : "VNPTLD",
-                        "providerName" : "Lam Dong VNPT",
-                        "service" : {
-                            "serviceCode" : "NUOC",
-                            "serviceName" : "Water Bill"
-                        }
-                    },
-                    "billType" : "MASTER_DETAIL",
-                    "customerName" : "TRAN THI KIEU CHINH",
-                    "customerCode" : "1234567",
-                    "address" : null,
-                    "phoneNumber" : null,
-                    "meterNumber" : "1027",
-                    "amount" : null,
-                    "paymentType" : null,
-                    "billSourceData" : null,
-                    "billItem" : [ {
-                        "orderId" : "170510",
-                        "description" : "05/17(1):xxxx",
-                        "amount" : 859.565,
-                        "fromDate" : "2017-04-15",
-                        "toDate" : "2017-05-15",
-                        "formulaRates" : "100",
-                        "billCodeItemNo" : null,
-                        "productType" : null,
-                        "amountMonth" : null,
-                        "customerId" : null,
-                        "customerName" : null,
-                        "qty" : null
-                    }, {
-                        "orderId" : "170511",
-                        "description" : "05/18(1):xxxx",
-                        "amount" : 1000.000,
-                        "fromDate" : "2017-04-15",
-                        "toDate" : "2017-05-15",
-                        "formulaRates" : "200",
-                        "billCodeItemNo" : null,
-                        "productType" : null,
-                        "amountMonth" : null,
-                        "customerId" : null,
-                        "customerName" : null,
-                        "qty" : null
-                    } ],
-                    "_links" : { }
-
-                } ;
-                $params.pageCount = billsList.totalPages;
-                deferred.resolve($scope.tmpBillPaymentResponse.billItem);
-                //deferred.resolve([]);
-                $scope.table.anyData = $scope.tmpBillPaymentResponse.billItem.length > 0;
-                $scope.updateBillTypeID = $scope.tmpBillPaymentResponse.billType ;
-            });
-
-        };
         $scope.onSenderAccountSelect = function(accountId) {
             if (accountId == $scope.payment.formData.beneficiaryAccountId) {
                 $scope.payment.formData.beneficiaryAccountId = undefined;
@@ -249,6 +187,7 @@ angular.module('ocb-payments')
         };
         $scope.clearForm = function () {
             $scope.payment.formData = {};
+            $scope.billTypeID = undefined;
             $scope.payment.items.checkBoxList = undefined;
             if($scope.payment.meta && $scope.payment.meta.modifyFromBeneficiary){
                 $scope.payment.formData.referenceId = $scope.payment.meta.referenceId;
@@ -266,18 +205,88 @@ angular.module('ocb-payments')
         $scope.billInfoSearch = false;
         $scope.payment.formData.billCode = undefined;
         // $scope.payment.formData.amount = undefined;
+
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
+            transferBillService.getBill({
+                providerCode: $scope.payment.formData.providerCode,//"EVNHN",
+                billCode: $scope.payment.formData.billCode//"0001"
+            }).then(function (data) {
+                if (data !== undefined) {
+                    $scope.paymentTypeID = data.paymentType;
+                    $scope.billTypeID = data.billType;
+                    // if ($scope.paymentTypeID == 'SELECT_ALL_AND_CANNOT_UNSELECT') {
+                    //     //$scope.payment.formData.isAllSelect = true;
+                    // }
+                    $scope.payment.formData.billInfo = data;
+                }
+            });
+            /*checkbox to handle available funds*/
+            $scope.oldestDate = [];
+            $scope.checkBoxIBAction =  function(length, item, idx) { // separated this func when more tbl???
+                //push ToDate to list compare
+                $scope.oldestDate.push(item.toDate);
+                if ($scope.payment.items.checkBoxList === undefined) {
+                    //checked
+                    $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
+                    //$scope.payment.items.checkBoxList[idx].amount = item.amount;
+                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                    $scope.payment.items.checkBoxList[idx].userClick = 1;
+                } else {
+                    //unCheck
+                    $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? ($scope.payment.items.checkBoxList[idx].userClick  + 1) : 1;
+                    //$scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
+                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                }
+                var totalAmount = 0;
+                angular.forEach($scope.payment.items.checkBoxList,function(val,key){
+                   // var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
+                    var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1);//*amountValidation;
+                    totalAmount += multiMonthAmount;
+                    //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
+                    // console.log(key + val);
+                    // console.log(val.amount);
+                    // console.log("-+-" + totalAmount);
+                    // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
+                    //     console.log(k1+":"+v1);
+                    // });
+                });
+                // Set amount value to 1000 --> waiting for confirming
+                $scope.payment.formData.amount = 1000;//totalAmount;
+                // $scope.payment.items.totalBill = totalAmount;
+                $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
+                console.log("-0-"+ $scope.table.tableData);
+            }
+            $scope.$broadcast('searchForm');
+            var deferred = $q.defer();
+            deferred.reject();
+            // var promise = deferred.promise;
+            // promise.then(function (data) {
+            //     $scope.$data = data;
+            //     if(angular.isDefined($scope.customFilter)) {
+            //         angular.copy(data,$scope.tmp_data);
+            //     }
+            //
+            // });
+            getBill(deferred, $scope.params);
             $scope.payment.items.checkBoxList = undefined;
             // $scope.payment.formData.amount = undefined;
-            $scope.initBDTable();
+            //$scope.initBDTable();
             //console.log("+++senderProv:" + $scope.payment.items.senderProvider.providerName);
-            $scope.$broadcast('searchForm');
+
+            $scope.$broadcast('update');
             if (($scope.payment.formData.billCode !== undefined) &&($scope.payment.formData.providerCode !== undefined)) {
                 $scope.billInfoSearch = !$scope.billInfoSearch;
                 $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
                 $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;//true;
                 //$scope.initBDTable();
             }
+        };
+
+        /*Handler check box*/
+        $scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
         };
 
         var alreadySet = false;
@@ -315,7 +324,7 @@ angular.module('ocb-payments')
             completeState: 'payments.basket.new.fill',
             footerType: 'billPayment',
             onClear: $scope.clearForm,
-            onSearch: $scope.showBillInfoSearch,
+            onSearch:  $scope.showBillInfoSearch,//getBillInfo,//$scope.showBillInfoSearch,
             onGetOTP: $scope.getOTP,
             cancelState: 'payments.basket.new.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
