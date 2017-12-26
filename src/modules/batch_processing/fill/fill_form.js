@@ -23,8 +23,12 @@ angular.module('ocb-payments')
                 actions.proceed();
             });
             var updatedFlag = 0;
+            if($scope.paymentsBatchProcessingForm.transferUpdated !== undefined && $scope.paymentsBatchProcessingForm.transferUpdated.beneficiaryList !== undefined){
+                updatedFlag = 1;
+            }else{
+                $scope.paymentsBatchProcessingForm.transferUpdated = {};
+            }
             $scope.transferParam = {};
-            $scope.paymentsBatchProcessingForm.transferUpdated = {};
             if($stateParams.referenceId !== null && $stateParams.referenceId !== undefined){
                 $scope.transferParam.referenceId = $stateParams.referenceId;
                 transferBatchService.getTransfer($scope.transferParam).then(function (transfer) {
@@ -34,8 +38,6 @@ angular.module('ocb-payments')
                     }
                 });
             }
-
-
 
             $scope.senderSelectParams = new rbAccountSelectParams({});
             $scope.senderSelectParams.payments = true;
@@ -129,7 +131,6 @@ angular.module('ocb-payments')
                 }
                 return result;
             };
-
             if($scope.paymentsBatchProcessingForm.formData.tableValidContent_temp && $scope.paymentsBatchProcessingForm.formData.tableValidContent_temp.length > 0){
                 $scope.paymentsBatchProcessingForm.formData.tableValidContent = $scope.paymentsBatchProcessingForm.formData.tableValidContent_temp;
                 $scope.paymentsBatchProcessingForm.formData.tableValidCount = $scope.paymentsBatchProcessingForm.formData.tableValidCount_temp;
@@ -192,6 +193,15 @@ angular.module('ocb-payments')
                 }
             }
             autoReloadValidTable();
+
+            function listenToTableContent(){
+                if($scope.paymentsBatchProcessingForm.formData.tableValidContent && $scope.paymentsBatchProcessingForm.formData.tableValidContent.length > 0){
+                    $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
+                }else{
+                    $timeout(listenToTableContent, 500);
+                }
+            }
+            listenToTableContent();
 
             /*$scope.tableInvalidData = {
                 content: []

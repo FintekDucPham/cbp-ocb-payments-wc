@@ -48,7 +48,7 @@ angular.module('ocb-payments')
         $scope.totalamountinwordsen = $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen;
         $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.totalnumberoflines;
 
-        $scope.table = {
+        $scope.tableValid = {
             tableConfig: new bdTableConfig({
                 pageSize: $scope.pageSize_,
                 placeholderText: $filter('translate')('ocb.payments.batch_processing')
@@ -71,6 +71,10 @@ angular.module('ocb-payments')
             tableControl: undefined
         };
 
+        var isInternal = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode === 'IN';
+        $scope.hideColumnTable(isInternal === true ? 1 : 0);
+
+        $scope.paymentsBatchProcessingForm.transferUpdated;
         $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;
         $scope.paymentsBatchProcessingForm.selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
 
