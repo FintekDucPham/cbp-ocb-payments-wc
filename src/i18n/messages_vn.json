@@ -76,6 +76,7 @@
     "ocb.payments.new.types.DOMESTIC": "Domestic transfer",
     "ocb.payments.new.types.STANDING": "Standing order",
     "ocb.payments.new.btn.change": "Change",
+    "ocb.payments.new.btn.back": "Back",
     "ocb.payments.new.btn.cancel": "Cancel",
     "ocb.payments.new.btn.accept": "Accept",
     "ocb.payments.new.btn.clear": "Clear",

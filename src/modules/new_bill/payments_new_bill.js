@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentNewBillController', function ($scope, $q, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE , bdTableConfig, transferBillService, ocbConvert) {
+    .controller('PaymentNewBillController', function ($scope, $q, bdMainStepInitializer, bdStepStateEvents, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE , bdTableConfig, transferBillService, ocbConvert) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
         $scope.CURRENT_DATE = CURRENT_DATE;
@@ -89,37 +89,12 @@ angular.module('ocb-payments')
                 tableControl: undefined, // will be set by the table
                 tableConfig: new bdTableConfig({
                     placeholderText: translate.property('ocb.payments.new.bill.fill.placeHolderTable'),
-                    checkBoxIBAction: function(length, item, idx) { // separated this func when more tbl???
-                        if ($scope.payment.items.checkBoxList === undefined) {
-                            $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
-                            $scope.payment.items.checkBoxList[idx].amount = item.amount;
-                            $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
-                            $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
-                            $scope.payment.items.checkBoxList[idx].userClick = 1;
-                        } else {
-                            $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? ($scope.payment.items.checkBoxList[idx].userClick  + 1) : 1;
-                            $scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
-                            $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
-                            $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
-                        }
-                        var totalAmount = 0;
-                        angular.forEach($scope.payment.items.checkBoxList,function(val,key){
-                            var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
-                            var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1)*amountValidation;
-                            totalAmount += multiMonthAmount;
-                            //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
-                            // console.log(key + val);
-                            // console.log(val.amount);
-                            // console.log("-+-" + totalAmount);
-                            // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
-                            //     console.log(k1+":"+v1);
-                            // });
-                        });
-                        $scope.payment.formData.amount = totalAmount;
-                       // $scope.payment.items.totalBill = totalAmount;
-                        $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
-                        console.log("-0-"+ $scope.table.tableData);
-                    }
+                   /* checkBoxIBAction: function(length, item, idx) {
+                        // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
+                        //     url = exportService.prepareHref(downloadLink);
+                        // fileDownloadService.startFileDownload(url);
+                        console.log("RUN HERE++++:");
+                    }*/
                 }),
                 tableData: {
                     getData: getBill//getBlockades
@@ -361,6 +336,14 @@ angular.module('ocb-payments')
             return "success";
         }
 
+        /*Back button*/
+        $scope.backBtn = function () {
+            // $scope.$parent.$broadcast(bdStepStateEvents.BACKWARD_MOVE, {
+            //     proceed: function () {
+            //         $scope.stepRemote.prev();
+            //     }
+            // });
+        }
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.bill_history.list',
