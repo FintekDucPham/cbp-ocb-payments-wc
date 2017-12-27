@@ -121,26 +121,13 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.pending.fill",
                     priority: 15
-                },{
-                    id: "payments.payu_bku",
-                    label: "ocb.payments.payu_bku.label",
+                },
+                {
+                    id: "payments.payu",
+                    label: "ocb.payments.payu.label",
                     icon: "ocb-icons basket",
-                    action: "payments.payu_bku.fill",
+                    action: "payments.payu.fill",
                     priority: 16
-                },
-                {
-                    id: "payments.payu_hufi",
-                    label: "ocb.payments.payu_hufi.label",
-                    icon: "ocb-icons basket",
-                    action: "payments.payu_hufi.fill",
-                    priority: 17
-                },
-                {
-                    id: "payments.payu_vnpay",
-                    label: "ocb.payments.payu_vnpay.label",
-                    icon: "ocb-icons basket",
-                    action: "payments.payu_vnpay.fill",
-                    priority: 18
                 }
 
             ]

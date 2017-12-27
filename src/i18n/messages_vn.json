@@ -878,6 +878,8 @@
     "ocb.payments.payu_vnpay.provider.label" : "Provider",
     "ocb.payments.payu_vnpay.distributed.label" : "Distributed by",
     "ocb.payments.payu_vnpay.verify.label" : "Data verification",
+    "ocb.payments.payu.label" : "PayU",
+    "ocb.payments.payu.err.label" : "Oops! nothing found here, please contact administrator for information. ",
 
     "ocb.payments.payu_hufi.label" : "Tuition payment for HUFI",
     "ocb.payments.payu_vnpay.label" : "Tuition payment VNPAY",
