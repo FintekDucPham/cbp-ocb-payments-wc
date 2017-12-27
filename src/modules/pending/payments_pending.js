@@ -45,7 +45,7 @@ angular.module('ocb-payments')
     };
     // $scope.selectedTrans = [];
     //todo get user type
-    $scope.userRole = "CHECKER_1";
+    $scope.userRole = "CHECKER_2";
 
     $scope.getUserType = function () {
         var userActions = {};

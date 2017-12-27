@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,pendingTransactionService) {
+    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,pendingTransactionService,ocbConvert) {
         // bdVerifyStepInitializer($scope, {
         //     formName: 'pendingTransactionForm',
         //     formData: {
@@ -21,15 +21,16 @@ angular.module('ocb-payments')
         //define list of status
         var listStatus = $scope.getStatusByRole();
         for (var k in listStatus){
+            $scope.statuses.push(k);
             if (listStatus.hasOwnProperty(k) && listStatus[k] == true) {
                // alert("Key is " + k + ", value is" + target[k]);
-                $scope.statuses.push(k);
+                $scope.status = k;
             }
         }
 
 
       //init selected status and account
-        $scope.status =$scope.statuses[0];
+       // $scope.status =$scope.statuses[0];
         $scope.account = "";
 
         //set variable for account
@@ -108,9 +109,13 @@ angular.module('ocb-payments')
                         pageNum: 10,
                         pageSize: 3,
                         accountNo: $scope.account,
-                        transStatus: 'WAITING_FOR_CHECK1'
+                        transStatus: $scope.status
                     }
                     pendingTransactionService.getListPendingTransaction(params).then(function (d) {
+                        if (d.errors){
+                            defer.resolve([]);
+                            return
+                        }
                         $scope.listPendingTrans = d;
                         $scope.targetList = {}
                         $scope.targetList.content = _.filter($scope.listPendingTrans.content,function(o){
@@ -138,11 +143,11 @@ angular.module('ocb-payments')
                             for (var i = 0; i < $scope.table.tableConfig.pageSize; i++) {
                                 var t = $scope.targetList.content[$params.currentPage * $scope.table.tableConfig.pageSize - $scope.table.tableConfig.pageSize + i];
                                 if (t) {
-
-                                   // if($scope.statuses.indexOf(t.operationStatus) !== -1) {
                                         selectedListItem[i] = t;
+                                        //add amount in words data
+                                        t.amount_in_words = ocbConvert.convertNumberToText(t.amount,false);
                                         $scope.listCheckBox[t.id] = false;
-                                  //  }
+
                                 }
                             }
                             //$scope.tmptargetList.content = selectedListItem;

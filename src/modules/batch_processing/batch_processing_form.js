@@ -13,7 +13,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsBatchProcessingController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
+    .controller('PaymentsBatchProcessingController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService, $filter) {
 
         bdMainStepInitializer($scope, 'paymentsBatchProcessingForm', {
             formName: 'paymentsBatchProcessingFormForm',
@@ -23,6 +23,11 @@ angular.module('ocb-payments')
             validation: {},
             items :{}
         });
+
+        $scope.getCurrentDate = function() {
+            var date = new Date();
+            return $filter('date')(date, "yyyy-MM-dd");
+        }
 
         $scope.modify = {
             verify:{

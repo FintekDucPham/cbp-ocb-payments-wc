@@ -220,17 +220,17 @@ angular.module('ocb-payments')
                 // if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
                 //     form.recipientAcc.$setValidity('sameAccounts', false);
                 // }
-                if (($scope.payment.formData.amount < 1) || ($scope.payment.formData.amount == undefined)) {
-                    form.checkBoxState.$setValidity('required', false);
-                }
+                // if (($scope.payment.formData.amount < 1) || ($scope.payment.formData.amount == undefined)) {
+                //     form.checkBoxState.$setValidity('required', false);
+                // }
 
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
                     var createTransfer = function(){
+                        setRealizationDateToCurrent();
                         transferBillService.create('bill', angular.extend({
                             "remitterId": $scope.payment.items.globusId,
-
                         }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                             $scope.payment.transferId = transfer.referenceId;
                             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
