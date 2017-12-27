@@ -138,7 +138,9 @@ angular.module('ocb-payments')
                     params.visibility.finalize = true;
                     params.visibility.cancel = true;
                     params.visibility.accept = true;
+                    params.visibility.back = true;
                     params.labels.change = 'ocb.payments.new.btn.change';
+                    params.labels.back = 'ocb.payments.new.btn.back';
                     params.labels.finalize = 'ocb.payments.new.btn.finalize';
                     params.labels.cancel = 'ocb.payments.new.btn.cancel';
                 }

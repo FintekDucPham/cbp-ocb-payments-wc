@@ -1,7 +1,7 @@
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
     <div ng-show = "serverError" class="error-content">
-        <span ng-click="closeBtn()">&times;</span>
         <p>{{::"ocb.payments.error.label.serverError"|translate}}</p>
+        <span class = "close-btn" ng-click="closeBtn()">&times;</span>
     </div>
     <section ng-hide="payment.beforeTransfer.suggestions.displayed">
         <!-- Label PERSONAL / ORDERING CUSTOMER -->
