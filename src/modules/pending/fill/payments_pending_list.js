@@ -87,7 +87,7 @@ angular.module('ocb-payments')
         $scope.table = {
             tableConfig : new bdTableConfig({
                 placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
-                pageSize:3,
+                pageSize:10,
                 checkBoxIBAction: function(length, item, idx) {
                         resetErrState();
                         if($scope.pendingTransaction.selectedTrans  == undefined) {
@@ -107,12 +107,12 @@ angular.module('ocb-payments')
                     resetErrState();
                     var params = {
                         pageNum: 10,
-                        pageSize: 3,
+                        pageSize: 10,
                         accountNo: $scope.account,
                         transStatus: $scope.status
                     }
                     pendingTransactionService.getListPendingTransaction(params).then(function (d) {
-                        if (d.errors){
+                        if (d == null || d.errors){
                             defer.resolve([]);
                             return
                         }
@@ -247,10 +247,10 @@ angular.module('ocb-payments')
             var transaction = $scope.pendingTransaction.selectedTrans[0];
             switch (transaction.transactionTypeDesc) {
                 case "Bill Payment":
-                    $state.go("payments.new_bill.fill", transaction);
+                    $state.go("payments.new_bill.fill", {"referenceId" : transaction.id});
                     break;
                 case "Batch Transfer":
-                    $state.go("payments.batch_processing.fill", transaction);
+                    $state.go("payments.batch_processing.fill", {"referenceId" : transaction.id});
                     break;
                 default:
                     //todo for another transaction type
