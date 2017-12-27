@@ -1,5 +1,5 @@
 <div ng-show="showVerify" class="form-pane" id="pn-1">
-    <bd-header>{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</bd-header>
+    <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</div>
     <div class="row" ng-show="payment.endOfDayWarning && !payment.formData.addToBasket">
         <div class="col-xs-12 col-sm-12">
             <bd-msg-panel bd-msg-type="warning">{{::'ocb.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>
@@ -20,12 +20,8 @@
                         rb-account-nrb="payment.items.senderAccount.accountNo"></rb-account-responsive-line>
             </div>
         </bd-item-property>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.billCode'|translate}}">
-            {{payment.formData.billCode}}
-        </bd-item-property>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{::'ocb.payments.new.bill.verify.execution_date'|translate}}">
-            {{payment.formData.realizationDate | date:'shortDate' }}
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
+            {{payment.items.senderAccount.accountName}}
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_service_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">

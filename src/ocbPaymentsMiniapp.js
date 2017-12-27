@@ -106,24 +106,29 @@ angular.module('ocb-payments', [
                     label: 'payments.submenu.options.new_bill.header',
                     icon: "ocb-icons ocb_przelew",
                     action: "payments.new_bill.fill",
-                    priority: 12
+                    priority: 11
                 },
                 {
                     id: "payments.bill_history.list",
                     label: "ocb.payments.basket.list.details.historyAction",
                     icon: "ocb-icons basket",
                     action: "payments.bill_history.list",
-                    priority: 14
+                    priority: 12
+                },
+                {
+                    id: "payments.tuition_fee.fill",
+                    label: "ocb.payments.tuition.label.header",
+                    icon: "ocb-icons basket",
+                    action: "payments.tuition_fee.fill",
+                    priority: 13
                 },
                 {
                     id: "payments.pending.fill",
                     label: "ocb.payments.pending.label",
                     icon: "ocb-icons basket",
                     action: "payments.pending.fill",
-                    priority: 15
+                    priority: 14
                 }
-
-
             ]
         });
     }

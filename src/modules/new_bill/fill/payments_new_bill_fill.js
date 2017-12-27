@@ -228,9 +228,9 @@ angular.module('ocb-payments')
                     formService.dirtyFields(form);
                 } else {
                     var createTransfer = function(){
+                        setRealizationDateToCurrent();
                         transferBillService.create('bill', angular.extend({
                             "remitterId": $scope.payment.items.globusId,
-
                         }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                             $scope.payment.transferId = transfer.referenceId;
                             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
