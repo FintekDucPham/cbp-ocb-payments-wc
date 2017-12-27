@@ -112,7 +112,7 @@ angular.module('ocb-payments')
                         transStatus: $scope.status
                     }
                     pendingTransactionService.getListPendingTransaction(params).then(function (d) {
-                        if (d.errors){
+                        if (d == null || d.errors){
                             defer.resolve([]);
                             return
                         }
