@@ -1,5 +1,5 @@
 angular.module('ocb-payments')
-    .controller('NewPaymentSavingFillController', function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams,
+    .controller('NewPaymentSavingFillControllerII', function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams,
                                                               validationRegexp, systemParameterService, translate, utilityService,
                                                               rbBeforeTransferManager,$q) {
 
