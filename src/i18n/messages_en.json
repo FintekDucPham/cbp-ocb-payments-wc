@@ -1036,5 +1036,24 @@
 
 
 
+    "ocb.payments.new.saving.label.header":"Future Accumulate Saving and Nurturing Future II",
+    "ocb.payments.submenu.options.new_saving.header":"Accumulative saving II",
+    "ocb.payments.new.saving.fill.sender_account.accessible_assets": "Available funds",
+    "ocb.payments.new.saving.fill.recipient_account.required": "Recipient account is required",
+    "ocb.payments.new.saving.fill.name.label":"Name",
+    "ocb.payments.new.saving.fill.branch.label":"OCB Branch",
+    "ocb.payments.new.saving.fill.balance.label":"Balance",
+    "ocb.payments.new.saving.fill.daily_limit.label":"Remaining daily limit",
+    "ocb.payments.new.saving.fill.customer_group_name.label":"PERSONAL ORDERING / CUSTOMER",
+    "ocb.payments.new.saving.fill.deposit_info_group_name.label":"DEPOSIT INFO",
+    "ocb.payments.new.saving.fill.account_type":"Account type",
+    "ocb.payments.new.saving.fill.deposit_account_number":"Account number",
+    "ocb.payments.new.saving.fill.beneficiaries.label":"Add to beneficiaries list",
+    "ocb.payments.new.saving.fill.remittance_info_group_name.label":"REMITTANCE INFORMATION",
+    "ocb.payments.new.saving.fill.amount_figures.label":"Amount in figures",
+    "ocb.payments.new.saving.amount_in_word.label":"Amount in word",
+    "ocb.payments.new.saving.fill.description":"Description",
+    "ocb.payments.new.saving.fill.description.EMPTY_TITLE": "Transfer description cannot be empty",
+    "ocb.payments.new.saving.fill.description.TOO_LONG_TITLE": "Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
     "EOF": ""
 }

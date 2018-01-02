@@ -73,6 +73,12 @@ angular.module('ocb-payments', [
                         });
                     },
                     priority: 2
+                },{
+                    id: "payments.new_saving.fill",
+                    label: 'ocb.payments.submenu.options.new_saving.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: "payments.new_saving.fill",
+                    priority: 1
                 },
                 {
                     id: "payments.recipients.list",
