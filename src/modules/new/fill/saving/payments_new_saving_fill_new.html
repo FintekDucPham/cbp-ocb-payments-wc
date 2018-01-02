@@ -1,0 +1,52 @@
+<div ng-controller="NewPaymentSavingFillControllerII">
+<rb-content-view class="rb-content-view--list accounts_list">
+    <bd-list id="account_List" bd-promise="accPromise">
+        <span ng-show="accountList.content.length > 0" class="animate-on am-fade-and-scale">
+           <!-- <span ng-repeat="account in accountList.content">-->
+                <!--<bd-list-item id="account_{{$index}}">-->
+                <bd-list-item id="itemqqq">
+                <div>huraaa4</div>
+                <bd-item-property label="{{ ::'ocb.payments.new.saving.fill.sender_account' | translate }}">
+                    <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
+                    <rb-account-select rb-account-id="payment.formData.remitterAccountId"
+                                   rb-account-no="payment.items.recipient.srcAccountNo"
+                                   rb-account="payment.items.senderAccount"
+                                   bd-attr-required="true"
+                                   rb-account-list="payment.meta.accountList"
+                                   rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                   rb-product-list-name="TRANSFER_FROM_LIST"
+                                   rb-on-account-select="onSenderAccountSelect()"
+                                   rb-account-select-params="remitterAccountSelectParams"
+                                   rb-remote="remote.model"
+                                   rb-init-select-value = "{{ payment.formData.accountNo || selectNrb}}"></rb-account-select>
+                    </bd-item-property>
+                    <bd-item-property class="bd-item-property--multirow" label="{{::'ocb.payments.new.saving.fill.name'|translate}}">
+                        <textarea class="input-area" ng-model="payments.formData.senderName" maxlength="140" required name="transactionTitle"></textarea>
+                            <eb-validation-messages eb-name="payment.sender.Name">
+                                <div eb-message-key="required" class="validation-message animate-on" >{{::'ocb.cards.repayment.fill.validate.required'|translate}}</div>
+                        </eb-validation-messages>
+                    </bd-item-property>
+                </bd-list-item>
+           <!-- </span>-->
+
+
+        </span>
+    </bd-list>
+
+    <div ng-if="accountList.content.length == 0 || accountList.content.size == 0">
+        {{::"accounts.label.empty_list"|translate}}
+        <rb-note rb-slot-name="ACCOUNT_EMPTY_LIST" rb-target-type="CURRENT_USER" rb-depends-on-force-visibility="N">
+            <rb-note-info></rb-note-info>
+        </rb-note>
+    </div>
+    <section ng-if="!(accountList.content.length == 0 || accountList.content.size == 0)">
+        <rb-note rb-slot-name="ACCOUNT_EMPTY_LIST" rb-target-type="CURRENT_USER" rb-depends-on-force-visibility="T">
+            <rb-note-info></rb-note-info>
+        </rb-note>
+    </section>
+
+    <bd-list bd-promise="accPromise" ng-show="accountList.content.length > 0" class="animate-on am-fade-and-scale">
+        <div>yerueyruey</div>
+    </bd-list>
+</rb-content-view>
+</div>
