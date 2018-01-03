@@ -1,101 +1,106 @@
 <form name="paymentForm" novalidate class="form-pane" id="pn-1">
     <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
     <!--Personal / Ordering Customer-->
-    <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.customer"|translate}}</div>
-    <div class="pane-bd deposit-form">
-        <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
-            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
-            <rb-account-select rb-account="payment.items.senderAccount"
-                               rb-account-no="payment.formData.remitterAccountId"
-                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                               rb-product-list-name="TRANSFER_OWN_FROM_LIST"
-                               rb-account-select-params="senderSelectParams"
-                               rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                               rb-on-account-select="onSenderAccountSelect($accountId)"
-                               rb-remote="remote.model_from"
-                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"
-                               rb-only-bill-payment="billPayment"
-                               rb-update-disabled-state="billInfoSearch"></rb-account-select>
-        </bd-item-property>
-        <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
-            {{ payment.formData.senderCustomer.fullName }}
-        </bd-item-property>
-        <bd-item-property label="{{::'ocb.payments.new.bill.fill.ocbBranch'|translate}}">
-            {{ payment.formData.senderCustomer.branch }}
-        </bd-item-property>
-        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
-                          label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount amount="payment.items.senderAccount.accessibleAssets"
-                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
-        </bd-item-property>
-        <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
-            <!--{{payment.items.senderAccount.limitReference}}-->TODO input data
-        </bd-item-property>
+    <div class="bd-form">
+        <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.customer"|translate}}</div>
+        <div class="pane-bd deposit-form">
+            <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
+                <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
+                <rb-account-select rb-account="payment.items.senderAccount"
+                                   rb-account-no="payment.formData.remitterAccountId"
+                                   rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                   rb-product-list-name="TRANSFER_OWN_FROM_LIST"
+                                   rb-account-select-params="senderSelectParams"
+                                   rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                                   rb-on-account-select="onSenderAccountSelect($accountId)"
+                                   rb-remote="remote.model_from"
+                                   rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"
+                                   rb-only-bill-payment="billPayment"
+                                   rb-update-disabled-state="billInfoSearch"></rb-account-select>
+            </bd-item-property>
+            <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
+                {{ payment.formData.senderCustomer.fullName }}
+            </bd-item-property>
+            <bd-item-property label="{{::'ocb.payments.new.bill.fill.ocbBranch'|translate}}">
+                {{ payment.formData.senderCustomer.branch }}
+            </bd-item-property>
+            <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
+                              label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
+                <bd-amount amount="payment.items.senderAccount.accessibleAssets"
+                           currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+            </bd-item-property>
+            <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
+                <!--{{payment.items.senderAccount.limitReference}}-->TODO input data
+            </bd-item-property>
+        </div>
     </div>
     <!--Enter Bill Information-->
-    <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</div>
-    <div class="pane-bd deposit-form">
-        <input name="providerCode" hidden ng-model="payment.formData.providerCode" required/>
-        <rb-service-select rb-update-disabled-state="billInfoSearch" rb-service="payment.items.senderService" rb-provider="payment.items.senderProvider" rb-service-code="payment.formData.serviceCode" rb-provider-code="payment.formData.providerCode">
-        </rb-service-select>
-        <eb-validation-messages eb-name="providerCode">
-            <div eb-message-key="required" class="validation-message animate-on">
-                {{::'ocb.payments.new.bill.fill.providerCode.EMPTY_PROVIDERCODE'|translate}}
-            </div>
-        </eb-validation-messages>
-        <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
-            <div class="bd-item-property__value--primary">
-                <input ng-disabled="billInfoSearch"
-                    type="text"
-                    name="billCode"
-                    class="input-field"
-                    ng-pattern="BILL_CODE"
-                    ng-model="payment.formData.billCode"
-                    required
-                    placeholder=""
-                />
-            </div>
-            <eb-validation-messages eb-name="billCode">
+    <div class="bd-form">
+        <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.billInfo" |translate}}</div>
+        <div class="pane-bd deposit-form">
+            <input name="providerCode" hidden ng-model="payment.formData.providerCode" required/>
+            <rb-service-select rb-update-disabled-state="billInfoSearch" rb-service="payment.items.senderService" rb-provider="payment.items.senderProvider" rb-service-code="payment.formData.serviceCode" rb-provider-code="payment.formData.providerCode">
+            </rb-service-select>
+            <eb-validation-messages eb-name="providerCode">
                 <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.new.bill.fill.billCode.EMPTY_BILLCODE'|translate}}
-                </div>
-                <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'ocb.payments.new.bill.fill.billCode.INCORRECT_BILLCODE'|translate}}
+                    {{::'ocb.payments.new.bill.fill.providerCode.EMPTY_PROVIDERCODE'|translate}}
                 </div>
             </eb-validation-messages>
-        </bd-item-property>
-        <!--Add Payment amount-->
-        <bd-item-property label="{{::'ocb.payments.new.bill.fill.paymentAmount'|translate}}" ng-if="billTypeID === 'NO_DETAIL'">
-            <div class="bd-item-property__value--primary">
-                <input type="text"
-                       name="billCode"
-                       class="input-field"
-                       ng-pattern="PAYMENT_AMOUNT"
-                       ng-model="payment.formData.paymentAmount"
-                       required
-                       placeholder="Enter payment amount"
-                />
-            </div>
-            <eb-validation-messages eb-name="billCode">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.new.bill.fill.amount.EMPTY_AMOUNT'|translate}}
+            <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
+                <div class="bd-item-property__value--primary">
+                    <input ng-disabled="billInfoSearch"
+                           type="text"
+                           name="billCode"
+                           class="input-field"
+                           ng-pattern="BILL_CODE"
+                           ng-model="payment.formData.billCode"
+                           required
+                           placeholder=""
+                    />
                 </div>
-                <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'ocb.payments.new.bill.fill.amount.INCORRECT_AMOUNT'|translate}}
+                <eb-validation-messages eb-name="billCode">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.new.bill.fill.billCode.EMPTY_BILLCODE'|translate}}
+                    </div>
+                    <div eb-message-key="pattern" class="validation-message animate-on">
+                        {{::'ocb.payments.new.bill.fill.billCode.INCORRECT_BILLCODE'|translate}}
+                    </div>
+                </eb-validation-messages>
+            </bd-item-property>
+            <!--Add Payment amount-->
+            <bd-item-property label="{{::'ocb.payments.new.bill.fill.paymentAmount'|translate}}" ng-if="billTypeID === 'NO_DETAIL'">
+                <div class="bd-item-property__value--primary">
+                    <input type="text"
+                           name="billCode"
+                           class="input-field"
+                           ng-pattern="PAYMENT_AMOUNT"
+                           ng-model="payment.formData.paymentAmount"
+                           required
+                           placeholder="Enter payment amount"
+                    />
                 </div>
-            </eb-validation-messages>
-        </bd-item-property>
-        <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
-        <rb-widget-banner-container rb-slot-name="ACCOUNT_WIDGET" rb-target-type="CURRENT_USER">
-            <div class="widget-content-inner info-text margin-bottom-20">
-                <a class="color" href="{{::'ocb.payments.new.bill.fill.serviceList.link_url'|translate}}"
-                   target="_blank"
-                   bd-widget-click>{{::'ocb.payments.new.bill.fill.serviceList.link_name'|translate}}</a>
-            </div>
-        </rb-widget-banner-container>
+                <eb-validation-messages eb-name="billCode">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.new.bill.fill.amount.EMPTY_AMOUNT'|translate}}
+                    </div>
+                    <div eb-message-key="pattern" class="validation-message animate-on">
+                        {{::'ocb.payments.new.bill.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    </div>
+                </eb-validation-messages>
+            </bd-item-property>
+            <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
+            <rb-widget-banner-container rb-slot-name="ACCOUNT_WIDGET" rb-target-type="CURRENT_USER">
+                <div class="widget-content-inner info-text margin-bottom-20">
+                    <a class="color" href="{{::'ocb.payments.new.bill.fill.serviceList.link_url'|translate}}"
+                       target="_blank"
+                       bd-widget-click>{{::'ocb.payments.new.bill.fill.serviceList.link_name'|translate}}</a>
+                </div>
+            </rb-widget-banner-container>
+        </div>
     </div>
+
     <!--Bill information-->
-    <div ng-if="billTypeID === 'MASTER_DETAIL'">
+    <div ng-if="billTypeID === 'MASTER_DETAIL'" class="bd-form">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.showBillInfo" |translate}}</div>
         <div class="pane-bd deposit-form">
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoName'|translate}}">
@@ -135,7 +140,8 @@
     <!--</div>-->
     <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
     <!--Show table Master Detail -->
-    <div class="bd-table"  ng-if="billTypeID === 'MASTER_DETAIL'">
+
+    <div class="bd-table bd-content"  ng-if="billTypeID === 'MASTER_DETAIL'">
 
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1" label="{{::'payments.new.bill.fill.info.header.stt'|translate}}">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
@@ -238,7 +244,7 @@
         <!--</bd-table>-->
 
     <!--</div>-->
-    <div class="bd-table"  ng-if="billTypeID === 'EXTENDED_DETAIL'">
+    <div class="bd-table bd-content"  ng-if="billTypeID === 'EXTENDED_DETAIL'">
 
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
