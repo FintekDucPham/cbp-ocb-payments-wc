@@ -11,10 +11,7 @@ angular.module('ocb-payments')
         });
     })
     .controller('payuStep1Controller'
-                    , function ($scope,$state,$stateParams, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
-                                                              validationRegexp, systemParameterService, translate, utilityService, accountsService,
-                                                              rbBeforeTransferManager,
-                                bdTableConfig,ocbConvert) {
+                    , function ($scope,$state,$stateParams,translate) {
             switch ($stateParams.university) {
                 case 'bku':
                     $state.go('payments.payu_bku.fill');
