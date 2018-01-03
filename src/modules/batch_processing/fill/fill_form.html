@@ -88,10 +88,6 @@
             <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group form-btn">
-                    <!--<input style="cursor: pointer" type="file" id="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-                    <span class="display-group">
-                        <bd-button class="bd-button__primary bd-button" ng-click="tienTest()">{{::'ocb.payments.batch_processing.upload'|translate}}</bd-button>
-                    </span>-->
                     <div class="control">
                         <div class="addfile-block" id="addfile" style="">
                             <div class="form-control file-name"></div>
@@ -110,19 +106,6 @@
                     <a class="bd-button" ng-show="isExternal" ng-click="downloadTemplateExternal()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
                 </div>
             </bd-item-property-form>
-            <!--<div class="form-row">
-                <div class="lb">Upload file</div>
-                <div class="control">
-                    <div class="addfile-block" style="">
-                        <div class="form-control file-name"></div>
-                        <label class="filelb">
-                            <input type="file">
-                            <img src="images/icon-plus-circle.svg" alt="" width="37" height="37">
-                        </label>
-                    </div>
-                    <a href="javascript:;" class="btn second-btn" style="">Upload</a>
-                </div>
-            </div>-->
         </div>
 
         <!--Table section-->
