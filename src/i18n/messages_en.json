@@ -975,14 +975,6 @@
     "ocb.payments.payu.err.label" : "Oops! nothing found here, please contact administrator for information. ",
 
 
-    "ocb.payments.recipients.new.domestic.fill.recipient_type.placeholder":"Enter recipient type",
-    "ocb.payments.recipients.new.domestic.fill.recipient_type.label":"Recipient type",
-    "ocb.payments.recipients.new.domestic.fill.province.placeholder":"Enter province",
-    "ocb.payments.recipients.new.domestic.fill.province.label":"Province",
-    "ocb.payments.recipients.new.domestic.fill.bank.placeholder":"Enter bank",
-    "ocb.payments.recipients.new.domestic.fill.bank.label":"Bank",
-    "ocb.payments.recipients.new.domestic.fill.branch.placeholder":"Enter branch",
-    "ocb.payments.recipients.new.domestic.fill.branch.label":"Branch",
     "ocb.payments.recipients.list.header.recipient_type.label":"Type",
     "ocb.payments.recipients.list.header.bank.label":"Bank",
     "ocb.payments.future.saving.label":"Accumulative saving",
@@ -994,8 +986,8 @@
     "ocb.payments.new.saving.fill.recipient_data.placeholder": "Enter recipient name",
     "ocb.payments.new.saving.fill.recipient_data.EMPTY_BNF_DATA": "Recipient details cannot be empty",
     "ocb.payments.new.saving.fill.recipient_data.TOO_LONG_BNF_DATA": "Recipient details cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
-    "ocb.payments.new.saving.fill.recipient_data.TOO_LONG_BNF_DATA": "Recipient details cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
     "ocb.payments.new.saving.fill.name":"Name",
+
     "EOF": ""
 
 
