@@ -1097,6 +1097,8 @@
     "ocb.payments.new.saving.fill.description":"Description",
     "ocb.payments.new.saving.fill.description.EMPTY_TITLE": "Transfer description cannot be empty",
     "ocb.payments.new.saving.fill.description.TOO_LONG_TITLE": "Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
+    "ocb.payments.new.sawing.account.select.placeholder":"Select account II",
+    "ocb.payments.new.sawing.account.select.type.placeholder":"Select account type II",
     "EOF": ""
 
 

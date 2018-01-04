@@ -13,10 +13,34 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewPaymentSavingFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager) {
+    .controller('NewPaymentSavingFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils,
+                                                            exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions,
+                                                            bdFillStepInitializer,bdStepStateEvents, lodash, formService, validationRegexp,
+                                                            rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,
+                                                            accountsService) {
+        $scope.accounts=[];
+        $scope.selAcc;
+        $scope.activeStep;
+        $scope.recipient={"formData":{"remitterAccountId":"363453646"}};
+
+        $scope.accChange=function(acc){
+            
+        };
+        
+        //todois account type get
+        $scope.accList=[];
+        $scope.accList[0]={account:"43243543",name:"test"};
+        $scope.accList[1]={account:"7767676",name:"testII"}
+        $scope.accList[2]={account:"757854",name:"trest"};
+        
+        $scope.getAccountList=function(){
+            accountsService.selectCurrentAccount().search().then(function(data){
+                $scope.accList=data;
+            })
+        }
 
         var senderAccountInitDefer = $q.defer();
-        $scope.payment.list={acc1:"123",acc2:"456"};
+
         $scope.remote = {
             model_from:{
                 initLoadingDefer:senderAccountInitDefer,

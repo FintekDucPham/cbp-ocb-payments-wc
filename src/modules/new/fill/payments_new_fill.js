@@ -21,29 +21,7 @@ angular.module('ocb-payments')
                 analyticsTitle: "config.multistepform.labels.step1"
             }
         });
-    })  .config(function (pathServiceProvider, stateServiceProvider) {
-    stateServiceProvider.state('payments.new.saving', {
-        url: "/fill/:accountId/:nrb",
-        templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new/fill/payments_new_fill.html",
-        controller: "NewPaymentFillController",
-        params: {
-            accountId: null,
-            recipientId: null,
-            taxpayerId: null
-        },
-        resolve:{
-            CURRENT_DATE: ['utilityService', function(utilityService){
-                return utilityService.getCurrentDateWithTimezone();
-            }],
-            paymentRulesResolved: ['paymentRules', function(paymentRules){
-                return paymentRules.search();
-            }]
-        },
-        data: {
-            analyticsTitle: "config.multistepform.labels.step1"
-        }
-    });
-})
+    })
     .controller('NewPaymentFillController', function ($scope, $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, paymentRulesResolved, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp,resourceServiceFactory, CURRENT_DATE, utilityService, rbPaymentTypes) {
         $scope.blockadesForward = angular.extend({
             isBlock : false
