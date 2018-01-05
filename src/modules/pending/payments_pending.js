@@ -8,7 +8,7 @@ angular.module('ocb-payments')
                 analyticsTitle: null
             }
         });
-    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,pendingTransactionService) {
+    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,customerService) {
 
         bdMainStepInitializer($scope, 'pendingTransaction', {
             formName: 'pendingTransactionForm',
@@ -26,10 +26,6 @@ angular.module('ocb-payments')
         $scope.pendingTransaction.returnTrans();
     };
 
-
-    // $scope.approveTrans = function(){
-    //     $scope.pendingTransaction.approveTrans();
-    // };
     $scope.modifyTrans = function(){
         $scope.pendingTransaction.modifyTrans();
     };
@@ -43,14 +39,17 @@ angular.module('ocb-payments')
     $scope.clearData = function () {
         $scope.pendingTransaction.clearData();
     };
-    // $scope.selectedTrans = [];
-    //todo get user type
-    $scope.userRole = "";
 
+    $scope.userRole = "";
+    customerService.getCustomerDetails().then(function(data) {
+        if (data.customerDetails) {
+            $scope.userRole = data.customerDetails.microRole;
+            console.log($scope.userRole);
+        }
+    })
     $scope.getUserType = function () {
         var userActions = {};
         switch ($scope.userRole) {
-
             case "INPUTTER":
                 userActions = {
                         MODIFY: true,
