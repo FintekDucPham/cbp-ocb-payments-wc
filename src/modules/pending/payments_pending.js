@@ -58,7 +58,7 @@ angular.module('ocb-payments')
                         DELETE: true
                     }
                 break;
-            case "CHECKER_1":
+            case "CHECKER1":
                 userActions = {
                     MODIFY: false,
                     RETURN: true,
@@ -66,7 +66,15 @@ angular.module('ocb-payments')
                     DELETE: false
                 }
                 break;
-            case "CHECKER_2":
+            case "CHECKER2":
+                userActions = {
+                    MODIFY: false,
+                    RETURN: true,
+                    APPROVE: true,
+                    DELETE: false
+                }
+                break;
+            case "APPROVER":
                 userActions = {
                     MODIFY: false,
                     RETURN: true,
@@ -76,18 +84,18 @@ angular.module('ocb-payments')
                 break;
             case "MASTER":
                 userActions = {
-                    MODIFY: false,
-                    RETURN: true,
-                    APPROVE: true,
-                    DELETE: false
-                }
-                break;
-            default:
-                userActions = {
                     MODIFY: true,
                     RETURN: true,
                     APPROVE: true,
                     DELETE: true
+                }
+                break;
+            default:
+                userActions = {
+                    MODIFY: false,
+                    RETURN: false,
+                    APPROVE: false,
+                    DELETE: false
                 }
         }
         return userActions;
@@ -106,7 +114,7 @@ angular.module('ocb-payments')
                     WA:false
                 }
                 break;
-            case "CHECKER_1":
+            case "CHECKER1":
                 statusByUser = {
                     C1:true,
                     C2:false,
@@ -114,7 +122,7 @@ angular.module('ocb-payments')
                     WA:false
                 }
                 break;
-            case "CHECKER_2":
+            case "CHECKER2":
                 statusByUser = {
                     C1:false,
                     C2:true,
@@ -122,20 +130,28 @@ angular.module('ocb-payments')
                     WA:false
                 }
                 break;
-            case "MASTER":
+            case "APPROVER":
                 statusByUser = {
                     C1:false,
                     C2:false,
+                    RT:true,
+                    WA:true
+                }
+                break;
+            case "MASTER":
+                statusByUser = {
+                    C1:true,
+                    C2:true,
                     RT:true,
                     WA:true
                 }
                 break;
             default:
                 statusByUser = {
-                    C1:true,
-                    C2:true,
-                    RT:true,
-                    WA:true
+                    C1:false,
+                    C2:false,
+                    RT:false,
+                    WA:false
                 }
         }
         return statusByUser;

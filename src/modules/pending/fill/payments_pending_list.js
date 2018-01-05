@@ -231,9 +231,8 @@ angular.module('ocb-payments')
         };
 
         $scope.pendingTransaction.modifyTrans = function(){
-            //delete for list transaction in $scope.items.checkBoxList
-
             resetErrState();
+
             if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
                 //$scope.checkBoxState.$setValidity('required', false);
                 $scope.checkBoxState = true;
@@ -262,12 +261,22 @@ angular.module('ocb-payments')
 
         //approve transactions
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+
             $scope.checkBoxState = false;
+
             if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
                 $scope.checkBoxState = true;
                 return;
             }
+            //valid ìf status not WA
+            var invalidWA = _.filter($scope.pendingTransaction.selectedTrans,function (o) {
+                return o.operationStatus !== "WA"
+            })
 
+            if(invalidWA.length > 0){
+                $scope.invalidWA = true;
+                return;
+            }
             $scope.pendingTransaction.selectedTrans = _.sortBy($scope.pendingTransaction.selectedTrans, 'id');
             actions.proceed();
         });

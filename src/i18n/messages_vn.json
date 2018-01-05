@@ -817,6 +817,7 @@
     "ocb.payments.pending.list.err_msg.select_multi" : "Please select only one transaction for modify",
     "ocb.payments.pending.list.err_msg.service_error" : "Error occurred.",
     "ocb.payments.pending.list.err_msg.invalid_rt" : "Some transactions can not be delete",
+    "ocb.payments.pending.list.err_msg.invalid_wa" : "Some transactions can not be approve",
     "ocb.payments.pending.list.confirm_msg" : "Are you sure?",
     "ocb.payments.pending.status.placeHolder": "Transaction Status",
     "ocb.payments.pending.account.placeHolder": "Account",
