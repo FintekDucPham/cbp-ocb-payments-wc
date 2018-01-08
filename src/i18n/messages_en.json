@@ -872,6 +872,7 @@
     "ocb.payments.pending.verify.token_input.placeholder": "Enter authentication code here",
     "ocb.payments.pending.verify.header.trans_fee.label" : "Transaction fee",
     "ocb.payments.pending.verify.header.exe_date.label" : "Execution date",
+    "ocb.payments.pending.verify.NA" : "Not available ",
     "ocb.ng_dropdown_multiselect.option.checkAll":"All",
     "ocb.ng_dropdown_multiselect.option.uncheckAll":"Uncheck all",
     "ocb.ng_dropdown_multiselect.option.selectionCount":"selected",
