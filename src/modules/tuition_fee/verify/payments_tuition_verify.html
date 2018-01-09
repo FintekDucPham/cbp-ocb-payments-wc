@@ -1,0 +1,58 @@
+<form ng-show="showVerify" name="paymentsTutitionForm">
+    <div class="bd-form">
+        <bd-header class="pd-bottom">
+            {{ ::'ocb.payments.tuition.data.verification.label' | translate }}
+        </bd-header>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.university' | translate }}">
+            {{paymentsTuitionUniversities.universityName}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.form' | translate }}">
+            {{formSelected}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.student.codeID' | translate }}">
+            {{payment.formData.stdCodeID}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.verify.student.name.label' | translate }}">
+            {{studentInfo.studentName}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.class.label' | translate }}">
+            {{studentInfo.clazz}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.period.label' | translate }}">
+            {{studentInfo.period}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.department.label' | translate }}">
+            {{studentInfo.department}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.verify.payment.label' | translate }}">
+            {{}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.verify.total.amount.label' | translate }}">
+            <bd-amount amount="totalAmount"
+                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.verify.total.amount.word.label' | translate }}">
+            {{totalAmountInWord}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.verify.account.label' | translate }}">
+            {{}}
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.verify.funds.label' | translate }}">
+            <bd-amount amount="tuitionBalance"
+                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.tuition.verify.limit.label' | translate }}">
+            <bd-amount amount="tuitionLimit"
+                       currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+        </bd-item-property>
+    </div>
+
+</form>
+<div class="form-row" ng-if="payment.operation.code!=='EDIT'">
+    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
+        <button class="left-txt bd-button-OTP mg-left-btn" ng-click="getOTP()">Get OTP</button>
+    </div>
+    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
+        <input ng-model="smsOTP" type="text" placeholder="Insert OTP" class="mg-left-tb">
+    </div>
+</div>
