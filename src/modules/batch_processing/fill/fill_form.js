@@ -107,6 +107,8 @@ angular.module('ocb-payments')
                 $scope.paymentsBatchProcessingForm.formData.selectedAccount;
                 $scope.paymentsBatchProcessingForm.formData.senderAccountId;
                 var k = 0;
+                $scope.subAccountList[k] = noSubAccount;
+                k++;
                 $scope.accountList.forEach(function(account) {
                     if(account.accountNo !== $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo){
                         $scope.subAccountList[k] = account;
