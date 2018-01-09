@@ -96,7 +96,8 @@ angular.module('ocb-payments')
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         $scope.paymentsBatchProcessingFormParams = {
-            completeState:'payments.batch_processing.fill',
+            //completeState:'payments.batch_processing.fill',
+            completeState:'payments.pending.fill',
             onClear: $scope.clearForm,
             cancelState:'dashboard',
             footerType: 'batchProcessing',

@@ -287,6 +287,7 @@
     "ocb.payments.batchprocessing.status.99": "Mass Transfer has been rejected",
     "ocb.payments.batchprocessing.status.success": "Mass transfer have successfully integrated to the system with the status of waiting for checking/approval",
     "ocb.payments.batchprocessing.status.error": "Mass Transfer has been rejected",
+    "ocb.payments.batchprocessing.message.validate.error": "Validate excel file error",
 
     "ocb.payments.recipients.label": "Defined recipients",
     "ocb.payments.recipients.search.label": "Search recipient",
@@ -792,6 +793,8 @@
     "ocb.payments.batch_processing.upload": "Tải lên",
     "ocb.payments.batch_processing.download.excelTable": "Xuất file",
     "ocb.payments.batch_processing.download.template": "Tải file mẫu",
+    "ocb.payments.batch_processing.validtable": "Danh sách không hợp lệ",
+    "ocb.payments.batch_processing.invalidtable": "Danh sách không hợp lệ",
 
     "ocb.payments.batch_processing.table.fullname": "Full Name",
     "ocb.payments.batch_processing.table.accountno": "Account No",
