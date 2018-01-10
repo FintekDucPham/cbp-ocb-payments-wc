@@ -349,7 +349,7 @@ angular.module('ocb-payments')
             completeState: 'payments.bill_history.list',
             footerType: 'billPayment',
             onClear: $scope.clearForm,
-            onSearch:  $scope.showBillInfoSearch,//getBillInfo,//$scope.showBillInfoSearch,
+            onSearch:  $scope.showBillInfoSearch,
             onGetOTP: $scope.getOTP,
             cancelState: 'payments.new_bill.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
