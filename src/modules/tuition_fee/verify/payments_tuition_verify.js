@@ -1,19 +1,22 @@
+/**
+ * Created by Tran Thanh Long on 2018-01-04.
+ */
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.new_bill.verify', {
-            url: "/verify",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_bill/verify/payments_new_bill_verify.html",
-            controller: "PaymentBillVerifyController",
+        stateServiceProvider.state('payments.tuition_fee.verify', {
+            url: "verify",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/tuition_fee/verify/payments_tuition_verify.html",
+            controller: "PaymentTuitionFeeVerifyController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
             }
         });
     })
-    .controller('PaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
+    .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
 
         $scope.showVerify = false;
         if (angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)) {
-            $state.go('payments.new_bill.fill');
+            $state.go('payments.tuition_fee.fill');
         } else {
             $scope.showVerify = true;
         }
@@ -115,7 +118,8 @@ angular.module('ocb-payments')
         };
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-               authorize(actions.proceed, actions);
+                $scope.showVerify = false;
+                authorize(actions.proceed, actions);
                 actions.proceed();
             }
         });
