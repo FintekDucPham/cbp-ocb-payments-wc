@@ -28,7 +28,7 @@ angular.module('ocb-payments')
                 params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
                 params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
                 params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
-                params.createDate = getDate();
+                params.createDate = $scope.getDate(new Date());
                 params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
 
                 var selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
@@ -411,7 +411,7 @@ angular.module('ocb-payments')
 
             $scope.messageError = false;
             $scope.paymentsBatchProcessingForm.formData.transferUpdated.batchId = null;
-            $scope.tienTest = function(){
+            $scope.validateExcel = function(){
                 var file = $('#uploadFile')[0].files[0];
 
                 var sFilename = file.name;
@@ -651,7 +651,7 @@ angular.module('ocb-payments')
                 var head = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/frontend-web";
                 return head + url;
             }
-            $scope.paymentsBatchProcessingForm.formData.createDate = $scope.getCurrentDate();
+            $scope.paymentsBatchProcessingForm.formData.createDate = $scope.getDate(new Date());
 
             $scope.paymentsBatchProcessingFormParams.visibility.accept = false;//true;
             function listenToUpdatedFlag() {
@@ -661,7 +661,7 @@ angular.module('ocb-payments')
                     $scope.paymentsBatchProcessingFormParams.visibility.search = false;//false;
                     $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;//true;
 
-                    $scope.paymentsBatchProcessingForm.formData.createDate = $scope.paymentsBatchProcessingForm.formData.transferUpdated.createDate;
+                    $scope.paymentsBatchProcessingForm.formData.createDate = $scope.getDate($scope.paymentsBatchProcessingForm.formData.transferUpdated.createDate);
 
                     function readAccountList() {
                         if($scope.accountList && $scope.accountList.length > 0){

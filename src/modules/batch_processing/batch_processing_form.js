@@ -24,8 +24,7 @@ angular.module('ocb-payments')
             items :{}
         });
 
-        $scope.getCurrentDate = function() {
-            var date = new Date();
+        $scope.getDate = function(date) {
             return $filter('date')(date, "yyyy-MM-dd");
         }
 
