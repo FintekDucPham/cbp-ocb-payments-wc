@@ -834,6 +834,7 @@
     "ocb.payments.batch_processing.table.totalamountinwords": "Total amount in words",
     "ocb.payments.batch_processing.table.totalnumberoflines": "Total number of lines",
     "ocb.payments.buttons.prev": "Prev",
+    "ocb.payments.buttons.back": "Back",
     "ocb.payments.batch_processing.dataverify.label": "Data verification",
     "ocb.payments.batch_processing.dataverify.accountnumber": "Account number",
     "ocb.payments.batch_processing.dataverify.date": "Date",

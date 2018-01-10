@@ -104,7 +104,7 @@ angular.module('ocb-payments')
             onSearch: $scope.showBatchInfoSearch,
             onCheckTable: $scope.checkTable,
             labels:{
-                prev:"ocb.payments.buttons.prev",
+                prev:"ocb.payments.buttons.back",
                 testFormButton:'ocb.payments.batch_processing.custom.button',
                 next:"ocb.payments.new.btn.next",
                 finalize:"ocb.payments.new.btn.finalize",
