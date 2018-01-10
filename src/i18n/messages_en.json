@@ -853,7 +853,7 @@
 
 
     "ocb.payments.pending.label": "CB Pending Transactions",
-    "ocb.payments.pending.list.button.filter.label": "FILTER",
+    "ocb.payments.pending.list.button.filter.label": "SEARCH",
     "ocb.payments.pending.list.button.return.label": "RETURN",
     "ocb.payments.pending.list.button.approve.label": "APPROVE",
     "ocb.payments.pending.list.button.modify.label": "MODIFY",
