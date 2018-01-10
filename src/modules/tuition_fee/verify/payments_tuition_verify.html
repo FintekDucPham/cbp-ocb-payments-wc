@@ -25,7 +25,14 @@
             {{studentInfo.department}}
         </bd-item-property>
         <bd-item-property label="{{ ::'ocb.payments.tuition.verify.payment.label' | translate }}">
-            {{}}
+            <div class="form-row" ng-repeat="item in paymentInfo">
+                <div class="bd-table__cell--md-3 code-txt">
+                    {{item.subjectId}}
+                </div>
+                <div>
+                    {{item.subjectName}}
+                </div>
+            </div>
         </bd-item-property>
         <bd-item-property label="{{ ::'ocb.payments.tuition.verify.total.amount.label' | translate }}">
             <bd-amount amount="totalAmount"
