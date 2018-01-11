@@ -24,7 +24,6 @@ angular.module('ocb-payments')
             }
         }
         $timeout(autoReloadValidTable, 500);*/
-
         bdStatusStepInitializer($scope, {
             formName: 'paymentsBatchProcessingFormForm',
             dataObject: $scope.paymentsBatchProcessingForm
