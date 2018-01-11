@@ -301,6 +301,14 @@ angular.module('ocb-payments')
         customerService.getCustomerDetails().then(function(data) {
             $scope.payment.meta.customerContext = data.customerDetails.context;
             $scope.payment.meta.employee = data.customerDetails.isEmployee;
+            $scope.payment.meta.authType = data.customerDetails.authType;
+            $scope.payment.meta.fullName = data.customerDetails.fullName;
+            $scope.payment.meta.customerType = data.customerDetails.customerContext[0].detal;
+            if ($scope.payment.meta.authType == 'HW_TOKEN') {
+                $scope.formShow = true;
+            }
+        }).catch(function(response) {
+
         });
 
         angular.extend($scope.payment.formData, {

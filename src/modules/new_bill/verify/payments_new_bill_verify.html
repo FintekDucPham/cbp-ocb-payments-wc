@@ -81,3 +81,7 @@
         <input ng-model="smsOTP" type="text" placeholder="Insert OTP" class="mg-left-tb">
     </div>
 </div>
+<!--hardware token-->
+<div ng-if="payment.meta.authType == 'HW_TOKEN'">
+   <rb-authorization></rb-authorization>
+</div>
