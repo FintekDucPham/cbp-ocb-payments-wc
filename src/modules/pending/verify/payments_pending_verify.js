@@ -41,10 +41,12 @@ angular.module('ocb-payments')
 
             //TODO handling token here
             //........
-            $scope.token = "ABC";
+            $scope.token ='11111';
             //after token valid, send request to approve api
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
-            var approveResult = transferService.realize(listTransID,token);
+            transferService.realize(listTransID,$scope.token).then(function(d){
+                console.log(d);
+            });
         });
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
