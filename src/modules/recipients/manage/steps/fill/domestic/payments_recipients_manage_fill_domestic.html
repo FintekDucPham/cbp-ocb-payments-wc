@@ -1,11 +1,10 @@
 <rb-payment-recipients-fill>
     <div ng-controller="RecipientsManageFillDomesticController">
-    <section ng-if="recipient.operation.code != 'EDIT'">
-
+        <section ng-if="recipient.operation.code !== 'EDIT'">
             <bd-item-property label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
-                 <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
+                <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
 
-                <rb-account-select rb-account-id="recipient.formData.remitterAccountId"
+                <rb-account-select-v2 rb-account-id="recipient.formData.remitterAccountId"
                                    rb-account="recipient.items.senderAccount"
                                    rb-account-list="recipient.items.accountList"
                                    rb-on-account-select="onSenderAccountSelect()"
@@ -13,7 +12,7 @@
                                    rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                    rb-product-list-name="TRANSFER_FROM_LIST"
                                    rb-account-select-params="recipientSelectParams"
-                                   rb-init-select-value = "{{selectNrb}}"></rb-account-select>
+                                   rb-init-select-value = "{{selectNrb}}"></rb-account-select-v2>
 
                 <eb-validation-messages eb-name="remitterAccountId">
                     <div eb-message-key="required" class="validation-message animate-on">
@@ -22,29 +21,30 @@
                 </eb-validation-messages>
 
             </bd-item-property>
-            </section>
-        <section ng-show="recipient.operation.code === 'EDIT'">
-                <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                                  label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
-                    {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
-                </bd-item-property>
-                <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'ocb.payments.recipients.edit.domestic.verify.company.name' | translate }}">
-                    <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                        <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                            <span ng-if="owner != null">{{owner.fullName}}</span>
-                            <span ng-if="owner == null">-</span>
-                        </div>
-                    </section>
-                    <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                        <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.formData.debitAccountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                            <span ng-if="owner != null">{{owner.fullName}}</span>
-                            <span ng-if="owner == null">-</span>
-                        </div>
-                    </section>
-                </bd-item-property>
-                <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'ocb.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">-->
-                    <!--{{ recipient.formData.recipientId}}-->
-                <!--</bd-item-property>-->
+        </section>
+
+        <section ng-if="recipient.operation.code === 'EDIT'">
+            <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                              label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
+                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
+            </bd-item-property>
+            <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'ocb.payments.recipients.edit.domestic.verify.company.name' | translate }}">
+                <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                    <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
+                        <span ng-if="owner != null">{{owner.fullName}}</span>
+                        <span ng-if="owner == null">-</span>
+                    </div>
+                </section>
+                <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                    <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.formData.debitAccountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
+                        <span ng-if="owner != null">{{owner.fullName}}</span>
+                        <span ng-if="owner == null">-</span>
+                    </div>
+                </section>
+            </bd-item-property>
+            <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'ocb.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">-->
+                <!--{{ recipient.formData.recipientId}}-->
+            <!--</bd-item-property>-->
         </section>
 
         <bd-item-property label="{{ ::'ocb.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
@@ -63,23 +63,91 @@
                     {{::'ocb.payments.recipients.new.domestic.fill.customName.ILLEGAL'|translate}}
                 </div>
             </eb-validation-messages>
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--multirow"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
+            <textarea name="recipientData"
+                      ng-model="recipient.formData.recipientData"
+                      split-text-max-length-validators="140"
+                      ng-pattern="RECIPIENT_DATA_REGEX"
+                      required
+                      class="input-field input-area--party-data"
+                      placeholder="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
+
+            <eb-validation-messages eb-name="recipientData">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_data.EMPTY'|translate}}
+                </div>
+                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
+                </div>
+                <div eb-message-key="pattern" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
+                </div>
+            </eb-validation-messages>
 
         </bd-item-property>
-        <span ng-if="recipient.operation.code != 'NEW'">
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{ ::'ocb.payments.recipients.new.domestic.fill.bankName'|translate}}" ng-show="recipient.formData.bankName">
-                    {{recipient.formData.bankName}}
-            </bd-item-property>
-        </span>
-        <rb-paste-warning>
+
+        <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_type.label'|translate}}">
+            <ui-select name="recipientType" ng-model="recipient.formData.recipientType"
+                       theme="bootstrap"
+                       search-enabled="true"
+                       required>
+                <ui-select-match placeholder="{{::'ocb.payments.recipients.new.domestic.fill.recipient_type.placeholder' | translate }}">
+                    <div>
+                        {{'ocb.payments.recipient_types.' + $select.selected.code | translate}}
+                    </div>
+                </ui-select-match>
+                <ui-select-choices repeat="recipientType in recipient.meta.recipientTypes">
+                    {{'ocb.payments.recipient_types.' + recipientType.code | translate}}
+                </ui-select-choices>
+            </ui-select>
+            <eb-validation-messages eb-name="recipientType">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_type.EMPTY'|translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
+
+        <bd-item-property ng-if="recipient.formData.recipientType.code === 'FAST'">
+            <bd-radio-select bd-model="recipient.formData.paymentTarget">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <bd-radio-option bd-option-value="'ACCOUNT'">
+                            {{::'ocb.payments.recipients.new.domestic.fill.payment_target.ACCOUNT' | translate}}
+                        </bd-radio-option>
+                    </div>
+                    <div class="col-xs-6">
+                        <bd-radio-option bd-option-value="'CARD'">
+                            {{::'ocb.payments.recipients.new.domestic.fill.payment_target.CARD' | translate}}
+                        </bd-radio-option>
+                    </div>
+                </div>
+            </bd-radio-select>
+        </bd-item-property>
+
+        <bd-item-property ng-if="recipient.formData.recipientType.code === 'FAST' && recipient.formData.paymentTarget === 'CARD'"
+                          label="{{::'ocb.payments.recipients.new.domestic.fill.card_number.label' | translate}}">
+            <input name="cardNumber" ng-model="recipient.formData.cardNumber" ng-disabled="recipient.formData.paymentTarget !== 'CARD'"
+                   ng-required="recipient.formData.paymentTarget === 'CARD'" class="input-field"
+                   placeholder="{{::'ocb.payments.recipients.new.domestic.fill.card_number.placeholder' | translate }}"/>
+            <eb-validation-messages eb-name="cardNumber">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.card_number.EMPTY' | translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
+
+        <rb-paste-warning ng-if="recipient.formData.recipientType && (recipient.formData.recipientType.code !== 'FAST' || recipient.formData.paymentTarget === 'ACCOUNT')">
             <bd-item-property
-                    label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}" ng-if="recipient.operation.code === 'NEW'">
+                    label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
                     <input id="recipientAccountNo"
                            ng-show="!showHide"
                            name="recipientAccountNo"
                            ng-model="recipient.formData.recipientAccountNo"
                            required="recipient.operation.code !=='EDIT'"
                            bban-nrb
-                           ng-readonly="recipient.operation.code === 'EDIT'"
                            bd-matches-none-of="recipientAccountValidators"
                            class="input-field"
                            ng-paste="recipient.formData.nrbCheck = ''; recicpientForm.nrbCheck = ''; rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)"
@@ -123,34 +191,44 @@
              </eb-validation-messages>
         </span>
         </rb-paste-warning>
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}" ng-if="recipient.operation.code === 'EDIT'">
-            {{recipient.formData.recipientAccountNo | nrbIbanFilter}}
-        </bd-item-property>
 
-        <bd-item-property class="bd-item-property--multirow"
-                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_name_address' | translate }}">
-            <textarea name="recipientData"
-                      ng-model="recipient.formData.recipientData"
-                      split-text-max-length-validators="140"
-                      ng-pattern="RECIPIENT_DATA_REGEX"
-                      required
-                      class="input-field input-area--party-data"
-                      placeholder="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_data.placeholder' | translate }}"></textarea>
-
-            <eb-validation-messages eb-name="recipientData">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_data.EMPTY'|translate}}
-                </div>
-                <div eb-message-key="splitTextMaxLength" class="validation-message animate-on">
-                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
-                </div>
-                <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_data.MSG_0557_TOO_LONG_BNF_DATA'|translate}}
-                </div>
-            </eb-validation-messages>
-
-        </bd-item-property>
+        <rb-recipient-location ng-if="recipient.formData.recipientType.code === 'EXTERNAL' || recipient.formData.recipientType.code === 'FAST' && recipient.formData.paymentTarget === 'ACCOUNT'">
+            <bd-item-property ng-if="recipient.formData.recipientType.code === 'EXTERNAL'"
+                              label="{{::'ocb.payments.recipients.new.domestic.fill.province.label'|translate}}">
+                <input name="province" hidden ng-model="recipient.formData.province" required/>
+                <rb-province-select rb-province="recipient.formData.province"
+                                rb-province-item="recipient.items.province"
+                                rb-placeholder="{{::'ocb.payments.recipients.new.domestic.fill.province.placeholder'|translate}}"></rb-province-select>
+                <eb-validation-messages eb-name="province">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.recipients.new.domestic.fill.province.EMPTY'|translate}}
+                    </div>
+                </eb-validation-messages>
+            </bd-item-property>
+            <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.bank.label'|translate}}">
+                <input name="bankCode" hidden ng-model="recipient.formData.bankCode" required/>
+                <rb-bank-select rb-bank-code="recipient.formData.bankCode"
+                                rb-bank="recipient.items.bank"
+                                rb-placeholder="{{::'ocb.payments.recipients.new.domestic.fill.bank.placeholder'|translate}}"></rb-bank-select>
+                <eb-validation-messages eb-name="bankCode">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.recipients.new.domestic.fill.bank.EMPTY'|translate}}
+                    </div>
+                </eb-validation-messages>
+            </bd-item-property>
+            <bd-item-property ng-if="recipient.formData.recipientType.code === 'EXTERNAL'"
+                              label="{{::'ocb.payments.recipients.new.domestic.fill.branch.label'|translate}}">
+                <input name="branchCode" hidden ng-model="recipient.formData.branchCode" required/>
+                <rb-branch-select rb-branch-code="recipient.formData.branchCode"
+                                  rb-branch="recipient.items.branch"
+                                    rb-placeholder="{{::'ocb.payments.recipients.new.domestic.fill.branch.placeholder'|translate}}"></rb-branch-select>
+                <eb-validation-messages eb-name="branchCode">
+                    <div eb-message-key="required" class="validation-message animate-on">
+                        {{::'ocb.payments.recipients.new.domestic.fill.branch.EMPTY'|translate}}
+                    </div>
+                </eb-validation-messages>
+            </bd-item-property>
+        </rb-recipient-location>
 
         <bd-item-property class="bd-item-property--multirow"
                           label="{{ ::'ocb.payments.recipients.new.domestic.fill.description.label' | translate }}">
@@ -176,6 +254,7 @@
             </eb-validation-messages>
 
         </bd-item-property>
+
         <bd-msg-panel ng-if="recipient.meta.showRecipientExistInfo" bd-msg-type="warning">{{::'ocb.payments.recipient.new.error.MSG-0660_SAME_BNF'|translate}}</bd-msg-panel>
-        </div>
+    </div>
 </rb-payment-recipients-fill>

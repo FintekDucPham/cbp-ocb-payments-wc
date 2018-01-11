@@ -1,0 +1,20 @@
+<div style="position:relative;">
+    <eb-preloader ng-if="loading" class="eb-inline-preloader" eb-promise="loadingPromise"></eb-preloader>
+</div>
+<div ng-hide="loading">
+    <ui-select ng-model="selection.branch"
+               class="rb-branch_select__select"
+               theme="bootstrap"
+               ng-disabled="readonly"
+               on-select="selectBranch($item)"
+               required>
+        <ui-select-match placeholder="{{placeholder || ('ocb.payments.branch.select.placeholder'|translate)}}">
+            <div class="rb-branch-select__match-text" style="max-width:none;">
+                {{$select.selected.branchName}}
+            </div>
+        </ui-select-match>
+        <ui-select-choices repeat="branch in branchesList  | filter : {'branchName': $select.search} track by $index">
+            {{branch.branchName}}
+        </ui-select-choices>
+    </ui-select>
+</div>
