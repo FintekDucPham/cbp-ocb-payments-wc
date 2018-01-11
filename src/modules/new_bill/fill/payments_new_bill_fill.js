@@ -350,9 +350,9 @@ angular.module('ocb-payments')
             }
         };
 
-        customerService.getCustomerDetails().then(function(data) {
-            $scope.payment.meta.customerContext = data.customerDetails.context;
-        });
+        // customerService.getCustomerDetails().then(function(data) {
+        //     $scope.payment.meta.customerContext = data.customerDetails.context;
+        // });
 
         function isSenderAccountCategoryRestricted(account) {
             if($scope.payment.items.senderAccount){
