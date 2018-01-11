@@ -1,0 +1,20 @@
+<div style="position:relative;">
+    <eb-preloader ng-if="loading" class="eb-inline-preloader" eb-promise="loadingPromise"></eb-preloader>
+</div>
+<div ng-hide="loading">
+    <ui-select ng-model="selection.bank"
+               class="rb-bank_select__select"
+               theme="bootstrap"
+               ng-disabled="readonly"
+               on-select="selectBank($item)"
+               required>
+        <ui-select-match placeholder="{{placeholder || ('ocb.payments.bank.select.placeholder'|translate)}}">
+            <div class="rb-bank-select__match-text" style="max-width:none;">
+                {{$select.selected.bankName}}
+            </div>
+        </ui-select-match>
+        <ui-select-choices repeat="bank in banksList  | filter : {'bankName': $select.search} track by $index">
+            {{bank.bankName}}
+        </ui-select-choices>
+    </ui-select>
+</div>

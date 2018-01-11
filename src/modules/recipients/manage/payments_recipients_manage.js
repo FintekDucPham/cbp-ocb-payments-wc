@@ -45,9 +45,14 @@ angular.module('ocb-payments')
         $scope.PAYMENT_TITLE_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
         bdMainStepInitializer($scope, 'recipient', {
             formName: 'recipientForm',
-            type: rbRecipientTypes[$stateParams.recipientType.toUpperCase()],
+            type: {
+                code: 'DOMESTIC',
+                state: 'domestic'
+            },
             operation: rbRecipientOperationType[$stateParams.operation.toUpperCase()],
-            formData: {},
+            formData: {
+                paymentTarget: 'ACCOUNT'
+            },
             transferId: {},
             options: {},
             token: {
@@ -190,8 +195,14 @@ angular.module('ocb-payments')
                     formData: {
                         recipientData: angular.isArray(recipient.recipientAddress) ? recipient.recipientAddress.join(" ") : recipient.recipientAddress,
                         description: angular.isArray(recipient.transferTitleTable) ? recipient.transferTitleTable.join( "") : recipient.transferTitleTable,
-                        bankName: recipient.bankName
-                    }
+                        recipientType: recipient.recipientType,
+                        province: recipient.province,
+                        bankCode: recipient.bankCode,
+                        branchCode: recipient.branchCode,
+                        cardNumber: recipient.cardNumber,
+                        paymentTarget: recipient.cardNumber ? 'CARD' : 'ACCOUNT'
+                    },
+                    items: recipient.items || {}
                 }, recipient);
             },
             insurance: function (recipient) {

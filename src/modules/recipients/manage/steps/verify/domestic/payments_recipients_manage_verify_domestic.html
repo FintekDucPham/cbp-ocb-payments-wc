@@ -1,9 +1,16 @@
-
-<div ng-show="showVerify">
-    <rb-payment-recipients-verify>
-    <div ng-controller="RecipientsManageVerifyDomesticController">
+<rb-payment-recipients-verify ng-show="showVerify">
+    <div ng-controller="RecipientsManageVerifyDomesticController" class="payments-recipients__domestic-verify">
         <eb-preloader class="eb-list-preloader" eb-promise="recipient.promises.authorizationPromise"></eb-preloader>
-        <span class="payments-recipients__domestic-verify">
+
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
+            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
+            </section>
+            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
+                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
+            </section>
+        </bd-item-property>
 
         <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'ocb.payments.recipients.edit.domestic.verify.company.name' | translate }}">
             <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
@@ -20,42 +27,9 @@
             </section>
         </bd-item-property>
 
-        <!--<bd-item-property ng-if="(recipient.operation.code == 'EDIT' || recipient.operation.code == 'REMOVE')" class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'ocb.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">-->
-            <!--{{ recipient.formData.recipientId}}-->
-        <!--</bd-item-property>-->
-
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
-            <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                {{ recipient.items.senderAccount.accountNo | nrbIbanFilter }}
-            </section>
-            <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
-            </section>
-        </bd-item-property>
-
-
         <bd-item-property class="bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'ocb.payments.recipients.new.domestic.fill.custom_name.label' | translate }}" style="word-wrap: break-word">
             {{ recipient.formData.customName }}
-        </bd-item-property>
-        <span ng-if="recipient.operation.code != 'NEW'">
-            <bd-item-property ng-show="recipient.formData.bankName" class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.recipients.new.domestic.fill.bankName'|translate}}">
-                {{recipient.formData.bankName}}
-            </bd-item-property>
-        </span>
-            
-        <span ng-if="recipient.operation.code == 'NEW'" class="payments-recipients__domestic-verify__bankName-preloader-section">
-
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.recipients.new.domestic.fill.bankName'|translate}}">
-                <rb-bank-name ng-show="recipient.formData.recipientAccountNo" account-no="recipient.formData.recipientAccountNo" bank-name-promise="recipient.formData.recipientBankNamePromise"></rb-bank-name>
-            </bd-item-property>
-
-        </span>
-
-        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
-            {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
@@ -63,11 +37,39 @@
             <p style="word-wrap: break-word">{{recipient.formData.recipientData | arrayFilter}}</p>
         </bd-item-property>
 
+        <bd-item-property class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_type.label' | translate }}">
+            {{ 'ocb.payments.recipient_types.' + recipient.formData.recipientType.code | translate }}
+        </bd-item-property>
+
+        <bd-item-property ng-if="recipient.formData.cardNumber" class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.card_number.label' | translate }}">
+            {{ recipient.formData.cardNumber }}
+        </bd-item-property>
+
+        <bd-item-property ng-if="recipient.formData.recipientAccountNo" class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.recipient_account.label' | translate }}">
+            {{ recipient.formData.recipientAccountNo | nrbIbanFilter }}
+        </bd-item-property>
+
+        <bd-item-property ng-if="recipient.formData.province" class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.province.label' | translate }}">
+            {{ recipient.items.province.name }}
+        </bd-item-property>
+
+        <bd-item-property ng-if="recipient.formData.bankCode" class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.bank.label' | translate }}">
+            {{ recipient.items.bank.bankName }}
+        </bd-item-property>
+
+        <bd-item-property ng-if="recipient.formData.branchCode" class="bd-item-property--text bd-item-property--disabled"
+                          label="{{ ::'ocb.payments.recipients.new.domestic.fill.branch.label' | translate }}">
+            {{ recipient.items.branch.branchName }}
+        </bd-item-property>
+
         <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled"
                           label="{{ ::'ocb.payments.recipients.new.domestic.fill.description.label' | translate }}">
             <p style="word-wrap: break-word">{{recipient.formData.description | arrayFilter}}</p>
         </bd-item-property>
-    </span>
     </div>
-</rb-payment-recipients-verify>
-</div>
+ </rb-payment-recipients-verify>
