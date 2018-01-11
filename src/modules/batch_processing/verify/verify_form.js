@@ -16,13 +16,9 @@ angular.module('ocb-payments')
     .controller("PaymentsBatchProcessingStep2Controller"
         , function($scope, bdStepStateEvents, formService, translate, $filter, bdTableConfig, transferBatchService) {
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            transferBatchService.createBatchTransfer(params).then(function(data) {
-                if(data.content){
-                    var content = JSON.parse(data.content);
-                    resultResponse(content.referenceId);
-                }
-                actions.proceed();
-            });
+            $scope.paymentsBatchProcessingForm.result.code = "0";
+            $scope.paymentsBatchProcessingForm.result.type = "success" ;
+            actions.proceed();
         });
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
@@ -74,7 +70,7 @@ angular.module('ocb-payments')
         var isInternal = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode === 'IN';
         $scope.hideColumnTable(isInternal === true ? 1 : 0);
 
-        $scope.paymentsBatchProcessingForm.transferUpdated;
+        $scope.paymentsBatchProcessingForm.formData.transferUpdated;
         $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;
         $scope.paymentsBatchProcessingForm.selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
 
@@ -87,74 +83,13 @@ angular.module('ocb-payments')
         $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen_temp = $scope.paymentsBatchProcessingForm.totalamountinwordsen;
         $scope.paymentsBatchProcessingForm.formData.totalnumberoflines_temp = $scope.paymentsBatchProcessingForm.totalnumberoflines;
 
-        var params = {};
-        if($scope.paymentsBatchProcessingForm.transferUpdated && $scope.paymentsBatchProcessingForm.transferUpdated.id){
-            params.id = $scope.paymentsBatchProcessingForm.transferUpdated.id;
-        }
-        params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
-        params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
-        params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
-        params.createDate = getDate();
-        params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
-
-        var selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
-        if(selectedSubAccount && selectedSubAccount.flag !== undefined && selectedSubAccount.flag === 0){
-            selectedSubAccount.accountNo = "0";
-        }
-        params.subAccount = selectedSubAccount.accountNo;
-
-        //params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
-        params.currency = "PLN";
-
-        params.fullName = [];
-        params.accountNo = [];
-        params.bankCode = [];
-        params.amount = [];
-        params.bankName = [];
-        params.remark = [];
-        params.status = [];
-
-        var arrayValidTable = $scope.paymentsBatchProcessingForm.formData.tableValidContent;
-        for(var i = 0; i < arrayValidTable.length; i++){
-            params.fullName[i] = arrayValidTable[i].fullName;
-            params.accountNo[i] = arrayValidTable[i].accountNo;
-            params.bankCode[i] = arrayValidTable[i].bankCode;
-            params.bankName[i] = "BIDV";
-            params.amount[i] = arrayValidTable[i].amount;
-            params.remark[i] = arrayValidTable[i].description;
-            params.status[i] = "PD";
-        }
-        //console.log(params);
-
-        var temporaryResponse = function(status){
-            switch (status.toLowerCase()) {
-                case "pending": {
-                    $scope.paymentsBatchProcessingForm.result.code = "0";
-                    $scope.paymentsBatchProcessingForm.result.type = "success" ;
-                };
-                default :  {
-                    $scope.paymentsBatchProcessingForm.result.code = "0";
-                    $scope.paymentsBatchProcessingForm.result.type = "success" ;
-                };
-            };
-        };
-        var resultResponse = function(referenceId){
-            if(referenceId !== null && referenceId !== undefined && referenceId !== 'null'){
-                $scope.paymentsBatchProcessingForm.result.code = "0";
-                $scope.paymentsBatchProcessingForm.result.type = "success" ;
-            }else{
-                $scope.paymentsBatchProcessingForm.result.code = "99";
-                $scope.paymentsBatchProcessingForm.result.type = "error" ;
-            }
-        };
     });
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function getDate(){
-    var today = new Date();
+function getDate(today){
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
