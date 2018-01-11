@@ -20,7 +20,7 @@ angular.module('ocb-payments')
                     if($scope.blockadesForward.isBlock){return;}
                     var form = $scope.recipientForm;
                     if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code && $scope.recipient.type.code === 'DOMESTIC'){
-                        if (form.recipientAccountNo.$valid) {
+                        if (form.recipientAccountNo && form.recipientAccountNo.$valid) {
                             var recipientAccountNo = $scope.recipient.formData.recipientAccountNo;
                             if(!$scope.recipient.meta.showRecipientExistInfo){
                                 if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code){
