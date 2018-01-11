@@ -1,26 +1,40 @@
-<div ng-init="resolveBankNamePromise($data.nrb)">
+<div>
+    <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.account_related'|translate}}">
+        {{ $data.debitNrb | nrbIbanFilter }}
+    </bd-item-property>
+
     <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
         <div>{{ $data.customerName }}</div>
     </bd-item-property>
 
-    <bd-item-property class="eb-item-property--text" label="{{::'ocb.payments.recipients.new.domestic.fill.bankName'|translate}}">
-        <eb-preloader class="eb-inline-preloader" ng-if="recipient.item.recipientBankNamePromise" eb-promise="recipient.item.recipientBankNamePromise"></eb-preloader>
-        <span ng-show="recipient.item.recipientBankNamePromise.$$state.status !== 0">
-            <span ng-if="recipient.item.recipientBankName">
-                {{recipient.item.recipientBankName}}
-            </span>
-             <span ng-if="recipient.item.recipientBankName == null">
-                -
-            </span>
-        </span>
+    <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
+        <div style="word-break: break-all;">{{$data.recipientAddress}}</div>
     </bd-item-property>
 
-    <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
+    <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_type.label'|translate}}">
+        {{::'ocb.payments.recipient_types.' + $data.recipientType.code | translate}}
+    </bd-item-property>
+
+    <bd-item-property ng-if="$data.cardNumber" class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.card_number.label'|translate}}">
+        {{ $data.cardNumber }}
+    </bd-item-property>
+
+    <bd-item-property ng-if="$data.nrb" class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
         {{ $data.nrb | nrbIbanFilter }}
     </bd-item-property>
 
-    <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
-        <div style="word-break: break-all;">{{$data.recipientAddress}}</div>
+    <bd-item-property ng-if="$data.province" class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.province.label'|translate}}">
+        <eb-preloader ng-if="!$data.provinceName" ng-init="promise=resolveProvinceName($data)" eb-promise="::promise" class="eb-inline-preloader"></eb-preloader>
+        {{$data.provinceName}}
+    </bd-item-property>
+
+    <bd-item-property ng-if="$data.bankName" class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.bank.label'|translate}}">
+        {{ $data.bankName }}
+    </bd-item-property>
+
+    <bd-item-property ng-if="$data.branchCode" class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.branch.label'|translate}}">
+        <eb-preloader ng-if="!$data.branchName" ng-init="promise=resolveBranchName($data)" eb-promise="::promise" class="eb-inline-preloader"></eb-preloader>
+        {{ $data.branchName }}
     </bd-item-property>
 
     <bd-item-property class="eb-item-property--text"  label="{{::'ocb.payments.recipients.new.domestic.fill.description.label'|translate}}">

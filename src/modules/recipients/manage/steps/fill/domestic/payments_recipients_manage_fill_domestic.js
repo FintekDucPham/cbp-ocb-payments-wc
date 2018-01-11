@@ -33,8 +33,8 @@ angular.module('ocb-payments')
         });
 
         $scope.$on(bdStepStateEvents.BEFORE_FORWARD_MOVE, function (event, control) {
-            if ($scope.recipient.operation.code !== 'EDIT') {
-                                $scope.recipientForm.recipientAccountNo.$validate();
+            if ($scope.recipient.operation.code !== 'EDIT' && $scope.recipientForm.recipientAccountNo) {
+               $scope.recipientForm.recipientAccountNo.$validate();
             }
         });
 
@@ -68,12 +68,18 @@ angular.module('ocb-payments')
             if (!copiedFormData.remitterAccountId) {
                 copiedFormData.remitterAccountId = findDebitAccount();
             }
+            var type = copiedFormData.recipientType.code;
             return {
                 shortName: copiedFormData.customName,
                 debitAccount: copiedFormData.remitterAccountId,
-                creditAccount: copiedFormData.recipientAccountNo,
                 beneficiary: copiedFormData.recipientData,
-                remarks: copiedFormData.description
+                remarks: copiedFormData.description,
+                recipientType: type,
+                creditAccount: type !== 'FAST' || copiedFormData.paymentTarget === 'ACCOUNT' ? copiedFormData.recipientAccountNo : null,
+                province: type === 'EXTERNAL' ? copiedFormData.province : null,
+                bankCode: type === 'EXTERNAL' || type === 'FAST' && copiedFormData.paymentTarget === 'ACCOUNT' ? copiedFormData.bankCode : null,
+                branchCode: type === 'EXTERNAL' ? copiedFormData.branchCode : null,
+                cardNumber: type === 'FAST' && copiedFormData.paymentTarget === 'CARD' ? copiedFormData.cardNumber : null
             };
         });
 

@@ -51,6 +51,11 @@
     "ocb.payments.widget.empty_list.link_name":"Transfer cut off time >",
     "ocb.payments.widget.empty_list.link_url":"https://www.deutschebank.pl/klienci-indywidualni/konta/godziny-realizacji-przelewow.html?pm=submenu&pc=klienci-indywidualni-godziny-realizacji-przelewow",
 
+    "ocb.payments.bank.select.placeholder": "Select bank",
+    "ocb.payments.recipient_types.INTERNAL": "Internal",
+    "ocb.payments.recipient_types.EXTERNAL": "External",
+    "ocb.payments.recipient_types.FAST": "Fast 24/7",
+
     "ocb.payments.new.step2.row.info.costs_not_available": "Information on estimated order costs is currently unavailable. This does not affect the possibility of submitting the order for execution.",
     "ocb.payments.new.step2.row.charges": "Fees",
 
@@ -80,7 +85,7 @@
     "ocb.payments.new.btn.final_action": "Save recipient",
     "ocb.payments.new.btn.add_as_standing_order": "Add as standing order",
 
-    "ocb.payments.error.label.serverError": "Server response error",
+    "ocb.payments.error.label.serverError": "404 can not found data",
 
     "ocb.payments.new.verify.smscode": "Enter SMS password for the operation",
     "ocb.payments.new.verify.smscode.value": "Enter the SMS code for the transaction number ##number## of ##date##",
@@ -331,6 +336,7 @@
     "ocb.payments.batchprocessing.status.99": "Mass Transfer has been rejected",
     "ocb.payments.batchprocessing.status.success": "Mass transfer have successfully integrated to the system with the status of waiting for checking/approval",
     "ocb.payments.batchprocessing.status.error": "Mass Transfer has been rejected",
+    "ocb.payments.batchprocessing.message.validate.error": "Validate excel file error",
 
     "ocb.payments.recipients.label": "Defined recipients",
     "ocb.payments.recipients.search.label": "Search recipient",
@@ -352,9 +358,9 @@
     "ocb.payments.recipients.new.domestic.fill.bankName": "Bank name",
     "ocb.payments.recipients.edit.domestic.verify.company.name":"Company name",
     "ocb.payments.recipients.edit.domestic.verify.recipient.id":"Recipient number",
-    "ocb.payments.recipients.new.domestic.fill.custom_name.placeholder": "Enter abbreviated recipient number",
-    "ocb.payments.recipients.new.domestic.fill.custom_name.label": "Custom recipient number",
-    "ocb.payments.recipients.new.domestic.fill.customName.EMPTY": "Abbreviated recipient name cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.custom_name.placeholder": "Enter your recipient name",
+    "ocb.payments.recipients.new.domestic.fill.custom_name.label": "Your recipient name",
+    "ocb.payments.recipients.new.domestic.fill.customName.EMPTY": "Your recipient name cannot be empty",
     "ocb.payments.recipients.new.domestic.fill.account_related.none_available": "You do not have sufficient number of accounts to add a domestic recipient",
     "ocb.payments.recipients.new.domestic.fill.remitterAccount.EMPTY":"This field cannot be empty",
     "ocb.payments.recipients.new.domestic.fill.customName.ILLEGAL": "The Recipient abbreviated name cannot be longer than 35 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` ' , / _",
@@ -375,6 +381,24 @@
     "ocb.payments.recipients.new.domestic.fill.description.EMPTY":"Transfer description cannot be empty",
     "ocb.payments.recipients.new.domestic.fill.description.PATTERN":"Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
     "ocb.payments.recipients.new.domestic.fill.description.MAXLENGTH":"Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
+
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.label": "Recipient type",
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.placeholder": "Select recipient type",
+    "ocb.payments.recipients.new.domestic.fill.recipient_type.EMPTY":"Recipient type cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.payment_target.ACCOUNT": "To account",
+    "ocb.payments.recipients.new.domestic.fill.payment_target.CARD": "To card",
+    "ocb.payments.recipients.new.domestic.fill.province.label": "Province",
+    "ocb.payments.recipients.new.domestic.fill.province.placeholder": "Select recipient province",
+    "ocb.payments.recipients.new.domestic.fill.province.EMPTY":"Recipient province cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.bank.label": "Bank name",
+    "ocb.payments.recipients.new.domestic.fill.bank.placeholder": "Select recipient bank",
+    "ocb.payments.recipients.new.domestic.fill.bank.EMPTY":"Recipient bank cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.branch.label": "Branch name",
+    "ocb.payments.recipients.new.domestic.fill.branch.placeholder": "Select recipient branch",
+    "ocb.payments.recipients.new.domestic.fill.branch.EMPTY":"Recipient branch cannot be empty",
+    "ocb.payments.recipients.new.domestic.fill.card_number.label": "Card number",
+    "ocb.payments.recipients.new.domestic.fill.card_number.placeholder": "Enter card number",
+    "ocb.payments.recipients.new.domestic.fill.card_number.EMPTY":"Card number cannot be empty",
 
     "ocb.payments.recipients.manage.status.recipient_shortname": "Abbreviated recipient name",
 
@@ -836,7 +860,9 @@
     "ocb.payments.batch_processing.uploadfile": "Upload file",
     "ocb.payments.batch_processing.upload": "Upload",
     "ocb.payments.batch_processing.download.excelTable": "EXPORT FILE",
-    "ocb.payments.batch_processing.download.template": "Download the Payment List template",
+    "ocb.payments.batch_processing.download.template": "Click here to Download the Payment List template",
+    "ocb.payments.batch_processing.validtable": "Valid data",
+    "ocb.payments.batch_processing.invalidtable": "Invalid data",
 
     "ocb.payments.batch_processing.table.fullname": "Full Name",
     "ocb.payments.batch_processing.table.accountno": "Account No",
@@ -847,6 +873,7 @@
     "ocb.payments.batch_processing.table.totalamountinwords": "Total amount in words",
     "ocb.payments.batch_processing.table.totalnumberoflines": "Total number of lines",
     "ocb.payments.buttons.prev": "Prev",
+    "ocb.payments.buttons.back": "Back",
     "ocb.payments.batch_processing.dataverify.label": "Data verification",
     "ocb.payments.batch_processing.dataverify.accountnumber": "Account number",
     "ocb.payments.batch_processing.dataverify.date": "Date",
@@ -969,6 +996,20 @@
     "ocb.payments.payu_vnpay.label" : "Tuition payment VNPAY",
     "ocb.payments.payu.label" : "PayU",
     "ocb.payments.payu.err.label" : "Oops! nothing found here, please contact administrator for information. ",
+
+
+    "ocb.payments.recipients.list.header.recipient_type.label":"Type",
+    "ocb.payments.recipients.list.header.bank.label":"Bank",
+    "ocb.payments.future.saving.label":"Accumulative saving",
+    "ocb.payments.new.types.SAVING":"Future Accumulate Saving and Nurturing Future ",
+
+    "ocb.payments.new.saving.fill.sender_account":"Account number",
+    "ocb.payments.new.saving.fill.recipient_account":"Account number",
+    "ocb.payments.new.saving.fill.recipient_data": "Recipient name",
+    "ocb.payments.new.saving.fill.recipient_data.placeholder": "Enter recipient name",
+    "ocb.payments.new.saving.fill.recipient_data.EMPTY_BNF_DATA": "Recipient details cannot be empty",
+    "ocb.payments.new.saving.fill.recipient_data.TOO_LONG_BNF_DATA": "Recipient details cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
+    "ocb.payments.new.saving.fill.name":"Name",
 
     "EOF": ""
 

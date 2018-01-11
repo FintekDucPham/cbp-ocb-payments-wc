@@ -113,8 +113,11 @@ angular.module('ocb-payments')
             }
             ;
         };
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
+            if ($scope.payment.formData.senderCustomer.customerSegmentRDto.detal == 'false') {
+                actions.proceed();
+            } else if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
                authorize(actions.proceed, actions);
                 actions.proceed();
             }

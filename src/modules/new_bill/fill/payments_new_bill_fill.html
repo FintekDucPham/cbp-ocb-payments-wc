@@ -1,5 +1,4 @@
 <form name="paymentForm" novalidate class="form-pane" id="pn-1">
-    <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
     <!--Personal / Ordering Customer-->
     <div class="bd-form">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.customer"|translate}}</div>
@@ -119,6 +118,9 @@
                 {{payment.formData.billInfo.phoneNumber.value}}
             </bd-item-property>
         </div>
+    </div>
+    <div ng-show="enableLoading" class="eb-preloader-container">
+        <div eb-themable class="eb-preloader">&nbsp;</div>
     </div>
     <!--<div class="pane-bd deposit-form" ng-show="billInfoSearch ">-->
         <!--<bd-table-->
