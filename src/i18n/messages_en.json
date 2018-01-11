@@ -80,7 +80,7 @@
     "ocb.payments.new.btn.final_action": "Save recipient",
     "ocb.payments.new.btn.add_as_standing_order": "Add as standing order",
 
-    "ocb.payments.error.label.serverError": "Server response error",
+    "ocb.payments.error.label.serverError": "404 can not found data",
 
     "ocb.payments.new.verify.smscode": "Enter SMS password for the operation",
     "ocb.payments.new.verify.smscode.value": "Enter the SMS code for the transaction number ##number## of ##date##",
