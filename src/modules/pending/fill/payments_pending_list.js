@@ -9,13 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,transferPendingService,ocbConvert) {
-        // bdVerifyStepInitializer($scope, {
-        //     formName: 'pendingTransactionForm',
-        //     formData: {
-        //     }
-        //
-        // });
+    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,transferPendingService,ocbConvert,userService) {
 
         $scope.statuses = []
         //define list of status
@@ -23,102 +17,102 @@ angular.module('ocb-payments')
         for (var k in listStatus){
             $scope.statuses.push(k);
             if (listStatus.hasOwnProperty(k) && listStatus[k] == true) {
-               // alert("Key is " + k + ", value is" + target[k]);
                 $scope.status = k;
             }
         }
 
-
       //init selected status and account
-       // $scope.status =$scope.statuses[0];
         $scope.account = "";
 
         //set variable for account
         $scope.onAccountChange = function (selectedAcc) {
-            $scope.account  = selectedAcc;
-            if($scope.table == undefined) {
-                $scope.table = {
-                    tableConfig: new bdTableConfig({
-                        placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
-                        pageSize: 10,
-                        checkBoxIBAction: function (length, item, idx) {
-                            resetErrState();
-                            if ($scope.pendingTransaction.selectedTrans == undefined) {
-                                $scope.pendingTransaction.selectedTrans = [];
-                            }
-                            //if item existed (unchecked) => remove from list
-                            //if item not existed (checked) => add to list
-                            if (!_.some($scope.pendingTransaction.selectedTrans, item)) {
-                                $scope.pendingTransaction.selectedTrans.push(item)
-                            } else {
-                                _.remove($scope.pendingTransaction.selectedTrans, {'id': item.id})
-                            }
-                        }
-                    }),
-                    tableData: {
-                        getData: function (defer, $params) {
-                            resetErrState();
-                            var params = {
-                                pageNum: 10,
-                                pageSize: 10,
-                                accountNo: $scope.account,
-                                transStatus: $scope.status
-                            }
-                            console.log("waiting for account");
-                            transferPendingService.getPendingTransactions(params).then(function (d) {
-                                if (d == null || d.errors) {
-                                    defer.resolve([]);
-                                    return
+
+            userService.getIdentityDetails().then(function(identity) {
+                $scope.account  = selectedAcc;
+                if($scope.table == undefined) {
+                    $scope.table = {
+                        tableConfig: new bdTableConfig({
+                            placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
+                            pageSize: 10,
+                            checkBoxIBAction: function (length, item, idx) {
+                                resetErrState();
+                                if ($scope.pendingTransaction.selectedTrans == undefined) {
+                                    $scope.pendingTransaction.selectedTrans = [];
                                 }
-                                $scope.listPendingTrans = d;
-                                $scope.targetList = {}
-                                $scope.targetList.content = _.filter($scope.listPendingTrans.content, function (o) {
-                                    // o.operationStatus = "WA";
-                                    if ($scope.statuses.indexOf(o.operationStatus) !== -1) {
-                                        if ($scope.account !== "") {
-                                            if ($scope.account === o.accountNo) {
+                                //if item existed (unchecked) => remove from list
+                                //if item not existed (checked) => add to list
+                                if (!_.some($scope.pendingTransaction.selectedTrans, item)) {
+                                    $scope.pendingTransaction.selectedTrans.push(item)
+                                } else {
+                                    _.remove($scope.pendingTransaction.selectedTrans, {'id': item.id})
+                                }
+                            }
+                        }),
+                        tableData: {
+                            getData: function (defer, $params) {
+                                resetErrState();
+                                var params = {
+                                    customerId : identity.id,
+                                    pageNum: 10,
+                                    pageSize: 10,
+                                    accountNo: $scope.account,
+                                    transactionStatus: $scope.status
+                                }
+                                console.log("waiting for account");
+                                transferPendingService.getPendingTransactions(params).then(function (d) {
+                                    if (d == null || d.errors) {
+                                        defer.resolve([]);
+                                        return
+                                    }
+                                    $scope.listPendingTrans = d;
+                                    $scope.targetList = {}
+                                    $scope.targetList.content = _.filter($scope.listPendingTrans.content, function (o) {
+                                        // o.operationStatus = "WA";
+                                        if ($scope.statuses.indexOf(o.operationStatus) !== -1) {
+                                            if ($scope.account !== "") {
+                                                if ($scope.account === o.accountNo) {
+                                                    return o;
+                                                }
+                                            } else {
                                                 return o;
                                             }
-                                        } else {
-                                            return o;
-                                        }
 
+                                        }
+                                    });
+                                    $scope.tmptargetList = lodash.clone($scope.targetList, true);
+
+                                    $scope.listAccount = _.map($scope.pendingTransaction.selectedTrans, 'id');
+                                    if ($scope.resetPage) {
+                                        $params.currentPage = 1;
+                                    }
+
+                                    if ($scope.targetList && $scope.targetList.content) {
+                                        var selectedListItem = [];
+                                        for (var i = 0; i < $scope.table.tableConfig.pageSize; i++) {
+                                            var t = $scope.targetList.content[$params.currentPage * $scope.table.tableConfig.pageSize - $scope.table.tableConfig.pageSize + i];
+                                            if (t) {
+                                                selectedListItem[i] = t;
+                                                //add amount in words data
+                                                t.amount_in_words = ocbConvert.convertNumberToText(t.amount, false);
+                                                $scope.listCheckBox[t.id] = false;
+
+                                            }
+                                        }
+                                        //$scope.tmptargetList.content = selectedListItem;
+                                        $scope.tmptargetList.totalPages = _.ceil($scope.targetList.content.length / $scope.table.tableConfig.pageSize);
+                                        $scope.tmptargetList.content = selectedListItem;
+
+                                        defer.resolve($scope.tmptargetList.content);
+                                        $params.pageCount = $scope.tmptargetList.totalPages;
+                                        $scope.resetPage = false;
                                     }
                                 });
-                                $scope.tmptargetList = lodash.clone($scope.targetList, true);
-
-                                $scope.listAccount = _.map($scope.pendingTransaction.selectedTrans, 'id');
-                                if ($scope.resetPage) {
-                                    $params.currentPage = 1;
-                                }
-
-                                if ($scope.targetList && $scope.targetList.content) {
-                                    var selectedListItem = [];
-                                    for (var i = 0; i < $scope.table.tableConfig.pageSize; i++) {
-                                        var t = $scope.targetList.content[$params.currentPage * $scope.table.tableConfig.pageSize - $scope.table.tableConfig.pageSize + i];
-                                        if (t) {
-                                            selectedListItem[i] = t;
-                                            //add amount in words data
-                                            t.amount_in_words = ocbConvert.convertNumberToText(t.amount, false);
-                                            $scope.listCheckBox[t.id] = false;
-
-                                        }
-                                    }
-                                    //$scope.tmptargetList.content = selectedListItem;
-                                    $scope.tmptargetList.totalPages = _.ceil($scope.targetList.content.length / $scope.table.tableConfig.pageSize);
-                                    $scope.tmptargetList.content = selectedListItem;
-
-                                    defer.resolve($scope.tmptargetList.content);
-                                    $params.pageCount = $scope.tmptargetList.totalPages;
-                                    $scope.resetPage = false;
-                                }
-                            });
-                        }
-                    },
-                    tableControl: undefined
-                };
-            }
-
+                            }
+                        },
+                        tableControl: undefined
+                    };
+                }
+            })
 
         }
 
@@ -177,7 +171,6 @@ angular.module('ocb-payments')
                 $scope.checkBoxState = true;
                 return;
             }
-
             //valid ìf status not RT
             var invalidNotRT = _.filter($scope.pendingTransaction.selectedTrans,function (o) {
                 return o.operationStatus == "RT"
@@ -188,8 +181,9 @@ angular.module('ocb-payments')
                 return;
             }
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
-            var returnResult = pendingTransactionService.returnPendingTransactions({transferIDs: listTransID}).then(function (d) {
-                if(d !== undefined && d.content == "EXECUTED"){
+            transferPendingService.returnPendingTransactions({transferIDs: listTransID}).then(function (d) {
+                console.log(d);
+                if(d !== undefined && d.content == "OK"){
 
                     // $scope.table.tableControl.invalidate();
                     $scope.resetPage = true;
@@ -202,8 +196,6 @@ angular.module('ocb-payments')
 
 
         };
-
-
 
         $scope.pendingTransaction.deleteTrans = function(){
             resetErrState();
@@ -228,7 +220,8 @@ angular.module('ocb-payments')
             }
 
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
-            var deleteResult = transferPendingService.deletePendingTransactions({transferIDs: listTransID}).then(function (d) {
+            transferPendingService.deletePendingTransactions({transferIDs: listTransID}).then(function (d) {
+                console.log(d);
                 if(d !== undefined && d.content == "OK") {
                     $scope.resetPage = true;
                     $scope.pendingTransaction.selectedTrans = []
@@ -247,7 +240,6 @@ angular.module('ocb-payments')
             resetErrState();
 
             if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
-                //$scope.checkBoxState.$setValidity('required', false);
                 $scope.checkBoxState = true;
                 return;
             }
@@ -281,12 +273,19 @@ angular.module('ocb-payments')
                 $scope.checkBoxState = true;
                 return;
             }
+            console.log($scope.getUserType());
+            var listLegalRole = _.pickBy(listStatus,function(value,key){
+                return value == true;
+            });
+            var keyOfRoles = _.keys(listLegalRole);
+
             //valid ìf status not WA
             var invalidWA = _.filter($scope.pendingTransaction.selectedTrans,function (o) {
-                return o.operationStatus !== "WA"
+                console.log(o);
+                var st = o.operationStatus;
+                return _.includes(keyOfRoles,st);
             })
-
-            if(invalidWA.length > 0){
+            if(invalidWA.length == 0){
                 $scope.invalidWA = true;
                 return;
             }
@@ -305,7 +304,6 @@ angular.module('ocb-payments')
         }
 
         function isAccountInvestmentFulfilsRules(account){
-            //return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0 || account.actions.indexOf('create_between_own_accounts_transfer') > -1;
             return account;
         }
         function  resetErrState() {
