@@ -137,7 +137,8 @@ angular.module('ocb-payments')
                         $scope.payment.formData.billInfo = data;
                     }
                 }).catch(function(response) {
-                    $scope.serverError = true
+                    $scope.serverError = true;
+                    $scope.enableLoading = false
                 });
             }
 
