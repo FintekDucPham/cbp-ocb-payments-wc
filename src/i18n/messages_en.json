@@ -325,6 +325,7 @@
     "ocb.payments.new.status.20": "Transfer/transaction is pending for approval",
     "ocb.payments.new.status.40": "Transfer/transaction accepted for execution",
     "ocb.payments.new.status.60": "Transfer/transaction is in processing",
+    "ocb.payments.new.status.27": "Transfer/transaction has successfully integrated to the system with the status of waiting for checking/approval",
     "ocb.payments.new.status.100": "Transfer/transaction executed",
     "ocb.payments.new.status.99": "Transfer/transaction rejected",
     "ocb.payments.new.status.98": "Transfer/transaction rejected",
@@ -461,6 +462,7 @@
     "ocb.payments.bill.history.header.qty.label": "Number of months",
     "ocb.payments.bill.history.period.label": "Period",
     "ocb.payments.bill.history.period.to.label": "-",
+    "ocb.payments.bill.history.search.label": "Search",
 
     "ocb.payments.rejected.select.filter.button.action": "Search",
     "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",

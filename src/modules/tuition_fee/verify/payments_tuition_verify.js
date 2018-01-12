@@ -49,7 +49,16 @@ angular.module('ocb-payments')
             $scope.transferCost = transferCostData;
         });
 
+        /*call service to set SMS or hardware token */
+        customerService.getCustomerDetails().then(function(data) {
+            $scope.authType = data.customerDetails.authType;
+            $scope.customerContext = data.customerDetails.context;
+            if ($scope.authType == 'HW_TOKEN') {
+                $scope.formShow = true;
+            }
+        }).catch(function(response) {
 
+        });
         // if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
         //     $scope.payment.result.token_error = false;
         //     sendAuthorizationToken();
