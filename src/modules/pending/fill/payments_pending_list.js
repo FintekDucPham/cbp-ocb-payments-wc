@@ -182,7 +182,6 @@ angular.module('ocb-payments')
             }
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
             transferPendingService.returnPendingTransactions({transferIDs: listTransID}).then(function (d) {
-                console.log(d);
                 if(d !== undefined && d.content == "OK"){
 
                     // $scope.table.tableControl.invalidate();
@@ -196,6 +195,8 @@ angular.module('ocb-payments')
 
 
         };
+
+
 
         $scope.pendingTransaction.deleteTrans = function(){
             resetErrState();
@@ -221,7 +222,6 @@ angular.module('ocb-payments')
 
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
             transferPendingService.deletePendingTransactions({transferIDs: listTransID}).then(function (d) {
-                console.log(d);
                 if(d !== undefined && d.content == "OK") {
                     $scope.resetPage = true;
                     $scope.pendingTransaction.selectedTrans = []
@@ -271,6 +271,11 @@ angular.module('ocb-payments')
 
             if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
                 $scope.checkBoxState = true;
+                return;
+            }
+
+            if($scope.pendingTransaction.selectedTrans.length >= 2) {
+                $scope.checkBoxState2 = true;
                 return;
             }
             console.log($scope.getUserType());

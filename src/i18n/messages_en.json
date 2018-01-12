@@ -893,7 +893,7 @@
     "ocb.payments.pending.list.header.approve.label":"Approve",
     "ocb.payments.pending.list.header.trans_type.label":"Transaction Type",
     "ocb.payments.pending.list.err_msg.select_0" : "Please select transaction to continue",
-    "ocb.payments.pending.list.err_msg.select_multi" : "Please select only one transaction for modify",
+    "ocb.payments.pending.list.err_msg.select_multi" : "Please select only one transaction to continue",
     "ocb.payments.pending.list.err_msg.service_error" : "Error occurred.",
     "ocb.payments.pending.list.err_msg.invalid_rt" : "Some transactions can not be delete",
     "ocb.payments.pending.list.err_msg.invalid_wa" : "Some transactions can not be approve",

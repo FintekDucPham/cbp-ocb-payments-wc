@@ -45,7 +45,15 @@ angular.module('ocb-payments')
             //after token valid, send request to approve api
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
             transferService.realize(listTransID,$scope.token).then(function(d){
-                console.log(d);
+                if(d !== undefined && d.content == "OK"){
+
+                    // $scope.table.tableControl.invalidate();
+                    $scope.resetPage = true;
+                    $scope.pendingTransaction.selectedTrans = []
+                    $state.go('payments.pending.status');
+                } else {
+                    $scope.serviceError = true;
+                }
             });
         });
 
