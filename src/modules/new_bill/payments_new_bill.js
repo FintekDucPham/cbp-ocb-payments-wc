@@ -93,9 +93,9 @@ angular.module('ocb-payments')
                 $scope.payment.formData.beneficiaryAccountId = undefined;
             }
             //$scope.recipientSelectParams.update(accountId);
-            transferBillService.getCustomer().then(function (customerDictionary) {
-                $scope.payment.formData.senderCustomer =  (customerDictionary.content !== undefined) ? customerDictionary.content[0] : [];
-            });
+            // transferBillService.getCustomer().then(function (customerDictionary) {
+            //     $scope.payment.formData.senderCustomer =  (customerDictionary.content !== undefined) ? customerDictionary.content[0] : [];
+            // });
 
         };
         $scope.clearForm = function () {
@@ -137,7 +137,8 @@ angular.module('ocb-payments')
                         $scope.payment.formData.billInfo = data;
                     }
                 }).catch(function(response) {
-                    $scope.serverError = true
+                    $scope.serverError = true;
+                    $scope.enableLoading = false
                 });
             }
 

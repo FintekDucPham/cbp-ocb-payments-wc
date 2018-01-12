@@ -21,7 +21,7 @@
             </div>
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
-            {{payment.items.senderAccount.accountName}}
+            {{payment.meta.fullName}}
         </bd-item-property>
         <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_service_name'|translate}}">
             <div class="hidden-sm hidden-xs hidden-md">
@@ -73,11 +73,15 @@
         </bd-item-property>
     </section>
 </div>
-<div class="form-row" ng-if="payment.operation.code!=='EDIT'">
+<div class="form-row" ng-if="payment.operation.code!=='EDIT' && payment.meta.authType == 'SMS_TOKEN' && payment.meta.customerContext == 'DETAL'">
     <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
         <button class="left-txt bd-button-OTP mg-left-btn" ng-click="getOTP()">Get OTP</button>
     </div>
     <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
         <input ng-model="smsOTP" type="text" placeholder="Insert OTP" class="mg-left-tb">
     </div>
+</div>
+<!--hardware token-->
+<div ng-if="payment.operation.code!=='EDIT' && payment.meta.authType == 'HW_TOKEN' && payment.meta.customerContext == 'DETAL'">
+   <rb-authorization></rb-authorization>
 </div>

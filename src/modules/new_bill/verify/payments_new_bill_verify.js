@@ -69,7 +69,7 @@ angular.module('ocb-payments')
                 }
                 depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
-                paymentsBasketService.updateCounter($scope.payment.result.code);
+                // paymentsBasketService.updateCounter($scope.payment.result.code);
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
@@ -88,39 +88,16 @@ angular.module('ocb-payments')
             });
         }
 
-        // Waiting transferType from customerService at login Web App.
-        var temporaryTransferType = function (businessLine) {
-            switch (businessLine) {
-                case "33":
-                    return "RETAIL";
-                default :
-                    return "CORPORATE";
-            }
-            ;
-        };
-        var temporaryResponse = function (status) {
-            switch (status.toLowerCase()) {
-                case "pending": {
-                    $scope.payment.result.code = "60";//"0": "99" ;
-                    $scope.payment.result.type = "error";
-                }
-                    ;
-                default : {
-                    $scope.payment.result.code = "0";
-                    $scope.payment.result.type = "success";
-                }
-                    ;
-            }
-            ;
-        };
-
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.payment.formData.senderCustomer.customerSegmentRDto.detal == 'false') {
-                actions.proceed();
-            } else if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-               authorize(actions.proceed, actions);
-                actions.proceed();
+            if ($scope.payment.meta.customerContext == 'DETAL') {
+                authorize(actions.proceed, actions);
+            } else if ($scope.payment.meta.customerContext == 'MICRO') {
+                $scope.payment.result.type = "success";
+                $scope.payment.result.code = "27";
+            } else {
+                console.error("Undefined customer context");
             }
+            actions.proceed();
         });
 
         $scope.setForm = function (form) {

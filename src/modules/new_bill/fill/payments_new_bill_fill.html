@@ -18,10 +18,10 @@
                                    rb-update-disabled-state="billInfoSearch"></rb-account-select>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
-                {{ payment.formData.senderCustomer.fullName }}
+                {{payment.meta.fullName}}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.ocbBranch'|translate}}">
-                {{ payment.formData.senderCustomer.branch }}
+                {{payment.items.senderAccount.openBranch}}
             </bd-item-property>
             <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
                               label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
@@ -29,7 +29,7 @@
                            currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
-                <!--{{payment.items.senderAccount.limitReference}}-->TODO input data
+                {{payment.items.senderAccount.limitReference}}
             </bd-item-property>
         </div>
     </div>
