@@ -112,10 +112,9 @@ angular.module('ocb-payments')
 
 
         $scope.onRecipientTransfer = function(data) {
-                $state.go("payments.new.fill", {
-                    paymentType: data.recipientType.state,
-                    recipientId: data.recipientId
-                });
+            $state.go(data.recipientType.transferState, {
+                recipientId: data.recipientId
+            });
         };
 
         $scope.resolveTemplateType = function (recipientType) {

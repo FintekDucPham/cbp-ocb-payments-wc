@@ -1,0 +1,8 @@
+<rb-content-view class="rb-content-view--framed rb-payments-new form">
+    <bd-header>{{::"ocb.payments.external.header" | translate}}</bd-header>
+    <bd-form-panel class="bd-form-panel--responsive">
+        <rb-multistep-form rb-step-params="rbPaymentsStepParams" rb-two-step="deleteOperation">
+            <div ui-view></div>
+        </rb-multistep-form>
+    </bd-form-panel>
+</rb-content-view>

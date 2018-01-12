@@ -1,0 +1,85 @@
+<eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
+<div class="form-body" ng-show="formReady">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.remitter_account.label' | translate}}">
+        <div class="hidden-sm hidden-xs hidden-md">
+            <div class="break-force">{{ payment.items.remitterAccount.customName || payment.items.remitterAccount.accountName }}</div>
+            <div>{{payment.items.remitterAccount.accountNo | nrbIbanFilter }}</div>
+        </div>
+        <div class="hidden-lg">
+            <rb-account-responsive-line rb-account-name="payment.items.remitterAccount.customName || payment.items.remitterAccount.accountName" rb-account-nrb="payment.items.remitterAccount.accountNo"></rb-account-responsive-line>
+        </div>
+    </bd-item-property>
+
+    <bd-item-property label="{{::'ocb.payments.domestic.remitter_name.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
+        <!--{{payment.meta.remitter.fullName}}-->
+        <p ng-bind-html="payment.items.remitterAccount | accountOwners"></p>
+    </bd-item-property>
+
+    <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
+        {{payment.meta.remitter.branch}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.recipient_account.label' | translate}}">
+        {{payment.formData.recipientAccountNo | nrbIbanFilter }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.recipient_name.label' | translate}}">
+        <p class="break-force">{{payment.formData.recipientName | arrayFilter}}</p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.province.label' | translate}}">
+        {{payment.items.province.name}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.bank.label' | translate}}">
+        {{payment.items.bank.bankName}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.branch.label' | translate}}">
+        {{payment.items.branch.branchName}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.fee.label' | translate}}">
+        <bd-amount amount="payment.formData.fee" currency="VND" not-styled></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.amount.label' | translate}}">
+        <bd-amount amount="payment.formData.amount" currency="{{payment.items.remitterAccount.currency}}" not-styled></bd-amount>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.amount_words.label' | translate}}">
+        {{amountInWords}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--multirow bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.description.label' | translate}}">
+        <p>{{payment.formData.description | arrayFilter}}</p>
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.realization_date.label' | translate}}">
+        {{payment.formData.realizationDate | date:'shortDate' }}
+    </bd-item-property>
+
+    <div ng-if="exceedsFunds">
+        <bd-msg-panel bd-msg-type="error" bd-msg-size="smallmsg">{{::'ocb.payments.domestic.error.funds' | translate}}</bd-msg-panel>
+    </div>
+
+    <div ng-if="newPayment && payment.formData.addToBasket">
+        <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">{{::'ocb.payments.basket.add.verify' | translate}}</bd-msg-panel>
+    </div>
+
+    <div ng-if="basketPayment">
+        <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">>{{::'ocb.payments.basket.modify.verify.'+payment.meta.customerContext | translate}}</bd-msg-panel>
+    </div>
+
+    <div ng-if="basketPayment && payment.meta.customerContext==='MICRO'">
+        <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">>{{::'ocb.payments.basket.modify.signRemove.verify' | translate}}</bd-msg-panel>
+    </div>
+
+    <div ng-if="payment.meta.holiday">
+        <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">{{::'ocb.payments.domestic.realization_date.warning.holiday' | translate }}</bd-msg-panel>
+    </div>
+
+    <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{payment.token.model.currentToken.label}}">
+        <rb-token-authorization rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-params="payment.token.params"></rb-token-authorization>
+    </bd-item-property>
+</div>

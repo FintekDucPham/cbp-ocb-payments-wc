@@ -37,17 +37,14 @@ angular.module('ocb-payments', [
             title: 'ocb.menu.transfer',
             items:[
                 {
-                    id: "payments.new.fill",
-                    label: 'payments.submenu.options.new.header',
+                    id: "payments.external.new.fill",
+                    label: 'payments.submenu.options.new_external.header',
                     icon: "ocb-icons ocb_przelew",
-                    action: function(item, scope, state){
-                        state.reload('payments.new.fill').then(function(){
-                            state.transitionTo("payments.new.fill",{ paymentType: 'domestic', referenceId: undefined }, {reload: true}).finally(function() {
-                                state.go('payments.new.fill', {
-                                    paymentType: 'domestic',
-                                    referenceId: undefined
-                                });
-                            });
+                    action: function (item, scope, state) {
+                        state.go('payments.external.new.fill', {
+                            recipientId: null
+                        }, {
+                            reload: true
                         });
                     },
                     priority: 1

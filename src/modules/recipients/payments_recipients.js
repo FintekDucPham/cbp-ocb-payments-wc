@@ -20,7 +20,8 @@ angular.module('ocb-payments')
         },
         "EXTERNAL": {
             code: "EXTERNAL",
-            state: 'domestic'
+            state: 'domestic',
+            transferState: 'payments.external.new.fill'
         },
         "FAST": {
             code: "FAST",

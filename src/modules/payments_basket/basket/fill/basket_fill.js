@@ -112,6 +112,15 @@ angular.module('ocb-payments')
         };
 
         $scope.onEdit = function (data) {
+            if (data.payment.transferType === 'DOMESTIC') {
+                if (data.payment.paymentType === 'LOCAL_PAYMENT') {
+                    $state.go('payments.external.basket.modify.fill', {
+                        referenceId: data.payment.id
+                    });
+                    return;
+                }
+            }
+
             var copiedData = angular.copy(data);
             var paymentType = angular.lowercase(copiedData.payment.transferType) == "standing_order" ? "standing" : angular.lowercase(copiedData.payment.transferType);
             viewStateService.setInitialState('payments.new', {
@@ -124,6 +133,16 @@ angular.module('ocb-payments')
         };
 
         $scope.onDelete = function(data) {
+            if (data.payment.transferType === 'DOMESTIC') {
+                if (data.payment.paymentType === 'LOCAL_PAYMENT') {
+                    $state.go('payments.external.basket.delete.verify', {
+                        referenceId: data.payment.id,
+                        basketReferenceId: data.referenceId
+                    });
+                    return;
+                }
+            }
+
             viewStateService.setInitialState('payments.basket.manage.delete.verify', {
                 basketItem: data
             });
