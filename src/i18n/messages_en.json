@@ -1065,7 +1065,7 @@
     "ocb.payments.new.saving.fill.customer_group_name.label":"PERSONAL ORDERING / CUSTOMER",
     "ocb.payments.new.saving.fill.deposit_info_group_name.label":"DEPOSIT INFO",
     "ocb.payments.new.saving.fill.account_type":"Account type",
-    "ocb.payments.new.saving.fill.deposit_account_number":"Account number",
+    "ocb.payments.new.saving.fill.deposit_account_number":"Deposit account number",
     "ocb.payments.new.saving.fill.beneficiaries.label":"Add to beneficiaries list",
     "ocb.payments.new.saving.fill.remittance_info_group_name.label":"REMITTANCE INFORMATION",
     "ocb.payments.new.saving.fill.amount_figures.label":"Amount in figures",
@@ -1073,8 +1073,12 @@
     "ocb.payments.new.saving.fill.description":"Description",
     "ocb.payments.new.saving.fill.description.EMPTY_TITLE": "Transfer description cannot be empty",
     "ocb.payments.new.saving.fill.description.TOO_LONG_TITLE": "Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
-    "ocb.payments.new.sawing.account.select.placeholder":"Select account II",
-    "ocb.payments.new.sawing.account.select.type.placeholder":"Select account type II",
+    "ocb.payments.new.saving.account.select.placeholder":"Select account II",
+    "ocb.payments.new.saving.account.select.type.placeholder":"Select account type",
+    "ocb.payments.recipients.list.header.recipient_type.label":"Type",
+    "ocb.payments.recipients.list.header.bank.label":"Bank",
+    "ocb.payments.new.saving.fill.description.placeholder":"Type description",
+    "ocb.payments.new.saving.fill.acctype.EMPTY_TITLE":"Account type cannot by empty",
 
     "EOF": ""
 }

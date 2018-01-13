@@ -4,11 +4,11 @@
 
         </div>
         <bd-item-property label="{{ ::'ocb.payments.new.saving.fill.sender_account' | translate }}">
-            <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
+          <!-- <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>-->
 
-            <rb-account-select-v2 rb-account-id="recipient.formData.remitterAccountId"
-                                  rb-account="recipient.items.senderAccount"
-                                  rb-account-list="recipient.items.accountList"
+            <rb-account-select-v2 rb-account-id="payment.formData.remitterAccountId"
+                                  rb-account="payment.items.senderAccount"
+                                  rb-account-list="payment.items.accountList"
                                   rb-on-account-select="onSenderAccountSelect()"
                                   rb-init-select-fn="getAccountByNrb($accountList, $select)"
                                   rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
@@ -69,15 +69,15 @@
 
         </bd-item-property>
 
-        <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
+      <!--  <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
                           label="{{ ::'ocb.payments.new.saving.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
             <bd-amount amount="payment.items.senderAccount.accessibleAssets"
                        currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
         </bd-item-property>
 
         <input name="recipientAcc" hidden ng-model="payment.formData.beneficiaryAccountId" required/>
-        <bd-item-property label="rrrr{{ ::'ocb.payments.new.internal.fill.recipient_account' | translate }}" ng-if="payment.formData.remitterAccountId">
-           <!-- <rb-account-select
+        <bd-item-property label="{{ ::'ocb.payments.new.internal.fill.recipient_account' | translate }}" ng-if="payment.formData.remitterAccountId">
+           &lt;!&ndash; <rb-account-select
                     rb-account="payment.items.recipientAccount"
                     rb-account-id="payment.formData.beneficiaryAccountId"
                     rb-account-select-params="recipientSelectParams"
@@ -85,7 +85,7 @@
                     rb-product-list-name="TRANSFER_OWN_TO_LIST"
                     rb-remote="remote.model_to"
                     rb-init-select-value = "{{payment.formData.recipientAccountNo}}"
-                    placeholder-value="{{ ::'ocb.payments.new.internal.fill.choose' | translate }}"></rb-account-select>-->
+                    placeholder-value="{{ ::'ocb.payments.new.internal.fill.choose' | translate }}"></rb-account-select>&ndash;&gt;
 
             <rb-account-select-v2 rb-account-id="recipient.formData.remitterAccountId"
                                   rb-account="recipient.items.senderAccount"
@@ -112,40 +112,60 @@
                           label="{{ ::'ocb.payments.new.saving.fill.recipient_account.accessible_assets' | translate }}">
             <bd-amount amount="payment.items.recipientAccount.accessibleAssets"
                        currency="{{ payment.items.recipientAccount.currency }}"></bd-amount>
-        </bd-item-property>
+        </bd-item-property>-->
         <!--nams branch balance-->
 
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.name.label'|translate}}">
             {{account.accountName}}
             <div id="editableDivName" class="productName" eb-editable-name eb-editable-model="account"
-                 placeholder-text="Jozko Ferko"
+                 placeholder-text="{{payment.meta.customerDetails.fullName}}"
                  bd-product-id="account.accountId" bd-product-type="ACCOUNT"></div>
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.branch.label'|translate}}">
             {{account.accountName}}
             <div id="editableDivBranch" class="productName" eb-editable-name eb-editable-model="account"
-                 placeholder-text="Branch"
+                 placeholder-text="branch name"
                  bd-product-id="account.accountId" bd-product-type="ACCOUNT"></div>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.balance.label'|translate}}">
             {{account.accountName}}
             <div id="editableDivBalance" class="productName" eb-editable-name eb-editable-model="account"
-                 placeholder-text="1000 VND"
+                 placeholder-text={{currentBalance}}
                  bd-product-id="account.accountId" bd-product-type="ACCOUNT"></div>
         </bd-item-property>
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.daily_limit.label'|translate}}">
             {{account.accountName}}
-            <div id="editableDivLimit" class="productName" eb-editable-name eb-editable-model="account"
-                 placeholder-text="10000 VND"
-                 bd-product-id="account.accountId" bd-product-type="ACCOUNT"></div>
+            <div id="remainingDailyLimit" class="productName" eb-editable-name eb-editable-model="account"
+                 placeholder-text="{{transactionLimit.remainingDailyLimit}}"
+                ></div>
         </bd-item-property>
 <!--group deposit info-->
         <div  class="groupTitle" >{{::'ocb.payments.new.saving.fill.deposit_info_group_name.label'|translate}}
 
         </div>
 
-        <bd-item-property label="{{ ::'ocb.payments.new.saving.fill.account_type' | translate }}">
+        <bd-item-property label="{{::'ocb.payments.new.saving.fill.account_type'|translate}}">
+            <ui-select ng-model="payment.formData.acctype"
+                       theme="bootstrap"
+                       name="accountType"
+                       on-select="acctypeSelected($select.selected)"
+                       class="deposit_type_select"
+                       required>
+                <ui-select-match placeholder="{{ ::'ocb.payments.new.saving.account.select.type.placeholder' | translate }}">
+                    <div class="deposit_type_truncate">
+                        {{$select.selected.name}}
+                    </div>
+                </ui-select-match>
+                <ui-select-choices repeat="accType in accTypeList | filter: $select.search track by $index">
+                    <div ng-bind-html=" accType.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            <eb-validation-messages eb-name="accountType">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.saving.fill.acctype.EMPTY_TITLE'|translate}}
+                </div>
+            </eb-validation-messages>
           <!--  <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
             <rb-account-select rb-account="payment.items.senderAccount"
                                rb-account-id="payment.formData.remitterAccountId"
@@ -157,7 +177,7 @@
                                rb-remote="remote.model_from"
                                rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>-->
 
-            <ui-select ng-model="selAcc"
+       <!--     <ui-select ng-model="selAcc"
                        theme="bootstrap"
                        on-select="accChange($select.selected)"
 
@@ -166,34 +186,44 @@
                 <ui-select-match placeholder="{{::'ocb.payments.new.sawing.account.select.type.placeholder'|translate}}">
                     <div class="select-account__row__cell account-desc">
                         <rb-account-responsive-line rb-allow-long-nrb="false"
-                                                    rb-account-name="$select.selected.name || $select.selected.account"
-                                                    rb-account-nrb="$select.selected.account"></rb-account-responsive-line>
+                                                    rb-account-name="$select.selected.name || $select.selected.type"
+                                                    rb-account-nrb="0"></rb-account-responsive-line>
                     </div>
                 </ui-select-match>
-                <ui-select-choices repeat="accItem in accList | filter: $select.search track by $index">
-                    <div class="rb-account-select__account-name-row" ng-bind="(accItem.name)"></div>
-                    <div class="rb-account-select__account-desc-row">
+                <ui-select-choices repeat="accType in accTypeList | filter: $select.search track by $index">
+                    <div class="rb-account-select__account-name-row" ng-bind="(accType.name)"></div>
+                    &lt;!&ndash;<div class="rb-account-select__account-desc-row">
                         <span class="rb-account-select__account-desc-row__nrb hidden-xs hidden-sm"
-                              ng-bind-html="accItem.account | highlight: $select.search"></span>
-                        <span class="rb-account-select__account-desc-row__nrb hidden-md hidden-lg"
-                              ng-bind-html="accItem.name | highlight: $select.search"></span>
+                              ng-bind-html="accType.name | highlight: $select.search"></span>
+                      &lt;!&ndash;  <span class="rb-account-select__account-desc-row__nrb hidden-md hidden-lg"
+                              ng-bind-html="accType.name | highlight: $select.search"></span>&ndash;&gt;
 
-                    </div>
+                    </div>&ndash;&gt;
                 </ui-select-choices>
-            </ui-select>
+            </ui-select>-->
         </bd-item-property>
 
         <bd-item-property label="{{ ::'ocb.payments.new.saving.fill.deposit_account_number' | translate }}">
-            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
-            <rb-account-select rb-account="payment.items.senderAccount"
-                               rb-account-id="payment.formData.remitterAccountId"
+       <!--     <input name="recipientAccountId" hidden ng-model="payment.formData.recipientAccountId" required/>-->
+            <rb-account-select-v2 rb-account="payment.items.recipientAccount"
+                               rb-account-id="payment.formData.beneficiaryAccountId"
                                rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                rb-product-list-name="TRANSFER_OWN_FROM_LIST"
                                rb-account-select-params="senderSelectParams"
                                rb-init-select-fn="getAccountByNrb($accountList, $select)"
                                rb-on-account-select="onSenderAccountSelect($accountId)"
                                rb-remote="remote.model_from"
-                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"></rb-account-select>
+                               rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"
+                               name="payment.formData.recipientAccountId"></rb-account-select-v2>
+
+            <eb-validation-messages eb-name="payment.formData.recipientAccountId">
+                <div eb-message-key="sameAccounts" class="validation-message animate-on">
+                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
+                </div>
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.new.saving.fill.recipient_account.required'|translate}}
+                </div>
+            </eb-validation-messages>
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.beneficiaries.label'|translate}}">
@@ -227,9 +257,12 @@
                     <ui-select ng-model="payment.formData.currency"
                                theme="bootstrap"
                                ng-disabled="payment.options.currencyLocked"
+                               class="deposit_type_select"
                                required>
                         <ui-select-match placeholder="{{::'ocb.payments.currency.placeholder' | translate }}">
+                            <div class="deposit_type_truncate">
                             {{$select.selected}}
+                            </div>
                         </ui-select-match>
                         <ui-select-choices repeat="currency in currencyList track by $index">
                             <div ng-bind-html="currency | highlight: $select.search"></div>

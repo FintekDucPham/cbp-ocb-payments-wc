@@ -10,28 +10,50 @@ angular.module('ocb-payments')
             },
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"
-            }
+            },
+/*            resolve: {
+                loadCustomer: function (){
+                    customerService.getCustomerDetails().then(function(data) {
+                        $scope.payment.meta.customerDetails=data.customerDetails;
+                        $scope.payment.meta.customerContext = data.customerDetails.context;
+                    })},
+                accTypeLoader: function(){
+                     return $scope.accTypeList=[{name:"Accumulate"},{name:"Online"},{name:"Normal"}]
+  /!*                      $scope.accTypeList[0]={type:"deposit_type",name:"Accumulate"};
+                        $scope.accTypeList[1]={type:"deposit_type",name:"Online"};
+                        $scope.accTypeList[2]={type:"deposit_type",name:"Normal"};*!/
+                    }
+                
+                
+            }*/
         });
     })
     .controller('NewPaymentSavingFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils,
                                                             exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions,
                                                             bdFillStepInitializer,bdStepStateEvents, lodash, formService, validationRegexp,
                                                             rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,
-                                                            accountsService) {
-        $scope.accounts=[];
+                                                            transactionService,systemSettingsService,systemParameterService) {
+/*        $scope.accounts=[];
         $scope.selAcc;
         $scope.activeStep;
         $scope.recipient={"formData":{"remitterAccountId":"363453646"}};
+        $scope.recipient={"items":{"accountList":""}};*/
 
-        $scope.accChange=function(acc){
-            
+
+        $scope.acctypeSelected=function(acc){
+        /*    alert("acc" + acc);*/
         };
         
         //todois account type get
-        $scope.accList=[];
+/*        $scope.accList=[];
         $scope.accList[0]={account:"43243543",name:"test"};
         $scope.accList[1]={account:"7767676",name:"testII"}
-        $scope.accList[2]={account:"757854",name:"trest"};
+        $scope.accList[2]={account:"757854",name:"trest"};*/
+        $scope.accTypeList=[];
+        $scope.accTypeList[0]={type:"deposit_type",name:"Accumulate"};
+        $scope.accTypeList[1]={type:"deposit_type",name:"Online"}
+        $scope.accTypeList[2]={type:"deposit_type",name:"Normal"}
+
         
         $scope.getAccountList=function(){
             accountsService.selectCurrentAccount().search().then(function(data){
@@ -39,6 +61,47 @@ angular.module('ocb-payments')
             })
         }
 
+        //todois set payment type from payment
+        var paymentdata={paymentType:"saving_payment"}
+        transactionService.limits(paymentdata).then(function(limits){
+            $scope.transactionLimit=limits;
+        });
+        
+        //todois maxdescription lenght
+/*        $scope.maxDescLenght=50;
+        function findItem(item) {
+            return item.parameterName == "messages.max.customer.header_length";
+        }
+        var sysSetting={name:"messages.max.customer.header_length"};
+        systemSettingsService.search(sysSetting).then(function(value){
+            var sysItem=value.content.filter(findItem);
+            if (angular.isArray(sysItem)){
+                $scope.maxDescLenght=sysItem[0].value;
+            }
+        })*/
+
+        systemParameterService.getParameterByName("messages.max.customer.header_length").then(function(value){
+            $scope.maxDescLenght=value.value;
+        })
+
+        //todois Icustomer:getcustomerbrief
+        customerService.getCustomerDetails().then(function(data) {
+            $scope.payment.meta.customerDetails=data.customerDetails;
+            $scope.payment.meta.customerContext = data.customerDetails.context;
+        });
+        $scope.currentBalance="-";
+        $scope.$watch('payment.formData.remitterAccountId', function (id){
+            if (angular.isArray($scope.payment.items.accountList)) {
+                $scope.currentBalance = $scope.payment.items.accountList.filter(filter, id)[0].currentBalance;
+            }
+        });
+        function filter(item){
+            return item.accountId==this;
+        }
+/*        function updateBalance (id){
+            $scope.currentBalance=$scope.recipient.items.accountList.filter(fero,id)[0].currentBalance;
+        }*/
+        
         var senderAccountInitDefer = $q.defer();
 
         $scope.remote = {
@@ -98,6 +161,9 @@ angular.module('ocb-payments')
             copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
             copiedForm.amount = (""+formData.amount).replace(",", ".");
             copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
+            delete copiedForm.beneficiaryAccountId;
+            delete copiedForm.acctype;
+            angular.extend(copiedForm,{paymentType:"INTERNAL",addToBasket:false,addToBeneficiary:false});
             return copiedForm;
         };
 
@@ -169,28 +235,27 @@ angular.module('ocb-payments')
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if(!$scope.remote.model_to.loaded){
+          /*  if(!$scope.remote.model_to.loaded){
                 return;
-            }
+            }*/
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 delete $scope.payment.token.params.resourceId;
                 var form = $scope.paymentForm;
                 $scope.limitExeeded = {
                     show: false
                 };
-
-                if(!$scope.payment.items.recipientAccount){
-                    form.recipientAcc.$setValidity('required', false);
+                if(!$scope.payment.formData.beneficiaryAccountId){
+                    form.recipientAccountId.$setValidity('required', false);
                 }
-                if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
-                    form.recipientAcc.$setValidity('sameAccounts', false);
+                if ($scope.payment.formData.senderAccountId == $scope.payment.formData.beneficiaryAccountId) {
+                    form.recipientAccountId.$setValidity('sameAccounts', false);
                 }
-
+               angular.extend($scope.payment.formData,{"recipientName":"nameII"},{"recipientAccountNo":$scope.payment.items.recipientAccount.accountNo});
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
                     var createTransfer = function(){
-                        transferService.create('INTERNAL', angular.extend({
+                        transferService.create('DOMESTIC', angular.extend({
                             "remitterId": 0
                         }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                             $scope.payment.transferId = transfer.referenceId;
@@ -258,15 +323,9 @@ angular.module('ocb-payments')
             $scope.payment.meta.currencies = lodash.indexBy(currencies.content, 'currencySymbol');
         });
 
-        //todois Icustomer:getcustomerbrief
-        customerService.getCustomerDetails().then(function(data) {
-            $scope.payment.meta.customerContext = data.customerDetails.context;
-            $scope.payment.meta.employee = data.customerDetails.isEmployee;
-        });
-
-        angular.extend($scope.payment.formData, {
-            description: translate.property('ocb.payments.new.internal.fill.default_description')
-        }, lodash.omit($scope.payment.formData, lodash.isUndefined));
+/*        angular.extend($scope.payment.formData, {
+            description: translate.property('ocb.payments.new.saving.fill.description.placeholder')
+        }, lodash.omit($scope.payment.formData, lodash.isUndefined));*/
 
         function recalculateCurrencies() {
             var toCurrency = $scope.payment.formData.currency;
@@ -311,9 +370,7 @@ angular.module('ocb-payments')
             }
         };
 
-        customerService.getCustomerDetails().then(function(data) {
-            $scope.payment.meta.customerContext = data.customerDetails.context;
-        });
+     
 
         function isSenderAccountCategoryRestricted(account) {
             if($scope.payment.items.senderAccount){
@@ -369,8 +426,8 @@ angular.module('ocb-payments')
         });
 
         $scope.onSenderAccountSelect = function(accountId) {
-            if (accountId == $scope.payment.formData.beneficiaryAccountId) {
-                $scope.payment.formData.beneficiaryAccountId = undefined;
+            if (accountId == $scope.payment.formData.senderAccountId) {
+                $scope.payment.formData.recipientAccountId = undefined;
             }
             $scope.recipientSelectParams.update(accountId);
         };
