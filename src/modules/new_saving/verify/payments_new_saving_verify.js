@@ -1,19 +1,19 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.new_internal.verify', {
+        stateServiceProvider.state('payments.new_saving.verify', {
             url: "/verify",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_internal/verify/payments_new_internal_verify.html",
-            controller: "NewPaymentInternalVerifyController",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_saving/verify/payments_new_saving_verify.html",
+            controller: "NewPaymentSavingVerifyController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
             }
         });
     })
-    .controller('NewPaymentInternalVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash) {
+    .controller('NewPaymentSavingVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash) {
 
         $scope.showVerify =  false;
         if(angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)){
-            $state.go('payments.new_internal.fill');
+            $state.go('payments.new_saving.fill');
         }else{
             $scope.showVerify = true;
         }
@@ -24,16 +24,21 @@ angular.module('ocb-payments')
         });
 
         function sendAuthorizationToken() {
-            $scope.payment.token.params.resourceId = $scope.payment.transferId;
-
+            /*$scope.payment.token.params.resourceId = $scope.payment.transferId;*/
+            $scope.payment.token = {
+                params: {
+                    resourceId:$scope.payment.transferId,
+                    rbOperationType: 'TRANSFER'
+                }
+            }
         }
+ 
 
-
-        transferService.getTransferCost({
+   /*     transferService.getTransferCost({
             remitterId: $scope.payment.formData.remitterAccountId
         }).then(function(transferCostData){
             $scope.transferCost = transferCostData;
-        });
+        });*/
 
 
         if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {

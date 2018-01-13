@@ -1,15 +1,15 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.new_internal.status', {
+        stateServiceProvider.state('payments.new_saving.status', {
             url: "/status",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_internal/status/payments_new_internal_status.html",
-            controller: "NewPaymentInternalStatusController",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_saving/status/payments_new_saving_status.html",
+            controller: "NewPaymentSavingStatusController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step3"
             }
         });
     })
-    .controller('NewPaymentInternalStatusController', function ($scope, bdStatusStepInitializer) {
+    .controller('NewPaymentSavingStatusController', function ($scope, bdStatusStepInitializer) {
 
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
