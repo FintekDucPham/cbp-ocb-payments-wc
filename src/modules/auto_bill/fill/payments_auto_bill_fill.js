@@ -9,8 +9,8 @@ angular.module('ocb-deposits')
             }
         });
     })
-    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, translate, formService, bdStepStateEvents) {
-
+    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, translate, formService, bdStepStateEvents, viewStateService, initialState) {
+        var data = initialState.data;
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.autoBillForm;
             if (form.$invalid) {

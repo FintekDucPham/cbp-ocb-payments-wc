@@ -11,7 +11,7 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsAutoBillPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
                                                                     paymentsService, $filter, pathService, viewStateService,
-                                                                     initialState, $location, transferBillService) {
+                                                                     initialState, $location, transferBillService, rbPaymentOperationTypes) {
             $scope.paymentDetailsTemplate = pathService.generateTemplatePath("ocb-payments") + "/modules/auto_bill/list/details/payments_auto_bill_list_detail.html";
 
             $scope.onOperationsDateSubmit = function () {
@@ -19,40 +19,14 @@ angular.module('ocb-payments')
                 $scope.table.tableControl.invalidate();
             };
 
-            $scope.onButtonPressed = function (action, payment) {
-                var parsePaymentFrequency = function (frequency) {
-                    if (STANDING_FREQUENCY_TYPES.DAILY.symbol === payment.frequency.periodUnit) {
-                        return undefined;
-                    }
-                    return frequency.periodCount;
-                };
-                var paymentFormData = {
-                    "shortName": payment.shortName,
-                    "recipientName": payment.beneficiary ? payment.beneficiary.join("\n") : "",
-                    "recipientAccountNo": payment.creditAccount,
-                    "description": payment.remarks ? payment.remarks.join("\n") : "",
-                    "remitterAccountId": payment.debitAccountId,
-                    "debitAccountNo": payment.debitAccount,
-                    "currency": payment.currency,
-                    "nextRealizationDate": payment.frequency.nextDate ? new Date(Date.parse(payment.frequency.nextDate)) : null,
-                    "firstRealizationDate": payment.startDate ? new Date(payment.startDate) : null,
-                    "finishDate": payment.endDate ? new Date(payment.endDate) : null,
-                    "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
-                    "frequency": parsePaymentFrequency(payment.frequency),
-                    "amount": payment.amount,
-                    "id": payment.id
-                };
-
+            $scope.onButtonPressed = function (action, data) {
                 if (action == 'edit') {
-                    viewStateService.setInitialState('payments.new', {
-                        paymentOperationType: rbPaymentOperationTypes.EDIT,
-                        returnToPage: $scope.table.tableConfig.currentPage
+                    viewStateService.setInitialState('payments.auto_bill.fill', {
+                        data: data,
+                        paymentOperationType: rbPaymentOperationTypes.EDIT
                     });
 
-                    $state.go('payments.new.fill', {
-                        payment: paymentFormData,
-                        paymentType: "standing"
-                    });
+                    $state.go('payments.auto_bill.fill');
                 }
                 else if (action == 'delete') {
                     if (payment.alreadyDeleted) {
