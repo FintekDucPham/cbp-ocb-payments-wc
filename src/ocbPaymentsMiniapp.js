@@ -103,10 +103,10 @@ angular.module('ocb-payments', [
                     priority: 7
                 },
                 {
-                    id: "payments.auto_bill.list",
+                    id: "payments.auto_bill_list",
                     label: 'ocb.payments.auto_bill.label',
                     icon: "ocb-icons ocb_zlecenie_stale",
-                    action: "payments.auto_bill.list",
+                    action: "payments.auto_bill_list",
                     priority: 8
                 },
                 {

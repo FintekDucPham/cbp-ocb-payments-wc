@@ -1,7 +1,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.auto_bill.list', {
-            url: "/list",
+        stateServiceProvider.state('payments.auto_bill_list', {
+            url: "/auto_bill/list",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/auto_bill/list/payments_auto_bill_list.html",
             controller: "PaymentsAutoBillPaymentsListController",
             data: {
@@ -79,17 +79,14 @@ angular.module('ocb-payments')
                 child.$emit('$collapseRows');
             };
 
-
-            $scope.onNewAutoBillClick = function () {
-                viewStateService.setInitialState('payments.new', {
-                    paymentOperationType: rbPaymentOperationTypes.NEW
+            $scope.onNewAutoBillClick = function() {
+                viewStateService.setInitialState('payments.auto_bill.fill', {
+                    formType: 'new',
+                    autoBillId: 3
                 });
 
-                $state.go('payments.new.fill', {
-                    paymentType: "standing"
-                });
+                $state.go('payments.auto_bill.fill');
             };
-
 
             $scope.table = {
                 tableConfig: new bdTableConfig({
