@@ -15,20 +15,20 @@
               bd-table-meta="{
                     'first': {
                         'title': '##ocb.payments.auto_bill.list.header.name',
-                        'data': 'shortName'
+                        'data': 'orderName'
                     },
                     'second': {
                         'title': '##ocb.payments.auto_bill.list.header.serviceProvider',
-                        'data': 'frequency_nextDate'
+                        'data': 'serviceProviderCode'
                     },
                     'third': {
                         'title': '##ocb.payments.auto_bill.list.header.realizationDate',
-                        'data': 'frequency_nextDate'
+                        'data': 'firstExecutionDate'
                     },
                     'fourth': {
                         'title': '##ocb.payments.auto_bill.list.header.amount',
                         'data': [
-                            'amount',
+                            'amountLimit.value',
                             'currency'
                         ]
                     },
@@ -38,32 +38,36 @@
                     },
                     'sixth': {
                         'title': '##ocb.payments.auto_bill.list.header.billCode',
-                        'data': 'beneficiary'
+                        'data': 'serviceCode'
                     },
                     'seventh': {
                         'title': '##ocb.payments.auto_bill.list.header.recipientAccount',
-                        'data': 'creditAccount'
+                        'data': 'fromAccount'
                     }
                 }">
 
         <bd-details-section bd-table-row-details>
-            <div ng-if="$data">
-                <ng-include src="::paymentDetailsTemplate"></ng-include>
+            <bd-item-property label="{{::'account.transactions.list.transaction_type'|translate}}">
+                test
+            </bd-item-property>
 
-                <bd-details-action-section>
-                    <div class="row">
-                        <div class="bd-grid__col--sm-16 desktop-only" style="text-align: right;">
-                            <bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>
-                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>
-                        </div>
-                        <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
-                            <bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>
-                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>
-                        </div>
-                    </div>
-                </bd-details-action-section>
+            <!--<div ng-if="$data">-->
+                <!--<ng-include src="::paymentDetailsTemplate"></ng-include>-->
 
-            </div>
+                <!--<bd-details-action-section>-->
+                    <!--<div class="row">-->
+                        <!--<div class="bd-grid__col&#45;&#45;sm-16 desktop-only" style="text-align: right;">-->
+                            <!--<bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>-->
+                            <!--<bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>-->
+                        <!--</div>-->
+                        <!--<div class="bd-grid__col&#45;&#45;sm-16 mobile-only bd-center-text">-->
+                            <!--<bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>-->
+                            <!--<bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</bd-details-action-section>-->
+
+            <!--</div>-->
 
         </bd-details-section>
     </bd-table>
