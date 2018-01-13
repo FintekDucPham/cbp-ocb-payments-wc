@@ -55,8 +55,8 @@ angular.module('ocb-payments')
 
             $scope.onNewAutoBillClick = function() {
                 viewStateService.setInitialState('payments.auto_bill.fill', {
-                    formType: 'new',
-                    autoBillId: 3
+                    data: null,
+                    paymentOperationType: rbPaymentOperationTypes.NEW
                 });
 
                 $state.go('payments.auto_bill.fill');
