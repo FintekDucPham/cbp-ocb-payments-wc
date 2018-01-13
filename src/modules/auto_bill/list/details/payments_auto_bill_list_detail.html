@@ -39,7 +39,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.frequencyPer'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.frequencyPeriodCount}} &nbsp; {{::'ocb.payments.new.auto_bill.fill.frequencyType.types.' + $data.frequencyPeriodUnit | translate}}<span ng-show="$data.frequencyPeriodCount > 1">s</span>
+    {{ $data.frequencyPeriodCount}}{{::'ocb.payments.auto_bill.list.details.frequencyPer.' + $data.frequencyPeriodUnit | translate}}<span ng-show="$data.frequencyPeriodCount > 1">s</span>
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.nextExecutionDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
