@@ -47,27 +47,23 @@
                 }">
 
         <bd-details-section bd-table-row-details>
-            <bd-item-property label="{{::'account.transactions.list.transaction_type'|translate}}">
-                test
-            </bd-item-property>
+            <div ng-if="$data">
+                <ng-include src="::paymentDetailsTemplate"></ng-include>
 
-            <!--<div ng-if="$data">-->
-                <!--<ng-include src="::paymentDetailsTemplate"></ng-include>-->
+                <bd-details-action-section>
+                    <div class="row">
+                        <div class="bd-grid__col--sm-16 desktop-only" style="text-align: right;">
+                            <bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>
+                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                        </div>
+                        <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
+                            <bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>
+                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                        </div>
+                    </div>
+                </bd-details-action-section>
 
-                <!--<bd-details-action-section>-->
-                    <!--<div class="row">-->
-                        <!--<div class="bd-grid__col&#45;&#45;sm-16 desktop-only" style="text-align: right;">-->
-                            <!--<bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>-->
-                            <!--<bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>-->
-                        <!--</div>-->
-                        <!--<div class="bd-grid__col&#45;&#45;sm-16 mobile-only bd-center-text">-->
-                            <!--<bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>-->
-                            <!--<bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</bd-details-action-section>-->
-
-            <!--</div>-->
+            </div>
 
         </bd-details-section>
     </bd-table>

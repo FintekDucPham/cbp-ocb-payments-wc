@@ -11,9 +11,7 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsAutoBillPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
                                                                     paymentsService, $filter, pathService, viewStateService,
-                                                                    standingTransferService, rbPaymentOperationTypes,
-                                                                    STANDING_FREQUENCY_TYPES, initialState, $anchorScroll,
-                                                                    $location, transferBillService) {
+                                                                     initialState, $location, transferBillService) {
             $scope.paymentDetailsTemplate = pathService.generateTemplatePath("ocb-payments") + "/modules/auto_bill/list/details/payments_auto_bill_list_detail.html";
 
             $scope.onOperationsDateSubmit = function () {
@@ -22,9 +20,6 @@ angular.module('ocb-payments')
             };
 
             $scope.onButtonPressed = function (action, payment) {
-                // ze wzgledu na fakt, ze inne nazwy pol dostajemy z backendu, a inne sa uzywane frontowo
-                // trzeba dane przepisac; ze wzgledu na fakt ze rozne uslugi przyjmuja inne nazwy parametrow
-                // nie mozemy rowniez tego po prostu uspojnic - trzeba przepisywac
                 var parsePaymentFrequency = function (frequency) {
                     if (STANDING_FREQUENCY_TYPES.DAILY.symbol === payment.frequency.periodUnit) {
                         return undefined;
