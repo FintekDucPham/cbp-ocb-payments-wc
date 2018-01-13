@@ -17,4 +17,9 @@ angular.module('ocb-payments')
             meta: {},
             validation: {}
         });
+
+        $scope.clearForm = function(){
+            // todo
+            $scope.$broadcast('clearForm');
+        };
     });
