@@ -118,6 +118,11 @@ angular.module('ocb-payments')
                         referenceId: data.payment.id
                     });
                     return;
+                } else if (data.payment.paymentType === 'INTERNAL_PAYMENT') {
+                    $state.go('payments.internal.basket.modify.fill', {
+                        referenceId: data.payment.id
+                    });
+                    return;
                 }
             }
 
@@ -136,6 +141,12 @@ angular.module('ocb-payments')
             if (data.payment.transferType === 'DOMESTIC') {
                 if (data.payment.paymentType === 'LOCAL_PAYMENT') {
                     $state.go('payments.external.basket.delete.verify', {
+                        referenceId: data.payment.id,
+                        basketReferenceId: data.referenceId
+                    });
+                    return;
+                } else if (data.payment.paymentType === 'INTERNAL_PAYMENT') {
+                    $state.go('payments.internal.basket.delete.verify', {
                         referenceId: data.payment.id,
                         basketReferenceId: data.referenceId
                     });
