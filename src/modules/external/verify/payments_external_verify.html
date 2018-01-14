@@ -67,11 +67,11 @@
         <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">{{::'ocb.payments.basket.add.verify' | translate}}</bd-msg-panel>
     </div>
 
-    <div ng-if="basketPayment">
-        <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">>{{::'ocb.payments.basket.modify.verify.'+payment.meta.customerContext | translate}}</bd-msg-panel>
+    <div ng-if="modifyInBasket">
+        <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">{{::'ocb.payments.basket.modify.verify.'+payment.meta.customerContext | translate}}</bd-msg-panel>
     </div>
 
-    <div ng-if="basketPayment && payment.meta.customerContext==='MICRO'">
+    <div ng-if="modifyInBasket && payment.meta.customerContext==='MICRO'">
         <bd-msg-panel bd-msg-type="warning" bd-msg-size="smallmsg">>{{::'ocb.payments.basket.modify.signRemove.verify' | translate}}</bd-msg-panel>
     </div>
 

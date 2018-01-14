@@ -41,9 +41,24 @@ angular.module('ocb-payments')
             .state('payments.external.new', {
                 url: '/new',
                 abstract: true,
+                params: {
+                    recipientId: null
+                },
                 data: {
                     newPayment: true,
                     finalState: 'payments.recipients.list'
+                },
+                resolve: {
+                    initForm: function (payment, $stateParams, translate, loadCurrentDate) {
+                        if ($stateParams.recipientId) {
+                            payment.formData.recipientId = $stateParams.recipientId;
+                        } else {
+                            payment.formData.description = translate.property('ocb.payments.domestic.description.default');
+                        }
+                        payment.promises.initForm = payment.promises.loadCurrentDate.then(function () {
+                            payment.formData.realizationDate = payment.meta.currentDate;
+                        });
+                    }
                 }
             })
             .state('payments.external.basket', {

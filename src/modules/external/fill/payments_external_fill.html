@@ -192,12 +192,12 @@
 
         <bd-item-property class="bd-item-property--multirow"
                           label="{{::'ocb.payments.domestic.description.label' | translate}}">
-            <textarea name="description"
+            <textarea ng-if="payment.meta.maxDescriptionLength" name="description"
                       ng-model="payment.formData.description"
                       class="input-field input-area--payment-description"
                       required
                       rb-split-array
-                      split-text-max-length-validators="{{::maxDescriptionLength}}"
+                      split-text-max-length-validators="{{::payment.meta.maxDescriptionLength}}"
                       ng-pattern="PAYMENT_DESCRIPTION_REGEX"
                       placeholder="{{::'ocb.payments.domestic.description.placeholder' | translate }}"></textarea>
             <eb-validation-messages eb-name="description">
