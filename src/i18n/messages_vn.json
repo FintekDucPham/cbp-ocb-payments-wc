@@ -967,7 +967,7 @@
     "ocb.payments.payu_vnpay.label" : "Tuition payment VNPAY",
     "ocb.payments.payu.label" : "PayU",
     "ocb.payments.payu.err.label" : "Oops! nothing found here, please contact administrator for information. ",
-
+    "payment.token.model.currentToken.label":"Enter SMS password for operation no. ##TOKEN_ID## of ##TOKEN_DATE##",
     "EOF": ""
 
 

@@ -12,8 +12,7 @@ angular.module('ocb-payments')
     .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate,$http,exportService,transferService,rbPaymentOperationTypes,depositsService) {
 
         if(_.isEmpty( $scope.pendingTransaction.selectedTrans)){
-            $state.go("payments.pending.fill");
-            //return;
+            $state.go("payments.pending.fill", {}, {reload: true});
         }
 
 

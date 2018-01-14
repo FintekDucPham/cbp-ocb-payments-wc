@@ -1012,7 +1012,7 @@
     "ocb.payments.new.saving.fill.recipient_data.EMPTY_BNF_DATA": "Recipient details cannot be empty",
     "ocb.payments.new.saving.fill.recipient_data.TOO_LONG_BNF_DATA": "Recipient details cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
     "ocb.payments.new.saving.fill.name":"Name",
-
+    "payment.token.model.currentToken.label":"Enter SMS password for operation no. ##TOKEN_ID## of ##TOKEN_DATE##",
     "EOF": ""
 
 
