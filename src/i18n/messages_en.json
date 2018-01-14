@@ -1031,6 +1031,6 @@
     "ocb.payments.recipients.list.header.bank.label":"Bank",
     "ocb.payments.new.saving.fill.description.placeholder":"Type description",
     "ocb.payments.new.saving.fill.acctype.EMPTY_TITLE":"Account type cannot by empty",
-
+    "ocb.payments.new.saving.verify.amount_in_word":"Amount in word",
     "EOF": ""
 }
