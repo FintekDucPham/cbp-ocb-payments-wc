@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,transferPendingService,ocbConvert,userService) {
+    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,transferPendingService,ocbConvert,userService,customerService) {
 
         $scope.statuses = []
         //define list of status
@@ -20,7 +20,17 @@ angular.module('ocb-payments')
                 $scope.status = k;
             }
         }
+        customerService.getCustomerDetails().then(function(data) {
+            $scope.pendingTransaction.meta.customerContext = data.customerDetails.context;
+            $scope.pendingTransaction.meta.employee = data.customerDetails.isEmployee;
+            $scope.pendingTransaction.meta.authType = data.customerDetails.authType;
+            $scope.pendingTransaction.meta.fullName = data.customerDetails.fullName;
+            if ($scope.pendingTransaction.meta.authType == 'HW_TOKEN') {
+                $scope.formShow = true;
+            }
+        }).catch(function(response) {
 
+        });
       //init selected status and account
         $scope.account = "";
 
@@ -58,7 +68,6 @@ angular.module('ocb-payments')
                                     accountNo: $scope.account,
                                     transactionStatus: $scope.status
                                 }
-                                console.log("waiting for account");
                                 transferPendingService.getPendingTransactions(params).then(function (d) {
                                     if (d == null || d.errors) {
                                         defer.resolve([]);
@@ -278,7 +287,6 @@ angular.module('ocb-payments')
                 $scope.checkBoxState2 = true;
                 return;
             }
-            console.log($scope.getUserType());
             var listLegalRole = _.pickBy(listStatus,function(value,key){
                 return value == true;
             });
@@ -286,7 +294,6 @@ angular.module('ocb-payments')
 
             //valid ìf status not WA
             var invalidWA = _.filter($scope.pendingTransaction.selectedTrans,function (o) {
-                console.log(o);
                 var st = o.operationStatus;
                 return _.includes(keyOfRoles,st);
             })

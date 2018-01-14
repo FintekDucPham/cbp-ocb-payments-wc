@@ -32,7 +32,12 @@
             <div class="col-xs-4 "><label  style="font-weight: bold">{{::'ocb.payments.pending.verify.token_input.header.label' | translate}}</label></div>
         </div>
         <div class="row">
-            <div class="col-xs-4"><rb-authorization></rb-authorization></div>
+            <bd-item-property class="bd-item-property--multirow"
+                              ng-if="pendingTransaction.token.params.resourceId"
+                              label="{{ pendingTransaction.token.model.currentToken.label }}">
+                <rb-token-authorization rb-operation-type="TRANSFER" rb-model="pendingTransaction.token.model"
+                                        rb-params="pendingTransaction.token.params"></rb-token-authorization>
+            </bd-item-property>
         </div>
 
     </form>

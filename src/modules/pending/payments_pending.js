@@ -8,18 +8,24 @@ angular.module('ocb-payments')
                 analyticsTitle: null
             }
         });
-    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,customerService) {
+    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,customerService,rbPaymentOperationTypes) {
 
         bdMainStepInitializer($scope, 'pendingTransaction', {
             formName: 'pendingTransactionForm',
             formData: {},
-            options: {},
+            options: {
+                fixedAccountSelection: false
+            },
+            operation: rbPaymentOperationTypes.NEW,
+            token: {
+                model: null,
+                params: {}
+            },
             meta: {},
             validation: {},
             items :[],
             dataObject: $scope.payment
         });
-
 
 
     $scope.returnTrans = function(){
