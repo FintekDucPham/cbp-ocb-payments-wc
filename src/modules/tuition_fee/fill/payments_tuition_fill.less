@@ -2,13 +2,6 @@ body{
   padding: 50px;
 }
 
-label{
-  position: relative;
-  cursor: pointer;
-  color: #666;
-  font-size: 30px;
-}
-
 input[type="checkbox"], input[type="radio"]{
   position: absolute;
   right: 9000px;
@@ -59,6 +52,7 @@ input[type="radio"]:checked + .label-text:after{
   border-radius: 50%;
   border: 1px solid #cccccc;
   margin-top: -2px;
+  margin-left: -4px;
 }
 
 .toggle input[type="radio"]:checked + .label-text:before{
@@ -67,6 +61,7 @@ input[type="radio"]:checked + .label-text:after{
   border-radius: 50%;
   border: 1px solid #008c44;
   margin-top: 13px;
+  margin-left: -5px;
 }
 
 .toggle input[type="radio"]:checked + .label-text:after{
@@ -75,7 +70,7 @@ input[type="radio"]:checked + .label-text:after{
   width: 10px;
   height: 10px;
   margin-top: 19px;
-  margin-left: -14px
+  margin-left: -14px;
 }
 
 @keyframes effect{

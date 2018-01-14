@@ -17,7 +17,14 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig, ocbConvert, transferBatchService, $cookies, $http, FileUploader, pathService, $location) {
+                                bdTableConfig, ocbConvert, transferBatchService, customerService, $cookies, $http, FileUploader, pathService, $location) {
+
+            /*Get customer details*/
+            customerService.getCustomerDetails().then(function(data) {
+                $scope.fullName = data.customerDetails.fullName;
+            }).catch(function(response) {
+
+            });
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 var params = {};

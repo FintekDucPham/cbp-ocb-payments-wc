@@ -1,5 +1,4 @@
 <form name="paymentForm" novalidate class="form-pane" id="pn-1">
-    <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
     <!--Personal / Ordering Customer-->
     <div class="bd-form">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.customer"|translate}}</div>
@@ -19,10 +18,10 @@
                                    rb-update-disabled-state="billInfoSearch"></rb-account-select>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
-                {{ payment.formData.senderCustomer.fullName }}
+                {{payment.meta.fullName}}
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.ocbBranch'|translate}}">
-                {{ payment.formData.senderCustomer.branch }}
+                {{payment.items.senderAccount.openBranch}}
             </bd-item-property>
             <bd-item-property ng-if="payment.formData.remitterAccountId && remote.model_from.loaded"
                               label="{{ ::'ocb.payments.new.bill.fill.sender_account.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
@@ -30,7 +29,7 @@
                            currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
-                <!--{{payment.items.senderAccount.limitReference}}-->TODO input data
+                {{payment.items.senderAccount.limitReference}}
             </bd-item-property>
         </div>
     </div>
@@ -119,6 +118,9 @@
                 {{payment.formData.billInfo.phoneNumber.value}}
             </bd-item-property>
         </div>
+    </div>
+    <div ng-show="enableLoading" class="eb-preloader-container">
+        <div eb-themable class="eb-preloader">&nbsp;</div>
     </div>
     <!--<div class="pane-bd deposit-form" ng-show="billInfoSearch ">-->
         <!--<bd-table-->

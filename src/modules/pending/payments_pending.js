@@ -8,7 +8,7 @@ angular.module('ocb-payments')
                 analyticsTitle: null
             }
         });
-    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,pendingTransactionService) {
+    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,customerService) {
 
         bdMainStepInitializer($scope, 'pendingTransaction', {
             formName: 'pendingTransactionForm',
@@ -26,10 +26,6 @@ angular.module('ocb-payments')
         $scope.pendingTransaction.returnTrans();
     };
 
-
-    // $scope.approveTrans = function(){
-    //     $scope.pendingTransaction.approveTrans();
-    // };
     $scope.modifyTrans = function(){
         $scope.pendingTransaction.modifyTrans();
     };
@@ -43,14 +39,17 @@ angular.module('ocb-payments')
     $scope.clearData = function () {
         $scope.pendingTransaction.clearData();
     };
-    // $scope.selectedTrans = [];
-    //todo get user type
-    $scope.userRole = "";
 
+    $scope.userRole = "";
+    customerService.getCustomerDetails().then(function(data) {
+        if (data.customerDetails) {
+            $scope.userRole = data.customerDetails.microRole;
+            console.log($scope.userRole);
+        }
+    })
     $scope.getUserType = function () {
         var userActions = {};
         switch ($scope.userRole) {
-
             case "INPUTTER":
                 userActions = {
                         MODIFY: true,
@@ -59,7 +58,7 @@ angular.module('ocb-payments')
                         DELETE: true
                     }
                 break;
-            case "CHECKER_1":
+            case "CHECKER1":
                 userActions = {
                     MODIFY: false,
                     RETURN: true,
@@ -67,7 +66,15 @@ angular.module('ocb-payments')
                     DELETE: false
                 }
                 break;
-            case "CHECKER_2":
+            case "CHECKER2":
+                userActions = {
+                    MODIFY: false,
+                    RETURN: true,
+                    APPROVE: true,
+                    DELETE: false
+                }
+                break;
+            case "APPROVER":
                 userActions = {
                     MODIFY: false,
                     RETURN: true,
@@ -77,18 +84,18 @@ angular.module('ocb-payments')
                 break;
             case "MASTER":
                 userActions = {
-                    MODIFY: false,
-                    RETURN: true,
-                    APPROVE: true,
-                    DELETE: false
-                }
-                break;
-            default:
-                userActions = {
                     MODIFY: true,
                     RETURN: true,
                     APPROVE: true,
                     DELETE: true
+                }
+                break;
+            default:
+                userActions = {
+                    MODIFY: false,
+                    RETURN: false,
+                    APPROVE: false,
+                    DELETE: false
                 }
         }
         return userActions;
@@ -107,7 +114,7 @@ angular.module('ocb-payments')
                     WA:false
                 }
                 break;
-            case "CHECKER_1":
+            case "CHECKER1":
                 statusByUser = {
                     C1:true,
                     C2:false,
@@ -115,7 +122,7 @@ angular.module('ocb-payments')
                     WA:false
                 }
                 break;
-            case "CHECKER_2":
+            case "CHECKER2":
                 statusByUser = {
                     C1:false,
                     C2:true,
@@ -123,20 +130,28 @@ angular.module('ocb-payments')
                     WA:false
                 }
                 break;
-            case "MASTER":
+            case "APPROVER":
                 statusByUser = {
                     C1:false,
                     C2:false,
+                    RT:true,
+                    WA:true
+                }
+                break;
+            case "MASTER":
+                statusByUser = {
+                    C1:true,
+                    C2:true,
                     RT:true,
                     WA:true
                 }
                 break;
             default:
                 statusByUser = {
-                    C1:true,
-                    C2:true,
-                    RT:true,
-                    WA:true
+                    C1:false,
+                    C2:false,
+                    RT:false,
+                    WA:false
                 }
         }
         return statusByUser;
