@@ -88,48 +88,12 @@ angular.module('ocb-payments')
                     if (resp.restriction)
                         $scope.restriction = resp.restriction;
                     else{
-                        alert('PROC055 || PROC056');
+                        if (payment.transferType.toLocaleLowerCase() === 'external')
+                            $state.go('payments.external.future.modify.fill', { referenceId: payment.id });
+                        else
+                            $state.go('payments.internal.future.modify.fill', { referenceId: payment.id });
                     }
                 })
-
-
-            // if (payment.transferType == rbPaymentTypes.STANDING.code) {
-            //     var paymentFormData = {
-            //         "shortName": payment.details.shortName,
-            //         "recipientName": payment.details.beneficiary ? payment.details.beneficiary.join("\n") : "",
-            //         "recipientAccountNo": payment.details.creditAccount,
-            //         "description": payment.details.remarks ? payment.details.remarks.join("\n") : "",
-            //         "remitterAccountId": payment.accountId,
-            //         "currency": payment.details.currency,
-            //         "nextRealizationDate": payment.details.frequency.nextDate ? new Date(Date.parse(payment.details.frequency.nextDate)) : null,
-            //         "firstRealizationDate": payment.details.startDate ? new Date(payment.details.startDate) : null,
-            //         "finishDate": payment.details.endDate ? new Date(payment.details.endDate) : null,
-            //         "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.details.frequency.periodUnit)).code,
-            //         "frequency": payment.details.frequency.periodCount,
-            //         "amount": payment.details.amount,
-            //         "id": payment.details.id
-            //     };
-            //
-            //     viewStateService.setInitialState('payments.new', {
-            //         paymentOperationType: rbPaymentOperationTypes.EDIT,
-            //         returnToPage: $scope.table.tableConfig.currentPage
-            //     });
-            //
-            //     $state.go('payments.new.fill', {
-            //         payment: paymentFormData,
-            //         paymentType: "standing"
-            //     });
-            // }
-            // else {
-            //     viewStateService.setInitialState('payments.future.manage.edit', {
-            //         referenceId: payment.id
-            //     });
-            //     $state.go('payments.future.manage.edit.fill');
-            // }
-
-
-
-
         };
 
         var parseDataByTransfer = function (details) {
@@ -151,35 +115,10 @@ angular.module('ocb-payments')
 
         $scope.onDelete = function(payment) {
 
-            alert('TODO:');
-
-
-            // if (payment.transferType == rbPaymentTypes.STANDING.code) {
-            //     if (payment.details.alreadyDeleted) {
-            //         $state.go('payments.standing.error');
-            //     } else {
-            //         viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-            //             payment: payment.details,
-            //             returnToPage: $scope.table.tableConfig.currentPage
-            //         });
-            //
-            //         $state.go('payments.standing.manage.remove.verify');
-            //     }
-            // }
-            // else {
-            //     var responseObject = parseDataByTransfer(payment.details);
-            //     paymentsService.remove(responseObject).then(function(resp) {
-            //         var responseJson = angular.fromJson(resp.content);
-            //         var referenceId = responseJson.referenceId;
-            //         viewStateService.setInitialState('payments.future.manage.delete', {
-            //             countryList: $scope.countryList,
-            //             paymentId: payment.id,
-            //             referenceId: referenceId,
-            //             paymentDetails: payment
-            //         });
-            //         $state.go('payments.future.manage.delete.fill');
-            //     });
-            // }
+            if (payment.transferType.toLocaleLowerCase() === 'external')
+                $state.go('payments.external.future.delete.verify', { referenceId: payment.id });
+            else
+                $state.go('payments.internal.future.delete.verify', { referenceId: payment.id });
         };
 
         $scope.onBack = function(child) {
@@ -217,7 +156,7 @@ angular.module('ocb-payments')
 
                     if(initialState && initialState.relation === 'DETAILS_FROM_WIDGET'){
                         var selectedPayment = angular.copy(initialState.paymentDetails);
-                        
+
                         if (selectedPayment.transferType == 'STANDING_ORDER') {
                             selectedPayment.transferType = rbPaymentTypes.STANDING.code;
                         }
