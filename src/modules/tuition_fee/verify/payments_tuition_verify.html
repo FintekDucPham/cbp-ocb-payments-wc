@@ -55,14 +55,7 @@
     </div>
 
 </form>
-<div class="form-row" ng-if="payment.operation.code!=='EDIT' && authType == 'SMS_TOKEN' && customerContext == 'DETAL'">
-    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
-        <button class="left-txt bd-button-OTP mg-left-btn" ng-click="getOTP()">Get OTP</button>
-    </div>
-    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
-        <input ng-model="smsOTP" type="text" placeholder="Insert OTP" class="mg-left-tb">
-    </div>
-</div>
-<div  ng-if="payment.operation.code!=='EDIT' && authType == 'HW_TOKEN' && customerContext == 'DETAL'">
-    <rb-authorization></rb-authorization>
+<!--Add Token Authorization-->
+<div class="form-row" ng-if="payment.operation.code!=='EDIT' && customerContext == 'DETAL'">
+    <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payment.token.model" rb-params="authType"></rb-token-authorization>
 </div>

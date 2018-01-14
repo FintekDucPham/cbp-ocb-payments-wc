@@ -27,15 +27,11 @@ angular.module('ocb-payments')
             },
             model_to:{}
         };
-        //$scope.BILL_CODE = validationRegexp('NEW_MOBILE_PASSWORD');
+
         $scope.BILL_CODE = validationRegexp('NUMBER_AND_CHAR_ONLY');
         if ($stateParams.payment && $stateParams.payment.beneficiaryAccountNo) {
             $scope.payment.formData.recipientAccountNo = $stateParams.payment.beneficiaryAccountNo;
         }
-        // $scope.payment.formData.description = "542546";
-        // $scope.payment.formData.beneficiaryAccountId = "19175000120000000012432445";
-        // $scope.payment.formData.realizationDate = "03.11.2017";
-        // $scope.payment.formData.currency = "PLN";
 
         bdFillStepInitializer($scope, {
             formName: 'paymentForm',
@@ -58,22 +54,12 @@ angular.module('ocb-payments')
             });
             $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
         });
-        // 04 services call promise auto: (paynewbill)
-        // 5. transferBillService.create : execute +++ create_bill_transfer.j
-        // 4. transferBillService.search (BE) serviceList   +++ tranfer_service_providers.j
-        //    transferBillService.getServiceProviders (BE) providerList
-        // 3. transferService.getTransferAccounts : acc list +++ transfer_acc.j
-        // 2. transferBillService,getCustomer -- senderCustomer: name, branch, addr +++ transfer_customer.j
-        // 1.transferBillService.getBill -- meterNumber + phonenmuber + tbl +++ transfer_bill.j
-        // transferBillService.getCustomer({"customerId": "12123"}).then(function (customerDictionary) {
-        //         $scope.payment.formData.senderCustomer = customerDictionary.content[0];
-        //     });
-        // ???: customerService, accountsService, downloadService, blockadesService
-        // $scope.billInfoSearch = false;
-        // $scope.showBillInfoSearch = function() {
-        //     $scope.billInfoSearch = !$scope.billInfoSearch;
-        // };
+
         $scope.getIcon = downloadService.downloadIconImage;
+
+        transferService.getTransferLimit({paymentType:"BILL_PAYMENT"}).then(function(limit) {
+            $scope.payment.items.limit = limit;
+        });
 
         $scope.refreshList = function () {
             $scope.table.newSearch = true;
@@ -186,17 +172,6 @@ angular.module('ocb-payments')
         $scope.$watch('payment.items.recipientAccount', checkCurrency, true);
 
         setRealizationDateToCurrent();
-
-        // Waiting transferType from customerService at login Web App.
-        var temporaryTransferType = function (businessLine) {
-            switch (businessLine) {
-                case "33":
-                    return "RETAIL";
-                default :
-                    return "CORPORATE";
-            }
-            ;
-        };
 
         var requestConverter = function (formData) {
             var copiedForm = angular.copy(formData);
