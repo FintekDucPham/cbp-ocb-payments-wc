@@ -968,7 +968,38 @@
     "ocb.payments.payu.label" : "PayU",
     "ocb.payments.payu.err.label" : "Oops! nothing found here, please contact administrator for information. ",
 
-    "EOF": ""
+    "EOF": "",
+
+    "ocb.payments.future.list.details.internal.transferType": "Transaction type",
+    "ocb.payments.future.list.details.internal.from": "From",
+    "ocb.payments.future.list.details.internal.accountName": "Name",
+    "ocb.payments.future.list.details.internal.accountNo": "Account number",
+    "ocb.payments.future.list.details.internal.to": "To",
+    "ocb.payments.future.list.details.internal.bank": "Bank",
+    "ocb.payments.future.list.details.internal.accountHolderName": "Account holder name",
+    "ocb.payments.future.list.details.internal.fee": "Fee",
+    "ocb.payments.future.list.details.internal.amount": "Amount in figures",
+    "ocb.payments.future.list.details.internal.amountInWords": "Amount in words",
+    "ocb.payments.future.list.details.internal.description": "Description",
+    "ocb.payments.future.list.details.internal.realizationDate": "Execution date",
+
+    "ocb.payments.future.list.details.external.transferType": "Transaction type",
+    "ocb.payments.future.list.details.external.from": "From",
+    "ocb.payments.future.list.details.external.accountName": "Name",
+    "ocb.payments.future.list.details.external.accountNo": "Account number",
+    "ocb.payments.future.list.details.external.to": "To",
+    "ocb.payments.future.list.details.external.recipient_name": "Recipient name",
+    "ocb.payments.future.list.details.external.province": "Province",
+    "ocb.payments.future.list.details.external.bank": "Bank name",
+    "ocb.payments.future.list.details.external.branch": "Branch name",
+    "ocb.payments.future.list.details.external.accountHolderName": "Account holder name",
+    "ocb.payments.future.list.details.external.fee": "Fee",
+    "ocb.payments.future.list.details.external.amount": "Amount in figures",
+    "ocb.payments.future.list.details.external.amountInWords": "Amount in words",
+    "ocb.payments.future.list.details.external.description": "Description",
+    "ocb.payments.future.list.details.external.realizationDate": "Execution date",
+
+    "ocb.payments.future.list.message.editRestriction": "Payment modification restriction"
 
 
 }
