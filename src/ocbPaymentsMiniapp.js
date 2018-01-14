@@ -50,6 +50,19 @@ angular.module('ocb-payments', [
                     priority: 1
                 },
                 {
+                    id: "payments.fast.new.fill",
+                    label: 'payments.submenu.options.new_fast.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: function (item, scope, state) {
+                        state.go('payments.fast.new.fill', {
+                            recipientId: null
+                        }, {
+                            reload: true
+                        });
+                    },
+                    priority: 1
+                },
+                {
                     id: "payments.new_internal.fill",
                     label: 'payments.submenu.options.new_internal.header',
                     icon: "ocb-icons ocb_przelew",

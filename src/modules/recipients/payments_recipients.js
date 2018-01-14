@@ -25,7 +25,8 @@ angular.module('ocb-payments')
         },
         "FAST": {
             code: "FAST",
-            state: 'domestic'
+            state: 'domestic',
+            transferState: 'payments.fast.new.fill'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
