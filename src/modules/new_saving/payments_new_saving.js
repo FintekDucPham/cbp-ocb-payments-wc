@@ -1,5 +1,5 @@
 angular.module('ocb-payments')
-    .config(function (pathServiceProvider, stateServiceProvider) {
+       .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.new_saving', {
             url: "/new-saving/:referenceId",
             abstract: true,
@@ -131,4 +131,6 @@ angular.module('ocb-payments')
         };
 
         rbPaymentInitFactory($scope);
-    });
+    }) .constant('rbPaymentAccTypes', {
+     "TYPES":[{name:"Accumulate"},{name:"Online"},{name:"Normal"}],
+});
