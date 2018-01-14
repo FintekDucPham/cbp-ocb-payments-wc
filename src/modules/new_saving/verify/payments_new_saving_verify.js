@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewPaymentSavingVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash) {
+    .controller('NewPaymentSavingVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash,ocbConvert,language) {
 
         $scope.showVerify =  false;
         if(angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)){
@@ -22,7 +22,7 @@ angular.module('ocb-payments')
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
-
+        $scope.amountInWords = ocbConvert.convertNumberToText($scope.payment.formData.amount, language.get() === 'en');
         function sendAuthorizationToken() {
             /*$scope.payment.token.params.resourceId = $scope.payment.transferId;*/
             $scope.payment.token = {
@@ -32,8 +32,7 @@ angular.module('ocb-payments')
                 }
             }
         }
- 
-
+        
    /*     transferService.getTransferCost({
             remitterId: $scope.payment.formData.remitterAccountId
         }).then(function(transferCostData){
