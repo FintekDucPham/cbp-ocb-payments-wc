@@ -27,23 +27,7 @@ angular.module('ocb-payments')
             }
         };
         stateServiceProvider
-            .state('payments.internal.new.fill', angular.merge(angular.copy(prototype), {
-                params: {
-                    recipientId: null
-                },
-                resolve: {
-                    initForm: function (payment, $stateParams, translate, loadCurrentDate) {
-                        if ($stateParams.recipientId) {
-                            payment.formData.recipientId = $stateParams.recipientId;
-                        } else {
-                            payment.formData.description = translate.property('ocb.payments.domestic.description.default');
-                        }
-                        payment.promises.initForm = payment.promises.loadCurrentDate.then(function () {
-                           payment.formData.realizationDate = payment.meta.currentDate;
-                        });
-                    }
-                }
-            }))
+            .state('payments.internal.new.fill', angular.copy(prototype))
             .state('payments.internal.basket.modify.fill', angular.copy(prototype))
             .state('payments.internal.future.modify.fill', angular.copy(prototype));
     })
