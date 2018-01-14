@@ -21,7 +21,7 @@ angular.module('ocb-payments')
 
             /*Get customer details*/
             customerService.getCustomerDetails().then(function(data) {
-                $scope.fullName = data.customerDetails.fullName;
+                $scope.paymentsBatchProcessingForm.fullName = data.customerDetails.fullName;
             }).catch(function(response) {
 
             });
@@ -446,7 +446,7 @@ angular.module('ocb-payments')
                     if(ext === 'xlsx') {
 
                     }
-                    var validateDate = getDate();
+                    var validateDate = getDate(new Date());
                     var param = {
                         remitterId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
                         remitterAccountId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
