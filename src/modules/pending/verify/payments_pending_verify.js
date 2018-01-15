@@ -74,14 +74,7 @@ angular.module('ocb-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.pendingTransaction.meta.customerContext == 'DETAL') {
-                authorize(actions.proceed, actions);
-            } else if ($scope.pendingTransaction.meta.customerContext == 'MICRO') {
-                $scope.pendingTransaction.result.type = "success";
-                $scope.pendingTransaction.result.code = "27";
-            } else {
-                console.error("Undefined customer context");
-            }
+            authorize(actions.proceed, actions);
             actions.proceed();
         });
 
