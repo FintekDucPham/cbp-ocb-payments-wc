@@ -17,7 +17,7 @@
     "payments.submenu.options.list.header": "List of payments",
     "payments.submenu.options.new.header": "Domestic transfer",
     "payments.submenu.options.new_external.header": "External transfer",
-    "payments.submenu.options.new_internal.header": "Own transfer",
+    "payments.submenu.options.new_internal.header": "Internal transfer",
     "payments.submenu.options.new_fast.header": "Fast transfer 24/7",
     "payments.submenu.options.new_bill.header": "Bill payment",
 
