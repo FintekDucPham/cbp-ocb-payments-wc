@@ -999,12 +999,6 @@
     "ocb.payments.payu.label" : "PayU",
     "ocb.payments.payu.err.label" : "Oops! nothing found here, please contact administrator for information. ",
 
-
-    "ocb.payments.recipients.list.header.recipient_type.label":"Type",
-    "ocb.payments.recipients.list.header.bank.label":"Bank",
-    "ocb.payments.future.saving.label":"Accumulative saving",
-    "ocb.payments.new.types.SAVING":"Future Accumulate Saving and Nurturing Future ",
-
     "ocb.payments.new.saving.fill.sender_account":"Account number",
     "ocb.payments.new.saving.fill.recipient_account":"Account number",
     "ocb.payments.new.saving.fill.recipient_data": "Recipient name",
@@ -1053,7 +1047,6 @@
     "ocb.payments.auto_bill.list.details.finishDate": "Finish date",
     "ocb.payments.auto_bill.list.details.nextExecutionDate": "Next execution date",
 
-
     "ocb.payments.new.saving.label.header":"Future Accumulate Saving and Nurturing Future",
     "ocb.payments.submenu.options.new_saving.header":"Accumulative saving",
     "ocb.payments.new.saving.fill.sender_account.accessible_assets": "Available funds",
@@ -1080,5 +1073,10 @@
     "ocb.payments.new.saving.fill.description.placeholder":"Type description",
     "ocb.payments.new.saving.fill.acctype.EMPTY_TITLE":"Account type cannot by empty",
     "ocb.payments.new.saving.verify.amount_in_word":"Amount in word",
+
+
     "EOF": ""
+
+
 }
+

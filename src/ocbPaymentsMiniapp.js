@@ -58,22 +58,7 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons ocb_przelew",
                     action: "payments.new_internal.fill",
                     priority: 1
-                },/*{
-                    id: "payments.new.saving",
-                    label: 'ocb.payments.future.saving.label',
-                    icon: "ocb-icons ocb_odbiorcy",
-                    action: function(item, scope, state){
-                        state.reload('payments.new.saving').then(function(){
-                            state.transitionTo("payments.new.saving",{ paymentType: 'saving', referenceId: undefined }, {reload: true}).finally(function() {
-                                state.go('payments.new.saving', {
-                                    paymentType: 'saving',
-                                    referenceId: undefined
-                                });
-                            });
-                        });
-                    },
-                    priority: 2
-                },*/{
+                },{
                     id: "payments.new_saving.fill",
                     label: 'ocb.payments.submenu.options.new_saving.header',
                     icon: "ocb-icons ocb_przelew",

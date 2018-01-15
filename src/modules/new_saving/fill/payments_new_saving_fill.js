@@ -280,7 +280,7 @@ angular.module('ocb-payments')
             $scope.payment.formData.currency = senderAccountCurrency;
             recalculateCurrencies();
         }
-        //todois getAccounts
+   
         $scope.getAccountByNrb = function(accountList, selectFn) {
             if ($stateParams.accountId) {
                 selectFn(lodash.findWhere(accountList, {
