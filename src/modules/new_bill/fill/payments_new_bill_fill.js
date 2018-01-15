@@ -57,7 +57,7 @@ angular.module('ocb-payments')
 
         $scope.getIcon = downloadService.downloadIconImage;
 
-        transferService.getTransferLimit({paymentType:"BILL_PAYMENT"}).then(function(limit) {
+        transferService.getTransferLimit({paymentType:"MASS_PAYMENT"}).then(function(limit) {
             $scope.payment.items.limit = limit;
         });
 

@@ -17,13 +17,18 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig, ocbConvert, transferBatchService, customerService, $cookies, $http, FileUploader, pathService, $location) {
+                                bdTableConfig, ocbConvert, transferBatchService, customerService, transferService, $cookies, $http, FileUploader, pathService, $location) {
 
             /*Get customer details*/
             customerService.getCustomerDetails().then(function(data) {
                 $scope.fullName = data.customerDetails.fullName;
             }).catch(function(response) {
 
+            });
+
+            /*Remaining daily limit*/
+            transferService.getTransferLimit({paymentType:"MASS_PAYMENT"}).then(function(limit) {
+                $scope.payment.items.limit = limit;
             });
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
