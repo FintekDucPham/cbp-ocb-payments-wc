@@ -21,7 +21,7 @@ angular.module('ocb-payments')
 
             /*Get customer details*/
             customerService.getCustomerDetails().then(function(data) {
-                $scope.fullName = data.customerDetails.fullName;
+                $scope.paymentsBatchProcessingForm.fullName = data.customerDetails.fullName;
             }).catch(function(response) {
 
             });
@@ -451,7 +451,7 @@ angular.module('ocb-payments')
                     if(ext === 'xlsx') {
 
                     }
-                    var validateDate = getDate();
+                    var validateDate = getDate(new Date());
                     var param = {
                         remitterId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
                         remitterAccountId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
@@ -647,16 +647,26 @@ angular.module('ocb-payments')
                     $scope.paymentsBatchProcessingForm.validTableShow = false;
                 }
             };
-            $scope.svgPath = createDownloadLink(pathService.generateRootPath('ocb-theme')+"/icons/accounts.svg");
 
             $scope.templateExcelExternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/External_Batch_Processing.xlsx");
             $scope.templateExcelInternal = createDownloadLink(pathService.generateRootPath('ocb-payments') + "/resources/batch_processing/Internal_Batch_Processing.xlsx");
-
             $scope.downloadTemplateExternal = function(){
                 downloadFile($scope.templateExcelExternal, "BatchProcessingTemplateExternal");
             };
             $scope.downloadTemplateInternal = function(){
                 downloadFile($scope.templateExcelInternal, "BatchProcessingTemplateInternal");
+            };
+
+            $scope.downloadTemplateAll = function(){
+                $scope.downloadTemplateParams = {};
+                $scope.downloadTemplateParams.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
+                var fileName = "Batch_Processing_Template_Internal";
+                if($scope.downloadTemplateParams.transactionType === 'EX'){
+                    fileName = "Batch_Processing_Template_External";
+                }
+                transferBatchService.downloadTemplate($scope.downloadTemplateParams).then(function(data) {
+                    downloadXLSX(fileName, data.content);
+                });
             };
 
             function createDownloadLink(url){
@@ -823,6 +833,19 @@ function downloadXLS(fileName, jsonString){
 
     link.style = "visibility:hidden";
     link.download = fileName + ".xls";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function downloadXLSX(fileName, jsonString){
+    var uri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8;base64,' + jsonString;
+
+    var link = document.createElement("a");
+    link.href = uri;
+
+    link.style = "visibility:hidden";
+    link.download = fileName + ".xlsx";
 
     document.body.appendChild(link);
     link.click();
