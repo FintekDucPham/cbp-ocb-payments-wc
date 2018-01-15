@@ -16,7 +16,8 @@ angular.module('ocb-payments')
     .constant('rbRecipientTypes', {
         "INTERNAL": {
             code: 'INTERNAL',
-            state: 'domestic'
+            state: 'domestic',
+            transferState: 'payments.internal.new.fill'
         },
         "EXTERNAL": {
             code: "EXTERNAL",
