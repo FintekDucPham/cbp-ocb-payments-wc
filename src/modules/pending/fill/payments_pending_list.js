@@ -292,10 +292,12 @@ angular.module('ocb-payments')
             });
             var keyOfRoles = _.keys(listLegalRole);
 
-            //valid ìf status not WA
+            //valid ìf status not for approval (C1,C2,WA)
             var invalidWA = _.filter($scope.pendingTransaction.selectedTrans,function (o) {
                 var st = o.operationStatus;
-                return _.includes(keyOfRoles,st);
+                if(st !== 'RT') {
+                    return _.includes(keyOfRoles, st);
+                }
             })
             if(invalidWA.length == 0){
                 $scope.invalidWA = true;
