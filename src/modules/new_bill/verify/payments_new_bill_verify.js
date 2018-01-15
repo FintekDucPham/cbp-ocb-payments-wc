@@ -18,6 +18,8 @@ angular.module('ocb-payments')
             $scope.showVerify = true;
         }
 
+        $scope.payment.token.params.authType = $scope.payment.meta.authType;
+
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -25,40 +27,31 @@ angular.module('ocb-payments')
 
         function sendAuthorizationToken() {
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
-
         }
 
-        var requestConverter = function (formData) {
-            var copiedForm = angular.copy(formData);
-            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
-            copiedForm.amount = (""+formData.amount).replace(",", ".");
-            copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
-            return copiedForm;
-        };
+        // transferService.getTransferCost({
+        //     remitterId: $scope.payment.formData.remitterAccountId
+        // }).then(function (transferCostData) {
+        //     $scope.transferCost = transferCostData;
+        // });
 
         $scope.getOTP = function (event, actions) {
             sendAuthorizationToken();
         }
 
-        transferService.getTransferCost({
-            remitterId: $scope.payment.formData.remitterAccountId
-        }).then(function (transferCostData) {
-            $scope.transferCost = transferCostData;
-        });
-
-
-        // if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-        //     $scope.payment.result.token_error = false;
-        //     sendAuthorizationToken();
-        // }
-
+        if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.payment.meta.customerContext === 'DETAL') {
+            if ($scope.payment.meta.authType !== 'SMS_TOKEN') {
+                $scope.payment.result.token_error = false;
+                sendAuthorizationToken();
+            }
+        }
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             delete $scope.payment.items.credentials;
         });
 
         function authorize(doneFn, actions) {
-            transferBillService.realize($scope.payment.transferId, $scope.smsOTP).then(function (resultCode) {
+            transferBillService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.payment.result = {
                     code: parts[1],
@@ -67,9 +60,9 @@ angular.module('ocb-payments')
                 if (parts[0] !== 'OK' && !parts[1]) {
                     $scope.payment.result.code = 'error';
                 }
-                depositsService.clearDepositCache();
+                // depositsService.clearDepositCache();
                 $scope.payment.result.token_error = false;
-                paymentsBasketService.updateCounter($scope.payment.result.code);
+                // paymentsBasketService.updateCounter($scope.payment.result.code);
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
@@ -88,39 +81,16 @@ angular.module('ocb-payments')
             });
         }
 
-        // Waiting transferType from customerService at login Web App.
-        var temporaryTransferType = function (businessLine) {
-            switch (businessLine) {
-                case "33":
-                    return "RETAIL";
-                default :
-                    return "CORPORATE";
-            }
-            ;
-        };
-        var temporaryResponse = function (status) {
-            switch (status.toLowerCase()) {
-                case "pending": {
-                    $scope.payment.result.code = "60";//"0": "99" ;
-                    $scope.payment.result.type = "error";
-                }
-                    ;
-                default : {
-                    $scope.payment.result.code = "0";
-                    $scope.payment.result.type = "success";
-                }
-                    ;
-            }
-            ;
-        };
-
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.payment.meta.customerType == 'false') {
-                actions.proceed();
-            } else if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-               authorize(actions.proceed, actions);
-                actions.proceed();
+            if ($scope.payment.meta.customerContext == 'DETAL') {
+                authorize(actions.proceed, actions);
+            } else if ($scope.payment.meta.customerContext == 'MICRO') {
+                $scope.payment.result.type = "success";
+                $scope.payment.result.code = "27";
+            } else {
+                console.error("Undefined customer context");
             }
+            actions.proceed();
         });
 
         $scope.setForm = function (form) {

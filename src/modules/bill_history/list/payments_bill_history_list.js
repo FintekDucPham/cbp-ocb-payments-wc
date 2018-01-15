@@ -38,6 +38,9 @@ angular.module('ocb-payments')
                         }
                     });
                 },
+                onSearch: function(fromDate, toDate) {
+
+                },
                 hideAddress: function (billType) {
                     if (billType == "EXTENDED_DETAIL" || billType == "NO_DETAIL") {
                         return true;
