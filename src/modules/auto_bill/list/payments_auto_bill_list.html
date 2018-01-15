@@ -1,0 +1,71 @@
+<rb-content-view class="rb-content-view--solid fixTableStanding">
+    <bd-header>{{::"ocb.payments.auto_bill.list.header"|translate}}</bd-header>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-2 ">
+            <bd-button ng-click="onNewAutoBillClick()" class="bd-button__primary bd-md-button-margin">{{::'ocb.payments.auto_bill.button.new.label'|translate}}</bd-button>
+        </div>
+    </div>
+
+    <bd-table bd-type="typeZ1"
+              bd-table-params="table.tableConfig"
+              bd-table-control="table.tableControl"
+              bd-table-data="table.tableData"
+              bd-table-promise="listPromise"
+              bd-table-meta="{
+                    'first': {
+                        'title': '##ocb.payments.auto_bill.list.header.name',
+                        'data': 'orderName'
+                    },
+                    'second': {
+                        'title': '##ocb.payments.auto_bill.list.header.serviceProvider',
+                        'data': 'serviceProviderCode'
+                    },
+                    'third': {
+                        'title': '##ocb.payments.auto_bill.list.header.realizationDate',
+                        'data': 'firstExecutionDate'
+                    },
+                    'fourth': {
+                        'title': '##ocb.payments.auto_bill.list.header.amount',
+                        'data': [
+                            'amountLimit.value',
+                            'currency'
+                        ]
+                    },
+                    'fifth': {
+                        'title': '##ocb.payments.auto_bill.list.header.recipientData',
+                        'data': 'beneficiary'
+                    },
+                    'sixth': {
+                        'title': '##ocb.payments.auto_bill.list.header.billCode',
+                        'data': 'serviceCode'
+                    },
+                    'seventh': {
+                        'title': '##ocb.payments.auto_bill.list.header.recipientAccount',
+                        'data': 'fromAccount'
+                    }
+                }">
+
+        <bd-details-section bd-table-row-details style="min-height: 315px">
+            <div ng-if="$data" class="main">
+                <ng-include src="::paymentDetailsTemplate"></ng-include>
+
+                <bd-details-action-section>
+                    <div class="row">
+                        <div class="bd-grid__col--sm-16 desktop-only" style="text-align: right;">
+                            <bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>
+                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                        </div>
+                        <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
+                            <bd-button ng-click="onButtonPressed('edit', $data)"       class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.edit' | translate}}</bd-button>
+                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm">{{::'ocb.payments.auto_bill.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                        </div>
+                    </div>
+                </bd-details-action-section>
+
+            </div>
+
+        </bd-details-section>
+    </bd-table>
+
+</rb-content-view>
