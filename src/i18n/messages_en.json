@@ -1027,6 +1027,11 @@
     "ocb.payments.auto_bill.list.details.finishDate": "Finish date",
     "ocb.payments.auto_bill.list.details.nextExecutionDate": "Next execution date",
 
+    "ocb.payments.auto_bill.error.customerId.empty": "This field cannot be empty",
+    "ocb.payments.auto_bill.list.details.recurringPeriod": "Recurring Period",
+    "ocb.payments.auto_bill.recurringPeriod.no.limit": "No Limit",
+    "ocb.payments.auto_bill.recurringPeriod.limited": "Limited",
+
     "EOF": ""
 }
 
