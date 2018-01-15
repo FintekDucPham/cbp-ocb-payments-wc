@@ -103,7 +103,7 @@ angular.module('ocb-payments')
         var stateData = $state.$current.data;
         var removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
         $scope.newPayment = stateData.newPayment;
-        $scope.basketPayment = stateData.basketPayment;
+        $scope.modifyInBasket = stateData.basketPayment && stateData.operation === 'modify';
 
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
@@ -238,7 +238,7 @@ angular.module('ocb-payments')
                 }
                 payment.result = {
                     type: 'error',
-                    message: errorReason
+                    message: removeFromBasket ? 'error' : errorReason
                 };
             });
         }

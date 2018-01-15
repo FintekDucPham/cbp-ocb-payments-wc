@@ -20,30 +20,14 @@ angular.module('ocb-payments')
                     });
                 },
                 loadMaxDescLength: function (payment, systemParameterService) {
-                    systemParameterService.getParameterByName('transaction.description.length.max').then(function(data) {
-                        payment.meta.maxDescriptionLength = data;
+                    payment.promises.loadMaxDescLength = systemParameterService.getParameterByName('transaction.description.length.max').then(function(data) {
+                        payment.meta.maxDescriptionLength = data.value;
                     });
                 }
             }
         };
         stateServiceProvider
-            .state('payments.external.new.fill', angular.merge(angular.copy(prototype), {
-                params: {
-                    recipientId: null
-                },
-                resolve: {
-                    initForm: function (payment, $stateParams, translate, loadCurrentDate) {
-                        if ($stateParams.recipientId) {
-                            payment.formData.recipientId = $stateParams.recipientId;
-                        } else {
-                            payment.formData.description = translate.property('ocb.payments.domestic.description.default');
-                        }
-                        payment.promises.initForm = payment.promises.loadCurrentDate.then(function () {
-                           payment.formData.realizationDate = payment.meta.currentDate;
-                        });
-                    }
-                }
-            }))
+            .state('payments.external.new.fill', angular.copy(prototype))
             .state('payments.external.basket.modify.fill', angular.copy(prototype))
             .state('payments.external.future.modify.fill', angular.copy(prototype));
     })

@@ -25,6 +25,9 @@ angular.module('ocb-payments')
             return;
         }
 
+        var stateData = $state.$current.data;
+        $scope.removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
+
         $scope.rbPaymentsStepParams.visibility.finalAction = !payment.formData.recipientId;
 
         bdStatusStepInitializer($scope, {

@@ -1,4 +1,4 @@
-<div class="section-wrapper">
+<div class="account-collapse-item form-horizontal">
     <form>
         <input name="checkBoxState" hidden ng-model="isEmpty" required/>
         <bd-table bd-type="typePL2"
@@ -28,13 +28,21 @@
 
 
         </bd-table>
-        <div class="row">
-            <div class="col-xs-4 "><label  style="font-weight: bold">{{::'ocb.payments.pending.verify.token_input.header.label' | translate}}</label></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4"><rb-authorization></rb-authorization></div>
-        </div>
 
     </form>
 </div>
 
+<div class="account-collapse-item form-horizontal">
+    <div class="row">
+        <div class="col-xs-6"><span class="pending-lbl">{{::'ocb.payments.pending.verify.token_input.header.label' | translate}}</span></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2" ng-if="pendingTransaction.token.params.resourceId">
+            <div class="lb">Authentication code here</div>
+            <div>
+                <rb-token-authorization rb-operation-type="TRANSFER" rb-model="pendingTransaction.token.model"
+                                    rb-params="pendingTransaction.token.params"></rb-token-authorization>
+            </div>
+        </div>
+    </div>
+</div>

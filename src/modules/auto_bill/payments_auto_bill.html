@@ -1,0 +1,11 @@
+<rb-content-view class="rb-content-view--framed rb-payments-new form">
+    <bd-header>{{::"ocb.payments.auto_bill.list.header"|translate}}</bd-header>
+
+    <bd-form-panel class="bd-form-panel--responsive">
+
+        <rb-multistep-form bd-active-step="activeStep" rb-step-params="{ completeState: 'payments.auto_bill_list', cancelState: 'payments.auto_bill_list', labels : { finalize: 'ocb.deposits.new.finalize.label.back', clear:'ocb.deposits.new.label.cancel', back: 'ocb.deposits.new.label.back', accept: 'ocb.deposits.modify.label.next'} }">
+            <div ui-view></div>
+        </rb-multistep-form>
+
+    </bd-form-panel>
+</rb-content-view>

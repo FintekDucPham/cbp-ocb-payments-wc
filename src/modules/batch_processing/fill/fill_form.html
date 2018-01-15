@@ -14,43 +14,24 @@
                         bd-attr-required="true"
                         rb-account-list="paymentsBatchProcessingForm.formData.accountList"
                         rb-account-select-params="senderSelectParams"
-                        rb-remote="remote.model"
-                ></rb-account-select>
-                <!--rb-init-select-value = "{{ payment.formData.accountNo || selectNrb}}"-->
-
-                <!--rb-account-no="payment1.items.recipient.srcAccountNo"-->
+                        rb-remote="remote.model">
+                </rb-account-select>
             </bd-item-property-form>
-            <!--<bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
-                              label="{{ ::'ocb.payments.batch_processing.name' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-                <div class="bd-amount form-group-label-value form-group-label-bold" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                    <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.selectedAccount.accountName| uppercase}}</span>
-                    <span class="bd-amount__currency" ng-show="!showDash"></span>
-                    <span class="dash" ng-show="showDash">-</span>
-                </div>
+            <bd-item-property-form label="{{::'ocb.payments.batch_processing.name'|translate}}">
+                <span class="form-group-label-value form-group-label-bold">{{paymentsBatchProcessingForm.fullName}}</span>
             </bd-item-property-form>
-            <bd-item-property-form ng-if="paym0entsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
-                              label="{{ ::'ocb.payments.batch_processing.ocbbranch' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-                <div class="bd-amount form-group-label-value form-group-label-bold" ng-class="{'not-styled': notStyled, 'amount-negative': highlightNegative &&  amount < 0}">
-                    <span class="bd-amount__value">Tan Binh</span><span class="bd-amount__currency" ng-show="!showDash"></span>
-                    <span class="dash" ng-show="showDash">-</span>
-                </div>
-            </bd-item-property-form>-->
-            <bd-item-property label="{{::'ocb.payments.batch_processing.name'|translate}}">
-                {{fullName}}
-            </bd-item-property>
-            <bd-item-property label="{{::'ocb.payments.batch_processing.ocbbranch'|translate}}">
-                {{paymentsBatchProcessingForm.formData.selectedAccount.openBranch}}
-            </bd-item-property>
+            <bd-item-property-form label="{{::'ocb.payments.batch_processing.ocbbranch'|translate}}">
+                <span class="form-group-label-value form-group-label-bold">{{paymentsBatchProcessingForm.formData.selectedAccount.openBranch}}</span>
+            </bd-item-property-form>
             <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
                               label="{{ ::'ocb.payments.new.domestic.fill.accessible_assets' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
                 <bd-amount class="form-group-label-value form-group-label-bold" amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
                            currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
             </bd-item-property-form>
 
-            <bd-item-property-form ng-if="paymentsBatchProcessingForm.formData.selectedAccount" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
-                              label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-                <bd-amount class="form-group-label-value form-group-label-bold" amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
-                           currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
+            <bd-item-property-form label="{{::'ocb.payments.batch_processing.remainingdailylimit'|translate}}">
+                <bd-amount amount="payment.items.limit.remainingDailyLimit"
+                           currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
             </bd-item-property-form>
 
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch">
@@ -122,8 +103,9 @@
                     </span>
                 </div>
                 <div class="input-group template-download">
-                    <a class="bd-button" ng-show="isInternal" ng-click="downloadTemplateInternal()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
-                    <a class="bd-button" ng-show="isExternal" ng-click="downloadTemplateExternal()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
+                    <!--<a class="bd-button" ng-show="isInternal" ng-click="downloadTemplateInternal()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
+                    <a class="bd-button" ng-show="isExternal" ng-click="downloadTemplateExternal()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>-->
+                    <a class="bd-button" ng-click="downloadTemplateAll()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
                 </div>
             </bd-item-property-form>
             <bd-item-property-form ng-show="messageError">
