@@ -1089,5 +1089,10 @@
   "ocb.payment.auto_bill.status.error.info": "The transaction has not been accepted",
   "ocb.payment.auto_bill.status.success.info": "The transaction has been accepted for execution, awaiting execution",
 
+  "ocb.payments.auto_bill.error.customerId.empty": "This field cannot be empty",
+  "ocb.payments.auto_bill.list.details.recurringPeriod": "Recurring Period",
+  "ocb.payments.auto_bill.recurringPeriod.no.limit": "No Limit",
+  "ocb.payments.auto_bill.recurringPeriod.limited": "Limited",
+
   "EOF": ""
 }
