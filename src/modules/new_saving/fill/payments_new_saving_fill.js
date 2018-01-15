@@ -46,16 +46,6 @@ angular.module('ocb-payments')
             return item.accountId==this;
         };
         
-/*        var senderAccountInitDefer = $q.defer();
-
-        $scope.remote = {
-            model_from:{
-                initLoadingDefer:senderAccountInitDefer,
-                initLoadingPromise: senderAccountInitDefer.promise,
-                loading: true
-            },
-            model_to:{}
-        };*/
         $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
@@ -75,22 +65,7 @@ angular.module('ocb-payments')
         if ($stateParams.accountId) {
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
-
-/*        $scope.$watch('payment.formData.realizationDate', function(realizationDate) {
-            $scope.payment.options.futureRealizationDate = realizationDate && rbDateUtils.isFutureDay(new Date(realizationDate));
-            if(!!$scope.paymentForm.amount) {
-                $scope.paymentForm.amount.$validate();
-            }
-        });*/
-
-/*        paymentRules.search().then(function (result) {
-            angular.extend($scope.payment.meta, result);
-            var options = $scope.payment.meta.rbRealizationDateOptions = rbDatepickerOptions({
-                minDate: $scope.CURRENT_DATE.time,
-                maxDaysFromNow: result.maxDaysToDelayPayment
-            });
-            $scope.payment.meta.laterExecutedDateMsg = translate.property('ocb.payments.new.domestic.fill.execution_date.LATER_EXECUTED_DATE').replace('##date##', $filter('dateFilter')(options.maxDate));
-        });*/
+        
 
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
@@ -194,7 +169,7 @@ angular.module('ocb-payments')
                 if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.recipientAccountId) {
                     form.recipientAccountId.$setValidity('sameAccounts', false);
                 }
-               angular.extend($scope.payment.formData,{"recipientName":"test","recipientAccountNo":$scope.payment.items.recipientAccount.accountNo});
+               angular.extend($scope.payment.formData,{"recipientName":$scope.payment.meta.customerDetails.fullName,"recipientAccountNo":$scope.payment.items.recipientAccount.accountNo});
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
