@@ -1,0 +1,48 @@
+
+<div>
+
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.transferType'|translate}}">
+        {{ ::$data.details.transactionTypeDesc}}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.from'|translate}}">
+    </bd-item-property>
+        <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.accountNo'|translate}}">
+            {{ $data.details.accountNo | nrbIbanFilter }}
+        </bd-item-property>
+        <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.accountName'|translate}}">
+            {{ $data.details.accountName }}
+        </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.to'|translate}}">
+    </bd-item-property>
+        <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.accountNo'|translate}}">
+            {{ $data.details.recipientAccountNo | nrbIbanFilter }}
+        </bd-item-property>
+        <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.bank'|translate}}">
+            <eb-preloader ng-if="!$data.details.bankName" ng-init="promise=resolveBankName($data)" eb-promise="::promise" class="eb-inline-preloader"></eb-preloader>
+            {{ $data.details.bankName}}
+        </bd-item-property>
+        <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.accountHolderName'|translate}}">
+            {{ $data.details.recipientName.join(' ') }}
+        </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.fee'|translate}}">
+        {{ $data.details.paymentDetails.fee}} <br/>
+        {{ $data.details.paymentDetails.feeAccount | nrbIbanFilter }}
+    </bd-item-property>
+
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.amount'|translate}}">
+        {{ $data.details.amount | number: 2}} {{ $data.details.currency }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.amountInWords'|translate}}">
+        <!--!!! TODO !!!  {{ $data.details.currency }}-->
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.description'|translate}}">
+        {{ $data.details.description }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.realizationDate'|translate}}">
+        {{ $data.realizationDatePre}}
+    </bd-item-property>
+</div>
+
