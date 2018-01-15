@@ -82,6 +82,40 @@
 
 }
 
+.control-has-indicator {
+  position: relative;
+  display: block;
+  background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
+  background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
+  background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
+  border-radius: 5px;
+}
+
+.control-has-indicator input {
+  padding-right: 60px;
+  background: none;
+  position: relative;
+  z-index: 2;
+}
+
+.control-has-indicator .indicator {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 45px;
+  width: 48px;
+  border-left: solid 1px #D9D9D9;
+  text-align: center;
+  z-index: 1;
+}
+
+.control-has-indicator .indicator:before {
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .authorization-blocked {
   text-align: center;
   font-size: 1.2em;
@@ -379,3 +413,37 @@ rb-payment-recipients-fill > form {
   }
 
 
+
+.payments-future-list {
+  max-width: none !important;
+
+  .bd-table__row-details .bd-details-section {
+    max-height: none !important;
+  }
+
+  //filter input field
+  .input-field   {
+    padding: 9px 15px;
+  }
+}
+
+.bd-item-property--multi.amount-currency {
+  .bd-item-property--multi__values {
+    max-width: 400px;
+  }
+  .bd-item-property__value--secondary {
+    width: 90px;
+  }
+}
+
+.basket-vew .bd-table__row-details .bd-details-section {
+  max-height: none;
+}
+
+.rb-content-view.form .control-has-indicator {
+  max-width: 400px;
+}
+
+.rb-content-view.form .control-has-indicator input {
+  max-width: none;
+}

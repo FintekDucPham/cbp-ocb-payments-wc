@@ -16,15 +16,18 @@ angular.module('ocb-payments')
     .constant('rbRecipientTypes', {
         "INTERNAL": {
             code: 'INTERNAL',
-            state: 'domestic'
+            state: 'domestic',
+            transferState: 'payments.internal.new.fill'
         },
         "EXTERNAL": {
             code: "EXTERNAL",
-            state: 'domestic'
+            state: 'domestic',
+            transferState: 'payments.external.new.fill'
         },
         "FAST": {
             code: "FAST",
-            state: 'domestic'
+            state: 'domestic',
+            transferState: 'payments.fast.new.fill'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
