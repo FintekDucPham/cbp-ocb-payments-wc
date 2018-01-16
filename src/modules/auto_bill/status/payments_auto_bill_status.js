@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             dataObject: $scope.payment
         });
 
-        if ($scope.deposit.result.type == "success") {
+        if ($scope.payment.result.type == "success") {
             var payment = $scope.payment.formData;
             if (!!payment.customIcon || !!payment.customName) {
                 customerProductService.refreshCustomerProductData();
