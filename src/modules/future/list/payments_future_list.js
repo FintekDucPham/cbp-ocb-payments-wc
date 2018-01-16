@@ -88,7 +88,7 @@ angular.module('ocb-payments')
                     if (resp.restriction)
                         $scope.restriction = resp.restriction;
                     else{
-                        if (payment.transferType.toLocaleLowerCase() === 'external')
+                        if (payment.details.transferType.toLocaleLowerCase() === 'external')
                             $state.go('payments.external.future.modify.fill', { referenceId: payment.id });
                         else
                             $state.go('payments.internal.future.modify.fill', { referenceId: payment.id });
@@ -115,7 +115,7 @@ angular.module('ocb-payments')
 
         $scope.onDelete = function(payment) {
 
-            if (payment.transferType.toLocaleLowerCase() === 'external')
+            if (payment.details.transferType.toLocaleLowerCase() === 'external')
                 $state.go('payments.external.future.delete.verify', { referenceId: payment.id });
             else
                 $state.go('payments.internal.future.delete.verify', { referenceId: payment.id });
