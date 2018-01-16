@@ -24,12 +24,12 @@ angular.module('ocb-payments')
                     $state.go('payments.auto_bill_modify.fill');
                 }
                 else if (action == 'delete') {
-                    viewStateService.setInitialState('payments.auto_bill.delete', {
+                    viewStateService.setInitialState('payments.auto_bill_delete.verify', {
                         data: data,
                         paymentOperationType: rbPaymentOperationTypes.REMOVE
                     });
 
-                    $state.go('payments.auto_bill.delete.verify');
+                    $state.go('payments.auto_bill_delete.verify');
                 }
             };
 

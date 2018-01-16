@@ -1,11 +1,11 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.auto_bill.delete', {
+        stateServiceProvider.state('payments.auto_bill_delete', {
             url: "/delete",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/auto_bill/delete/payments_auto_bill_delete.html",
             controller: "AutoBillDeleteController",
-            params:{
+            params: {
                 deposit: null
             },
             data: {
@@ -14,9 +14,12 @@ angular.module('ocb-payments')
         });
     }).controller('AutoBillDeleteController', function ($scope, $stateParams, bdMainStepInitializer) {
 
-        bdMainStepInitializer($scope, 'payment', {
-            id: $stateParams.depositId,
-            details: $stateParams.deposit
-        });
-
+    bdMainStepInitializer($scope, 'payment', {
+        formName: 'autoBillForm',
+        formData: {},
+        options: {},
+        meta: {},
+        validation: {}
     });
+
+});
