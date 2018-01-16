@@ -13,6 +13,14 @@ angular.module('ocb-deposits')
             symbol: "M"
         }
     })
+    .constant('PAYMENT_SETTING', {
+        FULL: 'FULL',
+        LIMITED: 'LIMITED'
+    })
+    .constant('RECURRING_PERIOD', {
+        NOLIMIT: 'NOLIMIT',
+        LIMITED: 'PERIOD'
+    })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.auto_bill.fill', {
             url: "/fill",
@@ -23,8 +31,11 @@ angular.module('ocb-deposits')
             }
         });
     })
-    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, STANDING_FREQUENCY_TYPES, translate, formService, bdStepStateEvents, viewStateService, initialState) {
-        var data = initialState.data;
+    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, STANDING_FREQUENCY_TYPES, PAYMENT_SETTING, RECURRING_PERIOD, translate, formService, bdStepStateEvents, viewStateService, initialState) {
+        var initialData = initialState.data;
+        if (initialData != null) {
+            $scope.payment.formData = initialData;
+        }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.autoBillForm;
@@ -86,4 +97,15 @@ angular.module('ocb-deposits')
             }
         };
 
+        // PAYMENT SETTING
+        $scope.PAYMENT_SETTING = PAYMENT_SETTING;
+        if ($scope.payment.formData.paymentSetting === undefined || $scope.payment.formData.paymentSetting == null || $scope.payment.formData.paymentSetting === 'null') {
+            $scope.payment.formData.paymentSetting = PAYMENT_SETTING.LIMITED;
+        }
+
+        // RECURRING PERIOD
+        $scope.RECURRING_PERIOD = RECURRING_PERIOD;
+        if ($scope.payment.formData.recurringPeriod === undefined || $scope.payment.formData.recurringPeriod === null || $scope.payment.formData.recurringPeriod === 'null') {
+            $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
+        }
     });
