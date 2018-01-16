@@ -22,9 +22,9 @@ angular.module('ocb-payments')
         LIMITED: 'PERIOD'
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.auto_bill.fill', {
+        stateServiceProvider.state('payments.auto_bill_modify.fill', {
             url: "/fill",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/auto_bill/fill/payments_auto_bill_fill.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/auto_bill/modify/fill/payments_auto_bill_fill.html",
             controller: "AutoBillFillController",
             data: {
                 analyticsTitle: 'config.multistepform.labels.step1'

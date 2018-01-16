@@ -1,8 +1,8 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
-        stateServiceProvider.state('payments.auto_bill.verify', {
+        stateServiceProvider.state('payments.auto_bill_modify.verify', {
             url: "/fill",
-            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/auto_bill/verify/payments_auto_bill_verify.html",
+            templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/auto_bill/modify/verify/payments_auto_bill_verify.html",
             controller: "AutoBillVerifyController",
             data: {
                 analyticsTitle: 'config.multistepform.labels.step2'

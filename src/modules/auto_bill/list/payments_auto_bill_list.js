@@ -16,12 +16,12 @@ angular.module('ocb-payments')
 
             $scope.onButtonPressed = function (action, data) {
                 if (action == 'edit') {
-                    viewStateService.setInitialState('payments.auto_bill.fill', {
+                    viewStateService.setInitialState('payments.auto_bill_modify.fill', {
                         data: data,
                         paymentOperationType: rbPaymentOperationTypes.EDIT
                     });
 
-                    $state.go('payments.auto_bill.fill');
+                    $state.go('payments.auto_bill_modify.fill');
                 }
                 else if (action == 'delete') {
                     viewStateService.setInitialState('payments.auto_bill.delete', {
@@ -34,12 +34,12 @@ angular.module('ocb-payments')
             };
 
             $scope.onNewAutoBillClick = function () {
-                viewStateService.setInitialState('payments.auto_bill.fill', {
+                viewStateService.setInitialState('payments.auto_bill_modify.fill', {
                     data: null,
                     paymentOperationType: rbPaymentOperationTypes.NEW
                 });
 
-                $state.go('payments.auto_bill.fill');
+                $state.go('payments.auto_bill_modify.fill');
             };
 
             $scope.table = {
