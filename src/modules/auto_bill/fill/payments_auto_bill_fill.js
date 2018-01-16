@@ -1,4 +1,4 @@
-angular.module('ocb-deposits')
+angular.module('ocb-payments')
     .constant('STANDING_FREQUENCY_TYPES', {
         "DAILY": {
             code: "DAILY",
