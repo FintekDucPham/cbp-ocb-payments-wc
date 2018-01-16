@@ -1047,8 +1047,11 @@
 
   "ocb.payments.auto_bill.label": "Auto bill",
   "ocb.payments.auto_bill.list.header": "Auto bill",
+  "ocb.payments.delete.label.header": "Delete auto bill",
+
   "ocb.payments.auto_bill.list.empty": "No auto bills found",
   "ocb.payments.auto_bill.button.new.label": "New auto bill",
+
   "ocb.payments.auto_bill.list.header.name": "Custom order name",
   "ocb.payments.auto_bill.list.header.realizationDate": "Execution date",
   "ocb.payments.auto_bill.list.header.amount": "Amount",
@@ -1056,10 +1059,10 @@
   "ocb.payments.auto_bill.list.header.recipientAccount": "Account",
   "ocb.payments.auto_bill.list.header.serviceProvider": "Service Provider",
   "ocb.payments.auto_bill.list.header.billCode": "Bill Code",
-  "ocb.payments.auto_bill.error.customerId.empty": "This field cannot be empty",
-  "ocb.payments.auto_bill.list.details.recurringPeriod": "Recurring Period",
-  "ocb.payments.auto_bill.recurringPeriod.no.limit": "No Limit",
-  "ocb.payments.auto_bill.recurringPeriod.limited": "Limited",
+
+  "ocb.payments.auto_bill.list.details.insurance.buttons.edit": "Edit",
+  "ocb.payments.auto_bill.list.details.insurance.buttons.delete": "Delete",
+  "ocb.payments.auto_bill.list.details.insurance.buttons.backToList": "Back",
 
   "ocb.payments.auto_bill.list.details.orderNo": "Order number",
   "ocb.payments.auto_bill.list.details.orderName": "Order name",
