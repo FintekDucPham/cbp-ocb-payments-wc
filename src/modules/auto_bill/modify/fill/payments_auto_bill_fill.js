@@ -105,13 +105,13 @@ angular.module('ocb-payments')
 
         // PAYMENT SETTING
         $scope.PAYMENT_SETTING = PAYMENT_SETTING;
-        if ($scope.payment.formData.paymentSetting === undefined || $scope.payment.formData.paymentSetting == null || $scope.payment.formData.paymentSetting === 'null') {
+        if ($scope.payment.formData.paymentSetting === undefined || $scope.payment.formData.paymentSetting == null || $scope.payment.formData.paymentSetting === 'null' || $scope.payment.formData.paymentSetting === '') {
             $scope.payment.formData.paymentSetting = PAYMENT_SETTING.LIMITED;
         }
 
         // RECURRING PERIOD
         $scope.RECURRING_PERIOD = RECURRING_PERIOD;
-        if ($scope.payment.formData.recurringPeriod === undefined || $scope.payment.formData.recurringPeriod === null || $scope.payment.formData.recurringPeriod === 'null') {
+        if ($scope.payment.formData.recurringPeriod === undefined || $scope.payment.formData.recurringPeriod === null || $scope.payment.formData.recurringPeriod === 'null'  || $scope.payment.formData.recurringPeriod === '') {
             $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
         }
 
