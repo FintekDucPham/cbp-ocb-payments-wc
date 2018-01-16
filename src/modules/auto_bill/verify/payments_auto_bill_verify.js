@@ -1,4 +1,4 @@
-angular.module('ocb-deposits')
+angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.auto_bill.verify', {
             url: "/fill",
