@@ -16,34 +16,25 @@ angular.module('ocb-payments')
         });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            transferBillService.createAutoBillTransfer($scope.payment.formData).then(function(createDepositResponse){
-                $scope.deposit.result.proxyMsg = {};
-                $scope.deposit.result.proxyMsg.show = false;
-                // if($scope.deposit.items.sourceAccount.relation == 'PROXY'){
-                //     $scope.deposit.result.proxyMsg.show = true;
-                //     $scope.deposit.result.proxyMsg.content = deposit.formData.period.powerOfAttorneyInformation;
-                // }
-                var response = angular.fromJson(createDepositResponse.content);
-                if(response.status === "success"){
-                    $scope.deposit.result.type = "success";
-                    if(response.numOfDeposits == 1){
-                        var key = "ocb.deposits.new.status.success.info." + (response.numOfDeposits == 1 ? "one" : "all");
-                        $scope.deposit.result.text = translate.property(key);
-                    }else{
-                        $scope.deposit.result.text =  translate.property('ocb.deposits.new.status.success.info.some')
-                            .replace("##deposits##", response.numOfDeposits)
-                            .replace("##wholeDeposits##","$scope.deposit.formData.depositQuantity");
-                    }
-                } else if (response.status === "warning"){
-                    $scope.deposit.result.type = "warning";
-                    $scope.deposit.result.text =  translate.property('ocb.deposits.new.status.warning.info');
+            $scope.payment.formData.amountLimit = $scope.payment.formData.amountLimit.value;
+            transferBillService.createAutoBillTransfer($scope.payment.formData).then(function(status){
+                $scope.payment.result = {};
+                if(status === "EXECUTED"){
+                    setErrorMessage("success", 'ocb.payment.auto_bill.status.success.info');
+                } else if (status === "IN_PROCESSING"){
+                    setErrorMessage("warning", 'ocb.payment.auto_bill.status.processing.info');
                 } else{
-                    setErrorMessage(params.numberOfDeposits);
+                    setErrorMessage("undefined", 'ocb.payment.auto_bill.status.error.info');
                 }
             }).catch(function(error) {
-                setErrorMessage(params.numberOfDeposits);
+                setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
             }).finally(function(params){
                 actions.proceed();
             });
         });
+
+        function setErrorMessage(type, message) {
+            $scope.payment.result.type = type;
+            $scope.payment.result.text = translate.property(message);
+        }
     });
