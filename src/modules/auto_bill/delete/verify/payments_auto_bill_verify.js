@@ -21,8 +21,8 @@ angular.module('ocb-payments')
         });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            $scope.payment.formData.amountLimit = $scope.payment.formData.amountLimit.value;
-            transferBillService.createAutoBillTransfer($scope.payment.formData).then(function(status){
+            var params = { orderNumber: $scope.payment.formData.orderNumber}
+            transferBillService.deleteAutoBillTransfer(params).then(function(status){
                 $scope.payment.result = {};
                 if(status === "EXECUTED"){
                     setErrorMessage("success", 'ocb.payment.auto_bill.status.success.info');

@@ -990,6 +990,7 @@
 
     "ocb.payments.auto_bill.label": "Auto bill",
     "ocb.payments.auto_bill.list.header": "Auto bill",
+    "ocb.payments.delete.label.header": "Delete auto bill",
 
     "ocb.payments.auto_bill.list.empty": "No auto bills found",
     "ocb.payments.auto_bill.button.new.label": "New auto bill",
