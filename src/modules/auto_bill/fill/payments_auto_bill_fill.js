@@ -35,6 +35,7 @@ angular.module('ocb-deposits')
         var initialData = initialState.data;
         if (initialData != null) {
             $scope.payment.formData = initialData;
+            $scope.payment.formData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
@@ -60,10 +61,15 @@ angular.module('ocb-deposits')
 
         $scope.onFrequencyTypeSelect = function () {
             if ($scope.payment.formData.frequencyType == "DAILY") {
-                $scope.payment.formData.frequency = "";
+                $scope.payment.formData.frequencyPeriodCount = "";
             }
             if ($scope.autoBillForm.frequency) {
                 $scope.autoBillForm.frequency.$validate();
+            }
+            $scope.payment.formData.frequencyPeriodUnit = null;
+            if ($scope.payment.formData.frequencyType != null) {
+                $scope.payment.formData.frequencyPeriodUnit = STANDING_FREQUENCY_TYPES[$scope.payment.formData.frequencyType].symbol;
+                console.log($scope.payment.formData.frequencyPeriodUnit);
             }
         };
 
@@ -107,5 +113,17 @@ angular.module('ocb-deposits')
         $scope.RECURRING_PERIOD = RECURRING_PERIOD;
         if ($scope.payment.formData.recurringPeriod === undefined || $scope.payment.formData.recurringPeriod === null || $scope.payment.formData.recurringPeriod === 'null') {
             $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
+        }
+
+        function convertFrequencySymbolToCode(frequencySymbol) {
+            var result = null;
+            if (frequencySymbol != null) {
+                _(STANDING_FREQUENCY_TYPES).forEach(function(item) {
+                    if (item.symbol === frequencySymbol) {
+                        result = item.code;
+                    }
+                });
+            }
+            return result;
         }
     });
