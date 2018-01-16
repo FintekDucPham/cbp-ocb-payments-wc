@@ -36,7 +36,7 @@
         {{ $data.details.amount | number: 2}} {{ $data.details.currency }}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.amountInWords'|translate}}">
-        <!--!!! TODO !!!  {{ $data.details.currency }}-->
+        {{amountInWords}} {{ $data.details.currency }}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.internal.description'|translate}}">
         {{ $data.details.description }}
