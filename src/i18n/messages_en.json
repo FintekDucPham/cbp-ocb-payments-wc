@@ -1082,5 +1082,9 @@
   "ocb.payments.auto_bill.list.details.finishDate": "Finish date",
   "ocb.payments.auto_bill.list.details.nextExecutionDate": "Next execution date",
 
+  "ocb.payment.auto_bill.status.processing.info": "The transaction is waiting for processing",
+  "ocb.payment.auto_bill.status.error.info": "The transaction has not been accepted",
+  "ocb.payment.auto_bill.status.success.info": "The transaction has been accepted for execution, awaiting execution",
+
   "EOF": ""
 }
