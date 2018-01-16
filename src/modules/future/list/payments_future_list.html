@@ -18,7 +18,7 @@
               bd-table-meta="{
                     'first': {
                         'title': '##ocb.payments.future.list.header.operation_date',
-                        'data': 'realizationDatePre'
+                        'data': 'deliveryDatePre'
                     },
                     'second': {
                         'title': '##ocb.payments.future.list.header.credit_account',
@@ -49,7 +49,7 @@
                     },
                     'eight': {
                         'title': '##ocb.payments.future.list.header.plannedoperationdate',
-                        'data': 'deliveryDatePre'
+                        'data': 'realizationDatePre'
                     }
                 }">
 
@@ -61,10 +61,13 @@
                  <ng-include src="::resolveTemplateType($data.details.transferType)"></ng-include>
 
                 <bd-details-action-section>
-                    <div class="row">
+                    <div class="bd-grid__row">
                         <div class="bd-grid__col--sm-12 desktop-only" style="text-align: left;">
                             <bd-button ng-click="onEdit($data)" ng-if="::canEdit($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.standing.list.details.insurance.buttons.edit' | translate}}</bd-button>
                             <bd-button ng-click="onDelete($data)" ng-if="::canDelete($data)" class="bd-button bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.standing.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                            <div ng-show="restriction" class="validation-message animate-on">
+                                <div class="messages">{{::'ocb.payments.future.list.message.editRestriction' | translate}}</div>
+                            </div>
                         </div>
                         <div class="bd-grid__col--sm-4 desktop-only" style="text-align: right;">
                             <bd-button ng-click="onBack(this)"    class="bd-button bd-button__primary">{{::'ocb.payments.future.list.details.insurance.buttons.backToList' | translate}}</bd-button>
@@ -113,7 +116,7 @@
                         <div>
                             {{::"ocb.payments.future.list.summary.currency"|translate}}&nbsp;{{currencySummary.currency}}:
                         </div>
-                        <div class="summary-item">
+                        <div class="summary-item" style="text-align:right">
                             <bd-amount amount="currencySummary.amount" currency="{{currencySummary.currency}}"></bd-amount>
                         </div>
                     </div>
