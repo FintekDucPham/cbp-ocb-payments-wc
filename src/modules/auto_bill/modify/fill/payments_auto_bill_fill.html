@@ -109,7 +109,6 @@
                            ng-required="payment.formData.frequencyType != 'DAILY'"
                            on-select="onFrequencyTypeSelect()"
                            ng-pattern="INTEGER_REGEX"
-                           ng-disabled="payment.formData.frequencyType == 'DAILY'"
                            bd-matches-none-of="frequencyValidators"
                            class="input-field order-frequency"/>
                 </div>
@@ -126,16 +125,16 @@
                     >
                         <ui-select-match placeholder="{{ ::'ocb.payments.new.standing.fill.frequencyType.types.empty'|translate }}">
 
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount <= 1 || !payment.formData.frequencyPeriodCount">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 2 && payment.formData.frequencyPeriodCount < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount <= 1 || !payment.formData.frequencyPeriodCount">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 2 && payment.formData.frequencyPeriodCount < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
+                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
 
                         </ui-select-match>
 
-                        <ui-select-choices repeat="frequency in STANDING_FREQUENCY_TYPES_LIST">
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount <= 1 || !payment.formData.frequencyPeriodCount">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 2 && payment.formData.frequencyPeriodCount < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + STANDING_FREQUENCY_TYPES[frequency].symbol | translate}}</div>
+                        <ui-select-choices repeat="frequency in FREQUENCY_TYPES_LIST">
+                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount <= 1 || !payment.formData.frequencyPeriodCount">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + FREQUENCY_TYPES[frequency].symbol | translate}}</div>
+                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 2 && payment.formData.frequencyPeriodCount < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + FREQUENCY_TYPES[frequency].symbol | translate}}</div>
+                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + FREQUENCY_TYPES[frequency].symbol | translate}}</div>
                         </ui-select-choices>
                     </ui-select>
                 </div>

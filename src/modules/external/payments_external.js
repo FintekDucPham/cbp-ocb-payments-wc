@@ -7,7 +7,7 @@ angular.module('ocb-payments')
                 templateUrl: pathServiceProvider.generateTemplatePath('ocb-payments') + '/modules/external/payments_external.html',
                 controller: 'PaymentsExternalController',
                 resolve: {
-                    payment: function (viewStateService) {
+                    payment: ['viewStateService', function (viewStateService) {
                         return angular.extend({
                             formData: {},
                             meta: {},
@@ -15,24 +15,24 @@ angular.module('ocb-payments')
                             result: {},
                             items: {}
                         }, viewStateService.getFormData('paymentForm'));
-                    },
-                    loadCustomer: function (payment, customerService) {
+                    }],
+                    loadCustomer: ['payment', 'customerService', function (payment, customerService) {
                         payment.promises.loadCustomer = customerService.getCustomerDetails().then(function (data) {
                             payment.meta.remitter = data.customerDetails;
                             payment.meta.customerContext = data.customerDetails.context;
                         });
-                    },
-                    loadRules: function (payment, paymentRules) {
+                    }],
+                    loadRules: ['payment', 'paymentRules', function (payment, paymentRules) {
                         payment.promises.loadRules = paymentRules.search().then(function (data) {
                             angular.extend(payment.meta, data);
                         });
-                    },
-                    loadCurrentDate: function (payment, utilityService) {
+                    }],
+                    loadCurrentDate: ['payment', 'utilityService', function (payment, utilityService) {
                         payment.promises.loadCurrentDate = utilityService.getCurrentDateWithTimezone().then(function (date) {
                             payment.meta.currentDate = date.time;
                             payment.meta.timeZone = date.zone;
                         });
-                    }
+                    }]
                 },
                 data: {
                     analyticsTitle: 'payments.submenu.options.new_external.header'
@@ -49,7 +49,7 @@ angular.module('ocb-payments')
                     finalState: 'payments.recipients.list'
                 },
                 resolve: {
-                    initForm: function (payment, $stateParams, translate, loadCurrentDate) {
+                    initForm: ['payment', '$stateParams', 'translate', 'loadCurrentDate', function (payment, $stateParams, translate, loadCurrentDate) {
                         if ($stateParams.recipientId) {
                             payment.formData.recipientId = $stateParams.recipientId;
                         } else {
@@ -58,7 +58,7 @@ angular.module('ocb-payments')
                         payment.promises.initForm = payment.promises.loadCurrentDate.then(function () {
                             payment.formData.realizationDate = payment.meta.currentDate;
                         });
-                    }
+                    }]
                 }
             })
             .state('payments.external.basket', {
@@ -73,7 +73,7 @@ angular.module('ocb-payments')
                     finalState: 'payments.basket.new.fill'
                 },
                 resolve: {
-                    loadPayment: function (payment, paymentsService, $stateParams, loadCurrentDate, $state, $timeout) {
+                    loadPayment: ['payment', 'paymentsService', '$stateParams', 'loadCurrentDate', '$state', '$timeout', function (payment, paymentsService, $stateParams, loadCurrentDate, $state, $timeout) {
                         if (!$stateParams.referenceId) {
                             var finalState = this.data.finalState;
                             $timeout(function () {
@@ -101,7 +101,7 @@ angular.module('ocb-payments')
                                 payment.formData.realizationDate = payment.meta.currentDate;
                             }
                         });
-                    }
+                    }]
                 }
             })
             .state('payments.external.basket.modify', {
@@ -129,7 +129,7 @@ angular.module('ocb-payments')
                     finalState: 'payments.future.list'
                 },
                 resolve: {
-                    loadPayment: function (payment, paymentsService, $stateParams, loadCurrentDate, $state, $timeout) {
+                    loadPayment: ['payment', 'paymentsService', '$stateParams', 'loadCurrentDate', '$state', '$timeout', function (payment, paymentsService, $stateParams, loadCurrentDate, $state, $timeout) {
                         if (!$stateParams.referenceId) {
                             var finalState = this.data.finalState;
                             $timeout(function () {
@@ -156,7 +156,7 @@ angular.module('ocb-payments')
                                 payment.formData.realizationDate = payment.meta.currentDate;
                             }
                         });
-                    }
+                    }]
                 }
             })
             .state('payments.external.future.modify', {
