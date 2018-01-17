@@ -153,17 +153,26 @@ angular.module('ocb-payments')
             $scope.oldestDate = [];
             $scope.validCheck = false;
             $scope.checkBoxIBAction =  function(length, item, idx, qty) { // separated this func when more tbl???
-                /*Validate*/
-                if (isNormalInteger(qty) == true) {
-                    console.log("Gia tri hop le");
-                    //Init Array when first click
-                    if ($scope.payment.items.checkBoxList === undefined) {
-                        $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
-                        //$scope.payment.items.checkBoxList[idx].amount = item.amount;
-                        $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
-                        $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
-                        $scope.payment.items.checkBoxList[idx].userClick = true;
-                        //checked oldest
+                //Init Array when first click
+                if ($scope.payment.items.checkBoxList === undefined) {
+                    $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
+                    //$scope.payment.items.checkBoxList[idx].amount = item.amount;
+                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                    $scope.payment.items.checkBoxList[idx].userClick = true;
+                    //checked oldest
+                    if (idx == 0){
+                        $scope.validCheck = false;
+                        $scope.oldestDate.push(item);
+                    } else {
+                        // Not oldest
+                        $scope.validCheck = true;
+                    }
+                } else {
+                    /*The second click and so on....*/
+                    $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                    // In the case of checked
+                    if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length == 0) {
                         if (idx == 0){
                             $scope.validCheck = false;
                             $scope.oldestDate.push(item);
@@ -171,62 +180,47 @@ angular.module('ocb-payments')
                             // Not oldest
                             $scope.validCheck = true;
                         }
-                    } else {
-                        /*The second click and so on....*/
-                        $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
-                        // In the case of checked
-                        if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length == 0) {
-                            if (idx == 0){
-                                $scope.validCheck = false;
-                                $scope.oldestDate.push(item);
-                            } else {
-                                // Not oldest
-                                $scope.validCheck = true;
-                            }
-                        }
-                        else if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length > 0) {
-                            if (idx == $scope.oldestDate.length){
-                                $scope.validCheck = false;
-                                $scope.oldestDate.push(item);
-                            } else {
-                                // Not oldest
-                                $scope.validCheck = true;
-                            }
-                        }
-                        // In the case of uncheck
-                        if ($scope.payment.items.checkBoxList[idx].userClick == false && $scope.oldestDate.length > 0) {
-                            if (idx == $scope.oldestDate.length - 1) {
-                                $scope.validCheck = false;
-                                $scope.oldestDate.pop(item);
-                            } else {
-                                $scope.validCheck = true;
-                            }
-                        }
-                        //$scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
-                        $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
-                        $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                     }
-                    var totalAmount = 0;
-                    angular.forEach($scope.payment.items.checkBoxList,function(val,key){
-                        // var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
-                        var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1);//*amountValidation;
-                        totalAmount += multiMonthAmount;
-                        //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
-                        // console.log(key + val);
-                        // console.log(val.amount);
-                        // console.log("-+-" + totalAmount);
-                        // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
-                        //     console.log(k1+":"+v1);
-                        // });
-                    });
-                    // Set amount value to 1000 --> waiting for confirming
-                    $scope.payment.formData.amount = 859.57;//totalAmount;
-                    $scope.payment.formData.amountDesc = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
-                    // $scope.payment.items.totalBill = totalAmount;
-                    $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
-                } else {
-                    console.error("Invalid number!!!!!!!");
+                    else if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length > 0) {
+                        if (idx == $scope.oldestDate.length){
+                            $scope.validCheck = false;
+                            $scope.oldestDate.push(item);
+                        } else {
+                            // Not oldest
+                            $scope.validCheck = true;
+                        }
+                    }
+                    // In the case of uncheck
+                    if ($scope.payment.items.checkBoxList[idx].userClick == false && $scope.oldestDate.length > 0) {
+                        if (idx == $scope.oldestDate.length - 1) {
+                            $scope.validCheck = false;
+                            $scope.oldestDate.pop(item);
+                        } else {
+                            $scope.validCheck = true;
+                        }
+                    }
+                    //$scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
+                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                 }
+                var totalAmount = 0;
+                angular.forEach($scope.payment.items.checkBoxList,function(val,key){
+                    // var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
+                    var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1);//*amountValidation;
+                    totalAmount += multiMonthAmount;
+                    //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
+                    // console.log(key + val);
+                    // console.log(val.amount);
+                    // console.log("-+-" + totalAmount);
+                    // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
+                    //     console.log(k1+":"+v1);
+                    // });
+                });
+                // Set amount value to 1000 --> waiting for confirming
+                $scope.payment.formData.amount = 859.57;//totalAmount;
+                $scope.payment.formData.amountDesc = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
+                // $scope.payment.items.totalBill = totalAmount;
+                $scope.payment.items.totalBillInWord = $scope.payment.formData.amountDesc;
             }
 
             /*click x button*/
