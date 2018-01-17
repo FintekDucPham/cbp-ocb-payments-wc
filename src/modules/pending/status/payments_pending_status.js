@@ -16,6 +16,6 @@ angular.module('ocb-payments')
             dataObject: $scope.payment
         });
 
-        $scope.paymentsPendingTransactionFormParams.selectedTrans = [];
+        $scope.pendingTransaction.selectedTrans = [];
 
     });

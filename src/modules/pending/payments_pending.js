@@ -8,12 +8,19 @@ angular.module('ocb-payments')
                 analyticsTitle: null
             }
         });
-    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,pendingTransactionService) {
+    }) .controller('PaymentsPendingTransactionController', function ($scope,bdMainStepInitializer,customerService,rbPaymentOperationTypes) {
 
         bdMainStepInitializer($scope, 'pendingTransaction', {
             formName: 'pendingTransactionForm',
             formData: {},
-            options: {},
+            options: {
+                fixedAccountSelection: false
+            },
+            operation: rbPaymentOperationTypes.NEW,
+            token: {
+                model: null,
+                params: {}
+            },
             meta: {},
             validation: {},
             items :[],
@@ -21,15 +28,10 @@ angular.module('ocb-payments')
         });
 
 
-
     $scope.returnTrans = function(){
         $scope.pendingTransaction.returnTrans();
     };
 
-
-    // $scope.approveTrans = function(){
-    //     $scope.pendingTransaction.approveTrans();
-    // };
     $scope.modifyTrans = function(){
         $scope.pendingTransaction.modifyTrans();
     };
@@ -43,106 +45,123 @@ angular.module('ocb-payments')
     $scope.clearData = function () {
         $scope.pendingTransaction.clearData();
     };
-    // $scope.selectedTrans = [];
-    //todo get user type
-    $scope.userRole = "";
 
-    $scope.getUserType = function () {
-        var userActions = {};
-        switch ($scope.userRole) {
+    // $scope.userRole = "";
+    customerService.getCustomerDetails().then(function(data) {
+        if (data.customerDetails) {
+            $scope.userRole = data.customerDetails.microRole;
 
-            case "INPUTTER":
-                userActions = {
+            $scope.userActions = {};
+            switch ($scope.userRole) {
+                case "INPUTTER":
+                    $scope.userActions = {
                         MODIFY: true,
                         RETURN: false,
                         APPROVE: false,
                         DELETE: true
                     }
-                break;
-            case "CHECKER_1":
-                userActions = {
-                    MODIFY: false,
-                    RETURN: true,
-                    APPROVE: true,
-                    DELETE: false
-                }
-                break;
-            case "CHECKER_2":
-                userActions = {
-                    MODIFY: false,
-                    RETURN: true,
-                    APPROVE: true,
-                    DELETE: false
-                }
-                break;
-            case "MASTER":
-                userActions = {
-                    MODIFY: false,
-                    RETURN: true,
-                    APPROVE: true,
-                    DELETE: false
-                }
-                break;
-            default:
-                userActions = {
-                    MODIFY: true,
-                    RETURN: true,
-                    APPROVE: true,
-                    DELETE: true
-                }
+                    break;
+                case "CHECKER1":
+                    $scope.userActions = {
+                        MODIFY: false,
+                        RETURN: true,
+                        APPROVE: true,
+                        DELETE: false
+                    }
+                    break;
+                case "CHECKER2":
+                    $scope.userActions = {
+                        MODIFY: false,
+                        RETURN: true,
+                        APPROVE: true,
+                        DELETE: false
+                    }
+                    break;
+                case "APPROVER":
+                    $scope.userActions = {
+                        MODIFY: false,
+                        RETURN: true,
+                        APPROVE: true,
+                        DELETE: false
+                    }
+                    break;
+                case "MASTER":
+                    $scope.userActions = {
+                        MODIFY: true,
+                        RETURN: true,
+                        APPROVE: true,
+                        DELETE: true
+                    }
+                    break;
+                default:
+                    userActions = {
+                        MODIFY: false,
+                        RETURN: false,
+                        APPROVE: false,
+                        DELETE: false
+                    }
+            }
+
+            $scope.statusByUser= {};
+            switch ($scope.userRole) {
+
+                case "INPUTTER":
+                    $scope.statusByUser = {
+                        C1:false,
+                        C2:false,
+                        RT:true,
+                        WA:false
+                    }
+                    break;
+                case "CHECKER1":
+                    $scope.statusByUser = {
+                        C1:true,
+                        C2:false,
+                        RT:false,
+                        WA:false
+                    }
+                    break;
+                case "CHECKER2":
+                    $scope.statusByUser = {
+                        C1:false,
+                        C2:true,
+                        RT:false,
+                        WA:false
+                    }
+                    break;
+                case "APPROVER":
+                    $scope.statusByUser = {
+                        C1:false,
+                        C2:false,
+                        RT:true,
+                        WA:true
+                    }
+                    break;
+                case "MASTER":
+                    $scope.statusByUser = {
+                        C1:true,
+                        C2:true,
+                        RT:true,
+                        WA:true
+                    }
+                    break;
+                default:
+                    $scope.statusByUser = {
+                        C1:false,
+                        C2:false,
+                        RT:false,
+                        WA:false
+                    }
+            }
         }
-        return userActions;
-    };
+    })
+
+    $scope.getUserType = function () {
+        return $scope.userActions;
+    }
     $scope.getStatusByRole = function () {
-
-
-        var statusByUser= {};
-        switch ($scope.userRole) {
-
-            case "INPUTTER":
-                statusByUser = {
-                    C1:false,
-                    C2:false,
-                    RT:true,
-                    WA:false
-                }
-                break;
-            case "CHECKER_1":
-                statusByUser = {
-                    C1:true,
-                    C2:false,
-                    RT:false,
-                    WA:false
-                }
-                break;
-            case "CHECKER_2":
-                statusByUser = {
-                    C1:false,
-                    C2:true,
-                    RT:false,
-                    WA:false
-                }
-                break;
-            case "MASTER":
-                statusByUser = {
-                    C1:false,
-                    C2:false,
-                    RT:true,
-                    WA:true
-                }
-                break;
-            default:
-                statusByUser = {
-                    C1:true,
-                    C2:true,
-                    RT:true,
-                    WA:true
-                }
-        }
-        return statusByUser;
-
-
-    };
+        return $scope.statusByUser;
+    }
     $scope.paymentsPendingTransactionFormParams = {
         completeState:'payments.pending.fill',
         onClear: $scope.clearForm,

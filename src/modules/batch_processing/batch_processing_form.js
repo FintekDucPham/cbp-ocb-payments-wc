@@ -24,8 +24,7 @@ angular.module('ocb-payments')
             items :{}
         });
 
-        $scope.getCurrentDate = function() {
-            var date = new Date();
+        $scope.getDate = function(date) {
             return $filter('date')(date, "yyyy-MM-dd");
         }
 
@@ -96,14 +95,15 @@ angular.module('ocb-payments')
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         $scope.paymentsBatchProcessingFormParams = {
-            completeState:'payments.batch_processing.fill',
+            //completeState:'payments.batch_processing.fill',
+            completeState:'payments.pending.fill',
             onClear: $scope.clearForm,
             cancelState:'dashboard',
             footerType: 'batchProcessing',
             onSearch: $scope.showBatchInfoSearch,
             onCheckTable: $scope.checkTable,
             labels:{
-                prev:"ocb.payments.buttons.prev",
+                prev:"ocb.payments.buttons.back",
                 testFormButton:'ocb.payments.batch_processing.custom.button',
                 next:"ocb.payments.new.btn.next",
                 finalize:"ocb.payments.new.btn.finalize",

@@ -43,14 +43,6 @@ angular.module('ocb-payments')
                 }
             },
             items: {
-                // senderService : {
-                //     serviceId: "NET",
-                //     serviceName: "ADSL – Internet ADSL bill",
-                //     providers: {
-                //         providerId: "VNPTLD",
-                //         providerName: "Lam Dong VNPT"
-                //     }
-                // },
                 modifyFromBeneficiary : false
             },
             type: rbPaymentTypes.OWN
@@ -73,10 +65,6 @@ angular.module('ocb-payments')
             tableConfig: new bdTableConfig({
                 placeholderText: translate.property('ocb.payments.new.bill.fill.placeHolderTable'),
                 checkBoxIBAction: function(length, item, idx) {
-                    // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
-                    //     url = exportService.prepareHref(downloadLink);
-                    // fileDownloadService.startFileDownload(url);
-                    console.log("++++:" + item + "-" + item.amount);
                 }
             }),
             tableData: {
@@ -89,12 +77,6 @@ angular.module('ocb-payments')
                 tableControl: undefined, // will be set by the table
                 tableConfig: new bdTableConfig({
                     placeholderText: translate.property('ocb.payments.new.bill.fill.placeHolderTable'),
-                   /* checkBoxIBAction: function(length, item, idx) {
-                        // var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
-                        //     url = exportService.prepareHref(downloadLink);
-                        // fileDownloadService.startFileDownload(url);
-                        console.log("RUN HERE++++:");
-                    }*/
                 }),
                 tableData: {
                     getData: getBill//getBlockades
@@ -104,49 +86,6 @@ angular.module('ocb-payments')
         };
         //$scope.updateBillTypeID = "NO_DETAIL";
         function getBill(defer, $params) {
-            console.log("######Start getBill#####");
-            // if ($scope.table.newSearch) {
-            //     $scope.table.newSearch = false;
-            //     //$scope.table.tableControl.invalidate();
-            //     $scope.table.tableConfig.currentPage = 1;
-            //     $scope.table.tableConfig.pageCount = 1;
-            //     $params.currentPage = 1;
-            // }
-            //var pageSize = $params.pageSize = 10;
-            // if (!$scope.selectedAccount) {
-            //     deferred.resolve([]);
-            //     return;
-            // }
-            // $scope.payment.formData.billsPromise = transferBillService.getBill({
-            //     // TODO mock here
-            //     providerCode: "EVNHN",//$scope.payment.formData.providerCode,//"EVNHN",
-            //     billCode: "0001"//$scope.payment.formData.billCode//"0001"
-            // }).then(function (billsList) {
-            //     if (billsList == undefined){
-            //         console.warn("The BillsList undefined");
-            //         defer.resolve([]);
-            //         //defer.reject({ message: "Really bad" });
-            //     }
-            //     else if (billsList !== undefined) {
-            //         //$params.pageCount = billsList.totalPages;
-            //
-            //         $scope.table.anyData = billsList.billItem.length > 0;
-            //         $scope.updateBillTypeID = billsList.billType;
-            //         console.warn("Xuat Bill List: " + billsList.billItem);
-            //         defer.resolve(billsList.billItem);
-            //         //return defer.promise;
-            //         //return defer;
-            //         //$rootScope.$apply();
-            //     } else {
-            //         defer.reject(billsList);
-            //     }
-            // },
-            // function (errors) {
-            //     defer.reject(errors)
-            // });
-            // console.warn("Xuat ProviderCode: " + $scope.payment.formData.providerCode);
-            // console.warn("Xuat BillCode: " + $scope.payment.formData.billCode);
-            // //return defer.promise;
         };
 
         $scope.onSenderAccountSelect = function(accountId) {
@@ -154,13 +93,13 @@ angular.module('ocb-payments')
                 $scope.payment.formData.beneficiaryAccountId = undefined;
             }
             //$scope.recipientSelectParams.update(accountId);
-            console.log("+++cuId:" + $scope.payment.items.senderAccount.ownersList[0].customerId);
-            transferBillService.getCustomer().then(function (customerDictionary) {
-                $scope.payment.formData.senderCustomer =  (customerDictionary.content !== undefined) ? customerDictionary.content[0] : [];
-            });
+            // transferBillService.getCustomer().then(function (customerDictionary) {
+            //     $scope.payment.formData.senderCustomer =  (customerDictionary.content !== undefined) ? customerDictionary.content[0] : [];
+            // });
 
         };
         $scope.clearForm = function () {
+            $scope.enableLoading = false;
             $scope.payment.formData = {};
             $scope.billTypeID = undefined;
             $scope.payment.items.checkBoxList = undefined;
@@ -182,21 +121,27 @@ angular.module('ocb-payments')
         // $scope.payment.formData.amount = undefined;
 
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
-            transferBillService.getBill({
-                providerCode: $scope.payment.formData.providerCode,//"EVNHN",
-                billCode: $scope.payment.formData.billCode//"0001"
-            }).then(function (data) {
-                if (data !== undefined) {
-                    $scope.paymentTypeID = data.paymentType;
-                    $scope.billTypeID = data.billType;
-                    // if ($scope.paymentTypeID == 'SELECT_ALL_AND_CANNOT_UNSELECT') {
-                    //     //$scope.payment.formData.isAllSelect = true;
-                    // }
-                    $scope.payment.formData.billInfo = data;
-                }
-            }).catch(function(response) {
-                $scope.serverError = true
-            });
+            /*Check providerCode and BillCode not null*/
+            if ($scope.payment.formData.providerCode != undefined && $scope.payment.formData.billCode != undefined ) {
+                $scope.enableLoading = true;
+                transferBillService.getBill({
+                    providerCode: $scope.payment.formData.providerCode,//"EVNHN",
+                    billCode: $scope.payment.formData.billCode//"0001"
+                }).then(function (data) {
+                    if (data !== undefined) {
+                        $scope.enableLoading = false;
+                        $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;
+                        $scope.serverError = false;
+                        $scope.paymentTypeID = data.paymentType;
+                        $scope.billTypeID = data.billType;
+                        $scope.payment.formData.billInfo = data;
+                    }
+                }).catch(function(response) {
+                    $scope.serverError = true;
+                    $scope.enableLoading = false
+                });
+            }
+
             /*checkbox to handle available funds*/
             $scope.oldestDate = [];
             $scope.validCheck = false;
@@ -274,30 +219,17 @@ angular.module('ocb-payments')
             /*click x button*/
             $scope.closeBtn = function () {
                 $scope.serverError = false;
+                $scope.clearForm();
             }
             $scope.$broadcast('searchForm');
             var deferred = $q.defer();
             deferred.reject();
-            // var promise = deferred.promise;
-            // promise.then(function (data) {
-            //     $scope.$data = data;
-            //     if(angular.isDefined($scope.customFilter)) {
-            //         angular.copy(data,$scope.tmp_data);
-            //     }
-            //
-            // });
             getBill(deferred, $scope.params);
             $scope.payment.items.checkBoxList = undefined;
-            // $scope.payment.formData.amount = undefined;
-            //$scope.initBDTable();
-            //console.log("+++senderProv:" + $scope.payment.items.senderProvider.providerName);
-
             $scope.$broadcast('update');
             if (($scope.payment.formData.billCode !== undefined) &&($scope.payment.formData.providerCode !== undefined)) {
                 $scope.billInfoSearch = !$scope.billInfoSearch;
                 $scope.payment.rbPaymentsStepParams.visibility.search = searchBool;//false;
-                $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;//true;
-                //$scope.initBDTable();
             }
         };
 
@@ -349,7 +281,7 @@ angular.module('ocb-payments')
             completeState: 'payments.bill_history.list',
             footerType: 'billPayment',
             onClear: $scope.clearForm,
-            onSearch:  $scope.showBillInfoSearch,//getBillInfo,//$scope.showBillInfoSearch,
+            onSearch:  $scope.showBillInfoSearch,
             onGetOTP: $scope.getOTP,
             cancelState: 'payments.new_bill.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,

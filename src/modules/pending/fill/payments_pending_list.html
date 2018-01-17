@@ -45,17 +45,17 @@
                                            rb-update-disabled-state="billInfoSearch"></rb-account-select>
                     </div>
 
-                    <div class="col-md-1" style="padding-top: 5px;">
+                    <div class="col-md-1 search-btn">
                         <bd-button class="bd-button__primary" ng-click="filterPendingTransaction()" type="submit">{{::'ocb.payments.pending.list.button.filter.label'|translate}}</bd-button>
                     </div>
                 </div>
 
-        </form>
+
 
     </div>
-
+</form>
     <br/>
-    <div class="section-wrapper">
+    <div class="section-wrapper" ng-if="table">
         <bd-table bd-type="typePL"
                   bd-table-params="table.tableConfig"
                   bd-table-control="table.tableControl"
@@ -97,5 +97,11 @@
 </div>
 <div ng-show="invalidRT" class="validation-message animate-on">
     <div class="messages">{{::'ocb.payments.pending.list.err_msg.invalid_rt' | translate}}</div>
+</div>
+<div ng-show="invalidWA" class="validation-message animate-on">
+    <div class="messages">{{::'ocb.payments.pending.list.err_msg.invalid_wa' | translate}}</div>
+</div>
+<div ng-show="invalidNotRT" class="validation-message animate-on">
+    <div class="messages">{{::'ocb.payments.pending.list.err_msg.invalid_nrt' | translate}}</div>
 </div>
 </form>

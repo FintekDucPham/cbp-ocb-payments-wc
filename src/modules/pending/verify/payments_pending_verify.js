@@ -9,19 +9,14 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate,$http,exportService,pendingTransactionService) {
+    .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate,$http,exportService,transferService,rbPaymentOperationTypes,depositsService) {
 
-        // if(_.isEmpty( $scope.pendingTransaction.selectedTrans)){
-        //     $state.go("payments.pending.fill");
-        //     //return;
-        // }
-
-        $scope.systemToken = "1234";
-        $scope.inputToken = "";
-
-        $scope.token = {
-            model :{}
+        if(_.isEmpty( $scope.pendingTransaction.selectedTrans)){
+            $state.go("payments.pending.fill", {}, {reload: true});
         }
+
+
+        $scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.selectedTrans[0].id;
         //list data table define
         $scope.table = {
             tableConfig : new bdTableConfig({
@@ -36,48 +31,51 @@ angular.module('ocb-payments')
             tableControl: undefined
         };
 
+        function sendAuthorizationToken() {
+            $scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.transferId;
+        }
+        if ($scope.pendingTransaction.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.pendingTransaction.meta.customerContext === 'DETAL') {
+            if ($scope.pendingTransaction.meta.authType !== 'SMS_TOKEN') {
+                $scope.pendingTransaction.result.token_error = false;
+                sendAuthorizationToken();
+            }
+        }
+
+        function authorize(doneFn, actions) {
+            var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
+            transferService.realize(listTransID[0], $scope.pendingTransaction.token.model.input.model).then(function (resultCode) {
+                var parts = resultCode.split('|');
+                $scope.pendingTransaction.result = {
+                    code: parts[1],
+                    type: parts[0] === 'OK' ? "success" : "error"
+                };
+                if (parts[0] !== 'OK' && !parts[1]) {
+                    $scope.pendingTransaction.result.code = 'error';
+                }
+                depositsService.clearDepositCache();
+                $scope.pendingTransaction.result.token_error = false;
+                // paymentsBasketService.updateCounter($scope.pendingTransaction.result.code);
+                doneFn();
+            }).catch(function (error) {
+                $scope.pendingTransaction.result.token_error = true;
+
+                if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
+                    if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
+                        actions.proceed();
+                    }
+                } else {
+                    actions.proceed();
+                }
+
+            }).finally(function () {
+                //delete $scope.pendingTransaction.items.credentials;
+                // formService.clearForm($scope.pendingTransactionAuthForm);
+            });
+        }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-
-            //TODO handling token here
-            //........
-            $scope.token = "ABC";
-            //after token valid, send request to approve api
-            var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');;
-            // var url = exportService.prepareHref('/api/mass_payment/actions/realize');
-            // $http({
-            //     method: 'POST',
-            //     url:  url,
-            //     data : {
-            //
-            //         transferId : listTransID,
-            //         credentials : $scope.token
-            //     }
-            // }).then(function successCallback(response) {
-            //     if(response.data.content == "EXECUTED"){
-            //         $state.go('payments.pending.status');
-            //     } else {
-            //         $scope.serviceError = true;
-            //     }
-            //     actions.proceed();
-            //     //reset after proceed OK
-            //     $scope.pendingTransaction.selectedTrans = []
-            //
-            // }, function errorCallback(response) {
-            //     $scope.serviceError = true;
-            // });
-
-            var approveResult = pendingTransactionService.approveTransaction(listTransID,$scope.token).then(function (d) {
-                if(d !== undefined && d.content == "OK"){
-
-                    // $scope.table.tableControl.invalidate();
-                    $scope.resetPage = true;
-                    $scope.pendingTransaction.selectedTrans = []
-                    $state.go('payments.pending.status');
-                } else {
-                    $scope.serviceError = true;
-                }
-            });
+            authorize(actions.proceed, actions);
+            actions.proceed();
         });
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {

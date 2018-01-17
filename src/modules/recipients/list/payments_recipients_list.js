@@ -112,10 +112,9 @@ angular.module('ocb-payments')
 
 
         $scope.onRecipientTransfer = function(data) {
-                $state.go("payments.new.fill", {
-                    paymentType: data.recipientType.state,
-                    recipientId: data.recipientId
-                });
+            $state.go(data.recipientType.transferState, {
+                recipientId: data.recipientId
+            });
         };
 
         $scope.resolveTemplateType = function (recipientType) {
@@ -204,6 +203,7 @@ angular.module('ocb-payments')
                                 }
                                 return lodash.extend({
                                     recipientType: rbRecipientTypes[template.templateType],
+                                    recipientTypeCode:rbRecipientTypes[template.templateType].code,
                                     customerName: $filter('arrayFilter')(recipient.recipientName),
                                     recipientId: recipient.recipientId,
                                     templateId: recipient.templateId,
