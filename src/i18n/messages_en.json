@@ -1056,7 +1056,7 @@
   "ocb.payments.new.saving.fill.acctype.EMPTY_TITLE":"Account type cannot by empty",
   "ocb.payments.new.saving.verify.amount_in_word":"Amount in word",
   "ocb.payments.delete.label.header": "Delete auto bill",
- 
+
   "ocb.payments.auto_bill.list.details.insurance.buttons.edit": "Edit",
   "ocb.payments.auto_bill.list.details.insurance.buttons.delete": "Delete",
   "ocb.payments.auto_bill.list.details.insurance.buttons.backToList": "Back",
@@ -1082,7 +1082,8 @@
   "ocb.payments.auto_bill.list.details.finishDate": "Finish date",
   "ocb.payments.auto_bill.list.details.nextExecutionDate": "Next execution date",
 
-  "ocb.payments.auto_bill.error.customerId.empty": "This field cannot be empty",
+  "ocb.payments.auto_bill.error.field.empty": "This field cannot be empty",
+  "ocb.payments.auto_bill.error.invalid.date": "Invalid date",
   "ocb.payments.auto_bill.list.details.recurringPeriod": "Recurring Period",
   "ocb.payments.auto_bill.recurringPeriod.no.limit": "No Limit",
   "ocb.payments.auto_bill.recurringPeriod.limited": "Limited",
