@@ -1,8 +1,8 @@
 angular.module('ocb-payments')
-    .constant('STANDING_FREQUENCY_TYPES', {
+    .constant('FREQUENCY_TYPES', {
         "DAILY": {
             code: "DAILY",
-            symbol: "B"
+            symbol: "D"
         },
         "WEEKLY": {
             code: "WEEKLY",
@@ -11,6 +11,10 @@ angular.module('ocb-payments')
         "MONTHLY": {
             code: "MONTHLY",
             symbol: "M"
+        },
+        "YEARLY": {
+            code: "YEARLY",
+            symbol: "Y"
         }
     })
     .constant('PAYMENT_SETTING', {
@@ -31,7 +35,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, STANDING_FREQUENCY_TYPES, PAYMENT_SETTING, RECURRING_PERIOD, translate, formService, bdStepStateEvents, viewStateService, initialState) {
+    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING, RECURRING_PERIOD, translate, formService, bdStepStateEvents, viewStateService, initialState) {
         var initialData = initialState.data;
         if (initialData != null) {
             $scope.payment.formData = initialData;
@@ -52,23 +56,23 @@ angular.module('ocb-payments')
         });
 
         // FREQUENCY
-        $scope.STANDING_FREQUENCY_TYPES_LIST = _.map(STANDING_FREQUENCY_TYPES, 'code');
-        $scope.STANDING_FREQUENCY_TYPES = STANDING_FREQUENCY_TYPES;
+        $scope.FREQUENCY_TYPES_LIST = _.map(FREQUENCY_TYPES, 'code');
+        $scope.FREQUENCY_TYPES = FREQUENCY_TYPES;
 
         if (!$scope.payment.formData.frequencyType) {
-            $scope.payment.formData.frequencyType = STANDING_FREQUENCY_TYPES.MONTHLY.code;
+            $scope.payment.formData.frequencyType = FREQUENCY_TYPES.MONTHLY.code;
         }
 
         $scope.onFrequencyTypeSelect = function () {
-            if ($scope.payment.formData.frequencyType == "DAILY") {
-                $scope.payment.formData.frequencyPeriodCount = "";
-            }
+            // if ($scope.payment.formData.frequencyType == "DAILY") {
+            //     $scope.payment.formData.frequencyPeriodCount = "";
+            // }
             if ($scope.autoBillForm.frequency) {
                 $scope.autoBillForm.frequency.$validate();
             }
             $scope.payment.formData.frequencyPeriodUnit = null;
             if ($scope.payment.formData.frequencyType != null) {
-                $scope.payment.formData.frequencyPeriodUnit = STANDING_FREQUENCY_TYPES[$scope.payment.formData.frequencyType].symbol;
+                $scope.payment.formData.frequencyPeriodUnit = FREQUENCY_TYPES[$scope.payment.formData.frequencyType].symbol;
                 console.log($scope.payment.formData.frequencyPeriodUnit);
             }
         };
@@ -78,25 +82,25 @@ angular.module('ocb-payments')
                 return !_.isEmpty($scope.payment.formData.frequencyType);
             },
             minWeeklyValue: function (val) {
-                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
+                if ($scope.payment.formData.frequencyType == FREQUENCY_TYPES.WEEKLY.code) {
                     return val >= 1;
                 }
                 return true;
             },
             minMonthlyValue: function (val) {
-                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                if ($scope.payment.formData.frequencyType == FREQUENCY_TYPES.MONTHLY.code) {
                     return val >= 1;
                 }
                 return true;
             },
             maxWeeklyValue: function (val) {
-                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.WEEKLY.code) {
+                if ($scope.payment.formData.frequencyType == FREQUENCY_TYPES.WEEKLY.code) {
                     return val <= 9;
                 }
                 return true;
             },
             maxMonthlyValue: function (val) {
-                if ($scope.payment.formData.frequencyType == STANDING_FREQUENCY_TYPES.MONTHLY.code) {
+                if ($scope.payment.formData.frequencyType == FREQUENCY_TYPES.MONTHLY.code) {
                     return val <= 99;
                 }
                 return true;
@@ -135,7 +139,7 @@ angular.module('ocb-payments')
         function convertFrequencySymbolToCode(frequencySymbol) {
             var result = null;
             if (frequencySymbol != null) {
-                _(STANDING_FREQUENCY_TYPES).forEach(function(item) {
+                _(FREQUENCY_TYPES).forEach(function(item) {
                     if (item.symbol === frequencySymbol) {
                         result = item.code;
                     }
