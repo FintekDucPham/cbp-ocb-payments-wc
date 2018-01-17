@@ -1,0 +1,82 @@
+<div>
+    <form name="autoBillForm" novalidate>
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.orderNo'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{ payment.formData.orderNumber }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.orderName'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.formData.orderName }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.paymentType'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            <span>Auto Bill Payment</span>
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.fromAccount'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.formData.fromAccount }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.owner'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.formData.owner }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.customerId'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.formData.customerId }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.service'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.formData.serviceProviderCode }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.supplier'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.formData.serviceProviderCodeName }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.paymentSetting'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{::'ocb.payments.auto_bill.list.details.paymentSetting.' + payment.formData.paymentSetting |translate}}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.firstExecutionDate'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{ payment.formData.firstExecutionDate | dateFilter }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.frequencyPer'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{ payment.formData.frequencyPeriodCount}}{{::'ocb.payments.auto_bill.list.details.frequencyPer.' +
+            payment.formData.frequencyPeriodUnit | translate}}<span ng-show="payment.formData.frequencyPeriodCount > 1">s</span>
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.nextExecutionDate'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{ payment.formData.nextExecutionDate | dateFilter }}
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.finishDate'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            <span ng-show="payment.formData.finishDate != null">{{ payment.formData.finishDate | dateFilter }}</span>
+        </bd-item-property>
+    </form>
+</div>

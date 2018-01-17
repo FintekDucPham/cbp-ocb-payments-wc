@@ -1,0 +1,9 @@
+<rb-content-view class="rb-content-view--framed form">
+    <bd-header>{{::'ocb.payments.delete.label.header'|translate}}</bd-header>
+    <bd-form-panel>
+        <rb-multistep-form bd-active-step="activeStep" rb-two-step="true"
+                           rb-step-params="{ completeState: 'deposits.list', footerType:'simple', labels:{ next:'config.multistepform.buttons.next' } }">
+            <div ui-view></div>
+        </rb-multistep-form>
+    </bd-form-panel>
+</rb-content-view>
