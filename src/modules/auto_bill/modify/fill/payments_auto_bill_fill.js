@@ -108,12 +108,29 @@ angular.module('ocb-payments')
         if ($scope.payment.formData.paymentSetting === undefined || $scope.payment.formData.paymentSetting == null || $scope.payment.formData.paymentSetting === 'null' || $scope.payment.formData.paymentSetting === '') {
             $scope.payment.formData.paymentSetting = PAYMENT_SETTING.LIMITED;
         }
+        $scope.$watch('payment.formData.paymentSetting', function(newValue){
+            if (newValue == PAYMENT_SETTING.FULL) {
+                $scope.payment.formData.amountLimit.value = undefined;
+            }
+        });
 
         // RECURRING PERIOD
         $scope.RECURRING_PERIOD = RECURRING_PERIOD;
         if ($scope.payment.formData.recurringPeriod === undefined || $scope.payment.formData.recurringPeriod === null || $scope.payment.formData.recurringPeriod === 'null'  || $scope.payment.formData.recurringPeriod === '') {
             $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
         }
+        $scope.$watch('payment.formData.recurringPeriod', function(newValue){
+            if (newValue == RECURRING_PERIOD.NOLIMIT) {
+                $scope.payment.formData.finishDate = undefined;
+            }
+        });
+
+        // FINISH DATE
+        $scope.$watch('payment.formData.finishDate', function(newValue){
+            if (newValue) {
+                $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
+            }
+        });
 
         function convertFrequencySymbolToCode(frequencySymbol) {
             var result = null;
