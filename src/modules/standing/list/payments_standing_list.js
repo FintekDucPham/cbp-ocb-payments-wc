@@ -46,13 +46,14 @@ angular.module('ocb-payments')
                 "remitterAccountId": payment.debitAccountId,
                 "debitAccountNo": payment.debitAccount,
                 "currency": payment.currency,
-                "nextRealizationDate": payment.frequency.nextDate ? new Date(Date.parse(payment.frequency.nextDate)) : null,
+                "nextRealizationDate": payment.frequency.nextDate ? new Date(payment.frequency.nextDate) : null,
                 "firstRealizationDate": payment.startDate ? new Date(payment.startDate) : null,
                 "finishDate": payment.endDate ? new Date(payment.endDate) : null,
                 "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
                 "frequency": parsePaymentFrequency(payment.frequency),
                 "amount": payment.amount,
-                "id": payment.id
+                "id": payment.id,
+                "standingOrderReferenceId": payment.standingOrderReferenceId
             }; 
 
             if (action == 'edit') {
