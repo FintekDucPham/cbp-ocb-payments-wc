@@ -28,7 +28,7 @@ angular.module('ocb-payments')
 
             /*Remaining daily limit*/
             transferService.getTransferLimit({paymentType:"MASS_PAYMENT"}).then(function(limit) {
-                $scope.payment.items.limit = limit;
+                $scope.paymentsBatchProcessingForm.formData.limit = limit;
             });
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
