@@ -12,7 +12,7 @@ angular.module('ocb-payments')
                 analyticsTitle: "config.multistepform.labels.step2"
             },
             resolve: {
-                initToken: function (payment, $state, $timeout) {
+                initToken: ['payment', '$state', '$timeout', function (payment, $state, $timeout) {
                     if (!payment.meta.referenceId) {
                         var finalState = this.data.finalState;
                         $timeout(function () {
@@ -26,7 +26,7 @@ angular.module('ocb-payments')
                             }
                         };
                     }
-                }
+                }]
             }
         };
         stateServiceProvider
@@ -34,7 +34,7 @@ angular.module('ocb-payments')
             .state('payments.fast.basket.modify.verify', angular.copy(prototype))
             .state('payments.fast.basket.delete.verify', angular.merge(angular.copy(prototype), {
                 resolve: {
-                    initToken: function (payment, paymentsBasketService, $stateParams, $state, $timeout) {
+                    initToken: ['payment', 'paymentsBasketService', '$stateParams', '$state', '$timeout', function (payment, paymentsBasketService, $stateParams, $state, $timeout) {
                         if (!$stateParams.basketReferenceId) {
                             var finalState = this.data.finalState;
                             $timeout(function () {
@@ -52,7 +52,7 @@ angular.module('ocb-payments')
                                 }
                             };
                         })
-                    }
+                    }]
                 }
             }));
     })
