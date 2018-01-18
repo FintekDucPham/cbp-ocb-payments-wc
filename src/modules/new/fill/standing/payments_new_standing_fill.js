@@ -185,7 +185,7 @@ angular.module('ocb-payments')
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function (event, control) {
             var recipientData = angular.copy({
                 customName: translate.property('ocb.new.recipient.custom_name'),
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                remitterAccountId: 3,//$scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,
                 description: $scope.payment.formData.description
