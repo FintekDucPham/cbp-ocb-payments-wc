@@ -273,11 +273,11 @@ angular.module('ocb-payments')
                 case "Mobile Top-Up":
                     $state.go("payments.prepaid.new.fill", {"referenceId" : transaction.id});
                     break;
-                 //TODO
-                case "External funds transfer":
+                case "Internal Funds Transfer":
+                    $state.go("payments.internal.new.fill", {"referenceId" : transaction.id});
                     break;
-                //TODO
-                case "Internal funds transfer":
+                case "External Funds Transfer":
+                    $state.go("payments.external.new.fill", {"referenceId" : transaction.id});
                     break;
                 case "Standing orders":
                     $state.go("payments.new.standing.fill", {"referenceId" : transaction.id});
