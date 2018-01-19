@@ -116,10 +116,10 @@ angular.module('ocb-payments')
             //$scope.payment.formData.billCode = undefined;
             //$scope.showBillInfoSearch(true, false);
         };
+        $scope.payment.formData.amount = 0;
         $scope.billInfoSearch = false;
         $scope.payment.formData.billCode = undefined;
         // $scope.payment.formData.amount = undefined;
-
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
             $scope.payment.formData.providerName = $scope.payment.items.senderProvider.providerName;
             $scope.payment.formData.serviceName = $scope.payment.items.senderService.serviceName;
@@ -135,6 +135,12 @@ angular.module('ocb-payments')
                         $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;
                         $scope.serverError = false;
                         $scope.paymentTypeID = data.paymentType;
+                        /*calculate total amount*/
+                        if ($scope.paymentTypeID == "SELECT_ALL_AND_CANNOT_UNSELECT") {
+                            for (var i=1; i < data.billItem.length ; i++) {
+                                $scope.payment.formData.amount += data.billItem[i].amountMonth.value * data.billItem[i].formulaRates;
+                            }
+                        }
                         $scope.billTypeID = data.billType;
                         $scope.payment.formData.billInfo = data;
                     }
@@ -146,83 +152,266 @@ angular.module('ocb-payments')
 
             /*Validate positive number*/
             function isNormalInteger(str) {
+                if (str === undefined) {
+                    return false;
+                }
                 var n = Math.floor(Number(str));
                 return String(n) === str && n >= 1;
             }
-            /*checkbox to handle available funds*/
-            $scope.oldestDate = [];
+            /*init variable for checkbox*/
+            // $scope.oldestDate = [];
+            $scope.isAllSelect = true;
             $scope.validCheck = false;
-            $scope.checkBoxIBAction =  function(length, item, idx, qty) { // separated this func when more tbl???
-                //Init Array when first click
-                if ($scope.payment.items.checkBoxList === undefined) {
-                    $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
-                    //$scope.payment.items.checkBoxList[idx].amount = item.amount;
-                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
-                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
-                    $scope.payment.items.checkBoxList[idx].userClick = true;
-                    //checked oldest
-                    if (idx == 0){
-                        $scope.validCheck = false;
-                        $scope.oldestDate.push(item);
+            $scope.isOnlyOne = false;
+            $scope.invalidQty = false;
+            $scope.totalAmountList = [];
+            $scope.invalidOldestOne = false;
+            /*------------Checkbox Handle Start------------*/
+            $scope.checkBoxIBAction =  function(length, item, idx, qty, paymentType, billType) {
+                /*Check billType*/
+                if (billType === 'EXTENDED_DETAIL') {
+                    if ($scope.payment.items.checkBoxList === undefined) {
+                        $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function (x, i) {
+                            return {};
+                        });
+                        $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                        //Add item into onlist when checked and check qty input
+                        if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                            /*check qty input*/
+                            if (isNormalInteger(qty) === false) {
+                                $scope.invalidQty = true;
+                            } else {
+                                // $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+
+                            /*add to list when qty valid*/
+                                $scope.totalAmountList.push(item);
+                                if ($scope.totalAmountList.length > 1) {
+                                    //show error message
+                                    $scope.isOnlyOne = true;
+                                }
+                            }
+                        }
                     } else {
-                        // Not oldest
-                        $scope.validCheck = true;
-                    }
-                } else {
-                    /*The second click and so on....*/
-                    $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined)  ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
-                    // In the case of checked
-                    if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length == 0) {
-                        if (idx == 0){
-                            $scope.validCheck = false;
-                            $scope.oldestDate.push(item);
+                        $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                        if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                            /*check qty input*/
+                            if (isNormalInteger(qty) === false) {
+                                $scope.invalidQty = true;
+                            } else {
+                                // $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                                /*add to list when qty valid*/
+                                $scope.totalAmountList.push(item);
+                                if ($scope.totalAmountList.length > 1) {
+                                    //show error message
+                                    $scope.isOnlyOne = true;
+                                }
+                            }
                         } else {
-                            // Not oldest
-                            $scope.validCheck = true;
+                            // Remove item when un-checked
+                            $scope.totalAmountList.pop(item);
+                            if ($scope.totalAmountList.length <= 1) {
+                                //show error message
+                                $scope.isOnlyOne = false;
+                            }
                         }
                     }
-                    else if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.oldestDate.length > 0) {
-                        if (idx == $scope.oldestDate.length){
-                            $scope.validCheck = false;
-                            $scope.oldestDate.push(item);
-                        } else {
-                            // Not oldest
-                            $scope.validCheck = true;
-                        }
+                } else if (billType === 'MASTER_DETAIL') {
+                    /*checkbox to handle available funds*/
+                    //Init Array when first click
+                    switch (paymentType) {
+                        case "SELECT_ALL_AND_CANNOT_UNSELECT":
+                            $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function (x, i) {
+                                return {};
+                            });
+                            break;
+                        case "MULTI_SELECT":
+                            if ($scope.payment.items.checkBoxList === undefined) {
+                                $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function (x, i) {
+                                    return {};
+                                });
+                                //checked or not
+                                $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                                if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                                    $scope.totalAmountList.push(item);
+                                }
+                            } else {
+                                $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                                if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                                    $scope.totalAmountList.push(item);
+                                } else {
+                                    $scope.totalAmountList.pop(item);
+                                }
+                            }
+                            break;
+                        case "MULTI_SELECT_OLDEST_ONES":
+                            if ($scope.payment.items.checkBoxList === undefined) {
+                                $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function (x, i) {
+                                    return {};
+                                });
+                                //$scope.payment.items.checkBoxList[idx].amount = item.amount;
+                                $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                                $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                                $scope.payment.items.checkBoxList[idx].userClick = true;
+                                //checked oldest
+                                if (idx == 0) {
+                                    $scope.validCheck = false;
+                                    $scope.totalAmountList.push(item);
+                                } else {
+                                    // Not oldest
+                                    $scope.validCheck = true;
+                                }
+                            } else {
+                                /*The second click and so on....*/
+                                $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                                // In the case of checked
+                                if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.totalAmountList.length == 0) {
+                                    if (idx == 0) {
+                                        $scope.validCheck = false;
+                                        $scope.totalAmountList.push(item);
+                                    } else {
+                                        // Not oldest
+                                        $scope.validCheck = true;
+                                    }
+                                }
+                                else if ($scope.payment.items.checkBoxList[idx].userClick == true && $scope.totalAmountList.length > 0) {
+                                    if (idx == $scope.totalAmountList.length) {
+                                        $scope.validCheck = false;
+                                        $scope.totalAmountList.push(item);
+                                    } else {
+                                        // Not oldest
+                                        $scope.validCheck = true;
+                                    }
+                                }
+                                // In the case of uncheck
+                                if ($scope.payment.items.checkBoxList[idx].userClick == false && $scope.totalAmountList.length > 0) {
+                                    if (idx == $scope.totalAmountList.length - 1) {
+                                        $scope.validCheck = false;
+                                        $scope.totalAmountList.pop(item);
+                                    } else {
+                                        $scope.validCheck = true;
+                                    }
+                                }
+                                //$scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
+                                // $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
+                                // $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
+                            }
+                            break;
+                        case "SELECT_ONLY_ONE":
+                            if ($scope.payment.items.checkBoxList === undefined) {
+                                $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function (x, i) {
+                                    return {};
+                                });
+                                $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                                //Add item into onlist when checked and check qty input
+                                if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                                    $scope.totalAmountList.push(item);
+                                    if ($scope.totalAmountList.length > 1) {
+                                        //show error message
+                                        $scope.isOnlyOne = true;
+                                    }
+                                }
+                            } else {
+                                $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                                if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                                    $scope.totalAmountList.push(item);
+                                    if ($scope.totalAmountList.length > 1) {
+                                        //show error message
+                                        $scope.isOnlyOne = true;
+                                    }
+                                } else {
+                                    // Remove item when un-checked
+                                    $scope.totalAmountList.pop(item);
+                                    if ($scope.totalAmountList.length <= 1) {
+                                        //show error message
+                                        $scope.isOnlyOne = false;
+                                    }
+                                }
+                            }
+                            break;
+                        case "SELECT_OLDEST_ONE":
+                            if ($scope.payment.items.checkBoxList === undefined) {
+                                $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function (x, i) {
+                                    return {};
+                                });
+                                $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                                //Add item into onlist when checked and check qty input
+                                if (idx == 0) {
+                                    //Oldest
+                                    if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                                        $scope.totalAmountList.push(item);
+                                    }
+                                } else {
+                                    //Not Oldest
+                                    $scope.totalAmountList.push(item);
+                                    if ($scope.totalAmountList.length > 1) {
+                                        //show error message
+                                        $scope.isOnlyOne = true;
+                                    }
+                                    $scope.invalidOldestOne = true;
+                                }
+
+                            } else {
+                                $scope.payment.items.checkBoxList[idx].userClick = ($scope.payment.items.checkBoxList[idx].userClick !== undefined) ? (($scope.payment.items.checkBoxList[idx].userClick == true) ? false : true) : true;
+                                if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                                    if (idx == 0) {
+                                        //Oldest
+                                        $scope.invalidOldestOne = false;
+                                        if ($scope.payment.items.checkBoxList[idx].userClick === true) {
+                                            $scope.totalAmountList.push(item);
+                                            if ($scope.totalAmountList.length > 1) {
+                                                //show error message
+                                                $scope.isOnlyOne = true;
+                                            }
+                                        }
+                                    } else {
+                                        //Not Oldest
+                                        $scope.totalAmountList.push(item);
+                                        if ($scope.totalAmountList.length > 1) {
+                                            //show error message
+                                            $scope.isOnlyOne = true;
+                                        }
+                                        $scope.invalidOldestOne = true;
+                                    }
+                                } else {
+                                    // Remove item when un-checked
+                                    $scope.totalAmountList.pop(item);
+                                    //uncheck but not oldest
+                                    if ($scope.totalAmountList.length <= 1) {
+                                        //Hide error message
+                                        $scope.isOnlyOne = false;
+                                    }
+                                    if ($scope.totalAmountList.length <= 1 && idx !== 0) {
+                                        $scope.invalidOldestOne = false;
+                                    }
+                                }
+                            }
+                            break;
                     }
-                    // In the case of uncheck
-                    if ($scope.payment.items.checkBoxList[idx].userClick == false && $scope.oldestDate.length > 0) {
-                        if (idx == $scope.oldestDate.length - 1) {
-                            $scope.validCheck = false;
-                            $scope.oldestDate.pop(item);
-                        } else {
-                            $scope.validCheck = true;
-                        }
-                    }
-                    //$scope.payment.items.checkBoxList[idx].amount = ($scope.payment.items.checkBoxList[idx].userClick % 2)*item.amount;
-                    $scope.payment.items.checkBoxList[idx].amountMonth = (item.amountMonth !== undefined) ? item.amountMonth : undefined;
-                    $scope.payment.items.checkBoxList[idx].orderId = item.orderId;
                 }
-                var totalAmount = 0;
-                angular.forEach($scope.payment.items.checkBoxList,function(val,key){
-                    // var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
-                    var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1);//*amountValidation;
-                    totalAmount += multiMonthAmount;
-                    //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
-                    // console.log(key + val);
-                    // console.log(val.amount);
-                    // console.log("-+-" + totalAmount);
-                    // angular.forEach(val,function(v1,k1){//this is nested angular.forEach loop
-                    //     console.log(k1+":"+v1);
-                    // });
-                });
+                //In the case of EXTENDED_DETAIL or MASTER_DETAIL
+                switch (billType) {
+                    case "EXTENDED_DETAIL":
+                        for (var i=0; i < $scope.totalAmountList.length; i++ ) {
+                            if (qty !== undefined && $scope.totalAmountList[i].amountMonth) {
+                                $scope.payment.formData.amount += $scope.totalAmountList[i].amountMonth.value * qty;
+                            }
+                        }
+                        break;
+                    case "MASTER_DETAIL":
+                        for (var i=0; i < $scope.totalAmountList.length; i++ ) {
+                            if ($scope.totalAmountList[i].amountMonth && $scope.totalAmountList[i].formulaRates) {
+                                $scope.payment.formData.amount += $scope.totalAmountList[i].amountMonth.value * $scope.totalAmountList[i].formulaRates;
+                            }
+                        }
+                        break;
+                }
+
                 // Set amount value to 1000 --> waiting for confirming
-                $scope.payment.formData.amount = 859.57;//totalAmount;
                 $scope.payment.formData.amountDesc = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
                 // $scope.payment.items.totalBill = totalAmount;
                 $scope.payment.items.totalBillInWord = $scope.payment.formData.amountDesc;
             }
-
+            /*-------------Checkbox handle End----------------*/
             /*click x button*/
             $scope.closeBtn = function () {
                 $scope.serverError = false;
