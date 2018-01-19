@@ -11,55 +11,35 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsAutoBillPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
                                                                     paymentsService, $filter, pathService, viewStateService,
-                                                                     initialState, $location, transferBillService, rbPaymentOperationTypes) {
+                                                                    initialState, $location, transferBillService, rbPaymentOperationTypes) {
             $scope.paymentDetailsTemplate = pathService.generateTemplatePath("ocb-payments") + "/modules/auto_bill/list/details/payments_auto_bill_list_detail.html";
-
-            $scope.onOperationsDateSubmit = function () {
-                $scope.table.tableData.newSearch = true;
-                $scope.table.tableControl.invalidate();
-            };
 
             $scope.onButtonPressed = function (action, data) {
                 if (action == 'edit') {
-                    viewStateService.setInitialState('payments.auto_bill.fill', {
+                    viewStateService.setInitialState('payments.auto_bill_modify.fill', {
                         data: data,
                         paymentOperationType: rbPaymentOperationTypes.EDIT
                     });
 
-                    $state.go('payments.auto_bill.fill');
+                    $state.go('payments.auto_bill_modify.fill');
                 }
                 else if (action == 'delete') {
-                    if (payment.alreadyDeleted) {
-                        $state.go('payments.standing.error');
-                    } else {
-                        viewStateService.setInitialState('payments.standing.manage.remove.verify', {
-                            payment: payment,
-                            returnToPage: $scope.table.tableConfig.currentPage
-                        });
+                    viewStateService.setInitialState('payments.auto_bill_delete.verify', {
+                        data: data,
+                        paymentOperationType: rbPaymentOperationTypes.REMOVE
+                    });
 
-                        $state.go('payments.standing.manage.remove.verify');
-                    }
+                    $state.go('payments.auto_bill_delete.verify');
                 }
             };
 
-            $scope.onDelete = function (standingPayment) {
-                viewStateService.setInitialState('futurePayments.standing.manage.delete', {
-                    referenceId: standingPayment.id
-                });
-                $state.go('payments.future.manage.delete.fill');
-            };
-
-            $scope.onBack = function (child) {
-                child.$emit('$collapseRows');
-            };
-
-            $scope.onNewAutoBillClick = function() {
-                viewStateService.setInitialState('payments.auto_bill.fill', {
+            $scope.onNewAutoBillClick = function () {
+                viewStateService.setInitialState('payments.auto_bill_modify.fill', {
                     data: null,
                     paymentOperationType: rbPaymentOperationTypes.NEW
                 });
 
-                $state.go('payments.auto_bill.fill');
+                $state.go('payments.auto_bill_modify.fill');
             };
 
             $scope.table = {
