@@ -121,12 +121,14 @@ angular.module('ocb-payments')
         // $scope.payment.formData.amount = undefined;
 
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
+            $scope.payment.formData.providerName = $scope.payment.items.senderProvider.providerName;
+            $scope.payment.formData.serviceName = $scope.payment.items.senderService.serviceName;
             /*Check providerCode and BillCode not null*/
             if ($scope.payment.formData.providerCode != undefined && $scope.payment.formData.billCode != undefined ) {
                 $scope.enableLoading = true;
                 transferBillService.getBill({
-                    providerCode: $scope.payment.formData.providerCode,//"EVNHN",
-                    billCode: $scope.payment.formData.billCode//"0001"
+                    providerCode: $scope.payment.formData.providerCode,
+                    billCode: $scope.payment.formData.billCode
                 }).then(function (data) {
                     if (data !== undefined) {
                         $scope.enableLoading = false;
@@ -142,10 +144,15 @@ angular.module('ocb-payments')
                 });
             }
 
+            /*Validate positive number*/
+            function isNormalInteger(str) {
+                var n = Math.floor(Number(str));
+                return String(n) === str && n >= 1;
+            }
             /*checkbox to handle available funds*/
             $scope.oldestDate = [];
             $scope.validCheck = false;
-            $scope.checkBoxIBAction =  function(length, item, idx) { // separated this func when more tbl???
+            $scope.checkBoxIBAction =  function(length, item, idx, qty) { // separated this func when more tbl???
                 //Init Array when first click
                 if ($scope.payment.items.checkBoxList === undefined) {
                     $scope.payment.items.checkBoxList = Array.apply(null, Array(length)).map(function(x,i){return {};});
@@ -198,7 +205,7 @@ angular.module('ocb-payments')
                 }
                 var totalAmount = 0;
                 angular.forEach($scope.payment.items.checkBoxList,function(val,key){
-                   // var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
+                    // var amountValidation = ((val.amount !== undefined) ? val.amount : 0);
                     var multiMonthAmount = (((val.amountMonth !== undefined) && (val.amountMonth !== null)) ? val.amountMonth : 1);//*amountValidation;
                     totalAmount += multiMonthAmount;
                     //totalAmount += ((val.amount !== undefined) ? val.amount : 0);
@@ -211,9 +218,9 @@ angular.module('ocb-payments')
                 });
                 // Set amount value to 1000 --> waiting for confirming
                 $scope.payment.formData.amount = 859.57;//totalAmount;
+                $scope.payment.formData.amountDesc = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
                 // $scope.payment.items.totalBill = totalAmount;
-                $scope.payment.items.totalBillInWord = ocbConvert.convertNumberToText($scope.payment.formData.amount, true);
-                console.log("-0-"+ $scope.table.tableData);
+                $scope.payment.items.totalBillInWord = $scope.payment.formData.amountDesc;
             }
 
             /*click x button*/
@@ -264,18 +271,18 @@ angular.module('ocb-payments')
             });
         };
 
-        $scope.getOTP = function () {
-            return "success";
-        }
-
-        /*Back button*/
-        $scope.backBtn = function () {
-            // $scope.$parent.$broadcast(bdStepStateEvents.BACKWARD_MOVE, {
-            //     proceed: function () {
-            //         $scope.stepRemote.prev();
-            //     }
-            // });
-        }
+        // $scope.getOTP = function () {
+        //     return "success";
+        // }
+        //
+        // /*Back button*/
+        // $scope.backBtn = function () {
+        //     // $scope.$parent.$broadcast(bdStepStateEvents.BACKWARD_MOVE, {
+        //     //     proceed: function () {
+        //     //         $scope.stepRemote.prev();
+        //     //     }
+        //     // });
+        // }
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.bill_history.list',

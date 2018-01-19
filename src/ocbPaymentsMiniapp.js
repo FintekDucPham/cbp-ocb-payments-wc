@@ -37,42 +37,50 @@ angular.module('ocb-payments', [
             title: 'ocb.menu.transfer',
             items:[
                 {
-                    id: "payments.new.fill",
-                    label: 'payments.submenu.options.new.header',
+                    id: "payments.external.new.fill",
+                    label: 'payments.submenu.options.new_external.header',
                     icon: "ocb-icons ocb_przelew",
-                    action: function(item, scope, state){
-                        state.reload('payments.new.fill').then(function(){
-                            state.transitionTo("payments.new.fill",{ paymentType: 'domestic', referenceId: undefined }, {reload: true}).finally(function() {
-                                state.go('payments.new.fill', {
-                                    paymentType: 'domestic',
-                                    referenceId: undefined
-                                });
-                            });
+                    action: function (item, scope, state) {
+                        state.go('payments.external.new.fill', {
+                            recipientId: null
+                        }, {
+                            reload: true
                         });
                     },
                     priority: 1
                 },
                 {
-                    id: "payments.new_internal.fill",
+                    id: "payments.internal.new.fill",
                     label: 'payments.submenu.options.new_internal.header',
                     icon: "ocb-icons ocb_przelew",
-                    action: "payments.new_internal.fill",
-                    priority: 1
-                },{
-                    id: "payments.new.saving",
-                    label: 'ocb.payments.future.saving.label',
-                    icon: "ocb-icons ocb_odbiorcy",
-                    action: function(item, scope, state){
-                        state.reload('payments.new.fill').then(function(){
-                            state.transitionTo("payments.new.fill",{ paymentType: 'saving', referenceId: undefined }, {reload: true}).finally(function() {
-                                state.go('payments.new.fill', {
-                                    paymentType: 'saving',
-                                    referenceId: undefined
-                                });
-                            });
+                    action: function (item, scope, state) {
+                        state.go('payments.internal.new.fill', {
+                            recipientId: null
+                        }, {
+                            reload: true
                         });
                     },
-                    priority: 2
+                    priority: 1
+                },
+                {
+                    id: "payments.fast.new.fill",
+                    label: 'payments.submenu.options.new_fast.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: function (item, scope, state) {
+                        state.go('payments.fast.new.fill', {
+                            recipientId: null
+                        }, {
+                            reload: true
+                        });
+                    },
+                    priority: 1
+                },
+                {
+                    id: "payments.new_saving.fill",
+                    label: 'ocb.payments.submenu.options.new_saving.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: "payments.new_saving.fill",
+                    priority: 1
                 },
                 {
                     id: "payments.recipients.list",
@@ -101,6 +109,13 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons ocb_zlecenie_stale",
                     action: "payments.standing.list",
                     priority: 7
+                },
+                {
+                    id: "payments.auto_bill_list",
+                    label: 'ocb.payments.auto_bill.label',
+                    icon: "ocb-icons ocb_zlecenie_stale",
+                    action: "payments.auto_bill_list",
+                    priority: 8
                 },
                 {
                     id: "payments.basket.fill",

@@ -1,0 +1,27 @@
+<div class="form-body">
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.sender_account'|translate}}">
+        <span style="display: inline-block; word-break: break-all;">{{ payment.items.senderAccount.accountNo }}</span>
+  <!--      <span style="display: inline-block;">
+            <span class="hidden-md hidden-lg">{{ cardContext.item.accountFrom.accountNo | nrbAccountSelectIbanShortFilter }}</span>
+        </span>-->
+        <!--<span style="display:block;" class="hidden-xs hidden-sm"> {{ cardContext.item.accountFrom.accountNo | nrbIbanFilter }}</span>-->
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.deposit_account_number'|translate}}">
+        {{payment.items.recipientAccount.accountNo }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.amount_figures.label'|translate}}">
+        {{payment.formData.amount}}&nbsp{{payment.formData.currency}}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.verify.amount_in_word'|translate}}">
+        {{amountInWords}}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.description'|translate}}">
+        {{payment.formData.description}}
+    </bd-item-property>
+    <section ng-if="payment.operation.code!=='EDIT'">
+        <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
+            <rb-token-authorization rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-params="payment.token.params">
+            </rb-token-authorization>
+        </bd-item-property>
+    </section>
+</div>

@@ -205,7 +205,7 @@ angular.module('ocb-payments')
                     var createTransfer = function(){
                         setRealizationDateToCurrent();
                         transferBillService.create('bill', angular.extend({
-                            "remitterId": $scope.payment.items.globusId,
+                            "remitterId": $scope.payment.items.globusId
                         }, requestConverter($scope.payment.formData)), $scope.payment.operation.link || false ).then(function (transfer) {
                             $scope.payment.transferId = transfer.referenceId;
                             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
