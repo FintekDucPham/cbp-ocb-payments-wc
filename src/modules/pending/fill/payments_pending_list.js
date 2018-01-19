@@ -259,8 +259,8 @@ angular.module('ocb-payments')
             }
             var transaction = $scope.pendingTransaction.selectedTrans[0];
             switch (transaction.transactionTypeDesc) {
-                //TODO
-                case "Fast 24/7 Payment":
+                case "Fast transfer 24/7":
+                    $state.go("payments.fast.new.fill", {"referenceId" : transaction.id});
                     break;
                 //batch processing
                 case "Internal Batch Transfer":
@@ -282,8 +282,8 @@ angular.module('ocb-payments')
                 case "Standing orders":
                     $state.go("payments.new.standing.fill", {"referenceId" : transaction.id});
                     break;
-                //TODO
                 case "Auto bill payment":
+                    $state.go("payments.auto_bill_modify.fill", {"referenceId" : transaction.id});
                     break;
                 case "Planned Payment":
                     $state.go("payments.future.manage.edit", {"referenceId" : transaction.id});
