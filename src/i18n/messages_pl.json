@@ -310,7 +310,7 @@
     "ocb.payments.rejected.select.filter.INCORRECT_DATE_TO": "Nieprawidłowa data końcowa okresu wyszukiwania",
     "ocb.payments.rejected.select.filter.TOO_LATE_FIRST_DATE": "Data początkowa nie może być późniejsza niż data końcowa",
     "ocb.payments.rejected.select.filter.FUTURE_DATE": "Data końcowa nie może być późniejsza niż data bieżąca.",
-    "ocb.payments.rejected.opration_type.rejected": "Odrzucona",
+    "ocb.payments.rejected.operation_type.rejected": "Odrzucona",
     "ocb.payments.rejected.operation.status.label":"Status operacji",
 
     "ocb.payments.edit.domestic.fill.recipient.clear": "Wyczyść",
