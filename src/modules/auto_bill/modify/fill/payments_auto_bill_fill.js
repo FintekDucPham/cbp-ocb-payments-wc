@@ -37,6 +37,7 @@ angular.module('ocb-payments')
     })
     .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING, RECURRING_PERIOD, translate, formService, bdStepStateEvents, viewStateService, initialState) {
         var initialData = initialState.data;
+        $scope.payment.formData.actionType = initialState.paymentOperationType;
         if (initialData != null) {
             $scope.payment.formData = initialData;
             $scope.payment.formData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);

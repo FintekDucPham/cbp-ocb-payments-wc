@@ -30,7 +30,7 @@ angular.module('ocb-payments')
         };
 
         if($scope.payment.operation.code === 'EDIT'){
-            $scope.standingOrderId = $scope.payment.formData.id;
+            $scope.standingOrderId = $scope.payment.formData.standingOrderReferenceId;//id;
         }
 
         if (!$scope.payment.formData.frequencyType) {
@@ -58,7 +58,7 @@ angular.module('ocb-payments')
 
         $scope.setRequestConverter(function (formData) {
             var result = {
-                "standingOrderId": formData.id ? formData.id : "",
+                "standingOrderId": formData.standingOrderReferenceId ? formData.standingOrderReferenceId : "",
                 "shortName": formData.shortName,
                 "amount": ("" + formData.amount).replace(',', '.'),
                 "beneficiary": utilityService.splitTextEveryNSigns(formData.recipientName),
@@ -185,7 +185,7 @@ angular.module('ocb-payments')
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function (event, control) {
             var recipientData = angular.copy({
                 customName: translate.property('ocb.new.recipient.custom_name'),
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                remitterAccountId: 3,//$scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,
                 description: $scope.payment.formData.description
