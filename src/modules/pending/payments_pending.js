@@ -45,7 +45,9 @@ angular.module('ocb-payments')
     $scope.clearData = function () {
         $scope.pendingTransaction.clearData();
     };
-
+    $scope.printReport = function () {
+        $scope.pendingTransaction.printReport();
+    };
     // $scope.userRole = "";
     customerService.getCustomerDetails().then(function(data) {
         if (data.customerDetails) {
@@ -175,6 +177,7 @@ angular.module('ocb-payments')
         clearData: $scope.clearData,
         getUserType: $scope.getUserType,
         getStatusByRole: $scope.getStatusByRole,
+        printReport: $scope.printReport,
         labels:{
 
             return:"ocb.payments.pending.list.button.return.label",
@@ -185,6 +188,6 @@ angular.module('ocb-payments')
         },
         visibility:{
             return:false
-        },
+        }
     }
 });
