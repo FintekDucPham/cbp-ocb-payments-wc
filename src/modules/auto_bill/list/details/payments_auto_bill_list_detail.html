@@ -15,7 +15,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.owner'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-     <bd-multiline-text bd-text="$data.orderingCustomer"></bd-multiline-text>
+    {{$data.owner }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.customerId'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
@@ -23,11 +23,11 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.service'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.serviceCode }}
+    {{$data.serviceProviderCode }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.supplier'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.serviceProviderCode }}
+    {{$data.serviceCode }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.paymentSetting'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">

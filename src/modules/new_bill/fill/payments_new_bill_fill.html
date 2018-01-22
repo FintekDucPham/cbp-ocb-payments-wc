@@ -123,24 +123,6 @@
     <div ng-show="enableLoading" class="eb-preloader-container">
         <div eb-themable class="eb-preloader">&nbsp;</div>
     </div>
-    <!--<div class="pane-bd deposit-form" ng-show="billInfoSearch ">-->
-        <!--<bd-table-->
-                <!--bd-type="typeI2"-->
-                <!--bd-table-params="table.tableConfig"-->
-                <!--bd-table-control="table.tableControl"-->
-                <!--bd-table-data="table.tableData"-->
-                <!--bd-table-promise="payment.formData.billsPromise"-->
-                <!--bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },-->
-                <!--'second' : { 'title': '##payments.new.bill.fill.info.header.order_id', 'data' : 'orderId' },-->
-                <!--'third' : { 'title': '##payments.new.bill.fill.info.header.description', 'data' : 'description'},-->
-                <!--'fourth' : { 'title': '##payments.new.bill.fill.info.header.amount', 'data' : ['amount', 'currency'] },-->
-                <!--'fifth' : { 'title': '##payments.new.bill.fill.info.header.from_date', 'data' : 'fromDate' },-->
-                <!--'sixth' : { 'title': '##payments.new.bill.fill.info.header.to_date', 'data' : 'toDate' },-->
-                <!--'seventh' : { 'title': '##payments.new.bill.fill.info.header.formula_rates', 'data' : 'formulaRates' } ,-->
-                <!--'eighth': {'title': '##account.invoices.button.download'} }">-->
-
-        <!--</bd-table>-->
-    <!--</div>-->
     <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
     <!--Show table Master Detail -->
 
@@ -188,31 +170,45 @@
                     <div bd-table-cell="seventh" class="bd-table__cell--sm-7 bd-table__cell--md-2 ">
                         {{item.formulaRates}}
                     </div>
-                    <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1">
-                        <!--{{ $eval('item.##fourthData##') }}-->
-                        <!--<bd-button ng-click="$params.downloadFile(item)">##fifthTitle##</bd-button>-->
+                    <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1 cb-mgTop">
                         <bd-checkbox ng-if="paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
-                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'SELECT_ALL_AND_CANNOT_UNSELECT', 'MASTER_DETAIL')"
                                      bd-disabled="true"
                                      ng-init="payment.formData.isAllSelect=true"
-                                     ng-model="payment.formData.isAllSelect">
+                                     ng-model="isAllSelect">
                         </bd-checkbox>
-                        <bd-checkbox ng-if="paymentTypeID !== 'SELECT_ALL_AND_CANNOT_UNSELECT'&& paymentTypeID !== 'MULTI_SELECT_OLDEST_ONES'"
-                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
-                                     ng-model="isSelect">
+                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'MULTI_SELECT', 'MASTER_DETAIL')"
+                                     ng-model="isMultiSelect">
                         </bd-checkbox>
                         <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
-                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
-                                     ng-model="isSelectOldest">
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'MULTI_SELECT_OLDEST_ONES', 'MASTER_DETAIL')"
+                                     ng-model="isMultiSelectOldest">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ONLY_ONE'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'SELECT_ONLY_ONE', 'MASTER_DETAIL')"
+                                     ng-model="isSelectOnlyOne">
+                        </bd-checkbox>
+                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_OLDEST_ONE'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'SELECT_OLDEST_ONE', 'MASTER_DETAIL')"
+                                     ng-model="isSelectOldestOne">
                         </bd-checkbox>
                     </div>
                 </div>
             </div>
-
-            <!--<div ng-if="$expanded">-->
-            <!--<ng-transclude></ng-transclude>-->
-            <!--</div>-->
-
+        </div>
+        <!--Show error message-->
+        <div ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES' && validCheck === true" class="validate-message">
+            {{::'ocb.payments.new.bill.fill.validate.check'|translate}}
+        </div>
+        <div ng-if="isOnlyOne === true" class="validate-message">
+            {{::'ocb.payments.new.bill.fill.validate.check.onlyOne'|translate}}
+        </div>
+        <div ng-if="invalidQty === true" class="validate-message">
+            {{::'ocb.payments.new.bill.fill.validate.check.qty'|translate}}
+        </div>
+        <div ng-if="invalidOldestOne === true" class="validate-message">
+            {{::'ocb.payments.new.bill.fill.validate.check.oldestOne'|translate}}
         </div>
 
         <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>
@@ -226,27 +222,6 @@
 
     </div>
 
-    <!--Show table extended detail-->
-    <!--<div class="pane-bd deposit-form" ng-show="billInfoSearch && updateBillTypeID ==='EXTENDED_DETAIL'">-->
-        <!--<input name="checkBoxState" hidden ng-model="payment.formData.amount" required/>-->
-        <!--<bd-table-->
-                <!--bd-type="typeI3"-->
-                <!--bd-table-params="table.tableConfig"-->
-                <!--bd-table-control="table.tableControl"-->
-                <!--bd-table-data="tables.tableData"-->
-                <!--bd-table-promise="billsPromise"-->
-                <!--bd-table-meta="{ 'first' : { 'title': '##payments.new.bill.fill.info.header.stt', 'data' : 'dateFrom|dateFilter' },-->
-                <!--'second' : { 'title': '##payments.new.bill.fill.info.header.customer_id', 'data' : 'customerId' },-->
-                <!--'third' : { 'title': '##payments.new.bill.fill.info.header.customer_name', 'data' : 'customerName'},-->
-                <!--'fourth' : { 'title': '##payments.new.bill.fill.info.header.product_type', 'data' : 'productType' },-->
-                <!--'fifth' : { 'title': '##payments.new.bill.fill.info.header.bill_code', 'data' : 'billCodeItemNo' },-->
-                <!--'sixth' : { 'title': '##payments.new.bill.fill.info.header.amount_per_month', 'data' : ['amount', 'currency'] },-->
-                <!--'seventh' : { 'title': '##payments.new.bill.fill.info.header.number_month', 'data' : 'amountMonth' } ,-->
-                <!--'eighth': {'title': '##account.invoices.button.download'} }">-->
-
-        <!--</bd-table>-->
-
-    <!--</div>-->
     <div class="bd-table bd-content"  ng-if="billTypeID === 'EXTENDED_DETAIL'">
 
         <div bd-table-header>
@@ -264,7 +239,7 @@
 
 
             <div class="bd-table__row-entry">
-                <div class="bd-table__row-line">
+                <div class="bd-table__row-line bd-tbContent">
                     <div bd-table-cell="first" class="bd-table__cell-index bd-hide-sm bd-table__cell--md-1">
                         {{item.billCodeItemNo}}
                     </div>
@@ -285,38 +260,29 @@
                                    currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
                     </div>
                     <div bd-table-cell="seventh" class="bd-table__cell--sm-7 bd-table__cell--md-2">
-                        {{item.qty}}
+                        <input class="ip-height" ng-model="qtyInput"/>
                     </div>
-                    <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1">
-                        <!--{{ $eval('item.##fourthData##') }}-->
-                        <!--<bd-button ng-click="$params.downloadFile(item)">##fifthTitle##</bd-button>-->
-                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
-                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length,, item, $index)"
-                                     bd-disabled="true"
-                                     ng-init="payment.formData.isAllSelect=true"
-                                     ng-model="payment.formData.isAllSelect">
+                    <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1 cb-mgTop">
+                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ONLY_ONE'"
+                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, qtyInput, 'SELECT_ONLY_ONE', 'EXTENDED_DETAIL')"
+                                     ng-model="isSelectOnlyOne">
                         </bd-checkbox>
-                        <bd-checkbox ng-if="paymentTypeID !== 'SELECT_ALL_AND_CANNOT_UNSELECT' && paymentTypeID !== 'MULTI_SELECT_OLDEST_ONES'"
-                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
-                                     ng-model="isSelect">
-                        </bd-checkbox>
-                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
-                                     bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index)"
-                                     ng-model="isSelectOldest">
-                        </bd-checkbox>
-                        <!--<div ng-if="paymentTypeID === 'SELECT_ONLY_ONE' && validCheck === 'true'" class="validation-message animate-on">-->
-                            <!--{{::'ocb.payments.new.bill.fill.validate.check'|translate}}-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>
-            <!--<div ng-if="$expanded">-->
-            <!--<ng-transclude></ng-transclude>-->
-            <!--</div>-->
         </div>
         <!--Show error message-->
-        <div ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES' && validCheck == true" class="validate-message">
+        <div ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES' && validCheck === true" class="validate-message">
             {{::'ocb.payments.new.bill.fill.validate.check'|translate}}
+        </div>
+        <div ng-if="isOnlyOne === true" class="validate-message">
+            {{::'ocb.payments.new.bill.fill.validate.check.onlyOne'|translate}}
+        </div>
+        <div ng-if="invalidQty === true" class="validate-message">
+            {{::'ocb.payments.new.bill.fill.validate.check.qty'|translate}}
+        </div>
+        <div ng-if="invalidOldestOne === true" class="validate-message">
+            {{::'ocb.payments.new.bill.fill.validate.check.oldestOne'|translate}}
         </div>
 
         <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>

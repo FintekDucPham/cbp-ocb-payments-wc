@@ -123,6 +123,11 @@ angular.module('ocb-payments')
                         referenceId: data.payment.id
                     });
                     return;
+                } else if (data.payment.paymentType === 'FAST_TRANSFER') {
+                    $state.go('payments.fast.basket.modify.fill', {
+                        referenceId: data.payment.id
+                    });
+                    return;
                 }
             }
 
@@ -147,6 +152,12 @@ angular.module('ocb-payments')
                     return;
                 } else if (data.payment.paymentType === 'INTERNAL_PAYMENT') {
                     $state.go('payments.internal.basket.delete.verify', {
+                        referenceId: data.payment.id,
+                        basketReferenceId: data.referenceId
+                    });
+                    return;
+                } else if (data.payment.paymentType === 'FAST_TRANSFER') {
+                    $state.go('payments.fast.basket.delete.verify', {
                         referenceId: data.payment.id,
                         basketReferenceId: data.referenceId
                     });

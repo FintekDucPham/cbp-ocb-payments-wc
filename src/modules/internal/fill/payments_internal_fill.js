@@ -12,18 +12,18 @@ angular.module('ocb-payments')
                 analyticsTitle: "config.multistepform.labels.step1"
             },
             resolve: {
-                loadLimits: function (payment, transactionService) {
+                loadLimits: ['payment', 'transactionService', function (payment, transactionService) {
                     payment.promises.loadLimits = transactionService.limits({
                         paymentType: 'InternalPayment'
                     }).then(function (limits) {
                         payment.meta.remainingDailyLimit = limits.remainingDailyLimit;
                     });
-                },
-                loadMaxDescLength: function (payment, systemParameterService) {
+                }],
+                loadMaxDescLength: ['payment', 'systemParameterService', function (payment, systemParameterService) {
                     payment.promises.loadMaxDescLength = systemParameterService.getParameterByName('transaction.description.length.max').then(function(data) {
                         payment.meta.maxDescriptionLength = data.value;
                     });
-                }
+                }]
             }
         };
         stateServiceProvider

@@ -35,11 +35,6 @@ angular.module('ocb-payments')
         "STANDING": {
             code: 'STANDING',
             state: 'standing'
-        },
-        "SAVING": {
-            code: 'SAVING',
-            state: 'saving',
-            parentState: 'new'
         }
     })
     .config(function (pathServiceProvider, stateServiceProvider) {

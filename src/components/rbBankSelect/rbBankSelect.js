@@ -21,7 +21,7 @@ ebankingSharedModule.directive('rbBankSelect', function(pathService, domesticBan
                     $scope.banksList = locationCtrl.banksList;
                 })
                 : domesticBanksService.search({}).then(function(data) {
-                    $scope.banksList =  data.content.banksList.map(function (bank) {
+                    $scope.banksList =  data.content.map(function (bank) {
                         return {
                             bankCode: bank.unitNo,
                             bankName: bank.nameShort
