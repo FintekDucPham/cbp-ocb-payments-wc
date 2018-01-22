@@ -45,7 +45,9 @@ angular.module('ocb-payments')
     $scope.clearData = function () {
         $scope.pendingTransaction.clearData();
     };
-
+    $scope.printReport = function () {
+        $scope.pendingTransaction.printReport();
+    };
     // $scope.userRole = "";
     customerService.getCustomerDetails().then(function(data) {
         if (data.customerDetails) {
@@ -109,48 +111,48 @@ angular.module('ocb-payments')
                     $scope.statusByUser = {
                         C1:false,
                         C2:false,
-                        RT:true,
-                        WA:false
+                        WA:false,
+                        RT:true
                     }
                     break;
                 case "CHECKER1":
                     $scope.statusByUser = {
                         C1:true,
                         C2:false,
-                        RT:false,
-                        WA:false
+                        WA:false,
+                        RT:false
                     }
                     break;
                 case "CHECKER2":
                     $scope.statusByUser = {
                         C1:false,
                         C2:true,
-                        RT:false,
-                        WA:false
+                        WA:false,
+                        RT:false
                     }
                     break;
                 case "APPROVER":
                     $scope.statusByUser = {
                         C1:false,
                         C2:false,
-                        RT:true,
-                        WA:true
+                        WA:true,
+                        RT:true
                     }
                     break;
                 case "MASTER":
                     $scope.statusByUser = {
                         C1:true,
                         C2:true,
-                        RT:true,
-                        WA:true
+                        WA:true,
+                        RT:true
                     }
                     break;
                 default:
                     $scope.statusByUser = {
                         C1:false,
                         C2:false,
-                        RT:false,
-                        WA:false
+                        WA:false,
+                        RT:false
                     }
             }
         }
@@ -175,6 +177,7 @@ angular.module('ocb-payments')
         clearData: $scope.clearData,
         getUserType: $scope.getUserType,
         getStatusByRole: $scope.getStatusByRole,
+        printReport: $scope.printReport,
         labels:{
 
             return:"ocb.payments.pending.list.button.return.label",
@@ -185,6 +188,6 @@ angular.module('ocb-payments')
         },
         visibility:{
             return:false
-        },
+        }
     }
 });
