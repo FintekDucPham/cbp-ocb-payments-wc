@@ -61,6 +61,16 @@
                 <span class="bd-amount__value">{{totalamountinfigures}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
             </div>
         </bd-item-property-form>
+        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.transactionFee' | translate }}">
+            <div class="bd-amount form-group-label-value">
+                <span class="bd-amount__value">{{transactionFee}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
+            </div>
+        </bd-item-property-form>
+        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountFee' | translate }}">
+            <div class="bd-amount form-group-label-value">
+                <span class="bd-amount__value">{{totalAmountWithFee}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
+            </div>
+        </bd-item-property-form>
         <!--<bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">
             {{totalamountinwords}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}
         </bd-item-property-form>-->
