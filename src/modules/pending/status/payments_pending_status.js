@@ -10,12 +10,12 @@ angular.module('ocb-payments')
         });
     })
     .controller('PendingStatusController', function ($scope, bdStatusStepInitializer) {
-
-        bdStatusStepInitializer($scope, {
-            formName: 'pendingForm',
-            dataObject: $scope.payment
-        });
+        //
+        // bdStatusStepInitializer($scope, {
+        //     formName: 'pendingForm',
+        //     dataObject: $scope.payment
+        // });
+        //
 
         $scope.pendingTransaction.selectedTrans = [];
-
     });
