@@ -9,8 +9,47 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsBillHistoryListController', function ($scope, bdTableConfig, translate, $filter, exportService, fileDownloadService, transferBillService, creditsService) {
-        //Set data bill history table
+    .controller('PaymentsBillHistoryListController', function ($scope, bdTableConfig, dateFilter, translate, $filter, exportService, fileDownloadService, transferBillService, creditsService) {
+
+        /*declare filterData*/
+        $scope.filterData = {
+            range: {
+                toDate: null,
+                fromDate: null
+            }
+        };
+
+        /*get date from form Filter*/
+        function getDatesFromFilter() {
+            var dateFromValue = null;
+            var dateToValue = null;
+
+            //dateToValue = dateFilter(moment().add(1, 'days').toDate(), 'dd/MM/yyyy');
+
+            if($scope.filterData.range.fromDate){
+                dateFromValue = dateFilter(moment($scope.filterData.range.fromDate).toDate(), 'yyyy-MM-dd');
+            }
+
+            if($scope.filterData.range.toDate){
+                dateToValue = dateFilter(moment($scope.filterData.range.toDate).toDate(), 'yyyy-MM-dd');
+            }
+
+            return {fromDate: dateFromValue, toDate: dateToValue};
+        }
+
+        /*handle Search button*/
+        $scope.invalidDate = false;
+        $scope.onSearch = function () {
+            var filterDateValues = getDatesFromFilter();
+            $scope.fromDate =  filterDateValues.fromDate;
+            $scope.toDate =  filterDateValues.toDate;
+            if ($scope.toDate < $scope.fromDate) {
+                $scope.invalidDate = true;
+            } else {
+                $scope.invalidDate = false;
+                $scope.table.tableControl.invalidate();
+            }
+        }
 
         //table config
         $scope.tableConfig = new bdTableConfig({});
@@ -19,27 +58,11 @@ angular.module('ocb-payments')
         $scope.table = {
             tableConfig: new bdTableConfig({
                 placeholderText: $filter('translate')('ocb.payments.PaymentsBillHistory'),
-                downloadFile: function (item) {
-                    var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
-                        url = exportService.prepareHref(downloadLink);
-                    fileDownloadService.startFileDownload(url);
-                },
-                exportpdf: function () {
-                    html2canvas(document.getElementById('transactionDetail'), {
-                        onrendered: function (canvas) {
-                            var data = canvas.toDataURL();
-                            var docDefinition = {
-                                content: [{
-                                    image: data,
-                                    width: 500,
-                                }]
-                            };
-                            pdfMake.createPdf(docDefinition).download("test.pdf");
-                        }
+                exportPdf: function (refId) {
+                    var downloadLink = exportService.prepareHref({
+                        href: "/api/transaction/downloads/pdf.json"
                     });
-                },
-                onSearch: function(fromDate, toDate) {
-
+                    fileDownloadService.startFileDownload(downloadLink + ".json?id=" + refId);
                 },
                 hideAddress: function (billType) {
                     if (billType == "EXTENDED_DETAIL" || billType == "NO_DETAIL") {
@@ -65,6 +88,8 @@ angular.module('ocb-payments')
                     /*Test calendar Start*/
                     //var fromDay = rbModelFrom;
                     $scope.billHistoryData = transferBillService.getBillHistory({
+                        fromDate: $scope.fromDate,
+                        toDate: $scope.toDate
                     }).then(function (data) {
                         // defer.resolve(data.content);
 
