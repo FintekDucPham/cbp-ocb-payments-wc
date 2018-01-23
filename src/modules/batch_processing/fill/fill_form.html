@@ -1,7 +1,7 @@
 <!-- Created by Tien Bui on 10/30/2017 -->
 <div>
     <form name="paymentsBatchProcessingFormForm">
-        <div class="account-collapse-item form-horizontal">
+        <div class="form-horizontal">
             <bd-header>{{ ::'ocb.payments.batch_processing.personal' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
                 <!--<input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>-->
@@ -70,7 +70,7 @@
                 </ui-select>
             </bd-item-property-form>
         </div>
-        <div class="account-collapse-item form-horizontal batch" ng-show="paymentsBatchProcessingForm.batchInfoSearch">
+        <div class="form-horizontal batch" ng-show="paymentsBatchProcessingForm.batchInfoSearch">
             <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group form-btn">
@@ -115,7 +115,7 @@
         </div>
 
         <!--Table section-->
-        <div class="account-collapse-item form-btn" ng-show="paymentsBatchProcessingForm.validTableShow">
+        <div class="form-btn" ng-show="paymentsBatchProcessingForm.validTableShow">
             <!--<bd-header>{{ ::'ocb.payments.batch_processing.validtable' | translate }}</bd-header>-->
             <bd-table
                     bd-display-bank-code="displayBankCode"
@@ -158,7 +158,7 @@
                 <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalnumberoflines' | translate }}">{{paymentsBatchProcessingForm.formData.totalnumberoflines}}</bd-item-property-form>
             </div>
         </div>
-        <div class="account-collapse-item form-btn" ng-show="paymentsBatchProcessingForm.invalidTableShow">
+        <div class="form-btn" ng-show="paymentsBatchProcessingForm.invalidTableShow">
             <bd-header>{{ ::'ocb.payments.batch_processing.invalidtable' | translate }}</bd-header>
             <bd-table
                     bd-display-bank-code="displayBankCode"

@@ -156,7 +156,7 @@ angular.module('ocb-payments')
                     return false;
                 }
                 var n = Math.floor(Number(str));
-                return String(n) === str && n >= 1;
+                return String(n) === str && n >= 1 && n < 1000;
             }
             /*init variable for checkbox*/
             // $scope.oldestDate = [];
@@ -212,6 +212,7 @@ angular.module('ocb-payments')
                             if ($scope.totalAmountList.length <= 1) {
                                 //show error message
                                 $scope.isOnlyOne = false;
+                                $scope.invalidQty = false;
                             }
                         }
                     }
