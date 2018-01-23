@@ -63,19 +63,11 @@ angular.module('ocb-payments')
                         url = exportService.prepareHref(downloadLink);
                     fileDownloadService.startFileDownload(url);
                 },
-                exportpdf: function () {
-                    html2canvas(document.getElementById('transactionDetail'), {
-                        onrendered: function (canvas) {
-                            var data = canvas.toDataURL();
-                            var docDefinition = {
-                                content: [{
-                                    image: data,
-                                    width: 500,
-                                }]
-                            };
-                            pdfMake.createPdf(docDefinition).download("test.pdf");
-                        }
+                exportPdf: function (refId) {
+                    var downloadLink = exportService.prepareHref({
+                        href: "/api/transaction/downloads/pdf.json"
                     });
+                    fileDownloadService.startFileDownload(downloadLink + ".json?id=" + refId);
                 },
                 hideAddress: function (billType) {
                     if (billType == "EXTENDED_DETAIL" || billType == "NO_DETAIL") {
