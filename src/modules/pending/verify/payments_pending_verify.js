@@ -9,13 +9,13 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate,$http,exportService,transferService,rbPaymentOperationTypes,depositsService) {
+    .controller('PaymentPendingVerifyController', function ($scope,  $state, bdVerifyStepInitializer,bdStepStateEvents,bdTableConfig,translate,$http,exportService,transferService,rbPaymentOperationTypes,depositsService,fileDownloadService) {
 
         if(_.isEmpty( $scope.pendingTransaction.selectedTrans)){
             $state.go("payments.pending.fill", {}, {reload: true});
         }
 
-
+        $scope.idForPrint = null;
         $scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.selectedTrans[0].id;
         //list data table define
         $scope.table = {
@@ -43,6 +43,7 @@ angular.module('ocb-payments')
 
         function authorize(doneFn, actions) {
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
+            $scope.idForPrint = listTransID[0];
             transferService.realize(listTransID[0], $scope.pendingTransaction.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.pendingTransaction.result = {
@@ -73,6 +74,15 @@ angular.module('ocb-payments')
             });
         }
 
+
+        $scope.pendingTransaction.printReport = function () {
+            if($scope.idForPrint !== null) {
+                var downloadLink =  exportService.prepareHref({
+                    href: "/api/transaction/downloads/pdf.json"
+                });
+                fileDownloadService.startFileDownload(downloadLink + ".json?id=" + $scope.idForPrint);
+            }
+        }
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             authorize(actions.proceed, actions);
             actions.proceed();

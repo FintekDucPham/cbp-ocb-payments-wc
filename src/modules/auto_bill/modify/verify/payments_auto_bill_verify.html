@@ -45,7 +45,7 @@
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.details.supplier'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-            {{payment.formData.serviceProviderCodeName }}
+            {{payment.formData.serviceCode }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"
@@ -63,8 +63,10 @@
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.details.frequencyPer'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-            {{ payment.formData.frequencyPeriodCount}}{{::'ocb.payments.auto_bill.list.details.frequencyPer.' +
-            payment.formData.frequencyPeriodUnit | translate}}<span ng-show="payment.formData.frequencyPeriodCount > 1">s</span>
+            {{payment.formData.frequencyPeriodCount}}
+            <span class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount <= 1 || !payment.formData.frequencyPeriodCount">{{::'ocb.payments.new.standing.fill.frequencyType.types.1.' + payment.formData.frequencyPeriodUnit | translate}}</span>
+            <span class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 2 && payment.formData.frequencyPeriodCount < 5">{{::'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + payment.formData.frequencyPeriodUnit | translate}}</span>
+            <span class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 5">{{::'ocb.payments.new.standing.fill.frequencyType.types.5more.' + payment.formData.frequencyPeriodUnit | translate}}</span>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"

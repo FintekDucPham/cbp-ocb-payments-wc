@@ -232,48 +232,52 @@ angular.module('ocb-payments')
         }
 
         //renew
-        $scope.renew = function (data) {
-            var copiedData = angular.copy(data);
-            var details = copiedData.details;
-            var paymentType = angular.lowercase(copiedData.transferType);
-            var goPage = "";
-            if (paymentType === 'standing_order') {
-                paymentType = 'domestic';
-            }
-            if(paymentType === 'internal') {
-                goPage = "payments.new_internal.fill";
-            } else {
-                goPage = "payments.new.fill";
-            }
-            $state.go(goPage, {
-                paymentType: paymentType,
-                payment: lodash.extend({
-                    remitterAccountId : details.accountId,
-                    recipientName : $filter('arrayFilter')(details.recipientName),
-                    realizationDate: dateTodayOrInFuture(details.realizationDate)
-                }, (function() {
-                    switch(paymentType) {
-                        case 'domestic':
-                            return {
-                                recipientAccountNo: details.recipientAccountNo,
-                                recipientName: $filter('arrayFilter')(details.recipientName),
-                                description: $filter('arrayFilter')(cropArray(details.title)),
-                                amount: details.amount,
-                                currency: details.currency
-                            };
-                        case 'internal':
-                            return {
-                                beneficiaryAccountId: details.recipientAccountId,
-                                amount: details.amount,
-                                recipientAccountNo: details.recipientAccountNo,
-                                currency: details.currency,
-                                description: $filter('arrayFilter')(cropArray(details.title))
-                            };
-                        default:
-                            throw "Payment type {0} not supported.".format(paymentType);
-                    }
-                })())
-            });
+        $scope.renew = function (payment) {
+            if (payment.details.transferType.toLocaleLowerCase() === 'external')
+                $state.go('payments.external.future.modify.fill', { referenceId: payment.id });
+            else
+                $state.go('payments.internal.future.modify.fill', { referenceId: payment.id });
+            // var copiedData = angular.copy(data);
+            // var details = copiedData.details;
+            // var paymentType = angular.lowercase(copiedData.transferType);
+            // var goPage = "";
+            // if (paymentType === 'standing_order') {
+            //     paymentType = 'domestic';
+            // }
+            // if(paymentType === 'internal') {
+            //     goPage = "payments.new_internal.fill";
+            // } else {
+            //     goPage = "payments.new.fill";
+            // }
+            // $state.go(goPage, {
+            //     paymentType: paymentType,
+            //     payment: lodash.extend({
+            //         remitterAccountId : details.accountId,
+            //         recipientName : $filter('arrayFilter')(details.recipientName),
+            //         realizationDate: dateTodayOrInFuture(details.realizationDate)
+            //     }, (function() {
+            //         switch(paymentType) {
+            //             case 'domestic':
+            //                 return {
+            //                     recipientAccountNo: details.recipientAccountNo,
+            //                     recipientName: $filter('arrayFilter')(details.recipientName),
+            //                     description: $filter('arrayFilter')(cropArray(details.title)),
+            //                     amount: details.amount,
+            //                     currency: details.currency
+            //                 };
+            //             case 'internal':
+            //                 return {
+            //                     beneficiaryAccountId: details.recipientAccountId,
+            //                     amount: details.amount,
+            //                     recipientAccountNo: details.recipientAccountNo,
+            //                     currency: details.currency,
+            //                     description: $filter('arrayFilter')(cropArray(details.title))
+            //                 };
+            //             default:
+            //                 throw "Payment type {0} not supported.".format(paymentType);
+            //         }
+            //     })())
+            // });
         };
 
         function cropArray(array) {

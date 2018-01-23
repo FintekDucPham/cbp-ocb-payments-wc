@@ -1,4 +1,4 @@
-<rb-content-view class="rb-content-view--solid">
+<rb-content-view class="rb-content-view--solid payments-rejected-list">
     <bd-header>{{::"ocb.payments.rejected.label"|translate}}</bd-header>
 
     <form novalidate name="filterForm" ng-submit="onSubmit(filterForm)">
@@ -148,13 +148,10 @@
 
             <section ng-if="$data.details">
                 <bd-item-property  label="{{ :: 'ocb.payments.rejected.list.details.transferType' | translate }}">
-                    {{ 'ocb.payments.new.types.'+$data.details.transferType | translate }}
+                    {{ 'ocb.payments.new.types.'+$data.details.paymentType | translate }}
                 </bd-item-property>
                 <bd-item-property  label="{{::'ocb.payments.rejected.operation.status.label'|translate}}">
-                    {{ :: 'ocb.payments.rejected.opration_type.rejected' | translate }}
-                </bd-item-property>
-                <bd-item-property  ng-show="$data.details.originalCustomerVisible" label="{{ :: 'ocb.payments.reject.original_customer' | translate }}">
-                    {{ $data.details.originalCustomerName}}
+                    {{ :: 'ocb.payments.rejected.operation_type.rejected' | translate }}
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'ocb.payments.rejected.list.details.registrationDate' | translate }}">
                     {{ $data.details.realizationDate | date : 'shortDate' }} <!-- cannot resolve registration date from the bus -->
