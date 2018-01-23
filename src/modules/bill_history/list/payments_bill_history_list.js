@@ -58,11 +58,6 @@ angular.module('ocb-payments')
         $scope.table = {
             tableConfig: new bdTableConfig({
                 placeholderText: $filter('translate')('ocb.payments.PaymentsBillHistory'),
-                downloadFile: function (item) {
-                    var downloadLink = "/api/account/downloads/account_electronic_invoice_download.json",
-                        url = exportService.prepareHref(downloadLink);
-                    fileDownloadService.startFileDownload(url);
-                },
                 exportPdf: function (refId) {
                     var downloadLink = exportService.prepareHref({
                         href: "/api/transaction/downloads/pdf.json"
