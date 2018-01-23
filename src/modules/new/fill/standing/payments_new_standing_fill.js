@@ -100,7 +100,7 @@ angular.module('ocb-payments')
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
-            $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
+            $scope.payment.formData.recipientAccountNo = recipient.accountNo;
             $scope.payment.formData.recipientName = recipient.data.join('');
             $scope.payment.formData.description = recipient.title.join('');
         };
@@ -185,7 +185,7 @@ angular.module('ocb-payments')
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function (event, control) {
             var recipientData = angular.copy({
                 customName: translate.property('ocb.new.recipient.custom_name'),
-                remitterAccountId: 3,//$scope.payment.formData.remitterAccountId,
+                remitterAccountId: $scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,
                 description: $scope.payment.formData.description
