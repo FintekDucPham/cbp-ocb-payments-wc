@@ -93,6 +93,7 @@
   "ocb.payments.new.btn.next": "Next",
   "ocb.payments.new.btn.finalize": "Back to list",
   "ocb.payments.new.btn.final_action": "Save recipient",
+  "ocb.payments.new.btn.print_report": "Print report",
   "ocb.payments.new.btn.add_as_standing_order": "Add as standing order",
   "ocb.payments.error.label.serverError": "404 can not found data",
   "ocb.payments.new.verify.smscode": "Enter SMS password for the operation",
