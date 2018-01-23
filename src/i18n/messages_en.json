@@ -448,6 +448,7 @@
   "ocb.payments.bill.history.period.label": "Period",
   "ocb.payments.bill.history.period.to.label": "-",
   "ocb.payments.bill.history.search.label": "Search",
+  "ocb.payments.bill.history.period.invalidDate": "The end date in the period cannot be earlier than the start date",
 
   "ocb.payments.rejected.select.filter.button.action": "Search",
   "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
