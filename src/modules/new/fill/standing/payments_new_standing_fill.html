@@ -70,7 +70,6 @@
                    ng-model="payment.formData.recipientAccountNo"
                    ng-disabled="payment.options.fixedRecipientSelection || showHide || modification"
                    required
-                   bban-nrb
                    ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    bd-matches-none-of="recipientAccountValidators"
                    class="input-field"
