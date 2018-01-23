@@ -43,6 +43,8 @@ angular.module('ocb-payments')
         $scope.totalamountinwords = $scope.paymentsBatchProcessingForm.formData.totalamountinwords;
         $scope.totalamountinwordsen = $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen;
         $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.totalnumberoflines;
+        $scope.transactionFee = $scope.paymentsBatchProcessingForm.formData.transactionFee;
+        $scope.totalAmountWithFee = $scope.paymentsBatchProcessingForm.formData.totalAmountWithFee;
 
         $scope.tableValid = {
             tableConfig: new bdTableConfig({
