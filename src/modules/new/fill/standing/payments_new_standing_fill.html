@@ -3,7 +3,7 @@
     <bd-item-property ng-if="payment.operation.code == 'EDIT'"
                       class="bd-item-property--text bd-item-property--disabled"
                       label="{{ :: 'ocb.payments.new.standing.edit.order_id' | translate }}" >
-        {{ payment.formData.id }}
+        {{ payment.formData.standingOrderReferenceId }}
     </bd-item-property>
 
 
@@ -70,7 +70,6 @@
                    ng-model="payment.formData.recipientAccountNo"
                    ng-disabled="payment.options.fixedRecipientSelection || showHide || modification"
                    required
-                   bban-nrb
                    ng-paste="payment.formData.nrbCheck = ''; paymentForm.nrbCheck = ''; rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                    bd-matches-none-of="recipientAccountValidators"
                    class="input-field"

@@ -30,7 +30,7 @@ angular.module('ocb-payments')
         };
 
         if($scope.payment.operation.code === 'EDIT'){
-            $scope.standingOrderId = $scope.payment.formData.id;
+            $scope.standingOrderId = $scope.payment.formData.standingOrderReferenceId;//id;
         }
 
         if (!$scope.payment.formData.frequencyType) {
@@ -58,7 +58,7 @@ angular.module('ocb-payments')
 
         $scope.setRequestConverter(function (formData) {
             var result = {
-                "standingOrderId": formData.id ? formData.id : "",
+                "standingOrderId": formData.standingOrderReferenceId ? formData.standingOrderReferenceId : "",
                 "shortName": formData.shortName,
                 "amount": ("" + formData.amount).replace(',', '.'),
                 "beneficiary": utilityService.splitTextEveryNSigns(formData.recipientName),
@@ -100,7 +100,7 @@ angular.module('ocb-payments')
         $scope.selectRecipient = function (recipient) {
             $scope.payment.items.recipient = recipient;
             $scope.payment.options.fixedRecipientSelection = true;
-            $scope.payment.formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
+            $scope.payment.formData.recipientAccountNo = recipient.accountNo;
             $scope.payment.formData.recipientName = recipient.data.join('');
             $scope.payment.formData.description = recipient.title.join('');
         };

@@ -13,7 +13,7 @@ angular.module('ocb-payments')
                                                                     paymentsService, $filter, pathService, viewStateService,
                                                                     standingTransferService, rbPaymentOperationTypes,
                                                                     STANDING_FREQUENCY_TYPES, initialState, $anchorScroll,
-                                                                    $location) {
+                                                                    $location, customerService) {
         $scope.dateRange = {};
 
         $scope.options = {
@@ -46,13 +46,14 @@ angular.module('ocb-payments')
                 "remitterAccountId": payment.debitAccountId,
                 "debitAccountNo": payment.debitAccount,
                 "currency": payment.currency,
-                "nextRealizationDate": payment.frequency.nextDate ? new Date(Date.parse(payment.frequency.nextDate)) : null,
+                "nextRealizationDate": payment.frequency.nextDate ? new Date(payment.frequency.nextDate) : null,
                 "firstRealizationDate": payment.startDate ? new Date(payment.startDate) : null,
                 "finishDate": payment.endDate ? new Date(payment.endDate) : null,
                 "frequencyType": _.find(STANDING_FREQUENCY_TYPES, _.matchesProperty('symbol', payment.frequency.periodUnit)).code,
                 "frequency": parsePaymentFrequency(payment.frequency),
                 "amount": payment.amount,
-                "id": payment.id
+                "id": payment.id,
+                "standingOrderReferenceId": payment.standingOrderReferenceId
             }; 
 
             if (action == 'edit') {
@@ -79,6 +80,11 @@ angular.module('ocb-payments')
                 }
             }
         };
+
+        customerService.getCustomerDetails().then(function(data){
+           $scope.isInputter = data.customerDetails.microRole === 'INPUTTER';
+        });
+
 
         $scope.onDelete = function(standingPayment) {
             viewStateService.setInitialState('futurePayments.standing.manage.delete', {

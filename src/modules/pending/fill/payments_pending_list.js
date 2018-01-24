@@ -330,6 +330,7 @@ angular.module('ocb-payments')
             actions.proceed();
         });
 
+
         function isSenderAccountCategoryRestricted(account) {
             if($scope.payment.items.senderAccount){
                 if ($scope.payment.meta.customerContext === 'DETAL') {

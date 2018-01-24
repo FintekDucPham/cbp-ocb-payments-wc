@@ -1,10 +1,97 @@
 <rb-content-view class="rb-content-view--solid">
     <div>
+        <div class="form-row">
+            <!--Header Bills History and select account-->
+            <div class="padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-11">
+                <div class="form-row">
+                    <!--Header-->
+                    <div class="header-size padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
+                        {{ ::'ocb.payments.bill.history.label' | translate }}
+                    </div>
+                    <!--Account-->
+                    <div class="lb bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-1">
+                        {{ ::'ocb.payments.bill.history.account.label' | translate }}
+                    </div>
+                    <div class=" bd-header padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-8">
+                        <rb-account-select rb-account-id="prepaid.formData.remitterAccountId"
+                                           rb-account="prepaid.items.senderAccount"
+                                           bd-attr-required="true"
+                                           rb-account-list="prepaid.meta.accountList"
+                                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                           rb-product-list-name="TRANSFER_FROM_LIST"
+                                           rb-on-account-select="onSenderAccountSelect()"
+                                           rb-account-no="payment.items.recipient.srcAccountNo"
+                                           rb-account-select-params="remitterAccountSelectParams"
+                                           rb-remote="remote.model"
+                                           rb-init-select-value="{{selectNrb}}" class="bd-table__cell--md-11">
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-        <script src="script.js"></script>
-
+                        </rb-account-select>
+                    </div>
+                </div>
+            </div>
+            <!--Search and advanced filter-->
+            <div class="padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-5">
+                <div class="form-row">
+                    <!--Search-->
+                    <div class="form-row bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-9">
+                        <input ng-model="table.tableConfig.searchText" type="text" placeholder="Search">
+                        <div class="search-icon"></div>
+                    </div>
+                    <!--Advanced filter-->
+                    <div ng-hide="$params.isAdvanced" ng-click="$params.isAdvanced = true"
+                         class="color bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-6">
+                        <a>{{::'ocb.payments.bill.history.advanced.filter.label' | translate}}</a>
+                    </div>
+                    <!--Hide advanced filter-->
+                    <div ng-show="$params.isAdvanced" ng-click="$params.isAdvanced = false"
+                         class="color bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-6">
+                        <a>{{::'ocb.payments.bill.history.hide.advanced.filter.label' | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Show advanced filter-->
+        <div ng-show="$params.isAdvanced" class="advanced-filter-wrap clear" id="advanced-filter-cont"
+             style="display: block;">
+            <div class="clearfix advanced-filter">
+                <div class="col-md-10 col-sm-12">
+                    <div class="txt-bold row__inline-block--middle row__inline-block--adjacent">
+                        {{:: 'ocb.payments.bill.history.period.label' | translate}}
+                    </div>
+                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
+                        <input name="dateFromInput_delgate" hidden ng-model="filterData.range.dateFrom" model-date="filterData.range.dateFrom" ng-required="filterData.periodType===baseData.PERIOD_TYPES.RANGE"/>
+                        <rb-datepicker ng-model="filterData.range.fromDate"
+                                       placeholder="From"
+                                       ng-model-options="{ allowInvalid: false }"
+                                       rb-name="dateFromInput"
+                                       max-search-date
+                                       rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
+                                       style="width: 140px;"></rb-datepicker>
+                    </div>
+                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                        {{::'ocb.payments.bill.history.period.to.label'|translate}}
+                    </div>
+                    <div class="row__inline-block--middle" style="width:140px;">
+                        <input name="dateToInput_delgate" hidden ng-model="filterData.range.dateTo" model-date="filterData.range.dateTo" ng-required="filterData.periodType===baseData.PERIOD_TYPES.RANGE"/>
+                        <rb-datepicker ng-model="filterData.range.toDate"
+                                       empty-date
+                                       ng-model-options="{ allowInvalid: false }"
+                                       rb-name="dateToInput"
+                                       max-search-date
+                                       rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
+                                       style="width: 140px;"></rb-datepicker>
+                    </div>
+                    <bd-button class="bd-button__primary bd-button bd-button search-btn-mg-left" ng-click="onSearch()">{{::'ocb.payments.bill.history.search.label' | translate}}</bd-button>
+                </div>
+            </div>
+            <!--Show error message when invalidDate-->
+            <div ng-if="invalidDate === true" class="validate-message">
+                {{::'ocb.payments.bill.history.period.invalidDate'|translate}}
+            </div>
+        </div>
+        <!--Hide Advanced filter-->
+        <div ng-hide="$params.isAdvanced">
+        </div>
         <bd-table
                 bd-type="typeBH",
                 bd-table-params="table.tableConfig",
@@ -18,16 +105,16 @@
                     },
                      'second' : {
                         'title': '##ocb.payments.bill.history.header.services.label',
-                        'data' : 'service'
+                        'data' : 'serviceName'
                     },'third' : {
                         'title': '##ocb.payments.bill.history.header.providers.label',
-                        'data' : 'provider.providerCode'
+                        'data' : 'providerName'
                     },'fourth' : {
                         'title': '##ocb.payments.bill.history.header.currency.label',
                         'data' : 'currency'
                     },'fifth' : {
                         'title': '##ocb.payments.bill.history.header.amount.label',
-                        'data' : 'amount.value'
+                        'data' : 'amount'
                     },'sixth' : {
                         'title': '##ocb.payments.bill.history.header.status.label',
                         'data' : 'status'
