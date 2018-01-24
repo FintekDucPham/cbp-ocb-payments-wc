@@ -168,7 +168,7 @@ angular.module('ocb-payments')
                 }
             });
     })
-    .controller('PaymentsInternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate) {
+    .controller('PaymentsInternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService) {
         var stateData = $state.$current.data;
         $scope.payment = payment;
         var deleteOperation = $scope.deleteOperation = stateData.operation === 'delete';
@@ -199,6 +199,11 @@ angular.module('ocb-payments')
             onClear: function () {
                 $scope.$broadcast('clearForm');
             },
+            printReport: function () {
+                window.location.href = exportService.prepareHref({
+                    href: "/api/transaction/" + payment.meta.referenceId + "/downloads/pdf.json"
+                });
+            },
             cancelState: stateData.finalState,
             labels: {
                 cancel: 'config.multistepform.buttons.cancel',
@@ -209,7 +214,8 @@ angular.module('ocb-payments')
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
                 finalize: 'ocb.payments.new.btn.finalize',
-                finalAction: 'ocb.payments.new.btn.final_action'
+                finalAction: 'ocb.payments.new.btn.final_action',
+                printReport: 'ocb.payments.new.btn.print_report'
             },
             visibility: {
                 fillReturn: false,
@@ -219,7 +225,8 @@ angular.module('ocb-payments')
                 next: true,
                 accept: true,
                 finalAction: true,
-                finalize: true
+                finalize: true,
+                printReport: true
             }
         };
     });
