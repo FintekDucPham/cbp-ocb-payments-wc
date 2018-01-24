@@ -69,6 +69,7 @@
                        ng-model="payment.formData.recipientAccountNo"
                        ng-disabled="payment.items.recipient"
                        required
+                       bd-account-digit
                        bban-nrb
                        bd-matches-none-of="recipientAccountValidators"
                        placeholder="{{::'ocb.payments.domestic.recipient_account.placeholder' | translate}}"
@@ -77,7 +78,7 @@
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                        ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                        ng-change="unlockField()">
-                <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX" ng-if="showHide" class="input-field">
+                <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                     <div class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.paste' | translate}}
@@ -87,8 +88,8 @@
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
                     </div>
-                    <div eb-message-key="bbanNrb" class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.format' | translate}}
+                    <div eb-message-key="bdAccountDigit" class="validation-message animate-on">
+                        {{::'ocb.payments.domestic.recipient_account.error.digit_count' | translate}}
                     </div>
                     <div eb-message-key="sameSourceAccount" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.same' | translate}}
