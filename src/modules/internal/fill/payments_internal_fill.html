@@ -52,8 +52,7 @@
                        ng-model="payment.formData.recipientAccountNo"
                        ng-disabled="payment.items.recipient"
                        required
-                       bd-account-digit
-                       bban-nrb
+                       bd-account-digit="internal"
                        bd-matches-none-of="recipientAccountValidators"
                        placeholder="{{::'ocb.payments.domestic.recipient_account.placeholder' | translate}}"
                        class="input-field"
@@ -72,7 +71,7 @@
                         {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
                     </div>
                     <div eb-message-key="bdAccountDigit" class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.digit_count' | translate}}
+                        {{::'ocb.payments.domestic.recipient_account.error.digits.internal' | translate}}
                     </div>
                     <div eb-message-key="sameSourceAccount" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.same' | translate}}

@@ -147,7 +147,7 @@
                            name="recipientAccountNo"
                            ng-model="recipient.formData.recipientAccountNo"
                            required="recipient.operation.code !=='EDIT'"
-                           bban-nrb
+                           bd-account-digit="{{recipient.formData.recipientType.code === 'INTERNAL' ? 'internal' : 'external'}}"
                            bd-matches-none-of="recipientAccountValidators"
                            class="input-field"
                            ng-paste="recipient.formData.nrbCheck = ''; recicpientForm.nrbCheck = ''; rbPasteTrigger(this,$event,recipientForm.recipientAccountNo)"
@@ -166,8 +166,8 @@
                         <div eb-message-key="required" class="validation-message animate-on">
                             {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC'|translate}}
                         </div>
-                        <div eb-message-key="bbanNrb" class="validation-message animate-on">
-                            {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC'|translate}}
+                        <div eb-message-key="bdAccountDigit" class="validation-message animate-on">
+                            {{'ocb.payments.domestic.recipient_account.error.digits.' + ($parent.recipient.formData.recipientType.code === 'INTERNAL' ? 'internal' : 'external') | translate}}
                         </div>
                         <div eb-message-key="sameAccount" class="validation-message animate-on">
                             {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
