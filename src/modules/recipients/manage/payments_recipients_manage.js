@@ -7,6 +7,7 @@ angular.module('ocb-payments')
             controller: "PaymentsRecipientsManageController",
             params: {
                 recipientType: 'domestic',
+                recipientTypeObj: null,
                 operation: 'new'
             },
             data: {
@@ -51,6 +52,7 @@ angular.module('ocb-payments')
             },
             operation: rbRecipientOperationType[$stateParams.operation.toUpperCase()],
             formData: {
+                recipientType: $stateParams.recipientTypeObj,
                 paymentTarget: 'ACCOUNT'
             },
             transferId: {},

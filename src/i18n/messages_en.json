@@ -57,6 +57,7 @@
   "ocb.payments.recipient_types.INTERNAL": "Internal",
   "ocb.payments.recipient_types.EXTERNAL": "External",
   "ocb.payments.recipient_types.FAST": "Fast 24/7",
+  "ocb.payments.recipient_types.ALL": "Any",
 
   "ocb.payments.new.step2.row.info.costs_not_available": "Information on estimated order costs is currently unavailable. This does not affect the possibility of submitting the order for execution.",
   "ocb.payments.new.step2.row.charges": "Fees",

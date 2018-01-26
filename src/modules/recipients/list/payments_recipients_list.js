@@ -106,7 +106,8 @@ angular.module('ocb-payments')
 
         $scope.onRecipientCreate = function(){
             $state.go("payments.recipients.manage.new.fill", {
-                operation: rbRecipientOperationType.NEW.code
+                operation: rbRecipientOperationType.NEW.code,
+                recipientTypeObj: $scope.types.currentType !== recipientFilterType.ALL ? $scope.types.currentType : null
             });
         };
 
