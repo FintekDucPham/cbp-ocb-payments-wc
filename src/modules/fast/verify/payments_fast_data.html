@@ -1,0 +1,38 @@
+<transferInfo>
+    <paymentType>FastExternalFundsTransfer</paymentType>
+</transferInfo>
+<payment>
+    <bookingDate/>
+    <debitAccount>{{payment.items.remitterAccount.accountNo}}</debitAccount>
+    <creditAccount>{{payment.formData.recipientAccountNo}}</creditAccount>
+    <customerId>{{payment.meta.remitter.customerContexts[0].externalId}}</customerId>
+    <originalCustomerId/>
+    <cRefNum/>
+    <amount>{{payment.formData.amount}}</amount>
+    <currency>{{payment.items.remitterAccount.currency}}</currency>
+    <sender/>
+    <recipient>{{payment.formData.recipientName | arrayFilter}}</recipient>
+    <remarks>{{payment.formData.description | arrayFilter}}</remarks>
+    <ebUserId>{{payment.meta.ebUserId}}</ebUserId>
+    <creditAccountBankCode>{{payment.formData.bankCode}}</creditAccountBankCode>
+    <creditAccountBankBranchCode/>
+    <creditAccountProvinceCode/>
+    <clearingNetwork/>
+    <serviceCode/>
+    <serviceProviderCode/>
+    <billCode/>
+    <qty/>
+    <billSourceData/>
+    <mobilePhoneNumber/>
+    <parValue/>
+    <studentCode/>
+    <universityCode/>
+    <courseType/>
+    <sourceData/>
+    <partnerId/>
+    <recipientCardNumber>{{payment.formData.cardNumber}}</recipientCardNumber>
+    <eWalletPhoneNumber/>
+    <billCodeItemNo/>
+    <paymentCode/>
+    <paymentItemStudentFee/>
+</payment>
