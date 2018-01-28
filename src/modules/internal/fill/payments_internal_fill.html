@@ -1,15 +1,17 @@
 <eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
 <form name="paymentForm" novalidate ng-show="formReady">
-    <div>
+
+    <div class="bd-form">
+        <div class="bd-form-header pd-bottom">{{::"ocb.payments.domestic.remitter_panel.label"|translate}}</div>
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_account.label' | translate}}">
             <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
             <rb-account-select-v2 rb-account-id="payment.formData.remitterAccountId"
-                               rb-account="payment.items.remitterAccount"
-                               rb-account-list="payment.meta.accountList"
-                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                               rb-product-list-name="TRANSFER_FROM_LIST"
-                               rb-account-select-params="remitterAccountSelectParams"
-                               rb-remote="remote.model"</rb-account-select-v2>
+                                  rb-account="payment.items.remitterAccount"
+                                  rb-account-list="payment.meta.accountList"
+                                  rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                  rb-product-list-name="TRANSFER_FROM_LIST"
+                                  rb-account-select-params="remitterAccountSelectParams"
+                                  rb-remote="remote.model"</rb-account-select-v2>
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_name.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
@@ -31,7 +33,8 @@
         </bd-item-property>
     </div>
 
-    <div>
+    <div class="bd-form">
+        <div class="bd-form-header pd-bottom">{{::"ocb.payments.domestic.recipient_panel.label"|translate}}</div>
         <bd-item-property class="bd-item-property--multirow" label="{{::'ocb.payments.domestic.recipient.label' | translate}}">
             <rb-recipient-select rb-recipient="payment.items.recipient"
                                  rb-recipient-id="payment.formData.recipientId"
@@ -52,7 +55,7 @@
                        ng-model="payment.formData.recipientAccountNo"
                        ng-disabled="payment.items.recipient"
                        required
-                       bban-nrb
+                       bd-account-digit="internal"
                        bd-matches-none-of="recipientAccountValidators"
                        placeholder="{{::'ocb.payments.domestic.recipient_account.placeholder' | translate}}"
                        class="input-field"
@@ -60,7 +63,7 @@
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                        ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                        ng-change="unlockField()">
-                <input type="text" disabled="true" value="XX XXXX XXXX XXXX XXXX XXXX XXXX" ng-if="showHide" class="input-field">
+                <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                     <div class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.paste' | translate}}
@@ -70,8 +73,8 @@
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
                     </div>
-                    <div eb-message-key="bbanNrb" class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.format' | translate}}
+                    <div eb-message-key="bdAccountDigit" class="validation-message animate-on">
+                        {{::'ocb.payments.domestic.recipient_account.error.digits.internal' | translate}}
                     </div>
                     <div eb-message-key="sameSourceAccount" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.same' | translate}}
