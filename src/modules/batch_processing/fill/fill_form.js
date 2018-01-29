@@ -481,7 +481,10 @@ angular.module('ocb-payments')
                                 $scope.paymentsBatchProcessingForm.formData.transferUpdated.batchId = responseContent.batchId;
                             }
                             $scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionAmount = responseContent.transactionAmount;
-                            $scope.paymentsBatchProcessingForm.formData.transactionFee = responseContent.transactionFee;
+                            $scope.paymentsBatchProcessingForm.formData.transactionFee = 0;
+                            if(validRecipients != 'undefined' && validRecipients != null && validRecipients.length > 0){
+                                $scope.paymentsBatchProcessingForm.formData.transactionFee = Number(validRecipients[0].transactionFee.value != null ? validRecipients[0].transactionFee.value : 0);
+                            }
                             var arrayList = [];
                             for(var i = 0; i < validRecipients.length; i++){
                                 var output = convertToTableJsonObject(validRecipients[i]);
@@ -523,7 +526,8 @@ angular.module('ocb-payments')
                             $scope.tableValid.tableControl.invalidate();
 
                             $scope.paymentsBatchProcessingForm.formData.totalAmount = totalAmount;
-                            $scope.paymentsBatchProcessingForm.formData.totalAmountWithFee = totalAmount + Number($scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionFee);
+                            var totalAmountWithFee = totalAmount + $scope.paymentsBatchProcessingForm.formData.transactionFee;
+                            $scope.paymentsBatchProcessingForm.formData.totalAmountWithFee = $scope.numberWithCommas(totalAmountWithFee);
                             $scope.paymentsBatchProcessingForm.formData.totalamountinfigures = $scope.totalamountinfigures = $scope.numberWithCommas(totalAmount);
                             $scope.paymentsBatchProcessingForm.formData.totalamountinwords = $scope.totalamountinwords = ocbConvert.convertNumberToText(totalAmount, false);
                             $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen = $scope.totalamountinwordsen = ocbConvert.convertNumberToText(totalAmount, true);
