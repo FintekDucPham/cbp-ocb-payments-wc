@@ -967,6 +967,7 @@
   "ocb.payments.auto_bill.list.header.recipientAccount": "Tài khoản",
   "ocb.payments.auto_bill.list.header.serviceProvider": "Nhà cung cấp",
   "ocb.payments.auto_bill.list.header.billCode": "Mã hoá đơn",
+  "ocb.payments.domestic.data_verify.label":"Xác nhận thông tin",
   "ocb.payments.domestic.remitter_panel.label": "Từ",
   "ocb.payments.domestic.remitter_account.label": "Tài khoản số",
   "ocb.payments.domestic.remitter_name.label": "Chủ tài khoản",

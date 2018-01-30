@@ -967,6 +967,7 @@
   "ocb.payments.auto_bill.list.header.recipientAccount": "Account",
   "ocb.payments.auto_bill.list.header.serviceProvider": "Service",
   "ocb.payments.auto_bill.list.header.billCode": "Bill Code",
+  "ocb.payments.domestic.data_verify.label": "Data verification",
   "ocb.payments.domestic.remitter_panel.label": "From",
   "ocb.payments.domestic.remitter_account.label": "From account",
   "ocb.payments.domestic.remitter_name.label": "Owner",
