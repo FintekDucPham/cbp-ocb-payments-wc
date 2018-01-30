@@ -461,51 +461,25 @@ rb-payment-recipients-fill > form {
   max-width: none;
 }
 
-.internal-payment.form{
+.internal-payment.form, .external-payment.form {
   .bd-form-content {
     background: none;
     padding: 0;
   }
 
-  .pd-bottom{
-      padding-bottom: 30px;
+  .pd-bottom {
+    padding-bottom: 30px;
   }
 
-  .bd-form{
+  .bd-form {
     margin-bottom: 0;
   }
 
-  .bd-form+.bd-form {
+  .bd-form + .bd-form {
     margin-top: 10px;
   }
 
-  @media only screen and (min-width: 768px) {
-    .rb-recipient-select__btn-clear {
-      width: 155px;
-    }
-  }
-
-  .rb-recipient-select__btn-clear > button{
-    padding-left: 0;
-    text-align: left;
-  }
-
-  .form-row{
-    margin-bottom: 10px;
-  }
-
-  .form-row:last-child{
-    margin-bottom: 0;
-  }
-
-}
-
-.internal-payment{
-  .form-footer{
-    float: right;
-  }
-
-  .bd-form-footer__button{
-
+  .bd-form-content .form-row {
+    padding-bottom: 20px;
   }
 }
