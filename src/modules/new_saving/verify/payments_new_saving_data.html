@@ -2,17 +2,17 @@
     <paymentType>InternalPayment</paymentType>
 </transferInfo>
 <payment>
-    <bookingDate>{{payment.formData.realizationDate | date:'shortDate'}}</bookingDate>
-    <debitAccount>{{payment.items.remitterAccount.accountNo}}</debitAccount>
-    <creditAccount>{{payment.formData.recipientAccountNo}}</creditAccount>
+    <bookingDate/>
+    <debitAccount>{{payment.items.senderAccount.accountNo}}</debitAccount>
+    <creditAccount>{{payment.items.recipientAccount.accountNo}}</creditAccount>
     <customerId/>
     <originalCustomerId>$cifnum$</originalCustomerId>
     <cRefNum/>
     <amount>{{payment.formData.amount}}</amount>
-    <currency>{{payment.items.remitterAccount.currency}}</currency>
+    <currency>{{payment.formData.currency}}</currency>
     <sender/>
-    <recipient>{{payment.formData.recipientName | arrayFilter}}</recipient>
-    <remarks>{{payment.formData.description | arrayFilter}}</remarks>
+    <recipient/>
+    <remarks>{{payment.formData.description}}</remarks>
     <ebUserId>$ebid$</ebUserId>
     <creditAccountBankCode/>
     <creditAccountBankBranchCode/>

@@ -6,10 +6,15 @@ angular.module('ocb-payments')
             controller: "NewPaymentSavingVerifyController",
             data: {
                 analyticsTitle: "config.multistepform.labels.step2"
+            },
+            resolve: {
+                dataTemplate: ['$templateRequest', function ($templateRequest) {
+                    return $templateRequest(pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/new_saving/verify/payments_new_saving_data.html");
+                }]
             }
         });
     })
-    .controller('NewPaymentSavingVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash,ocbConvert,language) {
+    .controller('NewPaymentSavingVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash,ocbConvert,language, $interpolate, dataTemplate) {
 
         $scope.showVerify =  false;
         if(angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)){
@@ -39,6 +44,9 @@ angular.module('ocb-payments')
             $scope.transferCost = transferCostData;
         });*/
 
+        $scope.payment.token.modelData = function () {
+            return $interpolate(dataTemplate)({ payment: $scope.payment });
+        };
 
         if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
             $scope.payment.result.token_error = false;

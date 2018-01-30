@@ -12,12 +12,10 @@ angular.module('ocb-payments')
                 analyticsTitle: "config.multistepform.labels.step2"
             },
             resolve: {
-                fillTemplate: ['$templateRequest', '$interpolate', function ($templateRequest, $interpolate) {
-                    return $templateRequest(pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/external/verify/payments_external_data.html").then(function (template) {
-                       return $interpolate(template);
-                    });
+                dataTemplate: ['$templateRequest', function ($templateRequest) {
+                    return $templateRequest(pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/external/verify/payments_external_data.html");
                 }],
-                initToken: ['payment', '$state', '$timeout', 'fillTemplate', function (payment, $state, $timeout, fillTemplate) {
+                initToken: ['payment', '$state', '$timeout', '$interpolate', 'dataTemplate', function (payment, $state, $timeout, $interpolate, dataTemplate) {
                     if (!payment.meta.referenceId) {
                         var finalState = this.data.finalState;
                         $timeout(function () {
@@ -27,10 +25,10 @@ angular.module('ocb-payments')
                         payment.token = {
                             operationType: 'TRANSFER',
                             params: {
-                                resourceId: payment.meta.referenceId,
-                                modelData: function () {
-                                    return fillTemplate({ payment: payment });
-                                }
+                                resourceId: payment.meta.referenceId
+                            },
+                            modelData: function () {
+                                return $interpolate(dataTemplate)({ payment: payment });
                             }
                         };
                     }
