@@ -51,7 +51,7 @@ angular.module('ocb-payments')
         });
 
         function authorize(doneFn, actions) {
-            transferBillService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
+            transferService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.payment.result = {
                     code: parts[1],
@@ -83,14 +83,31 @@ angular.module('ocb-payments')
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if ($scope.payment.meta.customerContext == 'DETAL') {
-                authorize(actions.proceed, actions);
+                if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
+                    if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                        if($scope.payment.token.model.input.$isValid()) {
+                            if ($scope.payment.result.token_error) {
+                                if ($scope.payment.result.nextTokenType === 'next') {
+                                    sendAuthorizationToken();
+                                } else {
+                                    $scope.payment.result.token_error = false;
+                                }
+                            } else {
+                                authorize(actions.proceed, actions);
+                            }
+                        }
+                    }
+                    else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                        $scope.payment.token.model.$proceed();
+                    }
+                }
+                // authorize(actions.proceed, actions);
             } else if ($scope.payment.meta.customerContext == 'MICRO') {
                 $scope.payment.result.type = "success";
                 $scope.payment.result.code = "27";
             } else {
                 console.error("Undefined customer context");
             }
-            actions.proceed();
         });
 
         $scope.setForm = function (form) {
