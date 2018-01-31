@@ -331,6 +331,7 @@
   "ocb.payments.new.status.error": "Giao dịch đã bị từ chối",
   "ocb.payments.new.status.success": "Giao dịch đã bị từ chối",
   "ocb.payments.new.status.": "Giao dịch đã bị từ chối",
+  "ocb.payments.new.status.info": "Orders submitted after <strong>23:00</strong> will be executed on the following business day",
   "ocb.payments.batchprocessing.status.0": "Chuyển khoản theo lô đã được hệ thống ghi nhận với trạng thái chờ kiểm duyệt",
   "ocb.payments.batchprocessing.status.99": "Chuyển khoản theo lô bị từ chối",
   "ocb.payments.batchprocessing.status.success": "Chuyển khoản theo lô đã được hệ thống ghi nhận với trạng thái chờ kiểm duyệt",
