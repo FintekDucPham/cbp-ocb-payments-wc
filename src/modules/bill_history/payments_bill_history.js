@@ -10,7 +10,16 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsBillHistoryController', function ($scope) {
+    .controller('PaymentsBillHistoryController', function ($scope, bdMainStepInitializer) {
+
+        bdMainStepInitializer($scope, 'prepaid', {
+            formName: 'billHistoryForm',
+            formData: {},
+            options: {},
+            meta: {},
+            validation: {},
+            items :{}
+        });
 
         $scope.modify = {
             verify: {

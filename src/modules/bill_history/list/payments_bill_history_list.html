@@ -1,5 +1,5 @@
-<rb-content-view class="rb-content-view--solid">
-    <div>
+<form name="billHistoryForm">
+    <rb-content-view class="rb-content-view--solid">
         <div class="form-row">
             <!--Header Bills History and select account-->
             <div class="padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-11">
@@ -14,7 +14,7 @@
                     </div>
                     <div class=" bd-header padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-8">
                         <rb-account-select rb-account-id="prepaid.formData.remitterAccountId"
-                                           rb-account="prepaid.items.senderAccount"
+                                           rb-account="prepaid.formData.selectedAccount"
                                            bd-attr-required="true"
                                            rb-account-list="prepaid.meta.accountList"
                                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
@@ -120,5 +120,5 @@
                         'data' : 'status'
                     }}">
         </bd-table>
-    </div>
-</rb-content-view>
+    </rb-content-view>
+</form>

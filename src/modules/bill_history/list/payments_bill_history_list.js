@@ -19,6 +19,15 @@ angular.module('ocb-payments')
             }
         };
 
+        $scope.onSenderAccountSelect = function () {
+            $scope.senderAccountNo = $scope.prepaid.formData.selectedAccount.accountNo;
+            console.log($scope.senderAccountNo);
+        };
+        function reloadTable(){
+            $scope.table.tableControl.invalidate();
+        }
+        $scope.$watch('senderAccountNo', reloadTable);
+
         /*get date from form Filter*/
         function getDatesFromFilter() {
             var dateFromValue = null;
@@ -126,7 +135,9 @@ angular.module('ocb-payments')
                         $scope.targetList.content = [];
                         for (i = startIndex; i <= endIndex; i++) {
                             var selectedItem = data.content[i];
-                            $scope.targetList.content.push(selectedItem);
+                            if(selectedItem.detail.accountNumber === $scope.senderAccountNo){
+                                $scope.targetList.content.push(selectedItem);
+                            }
 
                         }
                         defer.resolve($scope.targetList.content);
