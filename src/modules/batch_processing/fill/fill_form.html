@@ -1,6 +1,6 @@
 <!-- Created by Tien Bui on 10/30/2017 -->
 <div>
-    <form name="paymentsBatchProcessingFormForm">
+    <form name="paymentsBatchProcessingFormForm" class="batch">
         <div class="account-collapse-item form-horizontal">
             <bd-header>{{ ::'ocb.payments.batch_processing.personal' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
@@ -16,6 +16,9 @@
                         rb-account-select-params="senderSelectParams"
                         rb-remote="remote.model">
                 </rb-account-select>
+            </bd-item-property-form>
+            <bd-item-property-form ng-show="messageAccountListError">
+                <span class="error">{{ :: 'ocb.payments.batchprocessing.message.accountlist.error' | translate }}</span>
             </bd-item-property-form>
             <bd-item-property-form label="{{::'ocb.payments.batch_processing.name'|translate}}">
                 <div class="form-group-label-value form-group-label-bold">{{paymentsBatchProcessingForm.fullName}}</div>
@@ -70,7 +73,7 @@
                 </ui-select>
             </bd-item-property-form>
         </div>
-        <div class="account-collapse-item form-horizontal batch" ng-show="paymentsBatchProcessingForm.batchInfoSearch">
+        <div class="account-collapse-item form-horizontal" ng-show="paymentsBatchProcessingForm.batchInfoSearch">
             <bd-header>{{ ::'ocb.payments.batch_processing.beneficiarylist' | translate }}</bd-header>
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.uploadfile' | translate }}">
                 <div class="input-group form-btn">
@@ -108,7 +111,7 @@
                     <a class="bd-button" ng-click="downloadTemplateAll()">{{ ::'ocb.payments.batch_processing.download.template' | translate }}</a>
                 </div>
             </bd-item-property-form>
-            <bd-item-property-form ng-show="messageError">
+            <bd-item-property-form ng-show="messageValidateError">
                 <span class="error">{{ :: 'ocb.payments.batchprocessing.message.validate.error' | translate }}</span>
             </bd-item-property-form>
 
@@ -134,8 +137,8 @@
                             'data': 'accountNo'
                         },
                         'third':{
-                            'title': '##ocb.payments.batch_processing.table.bankcode',
-                            'data': 'bankCode'
+                            'title': '##ocb.payments.batch_processing.table.bankname',
+                            'data': 'bankName'
                         },
                         'fourth':{
                             'title': '##ocb.payments.batch_processing.table.amount',
@@ -156,13 +159,16 @@
                 <!--<bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">{{paymentsBatchProcessingForm.formData.totalamountinwordsen}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</bd-item-property-form>-->
                 <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">{{paymentsBatchProcessingForm.formData.totalamountinwords}} {{paymentsBatchProcessingForm.formData.selectedAccount.currency}}</bd-item-property-form>
                 <bd-item-property-form class="no-margin-bottom no-padding-top form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalnumberoflines' | translate }}">{{paymentsBatchProcessingForm.formData.totalnumberoflines}}</bd-item-property-form>
+                <bd-item-property-form ng-show="messageTotalAmountError">
+                    <span class="error">{{ :: 'ocb.payments.batchprocessing.message.totalamount.error' | translate }}</span>
+                </bd-item-property-form>
             </div>
         </div>
         <div class="account-collapse-item form-btn" ng-show="paymentsBatchProcessingForm.invalidTableShow">
-            <bd-header>{{ ::'ocb.payments.batch_processing.invalidtable' | translate }}</bd-header>
+            <bd-header class="error">{{ ::'ocb.payments.batch_processing.invalidtable' | translate }}</bd-header>
             <bd-table
                     bd-display-bank-code="displayBankCode"
-                    bd-type="typeBP"
+                    bd-type="typeBQ"
                     bd-table-params="tableInvalid.tableConfig"
                     bd-table-control="tableInvalid.tableControl"
                     bd-table-data="tableInvalid.tableData"
@@ -177,8 +183,8 @@
                             'data': 'accountNo'
                         },
                         'third':{
-                            'title': '##ocb.payments.batch_processing.table.bankcode',
-                            'data': 'bankCode'
+                            'title': '##ocb.payments.batch_processing.table.bankname',
+                            'data': 'bankName'
                         },
                         'fourth':{
                             'title': '##ocb.payments.batch_processing.table.amount',
@@ -187,6 +193,10 @@
                         'fifth':{
                             'title': '##ocb.payments.batch_processing.table.remarks',
                             'data': 'description'
+                        },
+                        'sixth':{
+                            'title': '##ocb.payments.batch_processing.table.error',
+                            'data': 'validateMessage'
                         }
                     }"
             >
