@@ -138,7 +138,6 @@ angular.module('ocb-payments')
                             if(selectedItem.detail.accountNumber === $scope.senderAccountNo){
                                 $scope.targetList.content.push(selectedItem);
                             }
-
                         }
                         defer.resolve($scope.targetList.content);
                         $params.pageCount = totalPages;
