@@ -140,7 +140,7 @@ angular.module('ocb-payments')
                         /*calculate total amount*/
                         if ($scope.paymentTypeID == "SELECT_ALL_AND_CANNOT_UNSELECT") {
                             for (var i=1; i < data.billItem.length ; i++) {
-                                $scope.payment.formData.amount += data.billItem[i].amountMonth.value * data.billItem[i].formulaRates;
+                                $scope.payment.formData.amount += data.billItem[i].amountMonth.value;
                             }
                         }
                         $scope.billTypeID = data.billType;
