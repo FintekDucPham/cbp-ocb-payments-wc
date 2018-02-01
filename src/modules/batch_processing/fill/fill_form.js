@@ -869,7 +869,7 @@ function convert_toJsonTable(input){
         provinceCode : String(input.provinceCode),
         amount: String(input.amount),
         transactionFee: String(input.transactionFee),
-        description: String(input.description),
+        description: String(input.description)
     };
     return output;
 }
