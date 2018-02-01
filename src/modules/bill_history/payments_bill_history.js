@@ -27,5 +27,4 @@ angular.module('ocb-payments')
             }
         };
 
-
     });
