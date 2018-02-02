@@ -44,15 +44,14 @@ angular.module('ocb-payments')
             $scope.transferCost = transferCostData;
         });*/
 
-        $scope.payment.token.modelData = function () {
-            return $interpolate(dataTemplate)({ payment: $scope.payment });
-        };
-
         if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
             $scope.payment.result.token_error = false;
             sendAuthorizationToken();
         }
 
+        $scope.payment.token.modelData = function () {
+            return $interpolate(dataTemplate)({ payment: $scope.payment });
+        };
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             delete $scope.payment.items.credentials;
