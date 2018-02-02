@@ -21,7 +21,6 @@ angular.module('ocb-payments')
 
         $scope.onSenderAccountSelect = function () {
             $scope.senderAccountNo = $scope.prepaid.formData.selectedAccount.accountNo;
-            console.log($scope.senderAccountNo);
         };
         function reloadTable(){
             $scope.table.tableControl.invalidate();
