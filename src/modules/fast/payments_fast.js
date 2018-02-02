@@ -91,7 +91,8 @@ angular.module('ocb-payments')
                                 fee: data.paymentDetails.fee,
                                 amount: data.amount,
                                 currency: data.currency,
-                                description: data.title
+                                description: data.title,
+                                openBranch: data.openBranch
                             });
                             return payment.promises.loadCurrentDate;
                         });
@@ -134,7 +135,9 @@ angular.module('ocb-payments')
                     recipientAccountNo: formData.recipientAccountNo,
                     bankCode: formData.bankCode,
                     cardNumber: formData.cardNumber,
-                    description: formData.description
+                    description: formData.description,
+                    openBranch: formData.openBranch
+
                 }
             });
         }

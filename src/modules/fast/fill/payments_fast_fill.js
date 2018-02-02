@@ -112,11 +112,13 @@ angular.module('ocb-payments')
 
         $scope.$watch('payment.items.remitterAccount', function(account) {
             if (account) {
+                payment.meta.openBranch = account.openBranch;
                 accountsService.getAvailableFunds(account).then(function (info) {
                     payment.meta.availableFunds = info.availableFunds;
                 });
             } else {
                 payment.meta.availableFunds = null;
+                payment.meta.openBranch = null;
             }
             $scope.paymentForm.amount.$setValidity('funds', true);
         });

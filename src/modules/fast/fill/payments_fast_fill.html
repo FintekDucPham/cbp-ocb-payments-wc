@@ -18,51 +18,51 @@
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
-            {{payment.meta.remitter.branch}}
-        </bd-item-property>
+            {{payment.meta.openBranch}}
+         </bd-item-property>
 
-        <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
-                          class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount ng-if="payment.meta.availableFunds !== null" amount="payment.meta.availableFunds" currency="{{payment.items.remitterAccount.currency}}"></bd-amount>
-        </bd-item-property>
+         <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
+                           class="accesibleAssetsInline accesibleAssetsBold">
+             <bd-amount ng-if="payment.meta.availableFunds !== null" amount="payment.meta.availableFunds" currency="{{payment.items.remitterAccount.currency}}"></bd-amount>
+         </bd-item-property>
 
-        <bd-item-property label="{{::'ocb.payments.domestic.daily_limit.label' | translate}}">
-            <bd-amount amount="payment.meta.remainingDailyLimit" currency="VND"></bd-amount>
-        </bd-item-property>
-    </div>
+         <bd-item-property label="{{::'ocb.payments.domestic.daily_limit.label' | translate}}">
+             <bd-amount amount="payment.meta.remainingDailyLimit" currency="VND"></bd-amount>
+         </bd-item-property>
+     </div>
 
-    <div>
-        <bd-item-property>
-            <bd-radio-select bd-model="payment.formData.paymentTarget">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <bd-radio-option bd-option-value="'ACCOUNT'">
-                            {{::'ocb.payments.fast.to_account.label' | translate}}
-                        </bd-radio-option>
-                    </div>
-                    <div class="col-xs-6">
-                        <bd-radio-option bd-option-value="'CARD'">
-                            {{::'ocb.payments.fast.to_card.label' | translate}}
-                        </bd-radio-option>
-                    </div>
-                </div>
-            </bd-radio-select>
-        </bd-item-property>
+     <div>
+         <bd-item-property>
+             <bd-radio-select bd-model="payment.formData.paymentTarget">
+                 <div class="row">
+                     <div class="col-xs-6">
+                         <bd-radio-option bd-option-value="'ACCOUNT'">
+                             {{::'ocb.payments.fast.to_account.label' | translate}}
+                         </bd-radio-option>
+                     </div>
+                     <div class="col-xs-6">
+                         <bd-radio-option bd-option-value="'CARD'">
+                             {{::'ocb.payments.fast.to_card.label' | translate}}
+                         </bd-radio-option>
+                     </div>
+                 </div>
+             </bd-radio-select>
+         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--multirow" label="{{::'ocb.payments.domestic.recipient.label' | translate}}">
-            <rb-recipient-select rb-recipient="payment.items.recipient"
-                                 rb-recipient-id="payment.formData.recipientId"
-                                 rb-recipient-list="payment.meta.recipientList"
-                                 rb-filer-template-type="FAST"
-                                 rb-recipient-clear-text="{{::'ocb.payments.domestic.recipient.clear' | translate}}"
-                                 rb-recipient-placeholder-text="{{::'ocb.payments.domestic.recipient.placeholder' | translate}}"
-                                 rb-recipient-layout="DEFAULT"
-                                 rb-on-recipient-clear="onRecipientCleared()"
-                                 rb-on-recipient-select="onRecipientSelected($recipient)"></rb-recipient-select>
-        </bd-item-property>
+         <bd-item-property class="bd-item-property--multirow" label="{{::'ocb.payments.domestic.recipient.label' | translate}}">
+             <rb-recipient-select rb-recipient="payment.items.recipient"
+                                  rb-recipient-id="payment.formData.recipientId"
+                                  rb-recipient-list="payment.meta.recipientList"
+                                  rb-filer-template-type="FAST"
+                                  rb-recipient-clear-text="{{::'ocb.payments.domestic.recipient.clear' | translate}}"
+                                  rb-recipient-placeholder-text="{{::'ocb.payments.domestic.recipient.placeholder' | translate}}"
+                                  rb-recipient-layout="DEFAULT"
+                                  rb-on-recipient-clear="onRecipientCleared()"
+                                  rb-on-recipient-select="onRecipientSelected($recipient)"></rb-recipient-select>
+         </bd-item-property>
 
-        <rb-paste-warning ng-if="payment.formData.paymentTarget === 'ACCOUNT'" ng-init="pasteWarning=this">
-            <!--rb-paste-warning provides: showHide, rbPasteTrigger, unlockField, isOk, isErrorPaste-->
+         <rb-paste-warning ng-if="payment.formData.paymentTarget === 'ACCOUNT'" ng-init="pasteWarning=this">
+             <!--rb-paste-warning provides: showHide, rbPasteTrigger, unlockField, isOk, isErrorPaste-->
             <bd-item-property label="{{::'ocb.payments.domestic.recipient_account.label' | translate}}">
                 <input type="text"
                        name="recipientAccountNo"
@@ -75,14 +75,7 @@
                        class="input-field"
                        ng-hide="showHide"
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-                       ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                        ng-change="unlockField()">
-                <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
-                <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
-                    <div class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.paste' | translate}}
-                    </div>
-                </eb-validation-messages>
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && !isErrorPaste">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
