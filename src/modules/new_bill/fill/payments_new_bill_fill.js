@@ -181,6 +181,7 @@ angular.module('ocb-payments')
             return copiedForm;
         };
 
+        $scope.invalidAmount = false;
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 delete $scope.payment.token.params.resourceId;
@@ -188,21 +189,15 @@ angular.module('ocb-payments')
                 $scope.limitExeeded = {
                     show: false
                 };
+                /*compare balance*/
+                if($scope.payment.formData.amount > $scope.payment.items.senderAccount.accessibleAssets || $scope.payment.formData.amount > $scope.payment.items.limit.remainingDailyLimit) {
+                    $cope.invalidAmount = true;
+                }
 
-                // if(!$scope.payment.items.recipientAccount){
-                //     form.recipientAcc.$setValidity('required', false);
-                // }
-                // if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.beneficiaryAccountId) {
-                //     form.recipientAcc.$setValidity('sameAccounts', false);
-                // }
-                // if (($scope.payment.formData.amount < 1) || ($scope.payment.formData.amount == undefined)) {
-                //     form.checkBoxState.$setValidity('required', false);
-                // }
-
-                if (form.$invalid) {
+                if (form.$invalid || $scope.invalidAmount === true) {
                     formService.dirtyFields(form);
                 } else {
-                    var createTransfer = function(){
+                    try {
                         setRealizationDateToCurrent();
                         transferBillService.create('bill', angular.extend({
                             "remitterId": $scope.payment.items.globusId
@@ -230,12 +225,9 @@ angular.module('ocb-payments')
                                 }
                             }
                         });
-                    };
-
-                    var fakeControl = {
-                        done: createTransfer
-                    };
-                    rbBeforeTransferManager.suggestions.resolveSuggestions($scope.payment.beforeTransfer.suggestions, fakeControl).then(createTransfer);
+                    } catch(ex) {
+                        console.error("Create transfer bill error: ", ex);
+                    }
                 }
            }
         });

@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsNewSavingController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE) {
+    .controller('PaymentsNewSavingController', function ($scope, bdMainStepInitializer, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE, exportService) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
         $scope.CURRENT_DATE = CURRENT_DATE;
@@ -102,6 +102,11 @@ angular.module('ocb-payments')
             completeState: 'payments.recipients.list',
             footerType: 'payment',
             onClear: $scope.clearForm,
+            printReport: function () {
+                window.location.href = exportService.prepareHref({
+                    href: "/api/transaction/" + $scope.payment.transferId + "/downloads/pdf.json"
+                });
+            },
             cancelState: 'payments.recipients.list',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
@@ -114,7 +119,7 @@ angular.module('ocb-payments')
                 accept: 'config.multistepform.buttons.accept',
                 finalize: 'ocb.payments.new.btn.finalize',
                 finalAction: 'ocb.payments.new.btn.final_action',
-                addAsStandingOrder: 'ocb.payments.new.btn.add_as_standing_order'
+                printReport: 'ocb.payments.new.btn.print_report'
             },
             visibility:{
                 fillReturn: false,
@@ -126,7 +131,7 @@ angular.module('ocb-payments')
                 finalAction: false,
                 finalize: true,
                 hideSaveRecipientButton: true,
-                addAsStandingOrder: true
+                printReport: true
             }
         };
 

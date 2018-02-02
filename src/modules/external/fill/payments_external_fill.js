@@ -151,6 +151,7 @@ angular.module('ocb-payments')
 
         function clearRecipientData () {
             var formData = payment.formData;
+            formData.recipientId = null;
             formData.recipientAccountNo = null;
             formData.recipientName = null;
             formData.province = null;
@@ -161,6 +162,7 @@ angular.module('ocb-payments')
 
         function setRecipientData (recipient) {
             var formData = payment.formData;
+            formData.recipientId = recipient.recipientId;
             formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
             formData.recipientName = recipient.data.join('');
             formData.province = recipient.province;

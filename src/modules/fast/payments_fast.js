@@ -20,6 +20,7 @@ angular.module('ocb-payments')
                         payment.promises.loadCustomer = customerService.getCustomerDetails().then(function (data) {
                             payment.meta.remitter = data.customerDetails;
                             payment.meta.customerContext = data.customerDetails.context;
+                            payment.meta.ebUserId = data.login;
                         });
                     }],
                     loadRules: ['payment', 'paymentRules', function (payment, paymentRules) {
