@@ -34,9 +34,10 @@ angular.module('ocb-payments')
         // }).then(function (transferCostData) {
         //     $scope.transferCost = transferCostData;
         // });
-
+        $scope.isOTP = false;
         $scope.getOTP = function (event, actions) {
             sendAuthorizationToken();
+            $scope.isOTP = true;
         }
 
         if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.payment.meta.customerContext === 'DETAL') {
@@ -88,7 +89,9 @@ angular.module('ocb-payments')
                         if($scope.payment.token.model.input.$isValid()) {
                             if ($scope.payment.result.token_error) {
                                 if ($scope.payment.result.nextTokenType === 'next') {
-                                    sendAuthorizationToken();
+                                    if ($scope.isOTP === true) {
+                                        sendAuthorizationToken();
+                                    }
                                 } else {
                                     $scope.payment.result.token_error = false;
                                 }
