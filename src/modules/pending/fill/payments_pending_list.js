@@ -36,7 +36,7 @@ angular.module('ocb-payments')
 
         //set variable for account
         $scope.onAccountChange = function (selectedAcc) {
-
+            console.log($scope.pendingTransaction.accountId);
             userService.getIdentityDetails().then(function(identity) {
                 $scope.account  = selectedAcc;
                 if($scope.table == undefined) {
@@ -65,7 +65,7 @@ angular.module('ocb-payments')
                                     customerId : identity.id,
                                     pageNum: 10,
                                     pageSize: 10,
-                                    accountNo: $scope.account,
+                                    accountId: $scope.pendingTransaction.accountId,
                                     transactionStatus: $scope.status
                                 }
                                 transferPendingService.getPendingTransactions(params).then(function (d) {

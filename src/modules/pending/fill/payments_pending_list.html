@@ -33,9 +33,9 @@
                             <!--</ui-select-choices>-->
                         <!--</ui-select>-->
                         <rb-account-select rb-account="payment.items.senderAccount"
-                                           rb-account-no="remitterAccountId"
+                                           rb-account-id="pendingTransaction.items.accountId"
                                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                           rb-product-list-name="TRANSFER_OWN_FROM_LIST"
+                                           rb-product-list-name="TRANSFER_FROM_LIST"
                                            rb-account-select-params="senderSelectParams"
                                            rb-init-select-fn="getAccountByNrb($accountList, $select)"
                                            rb-on-account-select="onAccountChange($accountNo)"
