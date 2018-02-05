@@ -35,7 +35,9 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING, RECURRING_PERIOD, translate, formService, bdStepStateEvents, viewStateService, initialState) {
+    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING,
+                                                    RECURRING_PERIOD, translate, formService, bdStepStateEvents,
+                                                    viewStateService, initialState, authorizationService) {
         var initialData = initialState.data;
         $scope.payment.formData.actionType = initialState.paymentOperationType;
         if (initialData != null) {
@@ -48,7 +50,17 @@ angular.module('ocb-payments')
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                actions.proceed();
+                authorizationService.createCommonOperation({
+                    paymentId: $scope.payment.paymentId,
+                    operationType: "AUTOBILL_PAYMENT"
+                }).then(function (response) {
+                    $scope.payment.meta.token = {
+                        params: {
+                            resourceId: response.content
+                        }
+                    };
+                    actions.proceed();
+                });
             }
         });
 
