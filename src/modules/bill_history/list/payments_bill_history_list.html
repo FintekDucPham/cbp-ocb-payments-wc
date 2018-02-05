@@ -1,51 +1,49 @@
-<form name="billHistoryForm">
+<form name="billHistoryForm" class="bill-history">
+
     <rb-content-view class="rb-content-view--solid">
         <div class="form-row">
+            <div class="col-md-2">
+                <bd-header>{{ ::'ocb.payments.bill.history.label' | translate }}</bd-header>
+            </div>
             <!--Header Bills History and select account-->
-            <div class="padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-11">
-                <div class="form-row">
-                    <!--Header-->
-                    <div class="header-size padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
-                        {{ ::'ocb.payments.bill.history.label' | translate }}
-                    </div>
+            <div class="col-md-5">
                     <!--Account-->
-                    <div class="lb bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-1">
+                    <div class="col-md-3 row-label form-label">
                         {{ ::'ocb.payments.bill.history.account.label' | translate }}
                     </div>
-                    <div class=" bd-header padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-8">
-                        <rb-account-select rb-account-id="prepaid.formData.remitterAccountId"
-                                           rb-account="prepaid.formData.selectedAccount"
-                                           bd-attr-required="true"
-                                           rb-account-list="prepaid.meta.accountList"
-                                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                           rb-product-list-name="TRANSFER_FROM_LIST"
-                                           rb-on-account-select="onSenderAccountSelect()"
-                                           rb-account-no="payment.items.recipient.srcAccountNo"
-                                           rb-account-select-params="remitterAccountSelectParams"
-                                           rb-remote="remote.model"
-                                           rb-init-select-value="{{selectNrb}}" class="bd-table__cell--md-11">
+                    <div class="col-md-9">
+                        <rb-account-select
+                                        class="ui-select-max"
+                                        rb-account-id="prepaid.formData.remitterAccountId"
+                                        rb-account="prepaid.formData.selectedAccount"
+                                        bd-attr-required="true"
+                                        rb-account-list="prepaid.meta.accountList"
+                                        rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                        rb-product-list-name="TRANSFER_FROM_LIST"
+                                        rb-on-account-select="onSenderAccountSelect()"
+                                        rb-account-no="payment.items.recipient.srcAccountNo"
+                                        rb-account-select-params="remitterAccountSelectParams"
+                                        rb-remote="remote.model"
+                                        rb-init-select-value="{{selectNrb}}" class="bd-table__cell--md-11">
                         </rb-account-select>
                     </div>
-                </div>
             </div>
             <!--Search and advanced filter-->
-            <div class="padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-5">
-                <div class="form-row">
-                    <!--Search-->
-                    <div class="form-row bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-9">
-                        <input ng-model="table.tableConfig.searchText" type="text" placeholder="Search">
-                        <div class="search-icon"></div>
-                    </div>
-                    <!--Advanced filter-->
-                    <div ng-hide="$params.isAdvanced" ng-click="$params.isAdvanced = true"
-                         class="color bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-6">
-                        <a>{{::'ocb.payments.bill.history.advanced.filter.label' | translate}}</a>
-                    </div>
-                    <!--Hide advanced filter-->
-                    <div ng-show="$params.isAdvanced" ng-click="$params.isAdvanced = false"
-                         class="color bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-6">
-                        <a>{{::'ocb.payments.bill.history.hide.advanced.filter.label' | translate}}</a>
-                    </div>
+            <div class="padding-left-cell col-md-5">
+                <!--Search-->
+                <div class="col-md-8">
+                    <input ng-model="table.tableConfig.searchText" type="text" placeholder="Search">
+                    <i class="search-icon"></i>
+                </div>
+                <!--Advanced filter-->
+                <div ng-hide="$params.isAdvanced" ng-click="$params.isAdvanced = true"
+                     class="col-md-4 color form-label">
+                    <a>{{::'ocb.payments.bill.history.advanced.filter.label' | translate}}</a>
+                </div>
+                <!--Hide advanced filter-->
+                <div ng-show="$params.isAdvanced" ng-click="$params.isAdvanced = false"
+                     class="col-md-4 color form-label">
+                    <a>{{::'ocb.payments.bill.history.hide.advanced.filter.label' | translate}}</a>
                 </div>
             </div>
         </div>
@@ -53,11 +51,11 @@
         <div ng-show="$params.isAdvanced" class="advanced-filter-wrap clear" id="advanced-filter-cont"
              style="display: block;">
             <div class="clearfix advanced-filter">
-                <div class="col-md-10 col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-md-10">
                     <div class="txt-bold row__inline-block--middle row__inline-block--adjacent">
                         {{:: 'ocb.payments.bill.history.period.label' | translate}}
                     </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
+                    <div class="form-calendar input-calendar row__inline-block--middle row__inline-block--adjacent">
                         <input name="dateFromInput_delgate" hidden ng-model="filterData.range.dateFrom" model-date="filterData.range.dateFrom" ng-required="filterData.periodType===baseData.PERIOD_TYPES.RANGE"/>
                         <rb-datepicker ng-model="filterData.range.fromDate"
                                        placeholder="From"
@@ -67,10 +65,10 @@
                                        rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
                                        style="width: 140px;"></rb-datepicker>
                     </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                    <div class="form-calendar mobile-hidden row__inline-block--middle row__inline-block--adjacent">
                         {{::'ocb.payments.bill.history.period.to.label'|translate}}
                     </div>
-                    <div class="row__inline-block--middle" style="width:140px;">
+                    <div class="form-calendar input-calendar row__inline-block--middle">
                         <input name="dateToInput_delgate" hidden ng-model="filterData.range.dateTo" model-date="filterData.range.dateTo" ng-required="filterData.periodType===baseData.PERIOD_TYPES.RANGE"/>
                         <rb-datepicker ng-model="filterData.range.toDate"
                                        empty-date
@@ -80,7 +78,7 @@
                                        rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
                                        style="width: 140px;"></rb-datepicker>
                     </div>
-                    <bd-button class="bd-button__primary bd-button bd-button search-btn-mg-left" ng-click="onSearch()">{{::'ocb.payments.bill.history.search.label' | translate}}</bd-button>
+                    <bd-button class="form-calendar bd-button__primary bd-button bd-button search-btn-mg-left" ng-click="onSearch()">{{::'ocb.payments.bill.history.search.label' | translate}}</bd-button>
                 </div>
             </div>
             <!--Show error message when invalidDate-->
@@ -92,6 +90,7 @@
         <div ng-hide="$params.isAdvanced">
         </div>
         <bd-table
+                class="table-clear"
                 bd-type="typeBH",
                 bd-table-params="table.tableConfig",
                 bd-table-control="table.tableControl",
