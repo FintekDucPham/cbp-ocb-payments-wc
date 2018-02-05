@@ -205,7 +205,7 @@ angular.module('ocb-payments')
         $scope.rbPaymentsStepParams = {
             completeState: stateData.finalState,
             finalAction: saveRecipient,
-            footerType: 'payment',
+            footerType: 'paymentnew',
             onClear: function () {
                 $scope.$broadcast('clearForm');
             },
