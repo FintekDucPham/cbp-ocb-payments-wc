@@ -82,7 +82,7 @@ angular.module('ocb-payments')
             copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             delete copiedForm.beneficiaryAccountId;
             delete copiedForm.acctype;
-            angular.extend(copiedForm,{paymentType:"INTERNAL",addToBasket:false,addToBeneficiary:$scope.addToBeneficiaries});
+            angular.extend(copiedForm,{paymentType:"SavingDeposit",addToBasket:false,addToBeneficiary:$scope.addToBeneficiaries});
             return copiedForm;
         };
 

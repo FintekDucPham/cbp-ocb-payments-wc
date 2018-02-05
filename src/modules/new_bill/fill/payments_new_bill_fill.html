@@ -1,4 +1,4 @@
-<form name="paymentForm" novalidate class="form-pane" id="pn-1">
+<form name="paymentForm" novalidate id="pn-1">
     <!--Personal / Ordering Customer-->
     <div class="bd-form">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.customer"|translate}}</div>
@@ -6,9 +6,9 @@
             <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
                 <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
                 <rb-account-select rb-account="payment.items.senderAccount"
-                                   rb-account-no="payment.formData.remitterAccountId"
+                                   rb-account-id="payment.formData.remitterAccountId"
                                    rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                   rb-product-list-name="TRANSFER_OWN_FROM_LIST"
+                                   rb-product-list-name="TRANSFER_FROM_LIST"
                                    rb-account-select-params="senderSelectParams"
                                    rb-init-select-fn="getAccountByNrb($accountList, $select)"
                                    rb-on-account-select="onSenderAccountSelect($accountId)"
@@ -47,7 +47,7 @@
                 </div>
             </eb-validation-messages>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
-                <div class="bd-item-property__value--primary">
+                <div class="bd-item-property__value--primary pd-top">
                     <input ng-disabled="billInfoSearch"
                            type="text"
                            name="billCode"
@@ -76,7 +76,7 @@
                            ng-pattern="PAYMENT_AMOUNT"
                            ng-model="payment.formData.paymentAmount"
                            required
-                           placeholder="Enter payment amount"
+                           placeholder="{{::'ocb.payments.new.domestic.fill.amount.placeholder'|translate}}"
                     />
                 </div>
                 <eb-validation-messages eb-name="billCode">
@@ -123,7 +123,6 @@
     <div ng-show="enableLoading" class="eb-preloader-container">
         <div eb-themable class="eb-preloader">&nbsp;</div>
     </div>
-    <eb-preloader class="eb-list-preloader" eb-promise="productListPromise"></eb-preloader>
     <!--Show table Master Detail -->
 
     <div class="bd-table bd-content"  ng-if="billTypeID === 'MASTER_DETAIL'">
@@ -210,7 +209,9 @@
         <div ng-if="invalidOldestOne === true" class="validate-message">
             {{::'ocb.payments.new.bill.fill.validate.check.oldestOne'|translate}}
         </div>
-
+        <div ng-if="invalidAmount === true" class="validate-message">
+            {{::'ocb.payments.domestic.amount.error.funds'|translate}}
+        </div>
         <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>
 
         <div bd-table-footer>
@@ -284,7 +285,9 @@
         <div ng-if="invalidOldestOne === true" class="validate-message">
             {{::'ocb.payments.new.bill.fill.validate.check.oldestOne'|translate}}
         </div>
-
+        <div ng-if="invalidAmount === true" class="validate-message">
+            {{::'ocb.payments.domestic.amount.error.funds'|translate}}
+        </div>
         <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>
 
         <div bd-table-footer>

@@ -129,6 +129,11 @@ angular.module('ocb-payments')
                     });
                     return;
                 }
+            } else if (data.payment.transferType === 'EWALLET') {
+                $state.go('ewallet.transfer.modify.fill', {
+                    referenceId: data.payment.id
+                });
+                return;
             }
 
             var copiedData = angular.copy(data);

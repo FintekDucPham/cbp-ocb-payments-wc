@@ -123,12 +123,14 @@ angular.module('ocb-payments')
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
             $scope.payment.formData.providerName = $scope.payment.items.senderProvider.providerName;
             $scope.payment.formData.serviceName = $scope.payment.items.senderService.serviceName;
+            $scope.payment.formData.serviceCode = $scope.payment.items.senderService.serviceCode;
             /*Check providerCode and BillCode not null*/
             if ($scope.payment.formData.providerCode != undefined && $scope.payment.formData.billCode != undefined ) {
                 $scope.enableLoading = true;
                 transferBillService.getBill({
                     providerCode: $scope.payment.formData.providerCode,
-                    billCode: $scope.payment.formData.billCode
+                    billCode: $scope.payment.formData.billCode,
+                    serviceCode: $scope.payment.formData.serviceCode
                 }).then(function (data) {
                     if (data !== undefined) {
                         $scope.enableLoading = false;
@@ -138,7 +140,7 @@ angular.module('ocb-payments')
                         /*calculate total amount*/
                         if ($scope.paymentTypeID == "SELECT_ALL_AND_CANNOT_UNSELECT") {
                             for (var i=1; i < data.billItem.length ; i++) {
-                                $scope.payment.formData.amount += data.billItem[i].amountMonth.value * data.billItem[i].formulaRates;
+                                $scope.payment.formData.amount += data.billItem[i].amountMonth.value;
                             }
                         }
                         $scope.billTypeID = data.billType;
@@ -400,8 +402,8 @@ angular.module('ocb-payments')
                         break;
                     case "MASTER_DETAIL":
                         for (var i=0; i < $scope.totalAmountList.length; i++ ) {
-                            if ($scope.totalAmountList[i].amountMonth && $scope.totalAmountList[i].formulaRates) {
-                                $scope.payment.formData.amount += $scope.totalAmountList[i].amountMonth.value * $scope.totalAmountList[i].formulaRates;
+                            if ($scope.totalAmountList[i].amountMonth) {
+                                $scope.payment.formData.amount += $scope.totalAmountList[i].amountMonth.value;
                             }
                         }
                         break;

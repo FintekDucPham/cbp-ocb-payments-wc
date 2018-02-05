@@ -1,0 +1,38 @@
+<transferInfo>
+    <paymentType>LocalPayment</paymentType>
+</transferInfo>
+<payment>
+    <bookingDate>{{payment.formData.realizationDate | date:'shortDate'}}</bookingDate>
+    <debitAccount>{{payment.items.remitterAccount.accountNo}}</debitAccount>
+    <creditAccount>{{payment.formData.recipientAccountNo}}</creditAccount>
+    <customerId/>
+    <originalCustomerId>$cifnum$</originalCustomerId>
+    <cRefNum/>
+    <amount>{{payment.formData.amount}}</amount>
+    <currency>{{payment.items.remitterAccount.currency}}</currency>
+    <sender/>
+    <recipient>{{payment.formData.recipientName | arrayFilter}}</recipient>
+    <remarks>{{payment.formData.description | arrayFilter}}</remarks>
+    <ebUserId>$ebid$</ebUserId>
+    <creditAccountBankCode>{{payment.formData.bankCode}}</creditAccountBankCode>
+    <creditAccountBankBranchCode>{{payment.formData.branchCode}}</creditAccountBankBranchCode>
+    <creditAccountProvinceCode>{{payment.formData.province}}</creditAccountProvinceCode>
+    <clearingNetwork/>
+    <serviceCode/>
+    <serviceProviderCode/>
+    <billCode/>
+    <qty/>
+    <billSourceData/>
+    <mobilePhoneNumber/>
+    <parValue/>
+    <studentCode/>
+    <universityCode/>
+    <courseType/>
+    <sourceData/>
+    <partnerId/>
+    <recipientCardNumber/>
+    <eWalletPhoneNumber/>
+    <billCodeItemNo/>
+    <paymentCode/>
+    <paymentItemStudentFee/>
+</payment>
