@@ -65,7 +65,7 @@ angular.module('ocb-payments')
                                     customerId : identity.id,
                                     pageNum: 10,
                                     pageSize: 10,
-                                    accountId: $scope.pendingTransaction.accountId,
+                                    accountId: $scope.pendingTransaction.formData.remitterAccountId,
                                     transactionStatus: $scope.status
                                 }
                                 transferPendingService.getPendingTransactions(params).then(function (d) {
