@@ -22,8 +22,6 @@ angular.module('ocb-payments')
         });
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
-
-            //console.log("PaymentsBatchProcessingStep2Controller BACKWARD_MOVE");
         });
 
         $scope.tableTestData = {
@@ -70,7 +68,7 @@ angular.module('ocb-payments')
         };
 
         var isInternal = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode === 'IN';
-        $scope.hideColumnTable(isInternal === true ? 1 : 0);
+        $scope.hideBankCodeColumnTable(isInternal);
 
         $scope.paymentsBatchProcessingForm.formData.transferUpdated;
         $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;

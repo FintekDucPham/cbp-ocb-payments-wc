@@ -163,7 +163,7 @@ angular.module('ocb-payments')
 
         function recalculateCurrency() {
             var senderAccount = $scope.payment.items.senderAccount;
-            $scope.payment.formData.currency = 'PLN';
+            $scope.payment.formData.currency = 'VND';
             $scope.payment.meta.convertedAssets = senderAccount.accessibleAssets;
             if ($scope.paymentForm) {
                 $scope.paymentForm.amount.$validate();
@@ -185,7 +185,7 @@ angular.module('ocb-payments')
         $scope.$on(bdStepStateEvents.AFTER_FORWARD_MOVE, function (event, control) {
             var recipientData = angular.copy({
                 customName: translate.property('ocb.new.recipient.custom_name'),
-                remitterAccountId: $scope.payment.formData.remitterAccountId,
+                remitterAccountId: 3,//$scope.payment.formData.remitterAccountId,
                 recipientAccountNo: $scope.payment.formData.recipientAccountNo,
                 recipientData: $scope.payment.formData.recipientName,
                 description: $scope.payment.formData.description
@@ -212,7 +212,7 @@ angular.module('ocb-payments')
             showCustomNames: true,
             accountFilter: function (accounts) {
                 return lodash.filter(accounts, function (account) {
-                    return account.currency == 'PLN' && isAccountInvestmentFulfilsRules(account);
+                    return account.currency == 'VND' && isAccountInvestmentFulfilsRules(account);
                 });
             },
             payments: true

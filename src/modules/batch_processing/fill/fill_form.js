@@ -37,22 +37,21 @@ angular.module('ocb-payments')
                     params.referenceId = $scope.paymentsBatchProcessingForm.formData.transferUpdated.referenceId;
                 }
                 params.batchId = $scope.paymentsBatchProcessingForm.formData.transferUpdated.batchId;
-                params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
-                params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
+                params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountId;
+                params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountId;
                 params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
                 params.createDate = $scope.getDate(new Date());
                 params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
 
                 params.transactionAmount = $scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionAmount;
-                params.transactionFee = $scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionFee;
+                params.transactionFee = $scope.paymentsBatchProcessingForm.formData.transactionFee;
 
                 var selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
                 if(selectedSubAccount && selectedSubAccount.flag !== undefined && selectedSubAccount.flag === 0){
-                    selectedSubAccount.accountNo = "0";
+                    selectedSubAccount.accountId = 0;
                 }
-                params.subAccount = selectedSubAccount.accountNo;
+                params.subAccount = selectedSubAccount.accountId;
 
-                //params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
                 params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
 
                 params.fullName = [];
@@ -83,12 +82,12 @@ angular.module('ocb-payments')
                     actions.proceed();
                 });
             });
-            var updatedFlag = 0;
+            $scope.updatedFlag = 0;
             if($scope.paymentsBatchProcessingForm.formData.transferUpdated === undefined){
                 $scope.paymentsBatchProcessingForm.formData.transferUpdated = {};
             }else{
                 if($scope.paymentsBatchProcessingForm.formData.transferUpdated.beneficiaryList !== undefined){
-                    updatedFlag = 1;
+                    $scope.updatedFlag = 1;
                 }
             }
             if($scope.transferParam === undefined){
@@ -104,7 +103,7 @@ angular.module('ocb-payments')
                 }
                 transferBatchService.getTransfer($scope.transferParam).then(function (transfer) {
                     if (transfer !== undefined && transfer !== null) {
-                        updatedFlag = 1;
+                        $scope.updatedFlag = 1;
                         $scope.paymentsBatchProcessingForm.formData.transferUpdated = transfer;
                     }
                 });
@@ -119,8 +118,6 @@ angular.module('ocb-payments')
 
             $scope.onSenderAccountSelect = function (accountId) {
                 $scope.senderAccountId = accountId;
-                $scope.paymentsBatchProcessingForm.formData.selectedAccount;
-                $scope.paymentsBatchProcessingForm.formData.senderAccountId;
                 loadSubAccountList();
             };
 
@@ -128,8 +125,11 @@ angular.module('ocb-payments')
             $scope.subAccountList = [];
             $scope.noSubAccount = false;
             var noSubAccount = {
-                accountName : "No sub account",
+                customerData: {
+                    name : "No sub account"
+                },
                 accountNo : "",
+                accountId : 0,
                 flag : 0
             };
             accountsService.search().then(function(accountList){
@@ -146,12 +146,18 @@ angular.module('ocb-payments')
                 var k = 0;
                 $scope.subAccountList[k] = noSubAccount;
                 k++;
-                $scope.accountList.forEach(function(account) {
-                    if(account.accountNo !== $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo){
-                        $scope.subAccountList[k] = account;
-                        k++;
+                if($scope.accountList && $scope.accountList.length > 0){
+                    var accountNo = $scope.accountList[0].accountNo;
+                    if($scope.paymentsBatchProcessingForm.formData.selectedAccount && $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo){
+                        accountNo = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
                     }
-                });
+                    $scope.accountList.forEach(function(account) {
+                        if(account.accountNo !== accountNo){
+                            $scope.subAccountList[k] = account;
+                            k++;
+                        }
+                    });
+                }
                 if(k > 0){
                     $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = $scope.subAccountList[0];
                     $scope.noSubAccount = true;
@@ -186,18 +192,22 @@ angular.module('ocb-payments')
                 $scope.paymentsBatchProcessingForm.isExternal = $scope.isExternal = false;
             }
 
+            $scope.paymentsBatchProcessingForm.flagType = 0;
             $scope.onTransactionTypeChanged = function (selectedItem) {
                 $scope.transactionTypeList = transferBatchService.getTransferTypes({}).then(function (typeList) {
-                        if (typeList.content !== undefined) {
-                            return typeList.content;
-                        }
-                        return null;
+                    if (typeList.content !== undefined) {
+                        return typeList.content;
+                    }
+                    return null;
                 });
                 var isInternal = selectedItem.typeCode === 'IN';
-                $scope.hideColumnTable(isInternal === true ? 1 : 0);
                 $scope.paymentsBatchProcessingForm.isInternal = $scope.isInternal = isInternal;
                 $scope.paymentsBatchProcessingForm.isExternal = $scope.isExternal = !isInternal;
+                $scope.hideBankCodeColumnTable($scope.isInternal);
                 $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = selectedItem;
+                if (!isInternal){
+                    $scope.paymentsBatchProcessingForm.flagType = 1;
+                }
             };
 
             $scope.subAccounts = [];
@@ -267,20 +277,31 @@ angular.module('ocb-payments')
                 if($scope.tableValid && $scope.tableValid.tableControl){
                     $scope.tableValid.tableControl.invalidate();
                 }else{
-                    $timeout(autoReloadValidTable, 500);
+                    $timeout(autoReloadValidTable, 1000);
+                    return;
                 }
             }
-            autoReloadValidTable();
-
+            function getFinalErrorBoolean(){
+                if($scope.messageAccountListError){
+                    return false;
+                }else if($scope.messageTotalAmountError){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
             function listenToNextButton(){
                 if($scope.paymentsBatchProcessingForm.formData.tableValidContent && $scope.paymentsBatchProcessingForm.formData.tableValidContent.length > 0
-                && $scope.accountList && $scope.accountList.length > 0){
-                    $scope.paymentsBatchProcessingFormParams.visibility.accept = true;
-                }else{
-                    $timeout(listenToNextButton, 500);
+                    && $scope.accountList && $scope.accountList.length > 0){
+                    $scope.paymentsBatchProcessingFormParams.visibility.accept = getFinalErrorBoolean();
+                }
+                if($scope.paymentsBatchProcessingForm.tableInvalidContent && $scope.paymentsBatchProcessingForm.tableInvalidContent.length > 0){
+                    $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
                 }
             }
-            listenToNextButton();
+            $scope.$watch('accountList', listenToNextButton);
+            $scope.$watch('paymentsBatchProcessingForm.formData.tableValidContent', listenToNextButton);
+            $scope.$watch('paymentsBatchProcessingForm.tableInvalidContent', listenToNextButton);
 
             /*$scope.tableInvalidData = {
                 content: []
@@ -389,7 +410,7 @@ angular.module('ocb-payments')
                         $scope.paymentsBatchProcessingForm.exportExcel.header = header;
                         $scope.paymentsBatchProcessingForm.exportExcel.type = type;
                     }else if($scope.isExternal){
-                        var header = ['Beneficiary', 'Account', 'Amount', 'Bank code', 'Payment details'];
+                        var header = ['Beneficiary', 'Account', 'Amount', 'Bank name', 'Payment details'];
                         var type = 'EX';
                         $scope.paymentsBatchProcessingForm.exportExcel.header = header;
                         $scope.paymentsBatchProcessingForm.exportExcel.type = type;
@@ -415,7 +436,7 @@ angular.module('ocb-payments')
                         $scope.paymentsBatchProcessingForm.exportExcel.header = header;
                         $scope.paymentsBatchProcessingForm.exportExcel.type = type;
                     }else if($scope.isExternal){
-                        var header = ['Beneficiary', 'Account', 'Bank code', 'Amount', 'Payment details'];
+                        var header = ['Beneficiary', 'Account', 'Bank name', 'Amount', 'Payment details'];
                         var type = 'EX';
                         $scope.paymentsBatchProcessingForm.exportExcel.header = header;
                         $scope.paymentsBatchProcessingForm.exportExcel.type = type;
@@ -429,7 +450,10 @@ angular.module('ocb-payments')
 
             $scope.paymentsBatchProcessingForm.invalidTableShow = false;
 
-            $scope.messageError = false;
+            $scope.messageValidateError = false;
+            $scope.messageTotalAmountError = false;
+            $scope.messageAccountListError = false;
+
             $scope.paymentsBatchProcessingForm.formData.transferUpdated.batchId = null;
             $scope.validateExcel = function(){
                 var file = $('#uploadFile')[0].files[0];
@@ -461,48 +485,57 @@ angular.module('ocb-payments')
                     }
                     var validateDate = getDate(new Date());
                     var param = {
-                        remitterId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
-                        remitterAccountId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
-                        subAccount : $scope.paymentsBatchProcessingForm.formData.selectedSubAccount.accountNo,
+                        remitterId : $scope.senderAccountId,
+                        remitterAccountId : $scope.senderAccountId,
+                        subAccount : $scope.paymentsBatchProcessingForm.formData.selectedSubAccount.accountId,
                         currency: $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency,
                         validateDate: validateDate,
                         filename : sFilename,
                         transferType : $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode,
                         fileData : reader.result.split(',')[1]
                     };
+                    $scope.paymentsBatchProcessingForm.formData.transactionFee = 0;
                     transferBatchService.validateRecipients(param).then(function(responseContent) {
                         //Valid table
                         if(responseContent === undefined || responseContent === null || responseContent === ''){
-                            $scope.messageError = true;
+                            $scope.messageValidateError = true;
                         }else{
-                            $scope.messageError = false;
+                            $scope.messageTotalAmountError = false;
+                            $scope.messageAccountListError = false;
+                            $scope.messageValidateError = false;
                             var validRecipients = responseContent.valids;
+
+                            $scope.paymentsBatchProcessingForm.formData.tableValidContent = [];
+                            $scope.paymentsBatchProcessingForm.validTableShow = false;
+                            $scope.paymentsBatchProcessingForm.formData.tableInvalidContent = [];
+                            $scope.paymentsBatchProcessingForm.invalidTableShow = false;
+
                             if(responseContent.batchId !== undefined || responseContent.batchId !== null || responseContent.batchId !== ''){
                                 $scope.paymentsBatchProcessingForm.formData.transferUpdated.batchId = responseContent.batchId;
                             }
                             $scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionAmount = responseContent.transactionAmount;
-                            $scope.paymentsBatchProcessingForm.formData.transactionFee = responseContent.transactionFee;
                             var arrayList = [];
                             for(var i = 0; i < validRecipients.length; i++){
                                 var output = convertToTableJsonObject(validRecipients[i]);
                                 arrayList[i] = output;
                             }
                             $scope.paymentsBatchProcessingForm.formData.tableValidContent = arrayList;
+                            $scope.paymentsBatchProcessingForm.formData.transactionFee = 0;
                             var totalAmount = 0;
                             $scope.paymentsBatchProcessingForm.formData.tableValidCount = 0;
                             for(var i = 0; i < $scope.paymentsBatchProcessingForm.formData.tableValidContent.length; i++) {
                                 var obj = $scope.paymentsBatchProcessingForm.formData.tableValidContent[i];
-                                var g = obj["bankCode"];
-                                if(g && g != null && g != 'null'){
-                                    $scope.paymentsBatchProcessingForm.flagType = 0;
-                                }
                                 var amount = Number(obj["amount"]);
+                                $scope.paymentsBatchProcessingForm.formData.transactionFee +=
+                                    Number($scope.paymentsBatchProcessingForm.formData.tableValidContent[i].transactionFee.value != null
+                                        ? $scope.paymentsBatchProcessingForm.formData.tableValidContent[i].transactionFee.value
+                                        : 0);
                                 if(amount && amount > 0){
                                     totalAmount += amount;
                                     $scope.paymentsBatchProcessingForm.formData.tableValidCount++;
                                 }
                             }
-                            $scope.hideColumnTable($scope.isInternal);
+                            $scope.hideBankCodeColumnTable($scope.isInternal);
                             $scope.paymentsBatchProcessingForm.formData.tableValidTotalPage = Math.floor($scope.paymentsBatchProcessingForm.formData.tableValidCount/$scope.pageSize_);
                             if($scope.paymentsBatchProcessingForm.formData.tableValidCount%$scope.pageSize_ > 0){
                                 $scope.paymentsBatchProcessingForm.formData.tableValidTotalPage++;
@@ -523,12 +556,13 @@ angular.module('ocb-payments')
                             $scope.tableValid.tableControl.invalidate();
 
                             $scope.paymentsBatchProcessingForm.formData.totalAmount = totalAmount;
-                            $scope.paymentsBatchProcessingForm.formData.totalAmountWithFee = totalAmount + Number($scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionFee);
+                            var totalAmountWithFee = totalAmount + $scope.paymentsBatchProcessingForm.formData.transactionFee;
+                            $scope.paymentsBatchProcessingForm.formData.totalAmountWithFee = $scope.numberWithCommas(totalAmountWithFee);
                             $scope.paymentsBatchProcessingForm.formData.totalamountinfigures = $scope.totalamountinfigures = $scope.numberWithCommas(totalAmount);
                             $scope.paymentsBatchProcessingForm.formData.totalamountinwords = $scope.totalamountinwords = ocbConvert.convertNumberToText(totalAmount, false);
                             $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen = $scope.totalamountinwordsen = ocbConvert.convertNumberToText(totalAmount, true);
-                            $scope.paymentsBatchProcessingForm.formData.totalamountinwordsFee = $scope.totalamountinwordsFee = ocbConvert.convertNumberToText($scope.paymentsBatchProcessingForm.formData.totalAmountWithFee, false);
-                            $scope.paymentsBatchProcessingForm.formData.totalamountinwordsFeeen = $scope.totalamountinwordsFeeen = ocbConvert.convertNumberToText($scope.paymentsBatchProcessingForm.formData.totalAmountWithFee, true);
+                            $scope.paymentsBatchProcessingForm.formData.totalamountinwordsFee = $scope.totalamountinwordsFee = ocbConvert.convertNumberToText(totalAmountWithFee, false);
+                            $scope.paymentsBatchProcessingForm.formData.totalamountinwordsFeeen = $scope.totalamountinwordsFeeen = ocbConvert.convertNumberToText(totalAmountWithFee, true);
                             $scope.paymentsBatchProcessingForm.formData.totalnumberoflines = $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.tableValidCount;
 
                             //Invalid table
@@ -554,7 +588,7 @@ angular.module('ocb-payments')
                                     $scope.paymentsBatchProcessingForm.tableInvalidCount++;
                                 }
                             }
-                            $scope.hideColumnTable($scope.paymentsBatchProcessingForm.flagType);
+                            $scope.hideBankCodeColumnTable($scope.isInternal);
                             $scope.paymentsBatchProcessingForm.tableInvalidTotalPage = Math.floor($scope.paymentsBatchProcessingForm.tableInvalidCount/$scope.pageSize_);
                             if($scope.paymentsBatchProcessingForm.tableInvalidCount%$scope.pageSize_ > 0){
                                 $scope.paymentsBatchProcessingForm.tableInvalidTotalPage++;
@@ -579,9 +613,16 @@ angular.module('ocb-payments')
                                 $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;
                             }
 
-                            $scope.tableInvalid.tableControl.invalidate();
-                        }
+                            if($scope.paymentsBatchProcessingForm.formData.selectedAccount === undefined || $scope.paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets === undefined){
+                                $scope.messageAccountListError = true;
+                            }
+                            else if(Number($scope.paymentsBatchProcessingForm.formData.totalAmount) > Number($scope.paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets)){
+                                $scope.messageTotalAmountError = true;
+                            }
 
+                            $scope.tableInvalid.tableControl.invalidate();
+                            listenToNextButton();
+                        }
                     });
                 };
             };
@@ -591,14 +632,17 @@ angular.module('ocb-payments')
                     fullName : String(input.recipientName),
                     accountNo: String(input.creditAccount),
                     bankCode: String(input.bankCode),
+                    bankName: String(input.bankName),
                     bankBranchCode : String(input.bankBranchCode),
                     provinceCode : String(input.provinceCode),
                     amount: String(input.amount.value),
                     transactionFee: String(input.transactionFee.value),
                     description: String(input.remarks),
+                    validateMessage: String(input.validateMessage)
                 };
                 return output;
             }
+
             function convertJsonObjectToJsonCSV(input){
                 var output = {
                     fullName : String(input.recipientName),
@@ -608,7 +652,7 @@ angular.module('ocb-payments')
                     provinceCode : String(input.provinceCode),
                     amount: String(input.amount.value),
                     transactionFee: String(input.transactionFee.value),
-                    description: String(input.remarks),
+                    description: String(input.remarks)
                 };
                 return output;
             }
@@ -620,15 +664,15 @@ angular.module('ocb-payments')
                         fullName : String(input.fullName),
                         accountNo: String(input.accountNo),
                         amount: String(input.amount),
-                        description: String(input.description),
+                        description: String(input.description)
                     };
                 }else{
                     output = {
                         fullName : String(input.fullName),
                         accountNo: String(input.accountNo),
-                        bankCode: String(input.bankCode),
+                        bankName: String(input.bankName),
                         amount: String(input.amount),
-                        description: String(input.description),
+                        description: String(input.description)
                     };
                 }
                 return output;
@@ -657,6 +701,7 @@ angular.module('ocb-payments')
                     $scope.paymentsBatchProcessingForm.validTableShow = true;
                 }else{
                     $scope.paymentsBatchProcessingForm.validTableShow = false;
+                    $scope.paymentsBatchProcessingForm.invalidTableShow = false;
                 }
             };
 
@@ -689,7 +734,9 @@ angular.module('ocb-payments')
 
             $scope.paymentsBatchProcessingFormParams.visibility.accept = false;//true;
             function listenToUpdatedFlag() {
-                if(updatedFlag === 1){
+                if($scope.updatedFlag === 1){
+                    $scope.messageTotalAmountError = false;
+                    $scope.messageAccountListError = false;
                     $scope.paymentsBatchProcessingForm.formData.transferUpdated;
                     $scope.paymentsBatchProcessingForm.batchInfoSearch = true;
                     $scope.paymentsBatchProcessingFormParams.visibility.search = false;//false;
@@ -715,17 +762,19 @@ angular.module('ocb-payments')
                                     $scope.paymentsBatchProcessingForm.formData.selectedSubAccount = noSubAccount;
                                 }
                             }
+                            $scope.messageAccountListError = false;
                             $scope.paymentsBatchProcessingFormParams.visibility.accept = true;//true;
                         }else{
-                            $timeout(readAccountList, 500);
+                            $scope.paymentsBatchProcessingFormParams.visibility.accept = false;
+                            $scope.messageAccountListError = true;
                         }
                     }
-                    readAccountList();
+                    $scope.$watch('accountList', readAccountList);
 
                     var isInternal = $scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionType === 'IN';
-                    $scope.hideColumnTable(isInternal === true ? 1 : 0);
                     $scope.paymentsBatchProcessingForm.isInternal = $scope.isInternal = isInternal;
                     $scope.paymentsBatchProcessingForm.isExternal = $scope.isExternal = !isInternal;
+                    $scope.hideBankCodeColumnTable($scope.isInternal);
                     for(var i = 0; i < $scope.transaction_types.length; i++){
                         if($scope.transaction_types[i].typeCode === $scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionType){
                             $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.transaction_types[i];
@@ -765,18 +814,31 @@ angular.module('ocb-payments')
                         numberOfElements : $scope.paymentsBatchProcessingForm.formData.tableValidCount
                     };
                     autoReloadValidTable();
-
+                    $scope.paymentsBatchProcessingForm.formData.transactionFee = 0;
+                    if($scope.paymentsBatchProcessingForm.formData.transferUpdated.transactionFee){
+                        $scope.paymentsBatchProcessingForm.formData.transactionFee = $scope.paymentsBatchProcessingForm.formData.transferUpdated;
+                    }
+                    var totalAmountWithFee = totalAmount + $scope.paymentsBatchProcessingForm.formData.transactionFee;
                     $scope.paymentsBatchProcessingForm.formData.totalAmount = totalAmount;
+                    $scope.paymentsBatchProcessingForm.formData.totalamountinfigures = $scope.numberWithCommas(totalAmount);
+                    $scope.paymentsBatchProcessingForm.formData.totalamountinwords = ocbConvert.convertNumberToText(totalAmount, false);
+                    $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen = ocbConvert.convertNumberToText(totalAmount, true);
+                    $scope.paymentsBatchProcessingForm.formData.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.tableValidCount;
 
-                    $scope.paymentsBatchProcessingForm.formData.totalamountinfigures = $scope.totalamountinfigures = $scope.numberWithCommas(totalAmount);
-                    $scope.paymentsBatchProcessingForm.formData.totalamountinwords = $scope.totalamountinwords = ocbConvert.convertNumberToText(totalAmount, false);
-                    $scope.paymentsBatchProcessingForm.formData.totalamountinwordsen = $scope.totalamountinwordsen = ocbConvert.convertNumberToText(totalAmount, true);
-                    $scope.paymentsBatchProcessingForm.formData.totalnumberoflines = $scope.totalnumberoflines = $scope.paymentsBatchProcessingForm.formData.tableValidCount;
-                }else{
-                    $timeout(listenToUpdatedFlag, 500);
+                    $scope.paymentsBatchProcessingForm.formData.totalAmountWithFee = $scope.numberWithCommas(totalAmountWithFee);
+                    $scope.paymentsBatchProcessingForm.formData.totalamountinwordsFee = ocbConvert.convertNumberToText(totalAmountWithFee, false);
+                    $scope.paymentsBatchProcessingForm.formData.totalamountinwordsFeeen = ocbConvert.convertNumberToText(totalAmountWithFee, true);
+
+                    if(Number($scope.paymentsBatchProcessingForm.formData.totalAmount) > Number($scope.paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets)){
+                        $scope.messageTotalAmountError = true;
+                    }
                 }
             }
-            listenToUpdatedFlag();
+            $scope.$watch('updatedFlag', listenToUpdatedFlag);
+
+            $scope.$on('$viewContentLoaded', function(){
+                //Here your view content is fully loaded !!
+            });
 
             function scanInput(){
                 if( $("#addfile").val() !== undefined){
@@ -791,11 +853,13 @@ angular.module('ocb-payments')
                         $('.file-name').html('Choose file to upload');
                     }
                 }else{
-                    $timeout(scanInput, 500);
+                    $timeout(scanInput, 1000);
                 }
             }
             scanInput();
         });
+
+
 function convert_toJsonTable(input){
     var output = {
         fullName : String(input.fullName),
@@ -805,7 +869,7 @@ function convert_toJsonTable(input){
         provinceCode : String(input.provinceCode),
         amount: String(input.amount),
         transactionFee: String(input.transactionFee),
-        description: String(input.description),
+        description: String(input.description)
     };
     return output;
 }

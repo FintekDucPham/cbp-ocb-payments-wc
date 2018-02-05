@@ -12,7 +12,10 @@ angular.module('ocb-payments')
                 analyticsTitle: "config.multistepform.labels.step2"
             },
             resolve: {
-                initToken: ['payment', '$state', '$timeout', function (payment, $state, $timeout) {
+                dataTemplate: ['$templateRequest', function ($templateRequest) {
+                    return $templateRequest(pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/internal/verify/payments_internal_data.html");
+                }],
+                initToken: ['payment', '$state', '$timeout', '$interpolate', 'dataTemplate', function (payment, $state, $timeout, $interpolate, dataTemplate) {
                     if (!payment.meta.referenceId) {
                         var finalState = this.data.finalState;
                         $timeout(function () {
@@ -20,9 +23,12 @@ angular.module('ocb-payments')
                         });
                     } else {
                         payment.token = {
+                            operationType: 'TRANSFER',
                             params: {
-                                resourceId: payment.meta.referenceId,
-                                rbOperationType: 'TRANSFER'
+                                resourceId: payment.meta.referenceId
+                            },
+                            modelData: function () {
+                                return $interpolate(dataTemplate)({ payment: payment });
                             }
                         };
                     }
@@ -34,7 +40,7 @@ angular.module('ocb-payments')
             .state('payments.internal.basket.modify.verify', angular.copy(prototype))
             .state('payments.internal.basket.delete.verify', angular.merge(angular.copy(prototype), {
                 resolve: {
-                    initToken: ['payment', 'paymentsBasketService', '$stateParams', '$state', '$timeout', function (payment, paymentsBasketService, $stateParams, $state, $timeout) {
+                    initToken: ['payment', 'paymentsBasketService', '$stateParams', '$state', '$timeout', 'fillTemplate', function (payment, paymentsBasketService, $stateParams, $state, $timeout, fillTemplate) {
                         if (!$stateParams.basketReferenceId) {
                             var finalState = this.data.finalState;
                             $timeout(function () {
@@ -42,13 +48,16 @@ angular.module('ocb-payments')
                             });
                             return;
                         }
-                        payment.initToken = paymentsBasketService.remove({
+                        payment.promises.initToken = paymentsBasketService.remove({
                             transferId: $stateParams.basketReferenceId
                         }).then(function (resourceId){
                             payment.token = {
+                                operationType: 'PAYMENTS_BASKET',
                                 params: {
                                     resourceId: resourceId,
-                                    rbOperationType: 'PAYMENTS_BASKET'
+                                    modelData: function () {
+                                        return fillTemplate({ payment: payment });
+                                    }
                                 }
                             };
                         })
@@ -58,7 +67,7 @@ angular.module('ocb-payments')
             .state('payments.internal.future.modify.verify', angular.copy(prototype))
             .state('payments.internal.future.delete.verify', angular.merge(angular.copy(prototype), {
                 resolve: {
-                    initToken: ['payment', 'paymentsService', '$stateParams', 'loadPayment', '$state', '$timeout', function (payment, paymentsService, $stateParams, loadPayment, $state, $timeout) {
+                    initToken: ['payment', 'paymentsService', '$stateParams', 'loadPayment', '$state', '$timeout', 'fillTemplate', function (payment, paymentsService, $stateParams, loadPayment, $state, $timeout, fillTemplate) {
                         if (!$stateParams.referenceId) {
                             var finalState = this.data.finalState;
                             $timeout(function () {
@@ -66,7 +75,7 @@ angular.module('ocb-payments')
                             });
                             return;
                         }
-                        payment.initToken = payment.promises.loadPayment.then(function () {
+                        payment.promises.initToken = payment.promises.loadPayment.then(function () {
                             var formData = payment.formData;
                             return paymentsService.remove({
                                 transferType: 'DOMESTIC',
@@ -81,9 +90,12 @@ angular.module('ocb-payments')
                             });
                         }).then(function (resourceId){
                             payment.token = {
+                                operationType: 'TRANSFER',
                                 params: {
                                     resourceId: resourceId,
-                                    rbOperationType: 'TRANSFER'
+                                    modelData: function () {
+                                        return fillTemplate({ payment: payment });
+                                    }
                                 }
                             };
                         });

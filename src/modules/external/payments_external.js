@@ -20,6 +20,7 @@ angular.module('ocb-payments')
                         payment.promises.loadCustomer = customerService.getCustomerDetails().then(function (data) {
                             payment.meta.remitter = data.customerDetails;
                             payment.meta.customerContext = data.customerDetails.context;
+                            payment.meta.ebUserId = data.login;
                         });
                     }],
                     loadRules: ['payment', 'paymentRules', function (payment, paymentRules) {
@@ -204,7 +205,7 @@ angular.module('ocb-payments')
         $scope.rbPaymentsStepParams = {
             completeState: stateData.finalState,
             finalAction: saveRecipient,
-            footerType: 'payment',
+            footerType: 'paymentnew',
             onClear: function () {
                 $scope.$broadcast('clearForm');
             },
