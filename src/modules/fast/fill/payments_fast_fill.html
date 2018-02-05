@@ -18,7 +18,7 @@
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
-            {{payment.meta.remitter.branch}}
+            {{payment.items.remitterAccount.openBranch}}
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
@@ -75,14 +75,7 @@
                        class="input-field"
                        ng-hide="showHide"
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-                       ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                        ng-change="unlockField()">
-                <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
-                <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
-                    <div class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.paste' | translate}}
-                    </div>
-                </eb-validation-messages>
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && !isErrorPaste">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
