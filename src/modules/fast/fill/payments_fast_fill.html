@@ -187,6 +187,9 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.domestic.amount_in_words.label' | translate }}">
+            {{payment.formData.amount | numberToText}}
+        </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
                           label="{{::'ocb.payments.domestic.description.label' | translate}}">
