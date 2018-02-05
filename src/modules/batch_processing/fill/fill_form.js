@@ -37,8 +37,8 @@ angular.module('ocb-payments')
                     params.referenceId = $scope.paymentsBatchProcessingForm.formData.transferUpdated.referenceId;
                 }
                 params.batchId = $scope.paymentsBatchProcessingForm.formData.transferUpdated.batchId;
-                params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
-                params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo;
+                params.remitterId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountId;
+                params.remitterAccountId = $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountId;
                 params.transactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode;
                 params.createDate = $scope.getDate(new Date());
                 params.totalAmount = $scope.paymentsBatchProcessingForm.formData.totalAmount;
@@ -48,11 +48,10 @@ angular.module('ocb-payments')
 
                 var selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
                 if(selectedSubAccount && selectedSubAccount.flag !== undefined && selectedSubAccount.flag === 0){
-                    selectedSubAccount.accountNo = "0";
+                    selectedSubAccount.accountId = 0;
                 }
-                params.subAccount = selectedSubAccount.accountNo;
+                params.subAccount = selectedSubAccount.accountId;
 
-                //params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
                 params.currency = $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency;
 
                 params.fullName = [];
@@ -119,8 +118,6 @@ angular.module('ocb-payments')
 
             $scope.onSenderAccountSelect = function (accountId) {
                 $scope.senderAccountId = accountId;
-                $scope.paymentsBatchProcessingForm.formData.selectedAccount;
-                $scope.paymentsBatchProcessingForm.formData.senderAccountId;
                 loadSubAccountList();
             };
 
@@ -128,8 +125,11 @@ angular.module('ocb-payments')
             $scope.subAccountList = [];
             $scope.noSubAccount = false;
             var noSubAccount = {
-                accountName : "No sub account",
+                customerData: {
+                    name : "No sub account"
+                },
                 accountNo : "",
+                accountId : 0,
                 flag : 0
             };
             accountsService.search().then(function(accountList){
@@ -485,9 +485,9 @@ angular.module('ocb-payments')
                     }
                     var validateDate = getDate(new Date());
                     var param = {
-                        remitterId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
-                        remitterAccountId : $scope.paymentsBatchProcessingForm.formData.selectedAccount.accountNo,
-                        subAccount : $scope.paymentsBatchProcessingForm.formData.selectedSubAccount.accountNo,
+                        remitterId : $scope.senderAccountId,
+                        remitterAccountId : $scope.senderAccountId,
+                        subAccount : $scope.paymentsBatchProcessingForm.formData.selectedSubAccount.accountId,
                         currency: $scope.paymentsBatchProcessingForm.formData.selectedAccount.currency,
                         validateDate: validateDate,
                         filename : sFilename,

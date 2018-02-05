@@ -9,7 +9,8 @@
                         rb-product-list-name="TRANSFER_FROM_LIST"
                         rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                         rb-account="paymentsBatchProcessingForm.formData.selectedAccount"
-                        rb-account-no="paymentsBatchProcessingForm.formData.senderAccountId"
+                        rb-account-id="paymentsBatchProcessingForm.formData.accountId"
+                        rb-account-no="paymentsBatchProcessingForm.formData.accountNo"
                         rb-on-account-select="onSenderAccountSelect($accountId)"
                         bd-attr-required="true"
                         rb-account-list="paymentsBatchProcessingForm.formData.accountList"
@@ -41,6 +42,7 @@
                 <ui-select ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
                         ng-model="paymentsBatchProcessingForm.formData.selectedTransactionType"
                            theme="bootstrap"
+                           class="rb-account-select__select"
                            on-select="onTransactionTypeChanged($select.selected)"
                            required>
                     <ui-select-match placeholder="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}">
@@ -54,16 +56,17 @@
 
             <bd-item-property-form label="{{ ::'ocb.payments.batch_processing.subaccount' | translate  }}" ng-disabled="paymentsBatchProcessingForm.batchInfoSearch">
                 <ui-select ng-disabled="paymentsBatchProcessingForm.batchInfoSearch"
-                        ng-model="paymentsBatchProcessingForm.formData.selectedSubAccount"
-                           theme="bootstrap"
-                           on-select="onSubAccountChanged($select.selected)"
-                           required>
+                            class="rb-account-select__select"
+                            ng-model="paymentsBatchProcessingForm.formData.selectedSubAccount"
+                            theme="bootstrap"
+                            on-select="onSubAccountChanged($select.selected)"
+                            required>
                     <ui-select-match placeholder="Sub Account">
-                        {{$select.selected.accountName}} {{$select.selected.accountNo}}
+                        {{($select.selected.customerData && $select.selected.customerData.name) ? $select.selected.customerData.name : $select.selected.accountName}} {{$select.selected.accountNo}}
                     </ui-select-match>
                     <ui-select-choices repeat="subAccount in subAccountList | filter: $select.search track by $index">
                         <!--<div ng-bind="subAccount.accountNo | highlight: $select.search"></div>-->
-                        <div class="rb-account-select__account-name-row" ng-bind="subAccount.accountName"></div>
+                        <div class="rb-account-select__account-name-row" ng-bind="(subAccount.customerData.name || subAccount.accountName) | highlight: $select.search"></div>
                         <div class="rb-account-select__account-desc-row" ng-show="noSubAccount">
                             <span class="rb-account-select__account-desc-row__nrb hidden-xs hidden-sm" ng-bind="subAccount.accountNo | nrbIbanFilter | highlight: $select.search"></span>
                             <span class="rb-account-select__account-desc-row__nrb hidden-md hidden-lg" ng-bind="subAccount.accountNo | nrbAccountSelectIbanShortFilter | highlight: $select.search"></span>
