@@ -29,7 +29,7 @@
                     </div>
             </div>
             <!--Search and advanced filter-->
-            <div class="padding-left-cell col-md-5">
+            <div class="padding-left-cell col-md-5 search-input">
                 <!--Search-->
                 <div class="col-md-8">
                     <input ng-model="table.tableConfig.searchText" type="text" placeholder="Search">
@@ -37,12 +37,12 @@
                 </div>
                 <!--Advanced filter-->
                 <div ng-hide="$params.isAdvanced" ng-click="$params.isAdvanced = true"
-                     class="col-md-4 color form-label">
+                     class="col-md-4 color form-label mobile-center">
                     <a>{{::'ocb.payments.bill.history.advanced.filter.label' | translate}}</a>
                 </div>
                 <!--Hide advanced filter-->
                 <div ng-show="$params.isAdvanced" ng-click="$params.isAdvanced = false"
-                     class="col-md-4 color form-label">
+                     class="col-md-4 color form-label mobile-center">
                     <a>{{::'ocb.payments.bill.history.hide.advanced.filter.label' | translate}}</a>
                 </div>
             </div>
