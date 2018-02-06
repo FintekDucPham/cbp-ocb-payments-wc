@@ -30,41 +30,30 @@ angular.module('ocb-payments')
     .controller('AutoBillVerifyController', function ($scope, bdFillStepInitializer, translate, formService,
             bdStepStateEvents, transferBillService, FREQUENCY_TYPES, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
 
-        $scope.payment.formData.frequencyPeriodUnit = FREQUENCY_TYPES[$scope.payment.formData.frequencyType].symbol;
-        $scope.payment.formData.nextExecutionDate = getNextExecutionDate();
+        var payment = $scope.payment;
+        payment.formData.frequencyPeriodUnit = FREQUENCY_TYPES[payment.formData.frequencyType].symbol;
+        payment.formData.nextExecutionDate = getNextExecutionDate();
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
             actions.proceed();
         });
 
-        $scope.payment.meta.token.modelData = function(){
+        payment.meta.token.modelData = function(){
+            var paymentData = payment.formData;
             var context = {
-                refnum: '$refnum$',
-                userId: '$cifnum$',
-                clientCode: '$cifnum$',
-                branchCode: '$cifnum$',
-                orderNumber: '$cifnum$',
-                fromAccount: '$cifnum$',
+                fromAccount: paymentData.fromAccount,
                 cifNum: '$cifnum$',
-                frequencyPeriodCount: '$cifnum$',
-                frequencyPeriodUnit: '$cifnum$',
-                customerId: '$cifnum$',
-                firstExecutionDate: '$cifnum$',
-                serviceCode: '$cifnum$',
-                serviceProviderCode: '$cifnum$',
-                paymentSetting: '$cifnum$',
-                amountLimit: '$cifnum$'
+                frequencyPeriodCount: paymentData.frequencyPeriodCount,
+                frequencyPeriodUnit: paymentData.frequencyPeriodUnit,
+                customerId: paymentData.customerId,
+                firstExecutionDate: paymentData.firstExecutionDate,
+                serviceCode: paymentData.serviceCode,
+                serviceProviderCode: paymentData.serviceProviderCode,
+                paymentSetting: paymentData.paymentSetting,
+                amountLimit: paymentData.amountLimit
             };
 
-            var exp = $interpolate('<transactionInfo>' +
-                '<cRefNum>{{refnum}}</cRefNum>' +
-                '  <userId>{{userId}}</userId>' +
-                '  <clientCode>{{clientCode}}</clientCode>' +
-                '  <branchInfo>' +
-                '    <branchCode>{{branchCode}}</branchCode>' +
-                '  </branchInfo>' +
-                '</transactionInfo>' +
+            var exp = $interpolate(
                 '<autoBillPayment>' +
-                '  <orderNumber>{{orderNumber}}</orderNumber>' +
                 '  <orderName></orderName>' +
                 '  <fromAccount>{{fromAccount}}</fromAccount>' +
                 '  <CIFNum>{{cifNum}}</CIFNum>' +
