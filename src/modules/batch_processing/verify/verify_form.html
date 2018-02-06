@@ -1,19 +1,5 @@
 <!-- Created by Tien Bui on 10/30/2017 -->
-<style>
-    .detail-item {
-        float: left;
-        width: 100%;
-        background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
-        background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
-        box-shadow: 0 0 15px 0 rgba(0,0,0,0.11);
-        border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-</style>
-
-<div>
+<div class="batch">
     <div class="detail-item form-horizontal">
         <bd-header>{{ ::'ocb.payments.batch_processing.dataverify.label' | translate }}</bd-header>
         <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.accountnumber' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
@@ -42,7 +28,7 @@
         </bd-item-property-form>
 
         <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.remainingdailylimit' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount class="form-group-label-value" amount="paymentsBatchProcessingForm.formData.selectedAccount.accessibleAssets"
+            <bd-amount class="form-group-label-value" amount="paymentsBatchProcessingForm.formData.limit.remainingDailyLimit"
                        currency="{{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}"></bd-amount>
         </bd-item-property-form>
         <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.transactiontype' | translate }}" class="accesibleAssetsInline accesibleAssetsBold">
@@ -58,17 +44,17 @@
 
         <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinfigures' | translate }}">
             <div class="bd-amount form-group-label-value">
-                <span class="bd-amount__value">{{totalamountinfigures}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.totalamountinfigures}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
             </div>
         </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.transactionFee' | translate }}">
+        <bd-item-property-form class="form-group-detail" ng-if="transactionFee > 0" label="{{ ::'ocb.payments.batch_processing.table.transactionFee' | translate }}">
             <div class="bd-amount form-group-label-value">
-                <span class="bd-amount__value">{{transactionFee}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.transactionFee}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
             </div>
         </bd-item-property-form>
-        <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountFee' | translate }}">
+        <bd-item-property-form class="form-group-detail" ng-if="transactionFee > 0" label="{{ ::'ocb.payments.batch_processing.table.totalamountFee' | translate }}">
             <div class="bd-amount form-group-label-value">
-                <span class="bd-amount__value">{{totalAmountWithFee}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.totalAmountWithFee}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
             </div>
         </bd-item-property-form>
         <!--<bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">
@@ -76,19 +62,19 @@
         </bd-item-property-form>-->
         <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalamountinwords' | translate }}">
             <div class="bd-amount form-group-label-value">
-                <span class="bd-amount__value">{{totalamountinwords}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.totalamountinwordsFee}} {{ paymentsBatchProcessingForm.formData.selectedAccount.currency }}</span>
             </div>
         </bd-item-property-form>
         <bd-item-property-form class="form-group-detail" label="{{ ::'ocb.payments.batch_processing.table.totalnumberoflines' | translate }}">
             <div class="bd-amount form-group-label-value">
-                <span class="bd-amount__value">{{totalnumberoflines}}</span>
+                <span class="bd-amount__value">{{paymentsBatchProcessingForm.formData.totalnumberoflines}}</span>
             </div>
         </bd-item-property-form>
 
 
     </div>
 
-    <div class="account-collapse-item">
+    <div class="col-sm-12 no-padding-left-right form-btn table-clear">
         <bd-table
                 bd-type="typeBP"
                 bd-display-bank-code="displayBankCode"
@@ -106,8 +92,8 @@
                             'data': 'accountNo'
                         },
                         'third':{
-                            'title': '##ocb.payments.batch_processing.table.bankcode',
-                            'data': 'bankCode'
+                            'title': '##ocb.payments.batch_processing.table.bankname',
+                            'data': 'bankName'
                         },
                         'fourth':{
                             'title': '##ocb.payments.batch_processing.table.amount',

@@ -43,35 +43,70 @@ angular.module('ocb-payments')
 
         function authorize(doneFn, actions) {
             var listTransID = _.map($scope.pendingTransaction.selectedTrans, 'id');
-            $scope.idForPrint = listTransID[0];
-            transferService.realize(listTransID[0], $scope.pendingTransaction.token.model.input.model).then(function (resultCode) {
-                var parts = resultCode.split('|');
-                $scope.pendingTransaction.result = {
-                    code: parts[1],
-                    type: parts[0] === 'OK' ? "success" : "error"
-                };
-                if (parts[0] !== 'OK' && !parts[1]) {
-                    $scope.pendingTransaction.result.code = 'error';
-                }
-                depositsService.clearDepositCache();
-                $scope.pendingTransaction.result.token_error = false;
-                // paymentsBasketService.updateCounter($scope.pendingTransaction.result.code);
-                doneFn();
-            }).catch(function (error) {
-                $scope.pendingTransaction.result.token_error = true;
+            var firstTran = $scope.pendingTransaction.selectedTrans[0];
 
-                if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
-                    if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
+            $scope.idForPrint = listTransID[0];
+            if(firstTran.operationStatus == 'WA') {
+                //Approve
+                transferService.approve(listTransID, $scope.pendingTransaction.token.model.input.model).then(function (resultCode) {
+                    var parts = resultCode.split('|');
+                    $scope.pendingTransaction.result = {
+                        code: parts[1],
+                        type: parts[0] === 'OK' ? "success" : "error"
+                    };
+                    if (parts[0] !== 'OK' && !parts[1]) {
+                        $scope.pendingTransaction.result.code = 'error';
+                    }
+                    depositsService.clearDepositCache();
+                    $scope.pendingTransaction.result.token_error = false;
+                    // paymentsBasketService.updateCounter($scope.pendingTransaction.result.code);
+                    doneFn();
+                }).catch(function (error) {
+                    $scope.pendingTransaction.result.token_error = true;
+
+                    if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
+                        if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
+                            actions.proceed();
+                        }
+                    } else {
                         actions.proceed();
                     }
-                } else {
-                    actions.proceed();
-                }
 
-            }).finally(function () {
-                //delete $scope.pendingTransaction.items.credentials;
-                // formService.clearForm($scope.pendingTransactionAuthForm);
-            });
+                }).finally(function () {
+                    //delete $scope.pendingTransaction.items.credentials;
+                    // formService.clearForm($scope.pendingTransactionAuthForm);
+                });
+            }  else {
+                //Realize
+                transferService.realize(listTransID[0], $scope.pendingTransaction.token.model.input.model).then(function (resultCode) {
+                    var parts = resultCode.split('|');
+                    $scope.pendingTransaction.result = {
+                        code: parts[1],
+                        type: parts[0] === 'OK' ? "success" : "error"
+                    };
+                    if (parts[0] !== 'OK' && !parts[1]) {
+                        $scope.pendingTransaction.result.code = 'error';
+                    }
+                    depositsService.clearDepositCache();
+                    $scope.pendingTransaction.result.token_error = false;
+                    // paymentsBasketService.updateCounter($scope.pendingTransaction.result.code);
+                    doneFn();
+                }).catch(function (error) {
+                    $scope.pendingTransaction.result.token_error = true;
+
+                    if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
+                        if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
+                            actions.proceed();
+                        }
+                    } else {
+                        actions.proceed();
+                    }
+
+                }).finally(function () {
+                    //delete $scope.pendingTransaction.items.credentials;
+                    // formService.clearForm($scope.pendingTransactionAuthForm);
+                });
+            }
         }
 
 

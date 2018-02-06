@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             .state('payments.external.future.modify.status', angular.copy(prototype))
             .state('payments.external.future.delete.status', angular.copy(prototype))
     })
-    .controller('PaymentsExternalStatusController', function ($scope, $state, payment, bdStatusStepInitializer) {
+    .controller('PaymentsExternalStatusController', function ($scope, $state, payment, bdStatusStepInitializer, translate) {
         if (!payment.result.type) {
             $state.go($state.$current.data.finalState);
             return;
@@ -29,6 +29,8 @@ angular.module('ocb-payments')
         $scope.removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
 
         $scope.rbPaymentsStepParams.visibility.finalAction = !payment.formData.recipientId;
+
+        $scope.infoText = translate.property('ocb.payments.new.status.info');
 
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',

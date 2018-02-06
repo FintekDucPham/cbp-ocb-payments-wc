@@ -77,8 +77,8 @@ angular.module('ocb-payments')
             // }
         };
 
-        $scope.hideColumnTable = function(isInternal) {
-            if(isInternal === 1){
+        $scope.hideBankCodeColumnTable = function(isInternal) {
+            if(isInternal){
                 $scope.displayBankCode = false;
             }else{
                 $scope.displayBankCode = true;
