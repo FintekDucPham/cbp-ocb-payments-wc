@@ -25,10 +25,13 @@
         .table-clear{
             clear: both;
         }
-        .dashed-line-table-row{
-            margin-top: 5px;
+        .dashed-line{
             border-top: 1px dashed #cacaca;
-            padding-top: 14px;
+            margin-bottom: 5px;
+            clear: both;
+        }
+        .table-row{
+
         }
         .row-index-mobile{
             margin-top: 3px;
@@ -63,7 +66,7 @@
             padding-bottom: 10px;
         }
         .btn-download-detail{
-            float: right;
+            text-align: center;
         }
         .ui-select-toggle {
             line-height: 23px;
@@ -86,6 +89,29 @@
         }
         .input-group {
             display: block;
+        }
+        .action-arrow{
+            width: 50px;
+            position: absolute;
+            top: 6px;
+            right: 5px;
+        }
+        .input-group-btn{
+            width: 4px;
+            position: absolute;
+            top: 22px;
+            right: 0px;
+        }
+        .mobile-center{
+            text-align: center;
+        }
+        .search-input{
+            margin-top: 5px;
+        }
+        .header-small{
+            margin-top: 7px;
+            margin-bottom: 7px;
+            text-transform: uppercase;
         }
     }
     @media (min-width: 768px) {
@@ -122,6 +148,9 @@
         }
         .input-calendar{
             width:140px;
+        }
+        .header-small{
+            display: none;
         }
     }
 }
