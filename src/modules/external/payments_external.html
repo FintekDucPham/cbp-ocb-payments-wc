@@ -1,8 +1,24 @@
 <rb-content-view class="rb-content-view--framed rb-payments-new form external-payment">
-    <bd-header>{{::"ocb.payments.external.header" | translate}}</bd-header>
-    <bd-form-panel class="bd-form-panel--responsive">
-        <rb-multistep-form rb-step-params="rbPaymentsStepParams" rb-two-step="deleteOperation">
-            <div ui-view></div>
-        </rb-multistep-form>
-    </bd-form-panel>
+	<section class="payments-warning-section">
+	    <div class="payments-warning-item" ng-if="newPayment && payment.formData.addToBasket">
+	        {{::'ocb.payments.basket.add.verify' | translate}}
+	    </div>
+	    <div class="payments-warning-item" ng-if="modifyInBasket">
+	        {{::'ocb.payments.basket.modify.verify.'+payment.meta.customerContext | translate}}
+	    </div>
+	    <div class="payments-warning-item" ng-if="modifyInBasket && payment.meta.customerContext==='MICRO'">
+	    	{{::'ocb.payments.basket.modify.signRemove.verify' | translate}}
+	    </div>
+	    <div class="payments-warning-item" ng-if="payment.meta.holiday">
+	        {{::'ocb.payments.domestic.realization_date.warning.holiday' | translate }}
+	    </div>
+	</section>
+    <section>
+	    <bd-header>{{::"ocb.payments.external.header" | translate}}</bd-header>
+	    <bd-form-panel class="bd-form-panel--responsive">
+	        <rb-multistep-form rb-step-params="rbPaymentsStepParams" rb-two-step="deleteOperation">
+	            <div ui-view></div>
+	        </rb-multistep-form>
+	    </bd-form-panel>
+    </section>
 </rb-content-view>
