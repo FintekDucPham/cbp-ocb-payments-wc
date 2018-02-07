@@ -143,7 +143,7 @@ angular.module('ocb-payments')
                                 $scope.payment.formData.amount += data.billItem[i].amountMonth.value;
                             }
                         }
-                        //$scope.billTypeID = data.billType;
+                        $scope.billTypeID = data.billType;
                         $scope.payment.formData.billInfo = data;
                     }
                 }).catch(function(response) {

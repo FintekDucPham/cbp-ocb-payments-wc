@@ -127,14 +127,14 @@
 
     <div class="bd-table bd-content"  ng-if="billTypeID === 'MASTER_DETAIL'">
         <div bd-table-header>
-            <div bd-table-heading="first" class="bd-table__cell hidden-xs col-md-1" label="{{::'payments.new.bill.fill.info.header.stt'|translate}}">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
+            <div bd-table-heading="first" class="bd-table__cell hidden-xs col-sm- col-md-1" label="{{::'payments.new.bill.fill.info.header.stt'|translate}}">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
             <!--<div bd-table-heading="firstSecondFusion" class="bd-table__cell bd-table__cell&#45;&#45;sm-9 bd-hide-md">##firstSecondFusionTitle##</div>-->
-            <div bd-table-heading="second" class="bd-table__cell col-xs-6 col-md-1" label="{{::'payments.new.bill.fill.info.header.order_id'|translate}}">{{::'payments.new.bill.fill.info.header.order_id'|translate}}</div>
-            <div bd-table-heading="third" class="bd-table__cell hidden-xs col-md-2" label="{{::'payments.new.bill.fill.info.header.description'|translate}}">{{::'payments.new.bill.fill.info.header.description'|translate}}</div>
-            <div bd-table-heading="fourth" class="bd-table__cell col-xs-6  col-md-2 "label="{{::'payments.new.bill.fill.info.header.amount'|translate}}">{{::'payments.new.bill.fill.info.header.amount'|translate}}</div>
-            <div bd-table-heading="fifth" class="bd-table__cell hidden-xs col-md-2 "label="{{::'payments.new.bill.fill.info.header.from_date'|translate}}">{{::'payments.new.bill.fill.info.header.from_date'|translate}}</div>
-            <div bd-table-heading="sixth" class="bd-table__cell hidden-xs col-md-2 "label="{{::'payments.new.bill.fill.info.header.to_date'|translate}}">{{::'payments.new.bill.fill.info.header.to_date'|translate}}</div>
-            <div bd-table-heading="seventh" class="bd-table__cell hidden-xs col-md-2 "label="{{::'payments.new.bill.fill.info.header.formula_rates'|translate}}">{{::'payments.new.bill.fill.info.header.formula_rates'|translate}}</div>
+            <div bd-table-heading="second" class="bd-table__cell col-xs-6 col-sm-1 col-md-1" label="{{::'payments.new.bill.fill.info.header.order_id'|translate}}">{{::'payments.new.bill.fill.info.header.order_id'|translate}}</div>
+            <div bd-table-heading="third" class="bd-table__cell hidden-xs col-sm-2 col-md-2" label="{{::'payments.new.bill.fill.info.header.description'|translate}}">{{::'payments.new.bill.fill.info.header.description'|translate}}</div>
+            <div bd-table-heading="fourth" class="bd-table__cell col-xs-6 col-sm-2 col-md-2 "label="{{::'payments.new.bill.fill.info.header.amount'|translate}}">{{::'payments.new.bill.fill.info.header.amount'|translate}}</div>
+            <div bd-table-heading="fifth" class="bd-table__cell hidden-xs col-sm-2 col-md-2 "label="{{::'payments.new.bill.fill.info.header.from_date'|translate}}">{{::'payments.new.bill.fill.info.header.from_date'|translate}}</div>
+            <div bd-table-heading="sixth" class="bd-table__cell hidden-xs col-sm-2 col-md-2 "label="{{::'payments.new.bill.fill.info.header.to_date'|translate}}">{{::'payments.new.bill.fill.info.header.to_date'|translate}}</div>
+            <div bd-table-heading="seventh" class="bd-table__cell hidden-xs col-sm-2 col-md-2 "label="{{::'payments.new.bill.fill.info.header.formula_rates'|translate}}">{{::'payments.new.bill.fill.info.header.formula_rates'|translate}}</div>
         </div>
         <!--<div ng-show="(promise.$$state.status === 1)"  bd-table-row bd-table-expandable ng-repeat="item in $data track by $index">-->
         <div ng-repeat="item in payment.formData.billInfo.billItem" bd-table-row bd-table-expandable>
@@ -147,24 +147,24 @@
                     <!--<div bd-table-cell="firstSecondFusion" class="bd-table__cell-index bd-table__cell&#45;&#45;sm-9 layout-first bd-hide-md">-->
                     <!--{{ $eval('item.##firstData##') }}<br/>{{ $eval('item.##secondData##') }}-->
                     <!--</div>-->
-                    <div bd-table-cell="second" class="eval('item.##secondData##' col-xs-6 col-md-1 bd-table__cell">
+                    <div bd-table-cell="second" class="eval('item.##secondData##' col-xs-6 col-sm-1 col-md-1 bd-table__cell">
                         <span class="near-checkbox-xs">{{item.orderId}}</span>
                     </div>
-                    <div bd-table-cell="third" class="bd-table__cell hidden-xs col-md-2">
+                    <div bd-table-cell="third" class="bd-table__cell hidden-xs col-sm-2 col-md-2">
                         {{item.description}}
                     </div>
-                    <div bd-table-cell="fourth" class="col-xs-6 col-md-2 bd-table__cell last-column-mobile">
+                    <div bd-table-cell="fourth" class="col-xs-6 col-sm-2 col-md-2 bd-table__cell last-column-mobile">
                         <bd-amount amount="item.amountMonth.value"
                                    currency="{{ payment.items.senderAccount.currency }}" show-dash>
                         </bd-amount>
                     </div>
-                    <div bd-table-cell="fifth" class="hidden-xs col-md-2 ">
+                    <div bd-table-cell="fifth" class="hidden-xs col-sm-2 col-md-2 ">
                         {{item.fromDate  | date : "dd/MM/yyyy"}}
                     </div>
-                    <div bd-table-cell="sixth" class="hidden-xs col-md-2">
+                    <div bd-table-cell="sixth" class="hidden-xs col-sm-2 col-md-2">
                         {{item.toDate  | date : "dd/MM/yyyy"}}
                     </div>
-                    <div bd-table-cell="seventh" class="hidden-xs col-md-2 last-column">
+                    <div bd-table-cell="seventh" class="hidden-xs col-sm-2 col-md-2 last-column">
                         {{item.formulaRates}}
                     </div>
                     <div class="check-box-table">
@@ -247,15 +247,14 @@
     </div>
 
     <div class="bd-table bd-content"  ng-if="billTypeID === 'EXTENDED_DETAIL'">
-
         <div bd-table-header>
-            <div bd-table-heading="first" class="bd-table__cell hidden-xs col-md-1">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
-            <div bd-table-heading="second" class="bd-table__cell col-xs-6 col-md-2">{{::'payments.new.bill.fill.info.header.customer_id'|translate}}</div>
-            <div bd-table-heading="third" class="bd-table__cell hidden-xs col-md-2">{{::'payments.new.bill.fill.info.header.customer_name'|translate}}</div>
-            <div bd-table-heading="fourth" class="bd-table__cell hidden-xs col-md-1">{{::'payments.new.bill.fill.info.header.product_type'|translate}}</div>
-            <div bd-table-heading="fifth" class="bd-table__cell hidden-xs col-md-2">{{::'payments.new.bill.fill.info.header.bill_code'|translate}}</div>
-            <div bd-table-heading="sixth" class="bd-table__cell col-xs-6 col-md-2">{{::'payments.new.bill.fill.info.header.amount_per_month'|translate}}</div>
-            <div bd-table-heading="seventh" class="bd-table__cell hidden-xs col-md-2">{{::'payments.new.bill.fill.info.header.number_month'|translate}}</div>
+            <div bd-table-heading="first" class="bd-table__cell hidden-xs col-sm-1 col-md-1">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
+            <div bd-table-heading="second" class="bd-table__cell col-xs-6 col-sm-2 col-md-2">{{::'payments.new.bill.fill.info.header.customer_id'|translate}}</div>
+            <div bd-table-heading="third" class="bd-table__cell hidden-xs col-sm-2 col-md-2">{{::'payments.new.bill.fill.info.header.customer_name'|translate}}</div>
+            <div bd-table-heading="fourth" class="bd-table__cell hidden-xs col-sm-1 col-md-1">{{::'payments.new.bill.fill.info.header.product_type'|translate}}</div>
+            <div bd-table-heading="fifth" class="bd-table__cell hidden-xs col-sm-2 col-md-2">{{::'payments.new.bill.fill.info.header.bill_code'|translate}}</div>
+            <div bd-table-heading="sixth" class="bd-table__cell col-xs-6 col-sm-2 col-md-2">{{::'payments.new.bill.fill.info.header.amount_per_month'|translate}}</div>
+            <div bd-table-heading="seventh" class="bd-table__cell hidden-xs col-sm-2 col-md-2">{{::'payments.new.bill.fill.info.header.number_month'|translate}}</div>
         </div>
         <!--<div ng-show="(promise.$$state.status === 1)"  bd-table-row bd-table-expandable ng-repeat="item in $data track by $index">-->
         <div ng-repeat="item in payment.formData.billInfo.billItem" bd-table-row bd-table-expandable>
@@ -263,26 +262,26 @@
 
             <div class="bd-table__row-entry">
                 <div class="bd-table__row-line bd-tbContent">
-                    <div bd-table-cell="first" class="bd-table__cell-index hidden-xs col-md-1">
+                    <div bd-table-cell="first" class="bd-table__cell-index hidden-xs col-sm-1 col-md-1">
                         {{item.billCodeItemNo}}
                     </div>
-                    <div bd-table-cell="second" class="eval('item.##secondData##') bd-table__cell col-xs-6 col-md-2">
+                    <div bd-table-cell="second" class="eval('item.##secondData##') bd-table__cell col-xs-6 col-sm-2 col-md-2">
                         <span class="near-checkbox-xs">{{item.customerCode}}</span>
                     </div>
-                    <div bd-table-cell="third" class="bd-table__cell hidden-xs col-md-2">
+                    <div bd-table-cell="third" class="bd-table__cell hidden-xs col-sm-2 col-md-2">
                         {{item.customerName}}
                     </div>
-                    <div bd-table-cell="fourth" class="bd-table__cell hidden-xs col-md-1">
+                    <div bd-table-cell="fourth" class="bd-table__cell hidden-xs col-sm-1 col-md-1">
                         {{item.productType}}
                     </div>
-                    <div bd-table-cell="fifth" class="bd-table__cell hidden-xs col-md-2">
+                    <div bd-table-cell="fifth" class="bd-table__cell hidden-xs col-sm-2 col-md-2">
                         {{payment.formData.billCode}}
                     </div>
-                    <div bd-table-cell="sixth" class="bd-table__cell col-xs-6 col-md-2 last-column-mobile">
+                    <div bd-table-cell="sixth" class="bd-table__cell col-xs-6 col-sm-2 col-md-2 last-column-mobile">
                         <bd-amount amount="item.amountMonth.value"
                                    currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
                     </div>
-                    <div bd-table-cell="seventh" class="bd-table__cell hidden-xs col-md-2 last-column">
+                    <div bd-table-cell="seventh" class="bd-table__cell hidden-xs col-sm-2 col-md-2 last-column">
                         <input class="ip-height" ng-model="qtyInput"/>
                     </div>
                     <div class="check-box-table">

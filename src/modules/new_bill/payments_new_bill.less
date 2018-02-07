@@ -71,6 +71,9 @@
   width: 100%;
 }
 .bill-payment{
+  .col-md-2{
+    display: block;
+  }
   .check-box-table{
     width: 22px;
     position: absolute;
@@ -149,6 +152,18 @@
         float: left;
       }
     }
+    .otp-btn{
+      width: 100%;
+      max-width: 100%;
+    }
+    .rb-authorization__input{
+      max-width: 100% !important;
+      margin-top: 5px;
+    }
+
+    .row-display{
+      display: inline-block;
+    }
   }
   @media (min-width: 768px) {
     .hide-table-column {
@@ -167,6 +182,9 @@
     }
     .action-arrow{
       display: none;
+    }
+    .rb-authorization__input{
+      width: 120px !important;
     }
   }
 }
