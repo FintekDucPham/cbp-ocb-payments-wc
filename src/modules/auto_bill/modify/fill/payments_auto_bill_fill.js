@@ -35,12 +35,16 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING, RECURRING_PERIOD, translate, formService, bdStepStateEvents, viewStateService, initialState) {
+    .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING,
+                                                    RECURRING_PERIOD, translate, formService, bdStepStateEvents,
+                                                    viewStateService, initialState, authorizationService) {
         var initialData = initialState.data;
-        $scope.payment.formData.actionType = initialState.paymentOperationType;
+        var payment = $scope.payment;
+        var paymentData = payment.formData;
+        paymentData.actionType = initialState.paymentOperationType;
         if (initialData != null) {
-            $scope.payment.formData = initialData;
-            $scope.payment.formData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
+            payment.formData = initialData;
+            paymentData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
@@ -48,7 +52,17 @@ angular.module('ocb-payments')
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                actions.proceed();
+                authorizationService.createCommonOperation({
+                    paymentId: $scope.payment.paymentId,
+                    operationType: "AUTOBILL_PAYMENT"
+                }).then(function (response) {
+                    $scope.payment.meta.token = {
+                        params: {
+                            resourceId: response.content
+                        }
+                    };
+                    actions.proceed();
+                });
             }
         });
 
@@ -60,8 +74,8 @@ angular.module('ocb-payments')
         $scope.FREQUENCY_TYPES_LIST = _.map(FREQUENCY_TYPES, 'code');
         $scope.FREQUENCY_TYPES = FREQUENCY_TYPES;
 
-        if (!$scope.payment.formData.frequencyType) {
-            $scope.payment.formData.frequencyType = FREQUENCY_TYPES.MONTHLY.code;
+        if (!paymentData.frequencyType) {
+            paymentData.frequencyType = FREQUENCY_TYPES.MONTHLY.code;
         }
 
         $scope.onFrequencyTypeSelect = function () {
@@ -110,19 +124,19 @@ angular.module('ocb-payments')
 
         // PAYMENT SETTING
         $scope.PAYMENT_SETTING = PAYMENT_SETTING;
-        if ($scope.payment.formData.paymentSetting === undefined || $scope.payment.formData.paymentSetting == null || $scope.payment.formData.paymentSetting === 'null' || $scope.payment.formData.paymentSetting === '') {
-            $scope.payment.formData.paymentSetting = PAYMENT_SETTING.LIMITED;
+        if (paymentData.paymentSetting === undefined || paymentData.paymentSetting == null || paymentData.paymentSetting === 'null' || paymentData.paymentSetting === '') {
+            paymentData.paymentSetting = PAYMENT_SETTING.LIMITED;
         }
         $scope.$watch('payment.formData.paymentSetting', function(newValue){
             if (newValue == PAYMENT_SETTING.FULL) {
-                $scope.payment.formData.amountLimit.value = undefined;
+                $scope.payment.formData.amountLimit = undefined;
             }
         });
 
         // RECURRING PERIOD
         $scope.RECURRING_PERIOD = RECURRING_PERIOD;
-        if ($scope.payment.formData.recurringPeriod === undefined || $scope.payment.formData.recurringPeriod === null || $scope.payment.formData.recurringPeriod === 'null'  || $scope.payment.formData.recurringPeriod === '') {
-            $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
+        if (paymentData.recurringPeriod === undefined || paymentData.recurringPeriod === null || paymentData.recurringPeriod === 'null'  || paymentData.recurringPeriod === '') {
+            paymentData.recurringPeriod = RECURRING_PERIOD.LIMITED;
         }
         $scope.$watch('payment.formData.recurringPeriod', function(newValue){
             if (newValue == RECURRING_PERIOD.NOLIMIT) {
