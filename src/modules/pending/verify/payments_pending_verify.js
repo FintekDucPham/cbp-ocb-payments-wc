@@ -46,9 +46,11 @@ angular.module('ocb-payments')
             var firstTran = $scope.pendingTransaction.selectedTrans[0];
 
             $scope.idForPrint = listTransID[0];
-            if(firstTran.operationStatus == 'WA') {
+            if(firstTran.operationStatus !== 'WA') {
                 //Approve
-                transferService.approve(listTransID, $scope.pendingTransaction.token.model.input.model).then(function (resultCode) {
+                transferService.approve(listTransID
+                    , $scope.pendingTransaction.token.model.input.model
+                    , $scope.pendingTransaction.token.model.currentToken.data.signedTransactionData).then(function (resultCode) {
                     var parts = resultCode.split('|');
                     $scope.pendingTransaction.result = {
                         code: parts[1],
