@@ -372,6 +372,7 @@
     "ocb.payments.future.list.details.domestic.recipientAccountNo": "Na rachunek",
     "ocb.payments.future.list.details.domestic.recipientName": "Nazwa odbiorcy",
     "ocb.payments.future.list.details.domestic.amount": "Kwota",
+    "ocb.payments.domestic.amount_in_words.label": "Amount in Words",
     "ocb.payments.future.list.details.domestic.recipientAdress": "TODO: ocb.payments.future.list.details.domestict.recipientAdress",
     "ocb.payments.future.list.details.domestic.transferTitle": "Tytułem",
     "ocb.payments.future.list.details.domestic.date": "Data realizacji",

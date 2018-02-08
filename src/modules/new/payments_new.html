@@ -1,5 +1,9 @@
-
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
+	<section class="payments-warning-section">
+		<div class="payments-warning-item" ng-show="payment.holiday">
+    		{{::'ocb.payments.new.domestic.fill.execution_date.holiday' | translate }}
+   	 </div>
+	</section>
     <section ng-hide="payment.beforeTransfer.suggestions.displayed">
         <bd-header>{{payment.header}}</bd-header>
 
