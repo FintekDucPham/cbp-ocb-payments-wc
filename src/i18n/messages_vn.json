@@ -692,6 +692,7 @@
   "ocb.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY": "Số tháng trong lệnh định kì hàng tháng phải có giá trị số từ 1 đến 99",
   "ocb.payments.new.standing.fill.MSG-0599_EXECUTED_DATE_NOT_EMPTY_SO": "Ngày thực hiện không thể để trống",
   "ocb.payments.new.standing.fill.MSG-0600_INCORRECT_EXECUTED_DATE_SO": "Ngày thực hiện là số giữa 1 và 31",
+  "ocb.payments.new.standing.status.1": "Lệnh được chấp nhận để thực hiện",
   "ocb.payments.new.standing.status.20": "Lệnh được chấp nhận để thực hiện",
   "ocb.payments.new.standing.status.40": "Lệnh được chấp nhận để thực hiện",
   "ocb.payments.new.standing.status.60": "Lệnh được chấp nhận để thực hiện",

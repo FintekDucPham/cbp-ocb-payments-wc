@@ -158,10 +158,15 @@
                     {{::'ocb.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
                 </div>
             </eb-validation-messages>
+
             <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
                  ng-if="limitExeeded !== undefined && limitExeeded.show">
                 {{limitExeeded.messages}}
             </div>
+        </bd-item-property>
+
+        <bd-item-property label="{{ ::'ocb.payments.new.saving.amount_in_word.label' | translate }}">
+            {{payment.formData.amount | numberToText}}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
