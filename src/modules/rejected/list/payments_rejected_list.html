@@ -170,7 +170,7 @@
                 </bd-item-property>
 
                 <bd-item-property  label="{{ :: 'ocb.payments.rejected.list.details.amount' | translate }}">
-                    {{ $data.details.amount }} {{ $data.details.currency }}
+                    <bd-amount amount="$data.details.amount " currency="{{$data.details.currency}}"></bd-amount>
                 </bd-item-property>
                 <bd-item-property  label="{{ :: 'ocb.payments.rejected.list.details.title' | translate }}">
                     {{ $data.details.title[0] }}

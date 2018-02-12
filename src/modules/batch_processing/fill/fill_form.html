@@ -70,7 +70,7 @@
                         <div class="rb-account-select__account-desc-row" ng-show="noSubAccount">
                             <span class="rb-account-select__account-desc-row__nrb hidden-xs hidden-sm" ng-bind="subAccount.accountNo | nrbIbanFilter | highlight: $select.search"></span>
                             <span class="rb-account-select__account-desc-row__nrb hidden-md hidden-lg" ng-bind="subAccount.accountNo | nrbAccountSelectIbanShortFilter | highlight: $select.search"></span>
-                            <span class="rb-account-select__account-desc-row__amount" ng-bind="((subAccount.accessibleAssets | currency:'') + ' ' + subAccount.currency) | highlight: $select.search"></span>
+                            <span class="rb-account-select__account-desc-row__amount"><bd-amount amount="subAccount.accessibleAssets" currency="{{subAccount.currency}}"></bd-amount></span>
                         </div>
                     </ui-select-choices>
                 </ui-select>
@@ -216,5 +216,3 @@
         </div>
     </form>
 </div>
-
-

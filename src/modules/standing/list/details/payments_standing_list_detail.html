@@ -27,7 +27,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.amount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{ $data.amount | number:2 }} {{ $data.currency }}
+    <bd-amount amount="$data.amount" currency="{{$data.currency}}"></bd-amount>
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.title'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
