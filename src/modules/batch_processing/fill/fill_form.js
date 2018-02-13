@@ -72,15 +72,28 @@ angular.module('ocb-payments')
                     params.remark[i] = arrayValidTable[i].description;
                     params.status[i] = "PD";
                 }
-                transferBatchService.createBatchTransfer(params).then(function(data) {
-                    if(data.content && data.content !== null){
-                        var content = JSON.parse(data.content);
-                        if(content != null && content.referenceId !== undefined && content.referenceId !== null){
-                            $scope.transferParam.referenceId = $scope.paymentsBatchProcessingForm.formData.transferUpdated.referenceId = content.referenceId;
+                if(params.referenceId && params.referenceId !== null){
+                    params.modifyDate = $scope.getDate(new Date());
+                    transferBatchService.modifyBatchTransfer(params).then(function(data) {
+                        if(data.content && data.content !== null){
+                            var content = JSON.parse(data.content);
+                            if(content != null && content.referenceId !== undefined && content.referenceId !== null){
+                                $scope.transferParam.referenceId = $scope.paymentsBatchProcessingForm.formData.transferUpdated.referenceId = content.referenceId;
+                            }
                         }
-                    }
-                    actions.proceed();
-                });
+                        actions.proceed();
+                    });
+                }else{
+                    transferBatchService.createBatchTransfer(params).then(function(data) {
+                        if(data.content && data.content !== null){
+                            var content = JSON.parse(data.content);
+                            if(content != null && content.referenceId !== undefined && content.referenceId !== null){
+                                $scope.transferParam.referenceId = $scope.paymentsBatchProcessingForm.formData.transferUpdated.referenceId = content.referenceId;
+                            }
+                        }
+                        actions.proceed();
+                    });
+                }
             });
             $scope.updatedFlag = 0;
             if($scope.paymentsBatchProcessingForm.formData.transferUpdated === undefined){
