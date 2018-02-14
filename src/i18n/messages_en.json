@@ -234,6 +234,7 @@
   "ocb.payments.new.bill.fill.validate.check.onlyOne": "Please choose to make payment for the only one bill.",
   "ocb.payments.new.bill.fill.validate.check.oldestOne": "Please choose to make payment for the oldest one bill.",
   "ocb.payments.new.bill.fill.validate.check.qty": "The input data is invalid, value must be integer number equal or greater than 1",
+  "ocb.payments.new.bill.fill.validate.check.nullOTP": "OTP can not be empty",
   "ocb.payments.new.bill.fill.default_description": "Transfer of funds",
   "ocb.payments.new_bill.label.header.customer": "Personal / Ordering Customer",
   "ocb.payments.new_bill.label.getOTP": "Get OTP",
