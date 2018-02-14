@@ -370,6 +370,7 @@
   "ocb.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC": "Recipient account cannot be empty",
   "ocb.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC": "Recipient account must be compliant with the NRB format [CCBBBBBBBBAAAAAAAAAAAAAAAA or CC BBBB BBBB AAAA AAAA AAAA AAAA]",
   "ocb.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT": "Recipient account must be different from sender account",
+  "ocb.payments.recipients.new.domestic.fill.recipient_account.NO_ACCOUNT": "Empty deposit accounts list",
   "ocb.payments.recipients.new.domestic.fill.recipient_name_address": "Name and address",
   "ocb.payments.recipients.new.domestic.fill.recipient_data.label": "Recipient details",
   "ocb.payments.recipients.new.domestic.fill.recipient_data.placeholder": "Enter recipient details",
