@@ -7,7 +7,7 @@
         <!--<span style="display:block;" class="hidden-xs hidden-sm"> {{ cardContext.item.accountFrom.accountNo | nrbIbanFilter }}</span>-->
     </bd-item-property>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.deposit_account_number'|translate}}">
-        {{payment.items.recipientAccount.accountNo }}
+        {{payment.items.recipientAccount.depositContractNumber }}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.amount_figures.label'|translate}}">
         {{payment.formData.amount}}&nbsp{{payment.formData.currency}}
