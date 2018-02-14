@@ -250,5 +250,10 @@
         </bd-item-property>
 
         <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="modifyFromBasket"></rb-add-to-basket-select>
+        <rb-add-to-beneficiary-select
+            ng-if="!payment.meta.editFuturePayment"
+            rb-model="payment.formData"
+            rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"
+        ></rb-add-to-beneficiary-select>
     </div>
 </form>
