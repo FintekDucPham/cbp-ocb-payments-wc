@@ -24,7 +24,7 @@ angular.module('ocb-payments')
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
-
+        $scope.payment.token.params.resourceId = $scope.payment.transferId;
         function sendAuthorizationToken() {
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
         }
@@ -82,7 +82,19 @@ angular.module('ocb-payments')
             });
         }
 
+        $scope.countInvalid = 0;
+        $scope.isNullOTP = false;
+        $scope.isInvalidOTP = false;
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            console.log("Value token = ", $scope.payment.token);
+            //Check input null OTP
+            if ($scope.payment.token.model.input.model == null) {
+                $scope.countInvalid++;
+                $scope.isNullOTP = true;
+                if ($scope.countInvalid == 2) {
+                    console.log("Go back Step1 screen");
+                }
+            }
             if ($scope.payment.meta.customerContext == 'DETAL') {
                 if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
                     if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
