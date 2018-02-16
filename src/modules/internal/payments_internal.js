@@ -199,7 +199,7 @@ angular.module('ocb-payments')
         $scope.rbPaymentsStepParams = {
             completeState: stateData.finalState,
             finalAction: saveRecipient,
-            footerType: 'paymentNew',
+            footerType: 'paymentNewInternal',
             onClear: function () {
                 $scope.$broadcast('clearForm');
             },
@@ -217,9 +217,10 @@ angular.module('ocb-payments')
                 prev: 'config.multistepform.buttons.prev',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
-                finalize: 'ocb.payments.new.btn.finalize',
+                finalize: 'ocb.payments.new.btn.completed',
                 finalAction: 'ocb.payments.new.btn.final_action',
-                printReport: 'ocb.payments.new.btn.print_report'
+                printReport: 'ocb.payments.new.btn.print_report',
+                completed: 'ocb.payments.new.btn.completed'
             },
             visibility: {
                 fillReturn: false,
