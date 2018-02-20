@@ -19,7 +19,7 @@
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
-            {{payment.meta.remitter.branch}}
+            {{payment.items.remitterAccount.openBranch}}
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
@@ -250,5 +250,7 @@
         </bd-item-property>
 
         <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="modifyFromBasket"></rb-add-to-basket-select>
+
+        <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
     </div>
 </form>

@@ -259,7 +259,7 @@
   "ocb.payments.new.bill.fill.serviceList.link_url": "https://www.ocb.com.vn/Upload/OCB-Online/DANH%20SACH%20DICH%20VU%20THANH%20TOAN%20HOA%20DON.pdf",
   "ocb.payments.new.bill.fill.serviceList.link_name": "Service & providers listing",
   "ocb.payments.new.bill.fill.placeHolderTable": "No bill found",
-  "ocb.payments.new.bill.fill.checkbox.label": "Add to Beneficiary",
+  "ocb.payments.new.bill.fill.checkbox.label": "Add recipient",
   "ocb.payments.new.bill.fill.recipient_account": "To account",
   "ocb.payments.new.bill.fill.recipient_account.required": "Recipient account is required",
   "ocb.payments.new.bill.fill.recipient_account.accessible_assets": "Available funds",
