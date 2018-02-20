@@ -135,9 +135,10 @@
         <bd-item-property ng-if="payment.formData.paymentTarget === 'ACCOUNT'"
                           label="{{::'ocb.payments.domestic.bank.label' | translate}}">
             <input name="bankCode" hidden ng-model="payment.formData.bankCode" required/>
-            <rb-bank-select rb-bank-code="payment.formData.bankCode"
+            <rb-bank-fast-napas-select type="fastNapas"
+                            rb-bank-code="payment.formData.bankCode"
                             rb-bank="payment.items.bank"
-                            rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"></rb-bank-select>
+                            rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"></rb-bank-fast-napas-select>
             <eb-validation-messages eb-name="bankCode">
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'ocb.payments.domestic.bank.error.empty'|translate}}
