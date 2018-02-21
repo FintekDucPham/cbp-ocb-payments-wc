@@ -357,10 +357,6 @@ angular.module('ocb-payments')
 
             accountsList: {},
             _depositsDataSource: {},
-            _depositAccountTypes: {
-                'Accumulate': [6633, 6634, 6635, 6636, 6642, 6643, 6644, 6645, 6646, 6647, 6648, 6649],
-                'Online': [6704, 6724]
-            },
 
             init: function() {
                 var that = this;
@@ -377,7 +373,7 @@ angular.module('ocb-payments')
                 return dataSource.filter(function (item) {
                     var res = true;
                     if (type) {
-                        res &= that._depositAccountTypes[type].indexOf(item.category) > -1;
+                        res &= item.depositType === type;
                     }
                     if (res) {
                         res &= item.status === "CUR";
