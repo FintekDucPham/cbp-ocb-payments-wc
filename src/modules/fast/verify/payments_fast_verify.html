@@ -55,7 +55,9 @@
 		<bd-msg-panel bd-msg-type="error" bd-msg-size="smallmsg">{{::'ocb.payments.domestic.error.funds' | translate}}</bd-msg-panel>
 	</div>
 
-    <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{payment.token.model.currentToken.label}}">
-        <rb-token-authorization rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
-    </bd-item-property>
 </div>
+
+<rb-token-authorization ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired"
+                        rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model"
+                        rb-model-data="payment.token.modelData()"
+                        rb-params="payment.token.params"></rb-token-authorization>

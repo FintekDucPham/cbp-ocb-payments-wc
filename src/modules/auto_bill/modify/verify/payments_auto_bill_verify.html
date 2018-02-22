@@ -81,9 +81,9 @@
             <span ng-show="payment.formData.finishDate != null">{{ payment.formData.finishDate | dateFilter }}</span>
         </bd-item-property>
 
-        <rb-token-authorization rb-operation-type="AUTOBILL_PAYMENT" rb-params="deposit.meta.token.params"
-                                rb-model-data="deposit.meta.token.modelData()"
-                                rb-model="deposit.meta.token.model"></rb-token-authorization>
-
     </form>
 </div>
+
+<rb-token-authorization rb-operation-type="AUTOBILL_PAYMENT" rb-params="deposit.meta.token.params"
+                        rb-model-data="deposit.meta.token.modelData()"
+                        rb-model="deposit.meta.token.model"></rb-token-authorization>

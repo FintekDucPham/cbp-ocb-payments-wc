@@ -18,10 +18,11 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.description'|translate}}">
         {{payment.formData.description}}
     </bd-item-property>
-    <section ng-if="payment.operation.code!=='EDIT'">
-        <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
-            <rb-token-authorization rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params">
-            </rb-token-authorization>
-        </bd-item-property>
-    </section>
 </div>
+
+<section ng-if="payment.operation.code!=='EDIT'">
+    <rb-token-authorization ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired"
+                            rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model"
+                            rb-model-data="payment.token.modelData()" rb-params="payment.token.params">
+    </rb-token-authorization>
+</section>

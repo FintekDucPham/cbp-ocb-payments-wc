@@ -144,8 +144,8 @@
                  </span>
              </span>
         </span>
-    <bd-item-property class="bd-item-property--multirow" ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired" label="{{ basket.token.model.currentToken.label }}">
-        <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
-    </bd-item-property>
-
 </div>
+
+<rb-token-authorization ng-if="basket.token.params.resourceId" ng-show="basket.token.model.$tokenRequired"
+                        rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model"
+                        rb-params="basket.token.params"></rb-token-authorization>
