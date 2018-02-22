@@ -45,7 +45,7 @@
         <bd-button class="bd-button bd-button__primary" ng-click="getOTP()">Get OTP</bd-button>
     </div>
     <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
-        <input ng-model="payuVnpay.data.OTP" required type="text" placeholder="Insert OTP">
+        <input ng-model="payuVnpay.data.OTP" required type="text" placeholder="{{::'ocb.payments.new_bill.label.insertOTP'|translate}}">
     </div>
 </div>
 <bd-item-property class="bd-item-property--multirow" ng-if="payuVnpay.token.params.resourceId"
