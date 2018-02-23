@@ -36,7 +36,6 @@ angular.module('ocb-payments')
 
         //set variable for account
         $scope.onAccountChange = function (selectedAcc) {
-
             userService.getIdentityDetails().then(function(identity) {
                 $scope.account  = selectedAcc;
                 if($scope.table == undefined) {
@@ -65,7 +64,7 @@ angular.module('ocb-payments')
                                     customerId : identity.id,
                                     pageNum: 10,
                                     pageSize: 10,
-                                    accountNo: $scope.account,
+                                    accountId: $scope.pendingTransaction.formData.remitterAccountId,
                                     transactionStatus: $scope.status
                                 }
                                 transferPendingService.getPendingTransactions(params).then(function (d) {
@@ -78,14 +77,7 @@ angular.module('ocb-payments')
                                     $scope.targetList.content = _.filter($scope.listPendingTrans.content, function (o) {
                                         // o.operationStatus = "WA";
                                         if ($scope.statuses.indexOf(o.operationStatus) !== -1) {
-                                            if ($scope.account !== "") {
-                                                if ($scope.account === o.accountNo) {
-                                                    return o;
-                                                }
-                                            } else {
-                                                return o;
-                                            }
-
+                                            return o;
                                         }
                                     });
                                     $scope.tmptargetList = lodash.clone($scope.targetList, true);

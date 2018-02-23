@@ -1,6 +1,6 @@
 <eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
 <form name="paymentForm" novalidate ng-show="formReady">
-    <div>
+    <div class="bd-form">
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_account.label' | translate}}">
             <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
             <rb-account-select-v2 rb-account-id="payment.formData.remitterAccountId"
@@ -18,7 +18,7 @@
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
-            {{payment.meta.remitter.branch}}
+            {{payment.items.remitterAccount.openBranch}}
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
@@ -31,7 +31,7 @@
         </bd-item-property>
     </div>
 
-    <div>
+    <div class="bd-form">
         <bd-item-property>
             <bd-radio-select bd-model="payment.formData.paymentTarget">
                 <div class="row">
@@ -75,14 +75,7 @@
                        class="input-field"
                        ng-hide="showHide"
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-                       ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
                        ng-change="unlockField()">
-                <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
-                <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
-                    <div class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.paste' | translate}}
-                    </div>
-                </eb-validation-messages>
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && !isErrorPaste">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
@@ -142,9 +135,10 @@
         <bd-item-property ng-if="payment.formData.paymentTarget === 'ACCOUNT'"
                           label="{{::'ocb.payments.domestic.bank.label' | translate}}">
             <input name="bankCode" hidden ng-model="payment.formData.bankCode" required/>
-            <rb-bank-select rb-bank-code="payment.formData.bankCode"
+            <rb-bank-fast-napas-select type="fastNapas"
+                            rb-bank-code="payment.formData.bankCode"
                             rb-bank="payment.items.bank"
-                            rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"></rb-bank-select>
+                            rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"></rb-bank-fast-napas-select>
             <eb-validation-messages eb-name="bankCode">
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'ocb.payments.domestic.bank.error.empty'|translate}}
@@ -194,6 +188,9 @@
                 </div>
             </eb-validation-messages>
         </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.domestic.amount_in_words.label' | translate }}">
+            {{payment.formData.amount | numberToText}}
+        </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
                           label="{{::'ocb.payments.domestic.description.label' | translate}}">
@@ -222,5 +219,7 @@
         </bd-item-property>
 
         <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="modifyFromBasket"></rb-add-to-basket-select>
+
+        <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
     </div>
 </form>

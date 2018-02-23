@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsBillHistoryListController', function ($scope, bdTableConfig, dateFilter, translate, $filter, exportService, fileDownloadService, transferBillService, creditsService) {
+    .controller('PaymentsBillHistoryListController', function ($scope, bdTableConfig, dateFilter, translate, $filter, exportService, fileDownloadService, transferBillService, rbAccountSelectParams) {
 
         /*declare filterData*/
         $scope.filterData = {
@@ -18,6 +18,10 @@ angular.module('ocb-payments')
                 fromDate: null
             }
         };
+
+        $scope.accountSelectParams = new rbAccountSelectParams({
+            showCustomNames: true
+        });
 
         /*get date from form Filter*/
         function getDatesFromFilter() {

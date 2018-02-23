@@ -26,7 +26,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.domestic.amount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        {{ $data.details.amount | number: 2}} {{ $data.details.currency }}
+        <bd-amount amount="$data.details.amount" currency="{{$data.details.currency}}"></bd-amount>
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.domestic.transferTitle'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
@@ -42,4 +42,3 @@
     </bd-item-property>
 
 </div>
-

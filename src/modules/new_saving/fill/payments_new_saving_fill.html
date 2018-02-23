@@ -52,7 +52,7 @@
             <ui-select ng-model="payment.formData.acctype"
                        theme="bootstrap"
                        name="accountType"
-                       on-select="acctypeSelected($select.selected)"
+                       on-select="depositAccounts.onDepositAccountTypeSelected($select.selected)"
                        class="deposit_type_select"
                        required>
                 <ui-select-match
@@ -74,21 +74,32 @@
         </bd-item-property>
 
         <bd-item-property label="{{ ::'ocb.payments.new.saving.fill.deposit_account_number' | translate }}">
-            <input name="recipientAccountId" hidden ng-model="payment.formData.recipientAccountId" required/>
-            <rb-account-select-v2 rb-account="payment.items.recipientAccount"
-                                  rb-account-id="payment.formData.recipientAccountId"
-                                  rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                  rb-product-list-name="TRANSFER_OWN_FROM_LIST"
-                                  rb-account-select-params="recipientSelectParams"
-                                  rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                                  rb-on-account-select="onRecipientAccountSelect($accountId)"
-                                  rb-remote="remote.model_from"
-                                  rb-init-select-value="{{payment.formData.accountNo || selectNrb}}"
-                                  <!--name="payment.formData.recipientAccountId"-->></rb-account-select-v2>
-            <eb-validation-messages eb-name="recipientAccountId">
-                <div eb-message-key="sameAccounts" class="validation-message animate-on">
-                    {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT'|translate}}
-                </div>
+            <ui-select ng-if="!depositAccounts.accountsList || depositAccounts.accountsList.length > 0"
+                       class="rb-account-select__select"
+                       theme="bootstrap"
+                       ng-disabled="depositAccounts.accountsList.length === 0"
+                       name="recipientAccount"
+                       ng-model="payment.formData.recipientAccount"
+                       on-select="depositAccounts.onAccountSelected($item)"
+                       required>
+
+                <ui-select-match placeholder="{{placeholderValue || ('account.statement.select.placeholder'|translate)}}">
+                    <div class="rb-account-select__match-text" style="max-width:none;">
+                        <div class="select-account__row__cell account-desc" ng-bind="$select.selected.depositContractNumber"></div>
+                    </div>
+                </ui-select-match>
+                <ui-select-choices repeat="accountItem in depositAccounts.accountsList track by $index">
+                    <div class="rb-account-select__account-name-row" ng-bind="accountItem.depositContractNumber | highlight: $select.search"></div>
+                    <div class="rb-account-select__account-desc-row">
+                        <span class="rb-account-select__account-desc-row__nrb hidden-xs hidden-sm" ng-bind="accountItem.accountNo | nrbIbanFilter | highlight: $select.search"></span>
+                        <span class="rb-account-select__account-desc-row__nrb hidden-md hidden-lg" ng-bind="accountItem.accountNo | nrbAccountSelectIbanShortFilter | highlight: $select.search"></span>
+                        <span class="rb-account-select__account-desc-row__amount"><bd-amount amount="accountItem.depositBalance" currency="{{accountItem.currency}}"></bd-amount></span>
+                    </div>
+                </ui-select-choices>
+            </ui-select>
+            <span ng-if="depositAccounts.accountsList.length === 0">{{::'ocb.payments.recipients.new.domestic.fill.recipient_account.NO_ACCOUNT'|translate}}</span>
+
+            <eb-validation-messages eb-name="recipientAccount">
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'ocb.payments.new.saving.fill.recipient_account.required'|translate}}
                 </div>
@@ -158,10 +169,15 @@
                     {{::'ocb.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
                 </div>
             </eb-validation-messages>
+
             <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
                  ng-if="limitExeeded !== undefined && limitExeeded.show">
                 {{limitExeeded.messages}}
             </div>
+        </bd-item-property>
+
+        <bd-item-property label="{{ ::'ocb.payments.new.saving.amount_in_word.label' | translate }}">
+            {{payment.formData.amount | numberToText}}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
