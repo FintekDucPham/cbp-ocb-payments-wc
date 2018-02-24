@@ -29,6 +29,52 @@ angular.module('ocb-payments')
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
         }
 
+        //prepare pki data
+        $scope.payment.token.modelData = function(billData){
+            var xmlData = $interpolate(
+                '<transferInfo>'   +
+                '<paymentType>BillPayment</paymentType>'   +
+                '</transferInfo>'   +
+                '<payment>'   +
+                '<bookingDate></bookingDate>'   +
+                '<debitAccount>{{account}}</debitAccount>'   +
+                '<creditAccount></creditAccount>'   +
+                '<customerId>{{customerId}}</customerId>'   +
+                '<originalCustomerId></originalCustomerId>'   +
+                '<cRefNum></cRefNum>'   +
+                '<amount>{{amount}}</amount>'   +
+                '<currency>{{currency}}</currency>'   +
+                '<sender></sender>'   +
+                '<recipient></recipient>'   +
+                '<remarks></remarks>'   +
+                '<ebUserId>{{ebUserId}}<ebUserId/>'   +
+                '<creditAccountBankCode></creditAccountBankCode>'   +
+                '<creditAccountBankBranchCode></creditAccountBankBranchCode>'   +
+                '<creditAccountProvinceCode></creditAccountProvinceCode>'   +
+                '<clearingNetwork></clearingNetwork>'   +
+                '<serviceCode>{{serviceCode}}</serviceCode>'   +
+                '<serviceProviderCode>{{providerCode}}</serviceProviderCode>'   +
+                '<billCode>{{billCode}}</billCode>'   +
+                '<qty></qty>'   +
+                '<billSourceData></billSourceData>'   +
+                '<mobilePhoneNumber></mobilePhoneNumber>'   +
+                '<parValue></parValue>'   +
+                '<studentCode></studentCode>'   +
+                '<universityCode></universityCode>'   +
+                '<courseType></courseType>'   +
+                '<sourceData></sourceData>'   +
+                '<partnerId></partnerId>'   +
+                '<recipientCardNumber></recipientCardNumber>'   +
+                '<eWalletPhoneNumber></eWalletPhoneNumber>'   +
+                '<billCodeItemNo></billCodeItemNo>'   +
+                '<paymentCode></paymentCode>'   +
+                '<paymentItemStudentFee>'   +
+                '</paymentItemStudentFee>'   +
+                '</payment> '
+            )
+
+            return xmlData(billData);
+        }
         // transferService.getTransferCost({
         //     remitterId: $scope.payment.formData.remitterAccountId
         // }).then(function (transferCostData) {
