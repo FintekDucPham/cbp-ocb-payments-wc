@@ -29,6 +29,17 @@ angular.module('ocb-payments')
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
         }
 
+
+        $scope.payment.billData = {
+            account : $scope.payment.items.senderAccount.accountNo,
+            customerId: $scope.payment.meta.userId,
+            amount: $scope.payment.formData.amount,
+            currency: $scope.payment.formData.currency,
+            ebUserId: $scope.payment.items.globusId,
+            serviceCode : $scope.payment.items.senderService.serviceCode,
+            providerCode : $scope.payment.items.senderProvider.providerCode,
+            billCode : $scope.payment.formData.billCode
+        }
         //prepare pki data
         $scope.payment.token.modelData = function(billData){
             var xmlData = $interpolate(
@@ -73,7 +84,9 @@ angular.module('ocb-payments')
                 '</payment> '
             )
 
-            return xmlData(billData);
+            var xml = xmlData($scope.payment.billData);
+            console.log(xml);
+            return xml;
         }
         // transferService.getTransferCost({
         //     remitterId: $scope.payment.formData.remitterAccountId
@@ -181,3 +194,4 @@ angular.module('ocb-payments')
 
 
     });
+
