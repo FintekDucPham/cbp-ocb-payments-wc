@@ -191,7 +191,7 @@ angular.module('ocb-payments')
                 };
                 /*compare balance*/
                 if($scope.payment.formData.amount > $scope.payment.items.senderAccount.accessibleAssets || $scope.payment.formData.amount > $scope.payment.items.limit.remainingDailyLimit) {
-                    $cope.invalidAmount = true;
+                   $scope.invalidAmount = true;
                 }
 
                 if (form.$invalid || $scope.invalidAmount === true) {
@@ -275,7 +275,6 @@ angular.module('ocb-payments')
             $scope.payment.meta.employee = data.customerDetails.isEmployee;
             $scope.payment.meta.authType = data.customerDetails.authType;
             $scope.payment.meta.fullName = data.customerDetails.fullName;
-            $scope.payment.meta.userId = data.customerDetails.userIdentityId.id;
             if ($scope.payment.meta.authType == 'HW_TOKEN') {
                 $scope.formShow = true;
             }

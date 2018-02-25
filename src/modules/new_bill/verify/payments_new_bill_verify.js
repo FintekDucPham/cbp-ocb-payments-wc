@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
+    .controller('PaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService,$interpolate) {
 
         $scope.showVerify = false;
         if (angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)) {
@@ -41,7 +41,7 @@ angular.module('ocb-payments')
             billCode : $scope.payment.formData.billCode
         }
         //prepare pki data
-        $scope.payment.token.modelData = function(billData){
+        $scope.payment.token.modelData = function(){
             var xmlData = $interpolate(
                 '<transferInfo>'   +
                 '<paymentType>BillPayment</paymentType>'   +
@@ -88,6 +88,7 @@ angular.module('ocb-payments')
             console.log(xml);
             return xml;
         }
+        $scope.payment.token.modelData();
         // transferService.getTransferCost({
         //     remitterId: $scope.payment.formData.remitterAccountId
         // }).then(function (transferCostData) {
