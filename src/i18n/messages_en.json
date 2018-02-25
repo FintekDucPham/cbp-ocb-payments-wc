@@ -1143,6 +1143,14 @@
   "ocb.payment.auto_bill.status.processing.info": "The transaction is waiting for processing",
   "ocb.payment.auto_bill.status.error.info": "The transaction has not been accepted",
   "ocb.payment.auto_bill.status.success.info": "The transaction has been accepted for execution, awaiting execution",
+  "ocb.authorization.value.template.SMS.OTP.header":"Please click the button \"GET OTP\" for getting OTP code on your mobile phone and then enter this code into this field",
+  "ocb.authorization.value.template.PKI.header":"Please follow steps: \n 1. Plug in PKI device  \n 2. Run \"OCB SignPlugin\" then click \"Sign\" button",
+  "ocb.authorization.value.template.HW_TOKEN.header":"Enter the TOKEN password",
+  "ocb.authorization.value.template.PKI.sign":"Sign",
+  "ocb.authorization.value.template.SMS.getOTP": "Get OTP",
+  "ocb.authorization.value.template.error.pattern":"Field contains unauthorized characters",
+  "ocb.authorization.value.template.SMS.error.required":"Enter the SMS password",
+  "ocb.authorization.value.template.PKI.error.required":"Please follow the instructions and then click \"Sign\" button",
 
   "EOF": ""
 }
