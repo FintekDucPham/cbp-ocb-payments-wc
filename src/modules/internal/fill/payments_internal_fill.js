@@ -84,6 +84,7 @@ angular.module('ocb-payments')
 
             return defer.promise;
         }).then(function () {
+            $scope.remmiterAccountId = ;
             $scope.formReady = true;
         });
 
