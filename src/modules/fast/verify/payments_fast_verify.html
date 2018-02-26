@@ -17,7 +17,7 @@
             <dd><p ng-bind-html="payment.items.remitterAccount | accountOwners"></p></dd>
 
             <dt>{{::'ocb.payments.domestic.remitter_branch.label' | translate}}</dt>
-            <dd>{{::payment.meta.remitter.branch}}</dd>
+            <dd>{{::payment.items.remitterAccount.openBranch}}</dd>
 
             <dt>{{::'ocb.payments.domestic.recipient_name.label' | translate}}</dt>
             <dd><p class="break-force">{{payment.formData.recipientName | arrayFilter}}</p></dd>
