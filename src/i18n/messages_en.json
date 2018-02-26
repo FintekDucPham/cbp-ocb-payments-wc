@@ -1154,5 +1154,8 @@
   "ocb.authorization.value.template.SMS.error.required":"Enter the SMS password",
   "ocb.authorization.value.template.PKI.error.required":"Please follow the instructions and then click \"Sign\" button",
 
+  "ocb.payments.form.checkbox.true": "YES",
+  "ocb.payments.form.checkbox.false": "NO",
+
   "EOF": ""
 }
