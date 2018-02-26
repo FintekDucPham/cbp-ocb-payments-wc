@@ -40,15 +40,22 @@
             <dt>{{::'ocb.payments.domestic.realization_date.label' | translate}}</dt>
             <dd>{{payment.formData.realizationDate | date:'shortDate' }}</dd>
 
-			<div ng-if="exceedsFunds">
+            <dt>{{::'ocb.payments.basket.checkbox.label' | translate}}</dt>
+            <dd>{{payment.formData.addToBasket ? ('ocb.payments.form.checkbox.true' | translate) : ('ocb.payments.form.checkbox.false' | translate)}}</dd>
+
+            <dt>{{::'ocb.payments.new.bill.fill.checkbox.label' | translate}}</dt>
+            <dd>{{payment.formData.addToBeneficiary ? ('ocb.payments.form.checkbox.true' | translate) : ('ocb.payments.form.checkbox.false' | translate)}}</dd>
+
+
+            <div ng-if="exceedsFunds">
 				<bd-msg-panel bd-msg-type="error" bd-msg-size="smallmsg">{{::'ocb.payments.domestic.error.funds' | translate}}</bd-msg-panel>
 			</div>
-
-            <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{payment.token.model.currentToken.label}}">
-                <rb-token-authorization rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
-            </bd-item-property>
 
         </dl>
     </div>
 
 </div>
+
+<bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{payment.token.model.currentToken.label}}">
+    <rb-token-authorization rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
+</bd-item-property>
