@@ -40,7 +40,7 @@ angular.module('ocb-payments')
             .state('payments.internal.basket.modify.verify', angular.copy(prototype))
             .state('payments.internal.basket.delete.verify', angular.merge(angular.copy(prototype), {
                 resolve: {
-                    initToken: ['payment', 'paymentsBasketService', '$stateParams', '$state', '$timeout', 'fillTemplate', function (payment, paymentsBasketService, $stateParams, $state, $timeout, fillTemplate) {
+                    initToken: ['payment', 'paymentsBasketService', '$stateParams', '$state', '$timeout', '$interpolate', 'dataTemplate', function (payment, paymentsBasketService, $stateParams, $state, $timeout, $interpolate, dataTemplate) {
                         if (!$stateParams.basketReferenceId) {
                             var finalState = this.data.finalState;
                             $timeout(function () {
@@ -54,10 +54,10 @@ angular.module('ocb-payments')
                             payment.token = {
                                 operationType: 'PAYMENTS_BASKET',
                                 params: {
-                                    resourceId: resourceId,
-                                    modelData: function () {
-                                        return fillTemplate({ payment: payment });
-                                    }
+                                    resourceId: resourceId
+                                },
+                                modelData: function () {
+                                    return $interpolate(dataTemplate)({ payment: payment });
                                 }
                             };
                         })
@@ -67,7 +67,7 @@ angular.module('ocb-payments')
             .state('payments.internal.future.modify.verify', angular.copy(prototype))
             .state('payments.internal.future.delete.verify', angular.merge(angular.copy(prototype), {
                 resolve: {
-                    initToken: ['payment', 'paymentsService', '$stateParams', 'loadPayment', '$state', '$timeout', 'fillTemplate', function (payment, paymentsService, $stateParams, loadPayment, $state, $timeout, fillTemplate) {
+                    initToken: ['payment', 'paymentsService', '$stateParams', 'loadPayment', '$state', '$timeout', '$interpolate', 'dataTemplate', function (payment, paymentsService, $stateParams, loadPayment, $state, $timeout, $interpolate, dataTemplate) {
                         if (!$stateParams.referenceId) {
                             var finalState = this.data.finalState;
                             $timeout(function () {
@@ -92,10 +92,10 @@ angular.module('ocb-payments')
                             payment.token = {
                                 operationType: 'TRANSFER',
                                 params: {
-                                    resourceId: resourceId,
-                                    modelData: function () {
-                                        return fillTemplate({ payment: payment });
-                                    }
+                                    resourceId: resourceId
+                                },
+                                modelData: function () {
+                                    return $interpolate(dataTemplate)({ payment: payment });
                                 }
                             };
                         });
