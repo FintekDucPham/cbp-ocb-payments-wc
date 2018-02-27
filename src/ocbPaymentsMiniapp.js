@@ -185,12 +185,13 @@ angular.module('ocb-payments', [
     });
 }).value('BANK_NRB_CONSTANTS', {
     internal_prefix: null
-}).factory('defaultAccount', ['customerService', function(customerService) {
-    return function defaultAccount(productType) {
-        var defaultSettings = customerService.getCustomerDefaultSettings();
-        console.log(defaultSettings);
+}).service('accountSettingsService', function(customerService) {
+    this.defaultAccount = function(productType) {
+        customerService.getCustomerDefaultSettings().then(function(response) {
+            console.log(response);
+        });
     }
-}]).filter('arrayFilter', function(){
+}).filter('arrayFilter', function(){
     return function(items){
         return angular.isArray(items) ? items.join("") : items;
     };

@@ -36,7 +36,7 @@ angular.module('ocb-payments')
                                                             utilityService, recipientGeneralService, validationRegexp, translate,
                                                             rbAccountSelectParams, rbDatepickerOptions,
                                                             rbRecipientOperationType, rbRecipientTypes, bdFocus,
-                                                            bdFillStepInitializer, bdStepStateEvents) {
+                                                            bdFillStepInitializer, bdStepStateEvents, accountSettingsService) {
 
         var stateData = $state.$current.data;
         var transferReferenceId = stateData.newPayment ? null : $stateParams.referenceId;
@@ -84,7 +84,7 @@ angular.module('ocb-payments')
 
             return defer.promise;
         }).then(function () {
-            $scope.remmiterAccountId = ;
+            accountSettingsService.defaultAccount();
             $scope.formReady = true;
         });
 

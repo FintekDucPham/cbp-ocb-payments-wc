@@ -13,7 +13,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, defaultAccount) {
+    .controller('NewPaymentInternalFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, customerService, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager, accountSettingsService) {
 
         var senderAccountInitDefer = $q.defer();
 
@@ -349,8 +349,6 @@ angular.module('ocb-payments')
             }
             $scope.recipientSelectParams.update(accountId);
         };
-
-        defaultAccount();
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);
