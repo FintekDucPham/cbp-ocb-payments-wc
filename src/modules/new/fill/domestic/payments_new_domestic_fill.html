@@ -160,7 +160,9 @@
                        ng-pattern="AMOUNT_PATTERN"
                        bd-no-more-than="{ 'balance': payment.options.futureRealizationDate || payment.formData.addToBasket ? 99999999999999999 : payment.items.senderAccount.accessibleAssets}"
                        required
-                       placeholder="{{ ::'ocb.payments.new.domestic.fill.amount.placeholder' | translate }}"/>
+                       placeholder="{{ ::'ocb.payments.new.domestic.fill.amount.placeholder' | translate }}"
+                       amount-input
+                       currency="{{payment.formData.currency}}" />
             </div>
             <div class="bd-item-property__value--secondary">
                 <ui-select ng-model="payment.formData.currency"

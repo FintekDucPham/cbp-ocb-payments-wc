@@ -170,6 +170,8 @@
                        ng-model="payment.formData.amount"
                        ng-pattern="AMOUNT_PATTERN"
                        required
+                       amount-input
+                       currency="{{payment.items.remitterAccount.currency}}"
                        placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"/>
                 <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
             </div>
