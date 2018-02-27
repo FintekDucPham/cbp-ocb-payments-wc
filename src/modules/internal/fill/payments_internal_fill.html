@@ -134,7 +134,10 @@
                        ng-model="payment.formData.amount"
                        ng-pattern="AMOUNT_PATTERN"
                        required
-                       placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"/>
+                       placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"
+                       amount-input
+                       currency="{{payment.items.remitterAccount.currency}}"
+                       />
                 <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
             </div>
             <eb-validation-messages eb-name="amount">
