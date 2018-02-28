@@ -334,6 +334,7 @@
   "ocb.payments.new.status.info": "Orders submitted after <strong>23:00</strong> will be executed on the following business day",
   "ocb.payments.batchprocessing.status.0": "Chuyển khoản theo lô đã được hệ thống ghi nhận với trạng thái chờ kiểm duyệt",
   "ocb.payments.batchprocessing.status.99": "Chuyển khoản theo lô bị từ chối",
+  "ocb.payments.bill.history.status.100": "Đã được thực hiện",
   "ocb.payments.batchprocessing.status.success": "Chuyển khoản theo lô đã được hệ thống ghi nhận với trạng thái chờ kiểm duyệt",
   "ocb.payments.batchprocessing.status.error": "Chuyển khoản theo lô bị từ chối",
   "ocb.payments.batchprocessing.message.validate.error": "Tệp excel bị lỗi",
