@@ -137,5 +137,5 @@ angular.module('ocb-payments')
 
         rbPaymentInitFactory($scope);
     }) .constant('rbPaymentAccTypes', {
-     "TYPES":[{name:"Accumulate"},{name:"Online"}],
+     "TYPES":[{name:"Accumulate"}],
 });

@@ -372,11 +372,8 @@ angular.module('ocb-payments')
                 var that = this;
                 return dataSource.filter(function (item) {
                     var res = true;
-                    if (type) {
-                        res &= item.depositType === type;
-                    }
                     if (res) {
-                        res &= item.status === "CUR";
+                        res &= item.status === "CUR" && item.depositType === type;
                     }
                     return res;
                 });
