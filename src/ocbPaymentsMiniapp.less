@@ -631,3 +631,27 @@ rb-payment-recipients-fill > form {
     margin-left: 28%
   }
 }
+
+@media screen and (min-width: @screenMediumMin) {
+
+  .payment-mobile-only {
+    display:none !important;
+  }
+  .payment-desktop-only {
+    display:flex !important;
+  }
+}
+
+@media screen and (max-width: @screenSmallMax) {
+  .payment-mobile-only {
+    display:flex !important;
+  }
+
+  .payment-desktop-only {
+    display:none !important;
+  }
+}
+
+.rb-add-benefit {
+  margin-left: 9px;
+}
