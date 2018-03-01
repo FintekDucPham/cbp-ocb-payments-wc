@@ -66,6 +66,8 @@
          </span>
         </div>
     </div>
+</div>
+<div class="bd-form">
     <!--add authorization token-->
     <section ng-show="payment.operation.code !== 'EDIT' && payment.meta.customerContext == 'DETAL'">
         <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{ payment.token.model.currentToken.label }}">
