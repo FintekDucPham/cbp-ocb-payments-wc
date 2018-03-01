@@ -14,7 +14,7 @@
                                   rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                   rb-product-list-name="TRANSFER_FROM_LIST"
                                   rb-account-select-params="senderSelectParams"
-                                  rb-on-account-select="onSenderAccountSelect($accountId)"
+                                  rb-on-account-select="onSenderAccountSelect($account)"
                                   rb-init-select-value="{{payment.formData.accountNo || selectNrb}}">
             </rb-account-select-v2>
         </bd-item-property>
@@ -25,23 +25,18 @@
                  bd-product-id="account.accountId" bd-product-type="ACCOUNT"></div>
         </bd-item-property>
 
-        <bd-item-property label="{{::'ocb.payments.new.saving.fill.branch.label'|translate}}">
-            {{account.accountName}}
-            <div id="editableDivBranch" class="productName" eb-editable-name eb-editable-model="account"
-                 placeholder-text="branch name"
-                 bd-product-id="account.accountId" bd-product-type="ACCOUNT"></div>
+        <bd-item-property label="{{::'ocb.payments.new.saving.fill.branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
+            {{payment.items.senderAccount.openBranch}}
         </bd-item-property>
-        <bd-item-property label="{{::'ocb.payments.new.saving.fill.balance.label'|translate}}">
-            {{account.accountName}}
-            <div id="editableDivBalance" class="productName" eb-editable-name eb-editable-model="account"
-                 placeholder-text={{currentBalance}}
-                 bd-product-id="account.accountId" bd-product-type="ACCOUNT"></div>
+
+
+        <bd-item-property label="{{::'ocb.payments.new.saving.fill.balance.label' | translate}}"
+                          class="accesibleAssetsInline accesibleAssetsBold">
+            <bd-amount ng-if="payment.meta.availableFunds !== null" amount="payment.meta.availableFunds" currency="{{payment.items.remitterAccount.currency}}"></bd-amount>
         </bd-item-property>
-        <bd-item-property label="{{::'ocb.payments.new.saving.fill.daily_limit.label'|translate}}">
-            {{account.accountName}}
-            <div id="remainingDailyLimit" class="productName" eb-editable-name eb-editable-model="account"
-                 placeholder-text="{{transactionLimit.remainingDailyLimit}}"
-            ></div>
+
+        <bd-item-property label="{{::'ocb.payments.new.saving.fill.daily_limit.label'|translate}}" class="accesibleAssetsInline accesibleAssetsBold">
+                <bd-amount ng-if="transactionLimit !== null" amount="transactionLimit.maximumAmount" currency="{{payment.items.senderAccount.currency}}"></bd-amount>
         </bd-item-property>
         <!--group deposit info-->
         <div class="groupTitle">{{::'ocb.payments.new.saving.fill.deposit_info_group_name.label'|translate}}
