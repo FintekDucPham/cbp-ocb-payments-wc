@@ -485,25 +485,36 @@ rb-payment-recipients-fill > form {
 
 
   .payments-dl {
-    line-height: 20px
-  }
+    line-height: 20px;
 
-  .payments-dl dt {
-    float: left;
-    width: 50%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #ccc;
-    padding: 5px 0;
-    clear: left
-  }
+    dt {
+      float: left;
+      width: 50%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #ccc;
+      padding: 5px 0;
+      clear: left;
 
-  .payments-dl dd {
-    margin-left: 50%;
-    overflow: hidden;
-    min-height: 30px;
-    padding: 5px 0
+      @media (max-width: @screenSmallMax) {
+        width: 100%
+      }
+    }
+
+    dd {
+      margin-left: 50%;
+      overflow: hidden;
+      min-height: 30px;
+      padding: 5px 0;
+
+      @media (max-width: @screenSmallMax) {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 0;
+        font-weight: bold;
+      }
+    }
   }
 
   .payments-dl.form-lb dt {
@@ -520,7 +531,11 @@ rb-payment-recipients-fill > form {
     font-size: 16px;
     line-height: 1;
     text-transform: capitalize;
-    font-weight: normal
+    font-weight: normal;
+
+    @media (max-width: @screenSmallMax) {
+      text-transform: uppercase;
+    }
   }
 
   .h3{
