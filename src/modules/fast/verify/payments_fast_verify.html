@@ -9,7 +9,7 @@
         <dl class="payments-dl clear">
             <dt>{{::'ocb.payments.domestic.remitter_account.label' | translate}}</dt>
             <dd>
-                <div class="break-force">{{ payment.items.remitterAccount.customName || payment.items.remitterAccount.accountName }}</div>
+                <div class="remitter-account-line">{{ payment.items.remitterAccount.customName || payment.items.remitterAccount.accountName }}</div>
                 <div>{{payment.items.remitterAccount.accountNo | nrbIbanFilter }}</div>
             </dd>
 
@@ -54,6 +54,11 @@
     </div>
 </div>
 
-<bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{payment.token.model.currentToken.label}}">
+<div ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" class="form-pane">
+    <div class="pane-above">
+        <rb-token-authorization rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
+    </div>
+</div>
+<!--<bd-item-property class="bd-item-property&#45;&#45;multirow" ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" label="{{payment.token.model.currentToken.label}}">
     <rb-token-authorization rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
-</bd-item-property>
+</bd-item-property>-->

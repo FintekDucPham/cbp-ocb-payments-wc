@@ -9,7 +9,7 @@
         <dl class="payments-dl clear">
             <dt>{{::'ocb.payments.domestic.remitter_account.label' | translate}}</dt>
             <dd>
-                <!--<div class="break-force">{{ payment.items.remitterAccount.customName || payment.items.remitterAccount.accountName }}</div>-->
+                <div class="remitter-account-line">{{ payment.items.remitterAccount.customName || payment.items.remitterAccount.accountName }}</div>
                 <div>{{payment.items.remitterAccount.accountNo | nrbIbanFilter }}</div>
             </dd>
 

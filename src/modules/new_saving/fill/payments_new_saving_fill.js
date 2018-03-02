@@ -18,12 +18,12 @@ angular.module('ocb-payments')
                                                             bdFillStepInitializer,bdStepStateEvents, lodash, formService, validationRegexp,
                                                             rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,
                                                             transactionService,systemParameterService,
-                                                            rbPaymentAccTypes, depositsService) {
+                                                            rbPaymentAccTypes, depositsService, accountsService) {
         
         $scope.accTypeList=rbPaymentAccTypes.TYPES;
         $scope.addToBeneficiaries=false;
 
-        var paymentdata={paymentType:"saving_payment"}
+        var paymentdata={paymentType:"InternalPayment"}
         transactionService.limits(paymentdata).then(function(limits){
             $scope.transactionLimit=limits;
         });
@@ -341,8 +341,15 @@ angular.module('ocb-payments')
             payments: true
         });
 
-        $scope.onSenderAccountSelect = function(accountId) {
-             //$scope.recipientSelectParams.update(accountId);
+        $scope.onSenderAccountSelect = function(account) {
+            if (account) {
+                accountsService.getAvailableFunds(account).then(function (info) {
+                    $scope.payment.meta.availableFunds = info.availableFunds;
+                });
+            } else {
+                $scope.payment.meta.availableFunds = null;
+            }
+            $scope.paymentForm.amount.$setValidity('funds', true);
         };
 
         $scope.cbChange= function (){

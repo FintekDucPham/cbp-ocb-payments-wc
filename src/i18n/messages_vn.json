@@ -386,7 +386,7 @@
   "ocb.payments.recipients.new.domestic.fill.payment_target.CARD": "Đến thẻ",
   "ocb.payments.recipients.new.domestic.fill.province.label": "Tỉnh/TP",
   "ocb.payments.recipients.new.domestic.fill.province.placeholder": "Chọn tỉnh/TP của người thụ hưởng",
-  "ocb.payments.recipients.new.domestic.fill.province.EMPTY": "Tỉnh/TP của người thụ hưởng không được để trống",																								   
+  "ocb.payments.recipients.new.domestic.fill.province.EMPTY": "Tỉnh/TP của người thụ hưởng không được để trống",
   "ocb.payments.recipients.new.domestic.fill.bank.label": "Tên ngân hàng",
   "ocb.payments.recipients.new.domestic.fill.bank.placeholder": "Chọn ngân hàng người thụ hưởng",
   "ocb.payments.recipients.new.domestic.fill.bank.EMPTY": "Ngân hàng người thụ hưởng không thể để trống",
@@ -1090,7 +1090,7 @@
   "ocb.payments.new.saving.fill.description.placeholder":"Nhập mô tả",
   "ocb.payments.new.saving.fill.acctype.EMPTY_TITLE":"Loại tài khoản không thể để trống",
   "ocb.payments.new.saving.verify.amount_in_word":"Số tiền bằng chữ",
-  
+
   "ocb.payments.auto_bill.label": "Thanh toán tự động",
   "ocb.payments.auto_bill.list.header": "Thanh toán tự động",
   "ocb.payments.delete.label.header": "Xóa hóa đơn tự động",
@@ -1109,7 +1109,7 @@
   "ocb.payments.auto_bill.list.details.insurance.buttons.edit": "Sửa",
   "ocb.payments.auto_bill.list.details.insurance.buttons.delete": "Xóa",
   "ocb.payments.auto_bill.list.details.insurance.buttons.backToList": "Quay lại",
-  
+
   "ocb.payments.auto_bill.list.details.orderNo": "Mã số  lệnh định kỳ",
   "ocb.payments.auto_bill.list.details.orderName": "Tên lệnh định kỳ",
   "ocb.payments.auto_bill.list.details.paymentType": "Loại thanh toán",
@@ -1130,7 +1130,7 @@
   "ocb.payments.auto_bill.list.details.frequencyPer.Y": " Năm",
   "ocb.payments.auto_bill.list.details.finishDate": "Ngày hoàn tất",
   "ocb.payments.auto_bill.list.details.nextExecutionDate": "Ngày thực hiện kế tiếp",
-  
+
   "ocb.payments.auto_bill.error.field.empty": "Trường này không thể để trống",
   "ocb.payments.auto_bill.error.invalid.date": "Ngày không hợp lệ",
   "ocb.payments.auto_bill.list.details.recurringPeriod": "Thời hạn đăng ký",
@@ -1141,13 +1141,13 @@
   "ocb.payment.auto_bill.status.error.info": "Giao dịch chưa được chấp nhận",
   "ocb.payment.auto_bill.status.success.info": "Giao dịch đã được chấp nhận đang chờ thực hiện",
   "ocb.authorization.value.template.SMS.OTP.header":"Vui lòng nhấn nút \"LẤY OTP\" để lấy mã OTP trên điện thoại của Quý khách và sau đó nhập mã vào ô bên dưới",
-  "ocb.authorization.value.template.PKI.header":"Please follow steps: \n 1. Plug in PKI device  \n 2. Run \"OCB SignPlugin\" then click \"Sign\" button",
-  "ocb.authorization.value.template.HW_TOKEN.header":"Enter the TOKEN password",
-  "ocb.authorization.value.template.PKI.sign":"Sign",
+  "ocb.authorization.value.template.PKI.header":"Vui lòng thực hiện các bước sau: \n 1. Kết nối thiết bị PKI  \n 2. Chạy file \"OCBSignPlugin\", sau đó nhấn nút \"Ký\" ",
+  "ocb.authorization.value.template.HW_TOKEN.header":"Nhập mã TOKEN",
+  "ocb.authorization.value.template.PKI.sign":"Ký",
   "ocb.authorization.value.template.SMS.getOTP": "Lấy OTP",
-  "ocb.authorization.value.template.error.pattern":"Field contains unauthorized characters",
+  "ocb.authorization.value.template.error.pattern":"Ký tự không được phép",
   "ocb.authorization.value.template.SMS.error.required":"Nhập OTP",
-  "ocb.authorization.value.template.PKI.error.required":"Please follow the instructions and then click \"Sign\" button",
+  "ocb.authorization.value.template.PKI.error.required":"Vui lòng thực hiện theo hướng dẫn, sau đó nhấn nút \"Ký\" ",
 
   "EOF": ""
 }
