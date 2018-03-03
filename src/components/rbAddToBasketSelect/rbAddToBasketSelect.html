@@ -1,5 +1,9 @@
 <span ng-if="!rbModifyFromBasket && !settings.hidden">
-    <bd-item-property class="bd-item-property--multirow" label="{{ ::'ocb.payments.basket.checkbox.label' | translate }}">
+    <bd-item-property class="bd-item-property--multirow payment-desktop-only" label="{{ ::'ocb.payments.basket.checkbox.label' | translate }}">
         <bd-checkbox ng-model="rbModel.addToBasket"></bd-checkbox>
     </bd-item-property>
+    <div class="payment-mobile-only">
+        <bd-checkbox ng-model="rbModel.addToBasket"></bd-checkbox>
+        <div class="rb-add-benefit">{{ ::'ocb.payments.basket.checkbox.label' | translate }}</div>
+    </div>
 </span>

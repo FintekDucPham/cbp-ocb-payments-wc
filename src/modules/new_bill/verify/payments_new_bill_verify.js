@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
+    .controller('PaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService,$interpolate) {
 
         $scope.showVerify = false;
         if (angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)) {
@@ -29,6 +29,66 @@ angular.module('ocb-payments')
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
         }
 
+
+        $scope.payment.billData = {
+            account : $scope.payment.items.senderAccount.accountNo,
+            customerId: $scope.payment.meta.userId,
+            amount: $scope.payment.formData.amount,
+            currency: $scope.payment.formData.currency,
+            ebUserId: $scope.payment.items.globusId,
+            serviceCode : $scope.payment.items.senderService.serviceCode,
+            providerCode : $scope.payment.items.senderProvider.providerCode,
+            billCode : $scope.payment.formData.billCode
+        }
+        //prepare pki data
+        $scope.payment.token.modelData = function(){
+            var xmlData = $interpolate(
+                '<transferInfo>'   +
+                '<paymentType>BillPayment</paymentType>'   +
+                '</transferInfo>'   +
+                '<payment>'   +
+                '<bookingDate></bookingDate>'   +
+                '<debitAccount>{{account}}</debitAccount>'   +
+                '<creditAccount></creditAccount>'   +
+                '<customerId>{{customerId}}</customerId>'   +
+                '<originalCustomerId></originalCustomerId>'   +
+                '<cRefNum></cRefNum>'   +
+                '<amount>{{amount}}</amount>'   +
+                '<currency>{{currency}}</currency>'   +
+                '<sender></sender>'   +
+                '<recipient></recipient>'   +
+                '<remarks></remarks>'   +
+                '<ebUserId>{{ebUserId}}<ebUserId/>'   +
+                '<creditAccountBankCode></creditAccountBankCode>'   +
+                '<creditAccountBankBranchCode></creditAccountBankBranchCode>'   +
+                '<creditAccountProvinceCode></creditAccountProvinceCode>'   +
+                '<clearingNetwork></clearingNetwork>'   +
+                '<serviceCode>{{serviceCode}}</serviceCode>'   +
+                '<serviceProviderCode>{{providerCode}}</serviceProviderCode>'   +
+                '<billCode>{{billCode}}</billCode>'   +
+                '<qty></qty>'   +
+                '<billSourceData></billSourceData>'   +
+                '<mobilePhoneNumber></mobilePhoneNumber>'   +
+                '<parValue></parValue>'   +
+                '<studentCode></studentCode>'   +
+                '<universityCode></universityCode>'   +
+                '<courseType></courseType>'   +
+                '<sourceData></sourceData>'   +
+                '<partnerId></partnerId>'   +
+                '<recipientCardNumber></recipientCardNumber>'   +
+                '<eWalletPhoneNumber></eWalletPhoneNumber>'   +
+                '<billCodeItemNo></billCodeItemNo>'   +
+                '<paymentCode></paymentCode>'   +
+                '<paymentItemStudentFee>'   +
+                '</paymentItemStudentFee>'   +
+                '</payment> '
+            )
+
+            var xml = xmlData($scope.payment.billData);
+            console.log(xml);
+            return xml;
+        }
+        $scope.payment.token.modelData();
         // transferService.getTransferCost({
         //     remitterId: $scope.payment.formData.remitterAccountId
         // }).then(function (transferCostData) {
@@ -135,3 +195,4 @@ angular.module('ocb-payments')
 
 
     });
+

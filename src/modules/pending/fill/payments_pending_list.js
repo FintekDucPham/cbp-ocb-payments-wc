@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,transferPendingService,ocbConvert,userService,customerService) {
+    .controller('PaymentsPendingListController', function ($scope,$stateParams,bdTableConfig,rbAccountSelectParams,bdStepStateEvents,bdVerifyStepInitializer,translate,lodash,$state,$http,exportService,transferPendingService,ocbConvert,userService,customerService, authorizationService) {
 
         $scope.statuses = []
         //define list of status
@@ -318,6 +318,18 @@ angular.module('ocb-payments')
                 $scope.invalidWA = true;
                 return;
             }
+            /*Add PKIs*/
+            authorizationService.createCommonOperation({
+                paymentId: $scope.pendingTransaction.transferId,
+                operationType: "TRANSFER"
+            }).then(function(response){
+                $scope.pendingTransaction.token = {
+                    params:{
+                        resourceId: response.content
+                    }
+                };
+                actions.proceed();
+            });
             $scope.pendingTransaction.selectedTrans = _.sortBy($scope.pendingTransaction.selectedTrans, 'id');
             actions.proceed();
         });

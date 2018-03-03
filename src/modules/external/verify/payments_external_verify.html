@@ -1,5 +1,5 @@
 <eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
-<div class="form-body" ng-show="formReady">
+<div class="form-body bd-form" ng-show="formReady">
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.remitter_account.label' | translate}}">
         <div class="hidden-sm hidden-xs hidden-md">
             <div class="break-force">{{ payment.items.remitterAccount.customName || payment.items.remitterAccount.accountName }}</div>
@@ -16,7 +16,7 @@
     </bd-item-property>
 
     <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
-        {{payment.meta.remitter.branch}}
+        {{payment.items.remitterAccount.openBranch}}
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.domestic.recipient_account.label' | translate}}">

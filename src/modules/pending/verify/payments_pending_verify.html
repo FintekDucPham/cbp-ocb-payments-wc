@@ -40,8 +40,11 @@
         <div class="col-xs-2" ng-if="pendingTransaction.token.params.resourceId">
             <div class="lb">Authentication code here</div>
             <div>
-                <rb-token-authorization rb-operation-type="TRANSFER" rb-model="pendingTransaction.token.model"
-                                    rb-params="pendingTransaction.token.params"></rb-token-authorization>
+                <rb-token-authorization
+                        rb-operation-type="TRANSFER" rb-model="pendingTransaction.token.model"
+                        rb-params="pendingTransaction.token.params"
+                        rb-model-data="pendingTransaction.token.modelData">
+                </rb-token-authorization>
             </div>
         </div>
     </div>

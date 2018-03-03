@@ -42,12 +42,15 @@
                             {{::'ocb.payments.auto_bill.list.details.paymentSetting.LIMITED'|translate}}
                         </div>
                         <div class="bd-item-property__value--secondary" style="display: inline;">
-                            <input type="number"
+                            <input type="text"
                                    name="next"
                                    class="input-field"
                                    ng-model="payment.formData.amountLimit.value"
                                    ng-pattern="AMOUNT_PATTERN"
-                                   style="width: 100px;"/>
+                                   style="width: 100px;"
+                                   amount-input
+                                   currency="VND"
+                                   />
                         </div>
                     </div>
                     <eb-validation-messages eb-name="next">

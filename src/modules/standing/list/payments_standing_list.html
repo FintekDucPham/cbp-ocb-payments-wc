@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <bd-table bd-type="typeZ"
+    <bd-table bd-type="typeZ2"
               bd-table-params="table.tableConfig"
               bd-table-control="table.tableControl"
               bd-table-data="table.tableData"
@@ -46,11 +46,11 @@
                     <div class="row">
                         <div class="bd-grid__col--sm-16 desktop-only" style="text-align: right;">
                             <bd-button ng-click="onButtonPressed('edit', $data)" ng-if="isInputter"      class="bd-button bd-hmargin-sm">{{::'ocb.payments.standing.list.details.insurance.buttons.edit' | translate}}</bd-button>
-                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.standing.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button__primary bd-hmargin-sm" style="margin-left: 10px;">{{::'ocb.payments.standing.list.details.insurance.buttons.delete' | translate}}</bd-button>
                         </div>
                         <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
                             <bd-button ng-click="onButtonPressed('edit', $data)" ng-if="isInputter"      class="bd-button bd-hmargin-sm">{{::'ocb.payments.standing.list.details.insurance.buttons.edit' | translate}}</bd-button>
-                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button bd-hmargin-sm">{{::'ocb.payments.standing.list.details.insurance.buttons.delete' | translate}}</bd-button>
+                            <bd-button ng-click="onButtonPressed('delete', $data)"     class="bd-button__primary bd-hmargin-sm">{{::'ocb.payments.standing.list.details.insurance.buttons.delete' | translate}}</bd-button>
                         </div>
                     </div>
                 </bd-details-action-section>

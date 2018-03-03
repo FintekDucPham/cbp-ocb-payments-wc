@@ -10,7 +10,9 @@
         {{payment.items.recipientAccount.depositContractNumber }}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.amount_figures.label'|translate}}">
-        {{payment.formData.amount}}&nbsp{{payment.formData.currency}}
+      <bd-amount amount="payment.formData.amount"
+                currency="{{ payment.formData.currency || VND}}">
+      </bd-amount>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.verify.amount_in_word'|translate}}">
         {{amountInWords}}

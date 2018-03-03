@@ -1,6 +1,12 @@
-<bd-item-property class="bd-item-property--text bd-item-property--disabled"
+<!--
+<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled"
                   label="{{ ::'ocb.payments.recipients.manage.status.recipient_shortname' | translate }}">
     {{ recipient.customName }}
 </bd-item-property>
-
-<bd-msg-panel bd-msg-type="{{ recipient.result.type }}">{{ ::'ocb.payments.recipients.new.status.' + (recipient.result.code || recipient.result.type) | translate }}</bd-msg-panel>
+-->
+<div class="ocb-design">
+    <div class="success-center">
+        <div class="success-img rb-multistep-form-icon-{{::recipient.result.type}}"></div>
+        <p class="title">{{::'ocb.payments.recipients.new.status.' + (recipient.result.code || recipient.result.type) | translate}}</p>
+    </div>
+</div>

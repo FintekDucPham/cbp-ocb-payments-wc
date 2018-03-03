@@ -4,7 +4,7 @@
       display: flex;
       flex-flow: row wrap;
       flex-direction: column;
-      max-height: 465px;
+      max-height: 525px;
     }
   }
 }
@@ -26,4 +26,51 @@
     padding: 20px;
     margin-top: 20px;
     color: #fa4b50;
+}
+
+.payments-fast-fill-item-header.form-row .lb{
+  font-family: 'SourceSansPro';
+  font-weight: bold;
+  font-size: 22px;
+  color: #000000;
+}
+
+.payments-standing-status .bd-msg-panel__message {
+  display: flex;
+}
+
+.payments_miniapp .standing-orders-table{
+  .bd-table__cell-content-wrapper span{
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .payments_miniapp .standing-orders-table .lb, .payments_miniapp .standing-orders-table .control{
+    width: 50%;
+  }
+
+  .payments_miniapp .standing-orders-table .bd-show-mob .form-row{
+    display: inline-flex;
+    padding-bottom: 5px;
+  }
+
+  .payments_miniapp .standing-orders-table .bd-show-mob.subsection{
+    padding-top: 10px;
+    padding-left: 10px;
+    border-top: 1px dashed #DAE0E7;
+  }
+  .payments_miniapp .standing-orders-table .bd-show-mob.section{
+    padding-top: 10px;
+    display: -webkit-box;
+  }
+  .payments_miniapp .standing-orders-table .bd-table__row-details{
+    border-top: 1px dashed #DAE0E7;
+    padding-top: 15px;
+  }
+
+  .payments_miniapp .standing-orders-table.bd-table .bd-table__row--toggler{
+    padding: 0;
+    margin-top: -5px;
+  }
 }

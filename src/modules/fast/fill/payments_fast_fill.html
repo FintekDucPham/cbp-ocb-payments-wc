@@ -1,6 +1,7 @@
 <eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
 <form name="paymentForm" novalidate ng-show="formReady">
     <div class="bd-form">
+        <bd-header style="padding-top: 0;">{{::'ocb.payments.fast.from.header' | translate}}</bd-header>
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_account.label' | translate}}">
             <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
             <rb-account-select-v2 rb-account-id="payment.formData.remitterAccountId"
@@ -32,7 +33,7 @@
     </div>
 
     <div class="bd-form">
-        <bd-item-property>
+        <bd-item-property label="{{::'ocb.payments.fast.to.header' | translate}}" class="payments-fast-fill-item-header">
             <bd-radio-select bd-model="payment.formData.paymentTarget">
                 <div class="row">
                     <div class="col-xs-6">
@@ -167,7 +168,9 @@
                        ng-model="payment.formData.amount"
                        ng-pattern="AMOUNT_PATTERN"
                        required
-                       placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"/>
+                       placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"
+                       amount-input
+                       currency="{{payment.items.remitterAccount.currency}}" />
                 <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
             </div>
             <eb-validation-messages eb-name="amount">
