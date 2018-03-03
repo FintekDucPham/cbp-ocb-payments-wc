@@ -16,7 +16,7 @@ angular.module('ocb-payments')
     .controller('PaymentsBatchProcessingStep1Controller'
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
-                                                              rbBeforeTransferManager,
+                                                              rbBeforeTransferManager, translate,
                                 bdTableConfig, ocbConvert, transferBatchService, customerService, transferService, $cookies, $http, FileUploader, pathService, $location) {
 
             /*Get customer details*/
@@ -139,7 +139,7 @@ angular.module('ocb-payments')
             $scope.noSubAccount = false;
             var noSubAccount = {
                 customerData: {
-                    name : "No sub account"
+                    name : translate.property('ocb.payments.batch_processing.noSubAccount')
                 },
                 accountNo : "",
                 accountId : 0,
@@ -192,6 +192,7 @@ angular.module('ocb-payments')
                 if($scope.paymentsBatchProcessingForm.selectedTransactionType){
                     $scope.paymentsBatchProcessingForm.formData.selectedTransactionType = $scope.paymentsBatchProcessingForm.selectedTransactionType;
                 }
+                initTransactionType();
             });
 
             if($scope.paymentsBatchProcessingForm.isInternal !== undefined){
@@ -213,6 +214,7 @@ angular.module('ocb-payments')
                     }
                     return null;
                 });
+                initTransactionType();
                 var isInternal = selectedItem.typeCode === 'IN';
                 $scope.paymentsBatchProcessingForm.isInternal = $scope.isInternal = isInternal;
                 $scope.paymentsBatchProcessingForm.isExternal = $scope.isExternal = !isInternal;
@@ -222,6 +224,27 @@ angular.module('ocb-payments')
                     $scope.paymentsBatchProcessingForm.flagType = 1;
                 }
             };
+
+            function initTransactionType(){
+                if($scope.transactionTypeList && $scope.transactionTypeList.length > 0){
+                    for(var i = 0; i < $scope.transactionTypeList.length; i++){
+                        if($scope.transactionTypeList[i].typeCode === 'IN'){
+                            $scope.transactionTypeList[i].typeName = translate.property('ocb.payments.batch_processing.transactionType.in');
+                        }else if($scope.transactionTypeList[i].typeCode === 'EX'){
+                            $scope.transactionTypeList[i].typeName = translate.property('ocb.payments.batch_processing.transactionType.ex');
+                        }
+                    }
+                }
+                if($scope.transaction_types && $scope.transaction_types.length > 0){
+                    for(var i = 0; i < $scope.transaction_types.length; i++){
+                        if($scope.transaction_types[i].typeCode === 'IN'){
+                            $scope.transaction_types[i].typeName = translate.property('ocb.payments.batch_processing.transactionType.in');
+                        }else if($scope.transaction_types[i].typeCode === 'EX'){
+                            $scope.transaction_types[i].typeName = translate.property('ocb.payments.batch_processing.transactionType.ex');
+                        }
+                    }
+                }
+            }
 
             $scope.subAccounts = [];
 
@@ -863,7 +886,7 @@ angular.module('ocb-payments')
                         });
                     });
                     if($('.file-name') && $('.file-name').html() === ''){
-                        $('.file-name').html('Choose file to upload');
+                        $('.file-name').html(translate.property('ocb.payments.batch_processing.uploadfile.placeholder'));
                     }
                 }else{
                     $timeout(scanInput, 1000);
