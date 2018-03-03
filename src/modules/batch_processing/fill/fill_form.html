@@ -61,7 +61,7 @@
                             theme="bootstrap"
                             on-select="onSubAccountChanged($select.selected)"
                             required>
-                    <ui-select-match placeholder="Sub Account">
+                    <ui-select-match placeholder="{{::'ocb.payments.batch_processing.subAccount' | translate}}">
                         {{($select.selected.customerData && $select.selected.customerData.name) ? $select.selected.customerData.name : $select.selected.accountName}} {{$select.selected.accountNo}}
                     </ui-select-match>
                     <ui-select-choices repeat="subAccount in subAccountList | filter: $select.search track by $index">
