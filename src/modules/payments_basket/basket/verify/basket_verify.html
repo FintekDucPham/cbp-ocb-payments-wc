@@ -5,7 +5,7 @@
                 <div class="bd-list-item__identification-cell">
                     <div class="product-name">
                         <div style="word-break: break-word" ng-if="systemParameterDefinedName.value == 'T'">
-                            <img ng-if="group.accountDetails.customerData.icon > 0" ng-src="{{getIcon(group.accountDetails.customerData.icon)}}" style="margin-top: -5px;"/>
+                            <img ng-if="group.accountDetails.customerData.iconSrc" ng-src="{{group.accountDetails.customerData.iconSrc}}" style="margin-top: -5px;"/>
                             {{group.accountDetails.customerData.name || group.accountDetails.accountName}}
                         </div>
                         <div  style="word-break: break-word; " ng-if="systemParameterDefinedName.value == 'N'">
