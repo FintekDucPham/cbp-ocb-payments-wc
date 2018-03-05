@@ -289,6 +289,11 @@ angular.module('ocb-payments')
                         var sourceAccountCurrency = scope.$eval(attr.rbSourceAccountCurrency),
                             transactionCurrency = scope.$eval(attr.rbTransactionCurrency);
 
+                        if (sourceAccountCurrency === transactionCurrency) {
+                            resolve();
+                            return;
+                        }
+
                         currencyExchangeService.exchangeForValidation(newValue, transactionCurrency, sourceAccountCurrency).then(function(exchanged) {
                             return (exchanged <= scope.payment.items.senderAccount.accessibleAssets) ? resolve() : reject();
                         }, function() {
