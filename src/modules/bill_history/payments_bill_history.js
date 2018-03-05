@@ -12,7 +12,7 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsBillHistoryController', function ($scope, bdMainStepInitializer) {
 
-        bdMainStepInitializer($scope, 'prepaid', {
+        bdMainStepInitializer($scope, 'billHistory', {
             formName: 'billHistoryForm',
             formData: {},
             options: {},

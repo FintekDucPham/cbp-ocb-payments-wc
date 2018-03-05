@@ -20,7 +20,7 @@ angular.module('ocb-payments')
         };
 
         $scope.onSenderAccountSelect = function () {
-            $scope.senderAccountNo = $scope.prepaid.formData.selectedAccount.accountNo;
+            $scope.senderAccountNo = $scope.billHistory.formData.selectedAccount.accountNo;
         };
         function reloadTable() {
             if ($scope.table.tableControl) {
