@@ -19,6 +19,16 @@ angular.module('ocb-payments')
             }
         };
 
+        $scope.onSenderAccountSelect = function () {
+            $scope.senderAccountNo = $scope.billHistory.formData.selectedAccount.accountNo;
+        };
+        function reloadTable() {
+            if ($scope.table.tableControl) {
+                $scope.table.tableControl.invalidate();
+            }
+        }
+        $scope.$watch('senderAccountNo', reloadTable);
+
         $scope.accountSelectParams = new rbAccountSelectParams({
             showCustomNames: true
         });
@@ -97,8 +107,18 @@ angular.module('ocb-payments')
                     }).then(function (data) {
                         // defer.resolve(data.content);
 
+                        // filter by selected account
+                        $scope.filteredList = angular.copy(data.content);
+                        $scope.filteredList.content = [];
+                        for (var j = 0; j < data.content.length; j++) {
+                            var selectedItem = data.content[j];
+                            if(selectedItem.detail.accountNumber === $scope.senderAccountNo){
+                                $scope.filteredList.content.push(selectedItem);
+                            }
+                        }
+
                         /*TEST Start*/
-                        var totalItems = data.content.length;
+                        var totalItems = $scope.filteredList.content.length;
                         // init page size
                         var pageSize = pageSize || 10;
                         var currentPage = $params.currentPage;
@@ -126,12 +146,13 @@ angular.module('ocb-payments')
                         var startIndex = (currentPage - 1) * pageSize;
                         var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
-                        $scope.targetList = angular.copy(data.content);
+                        $scope.targetList = angular.copy($scope.filteredList.content);
                         $scope.targetList.content = [];
                         for (i = startIndex; i <= endIndex; i++) {
-                            var selectedItem = data.content[i];
-                            $scope.targetList.content.push(selectedItem);
-
+                            var selectedItem = $scope.filteredList.content[i];
+                            if(selectedItem.detail.accountNumber === $scope.senderAccountNo){
+                                $scope.targetList.content.push(selectedItem);
+                            }
                         }
                         defer.resolve($scope.targetList.content);
                         $params.pageCount = totalPages;
