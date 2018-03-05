@@ -1,4 +1,4 @@
-<div ng-controller="NewStandingPaymentFillController" class="new-standing-payment-fill">
+<div ng-controller="NewStandingPaymentFillController" class="new-standing-payment-fill bd-form">
 
     <bd-item-property ng-if="payment.operation.code == 'EDIT'"
                       class="bd-item-property--text bd-item-property--disabled"
@@ -188,7 +188,9 @@
                        ng-min="0.01"
                        ng-pattern="AMOUNT_PATTERN"
                        required
-                       placeholder="{{ ::'ocb.payments.new.standing.fill.amount.placeholder' | translate }}"/>
+                       placeholder="{{ ::'ocb.payments.new.standing.fill.amount.placeholder' | translate }}"
+                       amount-input
+                       currency="{{payment.formData.currency}}" />
             </div>
             <div class="bd-item-property__value--secondary">
                 <ui-select ng-model="payment.formData.currency"

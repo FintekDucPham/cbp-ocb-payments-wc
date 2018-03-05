@@ -18,12 +18,12 @@ angular.module('ocb-payments')
                                                             bdFillStepInitializer,bdStepStateEvents, lodash, formService, validationRegexp,
                                                             rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,
                                                             transactionService,systemParameterService,
-                                                            rbPaymentAccTypes) {
+                                                            rbPaymentAccTypes, depositsService, accountsService) {
         
         $scope.accTypeList=rbPaymentAccTypes.TYPES;
         $scope.addToBeneficiaries=false;
 
-        var paymentdata={paymentType:"saving_payment"}
+        var paymentdata={paymentType:"InternalPayment"}
         transactionService.limits(paymentdata).then(function(limits){
             $scope.transactionLimit=limits;
         });
@@ -163,13 +163,10 @@ angular.module('ocb-payments')
                 $scope.limitExeeded = {
                     show: false
                 };
-                if(!$scope.payment.formData.recipientAccountId){
-                    form.recipientAccountId.$setValidity('required', false);
-                }
-                if ($scope.payment.formData.remitterAccountId == $scope.payment.formData.recipientAccountId) {
-                    form.recipientAccountId.$setValidity('sameAccounts', false);
-                }
-               angular.extend($scope.payment.formData,{"recipientName":$scope.payment.meta.customerDetails.fullName,"recipientAccountNo":$scope.payment.items.recipientAccount.accountNo});
+                /*if(!$scope.payment.formData.recipientAccount){
+                    form.recipientAccount.$setValidity('required', false);
+                }*/
+               angular.extend($scope.payment.formData,{"recipientName":$scope.payment.meta.customerDetails.fullName,"recipientAccountNo":($scope.payment.items.recipientAccount ? $scope.payment.items.recipientAccount.depositContractNumber : null)});
                 if (form.$invalid) {
                     formService.dirtyFields(form);
                 } else {
@@ -344,8 +341,15 @@ angular.module('ocb-payments')
             payments: true
         });
 
-        $scope.onSenderAccountSelect = function(accountId) {
-             $scope.recipientSelectParams.update(accountId);
+        $scope.onSenderAccountSelect = function(account) {
+            if (account) {
+                accountsService.getAvailableFunds(account).then(function (info) {
+                    $scope.payment.meta.availableFunds = info.availableFunds;
+                });
+            } else {
+                $scope.payment.meta.availableFunds = null;
+            }
+            $scope.paymentForm.amount.$setValidity('funds', true);
         };
 
         $scope.cbChange= function (){
@@ -354,4 +358,45 @@ angular.module('ocb-payments')
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);
+
+        // Deposits accounts functionality
+        var depositAccounts = {
+
+            accountsList: {},
+            _depositsDataSource: {},
+
+            init: function() {
+                var that = this;
+                return depositsService.search({
+                    pageSize: 30
+                }).then(function (accountList) {
+                    that._depositsDataSource = accountList.content;
+                    that.accountsList = that.filterDataSource(that._depositsDataSource);
+                });
+            },
+
+            filterDataSource: function(dataSource, type) {
+                var that = this;
+                return dataSource.filter(function (item) {
+                    var res = true;
+                    if (res) {
+                        res &= item.status === "CUR" && item.depositType === type;
+                    }
+                    return res;
+                });
+            },
+
+            onDepositAccountTypeSelected: function(depositAccountType) {
+                depositAccounts.accountsList = depositAccounts.filterDataSource(depositAccounts._depositsDataSource, depositAccountType.name);
+            },
+
+            onAccountSelected: function(account) {
+                $scope.payment.items.recipientAccount = account;
+                $scope.payment.formData.recipientAccountId = account ? account.depositId : null;
+                $scope.payment.formData.recipientAccountNo = account ? account.recipientAccountNo : null;
+            }
+        };
+
+        depositAccounts.init();
+        $scope.depositAccounts = depositAccounts;
     });

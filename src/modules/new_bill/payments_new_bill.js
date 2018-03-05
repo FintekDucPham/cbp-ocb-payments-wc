@@ -476,6 +476,8 @@ angular.module('ocb-payments')
         //     // });
         // }
 
+
+
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.bill_history.list',
             footerType: 'billPayment',

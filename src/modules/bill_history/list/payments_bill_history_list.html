@@ -1,5 +1,4 @@
 <form name="billHistoryForm" class="bill-history">
-
     <rb-content-view class="rb-content-view--solid">
         <div class="form-row">
             <div class="col-md-2">
@@ -22,7 +21,7 @@
                                         rb-product-list-name="TRANSFER_FROM_LIST"
                                         rb-on-account-select="onSenderAccountSelect()"
                                         rb-account-no="payment.items.recipient.srcAccountNo"
-                                        rb-account-select-params="remitterAccountSelectParams"
+                                        rb-account-select-params="accountSelectParams"
                                         rb-remote="remote.model"
                                         rb-init-select-value="{{selectNrb}}" class="bd-table__cell--md-11">
                         </rb-account-select>

@@ -19,7 +19,8 @@ angular.module('ocb-payments')
             operation: rbPaymentOperationTypes.NEW,
             token: {
                 model: null,
-                params: {}
+                params: {},
+                modelData: function (){}
             },
             meta: {},
             validation: {},

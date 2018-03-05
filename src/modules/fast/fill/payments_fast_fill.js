@@ -32,8 +32,9 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsFastFillController', function ($scope, $state, $stateParams, payment,
                                                             $filter, $q, transferService, accountsService,
-                                                            utilityService, validationRegexp, translate,
-                                                            rbAccountSelectParams, rbDatepickerOptions, bdFocus,
+                                                            utilityService, recipientGeneralService, validationRegexp, translate,
+                                                            rbAccountSelectParams, rbDatepickerOptions,
+                                                            rbRecipientOperationType, rbRecipientTypes, bdFocus,
                                                             bdFillStepInitializer, bdStepStateEvents) {
 
         var stateData = $state.$current.data;
@@ -240,6 +241,22 @@ angular.module('ocb-payments')
             });
         }
 
+        function createRecipient () {
+            var formData = payment.formData;
+            return recipient = {
+                bankCode: formData.bankCode,
+                beneficiary: new Array(""),
+                branchCode: null,
+                cardNumber: formData.cardNumber,
+                creditAccount: formData.recipientAccountNo,
+                debitAccount: formData.remitterAccountId,
+                province: null,
+                recipientType: rbRecipientTypes.FAST.code,
+                remarks: new Array(formData.description),
+                shortName: formData.recipientName
+            }
+        }
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if (!$scope.formReady) {
                 return;
@@ -255,6 +272,9 @@ angular.module('ocb-payments')
 
             if (!form.$invalid) {
                 payment.meta.referenceId = null;
+                if (payment.formData.addToBeneficiary === true) {
+                    recipientGeneralService.create(rbRecipientOperationType.NEW.code, rbRecipientTypes.FAST.state , createRecipient());
+                }
                 createTransfer().then(function () {
                     if (payment.meta.referenceId) {
                         actions.proceed();

@@ -191,7 +191,7 @@ angular.module('ocb-payments')
                 };
                 /*compare balance*/
                 if($scope.payment.formData.amount > $scope.payment.items.senderAccount.accessibleAssets || $scope.payment.formData.amount > $scope.payment.items.limit.remainingDailyLimit) {
-                    $cope.invalidAmount = true;
+                   $scope.invalidAmount = true;
                 }
 
                 if (form.$invalid || $scope.invalidAmount === true) {
@@ -205,6 +205,10 @@ angular.module('ocb-payments')
                             $scope.payment.transferId = transfer.referenceId;
                             $scope.payment.endOfDayWarning = transfer.endOfDayWarning;
                             $scope.payment.holiday = transfer.holiday;
+
+                            $scope.payment.token.params = {
+                                resourceId:transfer.referenceId
+                            }
                             setRealizationDateToCurrent();
                             actions.proceed();
                         }).catch(function(errorReason){
@@ -225,6 +229,7 @@ angular.module('ocb-payments')
                                 }
                             }
                         });
+
                     } catch(ex) {
                         console.error("Create transfer bill error: ", ex);
                     }
@@ -351,6 +356,9 @@ angular.module('ocb-payments')
                 return isAccountInvestmentFulfilsRules(account);
             });
         };
+
+
+
 
         $scope.recipientSelectParams = new rbAccountSelectParams({
             useFirstByDefault: false,

@@ -4,6 +4,5 @@
             <div class="rb-multistep-form-icon-{{::payment.result.type}} {{::payment.result.type}}-img"></div>
             <p class="title" ng-if="!removeFromBasket">{{::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate}}</p>
             <p class="title"  ng-if="removeFromBasket">{{::'ocb.payments.basket.delete.status.messages.' + payment.result.message | translate}}</p>
-            <p class="sumary" ng-bind-html="infoText"></p>
         </div>
 </div>

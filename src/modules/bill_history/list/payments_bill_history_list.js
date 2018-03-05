@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentsBillHistoryListController', function ($scope, bdTableConfig, dateFilter, translate, $filter, exportService, fileDownloadService, transferBillService, creditsService) {
+    .controller('PaymentsBillHistoryListController', function ($scope, bdTableConfig, dateFilter, translate, $filter, exportService, fileDownloadService, transferBillService, rbAccountSelectParams) {
 
         /*declare filterData*/
         $scope.filterData = {
@@ -22,10 +22,16 @@ angular.module('ocb-payments')
         $scope.onSenderAccountSelect = function () {
             $scope.senderAccountNo = $scope.prepaid.formData.selectedAccount.accountNo;
         };
-        function reloadTable(){
-            $scope.table.tableControl.invalidate();
+        function reloadTable() {
+            if ($scope.table.tableControl) {
+                $scope.table.tableControl.invalidate();
+            }
         }
         $scope.$watch('senderAccountNo', reloadTable);
+
+        $scope.accountSelectParams = new rbAccountSelectParams({
+            showCustomNames: true
+        });
 
         /*get date from form Filter*/
         function getDatesFromFilter() {

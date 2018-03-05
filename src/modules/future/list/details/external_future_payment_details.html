@@ -40,7 +40,7 @@
     </bd-item-property>
 
     <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.external.amount'|translate}}">
-        {{ $data.details.amount | number: 2}} {{ $data.details.currency }}
+        <bd-amount amount="$data.details.amount" currency="{{$data.details.currency}}"></bd-amount>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.future.list.details.external.amountInWords'|translate}}">
         {{amountInWords}} {{ $data.details.currency }}
@@ -52,4 +52,3 @@
         {{ $data.realizationDatePre}}
     </bd-item-property>
 </div>
-

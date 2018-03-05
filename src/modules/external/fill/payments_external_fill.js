@@ -33,8 +33,9 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsExternalFillController', function ($scope, $state, $stateParams, payment,
                                                             $filter, $q, transferService, accountsService,
-                                                            utilityService, validationRegexp, translate,
-                                                            rbAccountSelectParams, rbDatepickerOptions, bdFocus,
+                                                            utilityService, recipientGeneralService, validationRegexp, translate,
+                                                            rbAccountSelectParams, rbDatepickerOptions,
+                                                            rbRecipientOperationType, rbRecipientTypes, bdFocus,
                                                             bdFillStepInitializer, bdStepStateEvents) {
 
         var stateData = $state.$current.data;
@@ -244,6 +245,22 @@ angular.module('ocb-payments')
             });
         }
 
+        function createRecipient () {
+            var formData = payment.formData;
+            return recipient = {
+                bankCode: formData.bankCode,
+                beneficiary: new Array(""),
+                branchCode: formData.branchCode,
+                cardNumber: formData.cardNumber,
+                creditAccount: formData.recipientAccountNo,
+                debitAccount: formData.remitterAccountId,
+                province: null,
+                recipientType: rbRecipientTypes.EXTERNAL.code,
+                remarks: new Array(formData.description),
+                shortName: formData.recipientName
+            }
+        }
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if (!$scope.formReady) {
                 return;
@@ -259,6 +276,9 @@ angular.module('ocb-payments')
 
             if (!form.$invalid) {
                 payment.meta.referenceId = null;
+                if (payment.formData.addToBeneficiary === true) {
+                    recipientGeneralService.create(rbRecipientOperationType.NEW.code, rbRecipientTypes.EXTERNAL.state , createRecipient());
+                }
                 createTransfer().then(function () {
                     if (payment.meta.referenceId) {
                         actions.proceed();

@@ -19,7 +19,7 @@
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
-            {{payment.meta.remitter.branch}}
+            {{payment.items.remitterAccount.openBranch}}
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
@@ -170,6 +170,8 @@
                        ng-model="payment.formData.amount"
                        ng-pattern="AMOUNT_PATTERN"
                        required
+                       amount-input
+                       currency="{{payment.items.remitterAccount.currency}}"
                        placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"/>
                 <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
             </div>
@@ -190,6 +192,9 @@
                     {{::'ocb.payments.domestic.amount.error.limits' | translate}}
                 </div>
             </eb-validation-messages>
+        </bd-item-property>
+        <bd-item-property label="{{ ::'ocb.payments.domestic.amount_in_words.label' | translate }}">
+            {{payment.formData.amount | numberToText}}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--multirow"
@@ -247,5 +252,7 @@
         </bd-item-property>
 
         <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="modifyFromBasket"></rb-add-to-basket-select>
+
+        <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
     </div>
 </form>

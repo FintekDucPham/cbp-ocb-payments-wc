@@ -31,6 +31,68 @@ angular.module('ocb-payments')
             tableControl: undefined
         };
 
+        $scope.pendingTransaction.billData = {
+            paymentType: $scope.pendingTransaction.selectedTrans[0].paymentType,
+            amount: $scope.pendingTransaction.selectedTrans[0].account,
+            currency: $scope.pendingTransaction.selectedTrans[0].currency
+        }
+        /*prepare PKI data*/
+        $scope.pendingTransaction.token.modelData = function(){
+            var expInternal = $interpolate('<paymentType>{{paymentType}}</paymentType>'+
+                '<executionDate></executionDate>'+
+                '<debitAccount></debitAccount>'+
+                '<creditAccount></creditAccount>'+
+                '<customerId></customerId>'+
+                '<cRefNum></cRefNum>'+
+                '<amount>{{amount}}</amount>'+
+                '<currency>{{currency}}</currency>'+
+                '<sender></sender>'+
+                '<recipient></recipient>'+
+                '<remarks></remarks>'+
+                '<ebUserId></ebUserId>'+
+                '<creditAccountBankCode></creditAccountBankCode>'+
+                '<creditAccountBankBranchCode></creditAccountBankBranchCode>'+
+                '<creditAccountProvinceCode></creditAccountProvinceCode>'+
+                '<serviceCode></serviceCode>'+
+                '<serviceProviderCode></serviceProviderCode>'+
+                '<billCode></billCode>'+
+                '<billCodeItemNo></billCodeItemNo>'+
+                '<qty></qty>'+
+                '<mobilePhoneNumber></mobilePhoneNumber>'+
+                '<parValue></parValue>'+
+                '<partnerId></partnerId>'+
+                '<paymentCode></paymentCode>'+
+                '<recipientCardNumber></recipientCardNumber>'+
+                '<eWalletPhoneNumber></eWalletPhoneNumber>'+
+                '<autoCapitalisation></autoCapitalisation>'+
+                '<autoRollover></autoRollover>'+
+                '<currency>{{currency}}</currency>'+
+                '<dateFirstExecution></dateFirstExecution>'+
+                '<description></description>'+
+                '<frequencyAmount></frequencyAmount>'+
+                '<initialPrincipalAmount></initialPrincipalAmount>'+
+                '<interestLiquidationAccount></interestLiquidationAccount>'+
+                '<interestPaymentMethod></interestPaymentMethod>'+
+                '<interestRateType></interestRateType>'+
+                '<periodCount></periodCount>'+
+                '<periodFrequency></periodFrequency>'+
+                '<periodicDrawdownAccount></periodicDrawdownAccount>'+
+                '<periodicTransferDescription></periodicTransferDescription>'+
+                '<periodUnit></periodUnit>'+
+                '<principalDrawdownAccount></principalDrawdownAccount>'+
+                '<principalLiquidationAccount></principalLiquidationAccount>'+
+                '<productOwner></productOwner>'+
+                '<subProductCode></subProductCode>'+
+                '<termPeriodFrequency></termPeriodFrequency>'+
+                '<contractNumber></contractNumber>'+
+                '<interestLiquidationAccount></interestLiquidationAccount>'+
+                '<principalLiquidationAccount></principalLiquidationAccount>');
+
+            var xml = xmlData($scope.pendingTransaction.billData);
+            console.log(xml);
+            return xml;
+        };
+
         function sendAuthorizationToken() {
             $scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.transferId;
         }
@@ -46,9 +108,11 @@ angular.module('ocb-payments')
             var firstTran = $scope.pendingTransaction.selectedTrans[0];
 
             $scope.idForPrint = listTransID[0];
-            if(firstTran.operationStatus == 'WA') {
+            if(firstTran.operationStatus !== 'WA') {
                 //Approve
-                transferService.approve(listTransID, $scope.pendingTransaction.token.model.input.model).then(function (resultCode) {
+                transferService.approve(listTransID
+                    , $scope.pendingTransaction.token.model.input.model
+                    , $scope.pendingTransaction.token.model.currentToken.data.signedTransactionData).then(function (resultCode) {
                     var parts = resultCode.split('|');
                     $scope.pendingTransaction.result = {
                         code: parts[1],
