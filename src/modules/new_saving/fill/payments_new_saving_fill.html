@@ -112,7 +112,8 @@
                           label="{{ ::'ocb.payments.new.saving.fill.amount_figures.label' | translate }}">
 
             <div class="bd-item-property--multi__values">
-                <div class="bd-item-property__value--primary">
+                <div class="bd-item-property__value--primary"
+                     style="padding-right: 15px">
                     <input type="text"
                            name="amount"
                            class="input-field"
@@ -129,7 +130,7 @@
                            currency="{{payment.formData.currency}}"
                     />
                 </div>
-                <div class="bd-item-property__value--secondary" style="width:100px">
+                <div class="bd-item-property__value--secondary currency-amount" style="width:100px">
                     <ui-select ng-model="payment.formData.currency"
                                theme="bootstrap"
                                ng-disabled="payment.options.currencyLocked"
@@ -172,7 +173,7 @@
             </div>
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'ocb.payments.new.saving.amount_in_word.label' | translate }}">
+        <bd-item-property class="amount-wrapper" label="{{ ::'ocb.payments.new.saving.amount_in_word.label' | translate }}">
             {{payment.formData.amount | numberToText}}
         </bd-item-property>
 
