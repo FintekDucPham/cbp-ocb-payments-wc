@@ -96,6 +96,7 @@
   "ocb.payments.new.btn.final_action": "Lưu người nhận",
   "ocb.payments.new.btn.print_report": "In báo cáo",
   "ocb.payments.new.btn.add_as_standing_order": "Thêm lệnh chuyển định kì",
+  "ocb.payments.new.btn.completed": "Hoàn tất",
   "ocb.payments.error.label.serverError": "Không tìm thấy dữ liệu",
   "ocb.payments.new.verify.smscode": "Nhập OTP",
   "ocb.payments.new.verify.smscode.value": "Nhập OTP",
@@ -370,6 +371,7 @@
   "ocb.payments.recipients.new.domestic.fill.recipient_account.EMPTY_BNF_ACC": "Tài khoản người thụ hưởng không được để trống",
   "ocb.payments.recipients.new.domestic.fill.recipient_account.INCORECT_FORMAT_ACC": "Tài khoản người nhận phải theo định dạng [CCBBBBBBBBAAAAAAAAAAAAAAAA hoặc CC BBBB BBBB AAAA AAAA AAAA AAAA]",
   "ocb.payments.recipients.new.domestic.fill.recipient_account.SAME_ACCOUNT": "Tài khoản nhận phải khác với tài khoản  gửi",
+  "ocb.payments.recipients.new.domestic.fill.recipient_account.NO_ACCOUNT": "Danh sách tài khoản tiết kiệm trống",
   "ocb.payments.recipients.new.domestic.fill.recipient_name_address": "Tên và địa chỉ",
   "ocb.payments.recipients.new.domestic.fill.recipient_data.label": "Chi tiết người nhận",
   "ocb.payments.recipients.new.domestic.fill.recipient_data.placeholder": "Nhập chi tiết người thụ hưởng",
@@ -1156,6 +1158,8 @@
   "ocb.authorization.value.template.error.pattern":"Ký tự không được phép",
   "ocb.authorization.value.template.SMS.error.required":"Nhập OTP",
   "ocb.authorization.value.template.PKI.error.required":"Vui lòng thực hiện theo hướng dẫn, sau đó nhấn nút \"Ký\" ",
+  "ocb.payments.form.checkbox.true": "CÓ",
+  "ocb.payments.form.checkbox.false": "KHÔNG",
 
   "EOF": ""
 }
