@@ -330,10 +330,12 @@
         ></rb-add-to-basket-select>
 
         <rb-add-to-beneficiary-select
-            ng-if="!payment.meta.editFuturePayment"
+            ng-if="!payment.meta.editFuturePayment && !isRecipientSelected"
             rb-model="payment.formData"
-            rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"
-        ></rb-add-to-beneficiary-select>
-
+            rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary">
+        </rb-add-to-beneficiary-select>
     </div>
+</form>
+
+</div>
 </form>
