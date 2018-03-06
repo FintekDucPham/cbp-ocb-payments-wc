@@ -8,7 +8,8 @@ ebankingSharedModule.directive('rbBankSelect', function(pathService, domesticBan
         scope: {
             bankCode: '=rbBankCode',
             bank: '=rbBank',
-            placeholder: '@?rbPlaceholder'
+            placeholder: '@?rbPlaceholder',
+            onSelect: '&onSelect'
         },
 
         link: function postLink($scope, iElement, iAttrs, locationCtrl) {
@@ -56,6 +57,8 @@ ebankingSharedModule.directive('rbBankSelect', function(pathService, domesticBan
                     clearSelection();
                 } else {
                     setBank(bank);
+                    var bankCode = bank.bankCode;
+                    $scope.onSelect({ bankCode: bankCode });
                 }
             };
 

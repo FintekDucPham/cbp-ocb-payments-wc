@@ -1,30 +1,52 @@
 <eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
 <form name="paymentForm" novalidate ng-show="formReady">
     <div class="bd-form">
-        <div class="bd-form-header pd-bottom">{{::"ocb.payments.domestic.remitter_panel.label"|translate}}</div>
+        <div class="bd-form-header pd-bottom">
+            {{::"ocb.payments.domestic.remitter_panel.label"|translate}}
+        </div>
         <bd-item-property label="{{::'ocb.payments.domestic.remitter_account.label' | translate}}">
-            <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
-            <rb-account-select-v2 rb-account-id="payment.formData.remitterAccountId"
-                               rb-account="payment.items.remitterAccount"
-                               rb-account-list="payment.meta.accountList"
-                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                               rb-product-list-name="TRANSFER_FROM_LIST"
-                               rb-account-select-params="remitterAccountSelectParams"
-                               rb-remote="remote.model"</rb-account-select-v2>
+            <input
+                name="remitterAccountId"
+                hidden
+                ng-model="payment.formData.remitterAccountId"
+                required
+            />
+            <rb-account-select-v2
+                rb-account-id="payment.formData.remitterAccountId"
+                rb-account="payment.items.remitterAccount"
+                rb-account-list="payment.meta.accountList"
+                rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                rb-product-list-name="TRANSFER_FROM_LIST"
+                rb-account-select-params="remitterAccountSelectParams"
+                rb-remote="remote.model"
+                rb-on-account-select="onSelectSyncUserCache('remitterAccountId', $accountId)"
+            ></rb-account-select-v2>
         </bd-item-property>
 
-        <bd-item-property label="{{::'ocb.payments.domestic.remitter_name.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
+        <bd-item-property
+            label="{{::'ocb.payments.domestic.remitter_name.label' | translate}}"
+            class="bd-item-property--text bd-item-property--disabled"
+        >
             <!--{{payment.meta.remitter.fullName}}-->
             <p ng-bind-html="payment.items.remitterAccount | accountOwners"></p>
         </bd-item-property>
 
-        <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
+        <bd-item-property
+            label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}"
+            class="bd-item-property--text bd-item-property--disabled"
+        >
             {{payment.items.remitterAccount.openBranch}}
         </bd-item-property>
 
-        <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
-                          class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount ng-if="payment.meta.availableFunds !== null" amount="payment.meta.availableFunds" currency="{{payment.items.remitterAccount.currency}}"></bd-amount>
+        <bd-item-property
+            label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
+            class="accesibleAssetsInline accesibleAssetsBold"
+        >
+            <bd-amount
+                ng-if="payment.meta.availableFunds !== null"
+                amount="payment.meta.availableFunds"
+                currency="{{payment.items.remitterAccount.currency}}"
+            ></bd-amount>
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.daily_limit.label' | translate}}">
@@ -35,33 +57,38 @@
     <div class="bd-form">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.domestic.recipient_panel.label"|translate}}</div>
         <bd-item-property class="bd-item-property--multirow" label="{{::'ocb.payments.domestic.recipient.label' | translate}}">
-            <rb-recipient-select rb-recipient="payment.items.recipient"
-                                 rb-recipient-id="payment.formData.recipientId"
-                                 rb-recipient-list="payment.meta.recipientList"
-                                 rb-filer-template-type="EXTERNAL"
-                                 rb-recipient-clear-text="{{::'ocb.payments.domestic.recipient.clear' | translate}}"
-                                 rb-recipient-placeholder-text="{{::'ocb.payments.domestic.recipient.placeholder' | translate}}"
-                                 rb-recipient-layout="DEFAULT"
-                                 rb-on-recipient-clear="onRecipientCleared()"
-                                 rb-on-recipient-select="onRecipientSelected($recipient)"></rb-recipient-select>
+            <rb-recipient-select
+                rb-recipient="payment.items.recipient"
+                rb-recipient-id="payment.formData.recipientId"
+                rb-recipient-list="payment.meta.recipientList"
+                rb-filer-template-type="EXTERNAL"
+                rb-recipient-clear-text="{{::'ocb.payments.domestic.recipient.clear' | translate}}"
+                rb-recipient-placeholder-text="{{::'ocb.payments.domestic.recipient.placeholder' | translate}}"
+                rb-recipient-layout="DEFAULT"
+                rb-on-recipient-clear="onRecipientCleared()"
+                rb-on-recipient-select="onRecipientSelected($recipient)"
+            ></rb-recipient-select>
         </bd-item-property>
 
         <rb-paste-warning ng-init="pasteWarning=this">
             <!--rb-paste-warning provides: showHide, rbPasteTrigger, unlockField, isOk, isErrorPaste-->
             <bd-item-property label="{{::'ocb.payments.domestic.recipient_account.label' | translate}}">
-                <input type="text"
-                       name="recipientAccountNo"
-                       ng-model="payment.formData.recipientAccountNo"
-                       ng-disabled="payment.items.recipient"
-                       required
-                       bd-account-digit="external"
-                       bd-matches-none-of="recipientAccountValidators"
-                       placeholder="{{::'ocb.payments.domestic.recipient_account.placeholder' | translate}}"
-                       class="input-field"
-                       ng-hide="showHide"
-                       ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-                       ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
-                       ng-change="unlockField()">
+                <input
+                    type="text"
+                    name="recipientAccountNo"
+                    ng-model="payment.formData.recipientAccountNo"
+                    ng-disabled="payment.items.recipient"
+                    required
+                    bd-account-digit="external"
+                    bd-matches-none-of="recipientAccountValidators"
+                    placeholder="{{::'ocb.payments.domestic.recipient_account.placeholder' | translate}}"
+                    class="input-field"
+                    ng-hide="showHide"
+                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
+                    ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
+                    ng-change="unlockField()"
+                    ng-blur="onBlurUserCacheEvent('recipientAccountNo', $event)"
+                >
                 <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                     <div class="validation-message animate-on">
@@ -87,9 +114,16 @@
                 <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
                 {{properties2}}{{::'ocb.payments.new.domestic.fill.account.warning3' | translate}}
 
-                <input id="maskNumer" name="nrbCheck" type="text" ng-model="pasteWarning.nrbCheck" size="{{digit}}"
-                       ng-change="rbCheckNrb(this)" required maxlength="{{digit}}"
-                       ng-paste="$event.stopPropagation();$event.preventDefault();">
+                <input
+                    id="maskNumer"
+                    name="nrbCheck"
+                    type="text"
+                    ng-model="pasteWarning.nrbCheck"
+                    size="{{digit}}"
+                    ng-change="rbCheckNrb(this)"
+                    required maxlength="{{digit}}"
+                    ng-paste="$event.stopPropagation();$event.preventDefault();"
+                >
                 <eb-validation-messages eb-name="nrbCheck">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.new.domestic.fill.error.paste.required' | translate}}
@@ -98,16 +132,21 @@
             </div>
         </rb-paste-warning>
 
-        <bd-item-property class="bd-item-property--multirow"
-                          label="{{::'ocb.payments.domestic.recipient_name.label' | translate}}">
-            <textarea name="recipientName"
-                      ng-model="payment.formData.recipientName"
-                      ng-pattern="RECIPIENT_DATA_REGEX"
-                      required
-                      rb-split-array
-                      split-text-max-length-validators="140"
-                      class="input-field input-area--party-data"
-                      placeholder="{{::'ocb.payments.domestic.recipient_name.placeholder' | translate}}"></textarea>
+        <bd-item-property
+            class="bd-item-property--multirow"
+            label="{{::'ocb.payments.domestic.recipient_name.label' | translate}}"
+        >
+            <textarea
+                name="recipientName"
+                ng-model="payment.formData.recipientName"
+                ng-pattern="RECIPIENT_DATA_REGEX"
+                required
+                rb-split-array
+                split-text-max-length-validators="140"
+                class="input-field input-area--party-data"
+                placeholder="{{::'ocb.payments.domestic.recipient_name.placeholder' | translate}}"
+                ng-blur="onBlurUserCacheEvent('recipientName', $event)"
+            ></textarea>
             <eb-validation-messages eb-name="recipientName">
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'ocb.payments.domestic.recipient_name.error.empty' | translate}}
@@ -126,10 +165,19 @@
 
         <rb-recipient-location>
             <bd-item-property label="{{::'ocb.payments.domestic.province.label' | translate}}">
-                <input name="province" hidden ng-model="payment.formData.province" required/>
-                <rb-province-select rb-province="payment.formData.province"
-                                    rb-province-item="payment.items.province"
-                                    rb-placeholder="{{::'ocb.payments.domestic.province.placeholder' | translate}}"></rb-province-select>
+                <input
+                    name="province"
+                    hidden
+                    ng-model="payment.formData.province"
+                    required
+                    ng-blur="onBlurUserCacheEvent('province', $event)"
+                />
+                <rb-province-select
+                    rb-province="payment.formData.province"
+                    rb-province-item="payment.items.province"
+                    rb-placeholder="{{::'ocb.payments.domestic.province.placeholder' | translate}}"
+                    on-select="onSelectSyncUserCache('province', province)"
+                ></rb-province-select>
                 <eb-validation-messages eb-name="province">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.province.error.empty' | translate}}
@@ -137,10 +185,18 @@
                 </eb-validation-messages>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.domestic.bank.label' | translate}}">
-                <input name="bankCode" hidden ng-model="payment.formData.bankCode" required/>
-                <rb-bank-select rb-bank-code="payment.formData.bankCode"
-                                rb-bank="payment.items.bank"
-                                rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"></rb-bank-select>
+                <input
+                    name="bankCode"
+                    hidden
+                    ng-model="payment.formData.bankCode"
+                    required
+                />
+                <rb-bank-select
+                    rb-bank-code="payment.formData.bankCode"
+                    rb-bank="payment.items.bank"
+                    rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"
+                    on-select="onSelectSyncUserCache('bankCode', bankCode)"
+                ></rb-bank-select>
                 <eb-validation-messages eb-name="bankCode">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.bank.error.empty'|translate}}
@@ -148,10 +204,18 @@
                 </eb-validation-messages>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.domestic.branch.label' | translate}}">
-                <input name="branchCode" hidden ng-model="payment.formData.branchCode" required/>
-                <rb-branch-select rb-branch-code="payment.formData.branchCode"
-                                  rb-branch="payment.items.branch"
-                                  rb-placeholder="{{::'ocb.payments.domestic.branch.placeholder' | translate}}"></rb-branch-select>
+                <input
+                    name="branchCode"
+                    hidden
+                    ng-model="payment.formData.branchCode"
+                    required
+                />
+                <rb-branch-select
+                    rb-branch-code="payment.formData.branchCode"
+                    rb-branch="payment.items.branch"
+                    rb-placeholder="{{::'ocb.payments.domestic.branch.placeholder' | translate}}"
+                    on-select="onSelectSyncUserCache('branchCode', branchCode)"
+                ></rb-branch-select>
                 <eb-validation-messages eb-name="branchCode">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.branch.error.empty' | translate}}
@@ -162,17 +226,20 @@
 
         <bd-item-property label="{{::'ocb.payments.domestic.amount.label' | translate}}">
             <div class="control-has-indicator">
-                <input type="text"
-                       name="amount"
-                       rb-number-type-input
-                       ng-min="0.01"
-                       class="input-field"
-                       ng-model="payment.formData.amount"
-                       ng-pattern="AMOUNT_PATTERN"
-                       required
-                       amount-input
-                       currency="{{payment.items.remitterAccount.currency}}"
-                       placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"/>
+                <input
+                    type="text"
+                    name="amount"
+                    rb-number-type-input
+                    ng-min="0.01"
+                    class="input-field"
+                    ng-model="payment.formData.amount"
+                    ng-pattern="AMOUNT_PATTERN"
+                    required
+                    amount-input
+                    currency="{{payment.items.remitterAccount.currency}}"
+                    placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"
+                    ng-blur="onBlurUserCacheEvent('amount', $event)"
+                />
                 <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
             </div>
             <eb-validation-messages eb-name="amount">
@@ -197,16 +264,21 @@
             {{payment.formData.amount | numberToText}}
         </bd-item-property>
 
-        <bd-item-property class="bd-item-property--multirow"
-                          label="{{::'ocb.payments.domestic.description.label' | translate}}">
-            <textarea ng-if="payment.meta.maxDescriptionLength" name="description"
-                      ng-model="payment.formData.description"
-                      class="input-field input-area--payment-description"
-                      required
-                      rb-split-array
-                      split-text-max-length-validators="{{::payment.meta.maxDescriptionLength}}"
-                      ng-pattern="PAYMENT_DESCRIPTION_REGEX"
-                      placeholder="{{::'ocb.payments.domestic.description.placeholder' | translate }}"></textarea>
+        <bd-item-property
+            class="bd-item-property--multirow"
+            label="{{::'ocb.payments.domestic.description.label' | translate}}"
+        >
+            <textarea
+                ng-if="payment.meta.maxDescriptionLength" name="description"
+                ng-model="payment.formData.description"
+                class="input-field input-area--payment-description"
+                required
+                rb-split-array
+                split-text-max-length-validators="{{::payment.meta.maxDescriptionLength}}"
+                ng-pattern="PAYMENT_DESCRIPTION_REGEX"
+                placeholder="{{::'ocb.payments.domestic.description.placeholder' | translate }}"
+                ng-blur="onBlurUserCacheEvent('description', $event)"
+            ></textarea>
             <eb-validation-messages eb-name="description">
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'ocb.payments.domestic.description.error.empty' | translate}}
@@ -225,12 +297,13 @@
 
         <bd-item-property label="{{ ::'ocb.payments.domestic.realization_date.label' | translate }}">
             <rb-datepicker
-                    ng-model="payment.formData.realizationDate"
-                    rb-form="paymentForm"
-                    rb-name="realizationDate"
-                    ng-if="rbRealizationDateOptions"
-                    rb-datepicker-options="rbRealizationDateOptions"
-                    rb-required="true">
+                ng-model="payment.formData.realizationDate"
+                rb-form="paymentForm"
+                rb-name="realizationDate"
+                ng-if="rbRealizationDateOptions"
+                rb-datepicker-options="rbRealizationDateOptions"
+                rb-required="true"
+            >
             </rb-datepicker>
             <eb-validation-messages eb-name="realizationDate">
                 <div eb-message-key="required" class="validation-message animate-on">
@@ -251,8 +324,15 @@
             </eb-validation-messages>
         </bd-item-property>
 
-        <rb-add-to-basket-select rb-model="payment.formData" rb-modify-from-basket="modifyFromBasket"></rb-add-to-basket-select>
+        <rb-add-to-basket-select
+            rb-model="payment.formData"
+            rb-modify-from-basket="modifyFromBasket"
+        ></rb-add-to-basket-select>
 
-        <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
+        <rb-add-to-beneficiary-select
+            ng-if="!payment.meta.editFuturePayment"
+            rb-model="payment.formData"
+            rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"
+        ></rb-add-to-beneficiary-select>
     </div>
 </form>

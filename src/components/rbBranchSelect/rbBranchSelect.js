@@ -8,7 +8,8 @@ ebankingSharedModule.directive('rbBranchSelect', function(pathService) {
         scope: {
             branchCode: '=rbBranchCode',
             branch: '=?rbBranch',
-            placeholder: '@?rbPlaceholder'
+            placeholder: '@?rbPlaceholder',
+            onSelect: '&onSelect'
         },
 
         link: function postLink($scope, iElement, iAttrs, locationCtrl) {
@@ -54,6 +55,8 @@ ebankingSharedModule.directive('rbBranchSelect', function(pathService) {
                     clearSelection();
                 } else {
                     setBranch(branch);
+                    var branchCode = branch.branchCode;
+                    $scope.onSelect({ branchCode: branchCode });
                 }
             };
 

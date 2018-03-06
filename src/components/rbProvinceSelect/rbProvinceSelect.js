@@ -8,7 +8,8 @@ ebankingSharedModule.directive('rbProvinceSelect', function(pathService, provinc
         scope: {
             province: '=?rbProvince',
             provinceItem: '=?rbProvinceItem',
-            placeholder: '@?rbPlaceholder'
+            placeholder: '@?rbPlaceholder',
+            onSelect: '&onSelect'
         },
 
         link: function postLink($scope, iElement, iAttrs, locationCtrl) {
@@ -46,6 +47,8 @@ ebankingSharedModule.directive('rbProvinceSelect', function(pathService, provinc
                     clearSelection();
                 } else {
                     setProvince(province);
+                    var provinceCode = province.code;
+                    $scope.onSelect({ province: provinceCode });
                 }
             };
 

@@ -31,12 +31,72 @@ angular.module('ocb-payments')
             .state('payments.external.basket.modify.fill', angular.copy(prototype))
             .state('payments.external.future.modify.fill', angular.copy(prototype));
     })
-    .controller('PaymentsExternalFillController', function ($scope, $state, $stateParams, payment,
-                                                            $filter, $q, transferService, accountsService,
-                                                            utilityService, recipientGeneralService, validationRegexp, translate,
-                                                            rbAccountSelectParams, rbDatepickerOptions,
-                                                            rbRecipientOperationType, rbRecipientTypes, bdFocus,
-                                                            bdFillStepInitializer, bdStepStateEvents) {
+    .controller('PaymentsExternalFillController', function (
+        $scope,
+        $state,
+        $stateParams,
+        payment,
+        $filter,
+        $q,
+        transferService,
+        accountsService,
+        utilityService,
+        recipientGeneralService,
+        validationRegexp,
+        translate,
+        rbAccountSelectParams,
+        rbDatepickerOptions,
+        rbRecipientOperationType,
+        rbRecipientTypes,
+        bdFocus,
+        bdFillStepInitializer,
+        bdStepStateEvents,
+        userCacheHttpHandler
+    ) {
+        // ============================================
+        // ========= start of cache user data =========
+        // ============================================
+        var screenName = 'payments_external_new_fill';
+        $scope.userCacheForm = {};
+        userCacheHttpHandler.get(screenName).then(function(data){
+            if (data.realizationDate) {
+                data.realizationDate = new Date(data.realizationDate)
+            }
+            $scope.payment.formData = data;
+            $scope.userCacheForm = data;
+            // datepicker component doesn't support custom onBlur props -> so we use watch variable instead of onBlur
+            $scope.$watch('payment.formData.realizationDate', function(newValue) {
+                changeUserCacheMiddleware('realizationDate', newValue)
+            }, true);
+
+            // checkbox component doesn't support custom onSelect props -> so we use watch variable instead of onBlur
+            $scope.$watch('payment.formData.addToBasket', function(newValue) {
+                changeUserCacheMiddleware('addToBasket', newValue)
+            }, true);
+            $scope.$watch('payment.formData.addToBeneficiary', function(newValue) {
+                changeUserCacheMiddleware('addToBeneficiary', newValue)
+            }, true);
+        });
+
+        $scope.onSelectSyncUserCache = function(name, value) {
+            changeUserCacheMiddleware(name, value)
+        };
+
+        $scope.onBlurUserCacheEvent = function(name, $event) {
+            const newValue = $event.target.value;
+            changeUserCacheMiddleware(name, newValue)
+        };
+
+        var changeUserCacheMiddleware = function(name, newValue){
+            var valuesToUserCache = {};
+            valuesToUserCache[name] = newValue;
+            var newCacheValues = Object.assign({}, $scope.userCacheForm, valuesToUserCache);
+            $scope.userCacheForm = newCacheValues;
+            userCacheHttpHandler.save(screenName, newCacheValues);
+        };
+        // ============================================
+        // ========== end of cache user data ==========
+        // ============================================
 
         var stateData = $state.$current.data;
         var transferReferenceId = stateData.newPayment ? null : $stateParams.referenceId;
@@ -57,8 +117,10 @@ angular.module('ocb-payments')
                 readDataFromServer: false
             });
 
-            $scope.tooLongDescriptionMsg = translate.property('ocb.payments.domestic.description.error.invalid').replace('##length##', payment.meta.maxDescriptionLength);
-            $scope.tooFarRealizationDateMsg = translate.property('ocb.payments.domestic.realization_date.error.too_far').replace('##date##', $filter('dateFilter')(options.maxDate));
+            $scope.tooLongDescriptionMsg = translate.property('ocb.payments.domestic.description.error.invalid')
+                .replace('##length##', payment.meta.maxDescriptionLength);
+            $scope.tooFarRealizationDateMsg = translate.property('ocb.payments.domestic.realization_date.error.too_far')
+                .replace('##date##', $filter('dateFilter')(options.maxDate));
 
             var defer = new $q.defer();
 
