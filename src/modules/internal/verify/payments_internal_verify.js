@@ -105,8 +105,10 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsInternalVerifyController', function ($scope, $state, payment,
                                                               $q, transferService, paymentsBasketService,
+                                                              recipientGeneralService,
                                                               RB_TOKEN_AUTHORIZATION_CONSTANTS, ocbConvert, language,
-                                                              bdVerifyStepInitializer, bdStepStateEvents) {
+                                                              bdVerifyStepInitializer, bdStepStateEvents,
+                                                              rbRecipientOperationType, rbRecipientTypes) {
 
         var stateData = $state.$current.data;
         var removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
@@ -219,10 +221,29 @@ angular.module('ocb-payments')
             });
         }
 
+        function createRecipient () {
+            var formData = payment.formData;
+            return recipient = {
+                bankCode: formData.bankCode,
+                beneficiary: new Array(""),
+                branchCode: null,
+                cardNumber: formData.cardNumber,
+                creditAccount: formData.recipientAccountNo,
+                debitAccount: formData.remitterAccountId,
+                province: null,
+                recipientType: rbRecipientTypes.INTERNAL.code,
+                remarks: new Array(formData.description),
+                shortName: formData.recipientName
+            }
+        }
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var token = payment.token;
             if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if (token.model.input.$isValid()) {
+                    if (payment.formData.addToBeneficiary === true) {
+                        recipientGeneralService.create(rbRecipientOperationType.NEW.code, rbRecipientTypes.INTERNAL.state , createRecipient());
+                    }
                     authorize().then(function () {
                         if (payment.result.type) {
                             actions.proceed();

@@ -1157,6 +1157,7 @@
 
   "ocb.payments.form.checkbox.true": "YES",
   "ocb.payments.form.checkbox.false": "NO",
+  "ocb.payments.recipient.create.status": "Recepient was successfully created",
 
   "EOF": ""
 }
