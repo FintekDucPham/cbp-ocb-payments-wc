@@ -1,7 +1,7 @@
 <form novalidate name="futureDatePanelForm" ng-submit="onSubmitForm(futureDatePanelForm)" class="basketSearchPanel rb-transaction-filter">
     <div class="row basketSearchPanel__account-section">
-        <div class="col-md-10 col-sm-12" style="text-align: left;">
-            <bd-item-property label="{{::'account.statement.select.label'|translate}}">
+        <div class="col-md-8 col-sm-12" style="text-align: left;">
+            <bd-item-property class="account-select" label="{{::'account.statement.select.label'|translate}}">
                 <ui-select ng-model="inputData.selectedAccount"
                            theme="bootstrap"
                            reset-search-input="false"
@@ -53,37 +53,35 @@
             </bd-item-property>
         </div>
 
-        <div class="col-md-2 col-sm-12" style="text-align: right;">
-            <bd-button class="bd-button__primary bd-md-button-margin" type="submit">{{::'ocb.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
-        </div>
-    </div>
-
-    <div class="row" ng-show="!advancedSearch">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <bd-item-property label="{{::'ocb.payments.basket.search.panel.advanced.label'|translate}}" id="historyRange">
+        <div class="col-md-4 col-sm-12 advancedSearch" style="text-align: right;">
+            <bd-button class="bd-button__primary bd-md-button-margin" style="margin-top: 0" type="submit">{{::'ocb.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
+            <div class="row advancedSearchRow" ng-show="!advancedSearch" style="">
                 <div class="rb-transaction-filter__container" ng-click="showAdvanced()">
                     <div class="rb-transaction-filter__container__last">
-                        <div class="arrow expand" style="display: inline-block;"></div>
                         <div class="rb-transaction-filter__panel-primary__header__instruction"  style="display: inline-block; margin-left: 10px;">{{::'account.balances.filter.advanced.show'|translate}}</div>
                     </div>
-                    <div class="rb-transaction-filter__container">
-                        <div class="rb-transaction-filter__container__adjust">
-                            <div class="line"></div>
+                </div>
+            </div>
+            <div class="row advancedSearchRow" ng-show="advancedSearch">
+                <div class="rb-transaction-filter__container" ng-click="hideAdvanced()">
+                    <div class="rb-transaction-filter__container__last" ng-click="hide()">
+                        <div class="rb-transaction-filter__panel-primary__header__instruction"
+                             style="display: inline-block; margin-left: 10px;">
+                            {{::'account.transactions.select.filter.advanced.hideText'|translate}}
                         </div>
                     </div>
                 </div>
-            </bd-item-property>
+            </div>
         </div>
     </div>
 
     <div class="row basketSearchPanel__advanced-section" ng-show="advancedSearch">
-        <div class="col-md-5 col-sm-12 basketSearchPanel__advanced-section__left-panel">
-            <bd-radio-select bd-model="inputData.selectedMode">
+        <div class="col-lg-6 col-md-6 basketSearchPanel__advanced-section__left-panel" style="padding:15px;">
+            <bd-item-property label="{{::'account.balances.filter.advanced.selectDate'|translate}}"/>
+            <bd-radio-select bd-model="inputData.selectedMFUTURE_DATE_TYPES.PERIODode">
                 <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.PERIOD">
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{:: 'ocb.payments.components.futureDatePanel.dateTypes.PERIOD' | translate}}
-                    </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:37px;">
+                    <div class="radio-label">{{ ::'ocb.payments.components.futureDatePanel.dateTypes.PERIOD'|translate }}</div>
+                    <div class="row__inline-block--middle row__inline-block--adjacent payment-basket-date-value">
                         <input
                                 bd-type="number"
                                 class="input-field"
@@ -92,7 +90,7 @@
                                 ng-required="inputData.selectedMode===FUTURE_DATE_TYPES.PERIOD"
                                 ng-pattern="/^\d+$/"/>
                     </div>
-                    <div class="row__inline-block--middle" style="width:90px;">
+                    <div class="row__inline-block--middle payment-basket-date-type">
                         <ui-select ng-model="inputData.periodRange"
                                    theme="bootstrap"
                                    reset-search-input="false">
@@ -107,12 +105,9 @@
                 </bd-radio-option>
                 <div class="basket-no-padding">
                     <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE">
-                        <div class="dateLabel">
-                            {{ ::'account.transactions.select.filter.date.label'|translate }}
-                        </div>
+                        <div class="radio-label">{{ ::'account.transactions.select.filter.date.label'|translate }}</div>
                         <div class="dateRange">
-                            <div style="display: inline-flex; ">
-                                <div class="dateRangeLabel">{{::'ocb.payments.components.futureDatePanel.labels.from'|translate}}</div>&nbsp;
+                            <div style="display: inline-flex;margin-bottom: 10px;" class="payment-basket-from">
                                 <rb-datepicker ng-model="inputData.dateFrom"
                                                ng-model-options="{ allowInvalid: false }"
                                                rb-name="dateFromInput"
@@ -120,8 +115,7 @@
                                                class="rb-datepicker--right-aligned-xs"
                                         ></rb-datepicker>
                         </div>
-                            <div style="display: inline-flex; ">
-                                <div class="dateRangeLabel">{{::'ocb.payments.components.futureDatePanel.labels.to'|translate}}</div>&nbsp;
+                            <div style="display: inline-flex;" class="payment-basket-to">
                                 <rb-datepicker ng-model="inputData.dateTo"
                                                ng-model-options="{ allowInvalid: false }"
                                                rb-name="dateToInput"
@@ -135,42 +129,41 @@
 
         </div>
 
-        <div class="col-md-7 col-sm-12 basketSearchPanel__advanced-section__right-panel">
-            <div class="basketSearchPanel__advanced-section__right-panel__item">
-                <bd-amount-range name-min="amountFrom" name-max="amountTo" infinite-min="true" label="{{::'account.transactions.list.amount'|translate}}" label-min=" {{::'account.transactions.select.filter.date.from.label'|translate}}" label-max=" {{::'account.transactions.select.filter.date.to.label'|translate}}" range="inputData.amountRange" validate-pattern="advancedSearch"></bd-amount-range>
-            </div>
-
-            <div class="basketSearchPanel__advanced-section__right-panel__item">
-                <div ng-show="options.context == 'MICRO'" class="basketSearchPanel__advanced-section__right-panel__item__status">
-                    <bd-item-property label="{{::'ocb.payments.basket.search.panel.status'|translate}}">
-                        <div ng-dropdown-multiselect="" options="PAYMENT_BASKET_STATUS_LIST" selected-model="inputData.status" style=" position: relative;" events="onItemSelect();onItemDeselect()" extra-settings="filterStatusExtraSettings"></div>
-                    </bd-item-property>
-                </div>
-                <div class="basketSearchPanel__advanced-section__right-panel__item__button">
-                    <bd-button class="bd-button" ng-click="clearFilter()" bd-id="clear_filter_desktop" eb-analytics-disabled type="button">
-                        <i class="eb-icon eb-ico-filter-applied eb-ocb-theme"></i>
-                        {{::'account.transactions.select.filter.button.clear'|translate}}
-                    </bd-button>
-                </div>
-            </div>
-
+        <div class="col-lg-6 col-md-6 basketSearchPanel__advanced-section__right-panel" style="padding:15px;padding-bottom: 100px">
+                <span style="color: #ccc;float: left;">
+                    <span style="color: #ccc;">
+                        {{::'account.invoices.total_amount'|translate}}:
+                    </span>
+                    <span style="color: #088A48; font-weight: bold;">
+                        {{data.amountRange.min | number:0}} VND - {{data.amountRange.max | number:0}} VND
+                    </span>
+                </span>
+                <rzslider
+                        rz-slider-model="data.amountRange.min"
+                        rz-slider-high="data.amountRange.max"
+                        rz-slider-options="{
+                            floor:inputData.amountRange.min,
+                            ceil:inputData.amountRange.max,
+                            step:inputData.amountRange.step
+                            }"
+                ></rzslider>
+                <span style="color: #ccc;">
+                    <span style="float: left">
+                        {{inputData.amountRange.min | number:0}} VND
+                    </span>
+                    <span style="float:right;">
+                        {{inputData.amountRange.max | number:0}} VND
+                    </span>
+                </span>
+            </rb-search-row>
         </div>
-    </div>
-
-    <div class="row" ng-show="advancedSearch">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="rb-transaction-filter__container" ng-click="hideAdvanced()">
-                <div class="rb-transaction-filter__container__last" ng-click="hide()">
-                    <div class="arrow fold" style="display: inline-block;"></div>
-                    <div class="rb-transaction-filter__panel-primary__header__instruction"
-                         style="display: inline-block; margin-left: 10px;">
-                        {{::'account.transactions.select.filter.advanced.hideText'|translate}}
-                    </div>
-                </div>
-                <div class="rb-transaction-filter__container__adjust">
-                    <div class="line"></div>
-                </div>
-            </div>
+        <div class="basketSearchPanel__advanced-section__right-panel__item" style="position: absolute;bottom: 0;right: 20px;">
+            <span class="clear-button" ng-click="clearFilter()">
+                {{::'account.transactions.select.filter.button.clear'|translate}}
+            </span>
+            <bd-button class="bd-button__primary bd-md-button-margin" type="submit">
+                {{::'ocb.payments.components.basketSearchPanel.labels.search'|translate}}
+            </bd-button>
         </div>
     </div>
 

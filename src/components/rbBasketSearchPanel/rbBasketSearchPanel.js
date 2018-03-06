@@ -79,7 +79,11 @@ angular.module('ocb-payments')
 
                 $scope.data = {
                     dateRange: {},
-                    amountRange: {}
+                    amountRange: {
+                        min:0,
+                        max:1000000000,
+                        step:1000
+                    }
                 };
 
                 var selectWaiting = function(){
@@ -180,8 +184,9 @@ angular.module('ocb-payments')
                             status: [{id:PAYMENT_BASKET_STATUS.NEW}, {id:PAYMENT_BASKET_STATUS.TO_ACCEPT}, {id:PAYMENT_BASKET_STATUS.READY}],
                             selectedAccount: getSelectedAccount(options.account),
                             amountRange:{
-                                min:null,
-                                max:null
+                                min:$scope.data.amountRange.min,
+                                max:$scope.data.amountRange.max,
+                                step:$scope.data.amountRange.step
                             }
                         };
                     }else {
@@ -195,7 +200,8 @@ angular.module('ocb-payments')
                             selectedAccount: getSelectedAccount(options.account, $scope.inputDataCommited.selectedAccount.accountId),
                             amountRange:{
                                 min: $scope.inputDataCommited.amountRange.min,
-                                max: $scope.inputDataCommited.amountRange.max
+                                max: $scope.inputDataCommited.amountRange.max,
+                                step: $scope.inputDataCommited.amountRange.step
                             }
                         };
                     }

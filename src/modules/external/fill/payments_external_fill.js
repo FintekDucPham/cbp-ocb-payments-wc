@@ -41,13 +41,10 @@ angular.module('ocb-payments')
         transferService,
         accountsService,
         utilityService,
-        recipientGeneralService,
         validationRegexp,
         translate,
         rbAccountSelectParams,
         rbDatepickerOptions,
-        rbRecipientOperationType,
-        rbRecipientTypes,
         bdFocus,
         bdFillStepInitializer,
         bdStepStateEvents,
@@ -98,6 +95,7 @@ angular.module('ocb-payments')
         // ========== end of cache user data ==========
         // ============================================
 
+        $scope.isRecipientSelected = false;
         var stateData = $state.$current.data;
         var transferReferenceId = stateData.newPayment ? null : $stateParams.referenceId;
         var transferOperation = stateData.futurePayment ? 'modify' : 'create';
@@ -221,17 +219,19 @@ angular.module('ocb-payments')
             formData.bankCode = null;
             formData.branchCode = null;
             formData.description = null;
+            $scope.isRecipientSelected = false;
         }
 
         function setRecipientData (recipient) {
             var formData = payment.formData;
             formData.recipientId = recipient.recipientId;
             formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
-            formData.recipientName = recipient.data.join('');
+            formData.recipientName = recipient.name;
             formData.province = recipient.province;
             formData.bankCode = recipient.bankCode;
             formData.branchCode = recipient.branchCode;
             formData.description = recipient.title.join('');
+            $scope.isRecipientSelected = true;
         }
 
         $scope.onRecipientSelected = function (recipient) {
@@ -307,22 +307,6 @@ angular.module('ocb-payments')
             });
         }
 
-        function createRecipient () {
-            var formData = payment.formData;
-            return recipient = {
-                bankCode: formData.bankCode,
-                beneficiary: new Array(""),
-                branchCode: formData.branchCode,
-                cardNumber: formData.cardNumber,
-                creditAccount: formData.recipientAccountNo,
-                debitAccount: formData.remitterAccountId,
-                province: null,
-                recipientType: rbRecipientTypes.EXTERNAL.code,
-                remarks: new Array(formData.description),
-                shortName: formData.recipientName
-            }
-        }
-
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if (!$scope.formReady) {
                 return;
@@ -338,9 +322,6 @@ angular.module('ocb-payments')
 
             if (!form.$invalid) {
                 payment.meta.referenceId = null;
-                if (payment.formData.addToBeneficiary === true) {
-                    recipientGeneralService.create(rbRecipientOperationType.NEW.code, rbRecipientTypes.EXTERNAL.state , createRecipient());
-                }
                 createTransfer().then(function () {
                     if (payment.meta.referenceId) {
                         actions.proceed();

@@ -32,11 +32,11 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsFastFillController', function ($scope, $state, $stateParams, payment,
                                                             $filter, $q, transferService, accountsService,
-                                                            utilityService, recipientGeneralService, validationRegexp, translate,
-                                                            rbAccountSelectParams, rbDatepickerOptions,
-                                                            rbRecipientOperationType, rbRecipientTypes, bdFocus,
+                                                            utilityService, validationRegexp, translate,
+                                                            rbAccountSelectParams, rbDatepickerOptions, bdFocus,
                                                             bdFillStepInitializer, bdStepStateEvents) {
 
+        $scope.isRecipientSelected = false;
         var stateData = $state.$current.data;
         var transferReferenceId = stateData.newPayment ? null : $stateParams.referenceId;
         var transferOperation = 'create';
@@ -151,12 +151,13 @@ angular.module('ocb-payments')
             formData.recipientAccountNo = null;
             formData.bankCode = null;
             formData.cardNumber = null;
+            $scope.isRecipientSelected = false;
         }
 
         function setRecipientData (recipient) {
             var formData = payment.formData;
             formData.recipientId = recipient.recipientId;
-            formData.recipientName = recipient.data.join('');
+            formData.recipientName = recipient.name;
             formData.description = recipient.title.join('');
             if (recipient.cardNumber) {
                 formData.paymentTarget = 'CARD';
@@ -166,6 +167,7 @@ angular.module('ocb-payments')
                 formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
                 formData.bankCode = recipient.bankCode;
             }
+            $scope.isRecipientSelected = true;
         }
 
         $scope.onRecipientSelected = function (recipient) {
@@ -272,9 +274,6 @@ angular.module('ocb-payments')
 
             if (!form.$invalid) {
                 payment.meta.referenceId = null;
-                if (payment.formData.addToBeneficiary === true) {
-                    recipientGeneralService.create(rbRecipientOperationType.NEW.code, rbRecipientTypes.FAST.state , createRecipient());
-                }
                 createTransfer().then(function () {
                     if (payment.meta.referenceId) {
                         actions.proceed();
