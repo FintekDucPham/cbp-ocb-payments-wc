@@ -248,11 +248,50 @@ rb-basket-search-panel{
     background-image: -o-linear-gradient(#FAFAFA 0, #fff 100%);
     background-image: linear-gradient(#FAFAFA 0, #fff 100%);
     box-shadow: 0 1px 5px 0 rgba(0,0,0,0.11);
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-righr-radius: 5px;
     padding: 20px;
 
     .bd-list-item__identification-cell{
       width: 49%;
+    }
+  }
+  .tableGG__table-section .bd-table__cell.basket-checkbox.body-basket-checkbox{
+    top: 20px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .payments-basket{
+      .bd-show-mob.subsection{
+      padding: 10px 20px 0 20px;
+      border-top: 1px dashed #DAE0E7;
+
+      .lb {
+        width: 50%;
+      }
+      .control {
+        width: 50%;
+        text-align: right;
+      }
+      .form-row {
+        display: inline-flex;
+      }
+    }
+    .bd-table__row--expanded .bd-table__row-details{
+      border-top: 1px dashed #DAE0E7;
+      padding-top: 10px;
+    }
+    .tableGG__table-section .bd-details-section .basket-vew__details{
+      .lb, .control {
+        width: 50%;
+      }
+    }
+    .tableGG .tableGG__table-section{
+      .bd-table__header,
+      .bd-table__row-line{
+        padding: 0 20px;
+      }
     }
   }
 }
