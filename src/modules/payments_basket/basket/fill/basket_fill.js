@@ -49,6 +49,13 @@ angular.module('ocb-payments')
             $scope.basket.summary.summaryItemMap = {};
             $scope.basket.summary.summaryItem = {};
             $scope.basket.validator={};
+            $scope.basket.data={
+                dateRange:{},
+                amountRange:{
+                    min:null,
+                    max:null
+                }
+            };
         }
 
         $scope.templateDetails = pathService.generateTemplatePath("ocb-payments") + "/modules/payments_basket/basket/fill/details/basket_details.html";

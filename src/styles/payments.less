@@ -73,4 +73,187 @@
     padding: 0;
     margin-top: -5px;
   }
+
+  rb-basket-search-panel{
+    .basket-no-padding .dateRange{
+      .payment-basket-from{
+        margin-right: 7px;
+      }
+      .payment-basket-from .rb-datepicker input,
+      .payment-basket-to .rb-datepicker input{
+        width: 145px;
+      }
+    }
+    .basketSearchPanel__account-section {
+      .advancedSearch {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+.payments_miniapp rb-basket-search-panel {
+  .basketSearchPanel__advanced-section {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 13px 21px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    .clear-button{
+      text-decoration: underline;
+      margin-right: 20px;
+    }
+    .clear-button:hover{
+      text-decoration: none;
+    }
+  }
+
+  .bd-radio-option .radio-label{
+    display: inline-flex;
+  }
+}
+@media only screen and (min-width: 768px){
+  rb-basket-search-panel {
+    .basket-no-padding .dateRange .payment-basket-from {
+      margin-right: 35px;
+    }
+  }
+}
+rb-basket-search-panel .bd-radio-option__content{
+  .payment-basket-date-type{
+    width:145px;margin-bottom: 10px;
+  }
+  .payment-basket-date-value{
+    width:145px;margin-bottom: 10px;
+  }
+}
+
+@media only screen and (min-width: 551px){
+  rb-basket-search-panel .bd-radio-option .radio-label{
+    width: 65px;
+  }
+}
+@media only screen and (max-width: 550px){
+  rb-basket-search-panel{
+    .bd-radio-option__content .payment-basket-date-type,
+    .bd-radio-option__content .payment-basket-date-value{
+      float: right;
+      margin: 0 7px 10px 0;
+    }
+    .basket-no-padding .dateRange .payment-basket-from,
+    .basket-no-padding .dateRange .payment-basket-to{
+      margin: 0;
+      float: right;
+    }
+    .bd-radio-option {
+      .radio-label {
+        float: left;
+        height: 110px;
+        line-height: 110px;
+        padding-top: 2px;
+      }
+      .bd-radio-option__marker-placeholder{
+        padding-right: 5px;
+      }
+    }
+    .bd-radio-option__content {
+      max-width: 300px
+    }
+    .advancedSearch {
+      .bd-button{
+        float: left;
+      }
+    }
+  }
+
+  .bd-radio-select .bd-radio-option .bd-radio-option__marker-placeholder{
+    vertical-align: middle;
+  }
+}
+@media only screen and (max-width: 767px) and (min-width: 551px){
+  rb-basket-search-panel{
+    .basket-no-padding .dateRange{
+      display: inline-block;
+    }
+    .rb-transaction-filter .bd-radio-select .bd-radio-option .bd-radio-option__marker-placeholder{
+      padding-top: 8px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1280px) and (min-width: 992px) {
+  rb-basket-search-panel {
+    .bd-radio-option__content {
+      width: 300px;
+
+      .payment-basket-date-type,
+      .payment-basket-date-value {
+        float: right;
+        margin: 0 10px 10px 0;
+      }
+    }
+    .basket-no-padding .dateRange {
+      display: block;
+      margin-right: 35px;
+    }
+    .bd-radio-option {
+      .bd-radio-option__marker-placeholder {
+        padding-right: 5px;
+        vertical-align: middle;
+      }
+      .radio-label {
+        float: left;
+        height: 110px;
+        line-height: 110px;
+      }
+    }
+    .basket-no-padding .dateRange .payment-basket-from,
+    .basket-no-padding .dateRange .payment-basket-to {
+      margin: 0;
+      float: right;
+    }
+  }
+}
+
+rb-basket-search-panel{
+  .basket-no-padding .bd-radio-option__content .radio-label {
+    vertical-align: sub;
+  }
+  .basketSearchPanel__account-section{
+    .account-select .lb{
+      width: 100px;
+    }
+    .advancedSearch {
+      .advancedSearchRow {
+        display: inline-block;
+        vertical-align: middle;
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+  }
+}
+
+.payments_miniapp .basket-vew .tableGG{
+  .bd-table__row-entry .bd-table__cell-content-wrapper .bd-amount .bd-amount__currency,
+  .bd-table__row-entry .bd-table__cell-content-wrapper .bd-amount .bd-amount__value{
+    display: inline-block;
+  }
+  .tableGG__account-section{
+    background-image: -webkit-linear-gradient(#FAFAFA 0, #fff 100%);
+    background-image: -o-linear-gradient(#FAFAFA 0, #fff 100%);
+    background-image: linear-gradient(#FAFAFA 0, #fff 100%);
+    box-shadow: 0 1px 5px 0 rgba(0,0,0,0.11);
+    border-radius: 5px;
+    padding: 20px;
+
+    .bd-list-item__identification-cell{
+      width: 49%;
+    }
+  }
+  .tableGG__table-section .bd-table__row-entry{
+    @media only screen and (max-width: 767px) {
+      padding: 0 15px;
+    }
+  }
 }

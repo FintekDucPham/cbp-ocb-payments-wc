@@ -1161,5 +1161,7 @@
   "ocb.payments.form.checkbox.true": "CÓ",
   "ocb.payments.form.checkbox.false": "KHÔNG",
 
+  "ocb.payments.components.basketSearchPanel.labels.search": "Tìm kiếm",
+
   "EOF": ""
 }
