@@ -1151,5 +1151,7 @@
   "ocb.authorization.value.template.SMS.error.required":"Nhập OTP",
   "ocb.authorization.value.template.PKI.error.required":"Vui lòng thực hiện theo hướng dẫn, sau đó nhấn nút \"Ký\" ",
 
+  "ocb.payments.components.basketSearchPanel.labels.search": "Tìm kiếm",
+
   "EOF": ""
 }

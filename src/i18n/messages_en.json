@@ -1164,5 +1164,7 @@
   "ocb.payments.form.checkbox.true": "YES",
   "ocb.payments.form.checkbox.false": "NO",
 
+  "ocb.payments.components.basketSearchPanel.labels.search": "Apply filter",
+
   "EOF": ""
 }
