@@ -67,8 +67,9 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsFastVerifyController', function ($scope, $state, payment,
                                                               $q, transferService, paymentsBasketService,
-                                                              domesticBanksService,
+                                                              domesticBanksService, recipientGeneralService,
                                                               RB_TOKEN_AUTHORIZATION_CONSTANTS, ocbConvert, language,
+                                                              rbRecipientOperationType, rbRecipientTypes,
                                                               bdVerifyStepInitializer, bdStepStateEvents) {
 
         var stateData = $state.$current.data;
@@ -197,10 +198,29 @@ angular.module('ocb-payments')
             });
         }
 
+        function createRecipient () {
+            var formData = payment.formData;
+            return recipient = {
+                bankCode: formData.bankCode,
+                beneficiary: new Array(""),
+                branchCode: null,
+                cardNumber: formData.cardNumber,
+                creditAccount: formData.recipientAccountNo,
+                debitAccount: formData.remitterAccountId,
+                province: null,
+                recipientType: rbRecipientTypes.FAST.code,
+                remarks: new Array(formData.description),
+                shortName: formData.recipientName
+            }
+        }
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var token = payment.token;
             if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if (token.model.input.$isValid()) {
+                    if (payment.formData.addToBeneficiary === true) {
+                        recipientGeneralService.create(rbRecipientOperationType.NEW.code, rbRecipientTypes.FAST.state , createRecipient());
+                    }
                     authorize().then(function () {
                         if (payment.result.type) {
                             actions.proceed();
