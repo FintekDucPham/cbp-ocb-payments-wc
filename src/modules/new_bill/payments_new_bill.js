@@ -480,8 +480,6 @@ angular.module('ocb-payments')
             var downloadLink =  exportService.prepareHref({
                 href: "/api/transaction/downloads/pdf.json"
             });
-            refId = 'NIB-TRA1033010712174f959376e9145ccf';
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
             fileDownloadService.startFileDownload(downloadLink + ".json?id=" + refId);
 
         }
