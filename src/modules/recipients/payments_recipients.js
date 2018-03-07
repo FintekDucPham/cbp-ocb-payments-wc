@@ -11,6 +11,10 @@ angular.module('ocb-payments')
         "REMOVE": {
             code: 'REMOVE',
             state: 'remove'
+        },
+        "SAVE": {
+            code: 'SAVE',
+            state: 'save'
         }
     })
     .constant('rbRecipientTypes', {
