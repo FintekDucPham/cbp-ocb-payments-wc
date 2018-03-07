@@ -15,8 +15,7 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsBatchProcessingStep1Controller'
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
-                                                              validationRegexp, systemParameterService, translate, utilityService, accountsService,
-                                                              rbBeforeTransferManager, translate,
+                                validationRegexp, systemParameterService, translate, utilityService, accountsService, rbBeforeTransferManager,
                                 bdTableConfig, ocbConvert, transferBatchService, customerService, transferService, $cookies, $http, FileUploader, pathService, $location) {
 
             /*Get customer details*/
