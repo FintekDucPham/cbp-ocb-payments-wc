@@ -32,7 +32,7 @@
                 <!--Search-->
                 <div class="col-md-8">
                     <input ng-model="table.tableConfig.searchText" type="text" placeholder="Search">
-                    <i class="search-icon"></i>
+                    <i class="search-icon" ng-click="onSearch()"></i>
                 </div>
                 <!--Advanced filter-->
                 <div ng-hide="$params.isAdvanced" ng-click="$params.isAdvanced = true"
@@ -77,7 +77,6 @@
                                        rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
                                        style="width: 140px;"></rb-datepicker>
                     </div>
-                    <bd-button class="form-calendar bd-button__primary bd-button bd-button search-btn-mg-left" ng-click="onSearch()">{{::'ocb.payments.bill.history.search.label' | translate}}</bd-button>
                 </div>
             </div>
             <!--Show error message when invalidDate-->
