@@ -480,7 +480,7 @@ angular.module('ocb-payments')
             var downloadLink =  exportService.prepareHref({
                 href: "/api/transaction/downloads/pdf.json"
             });
-            fileDownloadService.startFileDownload(downloadLink + ".json?id=" + refId);
+            fileDownloadService.startFileDownload(downloadLink + ".json?id=" +  $scope.payment.transferId);
 
         }
 
