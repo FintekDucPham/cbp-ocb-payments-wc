@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentNewBillController', function ($scope, $q, bdMainStepInitializer, bdStepStateEvents, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE , bdTableConfig, transferBillService, ocbConvert) {
+    .controller('PaymentNewBillController', function ($scope, $q, bdMainStepInitializer, bdStepStateEvents, rbPaymentTypes, rbPaymentOperationTypes, pathService, translate, $stateParams, $state, lodash, viewStateService, rbPaymentInitFactory, rbBeforeTransferConstants, CURRENT_DATE , bdTableConfig, transferBillService, ocbConvert,exportService ,fileDownloadService) {
 
         $scope.beforeTransfer = rbBeforeTransferConstants;
         $scope.CURRENT_DATE = CURRENT_DATE;
@@ -476,7 +476,15 @@ angular.module('ocb-payments')
         //     // });
         // }
 
+        $scope.printPdf = function(refId){
+            var downloadLink =  exportService.prepareHref({
+                href: "/api/transaction/downloads/pdf.json"
+            });
+            refId = 'NIB-TRA1033010712174f959376e9145ccf';
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            fileDownloadService.startFileDownload(downloadLink + ".json?id=" + refId);
 
+        }
 
         $scope.payment.rbPaymentsStepParams = {
             completeState: 'payments.bill_history.list',
@@ -484,6 +492,7 @@ angular.module('ocb-payments')
             onClear: $scope.clearForm,
             onSearch:  $scope.showBillInfoSearch,
             onGetOTP: $scope.getOTP,
+            printPdf:  $scope.printPdf,
             cancelState: 'payments.new_bill.fill',
             addAsStandingOrder: $scope.addAsStandingOrder,
             labels : {
