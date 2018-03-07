@@ -219,7 +219,7 @@ angular.module('ocb-payments')
             if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if (token.model.input.$isValid()) {
                     if (payment.formData.addToBeneficiary === true) {
-                        recipientGeneralService.create(rbRecipientOperationType.NEW.code, rbRecipientTypes.FAST.state , createRecipient());
+                        recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.FAST.state , createRecipient());
                     }
                     authorize().then(function () {
                         if (payment.result.type) {

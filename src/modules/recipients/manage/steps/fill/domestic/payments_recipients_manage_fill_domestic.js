@@ -53,12 +53,6 @@ angular.module('ocb-payments')
             accountFilter: function (accounts) {
                return accounts;
             },
-            decorateRequest: function(params){
-                return angular.extend(params, {
-                    currency: "PLN",
-                    productList: "BENEFICIARY_CREATE_FROM_LIST"
-                });
-            }
         });
 
         $scope.setRequestConverter(function (formData) {

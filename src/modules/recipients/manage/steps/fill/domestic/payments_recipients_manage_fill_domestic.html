@@ -1,7 +1,7 @@
 <rb-payment-recipients-fill>
     <div ng-controller="RecipientsManageFillDomesticController">
         <section ng-if="recipient.operation.code !== 'EDIT'">
-            <bd-item-property label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
+            <bd-item-property class="account-recipient-form" label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
                 <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
 
                 <rb-account-select-v2 rb-account-id="recipient.formData.remitterAccountId"
