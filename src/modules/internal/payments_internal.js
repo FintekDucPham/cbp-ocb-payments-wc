@@ -53,9 +53,8 @@ angular.module('ocb-payments')
                     initForm: ['payment', '$stateParams', 'translate', 'loadCurrentDate', function (payment, $stateParams, translate, loadCurrentDate) {
                         if ($stateParams.recipientId) {
                             payment.formData.recipientId = $stateParams.recipientId;
-                        } else {
-                            payment.formData.description = translate.property('ocb.payments.domestic.description.default');
                         }
+
                         payment.promises.initForm = payment.promises.loadCurrentDate.then(function () {
                             payment.formData.realizationDate = payment.meta.currentDate;
                         });
@@ -217,10 +216,10 @@ angular.module('ocb-payments')
                 prev: 'config.multistepform.buttons.prev',
                 next: 'config.multistepform.buttons.next',
                 accept: 'config.multistepform.buttons.accept',
-                finalize: 'ocb.payments.new.btn.completed',
+                finalize: 'ocb.payments.new.btn.finalize',
                 finalAction: 'ocb.payments.new.btn.final_action',
                 printReport: 'ocb.payments.new.btn.print_report',
-                completed: 'ocb.payments.new.btn.completed'
+                completed: 'ocb.payments.new.btn.finalize'
             },
             visibility: {
                 fillReturn: false,
@@ -231,7 +230,7 @@ angular.module('ocb-payments')
                 accept: true,
                 finalAction: true,
                 finalize: true,
-                printReport: true
+                printReport: false
             }
         };
     });

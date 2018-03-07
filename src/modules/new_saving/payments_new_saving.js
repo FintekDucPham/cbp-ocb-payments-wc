@@ -131,7 +131,7 @@ angular.module('ocb-payments')
                 finalAction: false,
                 finalize: true,
                 hideSaveRecipientButton: true,
-                printReport: true
+                printReport: false
             }
         };
 

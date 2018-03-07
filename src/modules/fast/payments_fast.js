@@ -54,7 +54,6 @@ angular.module('ocb-payments')
                         if ($stateParams.recipientId) {
                             payment.formData.recipientId = $stateParams.recipientId;
                         } else {
-                            payment.formData.description = translate.property('ocb.payments.domestic.description.default');
                             payment.formData.paymentTarget = 'ACCOUNT';
                         }
                     }]
@@ -176,7 +175,7 @@ angular.module('ocb-payments')
                 accept: true,
                 finalAction: true,
                 finalize: true,
-                printReport: true
+                printReport: false
             }
         };
     });
