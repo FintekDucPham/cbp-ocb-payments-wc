@@ -56,7 +56,7 @@ angular.module('ocb-payments')
 
             $scope.userActions = {};
             switch ($scope.userRole) {
-                case "INPUTTER":
+                case "Inputer":
                     $scope.userActions = {
                         MODIFY: true,
                         RETURN: false,
@@ -64,7 +64,7 @@ angular.module('ocb-payments')
                         DELETE: true
                     }
                     break;
-                case "CHECKER1":
+                case "Checker1":
                     $scope.userActions = {
                         MODIFY: false,
                         RETURN: true,
@@ -72,7 +72,7 @@ angular.module('ocb-payments')
                         DELETE: false
                     }
                     break;
-                case "CHECKER2":
+                case "Checker2":
                     $scope.userActions = {
                         MODIFY: false,
                         RETURN: true,
@@ -80,15 +80,15 @@ angular.module('ocb-payments')
                         DELETE: false
                     }
                     break;
-                case "APPROVER":
-                    $scope.userActions = {
-                        MODIFY: false,
-                        RETURN: true,
-                        APPROVE: true,
-                        DELETE: false
-                    }
-                    break;
-                case "MASTER":
+                // case "APPROVER":
+                //     $scope.userActions = {
+                //         MODIFY: false,
+                //         RETURN: true,
+                //         APPROVE: true,
+                //         DELETE: false
+                //     }
+                //     break;
+                case "AccMaster":
                     $scope.userActions = {
                         MODIFY: true,
                         RETURN: true,
@@ -108,7 +108,7 @@ angular.module('ocb-payments')
             $scope.statusByUser= {};
             switch ($scope.userRole) {
 
-                case "INPUTTER":
+                case "Inputer":
                     $scope.statusByUser = {
                         C1:false,
                         C2:false,
@@ -116,7 +116,7 @@ angular.module('ocb-payments')
                         RT:true
                     }
                     break;
-                case "CHECKER1":
+                case "Checker1":
                     $scope.statusByUser = {
                         C1:true,
                         C2:false,
@@ -124,7 +124,7 @@ angular.module('ocb-payments')
                         RT:false
                     }
                     break;
-                case "CHECKER2":
+                case "Checker2":
                     $scope.statusByUser = {
                         C1:false,
                         C2:true,
@@ -132,15 +132,15 @@ angular.module('ocb-payments')
                         RT:false
                     }
                     break;
-                case "APPROVER":
-                    $scope.statusByUser = {
-                        C1:false,
-                        C2:false,
-                        WA:true,
-                        RT:true
-                    }
-                    break;
-                case "MASTER":
+                // case "APPROVER":
+                //     $scope.statusByUser = {
+                //         C1:false,
+                //         C2:false,
+                //         WA:true,
+                //         RT:true
+                //     }
+                //     break;
+                case "AccMaster":
                     $scope.statusByUser = {
                         C1:true,
                         C2:true,
