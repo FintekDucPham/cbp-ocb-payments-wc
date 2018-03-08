@@ -52,7 +52,10 @@ angular.module('ocb-payments')
     // $scope.userRole = "";
     customerService.getCustomerDetails().then(function(data) {
         if (data.customerDetails) {
-            $scope.userRole = data.customerDetails.microRole;
+            $scope.userRole = "";
+            if(data.customerDetails.cbRoles !== null){
+                $scope.userRole = data.customerDetails.cbRoles[0]
+            }
 
             $scope.userActions = {};
             switch ($scope.userRole) {
