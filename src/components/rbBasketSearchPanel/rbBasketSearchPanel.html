@@ -1,6 +1,6 @@
 <form novalidate name="futureDatePanelForm" ng-submit="onSubmitForm(futureDatePanelForm)" class="basketSearchPanel rb-transaction-filter">
     <div class="row basketSearchPanel__account-section">
-        <div class="col-md-8 col-sm-12" style="text-align: left;">
+        <div class="col-md-8 col-sm-12 mobile-padding" style="text-align: left;">
             <bd-item-property class="account-select" label="{{::'account.statement.select.label'|translate}}">
                 <ui-select ng-model="inputData.selectedAccount"
                            theme="bootstrap"
@@ -53,7 +53,7 @@
             </bd-item-property>
         </div>
 
-        <div class="col-md-4 col-sm-12 advancedSearch" style="text-align: right;">
+        <div class="col-md-4 col-sm-12 advancedSearch mobile-padding" style="text-align: right;">
             <bd-button class="bd-button__primary bd-md-button-margin" style="margin-top: 0" type="submit">{{::'ocb.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
             <div class="row advancedSearchRow" ng-show="!advancedSearch" style="">
                 <div class="rb-transaction-filter__container" ng-click="showAdvanced()">
