@@ -3,7 +3,7 @@
 
         <ng-include src="detailsTemplatePath"></ng-include>
 
-        <bd-item-property class="bd-item-property--multirow" label="{{ token.model.currentToken.label }}" ng-show="token.model.$tokenRequired">
+        <bd-item-property class="bd-item-property--multirow" label="{{ token.model.currentToken.label }}" ng-show="token.model.$tokenRequired" no-label-box="true">
             <rb-token-authorization rb-operation-type="TRANSFER" rb-model="token.model" rb-params="tokenParams"></rb-token-authorization>
         </bd-item-property>
 
