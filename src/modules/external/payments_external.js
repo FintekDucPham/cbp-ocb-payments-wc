@@ -187,7 +187,7 @@ angular.module('ocb-payments')
     }))
 
     function saveRecipient () {
-      var formData = payment.formData
+      var formData = payment.formData;
       $state.go('payments.recipients.manage.new.fill', {
         operation: 'new',
         recipient: {

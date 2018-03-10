@@ -1,9 +1,9 @@
 <span ng-if="!rbModifyFromBeneficiary && !settings.hidden">
     <bd-item-property class="bd-item-property--multirow payment-desktop-only" label="{{ ::'ocb.payments.new.bill.fill.checkbox.label' | translate }}">
-        <bd-checkbox ng-model="rbModel.addToBeneficiary"></bd-checkbox>
+        <bd-checkbox ng-model="rbModel.addToBeneficiary" bd-change="onCheck()"></bd-checkbox>
     </bd-item-property>
     <div class="payment-mobile-only">
-        <bd-checkbox ng-model="rbModel.addToBeneficiary"></bd-checkbox>
+        <bd-checkbox ng-model="rbModel.addToBeneficiary" bd-change="onCheck()"></bd-checkbox>
         <div class="rb-add-benefit">{{ ::'ocb.payments.new.bill.fill.checkbox.label' | translate }}</div>
     </div>
 </span>

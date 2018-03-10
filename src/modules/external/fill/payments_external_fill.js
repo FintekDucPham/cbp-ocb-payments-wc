@@ -55,41 +55,54 @@ angular.module('ocb-payments')
         // ============================================
         var screenName = 'payments_external_new_fill';
         $scope.userCacheForm = {};
-        userCacheHttpHandler.get(screenName).then(function(data){
-            if (data.realizationDate) {
-                data.realizationDate = new Date(data.realizationDate)
-            }
-            $scope.payment.formData = data;
-            $scope.userCacheForm = data;
-            // datepicker component doesn't support custom onBlur props -> so we use watch variable instead of onBlur
-            $scope.$watch('payment.formData.realizationDate', function(newValue) {
-                changeUserCacheMiddleware('realizationDate', newValue)
-            }, true);
-
-            // checkbox component doesn't support custom onSelect props -> so we use watch variable instead of onBlur
-            $scope.$watch('payment.formData.addToBasket', function(newValue) {
-                changeUserCacheMiddleware('addToBasket', newValue)
-            }, true);
-            $scope.$watch('payment.formData.addToBeneficiary', function(newValue) {
-                changeUserCacheMiddleware('addToBeneficiary', newValue)
-            }, true);
+        $scope.showStoreDataOption = true;
+        $scope.storedScreenData = userCacheHttpHandler.get(screenName).then(function(storedData) {
+            // don't want to restore data, when they are empty
+            $scope.showStoreDataOption = !_.isEmpty(storedData);
+            return storedData;
         });
 
-        $scope.onSelectSyncUserCache = function(name, value) {
-            changeUserCacheMiddleware(name, value)
-        };
-
-        $scope.onBlurUserCacheEvent = function(name, $event) {
-            const newValue = $event.target.value;
-            changeUserCacheMiddleware(name, newValue)
+        $scope.useStoredData = function(useDataFromStore){
+            // this will be triggered only for init time
+            if ($scope.showStoreDataOption) {
+                $scope.showStoreDataOption = false;
+                if (useDataFromStore) {
+                    $scope.storedScreenData.then(function(storedData) {
+                        $scope.payment.formData = storedData; // Object.assign({}, $scope.payment.formData, storedData);
+                        if (storedData.realizationDate) {
+                            storedData.realizationDate = new Date(storedData.realizationDate)
+                        }
+                        $scope.userCacheForm = storedData;
+                    })
+                } else {
+                    // TODO: add remove of record from DB
+                    // i reset user cache data in DB (maybe I should delete record instead of set to {})
+                    userCacheHttpHandler.save(screenName, {});
+                }
+            }
         };
 
         var changeUserCacheMiddleware = function(name, newValue){
-            var valuesToUserCache = {};
-            valuesToUserCache[name] = newValue;
-            var newCacheValues = Object.assign({}, $scope.userCacheForm, valuesToUserCache);
-            $scope.userCacheForm = newCacheValues;
-            userCacheHttpHandler.save(screenName, newCacheValues);
+            // console.log('_____________________');
+            // console.log('changeUserCacheMiddleware');
+            // console.log(name, newValue);
+            $scope.showStoreDataOption = false;
+            $scope.userCacheForm[name] = newValue;
+            userCacheHttpHandler.save(screenName, $scope.userCacheForm);
+        };
+
+        $scope.onChangeUserCache = changeUserCacheMiddleware;
+        $scope.onSelectAccount = function(name, value, triggeredFromUser) {
+            console.log(name, value, triggeredFromUser);
+            // i want trigger user cache sync when user user onBlur select
+            if (triggeredFromUser) {
+                changeUserCacheMiddleware(name, value)
+            }
+        };
+        $scope.onSelectSyncUserCache = changeUserCacheMiddleware;
+        $scope.onBlurUserCacheEvent = function(name, $event) {
+            const newValue = $event.target.value;
+            changeUserCacheMiddleware(name, newValue)
         };
         // ============================================
         // ========== end of cache user data ==========

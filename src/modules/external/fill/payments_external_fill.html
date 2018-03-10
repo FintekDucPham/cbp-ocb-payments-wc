@@ -1,5 +1,10 @@
 <eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
 <form name="paymentForm" novalidate ng-show="formReady">
+    <div style="background: #44FFFF" ng-show="showStoreDataOption">
+        <h1>use stored Data</h1>
+        <button ng-click="useStoredData(true)">Yes</button>
+        <button ng-click="useStoredData(false)">No</button>
+    </div>
     <div class="bd-form">
         <div class="bd-form-header pd-bottom">
             {{::"ocb.payments.domestic.remitter_panel.label"|translate}}
@@ -19,7 +24,7 @@
                 rb-product-list-name="TRANSFER_FROM_LIST"
                 rb-account-select-params="remitterAccountSelectParams"
                 rb-remote="remote.model"
-                rb-on-account-select="onSelectSyncUserCache('remitterAccountId', $accountId)"
+                rb-on-account-select="onSelectAccount('remitterAccountId', $accountId, triggeredFromUser)"
             ></rb-account-select-v2>
         </bd-item-property>
 
@@ -303,6 +308,7 @@
                 ng-if="rbRealizationDateOptions"
                 rb-datepicker-options="rbRealizationDateOptions"
                 rb-required="true"
+                on-blur="onChangeUserCache('realizationDate', value)"
             >
             </rb-datepicker>
             <eb-validation-messages eb-name="realizationDate">
@@ -327,12 +333,15 @@
         <rb-add-to-basket-select
             rb-model="payment.formData"
             rb-modify-from-basket="modifyFromBasket"
+            on-check="onChangeUserCache('addToBasket', payment.formData.addToBasket)"
         ></rb-add-to-basket-select>
 
         <rb-add-to-beneficiary-select
             ng-if="!payment.meta.editFuturePayment && !isRecipientSelected"
             rb-model="payment.formData"
-            rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary">
+            rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"
+            on-check="onChangeUserCache('addToBeneficiary', payment.formData.addToBeneficiary)"
+        >
         </rb-add-to-beneficiary-select>
     </div>
 </form>

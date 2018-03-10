@@ -6,7 +6,8 @@ angular.module('ocb-payments')
             scope: {
                 rbModel: '=rbModel',
                 rbModifyFromBeneficiary: '=rbModifyFromBeneficiary',
-                rbOptions: '=rbOptions'
+                rbOptions: '=rbOptions',
+                onCheck: '&onCheck'
             },
             controller: function($scope){
                 if ($scope.rbModifyFromBeneficiary === true) {
