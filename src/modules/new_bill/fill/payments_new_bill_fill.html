@@ -125,7 +125,7 @@
     </div>
     <!--Show table Master Detail -->
 
-    <div class="bd-table bd-content"  ng-if="billTypeID === 'MASTER_DETAIL'">
+    <div class="bd-table bd-content"  ng-if="billTypeID === 'MASTER_DETAIL'" ng-hide="hideTable">
 
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1" label="{{::'payments.new.bill.fill.info.header.stt'|translate}}">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
@@ -223,7 +223,7 @@
 
     </div>
 
-    <div class="bd-table bd-content"  ng-if="billTypeID === 'EXTENDED_DETAIL'">
+    <div class="bd-table bd-content"  ng-if="billTypeID === 'EXTENDED_DETAIL'" ng-hide="hideTable">
 
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>

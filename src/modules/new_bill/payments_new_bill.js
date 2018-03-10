@@ -121,6 +121,7 @@ angular.module('ocb-payments')
         $scope.payment.formData.billCode = undefined;
         // $scope.payment.formData.amount = undefined;
         $scope.showBillInfoSearch = function(searchBool, nextBool ) {
+            $scope.hideTable = false;
             $scope.payment.formData.providerName = $scope.payment.items.senderProvider.providerName;
             $scope.payment.formData.serviceName = $scope.payment.items.senderService.serviceName;
             $scope.payment.formData.serviceCode = $scope.payment.items.senderService.serviceCode;
@@ -133,18 +134,24 @@ angular.module('ocb-payments')
                     serviceCode: $scope.payment.formData.serviceCode
                 }).then(function (data) {
                     if (data !== undefined) {
-                        $scope.enableLoading = false;
-                        $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;
-                        $scope.serverError = false;
-                        $scope.paymentTypeID = data.paymentType;
-                        /*calculate total amount*/
-                        if ($scope.paymentTypeID == "SELECT_ALL_AND_CANNOT_UNSELECT") {
-                            for (var i=1; i < data.billItem.length ; i++) {
-                                $scope.payment.formData.amount += data.billItem[i].amountMonth.value;
+                        if (data == "" || data.billItem[0].billCodeItemNo == "") {
+                            $scope.hideTable = true;
+                            $scope.payment.rbPaymentsStepParams.visibility.next = false;
+                            $scope.enableLoading = false;
+                        } else {
+                            $scope.enableLoading = false;
+                            $scope.payment.rbPaymentsStepParams.visibility.next = nextBool;
+                            $scope.serverError = false;
+                            $scope.paymentTypeID = data.paymentType;
+                            /*calculate total amount*/
+                            if ($scope.paymentTypeID == "SELECT_ALL_AND_CANNOT_UNSELECT") {
+                                for (var i=1; i < data.billItem.length ; i++) {
+                                    $scope.payment.formData.amount += data.billItem[i].amountMonth.value;
+                                }
                             }
+                            $scope.billTypeID = data.billType;
+                            $scope.payment.formData.billInfo = data;
                         }
-                        $scope.billTypeID = data.billType;
-                        $scope.payment.formData.billInfo = data;
                     }
                 }).catch(function(response) {
                     $scope.serverError = true;
