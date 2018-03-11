@@ -55,7 +55,7 @@ angular.module('ocb-payments')
         // ============================================
         var screenName = 'payments_external_new_fill';
         $scope.userCacheForm = {};
-        $scope.showStoreDataOption = true;
+        $scope.showStoreDataOption = false;
         $scope.storedScreenData = userCacheHttpHandler.get(screenName).then(function(storedData) {
             // don't want to restore data, when they are empty
             $scope.showStoreDataOption = !_.isEmpty(storedData);
@@ -68,24 +68,19 @@ angular.module('ocb-payments')
                 $scope.showStoreDataOption = false;
                 if (useDataFromStore) {
                     $scope.storedScreenData.then(function(storedData) {
-                        $scope.payment.formData = storedData; // Object.assign({}, $scope.payment.formData, storedData);
+                        $scope.payment.formData = storedData;
                         if (storedData.realizationDate) {
                             storedData.realizationDate = new Date(storedData.realizationDate)
                         }
                         $scope.userCacheForm = storedData;
                     })
                 } else {
-                    // TODO: add remove of record from DB
-                    // i reset user cache data in DB (maybe I should delete record instead of set to {})
-                    userCacheHttpHandler.save(screenName, {});
+                    userCacheHttpHandler.remove(screenName);
                 }
             }
         };
 
         var changeUserCacheMiddleware = function(name, newValue){
-            // console.log('_____________________');
-            // console.log('changeUserCacheMiddleware');
-            // console.log(name, newValue);
             $scope.showStoreDataOption = false;
             $scope.userCacheForm[name] = newValue;
             userCacheHttpHandler.save(screenName, $scope.userCacheForm);
@@ -93,7 +88,6 @@ angular.module('ocb-payments')
 
         $scope.onChangeUserCache = changeUserCacheMiddleware;
         $scope.onSelectAccount = function(name, value, triggeredFromUser) {
-            console.log(name, value, triggeredFromUser);
             // i want trigger user cache sync when user user onBlur select
             if (triggeredFromUser) {
                 changeUserCacheMiddleware(name, value)

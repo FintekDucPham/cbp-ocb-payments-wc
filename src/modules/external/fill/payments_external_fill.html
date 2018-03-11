@@ -1,10 +1,9 @@
 <eb-preloader eb-promise="loading" class="eb-list-preloader"></eb-preloader>
+<bd-restore-form-modal
+    is-stored-data-option-shown="showStoreDataOption"
+    on-use-stored-data="useStoredData(shouldUseStoredData)"
+></bd-restore-form-modal>
 <form name="paymentForm" novalidate ng-show="formReady">
-    <div style="background: #44FFFF" ng-show="showStoreDataOption">
-        <h1>use stored Data</h1>
-        <button ng-click="useStoredData(true)">Yes</button>
-        <button ng-click="useStoredData(false)">No</button>
-    </div>
     <div class="bd-form">
         <div class="bd-form-header pd-bottom">
             {{::"ocb.payments.domestic.remitter_panel.label"|translate}}
