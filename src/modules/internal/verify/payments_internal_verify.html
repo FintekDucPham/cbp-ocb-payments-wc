@@ -32,7 +32,7 @@
             <dd><bd-amount amount="payment.formData.amount" currency="{{payment.items.remitterAccount.currency}}" not-styled></bd-amount></dd>
 
             <dt>{{::'ocb.payments.domestic.amount_words.label' | translate}}</dt>
-            <dd>{{amountInWords}}</dd>
+            <dd class="italic">{{amountInWords}}</dd>
 
             <dt>{{::'ocb.payments.domestic.description.label' | translate}}</dt>
             <dd><p>{{payment.formData.description | arrayFilter}}</p></dd>
