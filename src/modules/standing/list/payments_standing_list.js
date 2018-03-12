@@ -82,7 +82,12 @@ angular.module('ocb-payments')
         };
 
         customerService.getCustomerDetails().then(function(data){
-           $scope.isInputter = data.customerDetails.microRole === 'INPUTTER';
+            $scope.isInputter = false;
+            _.each(data.customerDetails.cbRoles, function(userRole) {
+                if (userRole === 'Inputer'){
+                    $scope.isInputter = true;
+                }
+            });
         });
 
 
