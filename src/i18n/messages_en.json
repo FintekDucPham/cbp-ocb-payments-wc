@@ -755,7 +755,7 @@
   "ocb.payments.basket.list.summary.sum": "Sum:",
   "ocb.payments.basket.list.summary.all": "Summary all",
   "ocb.payments.basket.list.details.buttons.delete": "Delete",
-  "ocb.payments.basket.list.details.buttons.modify": "Modify",
+  "ocb.payments.basket.list.details.buttons.modify": "Edit",
   "ocb.payments.basket.checkbox.label": "Add to the basket",
   "ocb.payments.basket.accepted": "Accepted",
   "ocb.payments.basket.add.verify": "The transfer will be added to your payment basket and it will be made in accordance with the scheduled operation date, but no sooner than on the date of its confirmation in the payment basket.",

@@ -59,11 +59,11 @@
                     <bd-details-action-section>
                         <div class="row">
                             <div class="col-sm-12 col-md-12">
-                                <bd-button ng-if="$data.signedStatus != 'DELETED' && $data.signedStatus != 'SUBMITTED' " ng-click="onDelete($data)" class="bd-button">
-                                    {{::'ocb.payments.basket.list.details.buttons.delete' | translate}}
-                                </bd-button>
                                 <bd-button ng-if="$data.actions.indexOf('BASKET_TRANSFER_EDIT_ACCESS') >-1 && $data.signedStatus != 'SUBMITTED' " ng-click="onEdit($data)" class="bd-button">
                                     {{::'ocb.payments.basket.list.details.buttons.modify' | translate}}
+                                </bd-button>
+                                <bd-button ng-if="$data.signedStatus != 'DELETED' && $data.signedStatus != 'SUBMITTED' " ng-click="onDelete($data)" class="bd-button bd-button__primary">
+                                    {{::'ocb.payments.basket.list.details.buttons.delete' | translate}}
                                 </bd-button>
                             </div>
                         </div>

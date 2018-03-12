@@ -244,6 +244,12 @@ rb-basket-search-panel{
         line-height: 40px;
       }
     }
+    .search-icon {
+      width: 39px;
+      position: absolute;
+      top: 4px;
+      right: 22px;
+    }
   }
 }
 
@@ -261,19 +267,42 @@ rb-basket-search-panel{
     border-top-righr-radius: 5px;
     padding: 20px;
 
-    .bd-list-item__identification-cell{
-      width: 49%;
+    @media only screen and (min-width: 768px) {
+      .bd-list-item__identification-cell {
+        width: 49%;
+      }
     }
   }
   .tableGG__table-section .bd-table__cell.basket-checkbox.body-basket-checkbox{
     top: 20px;
   }
 }
+.payments-basket {
+  .bd-table__row--expanded .bd-table__row-details {
+    .basket-vew__details {
+      border-bottom: 1px dashed #DAE0E7;
+    }
+  }
+}
 
 @media only screen and (max-width: 767px) {
+  rb-basket-search-panel {
+    .basketSearchPanel__account-section {
+      .search-icon {
+        right: 5px;
+      }
+      .advancedSearch.mobile-padding .search-input{
+        padding: 0;
+      }
+      .advancedSearch.mobile-padding .advanced-search{
+        padding: 0;
+        text-align: center;
+      }
+    }
+  }
   .payments-basket{
       .bd-show-mob.subsection{
-      padding: 10px 20px 0 20px;
+      padding: 10px 5px 0 5px;
       border-top: 1px dashed #DAE0E7;
 
       .lb {
@@ -299,7 +328,15 @@ rb-basket-search-panel{
     .tableGG .tableGG__table-section{
       .bd-table__header,
       .bd-table__row-line{
-        padding: 0 20px;
+        padding: 0 5px;
+      }
+
+      .bd-table__row-details{
+        padding: 10px 10px 0 10px;
+
+        .control {
+          text-align: right;
+        }
       }
     }
   }
@@ -310,4 +347,10 @@ rb-basket-search-panel{
 
 .account-recipient-form{
   margin-bottom: 20px;
+}
+
+.payments_miniapp .bd-table .bd-table__cell--sm-7{
+  @media only screen and (max-width: 411px) {
+    width: 43.75% !important;
+  }
 }
