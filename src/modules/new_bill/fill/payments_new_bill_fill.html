@@ -100,7 +100,7 @@
     </div>
 
     <!--Bill information-->
-    <div ng-if="billTypeID === 'MASTER_DETAIL'" class="bd-form">
+    <div ng-if="payment.billTypeID === 'MASTER_DETAIL'" class="bd-form">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.showBillInfo" |translate}}</div>
         <div class="pane-bd deposit-form">
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.billInfoName'|translate}}">
@@ -125,7 +125,7 @@
     </div>
     <!--Show table Master Detail -->
 
-    <div class="bd-table bd-content"  ng-if="billTypeID === 'MASTER_DETAIL'" ng-hide="hideTable">
+    <div class="bd-table bd-content"  ng-if="payment.billTypeID === 'MASTER_DETAIL'" ng-hide="hideTable">
 
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1" label="{{::'payments.new.bill.fill.info.header.stt'|translate}}">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
@@ -170,25 +170,25 @@
                         {{item.formulaRates}}
                     </div>
                     <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1 cb-mgTop">
-                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
+                        <bd-checkbox ng-if="payment.paymentTypeID === 'SELECT_ALL_AND_CANNOT_UNSELECT'"
                                      bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'SELECT_ALL_AND_CANNOT_UNSELECT', 'MASTER_DETAIL')"
                                      bd-disabled="true"
                                      ng-init="payment.formData.isAllSelect=true"
                                      ng-model="isAllSelect">
                         </bd-checkbox>
-                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT'"
+                        <bd-checkbox ng-if="payment.paymentTypeID === 'MULTI_SELECT'"
                                      bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'MULTI_SELECT', 'MASTER_DETAIL')"
                                      ng-model="isMultiSelect">
                         </bd-checkbox>
-                        <bd-checkbox ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
+                        <bd-checkbox ng-if="payment.paymentTypeID === 'MULTI_SELECT_OLDEST_ONES'"
                                      bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'MULTI_SELECT_OLDEST_ONES', 'MASTER_DETAIL')"
                                      ng-model="isMultiSelectOldest">
                         </bd-checkbox>
-                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ONLY_ONE'"
+                        <bd-checkbox ng-if="payment.paymentTypeID === 'SELECT_ONLY_ONE'"
                                      bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'SELECT_ONLY_ONE', 'MASTER_DETAIL')"
                                      ng-model="isSelectOnlyOne">
                         </bd-checkbox>
-                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_OLDEST_ONE'"
+                        <bd-checkbox ng-if="payment.paymentTypeID === 'SELECT_OLDEST_ONE'"
                                      bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, 'undefined', 'SELECT_OLDEST_ONE', 'MASTER_DETAIL')"
                                      ng-model="isSelectOldestOne">
                         </bd-checkbox>
@@ -197,7 +197,7 @@
             </div>
         </div>
         <!--Show error message-->
-        <div ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES' && validCheck === true" class="validate-message">
+        <div ng-if="payment.paymentTypeID === 'MULTI_SELECT_OLDEST_ONES' && validCheck === true" class="validate-message">
             {{::'ocb.payments.new.bill.fill.validate.check'|translate}}
         </div>
         <div ng-if="isOnlyOne === true" class="validate-message">
@@ -223,7 +223,7 @@
 
     </div>
 
-    <div class="bd-table bd-content"  ng-if="billTypeID === 'EXTENDED_DETAIL'" ng-hide="hideTable">
+    <div class="bd-table bd-content"  ng-if="payment.billTypeID === 'EXTENDED_DETAIL'" ng-hide="hideTable">
 
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-hide-sm bd-table__cell--md-1">{{::'payments.new.bill.fill.info.header.stt'|translate}}</div>
@@ -264,7 +264,7 @@
                         <input class="ip-height" ng-model="qtyInput"/>
                     </div>
                     <div bd-table-cell="eighth" class="bd-table__cell--sm-16 bd-table__cell--md-1 cb-mgTop">
-                        <bd-checkbox ng-if="paymentTypeID === 'SELECT_ONLY_ONE'"
+                        <bd-checkbox ng-if="payment.paymentTypeID === 'SELECT_ONLY_ONE'"
                                      bd-change="checkBoxIBAction(payment.formData.billInfo.billItem.length, item, $index, qtyInput, 'SELECT_ONLY_ONE', 'EXTENDED_DETAIL')"
                                      ng-model="isSelectOnlyOne">
                         </bd-checkbox>
@@ -273,7 +273,7 @@
             </div>
         </div>
         <!--Show error message-->
-        <div ng-if="paymentTypeID === 'MULTI_SELECT_OLDEST_ONES' && validCheck === true" class="validate-message">
+        <div ng-if="payment.paymentTypeID === 'MULTI_SELECT_OLDEST_ONES' && validCheck === true" class="validate-message">
             {{::'ocb.payments.new.bill.fill.validate.check'|translate}}
         </div>
         <div ng-if="isOnlyOne === true" class="validate-message">

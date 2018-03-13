@@ -85,7 +85,6 @@ angular.module('ocb-payments')
             )
 
             var xml = xmlData($scope.payment.billData);
-            console.log(xml);
             return xml;
         }
         $scope.payment.token.modelData();
