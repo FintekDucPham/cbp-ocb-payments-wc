@@ -1,14 +1,14 @@
 <rb-content-view class="rb-content-view--framed rb-payments-new form">
-    <div ng-show = "serverError" class="error-content">
+    <div ng-show = "payment.serverError" class="error-content">
         <p>{{::"ocb.payments.error.label.serverError"|translate}}</p>
-        <span class = "close-btn" ng-click="closeBtn()">&times;</span>
+        <span class = "close-btn" ng-click="payment.closeBtn()">&times;</span>
     </div>
     <section ng-hide="payment.beforeTransfer.suggestions.displayed">
         <!-- Label PERSONAL / ORDERING CUSTOMER -->
         <bd-header>{{::"ocb.payments.new_bill.label.header"|translate}}</bd-header>
 
         <bd-form-panel class="bd-form-panel--responsive">
-            <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payment.rbPaymentsStepParams" rb-only-bill-payment="billPayment">
+            <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="billPaymentsStepParams" rb-only-bill-payment="billPayment">
                 <div ng-if="payment.initData.promise.$$state.status!==0">
                     <div ui-view></div>
                 </div>
@@ -16,6 +16,6 @@
 
         </bd-form-panel>
     </section>
-    <rb-before-transfer rb-before-transfer-prototype="beforeTransfer.PROTOTYPE.SUGGESTION" rb-before-transfer-model="payment" rb-before-transfer-context-investments></rb-before-transfer>
+    <!--<rb-before-transfer rb-before-transfer-prototype="beforeTransfer.PROTOTYPE.SUGGESTION" rb-before-transfer-model="payment" rb-before-transfer-context-investments></rb-before-transfer>-->
 
 </rb-content-view>
