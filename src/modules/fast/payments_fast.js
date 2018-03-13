@@ -175,7 +175,7 @@ angular.module('ocb-payments')
                 accept: true,
                 finalAction: true,
                 finalize: true,
-                printReport: false
+                printReport: true
             }
         };
     });
