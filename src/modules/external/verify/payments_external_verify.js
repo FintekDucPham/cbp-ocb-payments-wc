@@ -106,13 +106,25 @@ angular.module('ocb-payments')
                 }
             }));
     })
-    .controller('PaymentsExternalVerifyController', function ($scope, $state, payment,
-                                                              $q, transferService, paymentsBasketService,
-                                                              provincesService, domesticBanksService,
-                                                              recipientGeneralService,
-                                                              RB_TOKEN_AUTHORIZATION_CONSTANTS, ocbConvert, language,
-                                                              bdVerifyStepInitializer, bdStepStateEvents,
-                                                              rbRecipientOperationType, rbRecipientTypes) {
+    .controller('PaymentsExternalVerifyController', function (
+        $scope,
+        $state,
+        payment,
+        $q,
+        transferService,
+        paymentsBasketService,
+        provincesService,
+        domesticBanksService,
+        recipientGeneralService,
+        RB_TOKEN_AUTHORIZATION_CONSTANTS,
+        ocbConvert,
+        language,
+        bdVerifyStepInitializer,
+        bdStepStateEvents,
+        rbRecipientOperationType,
+        rbRecipientTypes,
+        userCacheHttpHandler
+    ) {
 
         var stateData = $state.$current.data;
         var removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
@@ -281,6 +293,8 @@ angular.module('ocb-payments')
                         recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.EXTERNAL.state , createRecipient());
                     }
                     authorize().then(function () {
+                        var screenName = 'payments_external_new_fill';
+                        userCacheHttpHandler.remove(screenName);
                         if (payment.result.type) {
                             actions.proceed();
                         }
