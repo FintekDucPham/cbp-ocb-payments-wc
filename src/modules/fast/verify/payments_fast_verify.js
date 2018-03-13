@@ -159,6 +159,9 @@ angular.module('ocb-payments')
         function authorize() {
             var token = payment.token, realize;
             $scope.exceedsFunds = false;
+            payment.result = {
+                type: 'error'
+            };
 
             if (removeFromBasket) {
                 realize = paymentsBasketService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
