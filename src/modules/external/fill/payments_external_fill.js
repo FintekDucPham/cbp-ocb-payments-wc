@@ -194,7 +194,9 @@ angular.module('ocb-payments')
             } else {
                 payment.meta.availableFunds = null;
             }
-            $scope.paymentForm.amount.$setValidity('funds', true);
+            if ($scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$setValidity('funds', true);
+            }
         });
 
         function addInvalidUntilModified (control, validationKey) {

@@ -259,9 +259,10 @@ angular.module('ocb-payments')
                 case "External Batch Transfer":
                     $state.go("payments.batch_processing.fill", {"referenceId" : transaction.id});
                     break;
-                case "Bill Payment":
-                    $state.go("payments.new_bill.fill", {"referenceId" : transaction.id});
-                    break;
+                // TODO JAKO_DISABLE bill payment
+                // case "Bill Payment":
+                //     $state.go("payments.new_bill.fill", {"referenceId" : transaction.id});
+                //     break;
                 case "Mobile Top-Up":
                     $state.go("payments.prepaid.new.fill", {"referenceId" : transaction.id});
                     break;
