@@ -157,8 +157,9 @@
                         {{item.description}}
                     </div>
                     <div bd-table-cell="fourth" class="bd-table__cell--sm-7 bd-table__cell--md-3 ">
-                        <bd-amount amount="item.amountMonth.value"
-                                   currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+                        <!--<bd-amount amount="item.amountMonth.value"-->
+                                   <!--currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>-->
+                        {{item.amountMonth.value | number:0}} VND
                     </div>
                     <div bd-table-cell="fifth" class="bd-table__cell--sm-7 bd-table__cell--md-2 ">
                         {{item.fromDate  | date : "dd/MM/yyyy"}}
@@ -212,6 +213,9 @@
         <div ng-if="invalidAmount === true" class="validate-message">
             {{::'ocb.payments.domestic.amount.error.funds'|translate}}
         </div>
+        <div ng-if="noCheck === true" class="validate-message">
+            {{::'ocb.payments.domestic.bill.error.empty'|translate}}
+        </div>
         <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>
 
         <div bd-table-footer>
@@ -257,8 +261,9 @@
                         {{payment.formData.billCode}}
                     </div>
                     <div bd-table-cell="sixth" class="bd-table__cell--sm-7 bd-table__cell--md-3">
-                        <bd-amount amount="item.amountMonth.value"
-                                   currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+                        <!--<bd-amount amount="item.amountMonth.value"-->
+                                   <!--currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>-->
+                        {{item.amountMonth.value | number:0}} VND
                     </div>
                     <div bd-table-cell="seventh" class="bd-table__cell--sm-7 bd-table__cell--md-2">
                         <input class="ip-height" ng-model="qtyInput"/>
@@ -287,6 +292,9 @@
         </div>
         <div ng-if="invalidAmount === true" class="validate-message">
             {{::'ocb.payments.domestic.amount.error.funds'|translate}}
+        </div>
+        <div ng-if="noCheck === true" class="validate-message">
+            {{::'ocb.payments.domestic.bill.error.empty'|translate}}
         </div>
         <bd-table-empty-placeholder ng-if="promise.$$state.status === 1 && $data.length < 1"></bd-table-empty-placeholder>
 
