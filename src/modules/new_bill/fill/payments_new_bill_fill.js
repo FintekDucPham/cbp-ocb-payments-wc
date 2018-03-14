@@ -87,24 +87,23 @@ angular.module('ocb-payments')
                     serviceCode: $scope.payment.formData.serviceCode
                 }).then(function (data) {
                     if (data !== undefined) {
-                        if (data == "" || data.billItem[0].billCodeItemNo == "") {
+                        $scope.billPaymentsStepParams.visibility.next = nextBool;
+                        if (data == "" || data.billItem.length == 0) {
                             $scope.hideTable = true;
                             $scope.billPaymentsStepParams.visibility.next = false;
-                            $scope.enableLoading = false;
-                        } else {
-                            $scope.enableLoading = false;
-                            $scope.billPaymentsStepParams.visibility.next = nextBool;
-                            $scope.payment.serverError = false;
-                            $scope.payment.paymentTypeID = data.paymentType;
-                            /*calculate total amount*/
-                            if ($scope.paymentTypeID == "SELECT_ALL_AND_CANNOT_UNSELECT") {
-                                for (var i = 1; i < data.billItem.length; i++) {
-                                    $scope.payment.formData.amount += data.billItem[i].amountMonth.value;
-                                }
-                            }
-                            $scope.payment.billTypeID = data.billType;
-                            $scope.payment.formData.billInfo = data;
                         }
+                        $scope.enableLoading = false;
+                        $scope.payment.serverError = false;
+                        $scope.payment.paymentTypeID = data.paymentType;
+                        /*calculate total amount*/
+                        if ($scope.paymentTypeID == "SELECT_ALL_AND_CANNOT_UNSELECT") {
+                            for (var i = 1; i < data.billItem.length; i++) {
+                                $scope.payment.formData.amount += data.billItem[i].amountMonth.value;
+                            }
+                        }
+                        $scope.payment.billTypeID = data.billType;
+                        $scope.payment.formData.billInfo = data;
+
                     }
                 }).catch(function (response) {
                     $scope.payment.serverError = true;
