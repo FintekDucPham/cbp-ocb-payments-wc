@@ -756,7 +756,7 @@
   "ocb.payments.basket.list.details.buttons.modify": "Sửa",
   "ocb.payments.basket.checkbox.label": "Thêm vào giỏ",
   "ocb.payments.basket.accepted": "Đã chấp nhận",
-  "ocb.payments.basket.add.verify": "Giao dịch sẽ được them vào giỏ giao dịch của bạn và sẽ được thực hiện theo ngày đã đặt, nhưng không sớm hơn ngày xác nhận giao dịch này trong giỏ.",
+  "ocb.payments.basket.add.verify": "Giao dịch sẽ được thêm vào giỏ giao dịch của bạn và sẽ được thực hiện theo ngày đã đặt, nhưng không sớm hơn ngày xác nhận giao dịch này trong giỏ.",
   "ocb.payments.new.status.ADDED_TO_BASKET": "Giao dịch đã thêm vào giỏ và chờ duyệt.",
   "ocb.payments.new.standing.status.ADDED_TO_BASKET": "Lệnh định kì đã được thêm vào giỏ và chờ duyệt.",
   "ocb.payments.basket.list.empty": "Không tìm thấy giao dịch.",
@@ -1021,8 +1021,8 @@
   "ocb.payments.domestic.amount.error.empty": "Số tiền không thể để trống",
   "ocb.payments.domestic.amount.error.invalid": "Số tiền chuyển khoản không hợp lệ",
   "ocb.payments.domestic.amount.error.funds": "Số tiền không hợp lệ",
-  "ocb.payments.domestic.amount.error.limits": "Sô tiền giao dịch vượt qua hạn mức cho phép",
-  "ocb.payments.domestic.amount_words.label": "sô tiền bằng chữ",
+  "ocb.payments.domestic.amount.error.limits": "Số tiền giao dịch vượt qua hạn mức cho phép",
+  "ocb.payments.domestic.amount_words.label": "Số tiền bằng chữ",
   "ocb.payments.domestic.description.label": "Mô tả",
   "ocb.payments.domestic.description.placeholder": "Nhập nội dung",
   "ocb.payments.domestic.description.default": "Số tiền chuyển khoản",
@@ -1158,8 +1158,10 @@
   "ocb.authorization.value.template.error.pattern":"Ký tự không được phép",
   "ocb.authorization.value.template.SMS.error.required":"Nhập OTP",
   "ocb.authorization.value.template.PKI.error.required":"Vui lòng thực hiện theo hướng dẫn, sau đó nhấn nút \"Ký\" ",
+
   "ocb.payments.form.checkbox.true": "CÓ",
   "ocb.payments.form.checkbox.false": "KHÔNG",
+  "ocb.payments.recipient.create.status": "Tạo người thụ hưởng thành công",
 
   "ocb.payments.components.basketSearchPanel.labels.search": "Tìm kiếm",
 
