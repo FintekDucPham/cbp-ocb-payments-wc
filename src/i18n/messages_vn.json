@@ -1019,6 +1019,7 @@
   "ocb.payments.domestic.amount.placeholder": "Nhập số tiền cần chuyển",
   "ocb.payments.domestic.amount_in_words.label": "Số tiền bằng chữ",
   "ocb.payments.domestic.amount.error.empty": "Số tiền không thể để trống",
+  "ocb.payments.domestic.bill.error.empty": "Vui lòng chọn hóa đơn cần thanh toán để tiếp tục",
   "ocb.payments.domestic.amount.error.invalid": "Số tiền chuyển khoản không hợp lệ",
   "ocb.payments.domestic.amount.error.funds": "Số tiền không hợp lệ",
   "ocb.payments.domestic.amount.error.limits": "Sô tiền giao dịch vượt qua hạn mức cho phép",

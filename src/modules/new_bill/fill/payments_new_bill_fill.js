@@ -588,20 +588,26 @@ angular.module('ocb-payments')
             return copiedForm;
         };
 
-        $scope.invalidAmount = false;
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.invalidAmount = false;
+            $scope.noCheck = false;
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){
                 delete $scope.payment.token.params.resourceId;
                 var form = $scope.paymentForm;
                 $scope.limitExeeded = {
                     show: false
                 };
+
+                /*User do not check bill*/
+                if ($scope.payment.formData.amount === 0) {
+                    $scope.noCheck = true;
+                }
                 /*compare balance*/
                 if($scope.payment.formData.amount > $scope.payment.items.senderAccount.accessibleAssets || $scope.payment.formData.amount > $scope.payment.items.limit.remainingDailyLimit) {
                    $scope.invalidAmount = true;
                 }
 
-                if (form.$invalid || $scope.invalidAmount === true) {
+                if (form.$invalid || $scope.invalidAmount === true || $scope.noCheck === true || $scope.validCheck === true || $scope.isOnlyOne === true || $scope.invalidQty === true || $scope.invalidOldestOne === true) {
                     formService.dirtyFields(form);
                 } else {
                     try {
