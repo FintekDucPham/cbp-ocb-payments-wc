@@ -3,7 +3,7 @@
 </transferInfo>
 <payment>
     <bookingDate>{{payment.formData.realizationDate | date:'shortDate'}}</bookingDate>
-    <debitAccount>{{payment.items.remitterAccount.accountNo}}</debitAccount>
+    <debitAccount>{{payment.formData.remitterAccountId}}</debitAccount>
     <creditAccount>{{payment.formData.recipientAccountNo}}</creditAccount>
     <customerId/>
     <originalCustomerId>$cifnum$</originalCustomerId>
