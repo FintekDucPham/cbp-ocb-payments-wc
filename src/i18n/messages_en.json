@@ -68,6 +68,10 @@
   "ocb.payments.new.label.STANDING.NEW.header": "Adding of standing order",
   "ocb.payments.new.label.STANDING.EDIT.header": "Modification of standing order",
 
+  "ocb.payments.userCache.modal.text": "You did not finished last time. Do you want to continue?",
+  "ocb.payments.userCache.modal.continue": "Continue",
+  "ocb.payments.userCache.modal.cancel": "Cancel",
+
   "ocb.payments.recipient.new.error.exist": "A recipient with that account number is already present on the list.",
   "ocb.payments.new_internal.label.header": "Own transfer",
   "ocb.payments.new_bill.label.header": "Bill payment",

@@ -68,6 +68,10 @@
   "ocb.payments.new.label.STANDING.NEW.header": "Tạo mới lệnh chuyển định kì",
   "ocb.payments.new.label.STANDING.EDIT.header": "Sửa lệnh chuyển định kì",
 
+  "ocb.payments.userCache.modal.text": "Bạn có một giao dịch chưa hoàn thành. Bạn có muốn tiếp tục thực hiện?",
+  "ocb.payments.userCache.modal.continue": "Tiếp tục",
+  "ocb.payments.userCache.modal.cancel": "Hủy",
+
   "ocb.payments.recipient.new.error.exist": "Một người nhận có số tài khoản như vậy đang nằm trong danh sách.",
   "ocb.payments.new_internal.label.header": "Chuyển khoản nội bộ",
   "ocb.payments.new_bill.label.header": "Thanh toán hoá đơn",
