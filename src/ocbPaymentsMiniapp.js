@@ -123,14 +123,16 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 9
-                },
-                {
-                    id: "payments.batch_processing",
-                    label: "ocb.payments.batch_processing.label",
-                    icon: "ocb-icons basket",
-                    action: "payments.batch_processing.fill",
-                    priority: 10
                 }
+                //,
+                // TODO JAKO_DISABLE batch processing
+                // {
+                //     id: "payments.batch_processing",
+                //     label: "ocb.payments.batch_processing.label",
+                //     icon: "ocb-icons basket",
+                //     action: "payments.batch_processing.fill",
+                //     priority: 10
+                // }
                 // TODO JAKO_DISABLE bill payment
                 //,
                 // {
