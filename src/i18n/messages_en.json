@@ -68,6 +68,10 @@
   "ocb.payments.new.label.STANDING.NEW.header": "Adding of standing order",
   "ocb.payments.new.label.STANDING.EDIT.header": "Modification of standing order",
 
+  "ocb.payments.userCache.modal.text": "You did not finished last time. Do you want to continue?",
+  "ocb.payments.userCache.modal.continue": "Continue",
+  "ocb.payments.userCache.modal.cancel": "Cancel",
+
   "ocb.payments.recipient.new.error.exist": "A recipient with that account number is already present on the list.",
   "ocb.payments.new_internal.label.header": "Own transfer",
   "ocb.payments.new_bill.label.header": "Bill payment",
@@ -771,6 +775,7 @@
   "ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO": "In {0} out of {1} transfers ready for implementation, the daily limit of transfers has been exceeded. Please refer to \"Settings - e-banking - daily limits\" to see the applicable limit and the remaining amount.",
   "ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL": "Daily transfer limit has been exceeded. Please refer to \"Settings - e-banking - daily limits\" to see the applicable limit and the remaining amount.",
   "ocb.payments.git statusbasket.status.NOT_ACCEPTED_TRANSACTIONS": "{0} out of {1} awaits acceptance in the Payment basket arising out of the configured acceptance schemes.",
+  "ocb.payments.basket.status.REALIZATION_DATE_EXCEEDED": "Transfers for which the planned completion date has expired will be carried out with the current date.",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO": "{0} out of {1} transfers were submitted for implementation.",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "The transfers were submitted for implementation in line with the selected transaction manner.",
   "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Some transfers may be made in the next business day.",
