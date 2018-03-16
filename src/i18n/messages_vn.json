@@ -68,6 +68,10 @@
   "ocb.payments.new.label.STANDING.NEW.header": "Tạo mới lệnh chuyển định kì",
   "ocb.payments.new.label.STANDING.EDIT.header": "Sửa lệnh chuyển định kì",
 
+  "ocb.payments.userCache.modal.text": "Bạn có một giao dịch chưa hoàn thành. Bạn có muốn tiếp tục thực hiện?",
+  "ocb.payments.userCache.modal.continue": "Tiếp tục",
+  "ocb.payments.userCache.modal.cancel": "Hủy",
+
   "ocb.payments.recipient.new.error.exist": "Một người nhận có số tài khoản như vậy đang nằm trong danh sách.",
   "ocb.payments.new_internal.label.header": "Chuyển khoản nội bộ",
   "ocb.payments.new_bill.label.header": "Thanh toán hoá đơn",
@@ -769,9 +773,10 @@
   "ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.MICRO": "{0} trong số {1} giao dịch sẵn sàng triển khai, số tiền tổng của giao dịch vượt quá  hạn mức hàng ngày. Vui lòng tham khảo \"Tùy chọn - E-banking - Hạn mức hàng ngày\" để xem các hạn mức và số còn lại.",
   "ocb.payments.basket.status.DAILY_LIMIT_EXCEEDED.DETAL": "Hạn mức hàng ngày đã bị vượt quá . Vui lòng tham khảo \"Tùy chọn - E-banking - Hạn mức hàng ngày\" để xem các hạn mức và số còn lại.",
   "ocb.payments.git statusbasket.status.NOT_ACCEPTED_TRANSACTIONS": "{0} trong số {1} giao dịch đang chờ duyệt trong giỏ giao dịch phát sinh ngoài quy trình duyệt đã cài đặt.",
+  "ocb.payments.basket.status.REALIZATION_DATE_EXCEEDED":"",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO": "{0} trong số {1} giao dịch đã được ghi nhận để thực hiện",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "Giao dịch đã được ghi nhận để thực hiện theo danh sach đã chọn.",
-  "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Một số chuyển khoản có thể được thực hiện trong ngày làm việc tiếp theo.",
+  "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "",
   "ocb.payments.basket.list.details.addedToBasketDate": "Đã thêm vào giỏ",
   "ocb.payments.basket.list.details.historyAction": "Lịch sử",
   "ocb.payments.basket.multistepform.buttons.delete": "Xóa",
