@@ -300,8 +300,18 @@ rb-basket-search-panel{
         display: inline-block;
       }
     }
+    .bd-table__row-details .basket-vew__details{
+      display: flex;
+      flex-flow: row wrap;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 200px;
+      margin-top: 20px;
+      .form-row{
+        width: 50%;
+      }
+    }
   }
-  .tableGG__table-section
 }
 .payments-basket {
   .bd-table__row--expanded .bd-table__row-details {
@@ -363,6 +373,13 @@ rb-basket-search-panel{
         .control {
           text-align: right;
         }
+      }
+
+      .bd-table__header .bd-table__heading{
+        display: flex;
+        align-items: center;
+        height: 50px;
+        justify-content: center;
       }
     }
   }

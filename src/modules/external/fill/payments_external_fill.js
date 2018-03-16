@@ -68,11 +68,12 @@ angular.module('ocb-payments')
                 $scope.showStoreDataOption = false;
                 if (useDataFromStore) {
                     $scope.storedScreenData.then(function(storedData) {
+                        $scope.userCacheForm = storedData;
                         $scope.payment.formData = storedData;
+                        setRecipientData(storedData.recipientData);
                         if (storedData.realizationDate) {
                             storedData.realizationDate = new Date(storedData.realizationDate)
                         }
-                        $scope.userCacheForm = storedData;
                     })
                 } else {
                     userCacheHttpHandler.remove(screenName);
@@ -84,6 +85,11 @@ angular.module('ocb-payments')
             $scope.showStoreDataOption = false;
             $scope.userCacheForm[name] = newValue;
             userCacheHttpHandler.save(screenName, $scope.userCacheForm);
+        };
+
+        $scope.onRecipientSelected = function (recipient) {
+            setRecipientData(recipient);
+            changeUserCacheMiddleware('recipientData', recipient);
         };
 
         $scope.onChangeUserCache = changeUserCacheMiddleware;
@@ -194,7 +200,9 @@ angular.module('ocb-payments')
             } else {
                 payment.meta.availableFunds = null;
             }
-            $scope.paymentForm.amount.$setValidity('funds', true);
+            if ($scope.paymentForm.amount) {
+                $scope.paymentForm.amount.$setValidity('funds', true);
+            }
         });
 
         function addInvalidUntilModified (control, validationKey) {
@@ -233,17 +241,14 @@ angular.module('ocb-payments')
             var formData = payment.formData;
             formData.recipientId = recipient.recipientId;
             formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
-            formData.recipientName = recipient.name;
-            formData.province = recipient.province;
-            formData.bankCode = recipient.bankCode;
+            formData.recipientName = formData.recipientName || recipient.name;
+            formData.province = formData.province || recipient.province;
+            formData.bankCode = formData.bankCode || recipient.bankCode;
+            formData.description = formData.description || recipient.title.join('');
             formData.branchCode = recipient.branchCode;
-            formData.description = recipient.title.join('');
             $scope.isRecipientSelected = true;
         }
 
-        $scope.onRecipientSelected = function (recipient) {
-            setRecipientData(recipient);
-        };
 
         $scope.onRecipientCleared = function () {
             clearRecipientData();

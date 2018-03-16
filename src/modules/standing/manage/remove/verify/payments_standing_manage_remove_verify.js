@@ -34,7 +34,9 @@ angular.module('ocb-payments')
         });
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function(event, action) {
-            viewStateService.setInitialState("payments.standing.list", {
+            // TODO JAKO_DISABLE standing orders
+            viewStateService.setInitialState("payments.external.new.fill", {
+            //viewStateService.setInitialState("payments.standing.list", {
                 returnToPage: (initialState && initialState.returnToPage) ? initialState.returnToPage : null,
                 returnToItem: (initialState && initialState.payment) ? initialState.payment : null
             });
@@ -42,7 +44,10 @@ angular.module('ocb-payments')
             // bdStepPanel doesn't support moving back from 0 state to back state
             // so we have to do it manually
             // action.proceed();
-            $state.go('payments.standing.list');
+
+            // TODO JAKO_DISABLE standing orders
+            $state.go('payments.external.new.fill');
+            //$state.go('payments.standing.list');
         });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {

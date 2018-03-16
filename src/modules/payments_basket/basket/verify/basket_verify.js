@@ -36,7 +36,7 @@ angular.module('ocb-payments')
                 $scope.basket.result.token_error = true;
 
                 if($scope.basket.token.model && $scope.basket.token.model.$tokenRequired){
-                    if(!$scope.basket.token.model.$isErrorRegardingToken(error)){
+                    if($scope.basket.token.model.$isErrorRegardingToken != null && !$scope.basket.token.model.$isErrorRegardingToken(error)){
                         $scope.basket.item.result = error;
                         $scope.basket.item.result.error = true;
                         actions.proceed();
