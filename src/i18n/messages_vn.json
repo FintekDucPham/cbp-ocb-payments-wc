@@ -83,7 +83,7 @@
   "ocb.payments.new.types.DOMESTIC": "Chuyển khoản liên ngân hàng",
   "ocb.payments.new.types.STANDING": "Lệnh chuyển định kì",
   "ocb.payments.new.types.INTERNAL_PAYMENT": "Chuyển tiền nội bộ",
-  "ocb.payments.new.types.LOCAL_PAYMENT": "Chuyển tiền bên ngoài",
+  "ocb.payments.new.types.LOCAL_PAYMENT": "Chuyển tiền ngoai hệ thống",
   "ocb.payments.new.types.TOPUP_PAYMENT": "Nạp tiền điện thoại",
   "ocb.payments.new.types.BILL_PAYMENT": "Thanh toán hoá đơn",
   "ocb.payments.new.types.TUITION_FEE": "Thanh toán học phí",
