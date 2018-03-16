@@ -5,7 +5,7 @@
         <div class="pane-bd deposit-form">
             <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
                 <input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>
-                <rb-account-select rb-account="payment.items.senderAccount"
+                <rb-account-select-v2 rb-account="payment.items.senderAccount"
                                    rb-account-id="payment.formData.remitterAccountId"
                                    rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                    rb-product-list-name="TRANSFER_FROM_LIST"
@@ -15,7 +15,7 @@
                                    rb-remote="remote.model_from"
                                    rb-init-select-value = "{{payment.formData.accountNo || selectNrb}}"
                                    rb-only-bill-payment="billPayment"
-                                   rb-update-disabled-state="billInfoSearch"></rb-account-select>
+                                   rb-update-disabled-state="billInfoSearch"></rb-account-select-v2>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.accountName'|translate}}">
                 {{payment.meta.fullName}}
@@ -29,8 +29,7 @@
                            currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
             </bd-item-property>
             <bd-item-property label="{{::'ocb.payments.new.bill.fill.dailyLimit'|translate}}">
-                <bd-amount amount="payment.items.limit.remainingDailyLimit"
-                           currency="{{ payment.items.senderAccount.currency }}" show-dash></bd-amount>
+               {{payment.items.limit.remainingDailyLimit | number:0}}  VND
             </bd-item-property>
         </div>
     </div>
@@ -119,6 +118,9 @@
                 {{payment.formData.billInfo.phoneNumber.value}}
             </bd-item-property>
         </div>
+    </div>
+    <div ng-if="hideTable === true" class="validate-message">
+        {{::'ocb.payments.domestic.bill.error.amount.empty'|translate}}
     </div>
     <div ng-show="enableLoading" class="eb-preloader-container">
         <div eb-themable class="eb-preloader">&nbsp;</div>
