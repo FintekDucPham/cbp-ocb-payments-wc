@@ -50,6 +50,7 @@ angular.module('ocb-payments')
 
         };
         $scope.billPaymentsStepParams.clearForm = function () {
+            $scope.hideTable = false;
             $scope.enableLoading = false;
             $scope.payment.formData = {};
             $scope.payment.billTypeID = undefined;
