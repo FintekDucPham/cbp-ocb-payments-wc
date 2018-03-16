@@ -775,7 +775,7 @@
   "ocb.payments.git statusbasket.status.NOT_ACCEPTED_TRANSACTIONS": "{0} trong số {1} giao dịch đang chờ duyệt trong giỏ giao dịch phát sinh ngoài quy trình duyệt đã cài đặt.",
   "ocb.payments.basket.status.REALIZATION_DATE_EXCEEDED":"",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO": "{0} trong số {1} giao dịch đã được ghi nhận để thực hiện",
-  "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "Giao dịch đã được ghi nhận để thực hiện theo danh sách đã chọn.",
+  "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "Giao dịch đã được ghi nhận để thực hiện theo danh sach đã chọn.",
   "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "",
   "ocb.payments.basket.list.details.addedToBasketDate": "Đã thêm vào giỏ",
   "ocb.payments.basket.list.details.historyAction": "Lịch sử",
