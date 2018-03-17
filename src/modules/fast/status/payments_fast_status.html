@@ -1,4 +1,4 @@
-<bd-msg-panel bd-msg-type="{{::payment.result.type}}">
+<bd-msg-panel bd-msg-type="{{::payment.result.type}}" class="status-panel d-flex" style="padding: 0px">
     <p class="title" ng-if="!removeFromBasket">{{::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate}}</p>
     <p class="title" ng-if="removeFromBasket">{{::'ocb.payments.basket.delete.status.messages.' + payment.result.message | translate}}</p>
     <p class="title" ng-if="payment.formData.addToBeneficiary">{{::'ocb.payments.recipient.create.status' | translate}}</p>
