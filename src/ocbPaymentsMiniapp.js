@@ -94,13 +94,14 @@ angular.module('ocb-payments', [
                 //     action: "payments.future.list",
                 //     priority: 5
                 // },
-                {
-                    id: "payments.rejected.list",
-                    label: 'ocb.payments.rejected.label',
-                    icon: "ocb-icons operation_rejected",
-                    action: "payments.rejected.list",
-                    priority: 6
-                },
+                // TODO JAKO_DISABLE rejected payments
+                // {
+                //     id: "payments.rejected.list",
+                //     label: 'ocb.payments.rejected.label',
+                //     icon: "ocb-icons operation_rejected",
+                //     action: "payments.rejected.list",
+                //     priority: 6
+                // },
                 // TODO JAKO_DISABLE standing orders
                 // {
                 //     id: "payments.standing.list",
