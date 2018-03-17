@@ -1,3 +1,3 @@
-<bd-msg-panel bd-msg-type="{{::payment.result.type}}">
+<bd-msg-panel bd-msg-type="{{::recipient.result.type}}" class="bd-form">
     <p class="title">{{::'ocb.payments.recipients.new.status.' + (recipient.result.code || recipient.result.type) | translate}}</p>
 </bd-msg-panel>
