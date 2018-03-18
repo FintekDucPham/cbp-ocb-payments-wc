@@ -144,11 +144,10 @@
                  </span>
              </span>
         </span>
-        
-    <div class="bd-form-white" ng-show="basket.token.model.$tokenRequired">    
-        <bd-item-property class="bd-item-property--multirow" ng-if="basket.token.params.resourceId" label="{{ basket.token.model.currentToken.label }}" no-label-box="true">
-            <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
-        </bd-item-property>
-    </div>
+</div>
 
+<div class="bd-form-white basket-authorization" ng-show="basket.token.model.$tokenRequired">
+    <bd-item-property class="bd-item-property--multirow" ng-if="basket.token.params.resourceId" label="{{ basket.token.model.currentToken.label }}" no-label-box="true">
+        <rb-token-authorization rb-operation-type="{{basket.token.params.rbOperationType}}" rb-model="basket.token.model" rb-params="basket.token.params"></rb-token-authorization>
+    </bd-item-property>
 </div>
