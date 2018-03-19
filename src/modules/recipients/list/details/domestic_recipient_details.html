@@ -1,5 +1,42 @@
 <div class="row">
     <div class="col-lg-6">
+        <div class="row margin-bottom-sm">
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.custom_name.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {{ $data.customerName }}
+            </div>
+        </div>
+        <div class="row margin-bottom-sm">
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.recipient_type.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {{::'ocb.payments.recipient_types.' + $data.recipientType.code | translate}}
+            </div>
+        </div>
+        <div class="row margin-bottom-sm">
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div style="word-break: break-all;">{{$data.recipientAddress}}</div>
+            </div>
+        </div>
+        <div class="row margin-bottom-sm">
+            <div class="col-xs-12 col-sm-6 ">
+                {{::'ocb.payments.recipients.new.domestic.fill.account_related'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {{ $data.debitNrb | nrbIbanFilter }}
+            </div>
+        </div>
+
+
+
+        <h1>_______________________</h1>
+        <!--
         <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
             <div>{{ $data.customerName }}</div>
         </bd-item-property>
@@ -14,7 +51,9 @@
 
         <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.account_related'|translate}}">
             {{ $data.debitNrb | nrbIbanFilter }}
-        </bd-item-property>
+        </bd-ite
+        m-property>
+        -->
     </div>
     <div class="col-lg-6">
         <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.description.label'|translate}}">
@@ -43,5 +82,13 @@
             {{ $data.cardNumber }}
         </bd-item-property>
     </div>
+
+
+
+    <style>
+        .margin-bottom-sm {
+            margin-bottom: 20px;
+        }
+    </style>
 </div>
 
