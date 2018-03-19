@@ -5,7 +5,7 @@
                 <div class="row-line__cell">
                     <bd-item-property label="{{::'ocb.payments.payu_bku.std_code.label' | translate}}">
 
-                        <input bd-type="text" ng-model="payuBku.data.stdCode" class="input-field" name="contentText" required/>
+                        <input bd-type="text" ng-model="payuBku.formData.stdCode" class="input-field" name="contentText" required/>
                         &nbsp;
                         <bd-button class="bd-button bd-button__primary" ng-click="searchStudent()" type="submit">{{::'ocb.payments.recipients.select.filter.button.action'|translate}}</bd-button>
 
@@ -14,31 +14,31 @@
 
             </div>
         </div>
-        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.stdInfo !== null">
+        <div class="account-collapse-item form-horizontal" ng-if="payuBku.formData.stdInfo !== null">
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.std.label' | translate}}</p></div></div>
 
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_name.label' | translate}}</div>
-                <div class="col-md-3">{{payuBku.data.stdInfo.stdName}}</div>
+                <div class="col-md-3">{{payuBku.formData.stdInfo.stdName}}</div>
             </div>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_gen.label' | translate}}</div>
-                <div class="col-md-3">{{payuBku.data.stdInfo.stdGen}}</div>
+                <div class="col-md-3">{{payuBku.formData.stdInfo.stdGen}}</div>
             </div>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_code.label' | translate}}</div>
-                <div class="col-md-3">{{payuBku.data.stdInfo.stdCode}}</div>
+                <div class="col-md-3">{{payuBku.formData.stdInfo.stdCode}}</div>
             </div>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_birth.label' | translate}}</div>
-                <div class="col-md-3">{{payuBku.data.stdInfo.stdBirth}}</div>
+                <div class="col-md-3">{{payuBku.formData.stdInfo.stdBirth}}</div>
             </div>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_depart.label' | translate}}</div>
-                <div class="col-md-3">{{payuBku.data.stdInfo.stdDepart}}</div>
+                <div class="col-md-3">{{payuBku.formData.stdInfo.stdDepart}}</div>
             </div>
         </div>
-        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.subjectInfo !== null">
+        <div class="account-collapse-item form-horizontal" ng-if="payuBku.formData.subjectInfo !== null">
         <bd-table
             bd-type="typePU"
             bd-table-params="table.tableConfig"
@@ -68,21 +68,22 @@
             <br>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_fg.label' | translate}}</div>
-                <div class="col-md-3">{{payuBku.data.amountInfo.figure}}</div>
+                <div class="col-md-3">{{payuBku.formData.amountInfo.figure}}</div>
             </div>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_word.label' | translate}}</div>
-                <div class="col-md-3">{{payuBku.data.amountInfo.words}}</div>
+                <div class="col-md-3">{{payuBku.formData.amountInfo.words}}</div>
             </div>
         </div>
 
 
-        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.stdInfo !== null">
+        <div class="account-collapse-item form-horizontal" ng-if="payuBku.formData.stdInfo !== null">
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.remitter.label' | translate}}</p></div></div>
             <div class="row" style="display: flex;align-items: center;">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_number.label' | translate}}</div>
-                <div class="col-md-5">        <rb-account-select rb-account="payuBku.data.senderAccount"
-                                                                 rb-account-no="remitterAccountId"
+                <div class="col-md-5">        <rb-account-select rb-account="payuBku.formData.senderAccount"
+                                                                 rb-account-no="payuBku.formData.remitterAccountNo"
+                                                                 rb-account-id="payuBku.formData.remitterAccountId"
                                                                  rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                                                  rb-product-list-name="TRANSFER_OWN_FROM_LIST"
                                                                  rb-account-select-params="senderSelectParams"
@@ -95,22 +96,22 @@
 
             </div>
             <br>
-            <div ng-if="payuBku.data.senderAccount !== null">
+            <div ng-if="payuBku.formData.senderAccount !== null">
                 <div class="row" >
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_name.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.accountName}}</div>
+                    <div class="col-md-5">{{payuBku.formData.senderAccount.accountName}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_branch.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.branch}}</div>
+                    <div class="col-md-5">{{payuBku.formData.senderAccount.branch}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_avail.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.currentBalance + ' ' +payuBku.data.senderAccount.currency}}</div>
+                    <div class="col-md-5">{{payuBku.formData.senderAccount.currentBalance + ' ' +payuBku.formData.senderAccount.currency}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_remain.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.limit}}</div>
+                    <div class="col-md-5">{{payuBku.formData.senderAccount.limit}}</div>
                 </div>
             </div>
         </div>
