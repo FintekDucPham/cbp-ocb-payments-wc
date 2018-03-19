@@ -34,7 +34,7 @@ angular.module('ocb-payments')
                                                             $filter, $q, transferService, accountsService,
                                                             utilityService, validationRegexp, translate,
                                                             rbAccountSelectParams, rbDatepickerOptions, bdFocus,
-                                                            bdFillStepInitializer, bdStepStateEvents) {
+                                                            bdFillStepInitializer, bdStepStateEvents, lodash) {
 
         $scope.isRecipientSelected = false;
         var stateData = $state.$current.data;
@@ -179,6 +179,15 @@ angular.module('ocb-payments')
             resetFields($scope.paymentForm, ['recipientAccountNo', 'recipientName', 'description']);
             bdFocus('recipientAccountNo');
         };
+
+        $scope.onRecipientAccountChanged = function() {
+            var accountNo = payment.formData.recipientAccountNo.replace(/ /g, '');
+            var foundRecipient = lodash.filter(payment.meta.recipientList, function(recipient) {
+                return recipient.accountNo == accountNo;
+            })[0];
+            payment.formData.recipientName = foundRecipient.name;
+            payment.items.recipient = foundRecipient;
+        }
 
         $scope.$on('clearForm', function () {
             $scope.remote.model.resetToDefault();
