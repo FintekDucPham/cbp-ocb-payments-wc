@@ -25,62 +25,83 @@
             </div>
         </div>
         <div class="row margin-bottom-sm">
-            <div class="col-xs-12 col-sm-6 ">
+            <div class="col-xs-12 col-sm-6 lb">
                 {{::'ocb.payments.recipients.new.domestic.fill.account_related'|translate}}
             </div>
             <div class="col-xs-12 col-sm-6">
                 {{ $data.debitNrb | nrbIbanFilter }}
             </div>
         </div>
-
-
-
-        <h1>_______________________</h1>
-        <!--
-        <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.custom_name.label'|translate}}">
-            <div>{{ $data.customerName }}</div>
-        </bd-item-property>
-
-        <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_type.label'|translate}}">
-            {{::'ocb.payments.recipient_types.' + $data.recipientType.code | translate}}
-        </bd-item-property>
-
-        <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_name_address'|translate}}">
-            <div style="word-break: break-all;">{{$data.recipientAddress}}</div>
-        </bd-item-property>
-
-        <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.account_related'|translate}}">
-            {{ $data.debitNrb | nrbIbanFilter }}
-        </bd-ite
-        m-property>
-        -->
     </div>
+
     <div class="col-lg-6">
-        <bd-item-property label="{{::'ocb.payments.recipients.new.domestic.fill.description.label'|translate}}">
-            <div style="word-break: break-all;">{{ $data.transferTitle }}</div>
-        </bd-item-property>
+        <div class="row margin-bottom-sm">
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.description.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div style="word-break: break-all;">
+                    {{ $data.transferTitle }}
+                </div>
+            </div>
+        </div>
 
-        <bd-item-property ng-if="$data.nrb" label="{{::'ocb.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}">
-            {{ $data.nrb | nrbIbanFilter }}
-        </bd-item-property>
+        <div class="row margin-bottom-sm" ng-if="$data.nrb" >
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.recipient_account.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {{ $data.nrb | nrbIbanFilter }}
+            </div>
+        </div>
 
-        <bd-item-property ng-if="$data.province" label="{{::'ocb.payments.recipients.new.domestic.fill.province.label'|translate}}">
-            <eb-preloader ng-if="!$data.provinceName" ng-init="promise=resolveProvinceName($data)" eb-promise="::promise" class="eb-inline-preloader"></eb-preloader>
-            {{$data.provinceName}}
-        </bd-item-property>
+        <div class="row margin-bottom-sm" ng-if="$data.province">
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.province.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <eb-preloader
+                    ng-if="!$data.provinceName"
+                    ng-init="promise=resolveProvinceName($data)"
+                    eb-promise="::promise"
+                    class="eb-inline-preloader"
+                ></eb-preloader>
+                {{$data.provinceName}}
+            </div>
+        </div>
 
-        <bd-item-property ng-if="$data.bankName" label="{{::'ocb.payments.recipients.new.domestic.fill.bank.label'|translate}}">
-            {{ $data.bankName }}
-        </bd-item-property>
+        <div class="row margin-bottom-sm" ng-if="$data.bankName">
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.bank.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {{ $data.bankName }}
+            </div>
+        </div>
 
-        <bd-item-property ng-if="$data.branchCode" label="{{::'ocb.payments.recipients.new.domestic.fill.branch.label'|translate}}">
-            <eb-preloader ng-if="!$data.branchName" ng-init="promise=resolveBranchName($data)" eb-promise="::promise" class="eb-inline-preloader"></eb-preloader>
-            {{ $data.branchName }}
-        </bd-item-property>
+        <div class="row margin-bottom-sm" ng-if="$data.branchCode">
+            <div class="col-xs-12 col-sm-6 lb">
+                {{::'ocb.payments.recipients.new.domestic.fill.branch.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <eb-preloader
+                    ng-if="!$data.branchName"
+                    ng-init="promise=resolveBranchName($data)"
+                    eb-promise="::promise"
+                    class="eb-inline-preloader"
+                ></eb-preloader>
+                {{ $data.branchName }}
+            </div>
+        </div>
 
-        <bd-item-property ng-if="$data.cardNumber" label="{{::'ocb.payments.recipients.new.domestic.fill.card_number.label'|translate}}">
-            {{ $data.cardNumber }}
-        </bd-item-property>
+        <div class="row margin-bottom-sm" ng-if="$data.cardNumber">
+            <div class="col-xs-12 col-sm-6 lb">
+                ::'ocb.payments.recipients.new.domestic.fill.card_number.label'|translate}}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {{ $data.cardNumber }}
+            </div>
+        </div>
     </div>
 
 
