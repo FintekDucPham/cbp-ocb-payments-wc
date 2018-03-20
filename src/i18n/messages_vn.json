@@ -1039,7 +1039,7 @@
   "ocb.payments.domestic.realization_date.error.invalid": "Ngày thực hiện lệnh không hợp lệ",
   "ocb.payments.domestic.realization_date.error.in_past": "Ngày thực hiện lệnh không thể sớm hơn ngày hiện tại",
   "ocb.payments.domestic.realization_date.error.too_far": "Ngày thực hiện lệnh không thể trễ hơn ##date##",
-  "ocb.payments.domestic.realization_date.warning.holiday": "Đối với các lệnh chuyển tiền ngoài hệ thống OCB sau 15 giờ 45 phút từ thứ hai đến thứ sáu, hoặc ngày thứ 7, chủ nhật, ngày nghỉ, ngày lễ: lệnh sẽ được thực hiện vào ngày làm việc tiếp theo",
+  "ocb.payments.domestic.realization_date.warning.holiday": "Đối với các lệnh chuyển tiền ngoài hệ thống OCB sau 15 giờ 45 phút, ngày thứ 7, ngày nghỉ, ngày lễ: lệnh sẽ được thực hiện vào ngày làm việc tiếp theo.",
   "ocb.payments.domestic.error.funds": "Số tiền không hợp lệ",
   "ocb.payments.fast.to_account.label": "Tài khoản",
   "ocb.payments.fast.to_card.label": "Thẻ",
