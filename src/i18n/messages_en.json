@@ -111,6 +111,7 @@
   "ocb.payments.tuition.university.place.holder": "Choose a university in the list...",
   "ocb.payments.tuition.form": "Form",
   "ocb.payments.tuition.form.empty": "Form can not be empty",
+  "ocb.payments.tuition.student.type.empty": "Please chose Student Code/ID or NationalID",
   "ocb.payments.tuition.form.full": "Full time",
   "ocb.payments.tuition.form.credit": "Credit",
   "ocb.payments.tuition.form.post": "Post-University",
