@@ -61,7 +61,8 @@
                        ng-hide="showHide"
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
                        ng-paste="0 && rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
-                       ng-change="unlockField()">
+                       ng-change="unlockField()"
+                       ng-blur="onRecipientAccountChanged()">
                 <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
                     <div class="validation-message animate-on">

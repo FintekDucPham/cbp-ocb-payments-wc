@@ -76,7 +76,8 @@
                        class="input-field"
                        ng-hide="showHide"
                        ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-                       ng-change="unlockField()">
+                       ng-change="unlockField()"
+                       ng-blur="onRecipientAccountChanged()">
                 <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && !isErrorPaste">
                     <div eb-message-key="required" class="validation-message animate-on">
                         {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
