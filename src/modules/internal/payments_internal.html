@@ -9,9 +9,6 @@
 	    <div class="payments-warning-item" ng-if="modifyInBasket && payment.meta.customerContext==='MICRO'">
 	    	{{::'ocb.payments.basket.modify.signRemove.verify' | translate}}
 	    </div>
-	    <div class="payments-warning-item" ng-if="payment.meta.holiday">
-	    	{{::'ocb.payments.domestic.realization_date.warning.holiday' | translate }}
-	    </div>
 	</section>
     <section>
 	    <bd-header>{{::"ocb.payments.internal.header" | translate}}</bd-header>
