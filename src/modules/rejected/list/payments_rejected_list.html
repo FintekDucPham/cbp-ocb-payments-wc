@@ -1,17 +1,16 @@
 <rb-content-view class="rb-content-view--solid payments-rejected-list">
     <bd-header>{{::"ocb.payments.rejected.label"|translate}}</bd-header>
-
     <form novalidate name="filterForm" ng-submit="onSubmit(filterForm)">
         <bd-radio-select bd-model="rejectedList.filterData.periodType.model">
-
             <div class="bd-item-property row">
                 <div class="col-xs-12">
                     <bd-radio-option bd-option-value="rejectedList.periodTypes.LAST" class="row__inline-block--middle">
-                        <div class="row__inline-block--middle row__inline-block--adjacent">
-                            {{:: 'ocb.payments.rejected.list.filter.type.last.label' | translate}}
-                        </div>
-                        <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
-                            <input
+                        <div class="row">
+                            <div class="row__inline-block--middle row__inline-block--adjacent">
+                                {{:: 'ocb.payments.rejected.list.filter.type.last.label' | translate}}
+                            </div>
+                            <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
+                                <input
                                     bd-type="number"
                                     class="input-field"
                                     ng-model="rejectedList.filterData.last.value"
@@ -20,21 +19,25 @@
                                     ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST"
                                     min-date="rejectedList.minDate"
                                     model-date="rejectedList.filterData.last.dateFrom"
-                                    ng-pattern="/^\d+$/"/>
-                        </div>
-                        <div class="row__inline-block--middle" style="width:100px;">
-                            <ui-select ng-model="rejectedList.filterData.last.type.selected"
-                                       theme="bootstrap"
-                                       ng-change="onFilterLastTypeChange()"
-                                       reset-search-input="false"
-                                       required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
-                                <ui-select-match placeholder="{{:: 'ocb.payments.rejected.list.filter.type.last.placeholder' | translate }}">
-                                    {{ 'ocb.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">
-                                    {{ :: 'ocb.payments.rejected.list.filter.type.last.types.'+ item | translate }}
-                                </ui-select-choices>
-                            </ui-select>
+                                    ng-pattern="/^\d+$/"
+                                />
+                            </div>
+                            <div class="row__inline-block--middle" style="width: 200px;">
+                                <ui-select
+                                    ng-model="rejectedList.filterData.last.type.selected"
+                                    theme="bootstrap"
+                                    ng-change="onFilterLastTypeChange()"
+                                    reset-search-input="false"
+                                    required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST"
+                                >
+                                    <ui-select-match placeholder="{{:: 'ocb.payments.rejected.list.filter.type.last.placeholder' | translate }}">
+                                        {{ 'ocb.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">
+                                        {{ :: 'ocb.payments.rejected.list.filter.type.last.types.'+ item | translate }}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
                         </div>
                     </bd-radio-option>
 
@@ -66,25 +69,29 @@
                         </div>
                         <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
                             <input name="dateFromInput_delgate" hidden ng-model="rejectedList.filterData.range.dateFrom" min-date="rejectedList.minDate" model-date="rejectedList.filterData.range.dateFrom" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                            <rb-datepicker ng-model="rejectedList.filterData.range.dateFrom"
-                                           ng-model-options="{ allowInvalid: false }"
-                                           rb-name="dateFromInput"
-                                           max-search-date
-                                           rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
-                                           style="width: 140px;"></rb-datepicker>
+                            <rb-datepicker
+                                ng-model="rejectedList.filterData.range.dateFrom"
+                                ng-model-options="{ allowInvalid: false }"
+                                rb-name="dateFromInput"
+                                max-search-date
+                                rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
+                                style="width: 140px;"
+                            ></rb-datepicker>
                         </div>
-                        <div class="row__inline-block--middle row__inline-block--adjacent">
+                        <div class="row__inline-block--middle row__inline-block--adjacent" style="margin-left: 0.3rem">
                             {{::'ocb.payments.rejected.list.filter.type.range.to.label'|translate}}
                         </div>
                         <div class="row__inline-block--middle" style="width:140px;">
                             <input name="dateToInput_delgate" hidden ng-model="rejectedList.filterData.range.dateTo" min-date="rejectedList.filterData.range.dateFrom" model-date="rejectedList.filterData.range.dateTo" ng-required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.RANGE"/>
-                            <rb-datepicker ng-model="rejectedList.filterData.range.dateTo"
-                                           empty-date
-                                           ng-model-options="{ allowInvalid: false }"
-                                           rb-name="dateToInput"
-                                           max-search-date
-                                           rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
-                                           style="width: 140px;"></rb-datepicker>
+                            <rb-datepicker
+                                ng-model="rejectedList.filterData.range.dateTo"
+                                empty-date
+                                ng-model-options="{ allowInvalid: false }"
+                                rb-name="dateToInput"
+                                max-search-date
+                                rb-invalid="filterForm.dateToInput_delgate.$error.mindate"
+                                style="width: 140px;"
+                            ></rb-datepicker>
                         </div>
                     </bd-radio-option>
 

@@ -1,9 +1,5 @@
-<div class="status-panel form-pane">
-    <div class="pane-above"></div>
-        <div class="success-center clear">
-            <div class="rb-multistep-form-icon-{{::payment.result.type}} {{::payment.result.type}}-img"></div>
-            <p class="title" ng-if="!removeFromBasket">{{::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate}}</p>
-            <p class="title"  ng-if="removeFromBasket">{{::'ocb.payments.basket.delete.status.messages.' + payment.result.message | translate}}</p>
-            <p class="title" ng-if="payment.formData.addToBeneficiary">{{::'ocb.payments.recipient.create.status' | translate}}</p>
-        </div>
-</div>
+<bd-msg-panel bd-msg-type="{{::payment.result.type}}">
+    <p class="title" ng-if="!removeFromBasket">{{::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate}}</p>
+    <p class="title"  ng-if="removeFromBasket">{{::'ocb.payments.basket.delete.status.messages.' + payment.result.message | translate}}</p>
+    <p class="title" ng-if="payment.formData.addToBeneficiary">{{::'ocb.payments.recipient.create.status' | translate}}</p>
+</bd-msg-panel>

@@ -1,7 +1,3 @@
-<div class="form-pane status-panel">
-    <div class="pane-above"></div>
-    <div class="success-center clear" style="padding: 15px 0px; margin: 0px auto">
-        <div class="success-img rb-multistep-form-icon-{{::recipient.result.type}}"></div>
-        <p class="title" style="margin-bottom: 0px">{{::'ocb.payments.recipients.new.status.' + (recipient.result.code || recipient.result.type) | translate}}</p>
-    </div>
-</div>
+<bd-msg-panel bd-msg-type="{{::recipient.result.type}}" class="bd-form">
+    <p class="title">{{::'ocb.payments.recipients.new.status.' + (recipient.result.code || recipient.result.type) | translate}}</p>
+</bd-msg-panel>
