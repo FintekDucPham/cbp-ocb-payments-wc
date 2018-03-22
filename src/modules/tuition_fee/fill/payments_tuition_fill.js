@@ -227,6 +227,7 @@ angular.module('ocb-payments')
                 // $scope.universityEmpty = false;
                 // $scope.semesterEmpty = false;
                 // $scope.stdEmpty = false;
+                //
                 //check Cao Dang Kinh Te
                 if (university.code == 5) {
                     //check StudentID or NationalID
@@ -242,11 +243,22 @@ angular.module('ocb-payments')
                     $scope.studentID = $scope.tuitionFee.tuitionForm.stdCodeID;
                 }
                 //Call service to get Student's Info
+                // validate params
+                if (university) {
+                    $scope.universityCode = university.code;
+                } else {
+                    $scope.universityCode = "";
+                }
 
+                if (selectedForm) {
+                    $scope.courseType = selectedForm.name;
+                } else {
+                    $scope.courseType = "";
+                }
                 transferBillService.getStudentInfo({
-                    universityCode: university.code,
+                    universityCode: $scope.universityCode,
                     semesterCode: "",
-                    courseType: selectedForm.name,
+                    courseType: $scope.courseType,
                     studentCode: $scope.studentID,
                     nationalID: $scope.nationalID
                 }).then(function (data) {

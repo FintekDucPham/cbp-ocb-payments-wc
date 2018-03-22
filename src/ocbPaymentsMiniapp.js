@@ -125,56 +125,56 @@ angular.module('ocb-payments', [
                     action: "payments.basket.new.fill",
                     priority: 9
                 }
-                //,
-                // TODO JAKO_DISABLE batch processing
-                // {
-                //     id: "payments.batch_processing",
-                //     label: "ocb.payments.batch_processing.label",
-                //     icon: "ocb-icons basket",
-                //     action: "payments.batch_processing.fill",
-                //     priority: 10
-                // }
-                // TODO JAKO_DISABLE bill payment
-                //,
-                // {
-                //     id: "payments.new_bill.fill",
-                //     label: 'payments.submenu.options.new_bill.header',
-                //     icon: "ocb-icons ocb_przelew",
-                //     action: "payments.new_bill.fill",
-                //     priority: 11
-                // },
-                // TODO JAKO_DISABLE bill history
-                // {
-                //     id: "payments.bill_history.list",
-                //     label: "ocb.payments.basket.list.details.historyAction",
-                //     icon: "ocb-icons basket",
-                //     action: "payments.bill_history.list",
-                //     priority: 12
-                // },
-                // TODO JAKO_DISABLE tuition fee
-                // {
-                //     id: "payments.tuition_fee.fill",
-                //     label: "ocb.payments.tuition.label.header",
-                //     icon: "ocb-icons basket",
-                //     action: "payments.tuition_fee.fill",
-                //     priority: 13
-                // },
-                // TODO JAKO_DISABLE CB pending transactions
-                // {
-                //     id: "payments.pending.fill",
-                //     label: "ocb.payments.pending.label",
-                //     icon: "ocb-icons basket",
-                //     action: "payments.pending.fill",
-                //     priority: 14
-                // },
-                // TODO JAKO_DISABLE payU
-                // {
-                //     id: "payments.payu",
-                //     label: "ocb.payments.payu.label",
-                //     icon: "ocb-icons basket",
-                //     action: "payments.payu.fill",
-                //     priority: 15
-                // }
+                ,
+               // TODO JAKO_DISABLE batch processing
+                {
+                    id: "payments.batch_processing",
+                    label: "ocb.payments.batch_processing.label",
+                    icon: "ocb-icons basket",
+                    action: "payments.batch_processing.fill",
+                    priority: 10
+                }
+               // TODO JAKO_DISABLE bill payment
+                ,
+                {
+                    id: "payments.new_bill.fill",
+                    label: 'payments.submenu.options.new_bill.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: "payments.new_bill.fill",
+                    priority: 11
+                },
+             //   TODO JAKO_DISABLE bill history
+                {
+                    id: "payments.bill_history.list",
+                    label: "ocb.payments.basket.list.details.historyAction",
+                    icon: "ocb-icons basket",
+                    action: "payments.bill_history.list",
+                    priority: 12
+                },
+             //   TODO JAKO_DISABLE tuition fee
+                {
+                    id: "payments.tuition_fee.fill",
+                    label: "ocb.payments.tuition.label.header",
+                    icon: "ocb-icons basket",
+                    action: "payments.tuition_fee.fill",
+                    priority: 13
+                },
+             //   TODO JAKO_DISABLE CB pending transactions
+                {
+                    id: "payments.pending.fill",
+                    label: "ocb.payments.pending.label",
+                    icon: "ocb-icons basket",
+                    action: "payments.pending.fill",
+                    priority: 14
+                },
+             //   TODO JAKO_DISABLE payU
+                {
+                    id: "payments.payu",
+                    label: "ocb.payments.payu.label",
+                    icon: "ocb-icons basket",
+                    action: "payments.payu.fill",
+                    priority: 15
+                }
             ]
         });
     }
