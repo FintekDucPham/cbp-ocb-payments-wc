@@ -37,7 +37,11 @@ angular.module('ocb-payments')
     })
     .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING,
                                                     RECURRING_PERIOD, translate, formService, bdStepStateEvents,
-                                                    viewStateService, initialState, authorizationService) {
+                                                    viewStateService, initialState, authorizationService, rbDatepickerOptions) {
+        $scope.rbDatepickerOptions = rbDatepickerOptions({
+            minDate: new Date()
+        });
+
         var initialData = initialState.data;
         var payment = $scope.payment;
         var paymentData = payment.formData;
@@ -141,13 +145,6 @@ angular.module('ocb-payments')
         $scope.$watch('payment.formData.recurringPeriod', function(newValue){
             if (newValue == RECURRING_PERIOD.NOLIMIT) {
                 $scope.payment.formData.finishDate = undefined;
-            }
-        });
-
-        // FINISH DATE
-        $scope.$watch('payment.formData.finishDate', function(newValue){
-            if (newValue) {
-                $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
             }
         });
 
