@@ -87,13 +87,13 @@ angular.module('ocb-payments', [
 					priority: 3
                 },
                 // TODO JAKO_DISABLE planned payments
-                // {
-                //     id: "payments.future.list",
-                //     label: 'ocb.payments.future.label',
-                //     icon: "ocb-icons payments_waiting",
-                //     action: "payments.future.list",
-                //     priority: 5
-                // },
+                {
+                    id: "payments.future.list",
+                    label: 'ocb.payments.future.label',
+                    icon: "ocb-icons payments_waiting",
+                    action: "payments.future.list",
+                    priority: 5
+                },
                 // TODO JAKO_DISABLE rejected payments
                 // {
                 //     id: "payments.rejected.list",
