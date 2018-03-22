@@ -1,5 +1,5 @@
 <div>
-    <form name="autoBillForm" novalidate>
+    <form name="autoBillForm" class="bd-form" novalidate>
         <!--<bd-item-property class="bd-item-property&#45;&#45;text"-->
                           <!--label="{{::'ocb.payments.auto_bill.list.details.orderNo'|translate}}"-->
                           <!--ng-class="{'bd-item-property&#45;&#45;disabled': params.operationType === 'DELETE'}">-->
@@ -51,7 +51,7 @@
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.details.paymentSetting'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-            {{::'ocb.payments.auto_bill.list.details.paymentSetting.' + payment.formData.paymentSetting |translate}}
+            {{::'ocb.payments.auto_bill.list.details.paymentSetting.' + payment.formData.paymentSetting |translate}} <span ng-show="payment.formData.paymentSetting == 'LIMITED'">{{payment.formData.amountLimit.value}}</span>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"

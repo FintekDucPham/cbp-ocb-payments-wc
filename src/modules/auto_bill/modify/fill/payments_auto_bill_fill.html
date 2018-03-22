@@ -1,5 +1,5 @@
 <div>
-    <form name="autoBillForm" novalidate>
+    <form name="autoBillForm" novalidate class="bd-form">
 
 
         <bd-item-property class="bd-item-property"
@@ -47,9 +47,11 @@
                                    class="input-field"
                                    ng-model="payment.formData.amountLimit.value"
                                    ng-pattern="AMOUNT_PATTERN"
+                                   rb-number-type-input
                                    style="width: 100px;"
                                    amount-input
                                    currency="VND"
+                                   ng-min="0.01"
                                    />
                         </div>
                     </div>
@@ -63,6 +65,9 @@
                         <div eb-message-key="pattern" class="validation-message animate-on">
                             {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
                         </div>
+                        <div eb-message-key="ngMin" class="validation-message animate-on">
+                            {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
+                        </div>
                     </eb-validation-messages>
                 </bd-radio-option>
             </bd-radio-select>
@@ -73,7 +78,7 @@
                     ng-model="payment.formData.firstExecutionDate"
                     rb-form="autoBillForm"
                     rb-name="firstExecutionDate"
-                    rb-datepicker-options="firstOrNextDateDatepickerOptions"
+                    rb-datepicker-options="rbDatepickerOptions"
                     rb-required="true">
             </rb-datepicker>
 
@@ -89,7 +94,7 @@
                 </div>
 
                 <div eb-message-key="bdMinDate" class="validation-message animate-on">
-                    {{::'ocb.payments.new.standing.fill.first_execution_date.TOO_EARLY_FIRST_DATE'|translate|regexReplace:'##DATE##':(firstDateMinDate|date:'shortDate')}}
+                    {{::'ocb.payments.auto_bill.error.first_execution_date.min'|translate}}
                 </div>
 
                 <div eb-message-key="bdMaxDate" class="validation-message animate-on">
@@ -192,15 +197,20 @@
             </bd-radio-select>
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'ocb.payments.new.standing.fill.finish_date'|translate }}">
+        <bd-item-property label="{{ ::'ocb.payments.new.standing.fill.finish_date'|translate }}" ng-show="payment.formData.recurringPeriod == 'PERIOD'">
 
             <rb-datepicker
                     ng-model="payment.formData.finishDate"
                     rb-form="autoBillForm"
-                    rb-name="finishDate">
+                    rb-name="finishDate"
+                    rb-datepicker-options="rbDatepickerOptions"
+                    rb-required="{{payment.formData.recurringPeriod == 'PERIOD'}}">
             </rb-datepicker>
 
             <eb-validation-messages eb-name="finishDate">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.auto_bill.error.field.empty'|translate}}
+                </div>
                 <div eb-message-key="date" class="validation-message animate-on">
                     {{::'ocb.payments.auto_bill.error.invalid.date'|translate}}
                 </div>
@@ -211,6 +221,9 @@
 
                 <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">
                     {{::'ocb.payments.new.standing.fill.finish_date.TOO_LATE_END_DATE'|translate}}
+                </div>
+                <div eb-message-key="bdMinDate" class="validation-message animate-on">
+                    {{::'ocb.payments.auto_bill.error.first_execution_date.min'|translate}}
                 </div>
             </eb-validation-messages>
             <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
