@@ -15,6 +15,7 @@ angular.module('ocb-payments')
     .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
 
         $scope.showVerify = false;
+
         if (angular.isUndefined($scope.tuitionFee.tuitionForm) || lodash.isEmpty($scope.tuitionFee.tuitionForm)) {
             $state.go('payments.tuition_fee.fill');
         } else {
@@ -37,7 +38,7 @@ angular.module('ocb-payments')
 
         $scope.getOTP = function (event, actions) {
             sendAuthorizationToken();
-        }
+        };
 
         transferService.getTransferCost({
             remitterId: $scope.tuitionFee.tuitionForm.remitterAccountId
@@ -101,26 +102,27 @@ angular.module('ocb-payments')
             switch (businessLine) {
                 case "33":
                     return "RETAIL";
+                    break;
                 default :
                     return "CORPORATE";
             }
-            ;
         };
+
         var temporaryResponse = function (status) {
             switch (status.toLowerCase()) {
                 case "pending": {
                     $scope.tuitionFee.result.code = "60";//"0": "99" ;
                     $scope.tuitionFee.result.type = "error";
+                    break;
                 }
-                    ;
+
                 default : {
                     $scope.tuitionFee.result.code = "0";
                     $scope.tuitionFee.result.type = "success";
                 }
-                    ;
             }
-            ;
         };
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
                 $scope.showVerify = false;
@@ -134,8 +136,8 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-            $scope.rbPaymentTuitionFeeParams.visibility.search = true;
-            $scope.rbPaymentTuitionFeeParams.visibility.clear = true;
+            $scope.rbPaymentTuitionFeeParams.visibility.search = false;
+            $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
             actions.proceed();
         });
 

@@ -62,19 +62,19 @@ angular.module('ocb-payments')
         $scope.$watch('tuitionFee.tuitionForm.selectedForm.value', function(newValue, oldValue) {
             switch (newValue){
                 case 1:
-                    $scope.showSemester = true;
+                    $scope.tuitionFee.tuitionForm.showSemester = true;
                     break;
                 case 2:
-                    $scope.showSemester = false;
+                    $scope.tuitionFee.tuitionForm.showSemester = false;
                     break;
                 case 3:
-                    $scope.showSemester = false;
+                    $scope.tuitionFee.tuitionForm.showSemester = false;
                     break;
                 case 4:
-                    $scope.showSemester = false;
+                    $scope.tuitionFee.tuitionForm.showSemester = false;
                     break;
                 default:
-                    $scope.showSemester = false;
+                    $scope.tuitionFee.tuitionForm.showSemester = false;
                     break;
             }
         });
@@ -222,12 +222,8 @@ angular.module('ocb-payments')
                 //check student ID
                 $scope.stdEmpty = true;
             }  else {
-                $scope.batchInfoSearch = true;
-                // $scope.formEmpty = false;
-                // $scope.universityEmpty = false;
-                // $scope.semesterEmpty = false;
-                // $scope.stdEmpty = false;
-                //
+                $scope.tuitionFee.tuitionForm.batchInfoSearch = true;
+
                 //check Cao Dang Kinh Te
                 if (university.code == 5) {
                     //check StudentID or NationalID
@@ -274,16 +270,16 @@ angular.module('ocb-payments')
         /*Chose University from combobox*/
 
         $scope.onTuitionUniversityChange = function (itemSelected) {
-            $scope.hideStudent = false;
+            $scope.tuitionFee.tuitionForm.hideStudent = false;
             $scope.tuitionFee.tuitionForm.paymentsTuitionUniversities = itemSelected;
             if ($scope.tuitionFee.tuitionForm.paymentsTuitionUniversities.code == 1) {
-                $scope.hideStudentCode = true;
-                $scope.hideStudent = true;
+                $scope.tuitionFee.tuitionForm.hideStudentCode = true;
+                $scope.tuitionFee.tuitionForm.hideStudent = true;
                 $("#semesterID").removeClass("hide-content");
                 $("#codeID").addClass("code-txt");
             } else {
-                $scope.hideStudentCode = false;
-                $scope.hideStudent = true;
+                $scope.tuitionFee.tuitionForm.hideStudentCode = false;
+                $scope.tuitionFee.tuitionForm.hideStudent = true;
                 $("#semesterID").addClass("hide-content");
                 $("#codeID").removeClass("code-txt");
             }
@@ -297,7 +293,7 @@ angular.module('ocb-payments')
             $scope.tuitionFee.tuitionForm.paymentsTuitionUniversities = {};
             $scope.tuitionFee.tuitionForm.stdCodeID = null;
             $scope.hideStudentCode = false;
-            $scope.showSemester = false;
+            $scope.tuitionFee.tuitionForm.showSemester = false;
             $scope.hideStudent = false;
             $scope.universityEmpty = false;
             $scope.semesterEmpty = false;
@@ -307,7 +303,7 @@ angular.module('ocb-payments')
 
         /*Back button on fill screen*/
         $scope.rbPaymentTuitionFeeParams.backForm = function () {
-            $scope.batchInfoSearch = false;
+            $scope.tuitionFee.tuitionForm.batchInfoSearch = false;
             $scope.rbPaymentTuitionFeeParams.visibility.clear = true;
             $scope.rbPaymentTuitionFeeParams.visibility.search = true;
             $scope.rbPaymentTuitionFeeParams.visibility.next = false;

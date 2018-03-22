@@ -15,7 +15,7 @@
             </ui-select>
         </bd-item-property>
         <!--Form-->
-        <bd-item-property ng-show="hideStudentCode" label="{{ ::'ocb.payments.tuition.form' | translate }}">
+        <bd-item-property ng-show="tuitionFee.tuitionForm.hideStudentCode" label="{{ ::'ocb.payments.tuition.form' | translate }}">
             <!--test radio-->
             <bd-radio-select bd-model="tuitionFee.tuitionForm.selectedForm">
                 <div class="row vcenter tuitionFee-desktop-only">
@@ -38,7 +38,7 @@
         </bd-item-property>
 
         <!--Semester-->
-        <bd-item-property id="semesterID" ng-show="showSemester" label="{{ ::'ocb.payments.tuition.semester' | translate }}">
+        <bd-item-property id="semesterID" ng-show="tuitionFee.tuitionForm.showSemester" label="{{ ::'ocb.payments.tuition.semester' | translate }}">
             <ui-select ng-model="tuitionFee.tuitionForm.semester" theme="bootstrap"
                        title="Choose a semester" on-select = "onTuitionSemesterChange($select.selected)">
                 <ui-select-match placeholder="{{::'ocb.payments.tuition.semester.place.holder' | translate}}">{{$select.selected.semester}}</ui-select-match>
@@ -48,9 +48,9 @@
             </ui-select>
         </bd-item-property>
         <!--Student Code/ID-->
-        <bd-item-property ng-show="hideStudent" label="{{ ::'ocb.payments.tuition.student.codeID' | translate }}">
+        <bd-item-property ng-show="tuitionFee.tuitionForm.hideStudent" label="{{ ::'ocb.payments.tuition.student.codeID' | translate }}">
             <div class="row tuitionFee-desktop-only">
-                <div ng-hide="hideStudentCode" class="col-sm-4" style="margin-left:-15px;">
+                <div ng-hide="tuitionFee.tuitionForm.hideStudentCode" class="col-sm-4" style="margin-left:-15px;">
                     <ui-select ng-model="tuitionFee.tuitionForm.stdCodeType" theme="bootstrap" title="Choose a student code">
                         <ui-select-match>{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="studentCode in studentCodes track by studentCode.id">
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="row tuitionFee-mobile-only">
-                <div ng-hide="hideStudentCode">
+                <div ng-hide="tuitionFee.tuitionForm.hideStudentCode">
                     <ui-select ng-model="tuitionFee.tuitionForm.stdCodeType" theme="bootstrap" title="Choose a student code">
                         <ui-select-match>{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="studentCode in studentCodes track by studentCode.id">
@@ -94,7 +94,7 @@
         </div>
     </div>
 <!--Student Info-->
-    <div class="account-collapse-item form-horizontal bd-form" ng-show="batchInfoSearch">
+    <div class="account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.tuitionForm.batchInfoSearch">
         <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.studentInfo' | translate }}</bd-header>
         <div class="form-row">
             <div class="col-sm-8 col-md-8 code-txt">
@@ -128,7 +128,7 @@
         </div>
     </div>
 <!--Detail Payment Info-->
-    <div class="account-collapse-item form-horizontal bd-form tuitionFee-desktop-only" ng-show="batchInfoSearch">
+    <div class="account-collapse-item form-horizontal bd-form tuitionFee-desktop-only" ng-show="tuitionFee.tuitionForm.batchInfoSearch">
         <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.detailPayment' | translate }}</bd-header>
         <!--Desktop version-->
         <!--Add table header-->
@@ -188,7 +188,7 @@
 
     <!------------------------------------------------>
     <!--Mobile version-->
-    <div class="tuitionFee-mobile-only account-collapse-item form-horizontal bd-form" ng-show="batchInfoSearch">
+    <div class="tuitionFee-mobile-only account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.tuitionForm.batchInfoSearch">
         <!--Add table header-->
         <div bd-table-header>
             <div bd-table-heading="first" class="bd-table__cell bd-table__cell--md-3 form-row" label="{{::'ocb.payments.tuition.table.all'|translate}}">
@@ -257,7 +257,7 @@
     <!---------------------------------->
 
     <!--Payment Account-->
-    <div class="account-collapse-item form-horizontal bd-form" ng-show="batchInfoSearch">
+    <div class="account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.tuitionForm.batchInfoSearch">
         <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.paymentAccount' | translate }}</bd-header>
         <!--Load account-->
         <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
