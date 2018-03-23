@@ -72,13 +72,13 @@ angular.module('ocb-payments', [
                     priority: 1
                 },
                 // TODO JAKO_DISABLE accumulative savings
-                // {
-                //     id: "payments.new_saving.fill",
-                //     label: 'ocb.payments.submenu.options.new_saving.header',
-                //     icon: "ocb-icons ocb_przelew",
-                //     action: "payments.new_saving.fill",
-                //     priority: 1
-                // },
+                {
+                    id: "payments.new_saving.fill",
+                    label: 'ocb.payments.submenu.options.new_saving.header',
+                    icon: "ocb-icons ocb_przelew",
+                    action: "payments.new_saving.fill",
+                    priority: 1
+                },
                 {
                     id: "payments.recipients.list",
                     label: 'ocb.payments.recipients.label',
@@ -111,13 +111,13 @@ angular.module('ocb-payments', [
                     priority: 7
                 },
                 // TODO JAKO_DISABLE auto bill
-                // {
-                //     id: "payments.auto_bill_list",
-                //     label: 'ocb.payments.auto_bill.label',
-                //     icon: "ocb-icons ocb_zlecenie_stale",
-                //     action: "payments.auto_bill_list",
-                //     priority: 8
-                // },
+                {
+                    id: "payments.auto_bill_list",
+                    label: 'ocb.payments.auto_bill.label',
+                    icon: "ocb-icons ocb_zlecenie_stale",
+                    action: "payments.auto_bill_list",
+                    priority: 8
+                },
                 {
                     id: "payments.basket.fill",
                     label: "ocb.payments.basket.label",
