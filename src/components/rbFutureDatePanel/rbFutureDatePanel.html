@@ -19,6 +19,7 @@
                     <div class="radio-option__input-wrapper radio-option__input-wrapper--medium">
                         <ui-select ng-model="inputData.periodRange"
                                    theme="bootstrap"
+                                   search-enabled="false"
                                    reset-search-input="false">
                             <ui-select-match placeholder="">
                                 {{ 'ocb.payments.components.futureDatePanel.dateRanges.'+ $select.selected |
