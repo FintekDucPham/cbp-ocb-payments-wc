@@ -326,7 +326,8 @@ angular.module('ocb-payments')
             }).then(function(response){
                 $scope.pendingTransaction.token = {
                     params:{
-                        resourceId: response.content
+                        //TODO disable for test
+                        //resourceId: response.content
                     }
                 };
                 actions.proceed();

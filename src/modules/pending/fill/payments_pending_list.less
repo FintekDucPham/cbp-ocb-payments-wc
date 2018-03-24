@@ -11,3 +11,39 @@
   background: none;
   height:0;
 }
+.action-btn{
+  max-width: 500px;
+  .bd-button {
+    width: 100px;
+  }
+  .col-md-3{
+    padding-top: 10px;
+  }
+}
+
+@screenMediumMin: 768px;
+@screenSmallMax: 767px;
+@media screen and (min-width: @screenMediumMin) {
+
+  .pending-mobile-only {
+    display:none !important;
+  }
+  .action-btn {
+    text-align: center;
+  }
+  .pending-desktop-only {
+    display:block !important;
+  }
+}
+
+@media screen and (max-width: @screenSmallMax) {
+  .pending-mobile-only {
+    display:block !important;
+  }
+  .action-btn {
+    text-align: center;
+  }
+  .pending-desktop-only {
+    display:none !important;
+  }
+}

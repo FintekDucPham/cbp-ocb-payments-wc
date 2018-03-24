@@ -130,10 +130,12 @@ angular.module('ocb-payments')
 
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
-                            actions.proceed();
+                            //TODO disable for test
+                           // actions.proceed();
                         }
                     } else {
-                        actions.proceed();
+                        //TODO disable for test
+                      //  actions.proceed();
                     }
 
                 }).finally(function () {
@@ -160,10 +162,12 @@ angular.module('ocb-payments')
 
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
-                            actions.proceed();
+                            //TODO disable for test
+                           // actions.proceed();
                         }
                     } else {
-                        actions.proceed();
+                        //TODO disable for test
+                        //actions.proceed();
                     }
 
                 }).finally(function () {
@@ -183,11 +187,13 @@ angular.module('ocb-payments')
             }
         }
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            authorize(actions.proceed, actions);
-            actions.proceed();
+            //TODO disable for test
+            //authorize(actions.proceed, actions);
+            //actions.proceed();
         });
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
+            //TODO disable for test
             actions.proceed();
         });
 
