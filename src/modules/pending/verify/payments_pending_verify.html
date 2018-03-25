@@ -33,19 +33,12 @@
 </div>
 
 <div class="account-collapse-item form-horizontal">
-    <div class="row">
-        <div class="col-xs-6"><span class="pending-lbl">{{::'ocb.payments.pending.verify.token_input.header.label' | translate}}</span></div>
-    </div>
-    <div class="row">
-        <div class="col-xs-2" ng-if="pendingTransaction.token.params.resourceId">
-            <div class="lb">Authentication code here</div>
-            <div>
-                <rb-token-authorization
-                        rb-operation-type="TRANSFER" rb-model="pendingTransaction.token.model"
-                        rb-params="pendingTransaction.token.params"
-                        rb-model-data="pendingTransaction.token.modelData">
-                </rb-token-authorization>
-            </div>
-        </div>
-    </div>
+
+    <rb-token-authorization
+            rb-operation-type="TRANSFER"
+            rb-model="pendingTransaction.token.model"
+            rb-params="pendingTransaction.token.params"
+            rb-model-data="pendingTransaction.token.modelData">
+    </rb-token-authorization>
+
 </div>

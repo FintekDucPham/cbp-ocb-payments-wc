@@ -319,6 +319,8 @@ angular.module('ocb-payments')
                 $scope.invalidWA = true;
                 return;
             }
+
+            //TODO Disable for test
             /*Add PKIs*/
             authorizationService.createCommonOperation({
                 paymentId: $scope.pendingTransaction.transferId,
@@ -327,7 +329,7 @@ angular.module('ocb-payments')
                 $scope.pendingTransaction.token = {
                     params:{
                         //TODO disable for test
-                        //resourceId: response.content
+                        resourceId: response.content
                     }
                 };
                 actions.proceed();

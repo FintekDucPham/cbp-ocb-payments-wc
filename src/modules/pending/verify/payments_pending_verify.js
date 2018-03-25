@@ -16,7 +16,8 @@ angular.module('ocb-payments')
         }
 
         $scope.idForPrint = null;
-        $scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.selectedTrans[0].id;
+        //todo disable for test
+        //$scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.selectedTrans[0].id;
         //list data table define
         $scope.table = {
             tableConfig : new bdTableConfig({
@@ -130,12 +131,10 @@ angular.module('ocb-payments')
 
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
-                            //TODO disable for test
-                           // actions.proceed();
+                           actions.proceed();
                         }
                     } else {
-                        //TODO disable for test
-                      //  actions.proceed();
+                       actions.proceed();
                     }
 
                 }).finally(function () {
@@ -162,12 +161,10 @@ angular.module('ocb-payments')
 
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
-                            //TODO disable for test
-                           // actions.proceed();
+                           actions.proceed();
                         }
                     } else {
-                        //TODO disable for test
-                        //actions.proceed();
+                        actions.proceed();
                     }
 
                 }).finally(function () {
@@ -187,13 +184,11 @@ angular.module('ocb-payments')
             }
         }
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            //TODO disable for test
-            //authorize(actions.proceed, actions);
-            //actions.proceed();
+            authorize(actions.proceed, actions);
+            actions.proceed();
         });
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-            //TODO disable for test
             actions.proceed();
         });
 
