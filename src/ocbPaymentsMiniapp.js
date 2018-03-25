@@ -126,7 +126,7 @@ angular.module('ocb-payments', [
                     priority: 9
                 }
                 ,
-                //TODO JAKO_DISABLE batch processing
+               // TODO JAKO_DISABLE batch processing
                 {
                     id: "payments.batch_processing",
                     label: "ocb.payments.batch_processing.label",
@@ -134,7 +134,7 @@ angular.module('ocb-payments', [
                     action: "payments.batch_processing.fill",
                     priority: 10
                 }
-              //  TODO JAKO_DISABLE bill payment
+               // TODO JAKO_DISABLE bill payment
                 ,
                 {
                     id: "payments.new_bill.fill",
@@ -143,7 +143,7 @@ angular.module('ocb-payments', [
                     action: "payments.new_bill.fill",
                     priority: 11
                 },
-               // TODO JAKO_DISABLE bill history
+             //   TODO JAKO_DISABLE bill history
                 {
                     id: "payments.bill_history.list",
                     label: "ocb.payments.basket.list.details.historyAction",
@@ -151,7 +151,7 @@ angular.module('ocb-payments', [
                     action: "payments.bill_history.list",
                     priority: 12
                 },
-               // TODO JAKO_DISABLE tuition fee
+             //   TODO JAKO_DISABLE tuition fee
                 {
                     id: "payments.tuition_fee.fill",
                     label: "ocb.payments.tuition.label.header",
@@ -159,7 +159,7 @@ angular.module('ocb-payments', [
                     action: "payments.tuition_fee.fill",
                     priority: 13
                 },
-               // TODO JAKO_DISABLE CB pending transactions
+             //   TODO JAKO_DISABLE CB pending transactions
                 {
                     id: "payments.pending.fill",
                     label: "ocb.payments.pending.label",
@@ -167,7 +167,7 @@ angular.module('ocb-payments', [
                     action: "payments.pending.fill",
                     priority: 14
                 },
-                //TODO JAKO_DISABLE payU
+             //   TODO JAKO_DISABLE payU
                 {
                     id: "payments.payu",
                     label: "ocb.payments.payu.label",
