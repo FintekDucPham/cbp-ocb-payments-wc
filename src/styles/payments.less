@@ -283,7 +283,8 @@ rb-basket-search-panel{
       margin: 0;
     }
     .bd-list-item__properties-group-cell .bd-list-item__properties-group-cell__item.body .bd-amount__currency,
-    .bd-list-item__properties-group-cell .bd-list-item__properties-group-cell__item.body .bd-amount__value{
+    .bd-list-item__properties-group-cell .bd-list-item__properties-group-cell__item.body .bd-amount__value,
+    .bd-list-item__identification-cell .product-details-primary{
       font-weight: bold;
       font-size: 17px;
     }
@@ -300,15 +301,17 @@ rb-basket-search-panel{
         display: inline-block;
       }
     }
-    .bd-table__row-details .basket-vew__details{
-      display: flex;
-      flex-flow: row wrap;
-      flex-direction: column;
-      flex-wrap: wrap;
-      max-height: 200px;
-      margin-top: 20px;
-      .form-row{
-        width: 50%;
+    @media only screen and (min-width: 768px) {
+      .bd-table__row-details .basket-vew__details {
+        display: flex;
+        flex-flow: row wrap;
+        flex-direction: column;
+        flex-wrap: wrap;
+        max-height: 200px;
+        margin-top: 20px;
+        .form-row {
+          width: 50%;
+        }
       }
     }
   }
@@ -466,4 +469,11 @@ rb-basket-search-panel{
   .bd-msg-content {
     width: auto !important;
   }
+}
+
+.text-head-gray{
+  font-size: 14px;
+  color: #ccc;
+  font-weight: normal;
+  margin: 0;
 }
