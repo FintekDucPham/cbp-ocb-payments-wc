@@ -27,9 +27,9 @@ angular.module('ocb-payments')
                 if(status === "EXECUTED"){
                     setErrorMessage("success", 'ocb.payment.auto_bill.status.success.info');
                 } else if (status === "IN_PROCESSING"){
-                    setErrorMessage("warning", 'ocb.payment.auto_bill.status.processing.info');
+                    setErrorMessage("success", 'ocb.payment.auto_bill.status.processing.info');
                 } else{
-                    setErrorMessage("undefined", 'ocb.payment.auto_bill.status.error.info');
+                    setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
                 }
             }).catch(function(error) {
                 setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
