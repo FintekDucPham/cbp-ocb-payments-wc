@@ -686,3 +686,19 @@ rb-payment-recipients-fill > form {
   float:left;
   padding-right: 1em;
 }
+
+.form-pane {
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  &+.form-pane {
+    margin-top: 10px;
+  }
+  .pane-above {
+    padding: 30px;
+    &+.pane-bd {
+      padding: 30px;
+      padding-top: 0;
+    }
+  }
+}
