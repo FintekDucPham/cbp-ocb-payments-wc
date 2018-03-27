@@ -463,6 +463,8 @@
   "ocb.payments.bill.history.header.qty.label": "Number of months",
   "ocb.payments.bill.history.period.label": "Period",
   "ocb.payments.bill.history.period.to.label": "-",
+  "ocb.payments.bill.history.period.from.text.label": "From",
+  "ocb.payments.bill.history.period.to.text.label": "To",
   "ocb.payments.bill.history.search.label": "Search",
   "ocb.payments.bill.history.period.invalidDate": "The end date in the period cannot be earlier than the start date",
 

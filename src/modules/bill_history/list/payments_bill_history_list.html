@@ -108,7 +108,7 @@
                     <div class="form-calendar input-calendar row__inline-block--middle row__inline-block--adjacent">
                         <input name="dateFromInput_delgate" hidden ng-model="filterData.range.dateFrom" model-date="filterData.range.dateFrom" ng-required="filterData.periodType===baseData.PERIOD_TYPES.RANGE"/>
                         <rb-datepicker ng-model="filterData.range.fromDate"
-                                       placeholder="From"
+                                       rb-label="{{::'ocb.payments.bill.history.period.from.text.label' | translate}}"
                                        ng-model-options="{ allowInvalid: false }"
                                        rb-name="dateFromInput"
                                        max-search-date
@@ -122,6 +122,7 @@
                         <input name="dateToInput_delgate" hidden ng-model="filterData.range.dateTo" model-date="filterData.range.dateTo" ng-required="filterData.periodType===baseData.PERIOD_TYPES.RANGE"/>
                         <rb-datepicker ng-model="filterData.range.toDate"
                                        empty-date
+                                       rb-label="{{::'ocb.payments.bill.history.period.to.text.label' | translate}}"
                                        ng-model-options="{ allowInvalid: false }"
                                        rb-name="dateToInput"
                                        max-search-date

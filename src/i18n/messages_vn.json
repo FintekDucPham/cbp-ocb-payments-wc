@@ -461,6 +461,8 @@
   "ocb.payments.bill.history.header.qty.label": "Số tháng",
   "ocb.payments.bill.history.period.label": "Khoảng thời gian",
   "ocb.payments.bill.history.period.to.label": "-",
+  "ocb.payments.bill.history.period.from.text.label": "Từ ngày",
+  "ocb.payments.bill.history.period.to.text.label": "Đến ngày",
   "ocb.payments.bill.history.search.label": "Tìm kiếm",
   "ocb.payments.bill.history.period.invalidDate": "Ngày kết thúc không thể sớm hơn ngày bắt đầu",
 
