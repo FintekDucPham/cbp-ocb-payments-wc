@@ -37,7 +37,8 @@ angular.module('ocb-payments')
     })
     .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING,
                                                     RECURRING_PERIOD, translate, formService, bdStepStateEvents,
-                                                    viewStateService, initialState, authorizationService, rbDatepickerOptions) {
+                                                    viewStateService, initialState, authorizationService, rbDatepickerOptions,
+                                                    userService) {
         $scope.rbDatepickerOptions = rbDatepickerOptions({
             minDate: new Date()
         });
@@ -57,7 +58,17 @@ angular.module('ocb-payments')
             if (form.$invalid) {
                 formService.dirtyFields(form);
             } else {
-                actions.proceed();
+                authorizationService.createCommonOperation({
+                    paymentId: $scope.payment.paymentId,
+                    operationType: "AUTOBILL_PAYMENT"
+                }).then(function (response) {
+                    $scope.payment.meta.token = {
+                        params: {
+                            resourceId: response.content
+                        }
+                    };
+                    actions.proceed();
+                });
             }
         });
 
@@ -150,4 +161,8 @@ angular.module('ocb-payments')
             }
             return result;
         }
+
+        userService.getUserDetails().then(function (data) {
+            $scope.userDetails = data;
+        });
     });

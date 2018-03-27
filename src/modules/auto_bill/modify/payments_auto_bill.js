@@ -14,6 +14,13 @@ angular.module('ocb-payments')
             formName: 'autoBillForm',
             formData: {},
             options: {},
+            meta: {
+                token: {
+                    model: {},
+                    params: {},
+                    modelData: function () {}
+                }
+            },
             validation: {}
         });
 

@@ -28,7 +28,7 @@ angular.module('ocb-payments')
         });
     })
     .controller('AutoBillVerifyController', function ($scope, bdFillStepInitializer, translate, formService,
-            bdStepStateEvents, transferBillService, FREQUENCY_TYPES) {
+            bdStepStateEvents, transferBillService, FREQUENCY_TYPES, RB_TOKEN_AUTHORIZATION_CONSTANTS) {
 
         var payment = $scope.payment;
         payment.formData.frequencyPeriodUnit = FREQUENCY_TYPES[payment.formData.frequencyType].symbol;
@@ -37,26 +37,74 @@ angular.module('ocb-payments')
             actions.proceed();
         });
 
+        payment.meta.token.modelData = function(){
+            var paymentData = payment.formData;
+            var context = {
+                fromAccount: paymentData.fromAccount,
+                cifNum: '$cifnum$',
+                frequencyPeriodCount: paymentData.frequencyPeriodCount,
+                frequencyPeriodUnit: paymentData.frequencyPeriodUnit,
+                customerId: paymentData.customerId,
+                firstExecutionDate: paymentData.firstExecutionDate,
+                serviceCode: paymentData.serviceCode,
+                serviceProviderCode: paymentData.serviceProviderCode,
+                paymentSetting: paymentData.paymentSetting,
+                amountLimit: paymentData.amountLimit
+            };
+
+            var exp = $interpolate(
+                '<autoBillPayment>' +
+                '  <orderName></orderName>' +
+                '  <fromAccount>{{fromAccount}}</fromAccount>' +
+                '  <CIFNum>{{cifNum}}</CIFNum>' +
+                '  <frequencyPeriodCount>{{frequencyPeriodCount}}</frequencyPeriodCount>' +
+                '  <frequencyPeriodUnit>{{frequencyPeriodUnit}}</frequencyPeriodUnit>' +
+                '  <customerId>{{customerId}}</customerId>' +
+                '  <firstExecutionDate>{{firstExecutionDate}}</firstExecutionDate>' +
+                '  <serviceCode>{{serviceCode}}</serviceCode>' +
+                '  <serviceProviderCode>{{serviceProviderCode}}</serviceProviderCode>' +
+                '  <paymentSetting>{{paymentSetting}}</paymentSetting>' +
+                '  <amountLimit>{{amountLimit}}</amountLimit>' +
+                '  <recurringPeriod></recurringPeriod>' +
+                '  <finishDate></finishDate>' +
+                '</autoBillPayment>');
+
+            return exp(context);
+        };
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+
+
             var callParams = $scope.payment.formData;
-            if (callParams.actionType.code == "NEW") {
-                transferBillService.createAutoBillTransfer(callParams).then(function (status) {
-                    setMessage(status);
-                }).catch(function (error) {
-                    setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
-                }).finally(function (params) {
-                    actions.proceed();
-                });
-            }
-            if (callParams.actionType.code == "EDIT") {
-                callParams.amountLimit = callParams.amountLimit.value;
-                transferBillService.modifyAutoBillTransfer(callParams).then(function (status) {
-                    setMessage(status);
-                }).catch(function (error) {
-                    setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
-                }).finally(function (params) {
-                    actions.proceed();
-                });
+            callParams.resourceId = $scope.payment.meta.token.params.resourceId;
+            callParams.credentials = $scope.payment.meta.token.model.input.model;
+
+            if($scope.payment.meta.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM || $scope.userDetails.customerDetails.customerType == "CORPORATE") {
+                if ($scope.payment.meta.token.model.input.$isValid() || $scope.userDetails.customerDetails.customerType == "CORPORATE") {
+
+                    if (callParams.actionType.code == "NEW") {
+                        transferBillService.createAutoBillTransfer(callParams).then(function (status) {
+                            setMessage(status);
+                        }).catch(function (error) {
+                            setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
+                        }).finally(function (params) {
+                            actions.proceed();
+                        });
+                    }
+                    if (callParams.actionType.code == "EDIT") {
+                        callParams.amountLimit = callParams.amountLimit.value;
+                        transferBillService.modifyAutoBillTransfer(callParams).then(function (status) {
+                            setMessage(status);
+                        }).catch(function (error) {
+                            setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
+                        }).finally(function (params) {
+                            actions.proceed();
+                        });
+                    }
+
+                }
+            } else if ($scope.payment.meta.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                $scope.payment.meta.token.model.$proceed();
             }
         });
 
