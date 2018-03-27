@@ -372,6 +372,9 @@ angular.module('ocb-payments')
                 }).then(function (accountList) {
                     that._depositsDataSource = accountList.content;
                     that.accountsList = that.filterDataSource(that._depositsDataSource);
+                    if ($scope.payment.formData.acctype) {
+                        that.onDepositAccountTypeSelected($scope.payment.formData.acctype);
+                    }
                 });
             },
 
