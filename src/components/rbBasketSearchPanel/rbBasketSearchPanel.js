@@ -264,73 +264,7 @@ angular.module('ocb-payments')
                     }
                 };
 
-                var validateRange = function() {
-                    var dateFrom, dateTo;
-
-                    if ($scope.futureDatePanelForm.dateFromInput) {
-                        $scope.futureDatePanelForm.dateFromInput.$validate();
-                    }
-                    if ($scope.futureDatePanelForm.dateToInput) {
-                        $scope.futureDatePanelForm.dateToInput.$validate();
-                    }
-
-                    if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.PERIOD) {
-                        if ($scope.futureDatePanelForm.dateFromInput && $scope.futureDatePanelForm.dateToInput) {
-                            $scope.futureDatePanelForm.dateFromInput.$setValidity('maxValue', true);
-                            $scope.futureDatePanelForm.dateFromInput.$setValidity('minValue', true);
-                            $scope.futureDatePanelForm.dateToInput.$setValidity('maxValue', true);
-                            $scope.futureDatePanelForm.dateToInput.$setValidity('minValue', true);
-                        }
-                    }
-                    else if ($scope.inputData.selectedMode == FUTURE_DATE_TYPES.RANGE) {
-                        if ($scope.inputData.dateFrom) {
-                            $scope.inputData.dateFrom.setHours(0);
-                            $scope.inputData.dateFrom.setMinutes(0);
-                            $scope.inputData.dateFrom.setSeconds(0);
-                            $scope.inputData.dateFrom.setMilliseconds(0);
-                        }
-
-                        if ($scope.inputData.dateTo) {
-                            $scope.inputData.dateTo.setHours(0);
-                            $scope.inputData.dateTo.setMinutes(0);
-                            $scope.inputData.dateTo.setSeconds(0);
-                            $scope.inputData.dateTo.setMilliseconds(0);
-                        }
-
-                        dateFrom = $scope.inputData.dateFrom;
-                        dateTo   = $scope.inputData.dateTo;
-
-                        $scope.futureDatePanelForm.dateFromInput.$setValidity('required', !!$scope.futureDatePanelForm.dateFromInput.$viewValue);
-                        $scope.futureDatePanelForm.dateToInput.$setValidity('required', !!$scope.futureDatePanelForm.dateToInput.$viewValue);
-
-                        if (dateFrom && dateTo) {
-                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', dateFrom.getTime() <= dateTo.getTime());
-                        }
-                        else {
-                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_LATE_FINISH_DATE', true);
-                        }
-
-                        if (dateTo) {
-                            $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', dateTo.getTime() <= maxDate.getTime());
-                        }
-                        else {
-                            $scope.futureDatePanelForm.dateToInput.$setValidity('TOO_LATE_END_DATE', true);
-                        }
-                        if(dateFrom){
-                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FIRST_DATE', dateFrom.getTime() >= minDate.getTime());
-                        }else {
-                            $scope.futureDatePanelForm.dateFromInput.$setValidity('TOO_EARLY_FIRST_DATE', true);
-                        }
-                    }
-
-                    $scope.valid = $scope.futureDatePanelForm.$valid;
-                    if ($scope.futureDatePanelForm.dateFromInput.$valid && $scope.futureDatePanelForm.dateToInput.$valid) {
-                        commitDateRange();
-                    }
-                };
-
                 $scope.$watch('inputData.period', validatePeriod); // bind uneccessary
-                $scope.$watchGroup(['inputData.dateFrom', 'inputData.dateTo'], validateRange);
 
 
                 // change DAYS / WEEKS / MONTHS
