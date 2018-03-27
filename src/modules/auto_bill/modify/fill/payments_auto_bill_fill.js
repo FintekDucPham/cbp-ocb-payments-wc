@@ -41,6 +41,7 @@ angular.module('ocb-payments')
         $scope.rbDatepickerOptions = rbDatepickerOptions({
             minDate: new Date()
         });
+        $scope.payment.formData.frequencyPeriodCount = 1;
 
         var initialData = initialState.data;
         var payment = $scope.payment;
