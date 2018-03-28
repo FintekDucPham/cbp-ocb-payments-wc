@@ -312,9 +312,12 @@ angular.module('ocb-payments')
         /*Next button on fill screen*/
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             $scope.rbPaymentTuitionFeeParams.visibility.accept = true;
+            //TODO test to show otp
+            $scope.tuitionFee.token.params.resourceId = "NIB-TRA511102121217959bed69dd1aa50b";
             //Call service save to DB
             //TODO Call service when opened live data
             actions.proceed();
+
         });
 
 
