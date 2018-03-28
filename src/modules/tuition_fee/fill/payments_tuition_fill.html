@@ -26,12 +26,20 @@
                 </div>
                 <!--Mobile version-->
                 <div class="row vcenter tuitionFee-mobile-only">
+                    <div class="col-xs-6">
                     <bd-radio-option bd-option-value="formInfo.type1" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.full'|translate}}</bd-radio-option>
-                    <bd-radio-option bd-option-value="formInfo.type2" class="row__inline-block--middle mb-mg-left">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
+                    </div>
+                    <div class="col-xs-6">
+                    <bd-radio-option bd-option-value="formInfo.type2" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
+                    </div>
                 </div>
                 <div class="row vcenter tuitionFee-mobile-only">
+                    <div class="col-xs-6">
                     <bd-radio-option bd-option-value="formInfo.type3" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.post'|translate}}</bd-radio-option>
+                    </div>
+                    <div class="col-xs-6">
                     <bd-radio-option bd-option-value="formInfo.type4" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.part'|translate}}</bd-radio-option>
+                    </div>
                 </div>
                 <!--Mobile version-->
             </bd-radio-select>
@@ -191,18 +199,19 @@
     <div class="tuitionFee-mobile-only account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.tuitionForm.batchInfoSearch">
         <!--Add table header-->
         <div bd-table-header>
-            <div bd-table-heading="first" class="bd-table__cell bd-table__cell--md-3 form-row" label="{{::'ocb.payments.tuition.table.all'|translate}}">
+            <div bd-table-heading="first" class="bd-table__cell bd-table__cell--md-3" label="{{::'ocb.payments.tuition.table.all'|translate}}">
                 <!--Add checkbox all-->
                 <div class="pm-checkbox cb-padding mb-checkbox">
                     <input class="pm-checkbox__input"
                            type="checkbox" checked disabled/>
                     <span class="pm-checkbox__marker"></span>
+
                 </div>
                 <!--<div></div>-->
             </div>
-            <div bd-table-heading="second" class="bd-tb-hd-left" label="{{::'ocb.payments.tuition.table.classid'|translate}}">{{::'ocb.payments.tuition.table.classid'|translate}}</div>
+            <div bd-table-heading="second" class="col-xs-6" label="{{::'ocb.payments.tuition.table.classid'|translate}}">{{::'ocb.payments.tuition.table.classid'|translate}}</div>
             <div bd-table-heading="third" class="bd-table__cell bd-table__cell--md-4 bd-hide-sm" label="{{::'ocb.payments.tuition.table.classname'|translate}}">{{::'ocb.payments.tuition.table.classname'|translate}}</div>
-            <div bd-table-heading="fourth" class="bd-tb-hd-right"label="{{::'ocb.payments.tuition.table.amount'|translate}}">{{::'ocb.payments.tuition.table.amount'|translate}}</div>
+            <div bd-table-heading="fourth" class="col-xs-5"label="{{::'ocb.payments.tuition.table.amount'|translate}}">{{::'ocb.payments.tuition.table.amount'|translate}}</div>
             <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 bd-hide-sm "label="{{::'ocb.payments.tuition.table.discount'|translate}}">{{::'ocb.payments.tuition.table.discount'|translate}}</div>
         </div>
         <!--Add table content-->
