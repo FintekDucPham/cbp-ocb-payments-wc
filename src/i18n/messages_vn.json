@@ -111,6 +111,7 @@
   "ocb.payments.tuition.university.place.holder": "Chọn trường đại học từ danh sách",
   "ocb.payments.tuition.form": "Loại",
   "ocb.payments.tuition.form.empty": "Hệ đào tạo không thể để trống",
+  "ocb.payments.tuition.student.type.empty": "Vui lòng chọn Mã sinh viên hoặc CMNN",
   "ocb.payments.tuition.form.full": "Niên chế",
   "ocb.payments.tuition.form.credit": "Tín chỉ",
   "ocb.payments.tuition.form.post": "Sau đại học",
@@ -460,6 +461,8 @@
   "ocb.payments.bill.history.header.qty.label": "Số tháng",
   "ocb.payments.bill.history.period.label": "Khoảng thời gian",
   "ocb.payments.bill.history.period.to.label": "-",
+  "ocb.payments.bill.history.period.from.text.label": "Từ ngày",
+  "ocb.payments.bill.history.period.to.text.label": "Đến ngày",
   "ocb.payments.bill.history.search.label": "Tìm kiếm",
   "ocb.payments.bill.history.period.invalidDate": "Ngày kết thúc không thể sớm hơn ngày bắt đầu",
 
