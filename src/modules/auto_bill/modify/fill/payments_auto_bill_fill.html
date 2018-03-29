@@ -111,74 +111,8 @@
             <div class="bd-item-property--multi__values">
 
                 <div class="bd-item-property__value--secondary frequency" style="padding-right:5px; width: 100px;">
-
-                    <input name="frequency"
-                           ng-model="payment.formData.frequencyPeriodCount"
-                           ng-required="payment.formData.frequencyType != 'DAILY'"
-                           on-select="onFrequencyTypeSelect()"
-                           ng-pattern="INTEGER_REGEX"
-                           bd-matches-none-of="frequencyValidators"
-                           class="input-field order-frequency"/>
+                    {{payment.formData.frequencyPeriodCount}} {{::'ocb.payments.new.standing.fill.frequencyType.types.1.M' | translate}}
                 </div>
-
-
-                <div class="bd-item-property__value--primary">
-                    <ui-select ng-model="payment.formData.frequencyType"
-                               theme="bootstrap"
-                               on-select="onFrequencyTypeSelect($item)"
-                               reset-search-input="false"
-                               class="order-frequency-type"
-                               style="width: 200px;"
-                               required
-                    >
-                        <ui-select-match placeholder="{{ ::'ocb.payments.new.standing.fill.frequencyType.types.empty'|translate }}">
-
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount <= 1 || !payment.formData.frequencyPeriodCount">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 2 && payment.formData.frequencyPeriodCount < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + FREQUENCY_TYPES[$select.selected].symbol | translate}}</div>
-
-                        </ui-select-match>
-
-                        <ui-select-choices repeat="frequency in FREQUENCY_TYPES_LIST">
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount <= 1 || !payment.formData.frequencyPeriodCount">{{'ocb.payments.new.standing.fill.frequencyType.types.1.' + FREQUENCY_TYPES[frequency].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 2 && payment.formData.frequencyPeriodCount < 5">{{'ocb.payments.new.standing.fill.frequencyType.types.2-4.' + FREQUENCY_TYPES[frequency].symbol | translate}}</div>
-                            <div class="standing-order-truncate" ng-show="payment.formData.frequencyPeriodCount >= 5">{{'ocb.payments.new.standing.fill.frequencyType.types.5more.' + FREQUENCY_TYPES[frequency].symbol | translate}}</div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
-            </div>
-
-
-            <eb-validation-messages eb-name="frequency">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.auto_bill.error.field.empty'|translate}}
-                </div>
-                <div eb-message-key="pattern" class="validation-message animate-on">
-                    <span ng-show="payment.formData.frequencyType == 'WEEKLY'">{{::'ocb.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}</span>
-                    <span ng-show="payment.formData.frequencyType == 'MONTHLY'">{{::'ocb.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}</span>
-                </div>
-                <div eb-message-key="maxWeeklyValue" class="validation-message animate-on">
-                    {{::'ocb.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}
-                </div>
-                <div eb-message-key="maxMonthlyValue" class="validation-message animate-on">
-                    {{::'ocb.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}
-                </div>
-
-                <div eb-message-key="minWeeklyValue" class="validation-message animate-on">
-                    {{::'ocb.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_WEEKLY'|translate}}
-                </div>
-
-                <div eb-message-key="minMonthlyValue" class="validation-message animate-on">
-                    {{::'ocb.payments.new.standing.fill.MSG-0598_INCORRECT_FREQUENCY_MONTHLY'|translate}}
-                </div>
-
-                <div eb-message-key="frequencyTypeRequired" class="validation-message animate-on">
-                    {{::'ocb.payments.new.standing.fill.MSG-0597_EMPTY_FREQUENCY'|translate}}
-                </div>
-            </eb-validation-messages>
-            <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
-                 ng-if="validationErrors['frequency'] !== undefined">
-                {{validationErrors['frequency']}}
             </div>
         </bd-item-property>
 
@@ -204,7 +138,7 @@
                     rb-form="autoBillForm"
                     rb-name="finishDate"
                     rb-datepicker-options="rbDatepickerOptions"
-                    rb-required="{{payment.formData.recurringPeriod == 'PERIOD'}}">
+                    rb-required="payment.formData.recurringPeriod == 'PERIOD'">
             </rb-datepicker>
 
             <eb-validation-messages eb-name="finishDate">

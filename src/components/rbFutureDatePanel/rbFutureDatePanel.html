@@ -1,13 +1,13 @@
 <form novalidate name="futureDatePanelForm" ng-submit="onSubmit(futureDatePanelForm)">
     <bd-radio-select bd-model="inputData.selectedMode">
 
-        <div class="bd-item-property row">
-            <div class="col-xs-12">
-                <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.PERIOD" class="row__inline-block--middle">
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{:: 'ocb.payments.components.futureDatePanel.dateTypes.PERIOD' | translate}}
-                    </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:40px;">
+        <div class="bd-item-property">
+            <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.PERIOD" class="radio-option">
+                <div class="radio-option__label radio-option__label--small">
+                    {{:: 'ocb.payments.components.futureDatePanel.dateTypes.PERIOD' | translate}}
+                </div>
+                <div class="radio-option__values">
+                    <div class="radio-option__input-wrapper radio-option__input-wrapper--small">
                         <input
                                 bd-type="number"
                                 class="input-field"
@@ -16,92 +16,129 @@
                                 ng-required="inputData.selectedMode===FUTURE_DATE_TYPES.PERIOD"
                                 ng-pattern="/^\d+$/"/>
                     </div>
-                    <div class="row__inline-block--middle" style="width:100px;">
+                    <div class="radio-option__input-wrapper radio-option__input-wrapper--medium">
                         <ui-select ng-model="inputData.periodRange"
                                    theme="bootstrap"
+                                   search-enabled="false"
                                    reset-search-input="false">
                             <ui-select-match placeholder="">
-                                {{ 'ocb.payments.components.futureDatePanel.dateRanges.'+ $select.selected | translate }}
+                                {{ 'ocb.payments.components.futureDatePanel.dateRanges.'+ $select.selected |
+                                translate }}
                             </ui-select-match>
                             <ui-select-choices repeat="item in FUTURE_DATE_RANGES_LIST">
                                 {{ :: 'ocb.payments.components.futureDatePanel.dateRanges.'+ item | translate }}
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                </bd-radio-option>
-
-            </div>
+                </div>
+            </bd-radio-option>
         </div>
 
-
         <eb-validation-messages eb-name="period">
-            <div eb-message-key="required" class="validation-message animate-on">{{'ocb.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange | translate}}</div>
+            <div eb-message-key="required" class="validation-message animate-on">
+                {{'ocb.payments.components.futureDatePanel.validation.EMPTY_PERIOD_PLANNED_'+inputData.periodRange |
+                translate}}
+            </div>
 
-            <div eb-message-key="pattern" class="validation-message animate-on">{{'ocb.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange | translate}}</div>
+            <div eb-message-key="pattern" class="validation-message animate-on">
+                {{'ocb.payments.components.futureDatePanel.validation.INCORRECT_NUMBER_'+inputData.periodRange |
+                translate}}
+            </div>
 
-            <div eb-message-key="INCORRECT_END_DATE" class="validation-message animate-on">{{::messages.INCORRECT_END_DATE}}</div>
+            <div eb-message-key="INCORRECT_END_DATE" class="validation-message animate-on">
+                {{::messages.INCORRECT_END_DATE}}
+            </div>
 
-            <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
+            <div eb-message-key="TOO_LATE_END_DATE" class="validation-message animate-on">
+                {{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate |
+                regexReplace:'##MONTHS##':options.maxOffsetInMonths}}
+            </div>
         </eb-validation-messages>
 
         <div class="clearfix">
             <div class="row--spacing col-md-10 col-sm-12">
-                <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE" class="row__inline-block--middle">
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
+                <bd-radio-option bd-option-value="FUTURE_DATE_TYPES.RANGE" class="radio-option">
+                    <div class="radio-option__label radio-option__label--small">
                         {{:: 'ocb.payments.components.futureDatePanel.dateTypes.RANGE' | translate}}
                     </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'ocb.payments.components.futureDatePanel.labels.from'|translate}}
-                    </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent" style="width:140px;">
-                        <input name="dateFromInput_delegate"
-                               hidden
-                               ng-model="inputData.dateFrom_delegate"
-                               min-date="rejectedList.minDate"
-                               model-date="rejectedList.filterData.range.dateFrom"
+                    <div class="radio-option__values">
+                        <div class="radio-option__value">
+                            <div class="radio-option__label radio-option__label--xss">
+                                {{::'ocb.payments.components.futureDatePanel.labels.from'|translate}}
+                            </div>
+                            <div class="radio-option__input-wrapper">
+                                <input name="dateFromInput_delegate"
+                                       hidden
+                                       ng-model="inputData.dateFrom_delegate"
+                                       min-date="rejectedList.minDate"
+                                       model-date="rejectedList.filterData.range.dateFrom"
                                 />
-                        <rb-datepicker ng-model="inputData.dateFrom"
-                                       ng-model-options="{ allowInvalid: false }"
-                                       rb-name="dateFromInput"
-                                       max-search-date
-                                       style="width: 140px;"></rb-datepicker>
-                    </div>
-                    <div class="row__inline-block--middle row__inline-block--adjacent">
-                        {{::'ocb.payments.components.futureDatePanel.labels.to'|translate}}
-                    </div>
-                    <div class="row__inline-block--middle" style="width:140px;">
-                        <input name="dateToInput_delegate"
-                               hidden
-                               ng-model="inputData.dateTo_delegate"
-                               min-date="rejectedList.filterData.range.dateFrom"
-                               model-date="rejectedList.filterData.range.dateTo"
+                                <rb-datepicker ng-model="inputData.dateFrom"
+                                               ng-model-options="{ allowInvalid: false }"
+                                               rb-name="dateFromInput"
+                                               max-search-date></rb-datepicker>
+                            </div>
+                        </div>
+                        <div class="radio-option__value">
+                            <div class="radio-option__label radio-option__label--xss">
+                                {{::'ocb.payments.components.futureDatePanel.labels.to'|translate}}
+                            </div>
+                            <div class="radio-option__input-wrapper">
+                                <input name="dateToInput_delegate"
+                                       hidden
+                                       ng-model="inputData.dateTo_delegate"
+                                       min-date="rejectedList.filterData.range.dateFrom"
+                                       model-date="rejectedList.filterData.range.dateTo"
                                 />
-                        <rb-datepicker ng-model="inputData.dateTo"
-                                       empty-date
-                                       ng-model-options="{ allowInvalid: false }"
-                                       rb-name="dateToInput"
-                                       max-search-date
-                                       style="width: 140px;"></rb-datepicker>
+                                <rb-datepicker ng-model="inputData.dateTo"
+                                               empty-date
+                                               ng-model-options="{ allowInvalid: false }"
+                                               rb-name="dateToInput"
+                                               max-search-date></rb-datepicker>
+                            </div>
+                        </div>
                     </div>
                 </bd-radio-option>
-
             </div>
 
             <div class="row--spacing col-md-2 col-sm-12" style="text-align: right;">
-                <bd-button class="bd-button__primary" type="submit">{{::'ocb.payments.components.futureDatePanel.labels.search'|translate}}</bd-button>
+                <bd-button class="bd-button__primary" type="submit">
+                    {{::'ocb.payments.components.futureDatePanel.labels.search'|translate}}
+                </bd-button>
             </div>
 
         </div>
 
-        <div class="eb-validation-messages row" ng-show="futureDatePanelForm.$dirty || futureDatePanelForm.$submitted" style="margin-bottom: 10px;">
+        <div class="eb-validation-messages row" ng-show="futureDatePanelForm.$dirty || futureDatePanelForm.$submitted"
+             style="margin-bottom: 10px;">
             <div class="messages col-xs-12">
-                <div ng-show="futureDatePanelForm.dateToInput.$error.required" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}</div>
-                <div ng-show="futureDatePanelForm.dateToInput.$error.date || futureDatePanelForm.dateToInput.$error.parse || futureDatePanelForm.dateToInput.$error.rbDatepickerFormat" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}</div>
-                <div ng-show="futureDatePanelForm.dateToInput.$error.TOO_LATE_END_DATE" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate | regexReplace:'##MONTHS##':options.maxOffsetInMonths}}</div>
-                <div ng-show="futureDatePanelForm.dateFromInput.$error.TOO_EARLY_FINISH_DATE" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.TOO_EARLY_FINISH_DATE' | translate}}</div>
-                <div ng-show="futureDatePanelForm.dateFromInput.$error.required" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE' | translate}}</div>
-                <div ng-show="futureDatePanelForm.dateFromInput.$error.date || futureDatePanelForm.dateFromInput.$error.parse || futureDatePanelForm.dateFromInput.$error.rbDatepickerFormat" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}</div>
-                <div ng-show="futureDatePanelForm.dateFromInput.$error.TOO_LATE_FINISH_DATE" class="validation-message animate-on">{{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}</div>
+                <div ng-show="futureDatePanelForm.dateToInput.$error.required" class="validation-message animate-on">
+                    {{::'ocb.payments.components.futureDatePanel.validation.EMPTY_END_DATE' | translate}}
+                </div>
+                <div ng-show="futureDatePanelForm.dateToInput.$error.date || futureDatePanelForm.dateToInput.$error.parse || futureDatePanelForm.dateToInput.$error.rbDatepickerFormat"
+                     class="validation-message animate-on">
+                    {{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_END_DATE' | translate}}
+                </div>
+                <div ng-show="futureDatePanelForm.dateToInput.$error.TOO_LATE_END_DATE"
+                     class="validation-message animate-on">
+                    {{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_END_DATE' | translate |
+                    regexReplace:'##MONTHS##':options.maxOffsetInMonths}}
+                </div>
+                <div ng-show="futureDatePanelForm.dateFromInput.$error.TOO_EARLY_FINISH_DATE"
+                     class="validation-message animate-on">
+                    {{::'ocb.payments.components.futureDatePanel.validation.TOO_EARLY_FINISH_DATE' | translate}}
+                </div>
+                <div ng-show="futureDatePanelForm.dateFromInput.$error.required" class="validation-message animate-on">
+                    {{::'ocb.payments.components.futureDatePanel.validation.EMPTY_FIRST_DATE' | translate}}
+                </div>
+                <div ng-show="futureDatePanelForm.dateFromInput.$error.date || futureDatePanelForm.dateFromInput.$error.parse || futureDatePanelForm.dateFromInput.$error.rbDatepickerFormat"
+                     class="validation-message animate-on">
+                    {{::'ocb.payments.components.futureDatePanel.validation.INCORRECT_FIRST_DATE' | translate}}
+                </div>
+                <div ng-show="futureDatePanelForm.dateFromInput.$error.TOO_LATE_FINISH_DATE"
+                     class="validation-message animate-on">
+                    {{::'ocb.payments.components.futureDatePanel.validation.TOO_LATE_FINISH_DATE' | translate}}
+                </div>
             </div>
         </div>
 

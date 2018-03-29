@@ -79,8 +79,8 @@ angular.module('ocb-payments')
             callParams.resourceId = $scope.payment.meta.token.params.resourceId;
             callParams.credentials = $scope.payment.meta.token.model.input.model;
 
-            if($scope.payment.meta.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
-                if ($scope.payment.meta.token.model.input.$isValid()) {
+            if($scope.payment.meta.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM || $scope.userDetails.customerDetails.customerType == "CORPORATE") {
+                if ($scope.payment.meta.token.model.input.$isValid() || $scope.userDetails.customerDetails.customerType == "CORPORATE") {
 
                     if (callParams.actionType.code == "NEW") {
                         transferBillService.createAutoBillTransfer(callParams).then(function (status) {
@@ -138,9 +138,9 @@ angular.module('ocb-payments')
             if(status === "EXECUTED"){
                 setErrorMessage("success", 'ocb.payment.auto_bill.status.success.info');
             } else if (status === "IN_PROCESSING"){
-                setErrorMessage("warning", 'ocb.payment.auto_bill.status.processing.info');
+                setErrorMessage("success", 'ocb.payment.auto_bill.status.processing.info');
             } else{
-                setErrorMessage("undefined", 'ocb.payment.auto_bill.status.error.info');
+                setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
             }
         }
 

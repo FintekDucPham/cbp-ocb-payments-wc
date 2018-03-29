@@ -385,10 +385,9 @@ rb-payment-recipients-fill > form {
 }
 
 .groupTitle {
-    font-size:18px;
-  }
-
-
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 
 .payments-future-list {
   max-width: none !important;
@@ -653,4 +652,20 @@ rb-payment-recipients-fill > form {
 .remitter-account-line {
   float:left;
   padding-right: 1em;
+}
+
+.form-pane {
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  &+.form-pane {
+    margin-top: 10px;
+  }
+  .pane-above {
+    padding: 30px;
+    &+.pane-bd {
+      padding: 30px;
+      padding-top: 0;
+    }
+  }
 }

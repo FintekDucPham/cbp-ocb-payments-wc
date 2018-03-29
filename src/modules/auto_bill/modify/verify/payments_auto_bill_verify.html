@@ -83,8 +83,7 @@
 
     </form>
 </div>
-
-<div class="bd-form-white" ng-show="payment.meta.token.model.$tokenRequired">
+<div class="bd-form-white" ng-show="payment.meta.token.model.$tokenRequired && userDetails.customerDetails.customerType != 'CORPORATE'">
 
     <rb-token-authorization rb-operation-type="AUTOBILL_PAYMENT" rb-params="payment.meta.token.params"
                                 rb-model-data="payment.meta.token.modelData()"

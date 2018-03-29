@@ -1,6 +1,6 @@
 <eb-preloader eb-promise="loadData" class="eb-list-preloader"></eb-preloader>
 <form name="paymentForm" novalidate>
-    <div>
+    <div class="bd-form">
         <div class="groupTitle">{{::'ocb.payments.new.saving.fill.customer_group_name.label'|translate}}
 
         </div>
@@ -32,12 +32,14 @@
 
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.balance.label' | translate}}"
                           class="accesibleAssetsInline accesibleAssetsBold">
-            <bd-amount ng-if="payment.meta.availableFunds !== null" amount="payment.meta.availableFunds" currency="{{payment.items.remitterAccount.currency}}"></bd-amount>
+            <bd-amount ng-if="payment.meta.availableFunds !== null" amount="payment.meta.availableFunds" currency="{{payment.items.senderAccount.currency}}"></bd-amount>
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.daily_limit.label'|translate}}" class="accesibleAssetsInline accesibleAssetsBold">
-                <bd-amount ng-if="transactionLimit !== null" amount="transactionLimit.maximumAmount" currency="{{payment.items.senderAccount.currency}}"></bd-amount>
+                <bd-amount ng-if="transactionLimit !== null" amount="transactionLimit.maximumAmount" currency="VND"></bd-amount>
         </bd-item-property>
+    </div>
+    <div class="bd-form">
         <!--group deposit info-->
         <div class="groupTitle">{{::'ocb.payments.new.saving.fill.deposit_info_group_name.label'|translate}}
 
@@ -104,66 +106,44 @@
          <bd-item-property label="{{::'ocb.payments.new.saving.fill.beneficiaries.label'|translate}}">
             <bd-checkbox ng-model="addToBeneficiaries" bd-change="cbChange()"></bd-checkbox>
         </bd-item-property>
+    </div>
+    <div class="bd-form">
         <!--group remittance info-->
         <div class="groupTitle">{{::'ocb.payments.new.saving.fill.remittance_info_group_name.label'|translate}}
         </div>
 
-        <bd-item-property class="bd-item-property--multi"
-                          label="{{ ::'ocb.payments.new.saving.fill.amount_figures.label' | translate }}">
-
-            <div class="bd-item-property--multi__values">
-                <div class="bd-item-property__value--primary"
-                     style="padding-right: 15px">
-                    <input type="text"
-                           name="amount"
-                           class="input-field"
-                           ng-min="0.01"
-                           ng-pattern="AMOUNT_PATTERN"
-                           rb-number-type-input
-                           ng-model="payment.formData.amount"
-                           required
-                           placeholder=""
-                           rb-foreign-amount-validator
-                           rb-source-account-currency="payment.items.senderAccount.currency"
-                           rb-transaction-currency="payment.formData.currency"
-                           amount-input
-                           currency="{{payment.formData.currency}}"
-                    />
-                </div>
-                <div class="bd-item-property__value--secondary currency-amount" style="width:100px">
-                    <ui-select ng-model="payment.formData.currency"
-                               theme="bootstrap"
-                               ng-disabled="payment.options.currencyLocked"
-                               class="currency-sel" eb-themable theme="select2"
-                               required>
-                        <ui-select-match placeholder="{{::'ocb.payments.currency.placeholder' | translate }}">
-                                {{$select.selected}}
-                        </ui-select-match>
-                        <ui-select-choices repeat="currency in currencyList track by $index">
-                            <div ng-bind-html="currency | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
+        <bd-item-property label="{{::'ocb.payments.new.saving.fill.amount_figures.label' | translate}}">
+            <div class="control-has-indicator">
+                <input
+                        type="text"
+                        name="amount"
+                        rb-number-type-input
+                        ng-min="0.01"
+                        class="input-field"
+                        ng-model="payment.formData.amount"
+                        ng-pattern="AMOUNT_PATTERN"
+                        required
+                        amount-input
+                        currency="{{payment.items.senderAccount.currency}}"
+                        placeholder="{{::'ocb.payments.domestic.amount.placeholder' | translate }}"
+                />
+                <div class="indicator">{{payment.items.senderAccount.currency}}</div>
             </div>
             <eb-validation-messages eb-name="amount">
-                <div eb-message-key="convertedBalance" class="validation-message animate-on">
-                    {{ 'ocb.payments.new.internal.fill.amount.AMOUNT_EXCEEDED_FUNDS' | translate }}
-                </div>
-
-                <div eb-message-key="number" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.amount.error.empty' | translate}}
                 </div>
                 <div eb-message-key="pattern" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    {{::'ocb.payments.domestic.amount.error.invalid' | translate}}
                 </div>
                 <div eb-message-key="ngMin" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                    {{::'ocb.payments.domestic.amount.error.invalid' | translate}}
                 </div>
-                <div eb-message-key="amount" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.INCORRECT_AMOUNT'|translate}}
+                <div eb-message-key="funds" class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.amount.error.funds' | translate }}
                 </div>
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.new.internal.fill.amount.EMPTY_AMOUNT'|translate}}
+                <div eb-message-key="limits" class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.amount.error.limits' | translate}}
                 </div>
             </eb-validation-messages>
 
