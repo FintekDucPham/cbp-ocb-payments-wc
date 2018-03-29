@@ -15,19 +15,16 @@ angular.module('ocb-payments')
     .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
 
         $scope.showVerify = false;
-        if (angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)) {
+
+        if (angular.isUndefined($scope.tuitionFee.tuitionForm) || lodash.isEmpty($scope.tuitionFee.tuitionForm)) {
             $state.go('payments.tuition_fee.fill');
         } else {
             $scope.showVerify = true;
         }
 
-        bdVerifyStepInitializer($scope, {
-            formName: 'paymentForm',
-            dataObject: $scope.payment
-        });
 
         function sendAuthorizationToken() {
-            $scope.payment.token.params.resourceId = $scope.payment.transferId;
+            $scope.tuitionFee.token.params.resourceId = $scope.tuitionFee.transferId;
 
         }
 
@@ -41,10 +38,10 @@ angular.module('ocb-payments')
 
         $scope.getOTP = function (event, actions) {
             sendAuthorizationToken();
-        }
+        };
 
         transferService.getTransferCost({
-            remitterId: $scope.payment.formData.remitterAccountId
+            remitterId: $scope.tuitionFee.tuitionForm.remitterAccountId
         }).then(function (transferCostData) {
             $scope.transferCost = transferCostData;
         });
@@ -59,35 +56,35 @@ angular.module('ocb-payments')
         }).catch(function(response) {
 
         });
-        // if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-        //     $scope.payment.result.token_error = false;
+        // if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
+        //     $scope.tuitionFee.result.token_error = false;
         //     sendAuthorizationToken();
         // }
 
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
-            delete $scope.payment.items.credentials;
+            delete $scope.tuitionFee.items.credentials;
         });
 
         function authorize(doneFn, actions) {
-            transferBillService.realize($scope.payment.transferId, $scope.smsOTP).then(function (resultCode) {
+            transferBillService.realize($scope.tuitionFee.transferId, $scope.smsOTP).then(function (resultCode) {
                 var parts = resultCode.split('|');
-                $scope.payment.result = {
+                $scope.tuitionFee.result = {
                     code: parts[1],
                     type: parts[0] === 'OK' ? "success" : "error"
                 };
                 if (parts[0] !== 'OK' && !parts[1]) {
-                    $scope.payment.result.code = 'error';
+                    $scope.tuitionFee.result.code = 'error';
                 }
                 depositsService.clearDepositCache();
-                $scope.payment.result.token_error = false;
-                paymentsBasketService.updateCounter($scope.payment.result.code);
+                $scope.tuitionFee.result.token_error = false;
+                paymentsBasketService.updateCounter($scope.tuitionFee.result.code);
                 doneFn();
             }).catch(function (error) {
-                $scope.payment.result.token_error = true;
+                $scope.tuitionFee.result.token_error = true;
 
-                if ($scope.payment.token.model && $scope.payment.token.model.$tokenRequired) {
-                    if (!$scope.payment.token.model.$isErrorRegardingToken(error)) {
+                if ($scope.tuitionFee.token.model && $scope.tuitionFee.token.model.$tokenRequired) {
+                    if (!$scope.tuitionFee.token.model.$isErrorRegardingToken(error)) {
                         actions.proceed();
                     }
                 } else {
@@ -95,8 +92,8 @@ angular.module('ocb-payments')
                 }
 
             }).finally(function () {
-                //delete $scope.payment.items.credentials;
-                formService.clearForm($scope.paymentAuthForm);
+                //delete $scope.tuitionFee.items.credentials;
+                formService.clearForm($scope.tuitionFeeAuthForm);
             });
         }
 
@@ -105,28 +102,29 @@ angular.module('ocb-payments')
             switch (businessLine) {
                 case "33":
                     return "RETAIL";
+                    break;
                 default :
                     return "CORPORATE";
             }
-            ;
         };
+
         var temporaryResponse = function (status) {
             switch (status.toLowerCase()) {
                 case "pending": {
-                    $scope.payment.result.code = "60";//"0": "99" ;
-                    $scope.payment.result.type = "error";
+                    $scope.tuitionFee.result.code = "60";//"0": "99" ;
+                    $scope.tuitionFee.result.type = "error";
+                    break;
                 }
-                    ;
+
                 default : {
-                    $scope.payment.result.code = "0";
-                    $scope.payment.result.type = "success";
+                    $scope.tuitionFee.result.code = "0";
+                    $scope.tuitionFee.result.type = "success";
                 }
-                    ;
             }
-            ;
         };
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.payment.operation.code !== rbPaymentOperationTypes.EDIT.code) {
+            if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
                 $scope.showVerify = false;
                 authorize(actions.proceed, actions);
                 actions.proceed();
@@ -134,10 +132,12 @@ angular.module('ocb-payments')
         });
 
         $scope.setForm = function (form) {
-            $scope.paymentAuthForm = form;
+            $scope.tuitionFeeAuthForm = form;
         };
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
+            $scope.rbPaymentTuitionFeeParams.visibility.search = false;
+            $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
             actions.proceed();
         });
 
