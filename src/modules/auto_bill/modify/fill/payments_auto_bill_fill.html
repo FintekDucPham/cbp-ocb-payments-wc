@@ -42,6 +42,18 @@
                             {{::'ocb.payments.auto_bill.list.details.paymentSetting.LIMITED'|translate}}
                         </div>
                     </div>
+                </bd-radio-option>
+                <div>
+                    <div class="bd-item-property__value--secondary" style="display: inline;">
+                        <input type="text"
+                               name="next"
+                               class="input-field"
+                               ng-model="payment.formData.amountLimit.value"
+                               ng-pattern="AMOUNT_PATTERN"
+                               amount-input
+                               currency="VND"
+                        />
+                    </div>
                     <eb-validation-messages eb-name="next">
                         <div eb-message-key="number" class="validation-message animate-on">
                             {{::'ocb.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
@@ -53,16 +65,6 @@
                             {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
                         </div>
                     </eb-validation-messages>
-                </bd-radio-option>
-                <div class="bd-item-property__value--secondary" style="display: inline;">
-                    <input type="text"
-                           name="next"
-                           class="input-field"
-                           ng-model="payment.formData.amountLimit.value"
-                           ng-pattern="AMOUNT_PATTERN"
-                           amount-input
-                           currency="VND"
-                    />
                 </div>
             </bd-radio-select>
         </bd-item-property>
