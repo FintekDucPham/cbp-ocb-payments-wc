@@ -1,6 +1,6 @@
 <rb-payment-recipients-fill>
     <div ng-controller="RecipientsManageFillDomesticController" class="bd-form">
-        <section ng-if="recipient.operation.code !== 'EDIT'">
+        <section>
             <bd-item-property class="account-recipient-form" label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
                 <input name="remitterAccountId" hidden ng-model="recipient.formData.remitterAccountId" required/>
 
@@ -21,30 +21,6 @@
                 </eb-validation-messages>
 
             </bd-item-property>
-        </section>
-
-        <section ng-if="recipient.operation.code === 'EDIT'">
-            <bd-item-property class="bd-item-property--text bd-item-property--disabled"
-                              label="{{ ::'ocb.payments.recipients.new.domestic.fill.account_related' | translate }}">
-                {{ recipient.formData.debitAccountNo | nrbIbanFilter }}
-            </bd-item-property>
-            <bd-item-property ng-if="customerDetails.context == 'MICRO'" class="bd-item-property--text bd-item-property--disabled" label="{{ ::'ocb.payments.recipients.edit.domestic.verify.company.name' | translate }}">
-                <section ng-show="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                    <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.items.senderAccount.accountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                        <span ng-if="owner != null">{{owner.fullName}}</span>
-                        <span ng-if="owner == null">-</span>
-                    </div>
-                </section>
-                <section ng-hide="recipient.items.senderAccount.accountName && recipient.items.senderAccount.accountNo">
-                    <div ng-repeat="owner in ownerList = (getAccountByNrb(recipient.formData.debitAccountNo).ownersList | filter: { relationType: 'OWNER' }:true)">
-                        <span ng-if="owner != null">{{owner.fullName}}</span>
-                        <span ng-if="owner == null">-</span>
-                    </div>
-                </section>
-            </bd-item-property>
-            <!--<bd-item-property class="bd-item-property&#45;&#45;text bd-item-property&#45;&#45;disabled" label="{{::'ocb.payments.recipients.edit.domestic.verify.recipient.id'|translate}}">-->
-                <!--{{ recipient.formData.recipientId}}-->
-            <!--</bd-item-property>-->
         </section>
 
         <bd-item-property label="{{ ::'ocb.payments.recipients.new.domestic.fill.custom_name.label' | translate }}">
