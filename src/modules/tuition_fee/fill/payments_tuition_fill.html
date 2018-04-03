@@ -198,8 +198,8 @@
     <!--Mobile version-->
     <div class="tuitionFee-mobile-only account-collapse-item form-horizontal" ng-show="tuitionFee.tuitionForm.batchInfoSearch">
         <!--Add table header-->
-        <div bd-table-header>
-            <div bd-table-heading="first" class="bd-table__cell header-always-left bd-table__cell--sm-2 no-indent">
+        <div bd-table-header class="header-middle">
+            <div bd-table-heading="first" class="bd-table__cell header-always-left bd-table__cell--sm-2 no-indent ">
                 <!--Add checkbox all-->
                     <bd-checkbox
                                  ng-value="item"
@@ -217,8 +217,8 @@
         <!--Add table content-->
         <div ng-repeat="item in paymentInfo">
             <div class="bd-table__row-entry">
-                <div ng-init="isFunExpanded = false" ng-click="isFunExpanded = !isFunExpanded" class="bd-table__row-line">
-                    <div bd-table-cell="first" class=" header-always-left bd-table__cell--sm-2 no-indent">
+                <div ng-init="isFunExpanded = false" ng-click="isFunExpanded = !isFunExpanded" >
+                    <div bd-table-cell="first" class="bd-table__cell--sm-2 no-indent">
                         <bd-checkbox bd-change="checkBoxAction(paymentInfo.length, item, $index)"
                                      ng-value="item"
                                      bd-disabled="true"
@@ -238,10 +238,12 @@
                         <div ng-hide="isFunExpanded" class="tuif-arrow-down"></div>
                         <div ng-show="isFunExpanded" class="tuif-arrow-up"></div>
                     </div>
-                    <div bd-table-cell="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-pull-right">
-                        {{item.amount | number:0}}  VND
+                    <div bd-table-cell="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-pull-right amount-discount">
+                        <span >{{item.amount}}  VND</span>
+                        <span ng-show="item.discount" class="lb smaller-lb">{{::'ocb.payments.tuition.table.discount'|translate}}: {{item.discount}}%</span>
+                        <span ng-show="!item.discount"></span>
                     </div>
-                    <div class="mb-mg-discount">{{::'ocb.payments.tuition.table.discount'|translate}}: {{item.discount}}%</div>
+                    <br/>
                     <div ng-show="isFunExpanded" class="mb-dash-line">
                         <div class="mb-std-name mb-mg-left" >{{::'ocb.payments.tuition.table.classname'|translate}}</div>
                         <div class="std-content mb-mg-left mb-class-extend">{{item.subjectName}}</div>
@@ -252,12 +254,12 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row total-amount">
             <bd-item-property label="{{::'ocb.payments.tuition.table.figures'|translate}}:">
                 {{totalAmount | number:0}}  VND
             </bd-item-property>
         </div>
-        <div class="row">
+        <div class="row total-amount">
             <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}:">
                 {{totalAmountInWord}}
             </bd-item-property>
