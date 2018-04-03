@@ -748,7 +748,7 @@
   "ocb.payments.basket.sign.buttons.returnToList": "Return to list",
   "ocb.payments.basket.search.accountName": "Account",
   "ocb.payments.basket.list.header.operation_date": "Planned operation date",
-  "ocb.payments.basket.list.header.operation_type": "Transfer type",
+  "ocb.payments.basket.list.header.operation_type": "Transaction type",
   "ocb.payments.basket.list.header.recipient_name": "Recipient name",
   "ocb.payments.basket.list.header.operation_title": "Title",
   "ocb.payments.basket.list.header.operation_amount": "Amount",

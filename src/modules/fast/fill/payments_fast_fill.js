@@ -31,7 +31,7 @@ angular.module('ocb-payments')
             .state('payments.fast.basket.modify.fill', angular.copy(prototype));
     })
     .controller('PaymentsFastFillController', function ($scope, $state, $stateParams, payment,
-                                                            $filter, $q, transferService, accountsService,
+                                                            $filter, $q, transferService, accountsService, recipientsService,
                                                             utilityService, validationRegexp, translate,
                                                             rbAccountSelectParams, rbDatepickerOptions, bdFocus,
                                                             bdFillStepInitializer, bdStepStateEvents, lodash) {
@@ -181,12 +181,17 @@ angular.module('ocb-payments')
         };
 
         $scope.onRecipientAccountChanged = function() {
-            var accountNo = payment.formData.recipientAccountNo.replace(/ /g, '');
-            var foundRecipient = lodash.filter(payment.meta.recipientList, function(recipient) {
-                return recipient.accountNo == accountNo;
-            })[0];
-            payment.formData.recipientName = foundRecipient.name;
-            payment.items.recipient = foundRecipient;
+            retrieveRecipientNameByAccount();
+        }
+
+        $scope.onSelectBank = function(bank) {
+            if (bank) {
+                retrieveRecipientNameByAccount();
+            }
+        }
+
+        $scope.onCardNumberChanged = function() {
+            retrieveRecipientNameByCard();
         }
 
         $scope.$on('clearForm', function () {
@@ -199,6 +204,34 @@ angular.module('ocb-payments')
             form.$setPristine();
             form.$setUntouched();
         });
+
+        function retrieveRecipientNameByAccount() {
+            var accountNumber = payment.formData.recipientAccountNo;
+            var bankCode = payment.formData.bankCode;
+
+            if (accountNumber && bankCode) {
+                recipientsService.getRecipientNameByAccountNumber({
+                    debitAccount: payment.items.remitterAccount.accountNo,
+                    accountNumber: accountNumber,
+                    bankCode: bankCode
+                }).then(function (result) {
+                    payment.formData.recipientName = result;
+                });
+            }
+        }
+
+        function retrieveRecipientNameByCard() {
+            var cardNumber = payment.formData.cardNumber;
+
+            if (cardNumber) {
+                recipientService.getRecipientNameByCardNumber({
+                    debitAccount: payment.items.remitterAccount.accountNo,
+                    cardNumber: cardNumber
+                }).then(function(result) {
+                    payment.formData.recipientName = result;
+                });
+            }
+        }
 
         function createTransfer () {
             var formData = payment.formData;

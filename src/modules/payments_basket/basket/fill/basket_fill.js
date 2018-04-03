@@ -20,15 +20,13 @@ angular.module('ocb-payments')
                         var result = {
                             offset: parseInt(data.defaultOffsetInDays.value, 10),
                             maxOffsetInMonths: parseInt(data.maxOffsetInMonths.value, 10),
-                            dateFrom: new Date(data.CURRENT_DATE.time),
-                            dateTo: new Date(data.CURRENT_DATE.time),
                             account: data.account.content,
                             storageDaysPayments: parseInt(data.storageDaysPayments.value, 10)
                         };
                         result.period = result.offset;
                         result.dateChooseType = FUTURE_DATE_TYPES.RANGE;
-                        result.dateTo.setDate(result.dateTo.getDate() + result.offset);
-                        result.dateFrom.setDate(result.dateFrom.getDate() - result.storageDaysPayments);
+                        result.dateTo = null;
+                        result.dateFrom = null;
                         return result;
                     });
                 }]
