@@ -1033,6 +1033,7 @@
   "ocb.payments.domestic.amount.placeholder": "Enter transfer amount",
   "ocb.payments.domestic.amount_in_words.label": "Amount in words",
   "ocb.payments.domestic.amount.error.empty": "Transfer amount cannot be empty",
+  "ocb.payments.domestic.bill.error.amount.empty": "There is no pending amount to make payment in this bill. Please enter another bill number",
   "ocb.payments.domestic.bill.error.empty": "Please select at least one bill to continue",
   "ocb.payments.domestic.amount.error.invalid": "Please check and update if any",
   "ocb.payments.domestic.amount.error.funds": "Insufficient balance",

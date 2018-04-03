@@ -1038,6 +1038,7 @@
   "ocb.payments.domestic.description.placeholder": "Nhập nội dung",
   "ocb.payments.domestic.description.default": "Số tiền chuyển khoản",
   "ocb.payments.domestic.description.error.empty": "Nội dung không thể để trống",
+  "ocb.payments.domestic.bill.error.amount.empty": "Hiện hoá đơn không có khoản nợ nào để thanh toán. Vui lòng nhập mã hoá đơn khác",
   "ocb.payments.domestic.description.error.invalid": "Mô tả lệnh chuyển không thể dài hơn ##length## ký tự và chỉ bao gồm chữ cái, số và các ký tự đặc biệt sau: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
   "ocb.payments.domestic.realization_date.label": "Ngày thực hiện",
   "ocb.payments.domestic.realization_date.error.empty": "Ngày thực hiện lệnh chuyển không thể để trống",
