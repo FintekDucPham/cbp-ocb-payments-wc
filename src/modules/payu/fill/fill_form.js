@@ -25,6 +25,12 @@ angular.module('ocb-payments')
                 default:
                     $scope.errMsg = translate.property("ocb.payments.payu.err.label");
             }
+            $scope.videoModel = {
+                data: null
+            }
+            $scope.$watch("videoModel.data",function (newVal,oldVal) {
+                console.log(newVal)
+            })
 
         });
 

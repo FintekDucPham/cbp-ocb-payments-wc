@@ -5,4 +5,11 @@
             {{errMsg}}
          </span>
      </span>
+    <bd-video-record video-model="videoModel.data" record-active="videoModel.record" record-stop="videoModel.stop" record-reset="videoModel.reset">
+    </bd-video-record>
+    <button class="bd-button bd-button__primary" ng-click="videoModel.stop = 'stop'">Stop</button>
+    <button class="bd-button bd-button__primary" ng-click="videoModel.record = 'record'">Record</button>
+    <button class="bd-button bd-button__primary" ng-click="videoModel.reset = 'reset'">Reset</button>
+
+
 </span>
