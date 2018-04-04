@@ -46,7 +46,6 @@ angular.module('ocb-payments')
             return item.accountId==this;
         };
         
-        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
         }

@@ -204,6 +204,10 @@ angular.module('ocb-payments')
             onClear: function () {
                 $scope.$broadcast('clearForm');
             },
+            canPrintReport: function () {
+                var REJECTED_CODES = ['98', '99', 'error', '']
+                return REJECTED_CODES.indexOf(payment.result.type) === -1 && REJECTED_CODES.indexOf(payment.result.code) === -1
+            },
             printReport: function () {
                 window.location.href = exportService.prepareHref({
                     href: "/api/transaction/" + payment.meta.referenceId + "/downloads/pdf.json"
@@ -232,7 +236,6 @@ angular.module('ocb-payments')
                 accept: true,
                 finalAction: true,
                 finalize: true,
-                printReport: true
             }
         };
     });
