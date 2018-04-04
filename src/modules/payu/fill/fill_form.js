@@ -11,7 +11,7 @@ angular.module('ocb-payments')
         });
     })
     .controller('payuStep1Controller'
-                    , function ($scope,$state,$stateParams,translate) {
+                    , function ($scope,$state,$stateParams,translate,openAccountOnlineService) {
             switch ($stateParams.university) {
                 case 'bku':
                     $state.go('payments.payu_bku.fill');
@@ -30,6 +30,17 @@ angular.module('ocb-payments')
             }
             $scope.$watch("videoModel.data",function (newVal,oldVal) {
                 console.log(newVal)
+                if(newVal) {
+                    var fd = new FormData()
+                    fd.append('fileName', newVal.video.name)
+                    fd.append('size', newVal.video.size)
+                    fd.append('contentType', newVal.video.type)
+                    fd.append('content', newVal.video)
+                    openAccountOnlineService.uploadData(fd).then(function(data){
+                        console.log("openAccountOnlineService.uploadData(fd")
+                        console.log(data)
+                    })
+                }
             })
 
         });
