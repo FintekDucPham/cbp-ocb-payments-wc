@@ -34,6 +34,7 @@ angular.module('ocb-payments')
                 doneFn();
             }).catch(function (error) {
                 $scope.basket.result.token_error = true;
+                paymentsBasketService.updateCounter('PROCESS_FROM_BASKET');
 
                 if($scope.basket.token.model && $scope.basket.token.model.$tokenRequired){
                     if(!$scope.basket.token.model.$isErrorRegardingToken(error)){
