@@ -17,10 +17,12 @@
                                 ng-pattern="/^\d+$/"/>
                     </div>
                     <div class="radio-option__input-wrapper radio-option__input-wrapper--medium">
-                        <ui-select ng-model="inputData.periodRange"
-                                   theme="bootstrap"
-                                   search-enabled="false"
-                                   reset-search-input="false">
+                        <ui-select
+                            ng-model="inputData.periodRange"
+                            theme="bootstrap"
+                            search-enabled="false"
+                            reset-search-input="false"
+                        >
                             <ui-select-match placeholder="">
                                 {{ 'ocb.payments.components.futureDatePanel.dateRanges.'+ $select.selected |
                                 translate }}
@@ -63,7 +65,7 @@
                     </div>
                     <div class="radio-option__values">
                         <div class="radio-option__value">
-                            <div class="radio-option__label radio-option__label--xss">
+                            <div class="radio-option__label ocb-hidden-xs radio-option__label--xss">
                                 {{::'ocb.payments.components.futureDatePanel.labels.from'|translate}}
                             </div>
                             <div class="radio-option__input-wrapper">
@@ -80,7 +82,7 @@
                             </div>
                         </div>
                         <div class="radio-option__value">
-                            <div class="radio-option__label radio-option__label--xss">
+                            <div class="radio-option__label ocb-hidden-xs radio-option__label--xss">
                                 {{::'ocb.payments.components.futureDatePanel.labels.to'|translate}}
                             </div>
                             <div class="radio-option__input-wrapper">
