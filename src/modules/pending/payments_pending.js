@@ -56,6 +56,8 @@ angular.module('ocb-payments')
             if(data.customerDetails.cbRoles !== null){
                 $scope.userRole = data.customerDetails.cbRoles[0]
             }
+            //TODO test
+            $scope.userRole = "Inputer";
             $scope.userActions = {};
             switch ($scope.userRole) {
                 case "Inputer":
