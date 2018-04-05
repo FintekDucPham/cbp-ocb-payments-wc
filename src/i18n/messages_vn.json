@@ -778,7 +778,7 @@
   "ocb.payments.basket.status.REALIZATION_DATE_EXCEEDED": "Lệnh chuyển khoản với ngày thực hiên đã quá hạn sẽ được ghi nhận vào ngày hiện tại.",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO": "{0} trong số {1} giao dịch đã được ghi nhận để thực hiện",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "Giao dịch đã được ghi nhận để thực hiện theo danh sach đã chọn.",
-  "ocb.payments.basket.status.TRANSACTIONS_SUBMITED_UNKNOWN_STATUS": "The transfers were submitted, but status is unknown, please check transactions status later.",
+  "ocb.payments.basket.status.TRANSACTIONS_SUBMITED_UNKNOWN_STATUS": "Lệnh chuyển khoản đã được ghi nhận, vui lòng kiểm tra trạng thái giao dịch sau.",
   "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Một số lệnh chuyển khoản có thể được thực hiện vào ngày làm việc tiếp theo.",
   "ocb.payments.basket.list.details.addedToBasketDate": "Đã thêm vào giỏ",
   "ocb.payments.basket.list.details.historyAction": "Lịch sử",
