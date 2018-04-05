@@ -1008,6 +1008,7 @@
   "ocb.payments.domestic.recipient_account.error.digits.internal": "Số tài khoản phải bao gồm 16 số",
   "ocb.payments.domestic.recipient_account.error.digits.external": "Số tài khoản phải là chữ số hoặc là chữ cái viết hoa",
   "ocb.payments.domestic.recipient_account.error.same": "Số tài khoản của người thụ hưởng phải khác số tài khoản của ngừoi chuyển tiền",
+  "ocb.payments.domestic.recipient_account.error.notFound": "Không tìm thấy tài khoản người nhận",
   "ocb.payments.domestic.recipient_name.label": "Tên người thụ hưởng",
   "ocb.payments.domestic.recipient_name.placeholder": "Nhập tên người thụ hưởng",
   "ocb.payments.domestic.recipient_name.error.empty": "Tên người thụ hưởng không thể để trống",

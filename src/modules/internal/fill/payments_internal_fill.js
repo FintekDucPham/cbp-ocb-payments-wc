@@ -38,6 +38,7 @@ angular.module('ocb-payments')
                                                             bdFillStepInitializer, bdStepStateEvents, lodash) {
 
         $scope.isRecipientSelected = false;
+        $scope.reciepientAccountName = false;
         var stateData = $state.$current.data;
         var transferReferenceId = stateData.newPayment ? null : $stateParams.referenceId;
         var transferOperation = stateData.futurePayment ? 'modify' : 'create';
@@ -239,12 +240,24 @@ angular.module('ocb-payments')
         }
 
         $scope.onRecipientAccountChanged = function() {
+            $scope.paymentForm.recipientAccountNo.$setValidity("reciepientAccountName", false);
+            payment.formData.recipientName = "";
             var accountNo = payment.formData.recipientAccountNo.replace(/ /g, '');
             var foundRecipient = lodash.filter(payment.meta.recipientList, function(recipient) {
                 return recipient.accountNo == accountNo;
             })[0];
-            payment.formData.recipientName = foundRecipient.name;
-            payment.items.recipient = foundRecipient;
+            if(foundRecipient){
+                payment.formData.recipientName = foundRecipient.name;
+                payment.items.recipient = foundRecipient;
+                $scope.paymentForm.recipientAccountNo.$setValidity("reciepientAccountName", true);
+            } else{
+                accountsService.getReciepientAccount({"accountId": accountNo}).then(function (name) {
+                    if (name.content && name.content.length > 0){
+                        payment.formData.recipientName = name.content;
+                        $scope.paymentForm.recipientAccountNo.$setValidity("reciepientAccountName", true);
+                    }
+                });
+            }
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
