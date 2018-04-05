@@ -35,11 +35,32 @@ angular.module('ocb-payments')
                     fd.append('fileName', newVal.video.name)
                     fd.append('size', newVal.video.size)
                     fd.append('contentType', newVal.video.type)
-                    fd.append('content', newVal.video)
-                    openAccountOnlineService.uploadData(fd).then(function(data){
-                        console.log("openAccountOnlineService.uploadData(fd")
-                        console.log(data)
-                    })
+                    fd.append('fileContent', newVal.video)
+                    console.log(fd)
+
+                    var reader = new FileReader();
+                    reader.readAsArrayBuffer(newVal.video);
+                    reader.addEventListener("loadend", function() {
+                        console.log(reader.result)
+                        var params = {
+                            'fileName' : newVal.video.name,
+                            'size' : newVal.video.size,
+                            'contentType' : newVal.video.type,
+                            "content" : Array.from(new Uint8Array(reader.result))
+                        }
+
+                        var formData = new FormData();
+                        formData.append("fileName", newVal.video.name);
+                        formData.append("size", newVal.video.size);
+                        formData.append("contentType", newVal.video.type);
+                        formData.append("content", [0,0,0,24,102,116,112]);
+                        openAccountOnlineService.uploadData(params).then(function(data){
+                            console.log("openAccountOnlineService.uploadData(fd")
+                            console.log(data)
+                        })
+                    });
+
+
                 }
             })
 
