@@ -16,6 +16,8 @@ angular.module('ocb-payments')
 
                 $scope.recipientAuthForm = {};
 
+                $scope.invalidPasswordCount = 0;
+
                 bdVerifyStepInitializer($scope, {
                     formName: 'recipientForm',
                     dataObject: $scope.recipient
@@ -100,6 +102,18 @@ angular.module('ocb-payments')
                                     actions.proceed();
                                 }).catch(function (e) {
                                     $scope.recipient.result.token_error = true;
+                                    if (e.text === "INCORRECT_TOKEN_PASSWORD") {
+                                        if ($scope.invalidPasswordCount >= 1) {
+                                          $scope.$emit('wrongAuthCodeEvent');
+                                        }
+                                        else {
+                                          $scope.showWrongCodeLabel = true;
+                                        }
+
+                                      $scope.invalidPasswordCount++;
+                                      return;
+                                    }
+
                                     if($scope.recipient.token.model && $scope.recipient.token.model.$tokenRequired){
                                         if(!$scope.recipient.token.model.$isErrorRegardingToken(e)) {
                                             $scope.recipient.result.type = 'error';

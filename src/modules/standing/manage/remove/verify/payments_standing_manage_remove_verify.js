@@ -28,6 +28,8 @@ angular.module('ocb-payments')
             });
         }
 
+        $scope.invalidPasswordCount = 0;
+
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -70,6 +72,17 @@ angular.module('ocb-payments')
                         actions.proceed();
                     }).catch(function(err) {
                         $scope.payment.result.type = 'error';
+                        if (err.text === "INCORRECT_TOKEN_PASSWORD") {
+                            if ($scope.invalidPasswordCount >= 1) {
+                              $state.go('payments.standing.list');
+                            }
+                            else {
+                              $scope.showWrongCodeLabel = true;
+                            }
+
+                          $scope.invalidPasswordCount++;
+                          return;
+                        }
                         if($scope.payment.token.model && $scope.payment.token.model.$tokenRequired){
                             if(!$scope.payment.token.model.$isErrorRegardingToken(err)){
                                 actions.proceed();

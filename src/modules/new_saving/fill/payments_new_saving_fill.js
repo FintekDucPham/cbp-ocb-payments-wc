@@ -19,7 +19,7 @@ angular.module('ocb-payments')
                                                             rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,
                                                             transactionService,systemParameterService,
                                                             rbPaymentAccTypes, depositsService, accountsService) {
-        
+
         $scope.accTypeList=rbPaymentAccTypes.TYPES;
 
         var paymentdata = {
@@ -46,7 +46,7 @@ angular.module('ocb-payments')
         function filter(item){
             return item.accountId==this;
         };
-        
+
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
         }
@@ -65,7 +65,7 @@ angular.module('ocb-payments')
         if ($stateParams.accountId) {
             $scope.payment.formData.remitterAccountId = $stateParams.accountId;
         }
-        
+
 
         $scope.RECIPIENT_DATA_REGEX = validationRegexp('RECIPIENT_DATA_REGEX');
         $scope.PAYMENT_DESCRIPTION_REGEX = validationRegexp('PAYMENT_TITLE_REGEX');
@@ -154,6 +154,7 @@ angular.module('ocb-payments')
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.$emit('hideWrongCodeLabelEvent');
           /*  if(!$scope.remote.model_to.loaded){
                 return;
             }*/
@@ -277,7 +278,7 @@ angular.module('ocb-payments')
             $scope.payment.formData.currency = senderAccountCurrency;
             recalculateCurrencies();
         }
-   
+
         $scope.getAccountByNrb = function(accountList, selectFn) {
             if ($stateParams.accountId) {
                 selectFn(lodash.findWhere(accountList, {
@@ -286,7 +287,7 @@ angular.module('ocb-payments')
             }
         };
 
-     
+
 
         function isSenderAccountCategoryRestricted(account) {
             if($scope.payment.items.senderAccount){

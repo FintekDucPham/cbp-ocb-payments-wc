@@ -245,4 +245,11 @@ angular.module('ocb-payments')
         finalize: true,
       }
     }
+
+    $scope.$on('wrongAuthCodeEvent', function () {
+        $scope.showWrongCodeLabel = true;
+    });
+    $scope.$on('hideWrongCodeLabelEvent', function () {
+        $scope.showWrongCodeLabel = false;
+    });
   })

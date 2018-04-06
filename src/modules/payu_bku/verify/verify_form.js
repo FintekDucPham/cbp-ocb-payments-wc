@@ -57,6 +57,8 @@ angular.module('ocb-payments')
                     // formService.clearForm($scope.tuitionFeeAuthForm);
                 });
             }
+            $scope.invalidPasswordCount = 0;
+            
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 if ($scope.payuBku.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.payuBku.token.model.input.$isValid()) {
                     authorize(actions.proceed, actions);
@@ -76,5 +78,3 @@ angular.module('ocb-payments')
             });
 
     });
-
-

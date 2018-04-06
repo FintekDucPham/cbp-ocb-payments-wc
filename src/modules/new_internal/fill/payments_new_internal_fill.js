@@ -145,6 +145,7 @@ angular.module('ocb-payments')
         setRealizationDateToCurrent();
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.$emit('hideWrongCodeLabelEvent');
             if(!$scope.remote.model_to.loaded){
                 return;
             }

@@ -19,6 +19,8 @@ angular.module('ocb-payments')
                 // dataObject: $scope.payuBku
             });
 
+            $scope.invalidPasswordCount = 0;
+
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 if ($scope.payuVnpay.meta.customerContext == 'DETAL') {
                     // authorize(actions.proceed, actions);
@@ -86,5 +88,3 @@ angular.module('ocb-payments')
 
 
     });
-
-

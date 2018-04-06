@@ -43,6 +43,10 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.description'|translate}}">
         {{payment.formData.description}}
     </bd-item-property>
+<<<<<<< 5062ef14a188dacf52e4e93a7ea10f153664e529
+=======
+
+>>>>>>> OCBVNMCP-3022: wrong auth  code management
 </div>
 
 <br>
@@ -51,7 +55,7 @@
 
     <section ng-if="payment.operation.code!=='EDIT'">
         <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" label="{{ payment.token.model.currentToken.label }}" no-label-box="true">
-            <rb-token-authorization rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params">
+            <rb-token-authorization show-wrong-code-label="showWrongCodeLabel" rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params">
             </rb-token-authorization>
         </bd-item-property>
     </section>

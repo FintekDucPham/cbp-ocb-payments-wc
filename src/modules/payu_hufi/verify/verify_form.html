@@ -65,7 +65,8 @@
     <div ng-if="payuHufi.token.params.resourceId" ng-show="payuHufi.token.params.resourceId " label="{{ payuHufi.token.model.currentToken.label }}">
         <rb-token-authorization rb-operation-type="TRANSFER"
                                 rb-model="payuHufi.token.model"
-                                rb-params="payuHufi.token.params">
+                                rb-params="payuHufi.token.params"
+                                show-wrong-code-label="showWrongCodeLabel">
         </rb-token-authorization>
     </div>
     <!--</section>-->

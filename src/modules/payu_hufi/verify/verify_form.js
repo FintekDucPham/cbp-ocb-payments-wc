@@ -18,6 +18,7 @@ angular.module('ocb-payments')
                 dataObject: $scope.payuHufi
             });
 
+            $scope.invalidPasswordCount = 0;
 
             // if ($scope.payuHufi.token.model == null) {
             //     $scope.payuHufi.token.model.$tokenRequired = true;
@@ -76,5 +77,3 @@ angular.module('ocb-payments')
             });
 
         });
-
-

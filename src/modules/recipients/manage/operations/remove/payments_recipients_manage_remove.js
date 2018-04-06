@@ -66,6 +66,13 @@ angular.module('ocb-payments')
             });
         };
 
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
+
         $scope.recipient.manageAction = "REMOVE";
         $scope.recipient.multiStepParams.labels.accept = 'ocb.payments.recipients.list.details.remove';
         $scope.recipient.multiStepParams.visibility.clear = false;

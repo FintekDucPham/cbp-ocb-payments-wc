@@ -311,6 +311,7 @@ angular.module('ocb-payments')
 
         /*Next button on fill screen*/
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+           $scope.$emit('hideWrongCodeLabelEvent');
            if ($scope.tuitionFee.formData.amountNull === false) {
                try {
                    delete $scope.tuitionFee.token.params.resourceId;

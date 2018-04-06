@@ -64,6 +64,6 @@
 
 <div ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" class="form-pane">
     <div class="pane-above">
-        <rb-token-authorization rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
+        <rb-token-authorization show-wrong-code-label="showWrongCodeLabel" rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
     </div>
 </div>

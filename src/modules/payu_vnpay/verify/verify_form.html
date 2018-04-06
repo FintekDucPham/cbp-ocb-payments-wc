@@ -44,7 +44,8 @@
 <div class="bd-form" ng-if="payuVnpay.token.params.resourceId" ng-show="payuVnpay.token.params.resourceId " label="{{ payuVnpay.token.model.currentToken.label }}">
     <rb-token-authorization rb-operation-type="TRANSFER"
                             rb-model="payuVnpay.token.model"
-                            rb-params="payuVnpay.token.params">
+                            rb-params="payuVnpay.token.params"
+                            show-wrong-code-label="showWrongCodeLabel">
     </rb-token-authorization>
 </div>
 

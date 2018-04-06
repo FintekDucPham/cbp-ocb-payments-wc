@@ -108,6 +108,14 @@ angular.module('ocb-payments')
             manageAction: ""
         });
 
+
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
+        
         customerService.getCustomerDetails().then(function(customerDetails){
             $scope.customerDetails = customerDetails.customerDetails;
         });

@@ -202,7 +202,7 @@ angular.module('ocb-payments')
 
         $scope.addAsStandingOrder = function() {
            $scope.payment.formData.addToBasket = false;
-            
+
            viewStateService.setInitialState('payments.new', {
                paymentOperationType: rbPaymentOperationTypes.NEW
            });
@@ -215,7 +215,7 @@ angular.module('ocb-payments')
                $state.go('payments.new.fill', {
                     paymentType: 'standing',
                     payment: $scope.payment.standingOrderData
-               });   
+               });
            });
         };
 
@@ -295,6 +295,12 @@ angular.module('ocb-payments')
 
         rbPaymentInitFactory($scope);
 
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
 
 
     });

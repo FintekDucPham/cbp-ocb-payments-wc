@@ -59,6 +59,7 @@ angular.module('ocb-payments')
             });
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+<<<<<<< 5062ef14a188dacf52e4e93a7ea10f153664e529
                 var dataToCreate = {
                     "remitterId" : $scope.payuVnpay.data.remitterId,
                     "remitterAccountId" : $scope.payuVnpay.data.remitterAccountId,
@@ -73,6 +74,13 @@ angular.module('ocb-payments')
                     "currency" : $scope.payuVnpay.data.remitterInfo.currency,
                     "paymentType" : "VNPAY"
 
+=======
+                $scope.$emit('hideWrongCodeLabelEvent');
+                $scope.payuVnpay.data.senderAccount = $scope.remitterInfo;
+                if($scope.payuVnpay.data.senderAccount == null ){
+                    $scope.errMsg = translate.property('ocb.payments.payu_vnpay.err_msg_account.label');
+                    return;
+>>>>>>> OCBVNMCP-3022: wrong auth  code management
                 }
                 transferBillService.create('bill',dataToCreate).then(function (data) {
                     $scope.payuVnpay.token.params.resourceId = data.referenceId;
@@ -83,4 +91,3 @@ angular.module('ocb-payments')
             });
 
         });
-

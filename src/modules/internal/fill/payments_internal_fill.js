@@ -263,6 +263,7 @@ angular.module('ocb-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+          $scope.$emit('hideWrongCodeLabelEvent');
             if (!$scope.formReady) {
                 return;
             }

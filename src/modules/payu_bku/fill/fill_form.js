@@ -171,10 +171,18 @@ angular.module('ocb-payments')
                 return copiedForm;
             };
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+<<<<<<< 5062ef14a188dacf52e4e93a7ea10f153664e529
                 // if($scope.payuBku.data.subjectSelected === undefined || $scope.payuBku.data.subjectSelected.length === 0){
                 //     $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_select0.label');
                 //     return;
                 // }
+=======
+                $scope.$emit('hideWrongCodeLabelEvent');
+                if($scope.payuBku.data.subjectSelected == undefined || $scope.payuBku.data.subjectSelected.length == 0){
+                    $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_select0.label');
+                    return;
+                }
+>>>>>>> OCBVNMCP-3022: wrong auth  code management
                 $scope.payuBku.data.senderAccount = $scope.remitterInfo;
                 // if($scope.payuBku.data.senderAccount === null ){
                 //     $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_account.label');
@@ -209,4 +217,3 @@ angular.module('ocb-payments')
             });
 
         });
-

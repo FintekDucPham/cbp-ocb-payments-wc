@@ -37,6 +37,7 @@ angular.module('ocb-payments')
             actions.proceed();
         });
 
+        $scope.invalidPasswordCount = 0;
         payment.meta.token.modelData = function(){
             var paymentData = payment.formData;
             var context = {
@@ -93,8 +94,18 @@ angular.module('ocb-payments')
                         transferBillService.createAutoBillTransfer(callParams).then(function (status) {
                             setMessage(status);
                         }).catch(function (error) {
+                          if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                              if ($scope.invalidPasswordCount >= 1) {
+                                $scope.$emit('wrongAuthCodeEvent');
+                              }
+                              else {
+                                $scope.showWrongCodeLabel = true;
+                              }
+
+                            $scope.invalidPasswordCount++;
+                            return;
+                          }
                             setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
-                        }).finally(function (params) {
                             actions.proceed();
                         });
                     }
@@ -103,8 +114,18 @@ angular.module('ocb-payments')
                         transferBillService.modifyAutoBillTransfer(callParams).then(function (status) {
                             setMessage(status);
                         }).catch(function (error) {
+                          if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                              if ($scope.invalidPasswordCount >= 1) {
+                                $scope.$emit('wrongAuthCodeEvent');
+                              }
+                              else {
+                                $scope.showWrongCodeLabel = true;
+                              }
+
+                            $scope.invalidPasswordCount++;
+                            return;
+                          }
                             setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
-                        }).finally(function (params) {
                             actions.proceed();
                         });
                     }

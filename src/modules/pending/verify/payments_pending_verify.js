@@ -15,6 +15,8 @@ angular.module('ocb-payments')
             $state.go("payments.pending.fill", {}, {reload: true});
         }
 
+        $scope.invalidPasswordCount = 0;
+
         $scope.idForPrint = null;
         //todo disable for test
         //$scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.selectedTrans[0].id;
@@ -129,6 +131,18 @@ angular.module('ocb-payments')
                 }).catch(function (error) {
                     $scope.pendingTransaction.result.token_error = true;
 
+                    if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                        if ($scope.invalidPasswordCount >= 1) {
+                          $scope.$emit('wrongAuthCodeEvent');
+                        }
+                        else {
+                          $scope.showWrongCodeLabel = true;
+                        }
+
+                      $scope.invalidPasswordCount++;
+                      return;
+                    }
+
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
                            actions.proceed();
@@ -158,6 +172,18 @@ angular.module('ocb-payments')
                     doneFn();
                 }).catch(function (error) {
                     $scope.pendingTransaction.result.token_error = true;
+
+                    if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                        if ($scope.invalidPasswordCount >= 1) {
+                          $scope.$emit('wrongAuthCodeEvent');
+                        }
+                        else {
+                          $scope.showWrongCodeLabel = true;
+                        }
+
+                      $scope.invalidPasswordCount++;
+                      return;
+                    }
 
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
