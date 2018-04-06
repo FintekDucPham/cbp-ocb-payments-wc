@@ -46,7 +46,7 @@
         </bd-item-property>
 
         <!--Semester-->
-        <bd-item-property id="semesterID" ng-show="tuitionFee.formData.showSemester" label="{{ ::'ocb.payments.tuition.semester' | translate }}">
+        <bd-item-property id="semesterID" ng-show="showSemester" label="{{ ::'ocb.payments.tuition.semester' | translate }}">
             <ui-select ng-model="tuitionFee.formData.semester" theme="bootstrap"
                        title="Choose a semester" on-select = "onTuitionSemesterChange($select.selected)">
                 <ui-select-match placeholder="{{::'ocb.payments.tuition.semester.place.holder' | translate}}">{{$select.selected.semester}}</ui-select-match>
