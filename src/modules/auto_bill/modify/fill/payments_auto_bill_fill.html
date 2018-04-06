@@ -43,33 +43,33 @@
                         </div>
                     </div>
                 </bd-radio-option>
-                <div>
-                    <div class="bd-item-property__value--secondary" style="display: inline;">
-                        <input type="text"
-                               name="next"
-                               class="input-field"
-                               ng-model="payment.formData.amountLimit.value"
-                               ng-pattern="AMOUNT_PATTERN"
-                               amount-input
-                               currency="VND"
-                        />
-                    </div>
-                    <eb-validation-messages eb-name="next">
-                        <div eb-message-key="number" class="validation-message animate-on">
-                            {{::'ocb.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
-                        </div>
-                        <div eb-message-key="required" class="validation-message animate-on">
-                            {{::'ocb.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
-                        </div>
-                        <div eb-message-key="pattern" class="validation-message animate-on">
-                            {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
-                        </div>
-                        <div eb-message-key="ngMin" class="validation-message animate-on">
-                            {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
-                        </div>
-                    </eb-validation-messages>
-                </div>
             </bd-radio-select>
+          <div>
+            <div class="bd-item-property__value--secondary" style="display: inline;">
+              <input type="text"
+                     name="next"
+                     class="input-field"
+                     ng-model="payment.formData.amountLimit.value"
+                     ng-pattern="AMOUNT_PATTERN"
+                     amount-input
+                     currency="VND"
+              />
+            </div>
+            <eb-validation-messages eb-name="next">
+              <div eb-message-key="number" class="validation-message animate-on">
+                {{::'ocb.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
+              </div>
+              <div eb-message-key="required" class="validation-message animate-on">
+                {{::'ocb.payments.new.domestic.fill.amount.EMPTY_AMOUNT'|translate}}
+              </div>
+              <div eb-message-key="pattern" class="validation-message animate-on">
+                {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
+              </div>
+              <div eb-message-key="ngMin" class="validation-message animate-on">
+                {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
+              </div>
+            </eb-validation-messages>
+          </div>
         </bd-item-property>
 
         <bd-item-property label="{{ ::'ocb.payments.new.standing.fill.first_execution_date' | translate }}">
