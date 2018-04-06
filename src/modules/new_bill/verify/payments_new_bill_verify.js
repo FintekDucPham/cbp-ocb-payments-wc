@@ -24,7 +24,9 @@ angular.module('ocb-payments')
             formName: 'paymentForm',
             dataObject: $scope.payment
         });
-        $scope.payment.token.params.resourceId = $scope.payment.transferId;
+
+        //$scope.payment.token.params.resourceId = $scope.payment.transferId;
+
         function sendAuthorizationToken() {
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
         }
