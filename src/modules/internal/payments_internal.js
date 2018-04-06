@@ -170,7 +170,7 @@ angular.module('ocb-payments')
                 }
             });
     })
-    .controller('PaymentsInternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService) {
+    .controller('PaymentsInternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService, REJECTED_CODES) {
         var stateData = $state.$current.data;
         $scope.payment = payment;
         var deleteOperation = $scope.deleteOperation = stateData.operation === 'delete';
@@ -205,7 +205,6 @@ angular.module('ocb-payments')
                 $scope.$broadcast('clearForm');
             },
             canPrintReport: function () {
-                var REJECTED_CODES = ['98', '99', 'error', '']
                 return REJECTED_CODES.indexOf(payment.result.type) === -1 && REJECTED_CODES.indexOf(payment.result.code) === -1
             },
             printReport: function () {

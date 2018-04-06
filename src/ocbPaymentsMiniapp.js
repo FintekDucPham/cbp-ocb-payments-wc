@@ -197,5 +197,11 @@ angular.module('ocb-payments', [
 }).filter('arrayFilter', function(){
     return function(items){
         return angular.isArray(items) ? items.join("") : items;
-    };
-});
+    }
+})
+    .constant('REJECTED_CODES', [
+        '98',
+        '99',
+        'error',
+        ''
+    ]);
