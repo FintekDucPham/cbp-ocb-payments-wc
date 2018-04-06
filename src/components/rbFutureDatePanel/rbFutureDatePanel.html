@@ -9,12 +9,12 @@
                 <div class="radio-option__values">
                     <div class="radio-option__input-wrapper radio-option__input-wrapper--small">
                         <input
-                                bd-type="number"
-                                class="input-field"
-                                ng-model="inputData.period"
-                                name="period"
-                                ng-required="inputData.selectedMode===FUTURE_DATE_TYPES.PERIOD"
-                                ng-pattern="/^\d+$/"/>
+                            bd-type="number"
+                            class="input-field"
+                            ng-model="inputData.period"
+                            name="period"
+                            ng-required="inputData.selectedMode===FUTURE_DATE_TYPES.PERIOD"
+                            ng-pattern="/^\d+$/"/>
                     </div>
                     <div class="radio-option__input-wrapper radio-option__input-wrapper--medium">
                         <ui-select
@@ -32,6 +32,17 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
+
+                    <style>
+                        /*
+                            fix pushing android keyboar
+                            https://github.com/angular-ui/ui-select/issues/1927
+                        */
+                        .radio-option__input-wrapper input[type="search"],
+                        .radio-option__input-wrapper .ui-select-focusser {
+                            display: none;
+                        }
+                    </style>
                 </div>
             </bd-radio-option>
         </div>
