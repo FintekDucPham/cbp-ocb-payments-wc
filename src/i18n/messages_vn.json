@@ -467,6 +467,7 @@
   "ocb.payments.bill.history.period.invalidDate": "Ngày kết thúc không thể sớm hơn ngày bắt đầu",
 
   "ocb.payments.rejected.select.filter.button.action": "Tìm",
+  "ocb.payments.rejected.select.filter.button.clear": "LÀm sạch bộ lọc",
   "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "Quý khách phải nhập số kì",
   "ocb.payments.rejected.select.filter.INCORRECT_PERIOD": "Số kì không hợp lệ",
   "ocb.payments.rejected.select.filter.INCORRECT_DATE_SEARCH": "Ngày bắt đầu tìm kiếm không được sớm hơn ##months## tháng trước. Chỉ có thể tìm kiếm các giao dịch bị hủy trong ##months## tháng vừa qua.",

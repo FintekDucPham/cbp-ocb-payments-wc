@@ -64,7 +64,7 @@
             </div>
 
             <div class="clearfix">
-                <div class="row--spacing col-md-10 col-sm-12">
+                <div class="row--spacing col-lg-8 col-sm-12">
                     <bd-radio-option bd-option-value="rejectedList.periodTypes.RANGE" class="radio-option">
                         <div class="radio-option__label radio-option__label--small">
                             {{:: 'ocb.payments.rejected.list.filter.type.range.label' | translate}}
@@ -121,7 +121,10 @@
 
                 </div>
 
-                <div class="row--spacing col-md-2 col-sm-12" style="text-align: right;">
+                <div class="row--spacing col-lg-4 col-sm-12 text-right">
+                    <bd-button class="bd-button" type="button" ng-click="clearFilter()">
+                        {{::'ocb.payments.rejected.select.filter.button.clear'|translate}}
+                    </bd-button>
                     <bd-button class="bd-button__primary" type="submit">
                         {{::'ocb.payments.rejected.select.filter.button.action'|translate}}
                     </bd-button>

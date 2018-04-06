@@ -469,6 +469,7 @@
   "ocb.payments.bill.history.period.invalidDate": "The end date in the period cannot be earlier than the start date",
 
   "ocb.payments.rejected.select.filter.button.action": "Search",
+  "ocb.payments.rejected.select.filter.button.clear": "Clear filter",
   "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "You must enter the number of last",
   "ocb.payments.rejected.select.filter.INCORRECT_PERIOD": "Invalid number of last",
   "ocb.payments.rejected.select.filter.INCORRECT_DATE_SEARCH": "Search period start date is earlier than ##months## months back. It is possible to search only for transactions rejected in the last ##months## months.",
