@@ -357,7 +357,7 @@
   "ocb.payments.recipients.select.filter.button.action": "search",
   "ocb.payments.recipients.select.filter.text.label": "Search recipient",
   "ocb.payments.recipients.list.header.customName.label": "Your recipient name",
-  "ocb.payments.recipients.list.header.recipient.label": "Recipient type",
+  "ocb.payments.recipients.list.header.recipient.label": "Recipient",
   "ocb.payments.recipients.list.header.nrb.label": "Account no.",
   "ocb.payments.recipients.list.details.edit": "Edit",
   "ocb.payments.recipients.list.details.remove": "Delete",

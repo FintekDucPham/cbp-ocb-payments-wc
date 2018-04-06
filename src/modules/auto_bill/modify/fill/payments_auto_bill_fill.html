@@ -41,19 +41,18 @@
                         <div class="bd-item-property__value--primary" style="display: inline-block;">
                             {{::'ocb.payments.auto_bill.list.details.paymentSetting.LIMITED'|translate}}
                         </div>
-                        <div class="bd-item-property__value--secondary" style="display: inline;">
-                            <input type="text"
-                                   name="next"
-                                   class="input-field"
-                                   ng-model="payment.formData.amountLimit.value"
-                                   ng-pattern="AMOUNT_PATTERN"
-                                   rb-number-type-input
-                                   style="width: 100px;"
-                                   amount-input
-                                   currency="VND"
-                                   ng-min="0.01"
-                                   />
-                        </div>
+                    </div>
+                </bd-radio-option>
+                <div>
+                    <div class="bd-item-property__value--secondary" style="display: inline;">
+                        <input type="text"
+                               name="next"
+                               class="input-field"
+                               ng-model="payment.formData.amountLimit.value"
+                               ng-pattern="AMOUNT_PATTERN"
+                               amount-input
+                               currency="VND"
+                        />
                     </div>
                     <eb-validation-messages eb-name="next">
                         <div eb-message-key="number" class="validation-message animate-on">
@@ -69,7 +68,7 @@
                             {{::'ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT'|translate}}
                         </div>
                     </eb-validation-messages>
-                </bd-radio-option>
+                </div>
             </bd-radio-select>
         </bd-item-property>
 
