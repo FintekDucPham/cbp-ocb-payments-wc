@@ -1,4 +1,5 @@
 @mobile-width-min: 425px;
+@sm-width-max: 991px;
 @mobile-width-max: (@mobile-width-min - 1);
 @input-height: 45px;
 
@@ -44,6 +45,12 @@
 .radio-option__label--xss {
 
     @media (max-width: @mobile-width-max) {
+        display: none;
+    }
+}
+
+.ocb-hidden-xs {
+    @media (max-width: @sm-width-max) {
         display: none;
     }
 }
