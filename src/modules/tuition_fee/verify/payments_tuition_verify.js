@@ -16,7 +16,7 @@ angular.module('ocb-payments')
 
         $scope.showVerify = false;
 
-        if (angular.isUndefined($scope.tuitionFee.tuitionForm) || lodash.isEmpty($scope.tuitionFee.tuitionForm)) {
+        if (angular.isUndefined($scope.tuitionFee.formData) || lodash.isEmpty($scope.tuitionFee.formData)) {
             $state.go('payments.tuition_fee.fill');
         } else {
             $scope.showVerify = true;
@@ -41,7 +41,7 @@ angular.module('ocb-payments')
         };
 
         transferService.getTransferCost({
-            remitterId: $scope.tuitionFee.tuitionForm.remitterAccountId
+            remitterId: $scope.tuitionFee.formData.remitterAccountId
         }).then(function (transferCostData) {
             $scope.transferCost = transferCostData;
         });

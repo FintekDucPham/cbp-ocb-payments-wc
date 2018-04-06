@@ -12,10 +12,11 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('TuitionPaymentFillController', function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
+    .controller('TuitionPaymentFillController', function ($scope, $filter, lodash, CURRENT_DATE, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                           validationRegexp, systemParameterService, translate, utilityService,
                                                           rbBeforeTransferManager,
                                                           bdTableConfig, ocbConvert, transferBillService, transferService) {
+        $scope.CURRENT_DATE = CURRENT_DATE;
         // $scope.rbPaymentTuitionFeeParams.visibility.next = false;
         $scope.table = {
             tableConfig: new bdTableConfig({
@@ -300,15 +301,37 @@ angular.module('ocb-payments')
             $scope.rbPaymentTuitionFeeParams.visibility.next = false;
         }
 
+        var requestConverter = function (formData) {
+            var copiedForm = angular.copy(formData);
+            copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
+            copiedForm.amount = (""+formData.amount).replace(",", ".");
+            copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
+            return copiedForm;
+        };
+
+
+        var setRealizationDateToCurrent = function () {
+            angular.extend($scope.tuitionFee.formData, {
+                realizationDate: $scope.CURRENT_DATE.time
+            }, lodash.omit($scope.tuitionFee.formData, lodash.isUndefined));
+        };
+
+        var resetRealizationOnBlockedInput = function () {
+            if($scope.tuitionFee.meta.isFuturePaymentAllowed === false || $scope.tuitionFee.meta.dateSetByCategory) {
+                delete $scope.tuitionFee.formData.realizationDate;
+                setRealizationDateToCurrent(true);
+            }
+        };
+
         /*Next button on fill screen*/
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             $scope.rbPaymentTuitionFeeParams.visibility.accept = true;
             //TODO test to show otp
-            $scope.tuitionFee.token.params.resourceId = "NIB-TRA511102121217959bed69dd1aa50b";
+            //$scope.tuitionFee.token.params.resourceId = "NIB-TRA511102121217959bed69dd1aa50b";
             //Call service save to DB
             //TODO Call service when opened live data
             try {
-               //setRealizationDateToCurrent();
+               setRealizationDateToCurrent();
                 transferBillService.create('bill', angular.extend({
                     "remitterId": $scope.tuitionFee.items.globusId
                 }, requestConverter($scope.tuitionFee.formData)), $scope.tuitionFee.operation.link || false ).then(function (transfer) {
@@ -322,22 +345,23 @@ angular.module('ocb-payments')
                     setRealizationDateToCurrent();
                     actions.proceed();
                 }).catch(function(errorReason){
-                    if(errorReason.subType == 'validation'){
-                        for(var i=0; i<=errorReason.errors.length; i++){
-                            var currentError = errorReason.errors[i];
-                            if(currentError.field == 'ocb.transfer.limit.exceeed'){
-                                $scope.limitExeeded = {
-                                    show: true,
-                                    messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
-                                };
-                            }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
-                                $scope.limitBasketExeeded = {
-                                    show: true,
-                                    messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
-                                };
-                            }
-                        }
-                    }
+                    // if(errorReason.subType == 'validation'){
+                    //     for(var i=0; i<=errorReason.errors.length; i++){
+                    //         var currentError = errorReason.errors[i];
+                    //         if(currentError.field == 'ocb.transfer.limit.exceeed'){
+                    //             $scope.limitExeeded = {
+                    //                 show: true,
+                    //                 messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                    //             };
+                    //         }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
+                    //             $scope.limitBasketExeeded = {
+                    //                 show: true,
+                    //                 messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
+                    //             };
+                    //         }
+                    //     }
+                    // }
+                    console.error("create tuitionFee failed: ", errorReason);
                 });
 
             } catch(ex) {
