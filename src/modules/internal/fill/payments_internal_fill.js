@@ -35,7 +35,7 @@ angular.module('ocb-payments')
                                                             $filter, $q, transferService, accountsService,
                                                             utilityService, validationRegexp, translate,
                                                             rbAccountSelectParams, rbDatepickerOptions, bdFocus,
-                                                            bdFillStepInitializer, bdStepStateEvents, lodash) {
+                                                            bdFillStepInitializer, bdStepStateEvents, lodash, ocbConvert, language) {
 
         $scope.isRecipientSelected = false;
         $scope.reciepientAccountName = false;
@@ -201,7 +201,9 @@ angular.module('ocb-payments')
                 templateId: formData.recipientId,
                 recipientName: utilityService.splitTextEveryNSigns(formData.recipientName),
                 recipientAccountNo: formData.recipientAccountNo.replace(/ /g, ''),
+                branchName: payment.items.remitterAccount.openBranch,
                 amount: formData.amount.toString().replace(",", "."),
+                amountInWords: ocbConvert.convertNumberToText(formData.amount, language.get() === 'en'),
                 currency: payment.items.remitterAccount.currency, // only to support holiday indicator
                 description: utilityService.splitTextEveryNSigns(formData.description),
                 realizationDate: utilityService.convertDateToCurrentTimezone(formData.realizationDate, payment.meta.timeZone),
