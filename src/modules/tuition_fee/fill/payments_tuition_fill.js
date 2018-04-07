@@ -243,7 +243,7 @@ angular.module('ocb-payments')
                 }
                 transferTuitionService.getStudentInfo({
                     universityCode: $scope.universityCode,
-                    semesterCode: "",
+                    semesterCode:  $scope.tuitionFee.formData.semester.code,
                     courseType: $scope.courseType,
                     studentCode: $scope.studentID,
                     nationalID: $scope.nationalID
