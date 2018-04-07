@@ -1,6 +1,3 @@
-/**
- * Created by Sky on 10-Dec-17.
- */
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.tuition_fee.fill', {
@@ -15,12 +12,12 @@ angular.module('ocb-payments')
     .controller('TuitionPaymentFillController', function ($scope, $filter, lodash, CURRENT_DATE, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                           validationRegexp, systemParameterService, translate, utilityService,
                                                           rbBeforeTransferManager,
-                                                          bdTableConfig, ocbConvert, transferBillService, transferService) {
+                                                          bdTableConfig, ocbConvert, transferTuitionService, transferService) {
         $scope.CURRENT_DATE = CURRENT_DATE;
         // $scope.rbPaymentTuitionFeeParams.visibility.next = false;
         $scope.table = {
             tableConfig: new bdTableConfig({
-                placeholderText: translate.property('ocb.payments.tuition.table.placeHolderTable'),
+                placeholderText: translate.property('ocb.payments.tuition.table.placeHolderTable')
             }),
             tableData: {
                 getData: function (defer, $param) {
@@ -34,7 +31,7 @@ angular.module('ocb-payments')
         /*Test start*/
         /*Mock data*/
 
-        transferBillService.getUniversityList({
+        transferTuitionService.getUniversityList({
             groupCode: "1"
         }).then(function (data) {
             $scope.universityList = data.universities;
@@ -48,7 +45,7 @@ angular.module('ocb-payments')
                 },
                 type2: {
                     name: "Credit",
-                    value: 2,
+                    value: 2
                 },
                 type3: {
                     name: "PostUniversity",
@@ -166,7 +163,7 @@ angular.module('ocb-payments')
                 }
             ],
             "_links": {}
-        }
+        };
 
         $scope.studentInfo = $scope.dataInfo.studentInfo;
         $scope.paymentInfo = $scope.dataInfo.paymentInfo;
@@ -244,7 +241,7 @@ angular.module('ocb-payments')
                 } else {
                     $scope.courseType = "";
                 }
-                transferBillService.getStudentInfo({
+                transferTuitionService.getStudentInfo({
                     universityCode: $scope.universityCode,
                     semesterCode: "",
                     courseType: $scope.courseType,
@@ -280,12 +277,12 @@ angular.module('ocb-payments')
                 $("#codeID").removeClass("code-txt");
             }
             /*Chose Semester from combobox*/
-            transferService.getSemesterList({
+            transferTuitionService.getSemesterList({
                 universityCode: $scope.tuitionFee.formData.paymentsTuitionUniversities.code
             }).then(function (data) {
                 $scope.tuitionFee.formData.semester = data;
             })
-        }
+        };
 
 
         /*Clear button*/
@@ -340,7 +337,7 @@ angular.module('ocb-payments')
             //TODO Call service when opened live data
             try {
                setRealizationDateToCurrent();
-                transferBillService.create('tuition', angular.extend({
+                transferTuitionService.create('tuition', angular.extend({
                     "remitterId": 0
                 }, requestConverter($scope.tuitionFee.formData)), $scope.tuitionFee.operation.link || false ).then(function (transfer) {
                     $scope.tuitionFee.transferId = transfer.referenceId;
