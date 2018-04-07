@@ -57,11 +57,13 @@
 
 </form>
 <!--add authorization token-->
-<div class="bd-form-white">
-    <div ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" label="{{ tuitionFee.token.model.currentToken.label }}">
-        <rb-token-authorization rb-operation-type="TRANSFER"
-                                rb-model="tuitionFee.token.model"
-                                rb-params="tuitionFee.token.params">
-        </rb-token-authorization>
-    </div>
-</div>
+<section ng-show="tuitionFee.operation.code !== 'EDIT' && tuitionFee.meta.customerContext == 'DETAL' && tuitionFee.token.model.$tokenRequired">
+  <div class="bd-form-white">
+      <div ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" label="{{ tuitionFee.token.model.currentToken.label }}">
+          <rb-token-authorization rb-operation-type="TRANSFER"
+                                  rb-model="tuitionFee.token.model"
+                                  rb-params="tuitionFee.token.params">
+          </rb-token-authorization>
+      </div>
+  </div>
+</section>

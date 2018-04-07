@@ -12,7 +12,7 @@
                             {{ ::'ocb.payments.bill.history.account.label' | translate }}
                         </div>
                         <div class="col-md-9">
-                            <rb-account-select
+                            <rb-account-select-v2
                                             class="ui-select-max"
                                             rb-account-id="billHistory.formData.remitterAccountId"
                                             rb-account="billHistory.formData.selectedAccount"
@@ -25,7 +25,7 @@
                                             rb-account-select-params="accountSelectParams"
                                             rb-remote="remote.model"
                                             rb-init-select-value="{{selectNrb}}" class="bd-table__cell--md-11">
-                            </rb-account-select>
+                            </rb-account-select-v2>
                         </div>
                 </div>
                 <!--Search and advanced filter-->
@@ -61,7 +61,7 @@
                     {{ ::'ocb.payments.bill.history.account.label' | translate }}
                 </div>
                 <div class="col-md-9">
-                    <rb-account-select
+                    <rb-account-select-v2
                             class="ui-select-max"
                             rb-account-id="billHistory.formData.remitterAccountId"
                             rb-account="billHistory.formData.selectedAccount"
@@ -74,7 +74,7 @@
                             rb-account-select-params="accountSelectParams"
                             rb-remote="remote.model"
                             rb-init-select-value="{{selectNrb}}" class="bd-table__cell--md-11">
-                    </rb-account-select>
+                    </rb-account-select-v2>
                 </div>
             </div>
             <!--Search and advanced filter-->
