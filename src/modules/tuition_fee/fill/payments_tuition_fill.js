@@ -54,8 +54,8 @@ angular.module('ocb-payments')
                 type4: {
                     name: "PartTimeCredit",
                     value: 4
-                },
-                optionSelected: 1
+                }
+                //optionSelected: 1
             };
         }
 
@@ -280,9 +280,13 @@ angular.module('ocb-payments')
             transferTuitionService.getSemesterList({
                 universityCode: $scope.tuitionFee.formData.paymentsTuitionUniversities.code
             }).then(function (data) {
-                $scope.tuitionFee.formData.semester = data;
+                $scope.semesterList = data.semesters;
             })
         };
+
+        $scope.onTuitionSemesterChange = function (itemSelected) {
+            $scope.tuitionFee.formData.semester = itemSelected;
+        }
 
 
         /*Clear button*/
