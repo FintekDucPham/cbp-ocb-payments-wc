@@ -48,7 +48,9 @@ angular.module('ocb-payments')
         bdFocus,
         bdFillStepInitializer,
         bdStepStateEvents,
-        userCacheHttpHandler
+        userCacheHttpHandler,
+        ocbConvert,
+        language
     ) {
         // ============================================
         // ========= start of cache user data =========
@@ -283,6 +285,8 @@ angular.module('ocb-payments')
                 province: formData.province,
                 bankCode: formData.bankCode,
                 branchCode: formData.branchCode,
+                branchName: payment.items.remitterAccount.openBranch,
+                amountInWords: ocbConvert.convertNumberToText(formData.amount, language.get() === 'en'),
                 description: utilityService.splitTextEveryNSigns(formData.description),
                 realizationDate: utilityService.convertDateToCurrentTimezone(formData.realizationDate, payment.meta.timeZone),
                 addToBasket: formData.addToBasket
