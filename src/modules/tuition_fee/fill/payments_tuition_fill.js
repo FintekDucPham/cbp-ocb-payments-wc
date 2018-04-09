@@ -1,6 +1,3 @@
-/**
- * Created by Sky on 10-Dec-17.
- */
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.tuition_fee.fill', {
@@ -15,12 +12,12 @@ angular.module('ocb-payments')
     .controller('TuitionPaymentFillController', function ($scope, $filter, lodash, CURRENT_DATE, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                           validationRegexp, systemParameterService, translate, utilityService,
                                                           rbBeforeTransferManager,
-                                                          bdTableConfig, ocbConvert, transferBillService, transferService) {
+                                                          bdTableConfig, ocbConvert, transferTuitionService, transferService) {
         $scope.CURRENT_DATE = CURRENT_DATE;
         // $scope.rbPaymentTuitionFeeParams.visibility.next = false;
         $scope.table = {
             tableConfig: new bdTableConfig({
-                placeholderText: translate.property('ocb.payments.tuition.table.placeHolderTable'),
+                placeholderText: translate.property('ocb.payments.tuition.table.placeHolderTable')
             }),
             tableData: {
                 getData: function (defer, $param) {
@@ -34,7 +31,7 @@ angular.module('ocb-payments')
         /*Test start*/
         /*Mock data*/
 
-        transferBillService.getUniversityList({
+        transferTuitionService.getUniversityList({
             groupCode: "1"
         }).then(function (data) {
             $scope.universityList = data.universities;
@@ -48,7 +45,7 @@ angular.module('ocb-payments')
                 },
                 type2: {
                     name: "Credit",
-                    value: 2,
+                    value: 2
                 },
                 type3: {
                     name: "PostUniversity",
@@ -57,25 +54,26 @@ angular.module('ocb-payments')
                 type4: {
                     name: "PartTimeCredit",
                     value: 4
-                },
-                optionSelected: 1
+                }
+                //optionSelected: 1
             };
         }
 
+        $scope.showSemester = false;
         //Radio button
         $scope.$watch('tuitionFee.formData.selectedForm.optionSelected', function(newValue, oldValue) {
             switch (newValue){
                 case 1:
-                    $scope.tuitionFee.formData.showSemester = true;
+                    $scope.showSemester = true;
                     break;
                 case 2:
-                    $scope.tuitionFee.formData.showSemester = false;
+                    $scope.showSemester = false;
                     break;
                 case 3:
-                    $scope.tuitionFee.formData.showSemester = false;
+                    $scope.showSemester = false;
                     break;
                 case 4:
-                    $scope.tuitionFee.formData.showSemester = false;
+                    $scope.showSemester = false;
                     break;
                 default:
                     break;
@@ -165,7 +163,7 @@ angular.module('ocb-payments')
                 }
             ],
             "_links": {}
-        }
+        };
 
         $scope.studentInfo = $scope.dataInfo.studentInfo;
         $scope.paymentInfo = $scope.dataInfo.paymentInfo;
@@ -243,15 +241,18 @@ angular.module('ocb-payments')
                 } else {
                     $scope.courseType = "";
                 }
-                transferBillService.getStudentInfo({
+                transferTuitionService.getStudentInfo({
                     universityCode: $scope.universityCode,
-                    semesterCode: "",
+                    semesterCode:  $scope.tuitionFee.formData.semester.code,
                     courseType: $scope.courseType,
                     studentCode: $scope.studentID,
                     nationalID: $scope.nationalID
                 }).then(function (data) {
                    // $scope.universityList = data.universities;
                    // console.log("Show Student Info");
+                   //  $scope.tuitionFee.formData.amount = 7777777;
+                   //  $scope.tuitionFee.formData.totalAmount = 888888;
+                    $scope.tuitionFee.formData.studentCode = $scope.studentID;
                     $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
                     $scope.rbPaymentTuitionFeeParams.visibility.clear = searchBool;
                     $scope.rbPaymentTuitionFeeParams.visibility.next = nextBool;
@@ -276,7 +277,15 @@ angular.module('ocb-payments')
                 $("#codeID").removeClass("code-txt");
             }
             /*Chose Semester from combobox*/
-            $scope.tuitionFee.formData.semester = itemSelected.semester;
+            transferTuitionService.getSemesterList({
+                universityCode: $scope.tuitionFee.formData.paymentsTuitionUniversities.code
+            }).then(function (data) {
+                $scope.semesterList = data.semesters;
+            })
+        };
+
+        $scope.onTuitionSemesterChange = function (itemSelected) {
+            $scope.tuitionFee.formData.semester = itemSelected;
         }
 
 
@@ -285,7 +294,7 @@ angular.module('ocb-payments')
             $scope.tuitionFee.formData.paymentsTuitionUniversities = {};
             $scope.tuitionFee.formData.stdCodeID = null;
             $scope.hideStudentCode = false;
-            $scope.tuitionFee.formData.showSemester = false;
+            $scope.showSemester = false;
             $scope.hideStudent = false;
             $scope.universityEmpty = false;
             $scope.semesterEmpty = false;
@@ -332,8 +341,8 @@ angular.module('ocb-payments')
             //TODO Call service when opened live data
             try {
                setRealizationDateToCurrent();
-                transferBillService.create('bill', angular.extend({
-                    "remitterId": $scope.tuitionFee.items.globusId
+                transferTuitionService.create('tuition', angular.extend({
+                    "remitterId": 0
                 }, requestConverter($scope.tuitionFee.formData)), $scope.tuitionFee.operation.link || false ).then(function (transfer) {
                     $scope.tuitionFee.transferId = transfer.referenceId;
                     $scope.tuitionFee.endOfDayWarning = transfer.endOfDayWarning;
@@ -367,7 +376,7 @@ angular.module('ocb-payments')
             } catch(ex) {
                 console.error("Create transfer bill error: ", ex);
             }
-            actions.proceed();
+          //  actions.proceed();
 
         });
 
