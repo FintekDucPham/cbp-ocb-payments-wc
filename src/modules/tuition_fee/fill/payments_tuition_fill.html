@@ -140,7 +140,7 @@
         <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.detailPayment' | translate }}</bd-header>
         <!--Desktop version-->
         <!--Show table-->
-        <div ng-show="tuitionFee.formData.batchInfoSearch">
+        <div ng-if="tuitionFee.formData.batchInfoSearch === false">
             <div bd-table-header>
                 <div bd-table-heading="first" class="bd-table__cell bd-table__cell--md-3 form-row" label="{{::'ocb.payments.tuition.table.all'|translate}}">
                     <!--Add checkbox all-->
