@@ -128,7 +128,9 @@ angular.module('ocb-payments')
             resolveMessage();
         }else {
             registerMessage(1,
-                translate.property('ocb.payments.basket.delete.status.messages.error'), messageType.error);
+                translate.property('ocb.payments.basket.status.TRANSACTIONS_SUBMITED_UNKNOWN_STATUS'), messageType.error);
+
+            resolveMessage();
         }
 
     });

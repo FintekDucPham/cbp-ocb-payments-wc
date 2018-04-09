@@ -469,6 +469,7 @@
   "ocb.payments.bill.history.period.invalidDate": "Ngày kết thúc không thể sớm hơn ngày bắt đầu",
 
   "ocb.payments.rejected.select.filter.button.action": "Tìm",
+  "ocb.payments.rejected.select.filter.button.clear": "LÀm sạch bộ lọc",
   "ocb.payments.rejected.select.filter.EMPTY_PERIOD": "Quý khách phải nhập số kì",
   "ocb.payments.rejected.select.filter.INCORRECT_PERIOD": "Số kì không hợp lệ",
   "ocb.payments.rejected.select.filter.INCORRECT_DATE_SEARCH": "Ngày bắt đầu tìm kiếm không được sớm hơn ##months## tháng trước. Chỉ có thể tìm kiếm các giao dịch bị hủy trong ##months## tháng vừa qua.",
@@ -783,6 +784,7 @@
   "ocb.payments.basket.status.REALIZATION_DATE_EXCEEDED": "Lệnh chuyển khoản với ngày thực hiên đã quá hạn sẽ được ghi nhận vào ngày hiện tại.",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.MICRO": "{0} trong số {1} giao dịch đã được ghi nhận để thực hiện",
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED.DETAL": "Giao dịch đã được ghi nhận để thực hiện theo danh sach đã chọn.",
+  "ocb.payments.basket.status.TRANSACTIONS_SUBMITED_UNKNOWN_STATUS": "Lệnh chuyển khoản đã được ghi nhận, vui lòng kiểm tra trạng thái giao dịch sau.",
   "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Một số lệnh chuyển khoản có thể được thực hiện vào ngày làm việc tiếp theo.",
   "ocb.payments.basket.list.details.addedToBasketDate": "Đã thêm vào giỏ",
   "ocb.payments.basket.list.details.historyAction": "Lịch sử",
@@ -1013,6 +1015,7 @@
   "ocb.payments.domestic.recipient_account.error.digits.internal": "Số tài khoản phải bao gồm 16 số",
   "ocb.payments.domestic.recipient_account.error.digits.external": "Số tài khoản phải là chữ số hoặc là chữ cái viết hoa",
   "ocb.payments.domestic.recipient_account.error.same": "Số tài khoản của người thụ hưởng phải khác số tài khoản của ngừoi chuyển tiền",
+  "ocb.payments.domestic.recipient_account.error.notFound": "Không tìm thấy tài khoản người nhận",
   "ocb.payments.domestic.recipient_name.label": "Tên người thụ hưởng",
   "ocb.payments.domestic.recipient_name.placeholder": "Nhập tên người thụ hưởng",
   "ocb.payments.domestic.recipient_name.error.empty": "Tên người thụ hưởng không thể để trống",
