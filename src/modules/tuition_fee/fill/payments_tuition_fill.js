@@ -178,11 +178,11 @@ angular.module('ocb-payments')
                         $scope.tuitionFee.formData.batchInfoSearch = true;
 
                     }
-                    if (data.tuitionFee == null || data.tuitionFee.tuitionAmount == 0) {
+                    if (data.tuitionFee == null) {
                         $scope.amountNull = true;
                     }
                     if (data.tuitionFee != null) {
-                        $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionAmount;
+                        $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionDebtAmount;
                         $scope.tuitionFee.formData.totalAmountInWord = ocbConvert.convertNumberToText($scope.tuitionFee.formData.totalAmount, true);
                     }
                     if (data.student != null) {
