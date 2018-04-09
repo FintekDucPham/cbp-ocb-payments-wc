@@ -789,7 +789,7 @@
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED_UNKNOWN_STATUS": "The transfers were submitted, but status is unknown, please check transactions status later.",
   "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Some transfers may be made in the next business day.",
   "ocb.payments.basket.list.details.addedToBasketDate": "Added to basket date",
-  "ocb.payments.basket.list.details.historyAction": "Bills History",
+  "ocb.payments.basket.list.details.historyAction": "Bill History",
   "ocb.payments.basket.multistepform.buttons.delete": "Delete",
   "ocb.payments.basket.multistepform.buttons.cancel": "Cancel",
   "ocb.payments.basket.modify.verify.MICRO": "The transfer will be modified in your Payment basket and it will be made in line with the scheduled operation date, but no sooner than on the date of its acceptance in the payment basket. Transfer modification deletes all prior acceptances.",
