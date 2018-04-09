@@ -101,70 +101,8 @@ angular.module('ocb-payments')
         $scope.studentCodes = [{name: "MSSV", id: 1},
             {name: "CMND", id: 2}];
 
-        /*Data mock Student info and payment info*/
-        $scope.dataInfo = {
-            "studentInfo": {
-                "studentCode": "",
-                "studentName": "Tran Thi Kieu Chinh",
-                "birthday": 1514971234540,
-                "gender": "",
-                "placeOfBirth": "",
-                "nationalId": "123456789",
-                "clazz": "Thuong mai",
-                "period": "K21",
-                "department": "Kinh doanh thuong mai",
-                "mssv": "10143004",
-                "cmnd": "024210388"
-            },
-            "paymentInfo": [
-                {
-                    "subjectId": "KD01",
-                    "subjectName": "Kinh doanh thuong mai",
-                    "paymentPeriod": "",
-                    "amount": 250000,
-                    "discount": 0.5,
-                    "paymentCode": "",
-                    "description": "",
-                    "dueDate": "",
-                    "paymentItemFeeCode": "",
-                    "itemNameDescription": "",
-                    "itemTypeFeeType": "",
-                    "isrequired": ""
-                },
-                {
-                    "subjectId": "LTM01",
-                    "subjectName": "Luat thuong mai",
-                    "paymentPeriod": "",
-                    "amount": 350000,
-                    "discount": 0,
-                    "paymentCode": "",
-                    "description": "",
-                    "dueDate": "",
-                    "paymentItemFeeCode": "",
-                    "itemNameDescription": "",
-                    "itemTypeFeeType": "",
-                    "isrequired": ""
-                },
-                {
-                    "subjectId": "KD02",
-                    "subjectName": "Xuat nhap khau",
-                    "paymentPeriod": "",
-                    "amount": 450000,
-                    "discount": 0.1,
-                    "paymentCode": "",
-                    "description": "",
-                    "dueDate": "",
-                    "paymentItemFeeCode": "",
-                    "itemNameDescription": "",
-                    "itemTypeFeeType": "",
-                    "isrequired": ""
-                }
-            ],
-            "_links": {}
-        };
-
-        $scope.studentInfo = $scope.dataInfo.studentInfo;
-        $scope.paymentInfo = $scope.dataInfo.paymentInfo;
+        // $scope.studentInfo = $scope.dataInfo.studentInfo;
+        // $scope.paymentInfo = $scope.dataInfo.paymentInfo;
 
         /*Check box on payment info*/
         $scope.checkBoxAction =  function(length, item, idx) {
@@ -174,6 +112,7 @@ angular.module('ocb-payments')
         /*Handle Next Button*/
         //Check empty
         $scope.rbPaymentTuitionFeeParams.showTuitionInfoSearch = function(searchBool, nextBool) {
+            $scope.tuitionFee.formData.batchInfoSearch = false;
             $scope.amountNull = false;
             var university = $scope.tuitionFee.formData.paymentsTuitionUniversities;
             var selectedForm = $scope.tuitionFee.formData.selectedForm;
@@ -199,8 +138,6 @@ angular.module('ocb-payments')
                 //check student ID
                 $scope.stdEmpty = true;
             }  else {
-                $scope.tuitionFee.formData.batchInfoSearch = true;
-
                 //check Cao Dang Kinh Te
                 if (university.code == 5) {
                     //check StudentID or NationalID
@@ -235,6 +172,12 @@ angular.module('ocb-payments')
                     studentCode: $scope.studentID,
                     nationalID: $scope.nationalID
                 }).then(function (data) {
+                    if (data.tuitionPayment == null) {
+                        $scope.tuitionFee.formData.batchInfoSearch = false;
+                    } else {
+                        $scope.tuitionFee.formData.batchInfoSearch = true;
+
+                    }
                     if (data.tuitionFee == null || data.tuitionFee.tuitionAmount == 0) {
                         $scope.amountNull = true;
                     }
@@ -244,7 +187,9 @@ angular.module('ocb-payments')
                     }
                     if (data.student != null) {
                         $scope.tuitionFee.formData.studentCode = data.student.studentCode;
+                        $scope.tuitionFee.formData.studentInfo = data.student;
                     }
+                    $scope.paymentInfo = data.tuitionPayment;
                     $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
                     $scope.rbPaymentTuitionFeeParams.visibility.clear = searchBool;
                     $scope.rbPaymentTuitionFeeParams.visibility.next = nextBool;

@@ -108,29 +108,29 @@
             <div class="col-sm-8 col-md-8 code-txt">
                 <div class="form-row">
                     <div class="std-name">{{::'ocb.payments.tuition.name.label'|translate}}</div>
-                    <div class="std-content">{{studentInfo.studentName}}</div>
+                    <div class="std-content">{{tuitionFee.formData.studentInfo.studentName}}</div>
                 </div>
                 <div class="form-row">
                     <div class="std-name">{{::'ocb.payments.tuition.dateofbirth.label'|translate}}</div>
-                    <div class="std-content">{{studentInfo.birthday | date : "dd/MM/yyyy"}}</div>
+                    <div class="std-content">{{tuitionFee.formData.studentInfo.birthday | date : "dd/MM/yyyy"}}</div>
                 </div>
                 <div class="form-row">
                     <div class="std-name">{{::'ocb.payments.tuition.nationalid.label'|translate}}</div>
-                    <div class="std-content">{{studentInfo.nationalId}}</div>
+                    <div class="std-content">{{tuitionFee.formData.studentInfo.nationalID}}</div>
                 </div>
               </div>
             <div class="col-sm-8 col-md-8 code-txt">
                 <div class="form-row">
                     <div class="std-name">{{::'ocb.payments.tuition.class.label'|translate}}</div>
-                    <div class="std-content">{{studentInfo.clazz}}</div>
+                    <div class="std-content">{{tuitionFee.formData.studentInfo.className}}</div>
                 </div>
                 <div class="form-row">
                     <div class="std-name">{{::'ocb.payments.tuition.period.label'|translate}}</div>
-                    <div class="std-content">{{studentInfo.period}}</div>
+                    <div class="std-content">{{tuitionFee.formData.studentInfo.period}}</div>
                 </div>
                 <div class="form-row">
                     <div class="std-name">{{::'ocb.payments.tuition.department.label'|translate}}</div>
-                    <div class="std-content">{{studentInfo.department}}</div>
+                    <div class="std-content">{{tuitionFee.formData.studentInfo.department}}</div>
                 </div>
             </div>
         </div>
@@ -139,45 +139,47 @@
     <div class="account-collapse-item form-horizontal bd-form tuitionFee-desktop-only" ng-show="tuitionFee.formData.batchInfoSearch">
         <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.detailPayment' | translate }}</bd-header>
         <!--Desktop version-->
-        <!--Add table header-->
-        <div bd-table-header>
-            <div bd-table-heading="first" class="bd-table__cell bd-table__cell--md-3 form-row" label="{{::'ocb.payments.tuition.table.all'|translate}}">
-                <!--Add checkbox all-->
-                <div class="pm-checkbox cb-padding">
-                    <input class="pm-checkbox__input"
-                           type="checkbox" checked disabled/>
-                    <span class="pm-checkbox__marker"></span>
+        <!--Show table-->
+        <div ng-show="tuitionFee.formData.batchInfoSearch">
+            <div bd-table-header>
+                <div bd-table-heading="first" class="bd-table__cell bd-table__cell--md-3 form-row" label="{{::'ocb.payments.tuition.table.all'|translate}}">
+                    <!--Add checkbox all-->
+                    <div class="pm-checkbox cb-padding">
+                        <input class="pm-checkbox__input"
+                               type="checkbox" checked disabled/>
+                        <span class="pm-checkbox__marker"></span>
+                    </div>
+                    <div>{{::'ocb.payments.tuition.table.all'|translate}}</div>
                 </div>
-                <div>{{::'ocb.payments.tuition.table.all'|translate}}</div>
+                <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-4" label="{{::'ocb.payments.tuition.table.classid'|translate}}">{{::'ocb.payments.tuition.table.classid'|translate}}</div>
+                <div bd-table-heading="third" class="bd-table__cell bd-table__cell--md-4" label="{{::'ocb.payments.tuition.table.classname'|translate}}">{{::'ocb.payments.tuition.table.classname'|translate}}</div>
+                <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3 "label="{{::'ocb.payments.tuition.table.amount'|translate}}">{{::'ocb.payments.tuition.table.amount'|translate}}</div>
+                <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 "label="{{::'ocb.payments.tuition.table.discount'|translate}}">{{::'ocb.payments.tuition.table.discount'|translate}}</div>
             </div>
-            <div bd-table-heading="second" class="bd-table__cell bd-hide-sm bd-table__cell--md-4" label="{{::'ocb.payments.tuition.table.classid'|translate}}">{{::'ocb.payments.tuition.table.classid'|translate}}</div>
-            <div bd-table-heading="third" class="bd-table__cell bd-table__cell--md-4" label="{{::'ocb.payments.tuition.table.classname'|translate}}">{{::'ocb.payments.tuition.table.classname'|translate}}</div>
-            <div bd-table-heading="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3 "label="{{::'ocb.payments.tuition.table.amount'|translate}}">{{::'ocb.payments.tuition.table.amount'|translate}}</div>
-            <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 "label="{{::'ocb.payments.tuition.table.discount'|translate}}">{{::'ocb.payments.tuition.table.discount'|translate}}</div>
-        </div>
-        <!--Add table content-->
-        <div ng-repeat="item in paymentInfo">
-            <div class="bd-table__row-entry">
-                <div class="bd-table__row-line">
-                    <div bd-table-cell="first" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3">
-                        <bd-checkbox bd-change="checkBoxAction(paymentInfo.length, item, $index)"
-                                     ng-value="item"
-                                     bd-disabled="true"
-                                     ng-init="tuitionFee.formData.isAllSelect=true"
-                                     ng-model="tuitionFee.formData.isAllSelect">
-                        </bd-checkbox>
-                    </div>
-                    <div bd-table-cell="second" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-4">
-                        {{item.subjectId}}
-                    </div>
-                    <div bd-table-cell="third" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-4">
-                        {{item.subjectName}}
-                    </div>
-                    <div bd-table-cell="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3">
-                        {{item.amount | number:0}}  VND
-                    </div>
-                    <div bd-table-cell="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2">
-                        {{item.discount}}
+            <!--Add table content-->
+            <div ng-repeat="item in paymentInfo">
+                <div class="bd-table__row-entry">
+                    <div class="bd-table__row-line">
+                        <div bd-table-cell="first" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3">
+                            <bd-checkbox bd-change="checkBoxAction(paymentInfo.length, item, $index)"
+                                         ng-value="item"
+                                         bd-disabled="true"
+                                         ng-init="tuitionFee.formData.isAllSelect=true"
+                                         ng-model="tuitionFee.formData.isAllSelect">
+                            </bd-checkbox>
+                        </div>
+                        <div bd-table-cell="second" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-4">
+                            {{item.subjectId}}
+                        </div>
+                        <div bd-table-cell="third" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-4">
+                            {{item.subjectName}}
+                        </div>
+                        <div bd-table-cell="fourth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3">
+                            {{item.amount | number:0}}  VND
+                        </div>
+                        <div bd-table-cell="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2">
+                            {{item.discount}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -191,6 +193,9 @@
             <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}:">
                 {{totalAmountInWord}}
             </bd-item-property>
+        </div>
+        <div ng-if="tuitionFee.formData.batchInfoSearch === false" class="content-check">
+            {{::'ocb.payments.tuition.student.info.empty'|translate}}
         </div>
         <div ng-show="amountNull" class="content-check">
             {{::'ocb.payments.tuition.student.amount.empty'|translate}}
