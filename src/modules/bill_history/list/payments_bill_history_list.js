@@ -125,11 +125,11 @@ angular.module('ocb-payments')
             tableData: {
                 getData: function (defer, $params) {
                     /*Test calendar Start*/
-                    var fromDay = getDatesFromFilter().fromDate;
-                    var toDay = getDatesFromFilter().toDate;
+                    $scope.billHistory.formData.fromDate = getDatesFromFilter().fromDate;
+                    $scope.billHistory.formData.toDate = getDatesFromFilter().toDate;
                     $scope.billHistoryData = transferBillService.getBillHistory({
-                        fromDate: fromDay,
-                        toDate: toDay
+                        fromDate: $scope.billHistory.formData.fromDate,
+                        toDate: $scope.billHistory.formData.toDate
                     }).then(function (data) {
                         // defer.resolve(data.content);
 
