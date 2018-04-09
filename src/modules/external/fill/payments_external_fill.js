@@ -281,6 +281,7 @@ angular.module('ocb-payments')
                 currency: payment.items.remitterAccount.currency, // only to support holiday indicator
                 province: formData.province,
                 bankCode: formData.bankCode,
+                branchCode: formData.branchCode,
                 branchName: payment.items.remitterAccount.openBranch,
                 amountInWords: ocbConvert.convertNumberToText(formData.amount, language.get() === 'en'),
                 description: utilityService.splitTextEveryNSigns(formData.description),
