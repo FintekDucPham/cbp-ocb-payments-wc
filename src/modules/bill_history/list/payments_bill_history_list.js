@@ -127,8 +127,8 @@ angular.module('ocb-payments')
                     /*Test calendar Start*/
                     //var fromDay = rbModelFrom;
                     $scope.billHistoryData = transferBillService.getBillHistory({
-                        fromDate: $scope.fromDate,
-                        toDate: $scope.toDate
+                        fromDate: getDatesFromFilter().fromDate,
+                        toDate: getDatesFromFilter().toDate
                     }).then(function (data) {
                         // defer.resolve(data.content);
 
