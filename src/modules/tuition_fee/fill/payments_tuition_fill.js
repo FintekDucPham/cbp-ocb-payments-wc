@@ -237,7 +237,9 @@ angular.module('ocb-payments')
                     if (data.tuitionFee != null) {
                         $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionAmount;
                         $scope.tuitionFee.formData.totalAmountInWord = ocbConvert.convertNumberToText($scope.tuitionFee.formData.totalAmount, true);
-                        $scope.tuitionFee.formData.studentCode = $scope.studentID;
+                    }
+                    if (data.student != null) {
+                        $scope.tuitionFee.formData.studentCode = data.student.studentCode;
                     }
                     $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
                     $scope.rbPaymentTuitionFeeParams.visibility.clear = searchBool;
