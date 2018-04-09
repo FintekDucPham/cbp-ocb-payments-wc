@@ -82,9 +82,7 @@ angular.module('ocb-payments')
 
         //select account
         $scope.onSenderAccountSelect = function(accountId) {
-            if (accountId == $scope.tuitionFee.formData.remitterAccountId) {
-                $scope.tuitionFee.formData.remitterAccountId = undefined;
-            }
+                $scope.tuitionFee.formData.remitterAccountId = accountId;
         };
 
         $scope.$watch('tuitionFee.items.senderAccount', function(account) {
@@ -168,18 +166,6 @@ angular.module('ocb-payments')
         $scope.studentInfo = $scope.dataInfo.studentInfo;
         $scope.paymentInfo = $scope.dataInfo.paymentInfo;
 
-        /*Calculate Tuition Balance*/
-        $scope.tuitionBalance = "15000000";
-        /*Calculate Tuition Limit*/
-        $scope.tuitionLimit = "50000000";
-
-        /*Calculate Total Amount*/
-        $scope.totalAmount = 0;
-        for (var i = 0; i < $scope.paymentInfo.length; i++) {
-            $scope.totalAmount += ($scope.paymentInfo[i].amount - $scope.paymentInfo[i].amount * $scope.paymentInfo[i].discount);
-        }
-        $scope.totalAmountInWord = ocbConvert.convertNumberToText( $scope.totalAmount, true);
-
         /*Check box on payment info*/
         $scope.checkBoxAction =  function(length, item, idx) {
             // TODO Check box
@@ -199,13 +185,13 @@ angular.module('ocb-payments')
             if (university == undefined) {
                 //check university empty
                 $scope.universityEmpty = true;
-            } else if (university.code == 1 &&  selectedForm == undefined) {
+            } else if (university.code == 1 &&  selectedForm.optionSelected == undefined) {
                 //check form
                 $scope.formEmpty = true;
-            } else if (university.code == 1 && selectedForm.value == 1 &&  $scope.tuitionFee.formData.semester == undefined) {
+            } else if (university.code == 1 && selectedForm.optionSelected == 1 &&  $scope.tuitionFee.formData.semester == undefined) {
                 //check semester
                 $scope.semesterEmpty = true;
-            }  else if (university.code == 5 && stdType == undefined) {
+            } else if (university.code == 5 && stdType == undefined) {
                 //check studentID or nationalID
                 $scope.stdTypeEmpty = true;
             }  else if ( $scope.tuitionFee.formData.stdCodeID == undefined) {
@@ -243,16 +229,16 @@ angular.module('ocb-payments')
                 }
                 transferTuitionService.getStudentInfo({
                     universityCode: $scope.universityCode,
-                    semesterCode:  $scope.tuitionFee.formData.semester.code,
+                    semesterCode:  $scope.semesterNumber,
                     courseType: $scope.courseType,
                     studentCode: $scope.studentID,
                     nationalID: $scope.nationalID
                 }).then(function (data) {
-                   // $scope.universityList = data.universities;
-                   // console.log("Show Student Info");
-                   //  $scope.tuitionFee.formData.amount = 7777777;
-                   //  $scope.tuitionFee.formData.totalAmount = 888888;
-                    $scope.tuitionFee.formData.studentCode = $scope.studentID;
+                    if (data.tuitionFee != null) {
+                        $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionAmount;
+                        $scope.tuitionFee.formData.totalAmountInWord = ocbConvert.convertNumberToText($scope.tuitionFee.formData.totalAmount, true);
+                        $scope.tuitionFee.formData.studentCode = $scope.studentID;
+                    }
                     $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
                     $scope.rbPaymentTuitionFeeParams.visibility.clear = searchBool;
                     $scope.rbPaymentTuitionFeeParams.visibility.next = nextBool;
@@ -265,12 +251,14 @@ angular.module('ocb-payments')
         $scope.onTuitionUniversityChange = function (itemSelected) {
             $scope.tuitionFee.formData.hideStudent = false;
             $scope.tuitionFee.formData.paymentsTuitionUniversities = itemSelected;
-            if ($scope.tuitionFee.formData.paymentsTuitionUniversities.code == 1) {
+            $scope.tuitionFee.formData.universityCode = itemSelected.code;
+            if ($scope.tuitionFee.formData.universityCode == 1) {
                 $scope.tuitionFee.formData.hideStudentCode = true;
                 $scope.tuitionFee.formData.hideStudent = true;
                 $("#semesterID").removeClass("hide-content");
                 $("#codeID").addClass("code-txt");
             } else {
+                $scope.showSemester = false;
                 $scope.tuitionFee.formData.hideStudentCode = false;
                 $scope.tuitionFee.formData.hideStudent = true;
                 $("#semesterID").addClass("hide-content");
@@ -278,13 +266,14 @@ angular.module('ocb-payments')
             }
             /*Chose Semester from combobox*/
             transferTuitionService.getSemesterList({
-                universityCode: $scope.tuitionFee.formData.paymentsTuitionUniversities.code
+                universityCode: $scope.tuitionFee.formData.universityCode
             }).then(function (data) {
                 $scope.semesterList = data.semesters;
             })
         };
 
         $scope.onTuitionSemesterChange = function (itemSelected) {
+            $scope.semesterNumber = itemSelected.number;
             $scope.tuitionFee.formData.semester = itemSelected;
         }
 

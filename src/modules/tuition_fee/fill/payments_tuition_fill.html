@@ -27,18 +27,18 @@
                 <!--Mobile version-->
                 <div class="row vcenter tuitionFee-mobile-only">
                     <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="formInfo.type1" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.full'|translate}}</bd-radio-option>
+                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type1.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.full'|translate}}</bd-radio-option>
                     </div>
                     <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="formInfo.type2" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
+                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type2.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
                     </div>
                 </div>
                 <div class="row vcenter tuitionFee-mobile-only">
                     <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="formInfo.type3" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.post'|translate}}</bd-radio-option>
+                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type3.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.post'|translate}}</bd-radio-option>
                     </div>
                     <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="formInfo.type4" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.part'|translate}}</bd-radio-option>
+                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type4.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.part'|translate}}</bd-radio-option>
                     </div>
                 </div>
                 <!--Mobile version-->
@@ -256,12 +256,12 @@
         </div>
         <div class="row total-amount">
             <bd-item-property label="{{::'ocb.payments.tuition.table.figures'|translate}}:">
-                {{totalAmount | number:0}}  VND
+                {{tuitionFee.formData.totalAmount | number:0}}  VND
             </bd-item-property>
         </div>
         <div class="row total-amount">
             <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}:">
-                {{totalAmountInWord}}
+                {{tuitionFee.formData.totalAmountInWord}}
             </bd-item-property>
         </div>
     </div>
