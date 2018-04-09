@@ -174,6 +174,7 @@ angular.module('ocb-payments')
         /*Handle Next Button*/
         //Check empty
         $scope.rbPaymentTuitionFeeParams.showTuitionInfoSearch = function(searchBool, nextBool) {
+            $scope.amountNull = false;
             var university = $scope.tuitionFee.formData.paymentsTuitionUniversities;
             var selectedForm = $scope.tuitionFee.formData.selectedForm;
             var stdType = $scope.tuitionFee.formData.stdCodeType;
@@ -234,6 +235,9 @@ angular.module('ocb-payments')
                     studentCode: $scope.studentID,
                     nationalID: $scope.nationalID
                 }).then(function (data) {
+                    if (data.tuitionFee == null || data.tuitionFee.tuitionAmount == 0) {
+                        $scope.amountNull = true;
+                    }
                     if (data.tuitionFee != null) {
                         $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionAmount;
                         $scope.tuitionFee.formData.totalAmountInWord = ocbConvert.convertNumberToText($scope.tuitionFee.formData.totalAmount, true);
@@ -325,48 +329,50 @@ angular.module('ocb-payments')
 
         /*Next button on fill screen*/
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            $scope.rbPaymentTuitionFeeParams.visibility.accept = true;
+           if ($scope.amountNull === false) {
+               try {
+                   setRealizationDateToCurrent();
+                   transferTuitionService.create('tuition', angular.extend({
+                       "remitterId": 0
+                   }, requestConverter($scope.tuitionFee.formData)), $scope.tuitionFee.operation.link || false ).then(function (transfer) {
+                       $scope.tuitionFee.transferId = transfer.referenceId;
+                       $scope.tuitionFee.endOfDayWarning = transfer.endOfDayWarning;
+                       $scope.tuitionFee.holiday = transfer.holiday;
+
+                       $scope.tuitionFee.token.params = {
+                           resourceId:transfer.referenceId
+                       }
+                       setRealizationDateToCurrent();
+                       actions.proceed();
+                   }).catch(function(errorReason){
+                       // if(errorReason.subType == 'validation'){
+                       //     for(var i=0; i<=errorReason.errors.length; i++){
+                       //         var currentError = errorReason.errors[i];
+                       //         if(currentError.field == 'ocb.transfer.limit.exceeed'){
+                       //             $scope.limitExeeded = {
+                       //                 show: true,
+                       //                 messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                       //             };
+                       //         }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
+                       //             $scope.limitBasketExeeded = {
+                       //                 show: true,
+                       //                 messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
+                       //             };
+                       //         }
+                       //     }
+                       // }
+                       console.error("create tuitionFee failed: ", errorReason);
+                   });
+
+               } catch(ex) {
+                   console.error("Create transfer bill error: ", ex);
+               }
+           }
             //TODO test to show otp
             //$scope.tuitionFee.token.params.resourceId = "NIB-TRA511102121217959bed69dd1aa50b";
             //Call service save to DB
             //TODO Call service when opened live data
-            try {
-               setRealizationDateToCurrent();
-                transferTuitionService.create('tuition', angular.extend({
-                    "remitterId": 0
-                }, requestConverter($scope.tuitionFee.formData)), $scope.tuitionFee.operation.link || false ).then(function (transfer) {
-                    $scope.tuitionFee.transferId = transfer.referenceId;
-                    $scope.tuitionFee.endOfDayWarning = transfer.endOfDayWarning;
-                    $scope.tuitionFee.holiday = transfer.holiday;
 
-                    $scope.tuitionFee.token.params = {
-                        resourceId:transfer.referenceId
-                    }
-                    setRealizationDateToCurrent();
-                    actions.proceed();
-                }).catch(function(errorReason){
-                    // if(errorReason.subType == 'validation'){
-                    //     for(var i=0; i<=errorReason.errors.length; i++){
-                    //         var currentError = errorReason.errors[i];
-                    //         if(currentError.field == 'ocb.transfer.limit.exceeed'){
-                    //             $scope.limitExeeded = {
-                    //                 show: true,
-                    //                 messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
-                    //             };
-                    //         }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
-                    //             $scope.limitBasketExeeded = {
-                    //                 show: true,
-                    //                 messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
-                    //             };
-                    //         }
-                    //     }
-                    // }
-                    console.error("create tuitionFee failed: ", errorReason);
-                });
-
-            } catch(ex) {
-                console.error("Create transfer bill error: ", ex);
-            }
           //  actions.proceed();
 
         });

@@ -150,6 +150,7 @@
   "ocb.payments.tuition.table.words": "Total amount in words",
   "ocb.payments.tuition.table.placeHolderTable": "No payments found",
   "ocb.payments.tuition.placeholder.code": "Enter code here",
+  "ocb.payments.tuition.student.amount.empty": "Invalid amount",
   "ocb.payments.new.error.ELIXIRCharactersOnly": "Field contains unauthorised Elixir characters",
   "ocb.payments.new.domestic.fill.sender_account": "From account",
   "ocb.payments.new.domestic.fill.accessible_assets": "Available funds",
