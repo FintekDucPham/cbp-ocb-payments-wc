@@ -112,14 +112,14 @@ angular.module('ocb-payments')
                 }
             });
     })
-    .controller('PaymentsFastController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService) {
+    .controller('PaymentsFastController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService, REJECTED_CODES) {
         var stateData = $state.$current.data;
         $scope.payment = payment;
         var deleteOperation = $scope.deleteOperation = stateData.operation === 'delete';
 
         $scope.newPayment = stateData.newPayment;
         $scope.modifyInBasket = stateData.basketPayment && stateData.operation === 'modify';
-        
+
         $scope.loading = $q.all(Object.keys(payment.promises).map(function (key) {
             return payment.promises[key];
         }));
@@ -147,6 +147,9 @@ angular.module('ocb-payments')
             footerType: 'paymentNew',
             onClear: function () {
                 $scope.$broadcast('clearForm');
+            },
+            canPrintReport: function () {
+                return REJECTED_CODES.indexOf(payment.result.type) === -1 && REJECTED_CODES.indexOf(payment.result.code) === -1
             },
             printReport: function () {
                 window.location.href = exportService.prepareHref({
