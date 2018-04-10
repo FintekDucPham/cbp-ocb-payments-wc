@@ -113,6 +113,7 @@ angular.module('ocb-payments')
         //Check empty
         $scope.rbPaymentTuitionFeeParams.showTuitionInfoSearch = function(searchBool, nextBool) {
             $scope.tuitionFee.formData.batchInfoSearch = false;
+            $scope.tuitionFee.formData.paymentEmpty = false;
             $scope.amountNull = false;
             var university = $scope.tuitionFee.formData.paymentsTuitionUniversities;
             var selectedForm = $scope.tuitionFee.formData.selectedForm;
@@ -172,13 +173,11 @@ angular.module('ocb-payments')
                     studentCode: $scope.studentID,
                     nationalID: $scope.nationalID
                 }).then(function (data) {
-                    if (data.tuitionPayment == null) {
-                        $scope.tuitionFee.formData.batchInfoSearch = false;
-                    } else {
-                        $scope.tuitionFee.formData.batchInfoSearch = true;
-
+                    $scope.tuitionFee.formData.batchInfoSearch = true;
+                    if (data.tuitionPayment == null || data.tuitionPayment.length == 0) {
+                        $scope.tuitionFee.formData.paymentEmpty = true;
                     }
-                    if (data.tuitionFee == null) {
+                    if (data.tuitionFee == null || data.tuitionFee.length == 0) {
                         $scope.amountNull = true;
                     }
                     if (data.tuitionFee != null) {
