@@ -38,7 +38,7 @@ angular.module('ocb-payments')
     .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING,
                                                     RECURRING_PERIOD, translate, formService, bdStepStateEvents,
                                                     viewStateService, initialState, authorizationService, rbDatepickerOptions,
-                                                    userService) {
+                                                    userService, accountsService, transactionService) {
         $scope.rbDatepickerOptions = rbDatepickerOptions({
             minDate: new Date()
         });
@@ -164,5 +164,22 @@ angular.module('ocb-payments')
 
         userService.getUserDetails().then(function (data) {
             $scope.userDetails = data;
+        });
+
+        $scope.$watch('payment.items.remitterAccount', function(account) {
+            if (account) {
+                accountsService.getAvailableFunds(account).then(function (info) {
+                    payment.meta.availableFunds = info.availableFunds;
+                });
+
+            } else {
+                payment.meta.availableFunds = null;
+            }
+        });
+
+        transactionService.limits({
+            paymentType: 'BillPayment'
+        }).then(function (limits) {
+            payment.meta.remainingDailyLimit = limits.remainingDailyLimit;
         });
     });

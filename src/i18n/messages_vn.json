@@ -1141,6 +1141,7 @@
   "ocb.payments.auto_bill.list.details.orderName": "Tên lệnh định kỳ",
   "ocb.payments.auto_bill.list.details.paymentType": "Loại thanh toán",
   "ocb.payments.auto_bill.list.details.fromAccount": "Tài khoản số",
+  "ocb.payments.auto_bill.list.details.branch": "CN/PGD",
   "ocb.payments.auto_bill.list.details.owner": "Chủ tài khoản",
   "ocb.payments.auto_bill.list.details.customerId": "Mã KH",
   "ocb.payments.auto_bill.list.details.service": "Dịch vụ",

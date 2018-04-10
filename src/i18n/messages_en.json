@@ -1145,6 +1145,7 @@
   "ocb.payments.auto_bill.list.details.orderName": "Order name",
   "ocb.payments.auto_bill.list.details.paymentType": "Payment type",
   "ocb.payments.auto_bill.list.details.fromAccount": "From account",
+  "ocb.payments.auto_bill.list.details.branch": "Brancht",
   "ocb.payments.auto_bill.list.details.owner": "Owner",
   "ocb.payments.auto_bill.list.details.customerId": "Customer ID",
   "ocb.payments.auto_bill.list.details.service": "Service",

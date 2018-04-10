@@ -18,17 +18,23 @@
             <span>Auto Bill Payment</span>
         </bd-item-property>
 
-        <!--<bd-item-property class="bd-item-property&#45;&#45;text"-->
-                          <!--label="{{::'ocb.payments.auto_bill.list.details.fromAccount'|translate}}"-->
-                          <!--ng-class="{'bd-item-property&#45;&#45;disabled': params.operationType === 'DELETE'}">-->
-            <!--{{payment.formData.fromAccount }}-->
-        <!--</bd-item-property>-->
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.fromAccount'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.formData.fromAccount }}
+        </bd-item-property>
 
-        <!--<bd-item-property class="bd-item-property&#45;&#45;text"-->
-                          <!--label="{{::'ocb.payments.auto_bill.list.details.owner'|translate}}"-->
-                          <!--ng-class="{'bd-item-property&#45;&#45;disabled': params.operationType === 'DELETE'}">-->
-            <!--{{payment.formData.owner }}-->
-        <!--</bd-item-property>-->
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.owner'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            <p ng-bind-html="payment.items.remitterAccount | accountOwners"></p>
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.branch'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.items.remitterAccount.openBranch }}
+        </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.details.customerId'|translate}}"
