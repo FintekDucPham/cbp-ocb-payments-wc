@@ -16,6 +16,27 @@ angular.module('ocb-payments')
 
         $scope.showVerify = false;
 
+        //Set semester value
+        switch ($scope.tuitionFee.formData.selectedForm.optionSelected){
+            case 1:
+                $scope.formName = "Full Time";
+                break;
+            case 2:
+                $scope.formName = "Credit";
+                break;
+            case 3:
+                $scope.formName = "Post-University";
+                break;
+            case 4:
+                $scope.formName = "Part-time Credit";
+                break;
+            default:
+                break;
+        }
+
+
+
+
         if (angular.isUndefined($scope.tuitionFee.formData) || lodash.isEmpty($scope.tuitionFee.formData)) {
             $state.go('payments.tuition_fee.fill');
         } else {

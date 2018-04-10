@@ -157,11 +157,11 @@
                 <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 "label="{{::'ocb.payments.tuition.table.discount'|translate}}">{{::'ocb.payments.tuition.table.discount'|translate}}</div>
             </div>
             <!--Add table content-->
-            <div bd-table-row ng-repeat="item in paymentInfo track by $index">
+            <div bd-table-row ng-repeat="item in tuitionFee.formData.paymentInfo track by $index">
                 <div class="bd-table__row-entry">
                     <div class="bd-table__row-line">
                         <div bd-table-cell="first" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3">
-                            <bd-checkbox bd-change="checkBoxAction(paymentInfo.length, item, $index)"
+                            <bd-checkbox bd-change="checkBoxAction(tuitionFee.formData.paymentInfo.length, item, $index)"
                                          ng-value="item"
                                          bd-disabled="true"
                                          ng-init="tuitionFee.formData.isAllSelect=true"
@@ -191,7 +191,7 @@
         </div>
         <div class="row">
             <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}:">
-                {{tuitionFee.formData.totalAmountInWord}}
+                {{tuitionFee.formData.amountInWords}}
             </bd-item-property>
         </div>
         <div ng-if="tuitionFee.formData.batchInfoSearch === false" class="content-check">
@@ -271,7 +271,7 @@
         </div>
         <div class="row total-amount">
             <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}:">
-                {{tuitionFee.formData.totalAmountInWord}}
+                {{tuitionFee.formData.amountInWords}}
             </bd-item-property>
         </div>
         <div ng-if="tuitionFee.formData.batchInfoSearch === false" class="content-check">

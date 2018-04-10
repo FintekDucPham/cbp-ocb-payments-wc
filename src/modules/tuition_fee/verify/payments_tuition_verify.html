@@ -4,13 +4,13 @@
       {{ ::'ocb.payments.tuition.data.verification.label' | translate }}
     </bd-header>
     <bd-item-property label="{{ ::'ocb.payments.tuition.university' | translate }}">
-      {{tuitionFee.tuitionForm.paymentsTuitionUniversities.universityName}}
+      {{tuitionFee.formData.paymentsTuitionUniversities.name}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.form' | translate }}">
-      {{tuitionFee.tuitionForm.formSelected}}
+      {{formName}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.student.codeID' | translate }}">
-      {{tuitionFee.tuitionForm.stdCodeID}}
+      {{tuitionFee.formData.stdCodeID}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.student.name.label' | translate }}">
       {{studentInfo.studentName}}
