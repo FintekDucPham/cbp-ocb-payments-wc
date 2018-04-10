@@ -13,19 +13,19 @@
       {{tuitionFee.formData.stdCodeID}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.student.name.label' | translate }}">
-      {{studentInfo.studentName}}
+      {{tuitionFee.formData.studentName}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.class.label' | translate }}">
-      {{studentInfo.clazz}}
+      {{tuitionFee.formData.clazz}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.period.label' | translate }}">
-      {{studentInfo.period}}
+      {{tuitionFee.formData.period}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.department.label' | translate }}">
-      {{studentInfo.department}}
+      {{tuitionFee.formData.faculty}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.payment.label' | translate }}">
-      <div class="form-row" ng-repeat="item in paymentInfo">
+      <div class="form-row" ng-repeat="item in tuitionFee.formData.paymentInfo">
         <div class="bd-table__cell--md-3 code-txt">
           {{item.subjectId}}
         </div>
@@ -35,12 +35,11 @@
       </div>
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.total.amount.label' | translate }}">
-      <bd-amount amount="totalAmount"
-                 currency="{{ tuitionFee.items.senderAccount.currency }}" show-dash></bd-amount>
+     {{tuitionFee.formData.totalAmount | number:0}}  VND
     </bd-item-property>
     <bd-item-property class="italic-control"
                       label="{{ ::'ocb.payments.tuition.verify.total.amount.word.label' | translate }}">
-      {{totalAmount | numberToText}}
+      {{tuitionFee.formData.amountInWords}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.account.label' | translate }}">
       {{}}

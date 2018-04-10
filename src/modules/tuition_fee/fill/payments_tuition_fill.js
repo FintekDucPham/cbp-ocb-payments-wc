@@ -188,6 +188,8 @@ angular.module('ocb-payments')
                         $scope.tuitionFee.formData.studentInfo = data.student;
                         $scope.tuitionFee.formData.studentName = data.student.studentName;
                         $scope.tuitionFee.formData.faculty = data.student.department;
+                        $scope.tuitionFee.formData.clazz = data.student.className;
+                        $scope.tuitionFee.formData.period = data.student.period;
                     }
                     $scope.tuitionFee.formData.paymentInfo = data.tuitionPayment;
                     $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
