@@ -157,7 +157,7 @@
                 <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 "label="{{::'ocb.payments.tuition.table.discount'|translate}}">{{::'ocb.payments.tuition.table.discount'|translate}}</div>
             </div>
             <!--Add table content-->
-            <div ng-repeat="item in paymentInfo">
+            <div bd-table-row ng-repeat="item in paymentInfo track by $index">
                 <div class="bd-table__row-entry">
                     <div class="bd-table__row-line">
                         <div bd-table-cell="first" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-3">
@@ -223,7 +223,7 @@
             <div bd-table-heading="fifth" class="bd-table__cell bd-table__cell--sm-7 bd-table__cell--md-2 bd-hide-sm "label="{{::'ocb.payments.tuition.table.discount'|translate}}">{{::'ocb.payments.tuition.table.discount'|translate}}</div>
         </div>
         <!--Add table content-->
-        <div ng-repeat="item in paymentInfo">
+        <div bd-table-row ng-repeat="item in paymentInfo track by $index">
             <div class="bd-table__row-entry">
                 <div ng-init="isFunExpanded = false" ng-click="isFunExpanded = !isFunExpanded" >
                     <div bd-table-cell="first" class="bd-table__cell--sm-2 no-indent">
