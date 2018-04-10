@@ -42,15 +42,13 @@
       {{tuitionFee.formData.amountInWords}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.account.label' | translate }}">
-      {{}}
+      Current account {{accountNo}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.funds.label' | translate }}">
-      <bd-amount amount="tuitionBalance"
-                 currency="{{ tuitionFee.items.senderAccount.currency }}" show-dash></bd-amount>
+      {{tuitionFee.formData.balance | number:0}}  {{tuitionFee.formData.currency}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.limit.label' | translate }}">
-      <bd-amount amount="tuitionLimit"
-                 currency="{{ tuitionFee.items.senderAccount.currency }}" show-dash></bd-amount>
+      {{tuitionFee.items.limit.remainingDailyLimit | number:0}}  VND
     </bd-item-property>
   </div>
 

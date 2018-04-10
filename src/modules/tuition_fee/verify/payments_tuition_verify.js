@@ -33,7 +33,8 @@ angular.module('ocb-payments')
             default:
                 break;
         }
-
+       //Hide account
+        $scope.accountNo = $scope.tuitionFee.formData.accountNo.substr(0,5)+ "********" +$scope.tuitionFee.formData.accountNo.substr(12,15);
 
 
 

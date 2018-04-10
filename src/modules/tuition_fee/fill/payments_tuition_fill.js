@@ -89,6 +89,7 @@ angular.module('ocb-payments')
             if(account) {
                 $scope.tuitionFee.formData.balance = account.currentBalance;
                 $scope.tuitionFee.formData.currency = account.currency;
+                $scope.tuitionFee.formData.accountNo = account.accountNo;
             }
         });
 
