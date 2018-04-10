@@ -224,7 +224,7 @@ angular.module('ocb-payments')
             var cardNumber = payment.formData.cardNumber;
 
             if (cardNumber) {
-                recipientService.getRecipientNameByCardNumber({
+                recipientsService.getRecipientNameByCardNumber({
                     debitAccount: payment.items.remitterAccount.accountNo,
                     cardNumber: cardNumber
                 }).then(function(result) {
