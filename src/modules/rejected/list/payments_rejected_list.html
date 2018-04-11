@@ -22,14 +22,18 @@
                                     model-date="rejectedList.filterData.last.dateFrom"
                                     ng-pattern="/^\d+$/"/>
                         </div>
-                        <div class="row__inline-block--middle" style="width:100px;">
-                            <ui-select ng-model="rejectedList.filterData.last.type.selected"
-                                       theme="bootstrap"
-                                       ng-change="onFilterLastTypeChange()"
-                                       reset-search-input="false"
-                                       required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
-                                <ui-select-match placeholder="{{:: 'ocb.payments.rejected.list.filter.type.last.placeholder' | translate }}">
-                                    {{ 'ocb.payments.rejected.list.filter.type.last.types.'+ $select.selected | translate }}
+                        <div class="radio-option__input-wrapper radio-option__input-wrapper--medium">
+                            <ui-select
+                                    ng-model="rejectedList.filterData.last.type.selected"
+                                    theme="bootstrap"
+                                    ng-change="onFilterLastTypeChange()"
+                                    search-enabled="false"
+                                    reset-search-inpureset-search-t="false"
+                                    required="rejectedList.filterData.periodType.model===rejectedList.periodTypes.LAST">
+                                <ui-select-match
+                                        placeholder="{{:: 'ocb.payments.rejected.list.filter.type.last.placeholder' | translate }}">
+                                    {{ 'ocb.payments.rejected.list.filter.type.last.types.'+ $select.selected |
+                                    translate }}
                                 </ui-select-match>
                                 <ui-select-choices repeat="item in rejectedList.filterData.last.type.list">
                                     {{ :: 'ocb.payments.rejected.list.filter.type.last.types.'+ item | translate }}

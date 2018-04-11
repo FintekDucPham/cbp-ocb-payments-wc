@@ -98,6 +98,7 @@
                     <div class="row__inline-block--middle payment-basket-date-type">
                         <ui-select ng-model="inputData.periodRange"
                                    theme="bootstrap"
+                                   search-enabled="false"
                                    reset-search-input="false">
                             <ui-select-match placeholder="">
                                 {{ 'ocb.payments.components.futureDatePanel.dateRanges.'+ $select.selected | translate }}
