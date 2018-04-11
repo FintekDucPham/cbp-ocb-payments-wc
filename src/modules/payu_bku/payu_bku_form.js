@@ -44,6 +44,7 @@ angular.module('ocb-payments')
             cancelState:'payments.payu_bku.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
+            isChecked: 'true',
             labels:{
                 prev:"ocb.payments.buttons.prev",
                 next:"ocb.payments.new.btn.next",
