@@ -175,6 +175,7 @@
   "ocb.payments.new.domestic.fill.description.TOO_LONG_TITLE": "Nội dung chuyển khoản giới hạn 140 kí tự, có thể bao gồm chữ, số và các kí tự đặc biệt sau: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
   "ocb.payments.new.domestic.fill.amount": "Số tiền",
   "ocb.payments.new.domestic.fill.amount.placeholder": "Nhập số tiền chuyển",
+  "ocb.payments.new.domestic.fill.amount.NEGATIVE_NUMBER": "Vui lòng nhập số tiền lớn hơn 0",
   "ocb.payments.new.domestic.fill.amount.EMPTY_AMOUNT": "Số tiền không được để trống",
   "ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT": "Vui lòng kiểm tra và điều chỉnh nếu cần",
   "ocb.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS": "Số tiền chuyển khoản vượt quá số dư hiện có",
