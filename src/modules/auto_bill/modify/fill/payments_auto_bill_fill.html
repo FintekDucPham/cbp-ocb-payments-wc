@@ -10,7 +10,8 @@
                                       rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                       rb-product-list-name="TRANSFER_FROM_LIST"
                                       rb-account-select-params="remitterAccountSelectParams"
-                                      rb-remote="remote.model"</rb-account-select-v2>
+                                      rb-init-select-value="{{payment.formData.fromAccount}}">
+                </rb-account-select-v2>
             </bd-item-property>
 
             <bd-item-property label="{{::'ocb.payments.domestic.remitter_name.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
