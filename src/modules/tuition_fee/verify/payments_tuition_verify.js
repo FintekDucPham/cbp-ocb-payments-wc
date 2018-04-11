@@ -15,7 +15,7 @@ angular.module('ocb-payments')
     .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
 
         $scope.showVerify = false;
-
+        $scope.tuitionFee.token.params.authType = $scope.tuitionFee.meta.authType;
         //Set semester value
         switch ($scope.tuitionFee.formData.selectedForm.optionSelected){
             case 1:
@@ -68,21 +68,13 @@ angular.module('ocb-payments')
             $scope.transferCost = transferCostData;
         });
 
-        /*call service to set SMS or hardware token */
-        customerService.getCustomerDetails().then(function(data) {
-            $scope.authType = data.customerDetails.authType;
-            $scope.customerContext = data.customerDetails.context;
-            if ($scope.authType == 'HW_TOKEN') {
-                $scope.formShow = true;
+
+        if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.tuitionFee.meta.customerContext === 'DETAL') {
+            if ($scope.tuitionFee.meta.authType !== 'SMS_TOKEN') {
+                $scope.tuitionFee.result.token_error = false;
+                sendAuthorizationToken();
             }
-        }).catch(function(response) {
-
-        });
-        // if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-        //     $scope.tuitionFee.result.token_error = false;
-        //     sendAuthorizationToken();
-        // }
-
+        }
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             delete $scope.tuitionFee.items.credentials;

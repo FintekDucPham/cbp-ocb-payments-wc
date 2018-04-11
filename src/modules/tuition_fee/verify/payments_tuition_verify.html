@@ -54,13 +54,12 @@
 
 </form>
 <!--add authorization token-->
-<section ng-show="tuitionFee.operation.code !== 'EDIT' && tuitionFee.meta.customerContext == 'DETAL' && tuitionFee.token.model.$tokenRequired">
-  <div class="bd-form-white">
-      <div ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" label="{{ tuitionFee.token.model.currentToken.label }}">
-          <rb-token-authorization rb-operation-type="TRANSFER"
-                                  rb-model="tuitionFee.token.model"
-                                  rb-params="tuitionFee.token.params">
-          </rb-token-authorization>
-      </div>
-  </div>
-</section>
+<div>Test OTP</div>
+<div class="bd-form-white">
+  <bd-item-property class="bd-item-property--multirow" ng-if="tuitionFee.token.params.resourceId" no-label-box="true">
+    <rb-token-authorization rb-operation-type="TRANSFER"
+                            rb-model="tuitionFee.token.model"
+                            rb-params="tuitionFee.token.params">
+    </rb-token-authorization>
+  </bd-item-property>
+</div>

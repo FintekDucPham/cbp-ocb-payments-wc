@@ -12,7 +12,7 @@ angular.module('ocb-payments')
     .controller('TuitionPaymentFillController', function ($scope, $filter, lodash, CURRENT_DATE, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                           validationRegexp, systemParameterService, translate, utilityService,
                                                           rbBeforeTransferManager,
-                                                          bdTableConfig, ocbConvert, transferTuitionService, transferService) {
+                                                          bdTableConfig, ocbConvert, transferTuitionService, transferService, customerService) {
         $scope.CURRENT_DATE = CURRENT_DATE;
         // $scope.rbPaymentTuitionFeeParams.visibility.next = false;
         $scope.table = {
@@ -98,6 +98,12 @@ angular.module('ocb-payments')
             $scope.tuitionFee.items.limit = limit;
         });
 
+        /*Get customer context*/
+        customerService.getCustomerDetails().then(function(data) {
+            $scope.tuitionFee.meta.customerContext = data.customerDetails.context;
+            $scope.tuitionFee.meta.authType = data.customerDetails.authType;
+        });
+
         /*Student code*/
         $scope.studentCodes = [{name: "MSSV", id: 1},
             {name: "CMND", id: 2}];
@@ -163,7 +169,22 @@ angular.module('ocb-payments')
                 }
 
                 if (selectedForm) {
-                    $scope.tuitionFee.formData.courseType = selectedForm.name;
+                    switch ($scope.tuitionFee.formData.selectedForm.optionSelected){
+                        case 1:
+                            $scope.tuitionFee.formData.courseType = "FULL_TIME";
+                            break;
+                        case 2:
+                            $scope.tuitionFee.formData.courseType = "CREDIT";
+                            break;
+                        case 3:
+                            $scope.tuitionFee.formData.courseType = "POST_UNIVERSITY";
+                            break;
+                        case 4:
+                            $scope.tuitionFee.formData.courseType = "PART_TIME_CREDIT";
+                            break;
+                        default:
+                            break;
+                    }
                 } else {
                     $scope.tuitionFee.formData.courseType = "";
                 }
@@ -282,6 +303,7 @@ angular.module('ocb-payments')
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
            if ($scope.amountNull === false) {
                try {
+                   delete $scope.tuitionFee.token.params.resourceId;
                    setRealizationDateToCurrent();
                    transferTuitionService.create('tuition', angular.extend({
                        "remitterId": 0
