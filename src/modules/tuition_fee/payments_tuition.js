@@ -31,7 +31,7 @@ angular.module('ocb-payments')
             },
             operation: rbPaymentOperationTypes.NEW,
             token: {
-                model: null,
+                model: {},
                 params: {}
             },
             initData: {

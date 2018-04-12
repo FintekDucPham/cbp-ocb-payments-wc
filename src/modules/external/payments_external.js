@@ -176,7 +176,7 @@ angular.module('ocb-payments')
         }
       })
   })
-  .controller('PaymentsExternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService) {
+  .controller('PaymentsExternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService, REJECTED_CODES) {
     var stateData = $state.$current.data
     $scope.payment = payment
     var deleteOperation = $scope.deleteOperation = stateData.operation === 'delete'
@@ -213,6 +213,9 @@ angular.module('ocb-payments')
       onClear: function () {
         $scope.$broadcast('clearForm')
       },
+      canPrintReport: function () {
+        return REJECTED_CODES.indexOf(payment.result.type) === -1 && REJECTED_CODES.indexOf(payment.result.code) === -1
+      },
       printReport: function () {
         window.location.href = exportService.prepareHref({
           href: '/api/transaction/' + payment.meta.referenceId + '/downloads/pdf.json'
@@ -240,7 +243,6 @@ angular.module('ocb-payments')
         accept: true,
         finalAction: true,
         finalize: true,
-        printReport: true
       }
     }
   })
