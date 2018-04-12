@@ -14,6 +14,7 @@
 
             </div>
         </div>
+        <br/>
         <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.stdInfo">
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.std.label' | translate}}</p></div></div>
 
@@ -83,16 +84,18 @@
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.remitter.label' | translate}}</p></div></div>
             <div class="row" style="display: flex;align-items: center;">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_number.label' | translate}}</div>
-                <div class="col-md-5">        <rb-account-select rb-account="payuBku.data.senderAccount"
-                                                                 rb-account-no="remitterAccountId"
-                                                                 rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                                                 rb-product-list-name="TRANSFER_OWN_FROM_LIST"
-                                                                 rb-account-select-params="senderSelectParams"
-                                                                 rb-init-select-fn="getAccountByNrb($item, $select)"
-                                                                 rb-on-account-select="onAccountChange($accountList,$item)"
-                                                                 rb-remote="remote.model_from"
-                                                                 rb-init-select-value = "{{account || selectNrb}}"
-                                                                ></rb-account-select>
+                <div class="col-md-5">
+
+                    <rb-account-select rb-account="payuBku.data.remitterInfo"
+                                       rb-account-id="payuBku.data.formData.remitterAccountId"
+                                       rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                       rb-product-list-name="TRANSFER_FROM_LIST"
+                                       rb-account-select-params="senderSelectParams"
+                                       rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                                       rb-on-account-select="onAccountChange($account)"
+                                       rb-remote="remote.model_from"
+                                       rb-init-select-value = "{{account || selectNrb}}"
+                                       ></rb-account-select>
                 </div>
 
             </div>
@@ -100,19 +103,22 @@
             <div ng-if="payuBku.data.senderAccount !== null">
                 <div class="row" >
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_name.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.accountName}}</div>
+                    <div class="col-md-5">{{payuBku.data.remitterInfo.accountName}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_branch.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.branch}}</div>
+                    <div class="col-md-5">{{payuBku.data.remitterInfo.branch}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_avail.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.currentBalance + ' ' +payuBku.data.senderAccount.currency}}</div>
+                    <div class="col-md-5">
+                        <bd-amount amount="payuBku.data.remitterInfo.currentBalance" currency="{{payuBku.data.remitterInfo.currency}}"></bd-amount>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_remain.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.senderAccount.limit}}</div>
+
+                    <div class="col-md-5"><bd-amount amount="payuBku.data.remitterInfo.accessibleAssets" currency="{{payuBku.data.remitterInfo.currency}}"></bd-amount></div>
                 </div>
             </div>
         </div>

@@ -28,7 +28,10 @@ angular.module('ocb-payments')
                     remitterInfo: null
                 };
             }
-
+            $scope.onAccountChange = function (account) {
+                console.log(account)
+                // $scope.payuBku.data.remitterInfo = selectedAcc;
+            }
             $scope.searchStudent = function () {
                 if(_.trim($scope.payuBku.data.stdCode) == ''){
                    return;
@@ -147,7 +150,38 @@ angular.module('ocb-payments')
                     $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_account.label');
                     return;
                 }
+                $scope.creatParams = {
 
+                }
+                transferTuitionService.create('tuition').then(function (transfer) {
+                    $scope.payuBku.data.transferId = transfer.referenceId;
+                    $scope.payuBku.data.endOfDayWarning = transfer.endOfDayWarning;
+                    $scope.payuBku.data.holiday = transfer.holiday;
+
+                    $scope.payuBku.token.params = {
+                        resourceId:transfer.referenceId
+                    }
+                    setRealizationDateToCurrent();
+                    actions.proceed();
+                }).catch(function(errorReason){
+                    // if(errorReason.subType == 'validation'){
+                    //     for(var i=0; i<=errorReason.errors.length; i++){
+                    //         var currentError = errorReason.errors[i];
+                    //         if(currentError.field == 'ocb.transfer.limit.exceeed'){
+                    //             $scope.limitExeeded = {
+                    //                 show: true,
+                    //                 messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
+                    //             };
+                    //         }else if(currentError.field == 'ocb.basket.transfers.limit.exceeed') {
+                    //             $scope.limitBasketExeeded = {
+                    //                 show: true,
+                    //                 messages: translate.property("ocb.payments.basket.add.validation.amount_exceeded")
+                    //             };
+                    //         }
+                    //     }
+                    // }
+                    console.error("create tuitionFee failed: ", errorReason);
+                });
                 actions.proceed();
             });
 
