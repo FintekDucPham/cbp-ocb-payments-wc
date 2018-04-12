@@ -39,33 +39,35 @@
                 <div class="col-md-3">{{payuBku.data.stdInfo.department}}</div>
             </div>
         </div>
-        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.subjectInfo">
-        <bd-table
-            bd-type="typePU"
-            bd-table-params="table.tableConfig"
-            bd-table-control="table.tableControl"
-            bd-table-data="table.tableData"
-            bd-table-promise="testDataPromise"
-            bd-table-meta="{
-            'first':{
-            'title': '##ocb.payments.payu_bku.table.paymentCode.label',
-            'data': 'itemCode'
-            },
-            'second':{
-            'title': '##ocb.payments.payu_bku.table.amount.label',
-            'data': 'amount'
-            },
-            'third':{
-            'title': '##ocb.payments.payu_bku.table.desc.label',
-            'data': 'description'
-            },
-            'fourth':{
-            'title': '##ocb.payments.payu_bku.table.dueDate.label',
-            'data': 'dueDate'
-            }
-            }"
-            >
-        </bd-table>
+        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.subjectInfo || payuBku.data.amountInfo.tuitionAmount ">
+            <div  ng-if="payuBku.data.subjectInfo">
+                <bd-table
+                    bd-type="typePU"
+                    bd-table-params="table.tableConfig"
+                    bd-table-control="table.tableControl"
+                    bd-table-data="table.tableData"
+                    bd-table-promise="testDataPromise"
+                    bd-table-meta="{
+                    'first':{
+                    'title': '##ocb.payments.payu_bku.table.itemCode.label',
+                    'data': 'itemCode'
+                    },
+                    'second':{
+                    'title': '##ocb.payments.payu_bku.table.amount.label',
+                    'data': 'amount'
+                    },
+                    'third':{
+                    'title': '##ocb.payments.payu_bku.table.desc.label',
+                    'data': 'description'
+                    },
+                    'fourth':{
+                    'title': '##ocb.payments.payu_bku.table.dueDate.label',
+                    'data': 'dueDate'
+                    }
+                    }"
+                    >
+                </bd-table>
+            </div>
             <br>
             <div class="row">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_fg.label' | translate}}</div>
@@ -87,7 +89,7 @@
                 <div class="col-md-5">
 
                     <rb-account-select rb-account="payuBku.data.remitterInfo"
-                                       rb-account-id="payuBku.data.formData.remitterAccountId"
+                                       rb-account-id="payuBku.data.remitterAccountId"
                                        rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                                        rb-product-list-name="TRANSFER_FROM_LIST"
                                        rb-account-select-params="senderSelectParams"

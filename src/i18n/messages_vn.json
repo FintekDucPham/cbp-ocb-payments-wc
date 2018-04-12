@@ -923,7 +923,7 @@
   "ocb.payments.payu_bku.std_gen.label": "Giới tính",
   "ocb.payments.payu_bku.std_birth.label": "Ngày sinh",
   "ocb.payments.payu_bku.std_depart.label": "Khoa/Ngành",
-  "ocb.payments.payu_bku.table.paymentCode.label": "Mã thanh toán",
+  "ocb.payments.payu_bku.table.itemCode.label": "Mã thanh toán",
   "ocb.payments.payu_bku.table.amount.label": "Số tiền",
   "ocb.payments.payu_bku.table.desc.label": "Chi tiết",
   "ocb.payments.payu_bku.table.dueDate.label": "Ngày đến hạn",
