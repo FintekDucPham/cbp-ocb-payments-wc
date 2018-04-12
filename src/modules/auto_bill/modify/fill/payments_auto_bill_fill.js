@@ -43,6 +43,8 @@ angular.module('ocb-payments')
             minDate: new Date()
         });
         $scope.payment.formData.frequencyPeriodCount = 1;
+        $scope.isNegativeAmount = isNegativeAmount;
+        $scope.isZeroAmount = isZeroAmount;
 
         var initialData = initialState.data;
         var payment = $scope.payment;
@@ -55,9 +57,10 @@ angular.module('ocb-payments')
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.autoBillForm;
-            if (form.$invalid) {
-                formService.dirtyFields(form);
-            } else {
+            if (form.$invalid || isNegativeAmount($scope.payment.formData.amountLimit.value) || isZeroAmount($scope.payment.formData.amountLimit.value)) {
+               formService.dirtyFields(form);
+               return false;
+           } else {
                 authorizationService.createCommonOperation({
                     paymentId: $scope.payment.paymentId,
                     operationType: "AUTOBILL_PAYMENT"
@@ -182,4 +185,12 @@ angular.module('ocb-payments')
         }).then(function (limits) {
             payment.meta.remainingDailyLimit = limits.remainingDailyLimit;
         });
+
+        function isNegativeAmount(value) {
+          return /^((-[1-9][0-9]*([.][0-9]{1,2})?)|(-0[.][0-9]{1,2}))$/.test(value);
+        }
+
+        function isZeroAmount(value){
+            return value < 0.01;
+        }
     });

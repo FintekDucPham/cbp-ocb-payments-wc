@@ -175,6 +175,7 @@
   "ocb.payments.new.domestic.fill.description.TOO_LONG_TITLE": "Transfer description cannot be longer than 140 characters and may include only letters, digits and the following characters: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
   "ocb.payments.new.domestic.fill.amount": "Amount",
   "ocb.payments.new.domestic.fill.amount.placeholder": "Enter transfer amount",
+  "ocb.payments.new.domestic.fill.amount.NEGATIVE_NUMBER": "Please enter positive amount",
   "ocb.payments.new.domestic.fill.amount.EMPTY_AMOUNT": "Transfer amount cannot be empty",
   "ocb.payments.new.domestic.fill.amount.INCORRECT_AMOUNT": "Please check and update if any",
   "ocb.payments.new.domestic.fill.amount.AMOUNT_EXCEEDED_FUNDS": "Transfer amount exceeds available account balance",
