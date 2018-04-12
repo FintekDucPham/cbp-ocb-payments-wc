@@ -85,7 +85,7 @@ angular.module('ocb-payments')
         });
 
         function authorize(doneFn, actions) {
-            transferTuitionService.realize($scope.tuitionFee.transferId, $scope.smsOTP).then(function (resultCode) {
+            transferTuitionService.realize($scope.tuitionFee.transferId, $scope.tuitionFee.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.tuitionFee.result = {
                     code: parts[1],

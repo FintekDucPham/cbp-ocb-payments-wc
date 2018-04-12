@@ -253,7 +253,7 @@ angular.module('ocb-payments')
             $scope.tuitionFee.formData.semesterNrb = itemSelected.number;
             $scope.tuitionFee.formData.semester = itemSelected;
             $scope.tuitionFee.formData.semesterDesc = itemSelected.name;
-        }
+        };
 
 
         /*Clear button*/
@@ -267,7 +267,7 @@ angular.module('ocb-payments')
             $scope.semesterEmpty = false;
             $scope.stdEmpty = false;
             $scope.formEmpty = false;
-        }
+        };
 
         /*Back button on fill screen*/
         $scope.rbPaymentTuitionFeeParams.backForm = function () {
@@ -275,7 +275,7 @@ angular.module('ocb-payments')
             $scope.rbPaymentTuitionFeeParams.visibility.clear = true;
             $scope.rbPaymentTuitionFeeParams.visibility.search = true;
             $scope.rbPaymentTuitionFeeParams.visibility.next = false;
-        }
+        };
 
         var requestConverter = function (formData) {
             var copiedForm = angular.copy(formData);

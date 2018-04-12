@@ -55,7 +55,7 @@
 </form>
 <!--add authorization token-->
 <div class="bd-form-white">
-  <bd-item-property class="bd-item-property--multirow" ng-if="tuitionFee.token.params.resourceId" no-label-box="true">
+  <bd-item-property class="bd-item-property--multirow" ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" no-label-box="true">
     <rb-token-authorization rb-operation-type="TRANSFER"
                             rb-model="tuitionFee.token.model"
                             rb-params="tuitionFee.token.params">
