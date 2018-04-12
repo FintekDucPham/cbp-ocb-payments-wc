@@ -12,11 +12,49 @@ angular.module('ocb-payments')
         });
     })
     .controller("PayUBKUStep2Controller"
-        , function($scope, bdStepStateEvents,rbPaymentOperationTypes,bdVerifyStepInitializer) {
+        , function($scope, bdStepStateEvents,rbPaymentOperationTypes,bdVerifyStepInitializer,transferTuitionService) {
             bdVerifyStepInitializer($scope, {
                 formName: 'payuBkuForm',
                 dataObject: $scope.payuBku
             });
+
+
+            // if ($scope.payuBku.token.model == null) {
+            //     $scope.payuBku.token.model.$tokenRequired = true;
+            // }
+            $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+                delete $scope.tuitionFee.items.credentials;
+            });
+            function authorize(doneFn, actions) {
+                transferTuitionService.realize($scope.payuBku.transferId, $scope.payuBku.token.model.input.model).then(function (resultCode) {
+                    var parts = resultCode.split('|');
+                    $scope.payuBku.result = {
+                        code: parts[1],
+                        type: parts[0] === 'OK' ? "success" : "error"
+                    };
+                    if (parts[0] !== 'OK' && !parts[1]) {
+                        $scope.payuBku.result.code = 'error';
+                    }
+                    depositsService.clearDepositCache();
+                    $scope.payuBku.result.token_error = false;
+                    // paymentsBasketService.updateCounter($scope.payuBku.result.code);
+                    doneFn();
+                }).catch(function (error) {
+                    $scope.payuBku.result.token_error = true;
+
+                    if ($scope.payuBku.token.model && $scope.payuBku.token.model.$tokenRequired) {
+                        if (!$scope.payuBku.token.model.$isErrorRegardingToken(error)) {
+                            actions.proceed();
+                        }
+                    } else {
+                        actions.proceed();
+                    }
+
+                }).finally(function () {
+                    //delete $scope.tuitionFee.items.credentials;
+                    // formService.clearForm($scope.tuitionFeeAuthForm);
+                });
+            }
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 if ($scope.payuBku.operation.code !== rbPaymentOperationTypes.EDIT.code) {
                     authorize(actions.proceed, actions);

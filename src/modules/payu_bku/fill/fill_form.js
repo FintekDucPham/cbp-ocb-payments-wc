@@ -178,7 +178,7 @@ angular.module('ocb-payments')
                 }, requestConverter($scope.payuBku.data))).then(function (transfer) {
                     $scope.payuBku.endOfDayWarning = transfer.endOfDayWarning;
                     $scope.payuBku.holiday = transfer.holiday;
-
+                    $scope.payuBku.transferId = transfer.referenceId;
                     $scope.payuBku.token.params = {
                         resourceId:transfer.referenceId
                     }

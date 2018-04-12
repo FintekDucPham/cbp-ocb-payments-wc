@@ -59,19 +59,19 @@
     </div>
 
 </div>
-{{payuBku.token.params.resourceId}}
-{{payuBku.operation.code}}
+<div class="account-collapse-item form-horizontal" >
 <!--&lt;!&ndash;add authorization token&ndash;&gt;-->
-<section ng-show="payuBku.operation.code !== 'EDIT'">
+<!--<section ng-show="payuBku.operation.code !== 'EDIT'">-->
     <div class="bd-form-white">
-        <div ng-if="payuBku.token.params.resourceId" ng-show="payuBku.token.params.resourceId" label="{{ payuBku.token.model.currentToken.label }}">
+        <div ng-if="payuBku.token.params.resourceId" ng-show="payuBku.token.params.resourceId " label="{{ payuBku.token.model.currentToken.label }}">
             <rb-token-authorization rb-operation-type="TRANSFER"
                                     rb-model="payuBku.token.model"
                                     rb-params="payuBku.token.params">
             </rb-token-authorization>
         </div>
     </div>
-</section>
+<!--</section>-->
+</div>
 
 <span class="eb-validation-messages">
      <span class="messages"  ng-if="errMsg">
