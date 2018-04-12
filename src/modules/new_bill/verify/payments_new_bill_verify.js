@@ -147,7 +147,6 @@ angular.module('ocb-payments')
         $scope.isNullOTP = false;
         $scope.isInvalidOTP = false;
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            console.log("Value token = ", $scope.payment.token);
             //Check input null OTP
             if ($scope.payment.token.model.input.model == null) {
                 $scope.countInvalid++;

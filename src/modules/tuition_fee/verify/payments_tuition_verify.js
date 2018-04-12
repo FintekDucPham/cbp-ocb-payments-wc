@@ -12,10 +12,11 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
+    .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferTuitionService) {
 
         $scope.showVerify = false;
         $scope.tuitionFee.token.params.authType = $scope.tuitionFee.meta.authType;
+        // $scope.tuitionFee.token.model.$tokenType = $scope.tuitionFee.meta.authType;
         //Set semester value
         switch ($scope.tuitionFee.formData.selectedForm.optionSelected){
             case 1:
@@ -49,6 +50,9 @@ angular.module('ocb-payments')
             $scope.tuitionFee.token.params.resourceId = $scope.tuitionFee.transferId;
 
         }
+        if ($scope.tuitionFee.token.model == null) {
+            $scope.tuitionFee.token.model.$tokenRequired = true;
+        }
 
         var requestConverter = function (formData) {
             var copiedForm = angular.copy(formData);
@@ -81,7 +85,7 @@ angular.module('ocb-payments')
         });
 
         function authorize(doneFn, actions) {
-            transferBillService.realize($scope.tuitionFee.transferId, $scope.smsOTP).then(function (resultCode) {
+            transferTuitionService.realize($scope.tuitionFee.transferId, $scope.smsOTP).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.tuitionFee.result = {
                     code: parts[1],
@@ -138,10 +142,35 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-                $scope.showVerify = false;
-                authorize(actions.proceed, actions);
-                actions.proceed();
+            if ($scope.tuitionFee.meta.customerContext == 'DETAL') {
+                if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
+                    $scope.showVerify = false;
+                    // authorize(actions.proceed, actions);
+                    // actions.proceed();
+                    if ($scope.tuitionFee.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                        if ($scope.tuitionFee.token.model.input.$isValid()) {
+                            if ($scope.tuitionFee.result.token_error) {
+                                if ($scope.tuitionFee.result.nextTokenType === 'next') {
+                                    if ($scope.isOTP === true) {
+                                        sendAuthorizationToken();
+                                    }
+                                } else {
+                                    $scope.tuitionFee.result.token_error = false;
+                                }
+                            } else {
+                                authorize(actions.proceed, actions);
+                            }
+                        }
+                    }
+                    else if ($scope.tuitionFee.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                        $scope.tuitionFee.token.model.$proceed();
+                    }
+                }
+            } else if ($scope.tuitionFee.meta.customerContext == 'MICRO') {
+                $scope.tuitionFee.result.type = "success";
+                $scope.tuitionFee.result.code = "27";
+            } else {
+                console.error("Undefined customer context");
             }
         });
 

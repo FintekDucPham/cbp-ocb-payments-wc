@@ -316,6 +316,7 @@ angular.module('ocb-payments')
                            resourceId:transfer.referenceId
                        }
                        setRealizationDateToCurrent();
+                       $scope.rbPaymentTuitionFeeParams.visibility.accept = true;
                        actions.proceed();
                    }).catch(function(errorReason){
                        // if(errorReason.subType == 'validation'){
