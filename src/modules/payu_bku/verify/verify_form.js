@@ -12,34 +12,66 @@ angular.module('ocb-payments')
         });
     })
     .controller("PayUBKUStep2Controller"
-        , function($scope, bdStepStateEvents,translate) {
-            $scope.payuBku.token = {
-                model :{},
-                params: {}
+        , function($scope, bdStepStateEvents,rbPaymentOperationTypes,bdVerifyStepInitializer,transferTuitionService) {
+            bdVerifyStepInitializer($scope, {
+                formName: 'payuBkuForm',
+                dataObject: $scope.payuBku
+            });
+
+
+            // if ($scope.payuBku.token.model == null) {
+            //     $scope.payuBku.token.model.$tokenRequired = true;
+            // }
+            // $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+            //     delete $scope.tuitionFee.items.credentials;
+            // });
+            function authorize(doneFn, actions) {
+                transferTuitionService.realize($scope.payuBku.transferId, $scope.payuBku.token.model.input.model).then(function (resultCode) {
+                    var parts = resultCode.split('|');
+                    $scope.payuBku.result = {
+                        code: parts[1],
+                        type: parts[0] === 'OK' ? "success" : "error"
+                    };
+                    if (parts[0] !== 'OK' && !parts[1]) {
+                        $scope.payuBku.result.code = 'error';
+                    }
+                    depositsService.clearDepositCache();
+                    $scope.payuBku.result.token_error = false;
+                    // paymentsBasketService.updateCounter($scope.payuBku.result.code);
+                    doneFn();
+                }).catch(function (error) {
+                    $scope.payuBku.result.token_error = true;
+
+                    if ($scope.payuBku.token.model && $scope.payuBku.token.model.$tokenRequired) {
+                        if (!$scope.payuBku.token.model.$isErrorRegardingToken(error)) {
+                            actions.proceed();
+                        }
+                    } else {
+                        actions.proceed();
+                    }
+
+                }).finally(function () {
+                    //delete $scope.tuitionFee.items.credentials;
+                    // formService.clearForm($scope.tuitionFeeAuthForm);
+                });
             }
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-                if($scope.payuBku.data.OTP == null || $scope.payuBku.data.OTP == ''){
-                    $scope.errMsg = translate.property("ocb.payments.payu.err_msg_no_otp.label");
-                    return
+                if ($scope.payuBku.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.payuBku.token.model.input.$isValid()) {
+                    authorize(actions.proceed, actions);
+                    // actions.proceed();
                 }
-                //TODO process payment here
-                //....
                 //clear data after process
                 $scope.payuBku.data.stdInfo = {}
                 $scope.payuBku.data.amountInfo = {}
                 $scope.payuBku.data.paymentInfo = []
                 $scope.payuBku.data.remitterInfo = {}
                 $scope.payuBku.data.subjectSelected = [];
-                 actions.proceed();
+                 // actions.proceed();
               });
 
             $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-                $scope.payuBku.data.subjectSelected = [];
                 actions.proceed();
             });
-        $scope.getOTP = function () {
-            $scope.payuBku.token.params.resourceId = true;
-        }
 
     });
 

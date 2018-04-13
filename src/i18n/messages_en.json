@@ -928,7 +928,7 @@
   "ocb.payments.payu_bku.std_gen.label": "Gender",
   "ocb.payments.payu_bku.std_birth.label": "Date of Birth",
   "ocb.payments.payu_bku.std_depart.label": "Department",
-  "ocb.payments.payu_bku.table.paymentCode.label": "Payment Code",
+  "ocb.payments.payu_bku.table.itemCode.label": "Payment Code",
   "ocb.payments.payu_bku.table.amount.label": "Amount",
   "ocb.payments.payu_bku.table.desc.label": "Details",
   "ocb.payments.payu_bku.table.dueDate.label": "Due Date",

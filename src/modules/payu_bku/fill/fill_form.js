@@ -7,18 +7,27 @@ angular.module('ocb-payments')
             controller: "PayUBKUStep1Controller",
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"
-            }
+            },
+            resolve:{
+            CURRENT_DATE: ['utilityService', function(utilityService){
+                return utilityService.getCurrentDateWithTimezone();
+            }]
+        }
         });
     })
     .controller('PayUBKUStep1Controller'
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig,ocbConvert) {
+                                bdTableConfig,ocbConvert,transferTuitionService,CURRENT_DATE,bdFillStepInitializer) {
 
+            bdFillStepInitializer($scope, {
+                formName: 'payuBkuForm',
+                dataObject: $scope.payuBku
+            });
+            $scope.CURRENT_DATE = CURRENT_DATE;
 
             if($scope.payuBku.data == undefined) {
-                //todo data test
                 $scope.payuBku.data = {
                     stdCode: "",
                     account: null,
@@ -28,51 +37,72 @@ angular.module('ocb-payments')
                     remitterInfo: null
                 };
             }
+            $scope.onAccountChange = function (account) {
+                console.log(account)
+                // $scope.payuBku.data.remitterInfo = selectedAcc;
+            }
+
+            $scope.$watch('payuBku.data.remitterInfo',function (newVal) {
+                console.log(newVal);
+            })
+
+            //TODO mock data
+            $scope.subjectInfo = [
+                {
+                    "itemCode": "11111111",
+                    "amount": 666444,
+                    "description": "Anh van 2",
+                    "dueDate": "18 Dec 2017",
+                },
+                {
+                    "itemCode": "11111111",
+                    "amount": 666444,
+                    "description": "Anh van 2",
+                    "dueDate": "18 Dec 2017",
+                },
+                {
+                    "itemCode": "11111111",
+                    "amount": 666444,
+                    "description": "Anh van 2",
+                    "dueDate": "18 Dec 2017",
+                }
+            ]
+
 
             $scope.searchStudent = function () {
                 if(_.trim($scope.payuBku.data.stdCode) == ''){
                    return;
                 }
-                $scope.stdInfo = {
-                    "stdName": "Nguyen Thuan Phat",
-                    "stdGen": "Nam",
-                    "stdCode": "2233445566",
-                    "stdBirth": "06/10/1997",
-                    "stdDepart": "Khoa cong nghe co khi",
-                    "stdPlaceBirth": "Tp. Ho Chi Minh"
+                //TODO assign code for BKU
+                $scope.payuBku.data.universityCode = "1"; // 1 = dhkt
+                var paramsGetStd = {
+                    universityCode: $scope.payuBku.data.universityCode,
+                    studentCode: $scope.payuBku.data.stdCode,
+                    semesterCode:96013,
+                    groupCode: 2
                 }
 
-                $scope.payuBku.data.stdInfo = $scope.stdInfo;
-                $scope.subjectInfo = [
-                    {
-                        "paymentCode": "11111111",
-                        "amount": 666444,
-                        "paymentDesc": "Anh van 2",
-                        "dueDate": "18 Dec 2017",
-                    },
-                    {
-                        "paymentCode": "22222222",
-                        "amount": 77889,
-                        "paymentDesc": "Giao duc quoc phong an ninh",
-                        "dueDate": "15 May 2017",
-                    },
-                    {
-                        "paymentCode": "333333",
-                        "amount": 999999999,
-                        "paymentDesc": "Ky thuat dien",
-                        "dueDate": "25 May 2017",
+                transferTuitionService.getStudentInfo(paramsGetStd).then(function (stdData) {
+                    console.log(stdData)
+                    if(stdData.student){
+                        $scope.payuBku.data.stdInfo = stdData.student
                     }
-                ]
-                $scope.payuBku.data.subjectInfo = $scope.subjectInfo;
-                $scope.remitterInfo =
-                    {
-                        "accountNo": "Le Linh Phuong",
-                        "accountName": "Le Linh Phuong",
-                        "ocbBranch": "Tan Binh",
-                        "currentBalance": 1350000,
-                        "remainDaily":9999999999,
+                    if(stdData.tuitionPayment){
+                        $scope.payuBku.data.subjectInfo = stdData.tuitionPayment
                     }
-                $scope.payuBku.data.remitterInfo = $scope.remitterInfo;
+                    //todo mock
+                    $scope.payuBku.data.subjectInfo = $scope.subjectInfo;
+                    $scope.payuBku.data.universityCode = 1;
+                    if(stdData.tuitionFee){
+                        $scope.payuBku.data.amountInfo = stdData.tuitionFee;
+                        $scope.payuBku.data.amountInfo.words = ocbConvert.convertNumberToText($scope.payuBku.data.amountInfo.tuitionAmount,false)
+                        $scope.payuBku.data.amountInfo.currency = "VND";
+                        $scope.payuBku.data.totalAmount = stdData.tuitionFee.tuitionAmount
+                        $scope.payuBku.data.currency = "VND";
+
+                    }
+                })
+
                 $scope.table = {
                     tableConfig: new bdTableConfig({
                         placeholderText: translate.property("ocb.payments.pending.empty_list.label"),
@@ -86,16 +116,16 @@ angular.module('ocb-payments')
                             if (!_.some($scope.payuBku.data.subjectSelected, item)) {
                                 if($scope.payuBku.data.amountInfo == null ) {
                                     $scope.payuBku.data.amountInfo = {}
-                                    $scope.payuBku.data.amountInfo.figure = 0;
+                                    $scope.payuBku.data.amountInfo.tuitionAmount = 0;
                                 }
-                                $scope.payuBku.data.amountInfo.figure += item.amount;
+                                $scope.payuBku.data.amountInfo.tuitionAmount += item.amount;
                                 $scope.payuBku.data.subjectSelected.push(item)
                             } else {
-                                $scope.payuBku.data.amountInfo.figure -= item.amount;
-                                _.remove($scope.payuBku.data.subjectSelected, {'paymentCode': item.paymentCode})
+                                $scope.payuBku.data.amountInfo.tuitionAmount -= item.amount;
+                                _.remove($scope.payuBku.data.subjectSelected, {'itemCode': item.paymentCode})
                             }
-                            if( $scope.payuBku.data.amountInfo.figure > 0) {
-                                $scope.payuBku.data.amountInfo.words = ocbConvert.convertNumberToText($scope.payuBku.data.amountInfo.figure, false);
+                            if( $scope.payuBku.data.amountInfo.tuitionAmount > 0) {
+                                $scope.payuBku.data.amountInfo.words = ocbConvert.convertNumberToText($scope.payuBku.data.amountInfo.tuitionAmount, false);
                             } else {
                                 $scope.payuBku.data.amountInfo.words = '';
                                 ;
@@ -116,31 +146,51 @@ angular.module('ocb-payments')
                 $scope.searchStudent();
             }
 
-            $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-                if($scope.payuBku.data.subjectSelected == undefined || $scope.payuBku.data.subjectSelected.length == 0){
-                    $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_select0.label');
-                    return;
-                }
-                $scope.payuBku.data.senderAccount = $scope.remitterInfo;
-                if($scope.payuBku.data.senderAccount == null ){
-                    $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_account.label');
-                    return;
-                }
 
-                actions.proceed();
+            var requestConverter = function (formData) {
+                var copiedForm = angular.copy(formData);
+                copiedForm.description = utilityService.splitTextEveryNSigns(formData.description);
+                copiedForm.amount = (""+formData.amount).replace(",", ".");
+                copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
+                return copiedForm;
+            };
+            $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+                // if($scope.payuBku.data.subjectSelected === undefined || $scope.payuBku.data.subjectSelected.length === 0){
+                //     $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_select0.label');
+                //     return;
+                // }
+                $scope.payuBku.data.senderAccount = $scope.remitterInfo;
+                // if($scope.payuBku.data.senderAccount === null ){
+                //     $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_account.label');
+                //     return;
+                // }
+                //
+                var setRealizationDateToCurrent = function () {
+                    angular.extend($scope.payuBku.data, {
+                        realizationDate: $scope.CURRENT_DATE.time
+                    }, lodash.omit($scope.payuBku.data, lodash.isUndefined));
+                };
+                setRealizationDateToCurrent();
+
+                console.log($scope.payuBku.data)
+                transferTuitionService.create('tuition', angular.extend({
+                    "remitterId": 0
+                }, requestConverter($scope.payuBku.data))).then(function (transfer) {
+                    $scope.payuBku.endOfDayWarning = transfer.endOfDayWarning;
+                    $scope.payuBku.holiday = transfer.holiday;
+                    $scope.payuBku.transferId = transfer.referenceId;
+                    $scope.payuBku.token.params = {
+                        resourceId:transfer.referenceId
+                    }
+                    setRealizationDateToCurrent();
+                    actions.proceed();
+                }).catch(function(errorReason){
+
+                    console.error("create tuitionFee failed: ", errorReason);
+                    actions.proceed();
+                });
+
             });
 
-            function isSenderAccountCategoryRestricted(account) {
-                if($scope.payment.items.senderAccount){
-                    if ($scope.payment.meta.customerContext === 'DETAL') {
-                        return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
-                    } else {
-                        return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
-                    }
-                }
-            }
-            function isAccountInvestmentFulfilsRules(account){
-                return account;
-            }
         });
 
