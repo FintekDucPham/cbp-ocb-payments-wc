@@ -1,0 +1,66 @@
+
+@screenMax: 768px;
+@screenMin: 767px;
+.btn-search-std{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  .bd-button{
+    width: 150px;
+  }
+}
+.search-box{
+  padding-top: 10px;
+  vertical-align: middle;
+  .lb{
+    height: 100%;
+    width: 230px;
+  }
+}
+
+
+.amount-inline {
+  .bd-table__cell-content-wrapper {
+    .bd-amount__value,.bd-amount__currency {
+      display: inline-block !important;
+    }
+  }
+}
+
+.payu-desktop-only.bd-table__header,.payu-mobile-only.bd-table__header {
+  .bd-table__cell{
+    padding-top: 10px;
+  }
+}
+
+.payu-desktop-only.bd-table__header,.payu-mobile-only.bd-table__header {
+  .bd-table__cell{
+    padding-top: 10px;
+  }
+}
+@media screen and (max-width: @screenMax) {
+  .btn-search-std{
+    padding-top: 10px;
+
+  }
+  .payu-mobile-only {
+    display:block !important;
+    .non-padding {
+      padding-left: 0px;
+    }
+  }
+
+  .payu-desktop-only {
+    display:none !important;
+  }
+}
+
+@media screen and (min-width: @screenMin) {
+  .payu-mobile-only {
+    display:none !important;
+  }
+
+  .payu-desktop-only {
+    display:block !important;
+  }
+}

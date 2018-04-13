@@ -1,15 +1,18 @@
 
 <form name="payUBKUForm">
         <div class="accounts-transaction-list-filter">
-            <div class="row-line">
-                <div class="row-line__cell">
-                    <bd-item-property label="{{::'ocb.payments.payu_bku.std_code.label' | translate}}">
+                <div class="row search-box">
+                    <div class="col-md-3 col-xs-12 lb">
+                        {{::'ocb.payments.payu_bku.std_code.label' | translate}}
+                    </div>
 
+                    <div class="col-md-5 col-xs-12 text-right">
                         <input bd-type="text" ng-model="payuBku.data.stdCode" class="input-field" name="contentText" required/>
-                        &nbsp;
-                        <bd-button class="bd-button bd-button__primary" ng-click="searchStudent()" type="submit">{{::'ocb.payments.recipients.select.filter.button.action'|translate}}</bd-button>
+                    </div>
+                    <div class="col-md-3 col-xs-12 btn-search-std">
+                        <bd-button class="bd-button col-xs-12 bd-button__primary" ng-click="searchStudent()" type="submit">{{::'ocb.payments.recipients.select.filter.button.action'|translate}}</bd-button>
+                    </div>
 
-                    </bd-item-property>
                 </div>
 
             </div>

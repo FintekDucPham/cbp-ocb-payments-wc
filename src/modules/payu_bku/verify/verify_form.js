@@ -22,9 +22,9 @@ angular.module('ocb-payments')
             // if ($scope.payuBku.token.model == null) {
             //     $scope.payuBku.token.model.$tokenRequired = true;
             // }
-            $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
-                delete $scope.tuitionFee.items.credentials;
-            });
+            // $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
+            //     delete $scope.tuitionFee.items.credentials;
+            // });
             function authorize(doneFn, actions) {
                 transferTuitionService.realize($scope.payuBku.transferId, $scope.payuBku.token.model.input.model).then(function (resultCode) {
                     var parts = resultCode.split('|');
@@ -56,7 +56,7 @@ angular.module('ocb-payments')
                 });
             }
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-                if ($scope.payuBku.operation.code !== rbPaymentOperationTypes.EDIT.code) {
+                if ($scope.payuBku.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.payuBku.token.model.input.$isValid()) {
                     authorize(actions.proceed, actions);
                     // actions.proceed();
                 }
