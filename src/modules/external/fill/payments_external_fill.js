@@ -75,10 +75,10 @@ angular.module('ocb-payments')
                             $scope.payment.formData,
                             storedData
                         );
+                        setRecipientData(storedData.recipientData);
                         if (storedData.realizationDate) {
                             storedData.realizationDate = new Date(storedData.realizationDate)
                         }
-                        $scope.userCacheForm = storedData;
                     })
                 } else {
                     userCacheHttpHandler.remove(screenName);
