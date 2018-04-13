@@ -1023,6 +1023,7 @@
   "ocb.payments.domestic.recipient_name.placeholder": "Nhập tên người thụ hưởng",
   "ocb.payments.domestic.recipient_name.error.empty": "Tên người thụ hưởng không thể để trống",
   "ocb.payments.domestic.recipient_name.error.invalid": "Thông tin người thụ hưởng không thể vượt quá 140 ký tự và chỉ được bao gồm chữ cái, số và các ký tự sau: ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` '  , / _",
+  "ocb.payments.domestic.recipient_name.error.notFound": "Không tìm thấy số tài khoản này trên hệ thống NAPAS",
   "ocb.payments.domestic.province.label": "Tỉnh/TP",
   "ocb.payments.domestic.province.placeholder": "Chọn Tỉnh/TP người thụ hưởng",
   "ocb.payments.domestic.province.error.empty": "Tỉnh/TP người thụ hưởng không thể để trống",
