@@ -12,9 +12,32 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService) {
+    .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferTuitionService) {
 
         $scope.showVerify = false;
+        $scope.tuitionFee.token.params.authType = $scope.tuitionFee.meta.authType;
+        // $scope.tuitionFee.token.model.$tokenType = $scope.tuitionFee.meta.authType;
+        //Set semester value
+        switch ($scope.tuitionFee.formData.selectedForm.optionSelected){
+            case 1:
+                $scope.formName = "Full Time";
+                break;
+            case 2:
+                $scope.formName = "Credit";
+                break;
+            case 3:
+                $scope.formName = "Post-University";
+                break;
+            case 4:
+                $scope.formName = "Part-time Credit";
+                break;
+            default:
+                break;
+        }
+       //Hide account
+        $scope.accountNo = $scope.tuitionFee.formData.accountNo.substr(0,5)+ "********" +$scope.tuitionFee.formData.accountNo.substr(12,15);
+
+
 
         if (angular.isUndefined($scope.tuitionFee.formData) || lodash.isEmpty($scope.tuitionFee.formData)) {
             $state.go('payments.tuition_fee.fill');
@@ -26,6 +49,9 @@ angular.module('ocb-payments')
         function sendAuthorizationToken() {
             $scope.tuitionFee.token.params.resourceId = $scope.tuitionFee.transferId;
 
+        }
+        if ($scope.tuitionFee.token.model == null) {
+            $scope.tuitionFee.token.model.$tokenRequired = true;
         }
 
         var requestConverter = function (formData) {
@@ -46,28 +72,20 @@ angular.module('ocb-payments')
             $scope.transferCost = transferCostData;
         });
 
-        /*call service to set SMS or hardware token */
-        customerService.getCustomerDetails().then(function(data) {
-            $scope.authType = data.customerDetails.authType;
-            $scope.customerContext = data.customerDetails.context;
-            if ($scope.authType == 'HW_TOKEN') {
-                $scope.formShow = true;
+
+        if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.tuitionFee.meta.customerContext === 'DETAL') {
+            if ($scope.tuitionFee.meta.authType !== 'SMS_TOKEN') {
+                $scope.tuitionFee.result.token_error = false;
+                sendAuthorizationToken();
             }
-        }).catch(function(response) {
-
-        });
-        // if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-        //     $scope.tuitionFee.result.token_error = false;
-        //     sendAuthorizationToken();
-        // }
-
+        }
 
         $scope.$on(bdStepStateEvents.ON_STEP_LEFT, function () {
             delete $scope.tuitionFee.items.credentials;
         });
 
         function authorize(doneFn, actions) {
-            transferBillService.realize($scope.tuitionFee.transferId, $scope.smsOTP).then(function (resultCode) {
+            transferTuitionService.realize($scope.tuitionFee.transferId, $scope.tuitionFee.token.model.input.model).then(function (resultCode) {
                 var parts = resultCode.split('|');
                 $scope.tuitionFee.result = {
                     code: parts[1],
@@ -124,10 +142,35 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-                $scope.showVerify = false;
-                authorize(actions.proceed, actions);
-                actions.proceed();
+            if ($scope.tuitionFee.meta.customerContext == 'DETAL') {
+                if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
+                    $scope.showVerify = false;
+                    // authorize(actions.proceed, actions);
+                    // actions.proceed();
+                    if ($scope.tuitionFee.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                        if ($scope.tuitionFee.token.model.input.$isValid()) {
+                            if ($scope.tuitionFee.result.token_error) {
+                                if ($scope.tuitionFee.result.nextTokenType === 'next') {
+                                    if ($scope.isOTP === true) {
+                                        sendAuthorizationToken();
+                                    }
+                                } else {
+                                    $scope.tuitionFee.result.token_error = false;
+                                }
+                            } else {
+                                authorize(actions.proceed, actions);
+                            }
+                        }
+                    }
+                    else if ($scope.tuitionFee.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                        $scope.tuitionFee.token.model.$proceed();
+                    }
+                }
+            } else if ($scope.tuitionFee.meta.customerContext == 'MICRO') {
+                $scope.tuitionFee.result.type = "success";
+                $scope.tuitionFee.result.code = "27";
+            } else {
+                console.error("Undefined customer context");
             }
         });
 

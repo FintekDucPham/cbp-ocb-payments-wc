@@ -4,28 +4,28 @@
       {{ ::'ocb.payments.tuition.data.verification.label' | translate }}
     </bd-header>
     <bd-item-property label="{{ ::'ocb.payments.tuition.university' | translate }}">
-      {{tuitionFee.tuitionForm.paymentsTuitionUniversities.universityName}}
+      {{tuitionFee.formData.paymentsTuitionUniversities.name}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.form' | translate }}">
-      {{tuitionFee.tuitionForm.formSelected}}
+      {{formName}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.student.codeID' | translate }}">
-      {{tuitionFee.tuitionForm.stdCodeID}}
+      {{tuitionFee.formData.stdCodeID}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.student.name.label' | translate }}">
-      {{studentInfo.studentName}}
+      {{tuitionFee.formData.studentName}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.class.label' | translate }}">
-      {{studentInfo.clazz}}
+      {{tuitionFee.formData.clazz}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.period.label' | translate }}">
-      {{studentInfo.period}}
+      {{tuitionFee.formData.period}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.department.label' | translate }}">
-      {{studentInfo.department}}
+      {{tuitionFee.formData.faculty}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.payment.label' | translate }}">
-      <div class="form-row" ng-repeat="item in paymentInfo">
+      <div class="form-row" ng-repeat="item in tuitionFee.formData.paymentInfo">
         <div class="bd-table__cell--md-3 code-txt">
           {{item.subjectId}}
         </div>
@@ -35,35 +35,30 @@
       </div>
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.total.amount.label' | translate }}">
-      <bd-amount amount="totalAmount"
-                 currency="{{ tuitionFee.items.senderAccount.currency }}" show-dash></bd-amount>
+     {{tuitionFee.formData.totalAmount | number:0}}  VND
     </bd-item-property>
     <bd-item-property class="italic-control"
                       label="{{ ::'ocb.payments.tuition.verify.total.amount.word.label' | translate }}">
-      {{totalAmount | numberToText}}
+      {{tuitionFee.formData.amountInWords}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.account.label' | translate }}">
-      {{}}
+      Current account {{accountNo}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.funds.label' | translate }}">
-      <bd-amount amount="tuitionBalance"
-                 currency="{{ tuitionFee.items.senderAccount.currency }}" show-dash></bd-amount>
+      {{tuitionFee.formData.balance | number:0}}  {{tuitionFee.formData.currency}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.limit.label' | translate }}">
-      <bd-amount amount="tuitionLimit"
-                 currency="{{ tuitionFee.items.senderAccount.currency }}" show-dash></bd-amount>
+      {{tuitionFee.items.limit.remainingDailyLimit | number:0}}  VND
     </bd-item-property>
   </div>
 
 </form>
 <!--add authorization token-->
-<section ng-show="tuitionFee.operation.code !== 'EDIT' && tuitionFee.meta.customerContext == 'DETAL' && tuitionFee.token.model.$tokenRequired">
-  <div class="bd-form-white">
-      <div ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" label="{{ tuitionFee.token.model.currentToken.label }}">
-          <rb-token-authorization rb-operation-type="TRANSFER"
-                                  rb-model="tuitionFee.token.model"
-                                  rb-params="tuitionFee.token.params">
-          </rb-token-authorization>
-      </div>
-  </div>
-</section>
+<div class="bd-form-white">
+  <bd-item-property class="bd-item-property--multirow" ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" no-label-box="true">
+    <rb-token-authorization rb-operation-type="TRANSFER"
+                            rb-model="tuitionFee.token.model"
+                            rb-params="tuitionFee.token.params">
+    </rb-token-authorization>
+  </bd-item-property>
+</div>
