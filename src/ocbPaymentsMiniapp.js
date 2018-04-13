@@ -95,13 +95,13 @@ angular.module('ocb-payments', [
                     priority: 5
                 },
                 // TODO JAKO_DISABLE rejected payments
-                // {
-                //     id: "payments.rejected.list",
-                //     label: 'ocb.payments.rejected.label',
-                //     icon: "ocb-icons operation_rejected",
-                //     action: "payments.rejected.list",
-                //     priority: 6
-                // },
+                {
+                    id: "payments.rejected.list",
+                    label: 'ocb.payments.rejected.label',
+                    icon: "ocb-icons operation_rejected",
+                    action: "payments.rejected.list",
+                    priority: 6
+                },
                 // TODO JAKO_DISABLE standing orders
                 {
                     id: "payments.standing.list",
@@ -124,8 +124,7 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.basket.new.fill",
                     priority: 9
-                }
-                ,
+                },
                // TODO JAKO_DISABLE batch processing
                 {
                     id: "payments.batch_processing",
@@ -133,9 +132,8 @@ angular.module('ocb-payments', [
                     icon: "ocb-icons basket",
                     action: "payments.batch_processing.fill",
                     priority: 10
-                }
+                },
                // TODO JAKO_DISABLE bill payment
-                ,
                 {
                     id: "payments.new_bill.fill",
                     label: 'payments.submenu.options.new_bill.header',
