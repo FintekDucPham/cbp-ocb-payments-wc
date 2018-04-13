@@ -11,39 +11,47 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
+    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, rbPaymentOperationTypes) {
 
         bdMainStepInitializer($scope, 'payuBku', {
             formName: 'payuBkuForm',
             formData: {},
+            operation: rbPaymentOperationTypes.NEW,
             options: {},
             meta: {},
+            token: {
+                model: null,
+                params: {
+
+                }
+            },
             validation: {},
             items :{}
         });
 
-        $scope.modify = {
-            verify:{
-                data: null
-            }
-        };
+        // $scope.modify = {
+        //     verify:{
+        //         data: null
+        //     }
+        // };
         $scope.subjectSelected = function () {
             return $scope.payuBku.subjectSelected;
         };
 
-        $scope.getOTP = function (event, actions) {
-            sendAuthorizationToken();
-        }
-
-        function sendAuthorizationToken() {
-            //TODO get otp
-        };
+        // $scope.getOTP = function (event, actions) {
+        //     sendAuthorizationToken();
+        // }
+        //
+        // function sendAuthorizationToken() {
+        //     //TODO get otp
+        // };
        $scope.payuBkuFormParams = {
-            completeState:'payments.payu_bku.fill',
+            completeState:'dashboard',
             onClear: $scope.clearForm,
             cancelState:'payments.payu_bku.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
+            isChecked: 'true',
             labels:{
                 prev:"ocb.payments.buttons.prev",
                 next:"ocb.payments.new.btn.next",
