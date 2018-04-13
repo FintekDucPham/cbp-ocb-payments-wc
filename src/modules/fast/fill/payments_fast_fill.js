@@ -205,6 +205,7 @@ angular.module('ocb-payments')
             form.$setUntouched();
         });
 
+        $scope.recipientNotFound = false;
         function retrieveRecipientNameByAccount() {
             var accountNumber = payment.formData.recipientAccountNo;
             var bankCode = payment.formData.bankCode;
@@ -216,6 +217,7 @@ angular.module('ocb-payments')
                     bankCode: bankCode
                 }).then(function (result) {
                     payment.formData.recipientName = result;
+                    $scope.recipientNotFound = !result || result.length === 0;
                 });
             }
         }
@@ -229,6 +231,7 @@ angular.module('ocb-payments')
                     cardNumber: cardNumber
                 }).then(function(result) {
                     payment.formData.recipientName = result;
+                    $scope.recipientNotFound = !result || result.length === 0;
                 });
             }
         }
