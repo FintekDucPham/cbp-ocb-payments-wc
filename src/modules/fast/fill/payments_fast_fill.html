@@ -116,7 +116,7 @@
                       rb-split-array
                       split-text-max-length-validators="140"
                       class="input-field input-area--party-data"
-                      placeholder="{{::'ocb.payments.domestic.recipient_name.placeholder' | translate}}"></textarea >
+                      placeholder="{{::'ocb.payments.domestic.recipient_name.placeholder' | translate}}"></textarea>
             <eb-validation-messages eb-name="recipientName">
                 <div eb-message-key="required" class="validation-message animate-on">
                     {{::'ocb.payments.domestic.recipient_name.error.empty' | translate}}
@@ -131,6 +131,11 @@
                     {{$parent.validationErrors['recipientName']}}
                 </div>
             </eb-validation-messages>
+            <div class="messages" ng-show="recipientNotFound">
+                <div class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.recipient_name.error.notFound' | translate}}
+                </div>
+            </div>
         </bd-item-property>
 
         <bd-item-property ng-if="payment.formData.paymentTarget === 'ACCOUNT'"
