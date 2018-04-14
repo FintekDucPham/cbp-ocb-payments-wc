@@ -67,9 +67,9 @@ angular.module('ocb-payments')
                     "paymentType" : "VNPAY"
 
                 }
-                transferBillService.create('bill',dataToCreate).then(function () {
+                transferBillService.create('bill',dataToCreate).then(function (data) {
                     console.log(data)
-                    $scope.payuVnpay.token.params.resourceId = "sá"
+                    $scope.payuVnpay.token.params.resourceId = data.content.referenceId
                     actions.proceed();
                 })
 
