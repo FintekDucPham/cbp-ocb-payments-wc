@@ -34,12 +34,10 @@ angular.module('ocb-payments')
               });
 
             $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-                $scope.payuVnpay.data.subjectSelected = [];
+                // $scope.payuVnpay.data.subjectSelected = [];
                 actions.proceed();
             });
-        $scope.getOTP = function () {
-            $scope.payuVnpay.token.params.resourceId = true;
-        }
+
 
     });
 

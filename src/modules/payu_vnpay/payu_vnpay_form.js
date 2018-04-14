@@ -19,6 +19,12 @@ angular.module('ocb-payments')
             options: {},
             meta: {},
             validation: {},
+            token: {
+                model: null,
+                params: {
+
+                }
+            },
             items :{}
         });
 

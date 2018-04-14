@@ -3,57 +3,53 @@
 
     <div ng-if="payuVnpay.data.senderAccount !== null">
         <div class="row" >
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_name.label' | translate}}</div>
-            <div class="col-md-5">{{payuVnpay.data.senderAccount.accountName}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_name.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.fullName}}</div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_branch.label' | translate}}</div>
-            <div class="col-md-5">{{payuVnpay.data.senderAccount.branch}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_branch.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.remitterInfo.openBranch}}</div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_avail.label' | translate}}</div>
-            <div class="col-md-5">{{payuVnpay.data.senderAccount.currentBalance + ' ' +payuVnpay.data.senderAccount.currency}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_avail.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.remitterInfo.currentBalance + ' ' +payuVnpay.data.senderAccount.currency}}</div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_remain.label' | translate}}</div>
-            <div class="col-md-5">{{payuVnpay.data.senderAccount.limit}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_remain.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.limit}}</div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.payment_code.label' | translate}}</div>
-            <div class="col-md-3">{{payuVnpay.data.paymentInfo.paymentCode}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.payment_code.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.paymentInfo.customerCode}}</div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.bill_code.label' | translate}}</div>
-            <div class="col-md-3">{{payuVnpay.data.paymentInfo.billCode}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.bill_code.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.paymentInfo.billCode}}</div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.amount.label' | translate}}</div>
-            <div class="col-md-3">{{payuVnpay.data.paymentInfo.amount}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.amount.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">
+                <bd-amount amount="payuVnpay.data.paymentInfo.amount.value"
+                       currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
+            </div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.provider.label' | translate}}</div>
-            <div class="col-md-3">{{payuVnpay.data.paymentInfo.provider}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.provider.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.paymentInfo.serviceProvider.providerName}}</div>
         </div>
         <div class="row">
-            <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.distributed.label' | translate}}</div>
-            <div class="col-md-3">{{payuVnpay.data.paymentInfo.distributedBy}}</div>
+            <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.distributed.label' | translate}}</div>
+            <div class="col-xs-12 col-md-5">{{payuVnpay.data.paymentInfo.distributedBy}}</div>
         </div>
     </div>
 </div>
-<div class="row" >
-    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
-        <bd-button class="bd-button bd-button__primary" ng-click="getOTP()">Get OTP</bd-button>
-    </div>
-    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
-        <input ng-model="payuVnpay.data.OTP" required type="text" placeholder="Insert OTP">
-    </div>
+
+<div ng-if="payuVnpay.token.params.resourceId" ng-show="payuVnpay.token.params.resourceId " label="{{ payuVnpay.token.model.currentToken.label }}">
+    <rb-token-authorization rb-operation-type="TRANSFER"
+                            rb-model="payuVnpay.token.model"
+                            rb-params="payuVnpay.token.params">
+    </rb-token-authorization>
 </div>
-<bd-item-property class="bd-item-property--multirow" ng-if="payuVnpay.token.params.resourceId"
-                  ng-show="payuVnpay.token.model.$tokenRequired"
-                  label="{{ payuVnpay.token.model.currentToken.label }}">
-    <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payuVnpay.token.model"
-                            rb-params="payuVnpay.token.params"></rb-token-authorization>
-</bd-item-property>
 
 <span class="eb-validation-messages">
      <span class="messages"  ng-if="errMsg">
