@@ -19,7 +19,12 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE) {
+                                bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE,bdFillStepInitializer) {
+
+            bdFillStepInitializer($scope, {
+                formName: 'payuVnpayForm',
+                dataObject: $scope.payuBku
+            });
             $scope.payuVnpay.data = {
 
             }
@@ -34,9 +39,9 @@ angular.module('ocb-payments')
             })
 
             customerService.getCustomerDetails().then(function(data) {
-                // $scope.payment.meta.customerContext = data.customerDetails.context;
+                $scope.payuVnpay.meta.customerContext = data.customerDetails.context;
                 // $scope.payment.meta.employee = data.customerDetails.isEmployee;
-                // $scope.payment.meta.authType = data.customerDetails.authType;
+                $scope.payuVnpay.meta.authType = data.customerDetails.authType;
                 console.log(data)
                 $scope.payuVnpay.data.remitterId = data.userIdentityId.id
                 $scope.payuVnpay.data.fullName = data.customerDetails.fullName;
@@ -69,7 +74,8 @@ angular.module('ocb-payments')
                 }
                 transferBillService.create('bill',dataToCreate).then(function (data) {
                     console.log(data)
-                    $scope.payuVnpay.token.params.resourceId = data.content.referenceId
+                    $scope.payuVnpay.token.params.resourceId = data.referenceId;
+                    $scope.payuVnpay.transferId = data.referenceId;
                     actions.proceed();
                 })
 

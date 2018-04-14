@@ -1,7 +1,7 @@
 <div class="account-collapse-item form-horizontal" ng-if="payuVnpay.data.paymentInfo !== null">
     <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_vnpay.verify.label' | translate}}</p></div></div>
 
-    <div ng-if="payuVnpay.data.senderAccount !== null">
+    <div ng-if="payuVnpay.data.senderAccount !== null" class="vnpay-form">
         <div class="row" >
             <div class="col-xs-12 col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_name.label' | translate}}</div>
             <div class="col-xs-12 col-md-5">{{payuVnpay.data.fullName}}</div>
@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<div ng-if="payuVnpay.token.params.resourceId" ng-show="payuVnpay.token.params.resourceId " label="{{ payuVnpay.token.model.currentToken.label }}">
+<div class="account-collapse-item" ng-if="payuVnpay.token.params.resourceId" ng-show="payuVnpay.token.params.resourceId " label="{{ payuVnpay.token.model.currentToken.label }}">
     <rb-token-authorization rb-operation-type="TRANSFER"
                             rb-model="payuVnpay.token.model"
                             rb-params="payuVnpay.token.params">
