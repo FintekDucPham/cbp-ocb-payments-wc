@@ -63,15 +63,15 @@ angular.module('ocb-payments')
                     $scope.payuVnpay.result.token_error = false;
                     paymentsBasketService.updateCounter($scope.payuVnpay.result.code);
                     doneFn();
+                    actions.proceed();
                 }).catch(function (error) {
                     $scope.payuVnpay.result.token_error = true;
-
                     if ($scope.payuVnpay.token.model && $scope.payuVnpay.token.model.$tokenRequired) {
                         if (!$scope.payuVnpay.token.model.$isErrorRegardingToken(error)) {
-                            actions.proceed();
+                           //actions.proceed();
                         }
                     } else {
-                        actions.proceed();
+                       // actions.proceed();
                     }
 
                 }).finally(function () {
@@ -80,11 +80,7 @@ angular.module('ocb-payments')
             }
             $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
                 //clear data after process
-                $scope.payuVnpay.data.stdInfo = {}
-                $scope.payuVnpay.data.amountInfo = {}
-                $scope.payuVnpay.data.paymentInfo = []
-                $scope.payuVnpay.data.remitterInfo = {}
-                $scope.payuVnpay.data.subjectSelected = [];
+                $scope.payuVnpay.data = {};
                 actions.proceed();
             });
 

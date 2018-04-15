@@ -33,8 +33,6 @@ angular.module('ocb-payments')
                 billCode: $stateParams.transid,
                 serviceCode: $stateParams.s
             }).then(function (data) {
-                console.log(data);
-
                 $scope.payuVnpay.data.paymentInfo = data;
             })
 
@@ -42,7 +40,6 @@ angular.module('ocb-payments')
                 $scope.payuVnpay.meta.customerContext = data.customerDetails.context;
                 // $scope.payment.meta.employee = data.customerDetails.isEmployee;
                 $scope.payuVnpay.meta.authType = data.customerDetails.authType;
-                console.log(data)
                 $scope.payuVnpay.data.remitterId = data.userIdentityId.id
                 $scope.payuVnpay.data.fullName = data.customerDetails.fullName;
                 // if ($scope.payment.meta.authType == 'HW_TOKEN') {
@@ -73,7 +70,6 @@ angular.module('ocb-payments')
 
                 }
                 transferBillService.create('bill',dataToCreate).then(function (data) {
-                    console.log(data)
                     $scope.payuVnpay.token.params.resourceId = data.referenceId;
                     $scope.payuVnpay.transferId = data.referenceId;
                     actions.proceed();

@@ -9,18 +9,30 @@
                 <div class="col-md-4 lb">{{::'ocb.payments.payu_vnpay.remitter_number.label' | translate}}</div>
                 <div class="col-xs-12 col-md-5">
 
-                    <rb-account-select rb-account="payuVnpay.data.remitterInfo"
-                                       rb-account-id="payuVnpay.data.remitterAccountId"
-                                       rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                       rb-product-list-name="TRANSFER_FROM_LIST"
-                                       rb-account-select-params="senderSelectParams"
-                                       rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                                       rb-on-account-select="onAccountChange($account)"
-                                       rb-remote="remote.model_from"
-                                       rb-init-select-value = "{{account || selectNrb}}"
-                    ></rb-account-select>
-                </div>
+                    <!--<rb-account-select rb-account="payuVnpay.data.remitterInfo"-->
+                                       <!--rb-account-id="payuVnpay.data.remitterAccountId"-->
+                                       <!--rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"-->
+                                       <!--rb-product-list-name="TRANSFER_FROM_LIST"-->
+                                       <!--rb-account-select-params="senderSelectParams"-->
+                                       <!--rb-init-select-fn="getAccountByNrb($accountList, $select)"-->
+                                       <!--rb-on-account-select="onAccountChange($account)"-->
+                                       <!--rb-remote="remote.model_from"-->
+                                       <!--rb-init-select-value = "{{account || selectNrb}}"-->
+                    <!--&gt;</rb-account-select>-->
 
+
+                    <rb-account-select-v2
+                            rb-account-id="payuVnpay.data.remitterAccountId"
+                            rb-account="payuVnpay.data.remitterInfo"
+                            rb-account-list="payuVnpay.data.accountList"
+                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                            rb-product-list-name="TRANSFER_FROM_LIST"
+                            rb-on-account-select="onAccountChange()"
+                            rb-account-no="payuVnpay.data.remitterAccountNo"
+                            rb-account-select-params="accountSelectParams">
+                    </rb-account-select-v2>
+
+                </div>
             </div>
             <br>
             <div ng-if="payuVnpay.data.remitterInfo !== null">
