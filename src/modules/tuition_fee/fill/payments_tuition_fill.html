@@ -1,7 +1,7 @@
 <form ng-if="activeStep.id === 'fill'" name="formData">
     <!--Entering Data-->
     <div class="account-collapse-item form-horizontal bd-form">
-        <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.entering' | translate }}</bd-header>
+        <bd-header>{{ ::'ocb.payments.tuition.entering' | translate }}</bd-header>
         <!--University-->
         <bd-item-property label="{{ ::'ocb.payments.tuition.university' | translate }}">
             <ui-select ng-model="tuitionFee.formData.paymentsTuitionUniversities" theme="bootstrap"
@@ -67,7 +67,7 @@
                     </ui-select>
                 </div>
                 <div id="desktopCodeID" class="col-sm-8 col-md-5 width-code">
-                    <input ng-model="tuitionFee.formData.stdCodeID" type="text" class="input-field" placeholder="{{::'ocb.payments.tuition.placeholder.code' | translate}}">
+                    <input ng-readonly="blockInput" ng-model="tuitionFee.formData.stdCodeID" type="text" class="input-field" placeholder="{{::'ocb.payments.tuition.placeholder.code' | translate}}">
                 </div>
             </div>
             <div class="row tuitionFee-mobile-only">
@@ -103,7 +103,7 @@
     </div>
 <!--Student Info-->
     <div class="account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.formData.batchInfoSearch">
-        <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.studentInfo' | translate }}</bd-header>
+        <bd-header>{{ ::'ocb.payments.tuition.studentInfo' | translate }}</bd-header>
         <div class="form-row">
             <div class="col-sm-8 col-md-8 code-txt">
                 <div class="form-row">
@@ -137,7 +137,7 @@
     </div>
 <!--Detail Payment Info-->
     <div class="account-collapse-item form-horizontal bd-form tuitionFee-desktop-only" ng-show="tuitionFee.formData.batchInfoSearch">
-        <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.detailPayment' | translate }}</bd-header>
+        <bd-header>{{ ::'ocb.payments.tuition.detailPayment' | translate }}</bd-header>
         <!--Desktop version-->
         <!--Show table-->
         <div ng-hide="tuitionFee.formData.paymentEmpty">
@@ -285,7 +285,7 @@
 
     <!--Payment Account-->
     <div class="account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.formData.batchInfoSearch">
-        <bd-header class="pd-bottom">{{ ::'ocb.payments.tuition.paymentAccount' | translate }}</bd-header>
+        <bd-header>{{ ::'ocb.payments.tuition.paymentAccount' | translate }}</bd-header>
         <!--Load account-->
         <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
             <input name="remitterAccountId" hidden ng-model="tuitionFee.formData.remitterAccountId" required/>

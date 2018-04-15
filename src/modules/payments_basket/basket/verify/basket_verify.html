@@ -93,37 +93,31 @@
     </div>
     <div  class="basket-vew__summary">
         <bd-list-item summary>
-            <div class="summary-item" style="border-bottom: 1px solid #F1F1F1;padding-bottom: 10px;">
-                <div class="bd-table bd-table__fixed verify-step">
-                    <div class="bd-table__row-line bd-table__row-line--sm-tight" style="border-bottom: 1px solid #F1F1F1;padding-bottom: 40px;">
-                    <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-16">
-
-                        <div class="summary-item__label" style="border-bottom: 0px;">
-                        {{::"ocb.payments.basket.list.verify.summary"|translate}}
+            <div class="summary-item">
+                <div class="bd-table bd-table__fixed">
+                    <div class="basket-vew__summary__height bd-table__row-line bd-table__row-line--sm-tight">
+                        <div bd-table-cell="first" class="bd-table__cell--sm-16 bd-table__cell--md-6">
+                            <div class="summary-item__label font-weight-bold" style="border-bottom: 0px;">
+                                {{::"ocb.payments.basket.list.summary.all" | translate | uppercase}}
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                    <div style="padding-top: 10px;">
-                        <div ng-repeat="currencySummary in summaryItem">
-                            <div class="bd-table__row-line bd-table__row-line--sm-tight">
-                                <div bd-table-cell="first" class="basket-vew__summary__currency_quantity bd-table__cell--sm-16 bd-table__cell--md-5">
-                                    <div>
-                                        {{::"ocb.payments.basket.list.verify.summary.currency"|translate}} &nbsp;{{currencySummary.currency}}:
+                        <div bd-table-cell="second" class="bd-table__cell--sm-16 bd-table__cell--md-10" style="">
+                            <div ng-repeat="currencySummary in summaryItem">
+                                <div class="basket-vew__summary__height bd-table__row-line bd-table__row-line--sm-tight">
+                                    <div bd-table-cell="first" class="basket-vew__summary__currency_quantity bd-table__cell--sm-16 bd-table__cell--md-8" style="line-height: 24px;">
+                                        <div style="padding-top: 10px;">
+                                            <span class="text-head-gray">{{::"ocb.payments.basket.list.summary.amount.all"|translate}}&nbsp;{{currencySummary.currency}}</span>
+                                            <br class="bd-show-mob"/>
+                                            &nbsp;{{currencySummary.amount}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div bd-table-cell="second" class="bd-table__cell--sm-8 bd-table__cell--md-5 text-right">
-                                    <div>
-                                        {{::"ocb.payments.basket.list.verify.summary.currency.transactions"|translate}} &nbsp;{{currencySummary.currency}}
+                                    <div bd-table-cell="first"
+                                         class="bd-table__cell--sm-16 bd-table__cell--md-8 text-right-laptop text-head-gray" style="padding-top: 8px;line-height: 24px;">
+                                        {{::"ocb.payments.basket.list.summary.sum"|translate}}&nbsp;
+                                        <br class="bd-show-mob"/>
+                                        <bd-amount amount="currencySummary.sum"
+                                                   currency="{{currencySummary.currency}}"></bd-amount>
                                     </div>
-                                    <div class="transaction-count">
-                                        &nbsp;{{currencySummary.amount}}
-                                    </div>
-                                </div>
-                                <div bd-table-cell="third"
-                                     class="bd-table__cell--sm-8 bd-table__cell--md-6 text-right">
-                                    <div>{{::"ocb.payments.basket.list.verify.summary.currency.transactions.amount"|translate}}</div>
-                                    <bd-amount amount="currencySummary.sum"
-                                               currency="{{currencySummary.currency}}"></bd-amount>
                                 </div>
                             </div>
                         </div>

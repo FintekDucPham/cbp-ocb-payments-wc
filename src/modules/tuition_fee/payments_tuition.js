@@ -73,7 +73,7 @@ angular.module('ocb-payments')
         }
 
         $scope.rbPaymentTuitionFeeParams = {
-            completeState:'payments.batch_processing.fill',
+            completeState: 'payments.tuition_fee.fill',
             onClear: $scope.clearForm,
             onBack: $scope.backForm,
             cancelState:'dashboard',

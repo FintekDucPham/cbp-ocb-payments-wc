@@ -1,7 +1,39 @@
 <div>
-    <form name="autoBillForm" novalidate class="bd-form">
+    <form name="autoBillForm" novalidate>
+        <div class="bd-form">
+            <div class="bd-form-header pd-bottom">{{::"ocb.payments.domestic.remitter_panel.label"|translate}}</div>
+            <bd-item-property label="{{::'ocb.payments.domestic.remitter_account.label' | translate}}">
+                <input name="fromAccount" hidden ng-model="payment.formData.fromAccount" required/>
+                <rb-account-select-v2 rb-account-id="payment.formData.fromAccount"
+                                      rb-account="payment.items.remitterAccount"
+                                      rb-account-list="payment.meta.accountList"
+                                      rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                      rb-product-list-name="TRANSFER_FROM_LIST"
+                                      rb-account-select-params="remitterAccountSelectParams"
+                                      rb-init-select-value="{{payment.formData.fromAccount}}">
+                </rb-account-select-v2>
+            </bd-item-property>
 
+            <bd-item-property label="{{::'ocb.payments.domestic.remitter_name.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
+                <!--{{payment.meta.remitter.fullName}}-->
+                <p ng-bind-html="payment.items.remitterAccount | accountOwners"></p>
+            </bd-item-property>
 
+            <bd-item-property label="{{::'ocb.payments.domestic.remitter_branch.label' | translate}}" class="bd-item-property--text bd-item-property--disabled" >
+                {{payment.items.remitterAccount.openBranch}}
+            </bd-item-property>
+
+            <bd-item-property label="{{::'ocb.payments.domestic.available_funds.label' | translate}}"
+                              class="accesibleAssetsInline accesibleAssetsBold">
+                <bd-amount ng-if="payment.meta.availableFunds !== null" amount="payment.meta.availableFunds" currency="{{payment.items.remitterAccount.currency}}"></bd-amount>
+            </bd-item-property>
+
+            <bd-item-property label="{{::'ocb.payments.domestic.daily_limit.label' | translate}}">
+                <bd-amount amount="payment.meta.remainingDailyLimit" currency="VND"></bd-amount>
+            </bd-item-property>
+        </div>
+
+        <div class="bd-form">
         <bd-item-property class="bd-item-property"
                           label="{{ ::'ocb.payments.auto_bill.list.details.customerId' | translate }}">
             <input type="text"
@@ -46,15 +78,23 @@
             </bd-radio-select>
           <div>
             <div class="bd-item-property__value--secondary" style="display: inline;">
-              <input type="text"
-                     name="next"
-                     class="input-field"
-                     ng-model="payment.formData.amountLimit.value"
-                     ng-pattern="AMOUNT_PATTERN"
-                     amount-input
-                     currency="VND"
-              />
-            </div>
+               <input type="text"
+                      name="next"
+                      class="input-field"
+                      ng-model="payment.formData.amountLimit.value"
+                      rb-number-type-input
+                      ng-pattern="AMOUNT_PATTERN"
+                      amount-input
+                      currency="VND"
+               />
+             </div>
+           <div class="eb-validation-messages" ng-show="isNegativeAmount(payment.formData.amountLimit.value) || isZeroAmount(payment.formData.amountLimit.value)">
+             <div class="messages">
+               <div  class="validation-message animate-on">
+                 {{::'ocb.payments.new.domestic.fill.amount.NEGATIVE_NUMBER'|translate}}
+               </div>
+             </div>
+           </div>
             <eb-validation-messages eb-name="next">
               <div eb-message-key="number" class="validation-message animate-on">
                 {{::'ocb.payments.new.domestic.fill.amount.INVALID_NUMBER_AMOUNT'|translate}}
@@ -164,6 +204,6 @@
                 {{validationErrors['finishDate']}}
             </div>
         </bd-item-property>
-
+        </div>
     </form>
 </div>
