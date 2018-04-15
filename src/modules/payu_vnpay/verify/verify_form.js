@@ -12,7 +12,7 @@ angular.module('ocb-payments')
         });
     })
     .controller("PayuVnpayStep2Controller"
-        , function($scope, bdStepStateEvents,translate,bdVerifyStepInitializer,rbPaymentOperationTypes) {
+        , function($scope, bdStepStateEvents,translate,bdVerifyStepInitializer,rbPaymentOperationTypes,depositsService,paymentsBasketService,RB_TOKEN_AUTHORIZATION_CONSTANTS,transferTuitionService) {
 
             bdVerifyStepInitializer($scope, {
                 formName: 'payuVnpayForm',
@@ -20,19 +20,34 @@ angular.module('ocb-payments')
             });
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-                if($scope.payuVnpay.data.OTP == null || $scope.payuVnpay.data.OTP == ''){
-                    $scope.errMsg = translate.property("ocb.payments.payu.err_msg_no_otp.label");
-                    return
+                if ($scope.payuVnpay.meta.customerContext == 'DETAL') {
+                    // authorize(actions.proceed, actions);
+                    // actions.proceed();
+                    if ($scope.payuVnpay.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                        if ($scope.payuVnpay.token.model.input.$isValid()) {
+                            if ($scope.payuVnpay.result.token_error) {
+                                if ($scope.payuVnpay.result.nextTokenType === 'next') {
+                                    if ($scope.isOTP === true) {
+                                        sendAuthorizationToken();
+                                    }
+                                } else {
+                                    $scope.payuVnpay.result.token_error = false;
+                                }
+                            } else {
+                                authorize(actions.proceed, actions);
+                            }
+                        }
+                    }
+                    else if ($scope.payuVnpay.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                        $scope.payuVnpay.token.model.$proceed();
+                    }
+                } else if ($scope.payuVnpay.meta.customerContext == 'MICRO') {
+                    $scope.payuVnpay.result.type = "success";
+                    $scope.payuVnpay.result.code = "27";
+                } else {
+                    console.error("Undefined customer context");
                 }
-                //TODO process payment here
-                //....
-                //clear data after process
-                $scope.payuVnpay.data.stdInfo = {}
-                $scope.payuVnpay.data.amountInfo = {}
-                $scope.payuVnpay.data.paymentInfo = []
-                $scope.payuVnpay.data.remitterInfo = {}
-                $scope.payuVnpay.data.subjectSelected = [];
-                 actions.proceed();
+
               });
             function authorize(doneFn, actions) {
                 transferTuitionService.realize($scope.payuVnpay.transferId, $scope.payuVnpay.token.model.input.model).then(function (resultCode) {
@@ -64,36 +79,13 @@ angular.module('ocb-payments')
                 });
             }
             $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-                if ($scope.payuVnpay.meta.customerContext == 'DETAL') {
-                    if ($scope.payuVnpay.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-                        $scope.showVerify = false;
-                        // authorize(actions.proceed, actions);
-                        // actions.proceed();
-                        if ($scope.payuVnpay.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
-                            if ($scope.payuVnpay.token.model.input.$isValid()) {
-                                if ($scope.payuVnpay.result.token_error) {
-                                    if ($scope.payuVnpay.result.nextTokenType === 'next') {
-                                        if ($scope.isOTP === true) {
-                                            sendAuthorizationToken();
-                                        }
-                                    } else {
-                                        $scope.payuVnpay.result.token_error = false;
-                                    }
-                                } else {
-                                    authorize(actions.proceed, actions);
-                                }
-                            }
-                        }
-                        else if ($scope.payuVnpay.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
-                            $scope.payuVnpay.token.model.$proceed();
-                        }
-                    }
-                } else if ($scope.payuVnpay.meta.customerContext == 'MICRO') {
-                    $scope.payuVnpay.result.type = "success";
-                    $scope.payuVnpay.result.code = "27";
-                } else {
-                    console.error("Undefined customer context");
-                }
+                //clear data after process
+                $scope.payuVnpay.data.stdInfo = {}
+                $scope.payuVnpay.data.amountInfo = {}
+                $scope.payuVnpay.data.paymentInfo = []
+                $scope.payuVnpay.data.remitterInfo = {}
+                $scope.payuVnpay.data.subjectSelected = [];
+                actions.proceed();
             });
 
 
