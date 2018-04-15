@@ -290,16 +290,15 @@
         <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">
             <input name="remitterAccountId" hidden ng-model="tuitionFee.formData.remitterAccountId" required/>
             <rb-account-select-v2 rb-account="tuitionFee.items.senderAccount"
-                               rb-account-no="tuitionFee.formData.remitterAccountId"
-                               rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                               rb-product-list-name="TRANSFER_OWN_FROM_LIST"
-                               rb-account-select-params="senderSelectParams"
-                               rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                               rb-on-account-select="onSenderAccountSelect($accountId)"
-                               rb-remote="remote.model_from"
-                               rb-init-select-value = "{{tuitionFee.formData.accountNo || selectNrb}}"
-                               rb-only-bill-payment="billPayment"
-                               rb-update-disabled-state="billInfoSearch"></rb-account-select-v2>
+                                  rb-account-id="tuitionFee.formData.remitterAccountId"
+                                  rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                                  rb-product-list-name="TRANSFER_FROM_LIST"
+                                  rb-account-select-params="senderSelectParams"
+                                  rb-init-select-fn="getAccountByNrb($accountList, $select)"
+                                  rb-on-account-select="onSenderAccountSelect($accountId)"
+                                  rb-remote="remote.model_from"
+                                  rb-init-select-value = "{{tuitionFee.formData.accountNo || selectNrb}}">
+            </rb-account-select-v2>
         </bd-item-property>
         <!--Balance and Remaining Daily Limit-->
         <div class="form-row">
