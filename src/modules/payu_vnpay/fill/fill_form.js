@@ -21,20 +21,21 @@ angular.module('ocb-payments')
                                                               rbBeforeTransferManager,
                                 bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE,bdFillStepInitializer) {
 
+            console.log($scope.payuVnpay.data);
             bdFillStepInitializer($scope, {
                 formName: 'payuVnpayForm',
                 dataObject: $scope.payuBku
             });
-            $scope.payuVnpay.data = {
 
+            if($stateParams.p && $stateParams.transid && $stateParams.s) {
+                transferBillService.getBill({
+                    providerCode: $stateParams.p,
+                    billCode: $stateParams.transid,
+                    serviceCode: $stateParams.s
+                }).then(function (data) {
+                    $scope.payuVnpay.data.paymentInfo = data;
+                })
             }
-            transferBillService.getBill({
-                providerCode: $stateParams.p,
-                billCode: $stateParams.transid,
-                serviceCode: $stateParams.s
-            }).then(function (data) {
-                $scope.payuVnpay.data.paymentInfo = data;
-            })
 
             customerService.getCustomerDetails().then(function(data) {
                 $scope.payuVnpay.meta.customerContext = data.customerDetails.context;

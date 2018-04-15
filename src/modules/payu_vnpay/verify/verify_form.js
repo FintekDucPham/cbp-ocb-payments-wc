@@ -16,7 +16,7 @@ angular.module('ocb-payments')
 
             bdVerifyStepInitializer($scope, {
                 formName: 'payuVnpayForm',
-                dataObject: $scope.payuBku
+                // dataObject: $scope.payuBku
             });
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
@@ -80,7 +80,7 @@ angular.module('ocb-payments')
             }
             $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
                 //clear data after process
-                $scope.payuVnpay.data = {};
+                // $scope.payuVnpay.data = {};
                 actions.proceed();
             });
 
