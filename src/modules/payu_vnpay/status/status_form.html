@@ -1,8 +1,10 @@
-<!--<bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>-->
-<div class="pane-bd" style="text-align: center"  >
-    <div class="success-center clear">
-        <i style="font-size: 50px" class="icon-success"></i>
-        <p class="title">Your transaction has been done successfully</p>
-    </div>
+<!--&lt;!&ndash;<bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>&ndash;&gt;-->
+<!--<div class="pane-bd" style="text-align: center"  >-->
+    <!--<div class="success-center clear">-->
+        <!--<i style="font-size: 50px" class="icon-success"></i>-->
+        <!--<p class="title">Your transaction has been done successfully</p>-->
+    <!--</div>-->
 
-</div>
+<!--</div>-->
+
+<bd-msg-panel bd-msg-type="{{ payuVnpay.result.type || 'error'}}">{{ ::'ocb.payments.new.status.' + (payuVnpay.result.code || payuVnpay.result.type) | translate }}</bd-msg-panel>
