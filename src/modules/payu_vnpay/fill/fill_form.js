@@ -2,11 +2,16 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.payu_vnpay.fill', {
-            url: "/fill/",
+            url: "/fill?p&s&transid",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payu_vnpay/fill/fill_form.html",
             controller: "PayuVnpayStep1Controller",
             data: {
                 analyticsTitle: "config.multistepform.labels.step1"
+            },
+            resolve:{
+                CURRENT_DATE: ['utilityService', function(utilityService){
+                    return utilityService.getCurrentDateWithTimezone();
+                }]
             }
         });
     })
@@ -14,61 +19,64 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig,ocbConvert) {
+                                bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE,bdFillStepInitializer) {
 
-
-            if($scope.payuVnpay.data == undefined) {
-                $scope.payuVnpay.data = {
-                    paymentInfo: {},
-                    remitterInfo: null
-                };
-            }
-
-
-            //TODO data test
-            $scope.paymentInfo =
-                {
-                    "paymentCode": "11111111",
-                    "billCode": "22323232",
-                    "amount": 666444,
-                    "provider": "FPT",
-                    "distributedBy": "FPT",
-                }
-            $scope.payuVnpay.data.paymentInfo = $scope.paymentInfo;
-
-            //TODO data test
-            $scope.remitterInfo =
-                {
-                    "accountNo": "Le Linh Phuong",
-                    "accountName": "Le Linh Phuong",
-                    "ocbBranch": "Tan Binh",
-                    "currentBalance": 1350000,
-                    "remainDaily":9999999999,
-                }
-            $scope.payuVnpay.data.remitterInfo = $scope.remitterInfo;
-
-            $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-                $scope.payuVnpay.data.senderAccount = $scope.remitterInfo;
-                if($scope.payuVnpay.data.senderAccount == null ){
-                    $scope.errMsg = translate.property('ocb.payments.payu_vnpay.err_msg_account.label');
-                    return;
-                }
-
-                actions.proceed();
+            console.log($scope.payuVnpay.data);
+            bdFillStepInitializer($scope, {
+                formName: 'payuVnpayForm',
+                dataObject: $scope.payuBku
             });
 
-            function isSenderAccountCategoryRestricted(account) {
-                if($scope.payment.items.senderAccount){
-                    if ($scope.payment.meta.customerContext === 'DETAL') {
-                        return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
-                    } else {
-                        return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
-                    }
+            if($stateParams.p && $stateParams.transid && $stateParams.s) {
+                transferBillService.getBill({
+                    providerCode: $stateParams.p,
+                    billCode: $stateParams.transid,
+                    serviceCode: $stateParams.s
+                }).then(function (data) {
+                    $scope.payuVnpay.data.paymentInfo = data;
+                })
+            }
+
+            customerService.getCustomerDetails().then(function(data) {
+                $scope.payuVnpay.meta.customerContext = data.customerDetails.context;
+                // $scope.payment.meta.employee = data.customerDetails.isEmployee;
+                $scope.payuVnpay.meta.authType = data.customerDetails.authType;
+                $scope.payuVnpay.data.remitterId = data.userIdentityId.id
+                $scope.payuVnpay.data.fullName = data.customerDetails.fullName;
+                // if ($scope.payment.meta.authType == 'HW_TOKEN') {
+                //     $scope.formShow = true;
+                // }
+            }).catch(function(response) {
+
+            });
+
+            transferService.getTransferLimit({paymentType:"PAYU_PAYMENT"}).then(function(limit) {
+                $scope.payuVnpay.data.limit = limit.remainingDailyLimit;
+            });
+
+            $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+                var dataToCreate = {
+                    "remitterId" : $scope.payuVnpay.data.remitterId,
+                    "remitterAccountId" : $scope.payuVnpay.data.remitterAccountId,
+                    "billCode" : $stateParams.transid,
+                    "providerCode" : $stateParams.p,
+                    "providerName" : $scope.payuVnpay.data.paymentInfo.serviceProvider.providerName,
+                    "serviceCode" : $stateParams.s,
+                    "serviceName" : $scope.payuVnpay.data.paymentInfo.serviceProvider.service.serviceName,
+                    "realizationDate" : CURRENT_DATE.time,
+                    "amount" : $scope.payuVnpay.data.paymentInfo.amount.value,
+                    "amountDesc" : ocbConvert.convertNumberToText($scope.payuVnpay.data.paymentInfo.amount.value,false),
+                    "currency" : $scope.payuVnpay.data.remitterInfo.currency,
+                    "paymentType" : "VNPAY"
+
                 }
-            }
-            function isAccountInvestmentFulfilsRules(account){
-                //return account.accountCategories.indexOf('INVESTMENT_ACCOUNT_LIST') < 0 || account.actions.indexOf('create_between_own_accounts_transfer') > -1;
-                return account;
-            }
+                transferBillService.create('bill',dataToCreate).then(function (data) {
+                    $scope.payuVnpay.token.params.resourceId = data.referenceId;
+                    $scope.payuVnpay.transferId = data.referenceId;
+                    actions.proceed();
+                })
+
+            });
+
         });
 

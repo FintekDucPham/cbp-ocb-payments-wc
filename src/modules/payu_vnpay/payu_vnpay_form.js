@@ -18,7 +18,14 @@ angular.module('ocb-payments')
             formData: {},
             options: {},
             meta: {},
+            data: {},
             validation: {},
+            token: {
+                model: null,
+                params: {
+
+                }
+            },
             items :{}
         });
 
