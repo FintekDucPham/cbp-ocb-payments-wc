@@ -205,6 +205,7 @@
   "ocb.payments.new.domestic.fill.account.warning3": "của tài khoản được dán",
   "ocb.payments.new.domestic.fill.errorPaste": "Giá trị không khớp với tài khoản được dán, vui lòng thử lại.",
   "ocb.payments.new.fill.tooltip": "Các giá trị số đã cung cấp phù hợp với những số cuối của tài khoản",
+
   "ocb.payments.new.domestic.verify.sender_account_name": "Tài khoản số",
   "ocb.payments.new.domestic.verify.sender_data": "Chủ sở hữu",
   "ocb.payments.new.domestic.verify.recipient_account_no": "Đến tài khoản",
@@ -212,6 +213,8 @@
   "ocb.payments.new.domestic.verify.amount": "Số tiền",
   "ocb.payments.new.domestic.verify.description": "Nội dung",
   "ocb.payments.new.domestic.verify.execution_date": "Ngày thực hiện",
+  "ocb.payments.new.domestic.verify.MSG-0661_SAME_STANDING_ORDER": "Giao dịch định kì cho cặp tài khoản này đã tồn tại. Nếu bạn vẫn muốn tạo thêm, hãy nhấn \"Tiếp tục\"",
+
   "ocb.payments.new.internal.fill.default_description": "Chuyển khoản",
   "ocb.payments.new.internal.fill.sender_account": "Tài khoản số",
   "ocb.payments.new.internal.fill.sender_account.accessible_assets": "Số dư khả dụng",
