@@ -11,6 +11,9 @@ angular.module('ocb-payments')
         });
     })
     .controller("PayuVnpayStep3Controller", function($scope, bdStepStateEvents, bdStatusStepInitializer, $timeout) {
-
+        bdStatusStepInitializer($scope, {
+            formName: 'payuVnpayForm',
+            dataObject: $scope.payuBku
+        });
         $scope.payuVnpay.data = undefined;
     });

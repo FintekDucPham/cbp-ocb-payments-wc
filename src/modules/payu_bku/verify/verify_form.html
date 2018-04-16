@@ -4,7 +4,7 @@
     }
 </style>
 
-<div >
+<div class="account-collapse-item form-horizontal payu-tbl" >
     <div class="row" ><div class="col-md-4"><h1>{{::'ocb.payments.payu_bku.data_verify.label' | translate}}</h1></div></div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.university.label' | translate}}</div>
@@ -12,26 +12,26 @@
     </div>
     <div class="row" >
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_code.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.stdInfo.stdCode}}</div>
+        <div class="col-md-5">{{payuBku.data.stdInfo.studentCode}}</div>
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_name.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.stdInfo.stdName}}</div>
+        <div class="col-md-5">{{payuBku.data.stdInfo.studentName}}</div>
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.std_depart.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.stdInfo.stdDepart}}</div>
+        <div class="col-md-5">{{payuBku.data.stdInfo.department}}</div>
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.payment_for.label' | translate}}</div>
         <div class="col-md-7">
-            <div class="row"  ng-repeat="p in payuBku.data.subjectSelected track by $index"><div class="col-md-3">{{p.paymentCode}}</div><div class="col-md-9">{{ p.paymentDesc}}</div></div>
+            <div class="row"  ng-repeat="p in payuBku.data.subjectInfo track by $index"><div class="col-md-3">{{p.paymentCode}}</div><div class="col-md-9">{{ p.paymentDesc}}</div></div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_fg.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.amountInfo.figure}}</div>
+        <div class="col-md-5"> <bd-amount amount="payuBku.data.amountInfo.tuitionAmount" currency="{{payuBku.data.amountInfo.currency}}"></bd-amount></div>
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_word.label' | translate}}</div>
@@ -39,40 +39,37 @@
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_number.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.senderAccount.accountNo}}</div>
+        <div class="col-md-5">{{payuBku.data.remitterInfo.accountNo}}</div>
     </div>
     <div class="row" >
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_name.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.senderAccount.accountName}}</div>
+        <div class="col-md-5">{{payuBku.data.remitterInfo.accountName}}</div>
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_branch.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.senderAccount.branch}}</div>
+        <div class="col-md-5">{{payuBku.data.remitterInfo.branch}}</div>
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_avail.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.senderAccount.currentBalance}}</div>
+        <div class="col-md-5">{{payuBku.data.remitterInfo.currentBalance}}</div>
     </div>
     <div class="row">
         <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_remain.label' | translate}}</div>
-        <div class="col-md-5">{{payuBku.data.senderAccount.accountNo}}</div>
+        <div class="col-md-5">{{payuBku.data.remitterInfo.accountNo}}</div>
     </div>
 
 </div>
-<div class="row" >
-    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-3">
-        <bd-button class="bd-button bd-button__primary" ng-click="getOTP()">Get OTP</bd-button>
-    </div>
-    <div class=" bd-table__cell padding-left-cell bd-table__cell--sm-9 bd-table__cell--md-4">
-        <input ng-model="payuBku.data.OTP" required type="text" placeholder="Insert OTP">
-    </div>
+<div class="account-collapse-item form-horizontal" >
+<!--&lt;!&ndash;add authorization token&ndash;&gt;-->
+<!--<section ng-show="payuBku.operation.code !== 'EDIT'">-->
+        <div ng-if="payuBku.token.params.resourceId" ng-show="payuBku.token.params.resourceId " label="{{ payuBku.token.model.currentToken.label }}">
+            <rb-token-authorization rb-operation-type="TRANSFER"
+                                    rb-model="payuBku.token.model"
+                                    rb-params="payuBku.token.params">
+            </rb-token-authorization>
+        </div>
+<!--</section>-->
 </div>
-<bd-item-property class="bd-item-property--multirow" ng-if="payuBku.token.params.resourceId"
-                  ng-show="payuBku.token.model.$tokenRequired"
-                  label="{{ payuBku.token.model.currentToken.label }}">
-    <rb-token-authorization rb-operation-type="TRANSFER" rb-model="payuBku.token.model"
-                            rb-params="payuBku.token.params"></rb-token-authorization>
-</bd-item-property>
 
 <span class="eb-validation-messages">
      <span class="messages"  ng-if="errMsg">

@@ -1,4 +1,4 @@
-@mobile-width-min: 425px;
+@mobile-width-min: 540px;
 @sm-width-max: 991px;
 @mobile-width-max: (@mobile-width-min - 1);
 @input-height: 45px;
@@ -64,6 +64,14 @@
 .radio-option__value {
     display: flex;
     width: 100%;
+
+    .rb-datepicker {
+        width: 100%;
+
+        @media (min-width: @mobile-width-min) {
+            width: 150px;
+        }
+    }
 
     @media (min-width: @mobile-width-min) {
         width: auto;

@@ -4,7 +4,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.tuition_fee', {
-            url: "/tuition/:referenceId",
+            url: "/tuition:referenceId",
             abstract: true,
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/tuition_fee/payments_tuition.html",
             controller: "PaymentTuitionController",
@@ -31,7 +31,7 @@ angular.module('ocb-payments')
             },
             operation: rbPaymentOperationTypes.NEW,
             token: {
-                model: null,
+                model: {},
                 params: {}
             },
             initData: {
@@ -73,7 +73,7 @@ angular.module('ocb-payments')
         }
 
         $scope.rbPaymentTuitionFeeParams = {
-            completeState:'payments.batch_processing.fill',
+            completeState: 'dashboard',
             onClear: $scope.clearForm,
             onBack: $scope.backForm,
             cancelState:'dashboard',
