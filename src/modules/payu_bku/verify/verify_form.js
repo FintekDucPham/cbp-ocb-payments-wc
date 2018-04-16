@@ -38,16 +38,18 @@ angular.module('ocb-payments')
                     depositsService.clearDepositCache();
                     $scope.payuBku.result.token_error = false;
                     // paymentsBasketService.updateCounter($scope.payuBku.result.code);
+                    actions.proceed();
                     doneFn();
+
                 }).catch(function (error) {
                     $scope.payuBku.result.token_error = true;
 
                     if ($scope.payuBku.token.model && $scope.payuBku.token.model.$tokenRequired) {
                         if (!$scope.payuBku.token.model.$isErrorRegardingToken(error)) {
-                            actions.proceed();
+                            //actions.proceed();
                         }
                     } else {
-                        actions.proceed();
+                       // actions.proceed();
                     }
 
                 }).finally(function () {
