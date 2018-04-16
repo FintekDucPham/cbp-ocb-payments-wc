@@ -91,16 +91,27 @@
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_number.label' | translate}}</div>
                 <div class="col-md-5">
 
-                    <rb-account-select rb-account="payuBku.data.remitterInfo"
-                                       rb-account-id="payuBku.data.remitterAccountId"
-                                       rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                       rb-product-list-name="TRANSFER_FROM_LIST"
-                                       rb-account-select-params="senderSelectParams"
-                                       rb-init-select-fn="getAccountByNrb($accountList, $select)"
-                                       rb-on-account-select="onAccountChange($account)"
-                                       rb-remote="remote.model_from"
-                                       rb-init-select-value = "{{account || selectNrb}}"
-                                       ></rb-account-select>
+                    <!--<rb-account-select rb-account="payuBku.data.remitterInfo"-->
+                                       <!--rb-account-id="payuBku.data.remitterAccountId"-->
+                                       <!--rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"-->
+                                       <!--rb-product-list-name="TRANSFER_FROM_LIST"-->
+                                       <!--rb-account-select-params="senderSelectParams"-->
+                                       <!--rb-init-select-fn="getAccountByNrb($accountList, $select)"-->
+                                       <!--rb-on-account-select="onAccountChange($account)"-->
+                                       <!--rb-remote="remote.model_from"-->
+                                       <!--rb-init-select-value = "{{account || selectNrb}}"-->
+                                       <!--&gt;</rb-account-select>-->
+
+                    <rb-account-select-v2
+                            rb-account-id="payuBku.data.remitterAccountId"
+                            rb-account="payuBku.data.remitterInfo"
+                            rb-account-list="payuBku.data.accountList"
+                            rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                            rb-product-list-name="TRANSFER_FROM_LIST"
+                            rb-on-account-select="onAccountChange()"
+                            rb-account-no="payuBku.data.remitterAccountNo"
+                            rb-account-select-params="accountSelectParams">
+                    </rb-account-select-v2>
                 </div>
 
             </div>
