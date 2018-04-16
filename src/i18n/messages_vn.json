@@ -790,7 +790,7 @@
   "ocb.payments.basket.status.TRANSACTIONS_SUBMITED_UNKNOWN_STATUS": "Lệnh chuyển khoản đã được ghi nhận, vui lòng kiểm tra trạng thái giao dịch sau.",
   "ocb.payments.basket.status.CUT_OFF_TIME.DETAL": "Một số lệnh chuyển khoản có thể được thực hiện vào ngày làm việc tiếp theo.",
   "ocb.payments.basket.list.details.addedToBasketDate": "Đã thêm vào giỏ",
-  "ocb.payments.basket.list.details.historyAction": "Lịch sử",
+  "ocb.payments.basket.list.details.historyAction": "Lịch sử thanh toán",
   "ocb.payments.basket.multistepform.buttons.delete": "Xóa",
   "ocb.payments.basket.multistepform.buttons.cancel": "Hủy",
   "ocb.payments.basket.modify.verify.MICRO": "Giao dịch sẽ được sửa trong giỏ và sẽ được thực hiện vào ngày đã đặt, nhưng không sớm hơn ngày được duyệt trong giỏ. Sửa giao dịch vô hiệu hóa các hoạt động duyệt trước đây của giao dịch đó.",

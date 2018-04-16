@@ -175,8 +175,8 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-            // $scope.rbPaymentTuitionFeeParams.visibility.search = false;
-            // $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
+            $scope.rbPaymentTuitionFeeParams.visibility.search = false;
+            $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
             actions.proceed();
         });
 

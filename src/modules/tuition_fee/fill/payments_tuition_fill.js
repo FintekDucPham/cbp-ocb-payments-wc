@@ -163,9 +163,9 @@ angular.module('ocb-payments')
                 //Call service to get Student's Info
                 // validate params
                 if (university) {
-                    $scope.universityCode = university.code;
+                    $scope.tuitionFee.formData.universityCode = university.code;
                 } else {
-                    $scope.universityCode = "";
+                    $scope.tuitionFee.formData.universityCode = "";
                 }
 
                 if (selectedForm) {
@@ -189,13 +189,13 @@ angular.module('ocb-payments')
                     $scope.tuitionFee.formData.courseType = "";
                 }
                 transferTuitionService.getStudentInfo({
-                    universityCode: $scope.universityCode,
-                    semesterCode:  $scope.semesterNumber,
+                    universityCode: $scope.tuitionFee.formData.universityCode,
+                    semesterCode: $scope.tuitionFee.formData.semesterNumber,
                     courseType: $scope.tuitionFee.formData.courseType,
                     studentCode: $scope.tuitionFee.formData.studentCode,
                     nationalID: $scope.tuitionFee.formData.nationalId
                 }).then(function (data) {
-                    $scope.blockInput = true;
+                    $scope.tuitionFee.formData.blockInput = true;
                     $("#radioID").addClass("rbt-disable");
                     $scope.tuitionFee.formData.batchInfoSearch = true;
                     if (data.tuitionPayment == null || data.tuitionPayment.length == 0) {
@@ -251,7 +251,7 @@ angular.module('ocb-payments')
         };
 
         $scope.onTuitionSemesterChange = function (itemSelected) {
-            $scope.semesterNumber = itemSelected.number;
+           $scope.tuitionFee.formData.semesterNumber = itemSelected.number;
             $scope.tuitionFee.formData.semesterNrb = itemSelected.number;
             $scope.tuitionFee.formData.semester = itemSelected;
             $scope.tuitionFee.formData.semesterDesc = itemSelected.name;
@@ -273,7 +273,7 @@ angular.module('ocb-payments')
 
         /*Back button on fill screen*/
         $scope.rbPaymentTuitionFeeParams.backForm = function () {
-            $scope.blockInput = false;
+            $scope.tuitionFee.formData.blockInput = false;
             $("#radioID").removeClass("rbt-disable");
             $scope.tuitionFee.formData.batchInfoSearch = false;
             $scope.rbPaymentTuitionFeeParams.visibility.clear = true;
