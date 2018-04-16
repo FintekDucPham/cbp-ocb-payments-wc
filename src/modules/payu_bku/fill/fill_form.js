@@ -19,7 +19,7 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig,ocbConvert,transferTuitionService,CURRENT_DATE,bdFillStepInitializer) {
+                                bdTableConfig,ocbConvert,transferTuitionService,CURRENT_DATE,bdFillStepInitializer,transferService,customerService) {
 
             bdFillStepInitializer($scope, {
                 formName: 'payuBkuForm',
@@ -68,6 +68,22 @@ angular.module('ocb-payments')
                 }
             ]
 
+            customerService.getCustomerDetails().then(function(data) {
+                $scope.payuBku.meta.customerContext = data.customerDetails.context;
+                // $scope.payment.meta.employee = data.customerDetails.isEmployee;
+                $scope.payuBku.meta.authType = data.customerDetails.authType;
+                $scope.payuBku.data.remitterId = data.userIdentityId.id
+                $scope.payuBku.data.fullName = data.customerDetails.fullName;
+                // if ($scope.payment.meta.authType == 'HW_TOKEN') {
+                //     $scope.formShow = true;
+                // }
+            }).catch(function(response) {
+
+            });
+
+            transferService.getTransferLimit({paymentType:"PAYU_PAYMENT"}).then(function(limit) {
+                $scope.payuBku.data.limit = limit.remainingDailyLimit;
+            });
 
             $scope.searchStudent = function () {
                 if(_.trim($scope.payuBku.data.stdCode) == ''){

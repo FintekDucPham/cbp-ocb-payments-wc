@@ -18,7 +18,7 @@
             </div>
         </div>
         <br/>
-        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.stdInfo">
+        <div class="account-collapse-item form-horizontal payu-tbl" ng-if="payuBku.data.stdInfo">
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.std.label' | translate}}</p></div></div>
 
             <div class="row">
@@ -42,7 +42,7 @@
                 <div class="col-md-3">{{payuBku.data.stdInfo.department}}</div>
             </div>
         </div>
-        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.subjectInfo || payuBku.data.amountInfo.tuitionAmount ">
+        <div class="account-collapse-item form-horizontal payu-tbl" ng-if="payuBku.data.subjectInfo || payuBku.data.amountInfo.tuitionAmount ">
             <div  ng-if="payuBku.data.subjectInfo">
                 <bd-table
                     bd-type="typePU"
@@ -72,7 +72,7 @@
                 </bd-table>
             </div>
             <br>
-            <div class="row">
+            <div class="row ">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.amount_in_fg.label' | translate}}</div>
                 <div class="col-md-3">
                     <bd-amount amount="payuBku.data.amountInfo.tuitionAmount" currency="{{payuBku.data.amountInfo.currency}}"></bd-amount>
@@ -85,7 +85,7 @@
         </div>
 
 
-        <div class="account-collapse-item form-horizontal" ng-if="payuBku.data.stdInfo !== null">
+        <div class="account-collapse-item form-horizontal payu-tbl" ng-if="payuBku.data.stdInfo !== null">
             <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_bku.remitter.label' | translate}}</p></div></div>
             <div class="row" style="display: flex;align-items: center;">
                 <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_number.label' | translate}}</div>
@@ -108,11 +108,11 @@
             <div ng-if="payuBku.data.senderAccount !== null">
                 <div class="row" >
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_name.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.remitterInfo.accountName}}</div>
+                    <div class="col-md-5">{{payuBku.data.fullName}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_branch.label' | translate}}</div>
-                    <div class="col-md-5">{{payuBku.data.remitterInfo.branch}}</div>
+                    <div class="col-md-5">{{payuBku.data.remitterInfo.openBranch}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_avail.label' | translate}}</div>
@@ -123,7 +123,7 @@
                 <div class="row">
                     <div class="col-md-3 lb">{{::'ocb.payments.payu_bku.remitter_remain.label' | translate}}</div>
 
-                    <div class="col-md-5"><bd-amount amount="payuBku.data.remitterInfo.accessibleAssets" currency="{{payuBku.data.remitterInfo.currency}}"></bd-amount></div>
+                    <div class="col-md-5"><bd-amount amount="payuBku.data.limit" currency="{{payuBku.data.remitterInfo.currency}}"></bd-amount></div>
                 </div>
             </div>
         </div>
