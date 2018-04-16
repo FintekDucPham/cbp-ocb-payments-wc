@@ -34,10 +34,6 @@ angular.module('ocb-payments')
             default:
                 break;
         }
-       //Hide account
-        $scope.accountNo = $scope.tuitionFee.formData.accountNo.substr(0,5)+ "********" +$scope.tuitionFee.formData.accountNo.substr(12,15);
-
-
 
         if (angular.isUndefined($scope.tuitionFee.formData) || lodash.isEmpty($scope.tuitionFee.formData)) {
             $state.go('payments.tuition_fee.fill');
@@ -179,8 +175,8 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function (event, actions) {
-            $scope.rbPaymentTuitionFeeParams.visibility.search = false;
-            $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
+            // $scope.rbPaymentTuitionFeeParams.visibility.search = false;
+            // $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
             actions.proceed();
         });
 

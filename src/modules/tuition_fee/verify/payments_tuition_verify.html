@@ -42,7 +42,7 @@
       {{tuitionFee.formData.amountInWords}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.account.label' | translate }}">
-      Current account {{accountNo}}
+      {{tuitionFee.formData.accountNo}}
     </bd-item-property>
     <bd-item-property label="{{ ::'ocb.payments.tuition.verify.funds.label' | translate }}">
       {{tuitionFee.formData.balance | number:0}}  {{tuitionFee.formData.currency}}

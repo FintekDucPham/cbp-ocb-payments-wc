@@ -1,7 +1,7 @@
 angular.module('ocb-payments')
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.tuition_fee.fill', {
-            url: "fill",
+            url: "/fill",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/tuition_fee/fill/payments_tuition_fill.html",
             controller: "TuitionPaymentFillController",
             data: {
@@ -121,7 +121,7 @@ angular.module('ocb-payments')
         $scope.rbPaymentTuitionFeeParams.showTuitionInfoSearch = function(searchBool, nextBool) {
             $scope.tuitionFee.formData.batchInfoSearch = false;
             $scope.tuitionFee.formData.paymentEmpty = false;
-            $scope.amountNull = false;
+            $scope.tuitionFee.formData.amountNull = false;
             var university = $scope.tuitionFee.formData.paymentsTuitionUniversities;
             var selectedForm = $scope.tuitionFee.formData.selectedForm;
             var stdType = $scope.tuitionFee.formData.stdCodeType;
@@ -196,12 +196,13 @@ angular.module('ocb-payments')
                     nationalID: $scope.tuitionFee.formData.nationalId
                 }).then(function (data) {
                     $scope.blockInput = true;
+                    $("#radioID").addClass("rbt-disable");
                     $scope.tuitionFee.formData.batchInfoSearch = true;
                     if (data.tuitionPayment == null || data.tuitionPayment.length == 0) {
                         $scope.tuitionFee.formData.paymentEmpty = true;
                     }
                     if (data.tuitionFee == null || data.tuitionFee.length == 0) {
-                        $scope.amountNull = true;
+                        $scope.tuitionFee.formData.amountNull = true;
                     }
                     if (data.tuitionFee != null) {
                         $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionDebtAmount;
@@ -259,11 +260,11 @@ angular.module('ocb-payments')
 
         /*Clear button*/
         $scope.rbPaymentTuitionFeeParams.clearForm = function () {
+            $scope.tuitionFee.formData.hideStudentCode = false;
             $scope.tuitionFee.formData.paymentsTuitionUniversities = {};
             $scope.tuitionFee.formData.stdCodeID = null;
-            $scope.hideStudentCode = false;
             $scope.showSemester = false;
-            $scope.hideStudent = false;
+            $scope.tuitionFee.formData.hideStudent= false;
             $scope.universityEmpty = false;
             $scope.semesterEmpty = false;
             $scope.stdEmpty = false;
@@ -273,6 +274,7 @@ angular.module('ocb-payments')
         /*Back button on fill screen*/
         $scope.rbPaymentTuitionFeeParams.backForm = function () {
             $scope.blockInput = false;
+            $("#radioID").removeClass("rbt-disable");
             $scope.tuitionFee.formData.batchInfoSearch = false;
             $scope.rbPaymentTuitionFeeParams.visibility.clear = true;
             $scope.rbPaymentTuitionFeeParams.visibility.search = true;
@@ -303,7 +305,7 @@ angular.module('ocb-payments')
 
         /*Next button on fill screen*/
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-           if ($scope.amountNull === false) {
+           if ($scope.tuitionFee.formData.amountNull === false) {
                try {
                    delete $scope.tuitionFee.token.params.resourceId;
                    setRealizationDateToCurrent();

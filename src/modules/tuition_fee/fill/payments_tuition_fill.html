@@ -4,7 +4,7 @@
         <bd-header>{{ ::'ocb.payments.tuition.entering' | translate }}</bd-header>
         <!--University-->
         <bd-item-property label="{{ ::'ocb.payments.tuition.university' | translate }}">
-            <ui-select ng-model="tuitionFee.formData.paymentsTuitionUniversities" theme="bootstrap"
+            <ui-select ng-disabled="blockInput" ng-model="tuitionFee.formData.paymentsTuitionUniversities" theme="bootstrap"
                        title="Choose a university" on-select="onTuitionUniversityChange($select.selected)">
                 <ui-select-match placeholder="{{::'ocb.payments.tuition.university.place.holder' | translate}}">
                     {{$select.selected.name}}
@@ -17,37 +17,38 @@
         <!--Form-->
         <bd-item-property ng-show="tuitionFee.formData.hideStudentCode" label="{{ ::'ocb.payments.tuition.form' | translate }}">
             <!--test radio-->
-            <bd-radio-select bd-model="tuitionFee.formData.selectedForm.optionSelected">
-                <div class="row vcenter tuitionFee-desktop-only">
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type1.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.full'|translate}}</bd-radio-option>
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type2.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type3.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.post'|translate}}</bd-radio-option>
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type4.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.part'|translate}}</bd-radio-option>
-                </div>
-                <!--Mobile version-->
-                <div class="row vcenter tuitionFee-mobile-only">
-                    <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type1.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.full'|translate}}</bd-radio-option>
+            <div id="radioID">
+                <bd-radio-select bd-model="tuitionFee.formData.selectedForm.optionSelected">
+                    <div class="row vcenter tuitionFee-desktop-only">
+                        <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type1.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.full'|translate}}</bd-radio-option>
+                        <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type2.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
+                        <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type3.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.post'|translate}}</bd-radio-option>
+                        <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type4.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.part'|translate}}</bd-radio-option>
                     </div>
-                    <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type2.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
+                    <!--Mobile version-->
+                    <div class="row vcenter tuitionFee-mobile-only">
+                        <div class="col-xs-6">
+                            <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type1.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.full'|translate}}</bd-radio-option>
+                        </div>
+                        <div class="col-xs-6">
+                            <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type2.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.credit'|translate}}</bd-radio-option>
+                        </div>
                     </div>
-                </div>
-                <div class="row vcenter tuitionFee-mobile-only">
-                    <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type3.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.post'|translate}}</bd-radio-option>
+                    <div class="row vcenter tuitionFee-mobile-only">
+                        <div class="col-xs-6">
+                            <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type3.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.post'|translate}}</bd-radio-option>
+                        </div>
+                        <div class="col-xs-6">
+                            <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type4.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.part'|translate}}</bd-radio-option>
+                        </div>
                     </div>
-                    <div class="col-xs-6">
-                    <bd-radio-option bd-option-value="tuitionFee.formData.selectedForm.type4.value" class="row__inline-block--middle">{{::'ocb.payments.tuition.form.part'|translate}}</bd-radio-option>
-                    </div>
-                </div>
-                <!--Mobile version-->
-            </bd-radio-select>
+                    <!--Mobile version-->
+                </bd-radio-select>
+            </div>
         </bd-item-property>
-
         <!--Semester-->
         <bd-item-property id="semesterID" ng-show="showSemester" label="{{ ::'ocb.payments.tuition.semester' | translate }}">
-            <ui-select ng-model="tuitionFee.formData.semester" theme="bootstrap"
+            <ui-select ng-disabled="blockInput" ng-model="tuitionFee.formData.semester" theme="bootstrap"
                        title="Choose a semester" on-select = "onTuitionSemesterChange($select.selected)">
                 <ui-select-match placeholder="{{::'ocb.payments.tuition.semester.place.holder' | translate}}">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="item in semesterList">
@@ -59,7 +60,7 @@
         <bd-item-property ng-show="tuitionFee.formData.hideStudent" label="{{ ::'ocb.payments.tuition.student.codeID' | translate }}">
             <div class="row tuitionFee-desktop-only">
                 <div ng-hide="tuitionFee.formData.hideStudentCode" class="col-sm-4" style="margin-left:-15px;">
-                    <ui-select ng-model="tuitionFee.formData.stdCodeType" theme="bootstrap" title="Choose a student code">
+                    <ui-select ng-disabled="blockInput" ng-model="tuitionFee.formData.stdCodeType" theme="bootstrap" title="Choose a student code">
                         <ui-select-match>{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="studentCode in studentCodes track by studentCode.id">
                             <span ng-bind="studentCode.name"></span>
@@ -72,7 +73,7 @@
             </div>
             <div class="row tuitionFee-mobile-only">
                 <div ng-hide="tuitionFee.formData.hideStudentCode">
-                    <ui-select ng-model="tuitionFee.formData.stdCodeType" theme="bootstrap" title="Choose a student code">
+                    <ui-select ng-disabled="blockInput" ng-model="tuitionFee.formData.stdCodeType" theme="bootstrap" title="Choose a student code">
                         <ui-select-match>{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="studentCode in studentCodes track by studentCode.id">
                             <span ng-bind="studentCode.name"></span>
@@ -197,7 +198,7 @@
         <div ng-if="tuitionFee.formData.batchInfoSearch === false" class="content-check">
             {{::'ocb.payments.tuition.student.info.empty'|translate}}
         </div>
-        <div ng-show="amountNull" class="content-check">
+        <div ng-show="tuitionFee.formData.amountNull" class="content-check">
             {{::'ocb.payments.tuition.student.amount.empty'|translate}}
         </div>
     </div>
@@ -277,7 +278,7 @@
         <div ng-if="tuitionFee.formData.batchInfoSearch === false" class="content-check">
             {{::'ocb.payments.tuition.student.info.empty'|translate}}
         </div>
-        <div ng-show="amountNull" class="content-check">
+        <div ng-show="tuitionFee.formData.amountNull" class="content-check">
             {{::'ocb.payments.tuition.student.amount.empty'|translate}}
         </div>
     </div>
