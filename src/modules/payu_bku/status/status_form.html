@@ -1,8 +1,8 @@
-<!--<bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>-->
-<div class="pane-bd" style="text-align: center"  >
-    <div class="success-center clear">
-        <i style="font-size: 50px" class="icon-success"></i>
-        <p class="title">Your transaction has been done successfully</p>
-    </div>
-
-</div>
+<rb-content-view class="form">
+    <bd-header >{{::"ocb.payments.payu_hufi.label"|translate}}</bd-header>
+    <bd-form-panel>
+        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payuBkuFormParams">
+            <div ui-view></div>
+        </rb-multistep-form>
+    </bd-form-panel>
+</rb-content-view>

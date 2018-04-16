@@ -947,6 +947,7 @@
   "ocb.payments.payu_bku.err_msg_account.label": "Account information is not loaded",
   "ocb.payments.payu_bku.university.label": "University",
   "ocb.payments.payu_bku.university.value": "BK University",
+  "ocb.payments.payu_hufi.label": "Tuition payment for HUFI ",
   "ocb.payments.payu_hufi.std.label": "Student data",
   "ocb.payments.payu_hufi.std_code.label": "Student code",
   "ocb.payments.payu_hufi.std_name.label": "Student name",

@@ -4,38 +4,54 @@ angular.module('ocb-payments')
         stateServiceProvider.state('payments.payu_hufi', {
             url: "/payu_hufi",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/payu_hufi/payu_hufi_form.html",
-            controller: "PayuHufiController",
+            controller: "PayUHufiController",
             abstract: true,
             data: {
                 analyticsTitle: null
             }
         });
     })
-    .controller('PayuHufiController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
+    .controller('PayUHufiController', function ($scope, bdMainStepInitializer, bdTableConfig, rbPaymentOperationTypes) {
 
         bdMainStepInitializer($scope, 'payuHufi', {
             formName: 'payuHufiForm',
             formData: {},
+            operation: rbPaymentOperationTypes.NEW,
             options: {},
             meta: {},
+            token: {
+                model: null,
+                params: {
+
+                }
+            },
             validation: {},
             items :{}
         });
 
-        $scope.modify = {
-            verify:{
-                data: null
-            }
-        };
+        // $scope.modify = {
+        //     verify:{
+        //         data: null
+        //     }
+        // };
         $scope.subjectSelected = function () {
             return $scope.payuHufi.subjectSelected;
         };
-       $scope.payuHufiFormParams = {
-            completeState:'payments.payu_hufi.fill',
+
+        // $scope.getOTP = function (event, actions) {
+        //     sendAuthorizationToken();
+        // }
+        //
+        // function sendAuthorizationToken() {
+        //     //TODO get otp
+        // };
+        $scope.payuHufiFormParams = {
+            completeState:'dashboard',
             onClear: $scope.clearForm,
             cancelState:'payments.payu_hufi.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
+            isChecked: 'true',
             labels:{
                 prev:"ocb.payments.buttons.prev",
                 next:"ocb.payments.new.btn.next",

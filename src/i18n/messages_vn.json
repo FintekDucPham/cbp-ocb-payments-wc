@@ -943,6 +943,7 @@
   "ocb.payments.payu_bku.err_msg_account.label": "Thông tin tài khoản chưa được tải",
   "ocb.payments.payu_bku.university.label": "Đại học",
   "ocb.payments.payu_bku.university.value": "Trường Đại học Bách Khoa",
+  "ocb.payments.payu_hufi.label": "Trường Đại học Công nghệ thực phẩm ",
   "ocb.payments.payu_hufi.std.label": "Thông tin sinh viên",
   "ocb.payments.payu_hufi.std_code.label": "Mã số sinh viên/Số báo danh",
   "ocb.payments.payu_hufi.std_name.label": "Tên sinh viên",
