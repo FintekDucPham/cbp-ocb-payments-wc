@@ -10,7 +10,10 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller("PayuHufiStep3Controller", function($scope) {
-
+    .controller("PayuHufiStep3Controller", function($scope, bdStepStateEvents, bdStatusStepInitializer, $timeout) {
+        bdStatusStepInitializer($scope, {
+            formName: 'payuHufiForm',
+            dataObject: $scope.payuHufi
+        });
         $scope.payuHufi.data = undefined;
     });
