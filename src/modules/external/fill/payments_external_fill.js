@@ -71,7 +71,11 @@ angular.module('ocb-payments')
                 if (useDataFromStore) {
                     $scope.storedScreenData.then(function(storedData) {
                         $scope.userCacheForm = storedData;
-                        $scope.payment.formData = storedData;
+                        $scope.payment.formData = Object.assign({},
+                            $scope.payment.formData,
+                            storedData
+                        );
+                        console.log($scope.payment.formData);
                         setRecipientData(storedData.recipientData);
                         if (storedData.realizationDate) {
                             storedData.realizationDate = new Date(storedData.realizationDate)
