@@ -119,6 +119,7 @@ angular.module('ocb-payments')
         /*Handle Next Button*/
         //Check empty
         $scope.rbPaymentTuitionFeeParams.showTuitionInfoSearch = function(searchBool, nextBool) {
+            $scope.infoNotFound = false;
             $scope.tuitionFee.formData.batchInfoSearch = false;
             $scope.tuitionFee.formData.paymentEmpty = false;
             $scope.tuitionFee.formData.amountNull = false;
@@ -195,30 +196,34 @@ angular.module('ocb-payments')
                     studentCode: $scope.tuitionFee.formData.studentCode,
                     nationalID: $scope.tuitionFee.formData.nationalId
                 }).then(function (data) {
-                    $scope.tuitionFee.formData.blockInput = true;
-                    $("#radioID").addClass("rbt-disable");
-                    $scope.tuitionFee.formData.batchInfoSearch = true;
-                    if (data.tuitionPayment == null || data.tuitionPayment.length == 0) {
-                        $scope.tuitionFee.formData.paymentEmpty = true;
+                    if (data.student == null && data.tuitionFee == null) {
+                        $scope.infoNotFound = true;
+                    } else {
+                        if (data.tuitionPayment == null || data.tuitionPayment.length == 0) {
+                            $scope.tuitionFee.formData.paymentEmpty = true;
+                        }
+                        if (data.tuitionFee == null || data.tuitionFee.length == 0) {
+                            $scope.tuitionFee.formData.amountNull = true;
+                        }
+                        if (data.tuitionFee != null) {
+                            $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionDebtAmount;
+                            $scope.tuitionFee.formData.amountInWords = ocbConvert.convertNumberToText($scope.tuitionFee.formData.totalAmount, true);
+                        }
+                        if (data.student != null) {
+                            $scope.tuitionFee.formData.studentInfo = data.student;
+                            $scope.tuitionFee.formData.studentName = data.student.studentName;
+                            $scope.tuitionFee.formData.faculty = data.student.department;
+                            $scope.tuitionFee.formData.clazz = data.student.className;
+                            $scope.tuitionFee.formData.period = data.student.period;
+                        }
+                        $scope.tuitionFee.formData.blockInput = true;
+                        $("#radioID").addClass("rbt-disable");
+                        $scope.tuitionFee.formData.batchInfoSearch = true;
+                        $scope.tuitionFee.formData.paymentInfo = data.tuitionPayment;
+                        $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
+                        $scope.rbPaymentTuitionFeeParams.visibility.clear = searchBool;
+                        $scope.rbPaymentTuitionFeeParams.visibility.next = nextBool;
                     }
-                    if (data.tuitionFee == null || data.tuitionFee.length == 0) {
-                        $scope.tuitionFee.formData.amountNull = true;
-                    }
-                    if (data.tuitionFee != null) {
-                        $scope.tuitionFee.formData.totalAmount = data.tuitionFee.tuitionDebtAmount;
-                        $scope.tuitionFee.formData.amountInWords = ocbConvert.convertNumberToText($scope.tuitionFee.formData.totalAmount, true);
-                    }
-                    if (data.student != null) {
-                        $scope.tuitionFee.formData.studentInfo = data.student;
-                        $scope.tuitionFee.formData.studentName = data.student.studentName;
-                        $scope.tuitionFee.formData.faculty = data.student.department;
-                        $scope.tuitionFee.formData.clazz = data.student.className;
-                        $scope.tuitionFee.formData.period = data.student.period;
-                    }
-                    $scope.tuitionFee.formData.paymentInfo = data.tuitionPayment;
-                    $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
-                    $scope.rbPaymentTuitionFeeParams.visibility.clear = searchBool;
-                    $scope.rbPaymentTuitionFeeParams.visibility.next = nextBool;
                 });
             }
         };
@@ -260,6 +265,7 @@ angular.module('ocb-payments')
 
         /*Clear button*/
         $scope.rbPaymentTuitionFeeParams.clearForm = function () {
+            $scope.infoNotFound = false;
             $scope.tuitionFee.formData.hideStudentCode = false;
             $scope.tuitionFee.formData.paymentsTuitionUniversities = {};
             $scope.tuitionFee.formData.stdCodeID = null;
