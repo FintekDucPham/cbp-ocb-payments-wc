@@ -195,6 +195,7 @@ angular.module('ocb-payments')
                     studentCode: $scope.tuitionFee.formData.studentCode,
                     nationalID: $scope.tuitionFee.formData.nationalId
                 }).then(function (data) {
+                    $scope.blockInput = true;
                     $scope.tuitionFee.formData.batchInfoSearch = true;
                     if (data.tuitionPayment == null || data.tuitionPayment.length == 0) {
                         $scope.tuitionFee.formData.paymentEmpty = true;
@@ -271,6 +272,7 @@ angular.module('ocb-payments')
 
         /*Back button on fill screen*/
         $scope.rbPaymentTuitionFeeParams.backForm = function () {
+            $scope.blockInput = false;
             $scope.tuitionFee.formData.batchInfoSearch = false;
             $scope.rbPaymentTuitionFeeParams.visibility.clear = true;
             $scope.rbPaymentTuitionFeeParams.visibility.search = true;
