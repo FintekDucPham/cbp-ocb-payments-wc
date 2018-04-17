@@ -52,7 +52,7 @@ angular.module('ocb-payments')
         paymentData.actionType = initialState.paymentOperationType;
         if (initialData != null) {
             payment.formData = initialData;
-            paymentData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
+            payment.formData.frequencyType = paymentData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
