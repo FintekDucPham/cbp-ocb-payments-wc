@@ -258,7 +258,6 @@ angular.module('ocb-payments')
         });
 
         var lastProm;
-
         function checkStandingOrder() {
             if (!$scope.standingOrderId && $scope.payment.formData.recipientAccountNo) {
                 var prom = standingTransferService.search({

@@ -21,7 +21,7 @@
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.details.fromAccount'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-            {{payment.formData.fromAccount }}
+            {{payment.items.remitterAccount.accountNo }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"

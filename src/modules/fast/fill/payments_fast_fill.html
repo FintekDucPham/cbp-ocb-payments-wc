@@ -62,6 +62,34 @@
                                  rb-on-recipient-select="onRecipientSelected($recipient)"></rb-recipient-select>
         </bd-item-property>
 
+        <bd-item-property ng-if="payment.formData.paymentTarget === 'ACCOUNT'"
+                          label="{{::'ocb.payments.domestic.bank.label' | translate}}">
+            <input name="bankCode" hidden ng-model="payment.formData.bankCode" required/>
+            <rb-bank-fast-napas-select
+                    on-select="onSelectBank(data)"
+                    type="fastNapas"
+                    rb-bank-code="payment.formData.bankCode"
+                    rb-bank="payment.items.bank"
+                    rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"></rb-bank-fast-napas-select>
+            <eb-validation-messages eb-name="bankCode">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.bank.error.empty'|translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
+
+        <bd-item-property ng-if="payment.formData.paymentTarget === 'CARD'"
+                          label="{{::'ocb.payments.fast.card_number.label' | translate}}">
+            <input name="cardNumber" ng-model="payment.formData.cardNumber" required class="input-field"
+                   placeholder="{{::'ocb.payments.fast.card_number.placeholder' | translate }}"
+                   ng-blur="onCardNumberChanged()" />
+            <eb-validation-messages eb-name="cardNumber">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.fast.card_number.empty' | translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
+
         <rb-paste-warning ng-if="payment.formData.paymentTarget === 'ACCOUNT'" ng-init="pasteWarning=this">
             <!--rb-paste-warning provides: showHide, rbPasteTrigger, unlockField, isOk, isErrorPaste-->
             <bd-item-property label="{{::'ocb.payments.domestic.recipient_account.label' | translate}}">
@@ -136,34 +164,6 @@
                     {{::'ocb.payments.domestic.recipient_name.error.notFound' | translate}}
                 </div>
             </div>
-        </bd-item-property>
-
-        <bd-item-property ng-if="payment.formData.paymentTarget === 'ACCOUNT'"
-                          label="{{::'ocb.payments.domestic.bank.label' | translate}}">
-            <input name="bankCode" hidden ng-model="payment.formData.bankCode" required/>
-            <rb-bank-fast-napas-select
-                            on-select="onSelectBank(data)"
-                            type="fastNapas"
-                            rb-bank-code="payment.formData.bankCode"
-                            rb-bank="payment.items.bank"
-                            rb-placeholder="{{::'ocb.payments.domestic.bank.placeholder' | translate}}"></rb-bank-fast-napas-select>
-            <eb-validation-messages eb-name="bankCode">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.domestic.bank.error.empty'|translate}}
-                </div>
-            </eb-validation-messages>
-        </bd-item-property>
-
-        <bd-item-property ng-if="payment.formData.paymentTarget === 'CARD'"
-                          label="{{::'ocb.payments.fast.card_number.label' | translate}}">
-            <input name="cardNumber" ng-model="payment.formData.cardNumber" required class="input-field"
-                   placeholder="{{::'ocb.payments.fast.card_number.placeholder' | translate }}"
-                   ng-blur="onCardNumberChanged()" />
-            <eb-validation-messages eb-name="cardNumber">
-                <div eb-message-key="required" class="validation-message animate-on">
-                    {{::'ocb.payments.fast.card_number.empty' | translate}}
-                </div>
-            </eb-validation-messages>
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.domestic.amount.label' | translate}}">
