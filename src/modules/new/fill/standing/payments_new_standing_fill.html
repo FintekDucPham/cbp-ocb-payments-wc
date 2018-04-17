@@ -178,34 +178,20 @@
 
     <bd-item-property class="bd-item-property--multi"
                       label="{{ ::'ocb.payments.new.standing.fill.amount' | translate }}">
-        <div class="bd-item-property--multi__values">
-            <div class="bd-item-property__value--primary">
-                <input type="text"
-                       name="amount"
-                       rb-number-type-input
-                       class="input-field"
-                       ng-change="validationErrors.amount = undefined"
-                       ng-model="payment.formData.amount"
-                       ng-min="0.01"
-                       ng-pattern="AMOUNT_PATTERN"
-                       required
-                       placeholder="{{ ::'ocb.payments.new.standing.fill.amount.placeholder' | translate }}"
-                       amount-input
-                       currency="{{payment.formData.currency}}" />
-            </div>
-            <div class="bd-item-property__value--secondary">
-                <ui-select ng-model="payment.formData.currency"
-                           theme="bootstrap"
-                           ng-disabled="true"
-                           required>
-                    <ui-select-match placeholder="Waluta">
-                        {{$select.selected}}
-                    </ui-select-match>
-                    <ui-select-choices repeat="currency in ['VND'] track by $index">
-                        <div ng-bind="currency"></div>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
+        <div class="control-has-indicator">
+            <input type="text"
+                   name="amount"
+                   rb-number-type-input
+                   class="input-field"
+                   ng-change="validationErrors.amount = undefined"
+                   ng-model="payment.formData.amount"
+                   ng-min="0.01"
+                   ng-pattern="AMOUNT_PATTERN"
+                   required
+                   placeholder="{{ ::'ocb.payments.new.standing.fill.amount.placeholder' | translate }}"
+                   amount-input
+                   currency="{{payment.formData.currency}}" />
+            <div class="indicator">{{payment.formData.currency}}</div>
         </div>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['amount'] !== undefined">
