@@ -58,10 +58,10 @@ angular.module('ocb-payments')
                 var dataToCreate = {
                     "remitterId" : $scope.payuVnpay.data.remitterId,
                     "remitterAccountId" : $scope.payuVnpay.data.remitterAccountId,
-                    "billCode" : $stateParams.transid,
-                    "providerCode" : $stateParams.p,
+                    "billCode" : $scope.payuVnpay.data.paymentInfo.billCode,
+                    "providerCode" : $scope.payuVnpay.data.paymentInfo.serviceProvider.providerCode,
                     "providerName" : $scope.payuVnpay.data.paymentInfo.serviceProvider.providerName,
-                    "serviceCode" : $stateParams.s,
+                    "serviceCode" : $scope.payuVnpay.data.paymentInfo.serviceProvider.service.serviceCode,
                     "serviceName" : $scope.payuVnpay.data.paymentInfo.serviceProvider.service.serviceName,
                     "realizationDate" : CURRENT_DATE.time,
                     "amount" : $scope.payuVnpay.data.paymentInfo.amount.value,
