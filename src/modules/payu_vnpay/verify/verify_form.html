@@ -10,8 +10,10 @@
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.remitter_branch.label' | translate}}">
         {{payuVnpay.data.remitterInfo.openBranch}}
     </bd-item-property>
+
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.remitter_avail.label' | translate}}">
-        {{payuVnpay.data.remitterInfo.currentBalance + ' ' +payuVnpay.data.senderAccount.currency}}
+        <bd-amount amount="payuVnpay.data.remitterInfo.currentBalance"
+                   currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
     </bd-item-property>
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.remitter_remain.label' | translate}}">
         {{payuVnpay.data.limit}}
