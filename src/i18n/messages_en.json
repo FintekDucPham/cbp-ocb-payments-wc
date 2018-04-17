@@ -1163,7 +1163,7 @@
   "ocb.payments.auto_bill.list.details.supplier": "Supplier",
   "ocb.payments.auto_bill.list.details.paymentSetting": "Payment setting",
   "ocb.payments.auto_bill.list.details.paymentSetting.null": "",
-  "ocb.payments.auto_bill.list.details.paymentSetting.LIMITED": "Amount less than",
+  "ocb.payments.auto_bill.list.details.paymentSetting.LIMITED": "Amount is less than",
   "ocb.payments.auto_bill.list.details.paymentSetting.FULL": "Full payment",
   "ocb.payments.auto_bill.list.details.firstExecutionDate": "First execution date",
   "ocb.payments.auto_bill.list.details.frequencyPer": "Frequency per",

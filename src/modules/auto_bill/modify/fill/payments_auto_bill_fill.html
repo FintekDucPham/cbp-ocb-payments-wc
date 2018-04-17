@@ -61,6 +61,8 @@
             </div>
         </eb-validation-messages>
 
+        <div class="form-row"></div>
+
         <bd-item-property label="{{ ::'ocb.payments.auto_bill.list.details.paymentSetting' | translate }}">
             <bd-radio-select bd-model="payment.formData.paymentSetting">
                 <bd-radio-option bd-option-value="PAYMENT_SETTING.FULL">
@@ -77,17 +79,18 @@
                 </bd-radio-option>
             </bd-radio-select>
           <div>
-            <div class="bd-item-property__value--secondary" style="display: inline;">
-               <input type="text"
-                      name="next"
-                      class="input-field"
-                      ng-model="payment.formData.amountLimit.value"
-                      rb-number-type-input
-                      ng-pattern="AMOUNT_PATTERN"
-                      amount-input
-                      currency="VND"
-               />
-             </div>
+              <div class="control-has-indicator">
+                  <input type="text"
+                         name="next"
+                         rb-number-type-input
+                         ng-min="0.01"
+                         class="input-field"
+                         ng-model="payment.formData.amountLimit.value"
+                         ng-pattern="AMOUNT_PATTERN"
+                         amount-input
+                         currency="{{payment.items.remitterAccount.currency}}">
+                  <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
+              </div>
            <div class="eb-validation-messages" ng-show="isNegativeAmount(payment.formData.amountLimit.value) || isZeroAmount(payment.formData.amountLimit.value)">
              <div class="messages">
                <div  class="validation-message animate-on">
