@@ -170,6 +170,7 @@ angular.module('ocb-payments')
         });
 
         $scope.$watch('payment.items.remitterAccount', function(account) {
+            payment.formData.fromAccountNo = account ? account.accountNo : null;
             if (account) {
                 accountsService.getAvailableFunds(account).then(function (info) {
                     payment.meta.availableFunds = info.availableFunds;
