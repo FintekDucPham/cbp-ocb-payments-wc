@@ -21,11 +21,12 @@ angular.module('ocb-payments')
                                                             rbPaymentAccTypes, depositsService, accountsService) {
         
         $scope.accTypeList=rbPaymentAccTypes.TYPES;
-        $scope.addToBeneficiaries=false;
 
-        var paymentdata={paymentType:"InternalPayment"}
+        var paymentdata = {
+            paymentType: 'InternalPayment',
+        }
         transactionService.limits(paymentdata).then(function(limits){
-            $scope.transactionLimit=limits;
+            $scope.payment.meta.remainingDailyLimit = limits.remainingDailyLimit;
         });
 
         $scope.loadDescription=systemParameterService.getParameterByName("transaction.description.length.max").then(function(value){
@@ -81,7 +82,7 @@ angular.module('ocb-payments')
             copiedForm.realizationDate = utilityService.convertDateToCurrentTimezone(formData.realizationDate, $scope.CURRENT_DATE.zone);
             delete copiedForm.beneficiaryAccountId;
             delete copiedForm.acctype;
-            angular.extend(copiedForm,{paymentType:"SavingDeposit",addToBasket:false,addToBeneficiary:$scope.addToBeneficiaries});
+            angular.extend(copiedForm,{paymentType:"SavingDeposit",addToBasket:false});
             return copiedForm;
         };
 
@@ -350,10 +351,6 @@ angular.module('ocb-payments')
             }
             $scope.paymentForm.amount.$setValidity('funds', true);
         };
-
-        $scope.cbChange= function (){
-            $scope.addToBeneficiaries=!$scope.addToBeneficiaries;
-        }
 
         $scope.$watch('[ payment.items.senderAccount.accountId, payment.items.recipientAccount.accountId ]', updatePaymentCurrencies, true);
         $scope.$watch('payment.formData.currency', recalculateCurrencies);
