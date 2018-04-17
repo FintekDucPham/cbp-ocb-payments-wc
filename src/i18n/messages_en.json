@@ -922,6 +922,7 @@
   "ocb.payments.future.saving.label":"Accumulative saving",
   "ocb.payments.new.types.SAVING":"Future Accumulate Saving and Nurturing Future",
   "ocb.payments.new.saving.fill.sender_account":"Account number",
+  "ocb.payments.new.saving.fill.sender_account_name": "Name",
   "ocb.payments.new.saving.fill.recipient_account":"Account number",
   "ocb.payments.new.saving.fill.recipient_data": "Recipient name",
   "ocb.payments.new.saving.fill.recipient_data.placeholder": "Enter recipient name",
@@ -1130,6 +1131,7 @@
   "ocb.payments.new.saving.fill.description.placeholder":"Type description",
   "ocb.payments.new.saving.fill.acctype.EMPTY_TITLE":"Account type cannot by empty",
   "ocb.payments.new.saving.verify.amount_in_word":"Amount in word",
+  "ocb.payments.new.saving.verify.title": "Data verification",
 
   "ocb.payments.auto_bill.label": "Auto bill",
   "ocb.payments.auto_bill.list.header": "Auto bill",

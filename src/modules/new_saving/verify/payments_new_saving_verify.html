@@ -1,13 +1,36 @@
-<div class="bd-form-white bd-form-content">
+<div class="bd-form-white">
+    <div class="groupTitle">
+        {{ 'ocb.payments.new.saving.verify.title' | translate }}
+    </div>
+
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.sender_account'|translate}}">
         <span style="display: inline-block; word-break: break-all;">{{ payment.items.senderAccount.accountNo }}</span>
-  <!--      <span style="display: inline-block;">
-            <span class="hidden-md hidden-lg">{{ cardContext.item.accountFrom.accountNo | nrbAccountSelectIbanShortFilter }}</span>
-        </span>-->
-        <!--<span style="display:block;" class="hidden-xs hidden-sm"> {{ cardContext.item.accountFrom.accountNo | nrbIbanFilter }}</span>-->
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.sender_account_name'|translate}}">
+        {{payment.items.senderAccount.accountName }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.branch.label' | translate}}">
+        {{payment.items.senderAccount.openBranch}}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.balance.label'|translate}}">
+        <bd-amount amount="payment.items.senderAccount.currentBalance"
+                   currency="{{ payment.formData.currency || VND}}">
+        </bd-amount>
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.daily_limit.label' | translate}}">
+        <bd-amount ng-if="payment.meta.remainingDailyLimit !== null"
+                   amount="payment.meta.remainingDailyLimit"
+                   currency="{{payment.formData.currency || VND}}">
+        </bd-amount>
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.account_type'|translate}}">
+        {{ payment.formData.acctype.name }}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.deposit_account_number'|translate}}">
         {{payment.items.recipientAccount.depositContractNumber }}
+    </bd-item-property>
+    <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.fill.checkbox.label'|translate}}">
+        {{payment.formData.addToBeneficiary ? ('ocb.payments.form.checkbox.true' | translate) : ('ocb.payments.form.checkbox.false' | translate)}}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.amount_figures.label'|translate}}">
       <bd-amount amount="payment.formData.amount"
@@ -20,8 +43,9 @@
     <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.saving.fill.description'|translate}}">
         {{payment.formData.description}}
     </bd-item-property>
-    
 </div>
+
+<br>
 
 <div class="bd-form-white" ng-show="payment.token.model.$tokenRequired">
 

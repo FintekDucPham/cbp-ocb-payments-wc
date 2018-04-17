@@ -14,7 +14,28 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewPaymentSavingVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService,authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash,ocbConvert,language, $interpolate, dataTemplate) {
+    .controller('NewPaymentSavingVerifyController', function (
+        $scope,
+        bdVerifyStepInitializer,
+        bdStepStateEvents,
+        transferService,
+        depositsService,
+        authorizationService,
+        formService,
+        translate,
+        dateFilter,
+        rbPaymentOperationTypes,
+        RB_TOKEN_AUTHORIZATION_CONSTANTS,
+        paymentsBasketService,
+        $state,
+        lodash,
+        ocbConvert,
+        language,
+        $interpolate,
+        dataTemplate,
+        recipientGeneralService,
+        rbRecipientOperationType,
+        rbRecipientTypes) {
 
         $scope.showVerify =  false;
         if(angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)){
@@ -88,6 +109,22 @@ angular.module('ocb-payments')
             });
         }
 
+        function createRecipient () {
+            var formData = $scope.payment.formData;
+            return {
+                bankCode: null,
+                beneficiary: new Array(""),
+                branchCode: null,
+                cardNumber: null,
+                creditAccount: formData.recipientAccountNo,
+                debitAccount: formData.remitterAccountId,
+                province: null,
+                recipientType: rbRecipientTypes.INTERNAL.code,
+                remarks: new Array(formData.description),
+                shortName: formData.recipientName
+            }
+        }
+
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
                 if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
@@ -99,6 +136,9 @@ angular.module('ocb-payments')
                                 $scope.payment.result.token_error = false;
                             }
                         } else {
+                            if ($scope.payment.formData.addToBeneficiary === true) {
+                                recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.INTERNAL.state , createRecipient());
+                            }
                             authorize(actions.proceed, actions);
                         }
                     }
