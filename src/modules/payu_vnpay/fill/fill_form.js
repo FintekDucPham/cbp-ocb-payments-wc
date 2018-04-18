@@ -19,7 +19,7 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE,bdFillStepInitializer) {
+                                bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE,bdFillStepInitializer,$state) {
 
             console.log($scope.payuVnpay.data);
             bdFillStepInitializer($scope, {
@@ -35,6 +35,10 @@ angular.module('ocb-payments')
                 }).then(function (data) {
                     $scope.payuVnpay.data.paymentInfo = data;
                 })
+            } else {
+                if(!$scope.payuVnpay.data || !$scope.payuVnpay.data.paymentInfo) {
+                    $state.go('dashboard');
+                }
             }
 
             customerService.getCustomerDetails().then(function(data) {
