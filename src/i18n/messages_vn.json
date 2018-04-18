@@ -988,7 +988,7 @@
   "ocb.payments.payu_vnpay.verify.label": "Xác nhận thông tin",
   "ocb.payments.payu_vnpay.label": "VNPAY",
   "ocb.payments.payu_vnpay.return.label": "Trở lại",
-  "ocb.payments.payu_vnpay.export.label": "Print Report",
+  "ocb.payments.payu_vnpay.export.label": "In báo cáo",
   "ocb.payments.payu.label": "PayU",
   "ocb.payments.payu.err.label": "Không tìm thấy thông tin, vui lòng liên hệ quản trị viên để biết thêm chi tiết",
   "ocb.payments.new.saving.fill.recipient_data.EMPTY_BNF_DATA": "Chi tiết người thụ hưởng không thể để trống",
