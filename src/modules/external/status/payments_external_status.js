@@ -30,8 +30,6 @@ angular.module('ocb-payments')
 
         $scope.rbPaymentsStepParams.visibility.finalAction = !payment.formData.recipientId;
 
-        $scope.infoText = translate.property('ocb.payments.new.status.info');
-
         bdStatusStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: payment

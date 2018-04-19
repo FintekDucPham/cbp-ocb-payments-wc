@@ -16,7 +16,8 @@ angular.module('ocb-payments')
         }
 
         $scope.idForPrint = null;
-        $scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.selectedTrans[0].id;
+        //todo disable for test
+        //$scope.pendingTransaction.token.params.resourceId = $scope.pendingTransaction.selectedTrans[0].id;
         //list data table define
         $scope.table = {
             tableConfig : new bdTableConfig({
@@ -130,10 +131,10 @@ angular.module('ocb-payments')
 
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
-                            actions.proceed();
+                           actions.proceed();
                         }
                     } else {
-                        actions.proceed();
+                       actions.proceed();
                     }
 
                 }).finally(function () {
@@ -160,7 +161,7 @@ angular.module('ocb-payments')
 
                     if ($scope.pendingTransaction.token.model && $scope.pendingTransaction.token.model.$tokenRequired) {
                         if (!$scope.pendingTransaction.token.model.$isErrorRegardingToken(error)) {
-                            actions.proceed();
+                           actions.proceed();
                         }
                     } else {
                         actions.proceed();

@@ -19,7 +19,7 @@
             </span>
             <span class="control-block search-block">
                 <span class="search-ip">
-                    <input type="text" ng-model="table.operationTitle" class="form-control" placeholder="Search">
+                    <input type="text" ng-model="table.operationTitle" class="form-control" placeholder="{{::'platform.search.title' | translate}}" style="padding: 0 15px">
                     <button type="submit" ng-click="searchRecipient()" class="btn"><i class="search-icon"></i></button>
                 </span>
             </span>
@@ -29,38 +29,62 @@
         <button type="button" ng-click="onRecipientCreate()" class="btn second-btn" style="text-transform: uppercase;">{{::'ocb.payments.recipients.new.button' | translate}}</button>
     </div>
     <div class="page-bd clear">
-        <bd-table bd-type="typeL1"
-                  bd-table-params="table.tableConfig"
-                  bd-table-control="table.tableControl"
-                  bd-table-data="table.tableData"
-                  bd-table-promise="recipientListPromise"
-                  bd-table-meta="{
-                        'first' : { 'title': '##ocb.payments.recipients.list.header.customName.label', 'data' : 'customerName' },
-                        'second' : { 'title': '##ocb.payments.recipients.list.header.recipient_type.label', 'data' : 'recipientType' },
-                        'third' : { 'title': '##ocb.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' },
-                        'fourth' : { 'title': '##ocb.payments.recipients.list.header.bank.label', 'data' : 'bankName' },
-                        'fifth' : { 'title': '##ocb.payments.recipients.list.header.nrb.label', 'data' : 'nrb' },
-                        'button' : {'title': '##ocb.payments.recipients.list.details.transfer', 'data': '-'}
-                  }">
+        <bd-table
+            bd-type="typeL1"
+            bd-table-params="table.tableConfig"
+            bd-table-control="table.tableControl"
+            bd-table-data="table.tableData"
+            bd-table-promise="recipientListPromise"
+            bd-table-meta="{
+                'first' : { 'title': '##ocb.payments.recipients.list.header.customName.label', 'data' : 'customerName' },
+                'second' : { 'title': '##ocb.payments.recipients.list.header.recipient_type.label', 'data' : 'recipientType' },
+                'third' : { 'title': '##ocb.payments.recipients.list.header.recipient.label', 'data' : 'recipientName' },
+                'fourth' : { 'title': '##ocb.payments.recipients.list.header.bank.label', 'data' : 'bankName' },
+                'fifth' : { 'title': '##ocb.payments.recipients.list.header.nrb.label', 'data' : 'nrb' },
+                'button' : {'title': '##ocb.payments.recipients.list.details.transfer', 'data': '-'}
+            }">
             <bd-details-section bd-table-row-details>
                 <div ng-include="::resolveTemplateType($data.recipientType)"></div>
                 <bd-details-action-section>
-                    <div class="ft-cont-with-dashed">
-                        <div class="right">
-                            <button type="button" ng-click="onRecipientEdit($data)" class="btn hl-txt2">{{::'ocb.payments.recipients.list.details.edit' | translate}}</button>
-                            <button type="button" ng-click="onRecipientRemove($data)" class="btn second-btn">{{::'ocb.payments.recipients.list.details.remove' | translate}}</button>
-                        </div>
+                    <div class="right-lg-center-xs">
+                        <button type="button" ng-click="onRecipientEdit($data)" class="btn hl-txt2">
+                            {{::'ocb.payments.recipients.list.details.edit' | translate}}
+                        </button>
+                        <button type="button" ng-click="onRecipientRemove($data)" class="btn second-btn">
+                            {{::'ocb.payments.recipients.list.details.remove' | translate}}
+                        </button>
                     </div>
+                    <style>
+                        @media (max-width: 768px) {
+                            .right-lg-center-xs {
+                                width: fit-content;
+                                margin: 0 auto
+                            }
+                        }
+                        @media (min-width: 768px) {
+                            .right-lg-center-xs {
+                                float: right;
+                            }
+                        }
+                    </style>
 
                     <div class="bd-grid" style="display: none">
                         <div class="bd-grid__row">
                             <div class="bd-grid__col--sm-12 desktop-only">
-                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm" style="margin-right: 5px;">{{::'ocb.payments.recipients.list.details.edit' | translate}}</bd-button>
-                                <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.recipients.list.details.remove' | translate}}</bd-button>
+                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm" style="margin-right: 5px;">
+                                    {{::'ocb.payments.recipients.list.details.edit' | translate}}
+                                </bd-button>
+                                <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">
+                                    {{::'ocb.payments.recipients.list.details.remove' | translate}}
+                                </bd-button>
                             </div>
                             <div class="bd-grid__col--sm-16 mobile-only bd-center-text">
-                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.recipients.list.details.edit' | translate}}</bd-button><br />
-                                <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">{{::'ocb.payments.recipients.list.details.remove' | translate}}</bd-button>
+                                <bd-button ng-click="onRecipientEdit($data)" class="bd-button bd-hmargin-sm">
+                                    {{::'ocb.payments.recipients.list.details.edit' | translate}}
+                                </bd-button><br />
+                                <bd-button ng-click="onRecipientRemove($data)" class="bd-button bd-hmargin-sm">
+                                    {{::'ocb.payments.recipients.list.details.remove' | translate}}
+                                </bd-button>
                             </div>
                         </div>
                     </div>

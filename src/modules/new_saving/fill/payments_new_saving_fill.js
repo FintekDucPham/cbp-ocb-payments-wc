@@ -46,7 +46,6 @@ angular.module('ocb-payments')
             return item.accountId==this;
         };
         
-        $scope.AMOUNT_PATTERN = validationRegexp('AMOUNT_PATTERN');
         if($stateParams.nrb) {
             $scope.selectNrb = $stateParams.nrb;
         }
@@ -372,6 +371,9 @@ angular.module('ocb-payments')
                 }).then(function (accountList) {
                     that._depositsDataSource = accountList.content;
                     that.accountsList = that.filterDataSource(that._depositsDataSource);
+                    if ($scope.payment.formData.acctype) {
+                        that.onDepositAccountTypeSelected($scope.payment.formData.acctype);
+                    }
                 });
             },
 

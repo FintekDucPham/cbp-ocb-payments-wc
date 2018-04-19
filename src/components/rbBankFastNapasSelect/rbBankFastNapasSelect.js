@@ -8,7 +8,8 @@ ebankingSharedModule.directive('rbBankFastNapasSelect', function(pathService, do
         scope: {
             bankCode: '=rbBankCode',
             bank: '=rbBank',
-            placeholder: '@?rbPlaceholder'
+            placeholder: '@?rbPlaceholder',
+            onSelect: '&'
         },
 
         link: function postLink($scope, iElement, iAttrs, locationCtrl) {
@@ -78,12 +79,17 @@ ebankingSharedModule.directive('rbBankFastNapasSelect', function(pathService, do
             }
 
             function selectBank(bankCode) {
-                return $scope.banksList.some(function (bank) {
+                var res = $scope.banksList.some(function (bank) {
                     if (bank.bankCode === bankCode) {
                         setBank(bank);
                         return true;
                     }
                 });
+                if (res) {
+                    console.debug($scope);
+                    $scope.onSelect({data: $scope.bank});
+                }
+                return res;
             }
         }
     };

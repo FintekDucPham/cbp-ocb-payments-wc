@@ -139,6 +139,9 @@ angular.module('ocb-payments')
             }
         };
 
+        var defaultRejectedList = {}
+        angular.copy($scope.rejectedList, defaultRejectedList)
+
         $scope.onFilterLastValueChange();
 
         //if micro
@@ -302,6 +305,13 @@ angular.module('ocb-payments')
         $scope.hasValue = function(value) {
             return angular.isDefined(value) && value != null && value != "null";
         };
+
+        $scope.clearFilter = function () {
+            $scope.rejectedList = angular.copy(defaultRejectedList)
+            $scope.rejectedList.filterData.periodType.model = null
+            $scope.onFilterLastValueChange();
+            $scope.table.tableControl.invalidate();
+        }
 
     }).directive('minDate', function () {
         return {

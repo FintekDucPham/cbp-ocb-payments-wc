@@ -124,8 +124,8 @@ angular.module('ocb-payments')
                 data: {
                     futurePayment: true,
                     // TODO JAKO_DISABLE planned payments
-                    finalState: 'payments.external.new.fill'
-                    //finalState: 'payments.future.list'
+                    //finalState: 'payments.external.new.fill'
+                    finalState: 'payments.future.list'
                 },
                 resolve: {
                     loadPayment: ['payment', 'paymentsService', '$stateParams', 'loadCurrentDate', '$state', '$timeout', function (payment, paymentsService, $stateParams, loadCurrentDate, $state, $timeout) {
@@ -170,7 +170,7 @@ angular.module('ocb-payments')
                 }
             });
     })
-    .controller('PaymentsInternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService) {
+    .controller('PaymentsInternalController', function ($scope, $state, $q, payment, rbRecipientTypes, translate, exportService, REJECTED_CODES) {
         var stateData = $state.$current.data;
         $scope.payment = payment;
         var deleteOperation = $scope.deleteOperation = stateData.operation === 'delete';
@@ -204,6 +204,9 @@ angular.module('ocb-payments')
             onClear: function () {
                 $scope.$broadcast('clearForm');
             },
+            canPrintReport: function () {
+                return REJECTED_CODES.indexOf(payment.result.type) === -1 && REJECTED_CODES.indexOf(payment.result.code) === -1
+            },
             printReport: function () {
                 window.location.href = exportService.prepareHref({
                     href: "/api/transaction/" + payment.meta.referenceId + "/downloads/pdf.json"
@@ -232,7 +235,6 @@ angular.module('ocb-payments')
                 accept: true,
                 finalAction: true,
                 finalize: true,
-                printReport: true
             }
         };
     });

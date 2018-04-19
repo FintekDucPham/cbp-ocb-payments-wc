@@ -1,70 +1,68 @@
 
-<form name="payuVnpayForm">
+<form name="payuVnpayForm" class="vnpay-form">
+
+        <div class="bd-form" >
+            <bd-header class="">
+                {{ ::'ocb.payments.payu_vnpay.remitter.label' | translate }}
+            </bd-header>
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.remitter_number.label' | translate }}">
+                <rb-account-select-v2
+                        rb-account-id="payuVnpay.data.remitterAccountId"
+                        rb-account="payuVnpay.data.remitterInfo"
+                        rb-account-list="payuVnpay.data.accountList"
+                        rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                        rb-product-list-name="TRANSFER_FROM_LIST"
+                        rb-on-account-select="onAccountChange()"
+                        rb-account-no="payuVnpay.data.remitterAccountNo"
+                        rb-account-select-params="accountSelectParams">
+                </rb-account-select-v2>
+            </bd-item-property>
 
 
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.remitter_name.label' | translate }}">
+                {{payuVnpay.data.fullName}}
+            </bd-item-property>
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.remitter_branch.label' | translate }}">
+                {{payuVnpay.data.remitterInfo.openBranch}}
+            </bd-item-property>
 
-        <div class="account-collapse-item form-horizontal" >
-            <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_vnpay.remitter.label' | translate}}</p></div></div>
-            <div class="row" style="display: flex;align-items: center;">
-                <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_number.label' | translate}}</div>
-                <div class="col-md-5">        <rb-account-select rb-account="payuVnpay.data.senderAccount"
-                                                                 rb-account-no="remitterAccountId"
-                                                                 rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                                                                 rb-product-list-name="TRANSFER_OWN_FROM_LIST"
-                                                                 rb-account-select-params="senderSelectParams"
-                                                                 rb-init-select-fn="getAccountByNrb($item, $select)"
-                                                                 rb-on-account-select="onAccountChange($accountList,$item)"
-                                                                 rb-remote="remote.model_from"
-                                                                 rb-init-select-value = "{{account || selectNrb}}"
-                                                                ></rb-account-select>
-                </div>
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.remitter_avail.label' | translate }}">
+                <bd-amount amount="payuVnpay.data.remitterInfo.currentBalance"
+                           currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
+            </bd-item-property>
 
-            </div>
-            <br>
-            <div ng-if="payuVnpay.data.senderAccount !== null">
-                <div class="row" >
-                    <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_name.label' | translate}}</div>
-                    <div class="col-md-5">{{payuVnpay.data.senderAccount.accountName}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_branch.label' | translate}}</div>
-                    <div class="col-md-5">{{payuVnpay.data.senderAccount.branch}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_avail.label' | translate}}</div>
-                    <div class="col-md-5">{{payuVnpay.data.senderAccount.currentBalance + ' ' +payuVnpay.data.senderAccount.currency}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.remitter_remain.label' | translate}}</div>
-                    <div class="col-md-5">{{payuVnpay.data.senderAccount.limit}}</div>
-                </div>
-            </div>
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.remitter_remain.label' | translate }}">
+                <bd-amount amount="payuVnpay.data.limit"
+                           currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
+            </bd-item-property>
+
+        </div>
+        <div class="bd-form">
+            <bd-header class="">
+                {{ ::'ocb.payments.payu_vnpay.payment.label' | translate }}
+            </bd-header>
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.payment_code.label' | translate }}">
+                {{payuVnpay.data.paymentInfo.billCode}}
+            </bd-item-property>
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.bill_code.label' | translate }}">
+                {{payuVnpay.data.paymentInfo.customerCode}}
+            </bd-item-property>
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.amount.label' | translate }}">
+                <bd-amount amount="payuVnpay.data.paymentInfo.amount.value"
+                           currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
+            </bd-item-property>
+
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.provider.label' | translate }}">
+                {{payuVnpay.data.paymentInfo.serviceProvider.providerName}}
+            </bd-item-property>
+
+            <bd-item-property label="{{ ::'ocb.payments.payu_vnpay.distributed.label' | translate }}">
+                {{payuVnpay.data.paymentInfo.distributedBy}}
+            </bd-item-property>
+
+
         </div>
 
-        <div class="account-collapse-item form-horizontal" ng-if="payuVnpay.data.paymentInfo !== null">
-            <div class="row strong"><div class="col-md-3 "><p class="font-weight-bold text-uppercase">{{::'ocb.payments.payu_vnpay.payment.label' | translate}}</p></div></div>
-
-            <div class="row">
-                <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.payment_code.label' | translate}}</div>
-                <div class="col-md-3">{{payuVnpay.data.paymentInfo.paymentCode}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.bill_code.label' | translate}}</div>
-                <div class="col-md-3">{{payuVnpay.data.paymentInfo.billCode}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.amount.label' | translate}}</div>
-                <div class="col-md-3">{{payuVnpay.data.paymentInfo.amount}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.provider.label' | translate}}</div>
-                <div class="col-md-3">{{payuVnpay.data.paymentInfo.provider}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 lb">{{::'ocb.payments.payu_vnpay.distributed.label' | translate}}</div>
-                <div class="col-md-3">{{payuVnpay.data.paymentInfo.distributedBy}}</div>
-            </div>
-        </div>
 
     <span class="eb-validation-messages">
              <span class="messages"  ng-if="errMsg">

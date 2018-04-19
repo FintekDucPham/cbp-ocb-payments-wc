@@ -37,7 +37,15 @@ angular.module('ocb-payments')
     })
     .controller('AutoBillFillController', function ($scope, bdFillStepInitializer, FREQUENCY_TYPES, PAYMENT_SETTING,
                                                     RECURRING_PERIOD, translate, formService, bdStepStateEvents,
-                                                    viewStateService, initialState, authorizationService) {
+                                                    viewStateService, initialState, authorizationService, rbDatepickerOptions,
+                                                    userService, accountsService, transactionService) {
+        $scope.rbDatepickerOptions = rbDatepickerOptions({
+            minDate: new Date()
+        });
+        $scope.payment.formData.frequencyPeriodCount = 1;
+        $scope.isNegativeAmount = isNegativeAmount;
+        $scope.isZeroAmount = isZeroAmount;
+
         var initialData = initialState.data;
         var payment = $scope.payment;
         var paymentData = payment.formData;
@@ -49,9 +57,10 @@ angular.module('ocb-payments')
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             var form = $scope.autoBillForm;
-            if (form.$invalid) {
-                formService.dirtyFields(form);
-            } else {
+            if (form.$invalid || ($scope.payment.formData.amountLimit  && (isNegativeAmount($scope.payment.formData.amountLimit.value) || isZeroAmount($scope.payment.formData.amountLimit.value)))) {
+               formService.dirtyFields(form);
+               return false;
+           } else {
                 authorizationService.createCommonOperation({
                     paymentId: $scope.payment.paymentId,
                     operationType: "AUTOBILL_PAYMENT"
@@ -144,13 +153,6 @@ angular.module('ocb-payments')
             }
         });
 
-        // FINISH DATE
-        $scope.$watch('payment.formData.finishDate', function(newValue){
-            if (newValue) {
-                $scope.payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
-            }
-        });
-
         function convertFrequencySymbolToCode(frequencySymbol) {
             var result = null;
             if (frequencySymbol != null) {
@@ -161,5 +163,34 @@ angular.module('ocb-payments')
                 });
             }
             return result;
+        }
+
+        userService.getUserDetails().then(function (data) {
+            $scope.userDetails = data;
+        });
+
+        $scope.$watch('payment.items.remitterAccount', function(account) {
+            if (account) {
+                accountsService.getAvailableFunds(account).then(function (info) {
+                    payment.meta.availableFunds = info.availableFunds;
+                });
+
+            } else {
+                payment.meta.availableFunds = null;
+            }
+        });
+
+        transactionService.limits({
+            paymentType: 'BillPayment'
+        }).then(function (limits) {
+            payment.meta.remainingDailyLimit = limits.remainingDailyLimit;
+        });
+
+        function isNegativeAmount(value) {
+          return /^((-[1-9][0-9]*([.][0-9]{1,2})?)|(-0[.][0-9]{1,2}))$/.test(value);
+        }
+
+        function isZeroAmount(value){
+            return value < 0.01;
         }
     });

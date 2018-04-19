@@ -11,14 +11,10 @@ angular.module('ocb-payments')
     })
     .controller('TuitionFeeStatusController', function ($scope, bdStatusStepInitializer) {
 
-        bdStatusStepInitializer($scope, {
-            formName: 'paymentForm',
-            dataObject: $scope.payment
-        });
-        // console.log("+++sttE:" + $scope.payment.result.code + $scope.payment.result.type );
-        $scope.payment.standingOrderData = $scope.payment.formData;
-        //$scope.payment.standingOrderData.recipientAccountNo = $scope.payment.items.recipientAccount.accountNo;
+        // console.log("+++sttE:" + $scope.tuitionFee.result.code + $scope.tuitionFee.result.type );
+        $scope.tuitionFee.standingOrderData = $scope.tuitionFee.formData;
+        //$scope.tuitionFee.standingOrderData.recipientAccountNo = $scope.tuitionFee.items.recipientAccount.accountNo;
 
-        $scope.payment.formData = {};
+        $scope.tuitionFee.formData = {};
 
     });

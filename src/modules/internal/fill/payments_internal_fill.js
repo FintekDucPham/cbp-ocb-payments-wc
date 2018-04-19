@@ -35,9 +35,10 @@ angular.module('ocb-payments')
                                                             $filter, $q, transferService, accountsService,
                                                             utilityService, validationRegexp, translate,
                                                             rbAccountSelectParams, rbDatepickerOptions, bdFocus,
-                                                            bdFillStepInitializer, bdStepStateEvents) {
+                                                            bdFillStepInitializer, bdStepStateEvents, lodash, ocbConvert, language) {
 
         $scope.isRecipientSelected = false;
+        $scope.reciepientAccountName = false;
         var stateData = $state.$current.data;
         var transferReferenceId = stateData.newPayment ? null : $stateParams.referenceId;
         var transferOperation = stateData.futurePayment ? 'modify' : 'create';
@@ -200,7 +201,9 @@ angular.module('ocb-payments')
                 templateId: formData.recipientId,
                 recipientName: utilityService.splitTextEveryNSigns(formData.recipientName),
                 recipientAccountNo: formData.recipientAccountNo.replace(/ /g, ''),
+                branchName: payment.items.remitterAccount.openBranch,
                 amount: formData.amount.toString().replace(",", "."),
+                amountInWords: ocbConvert.convertNumberToText(formData.amount, language.get() === 'en'),
                 currency: payment.items.remitterAccount.currency, // only to support holiday indicator
                 description: utilityService.splitTextEveryNSigns(formData.description),
                 realizationDate: utilityService.convertDateToCurrentTimezone(formData.realizationDate, payment.meta.timeZone),
@@ -236,6 +239,27 @@ angular.module('ocb-payments')
                     });
                 }
             });
+        }
+
+        $scope.onRecipientAccountChanged = function() {
+            $scope.paymentForm.recipientAccountNo.$setValidity("reciepientAccountName", false);
+            payment.formData.recipientName = "";
+            var accountNo = payment.formData.recipientAccountNo.replace(/ /g, '');
+            var foundRecipient = lodash.filter(payment.meta.recipientList, function(recipient) {
+                return recipient.accountNo == accountNo;
+            })[0];
+            if(foundRecipient){
+                payment.formData.recipientName = foundRecipient.name;
+                payment.items.recipient = foundRecipient;
+                $scope.paymentForm.recipientAccountNo.$setValidity("reciepientAccountName", true);
+            } else{
+                accountsService.getReciepientAccount({"accountId": accountNo}).then(function (name) {
+                    if (name.content && name.content.length > 0){
+                        payment.formData.recipientName = name.content;
+                        $scope.paymentForm.recipientAccountNo.$setValidity("reciepientAccountName", true);
+                    }
+                });
+            }
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {

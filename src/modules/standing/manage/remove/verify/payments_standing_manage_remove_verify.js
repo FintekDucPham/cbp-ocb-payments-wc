@@ -35,8 +35,8 @@ angular.module('ocb-payments')
 
         $scope.$on(bdStepStateEvents.BACKWARD_MOVE, function(event, action) {
             // TODO JAKO_DISABLE standing orders
-            viewStateService.setInitialState("payments.external.new.fill", {
-            //viewStateService.setInitialState("payments.standing.list", {
+            //viewStateService.setInitialState("payments.external.new.fill", {
+            viewStateService.setInitialState("payments.standing.list", {
                 returnToPage: (initialState && initialState.returnToPage) ? initialState.returnToPage : null,
                 returnToItem: (initialState && initialState.payment) ? initialState.payment : null
             });
@@ -46,8 +46,8 @@ angular.module('ocb-payments')
             // action.proceed();
 
             // TODO JAKO_DISABLE standing orders
-            $state.go('payments.external.new.fill');
-            //$state.go('payments.standing.list');
+            //$state.go('payments.external.new.fill');
+            $state.go('payments.standing.list');
         });
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {

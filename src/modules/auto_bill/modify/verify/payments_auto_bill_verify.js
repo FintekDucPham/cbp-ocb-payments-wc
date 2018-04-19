@@ -19,7 +19,7 @@ angular.module('ocb-payments')
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.auto_bill_modify.verify', {
-            url: "/fill",
+            url: "/verify",
             templateUrl: pathServiceProvider.generateTemplatePath("ocb-payments") + "/modules/auto_bill/modify/verify/payments_auto_bill_verify.html",
             controller: "AutoBillVerifyController",
             data: {
@@ -76,11 +76,14 @@ angular.module('ocb-payments')
 
 
             var callParams = $scope.payment.formData;
+            if(callParams.amountLimit) {
+                callParams.amountLimit = callParams.amountLimit.value;
+            }
             callParams.resourceId = $scope.payment.meta.token.params.resourceId;
             callParams.credentials = $scope.payment.meta.token.model.input.model;
 
-            if($scope.payment.meta.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
-                if ($scope.payment.meta.token.model.input.$isValid()) {
+            if($scope.payment.meta.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM || $scope.userDetails.customerDetails.customerType == "CORPORATE") {
+                if ($scope.payment.meta.token.model.input.$isValid() || $scope.userDetails.customerDetails.customerType == "CORPORATE") {
 
                     if (callParams.actionType.code == "NEW") {
                         transferBillService.createAutoBillTransfer(callParams).then(function (status) {
@@ -138,9 +141,9 @@ angular.module('ocb-payments')
             if(status === "EXECUTED"){
                 setErrorMessage("success", 'ocb.payment.auto_bill.status.success.info');
             } else if (status === "IN_PROCESSING"){
-                setErrorMessage("warning", 'ocb.payment.auto_bill.status.processing.info');
+                setErrorMessage("success", 'ocb.payment.auto_bill.status.processing.info');
             } else{
-                setErrorMessage("undefined", 'ocb.payment.auto_bill.status.error.info');
+                setErrorMessage("error", 'ocb.payment.auto_bill.status.error.info');
             }
         }
 

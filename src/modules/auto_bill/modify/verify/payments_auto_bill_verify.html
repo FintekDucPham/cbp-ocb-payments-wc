@@ -1,5 +1,5 @@
 <div>
-    <form name="autoBillForm" novalidate>
+    <form name="autoBillForm" class="bd-form" novalidate>
         <!--<bd-item-property class="bd-item-property&#45;&#45;text"-->
                           <!--label="{{::'ocb.payments.auto_bill.list.details.orderNo'|translate}}"-->
                           <!--ng-class="{'bd-item-property&#45;&#45;disabled': params.operationType === 'DELETE'}">-->
@@ -18,17 +18,23 @@
             <span>Auto Bill Payment</span>
         </bd-item-property>
 
-        <!--<bd-item-property class="bd-item-property&#45;&#45;text"-->
-                          <!--label="{{::'ocb.payments.auto_bill.list.details.fromAccount'|translate}}"-->
-                          <!--ng-class="{'bd-item-property&#45;&#45;disabled': params.operationType === 'DELETE'}">-->
-            <!--{{payment.formData.fromAccount }}-->
-        <!--</bd-item-property>-->
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.fromAccount'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.items.remitterAccount.accountNo }}
+        </bd-item-property>
 
-        <!--<bd-item-property class="bd-item-property&#45;&#45;text"-->
-                          <!--label="{{::'ocb.payments.auto_bill.list.details.owner'|translate}}"-->
-                          <!--ng-class="{'bd-item-property&#45;&#45;disabled': params.operationType === 'DELETE'}">-->
-            <!--{{payment.formData.owner }}-->
-        <!--</bd-item-property>-->
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.owner'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            <p ng-bind-html="payment.items.remitterAccount | accountOwners"></p>
+        </bd-item-property>
+
+        <bd-item-property class="bd-item-property--text"
+                          label="{{::'ocb.payments.auto_bill.list.details.branch'|translate}}"
+                          ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+            {{payment.items.remitterAccount.openBranch }}
+        </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.details.customerId'|translate}}"
@@ -51,7 +57,7 @@
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.details.paymentSetting'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-            {{::'ocb.payments.auto_bill.list.details.paymentSetting.' + payment.formData.paymentSetting |translate}}
+            {{::'ocb.payments.auto_bill.list.details.paymentSetting.' + payment.formData.paymentSetting |translate}} <span ng-show="payment.formData.paymentSetting == 'LIMITED'"><bd-amount style="display: inline-flex" amount="payment.formData.amountLimit.value" currency="VND"></bd-amount></span>
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"
@@ -83,8 +89,7 @@
 
     </form>
 </div>
-
-<div class="bd-form-white" ng-show="payment.meta.token.model.$tokenRequired">
+<div class="bd-form-white" ng-show="payment.meta.token.model.$tokenRequired && userDetails.customerDetails.customerType != 'CORPORATE'">
 
     <rb-token-authorization rb-operation-type="AUTOBILL_PAYMENT" rb-params="payment.meta.token.params"
                                 rb-model-data="payment.meta.token.modelData()"

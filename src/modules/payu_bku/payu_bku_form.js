@@ -11,44 +11,62 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
+    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, rbPaymentOperationTypes,exportService,fileDownloadService) {
 
         bdMainStepInitializer($scope, 'payuBku', {
             formName: 'payuBkuForm',
             formData: {},
+            operation: rbPaymentOperationTypes.NEW,
             options: {},
             meta: {},
+            token: {
+                model: null,
+                params: {
+
+                }
+            },
             validation: {},
             items :{}
         });
 
-        $scope.modify = {
-            verify:{
-                data: null
-            }
-        };
+        // $scope.modify = {
+        //     verify:{
+        //         data: null
+        //     }
+        // };
         $scope.subjectSelected = function () {
             return $scope.payuBku.subjectSelected;
         };
 
-        $scope.getOTP = function (event, actions) {
-            sendAuthorizationToken();
+        // $scope.getOTP = function (event, actions) {
+        //     sendAuthorizationToken();
+        // }
+        //
+        // function sendAuthorizationToken() {
+        //     //TODO get otp
+        // };
+
+        $scope.exportPdf =  function () {
+            var downloadLink = exportService.prepareHref({
+                href: "/api/transaction/downloads/pdf.json"
+            });
+            fileDownloadService.startFileDownload(downloadLink + ".json?id=" + $scope.payuBku.transferId);
         }
 
-        function sendAuthorizationToken() {
-            //TODO get otp
-        };
        $scope.payuBkuFormParams = {
-            completeState:'payments.payu_bku.fill',
+            completeState:'dashboard',
             onClear: $scope.clearForm,
             cancelState:'payments.payu_bku.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
+            exportPdf: $scope.exportPdf,
+            isChecked: 'true',
             labels:{
                 prev:"ocb.payments.buttons.prev",
                 next:"ocb.payments.new.btn.next",
-                finalize:"ocb.payments.new.btn.finalize",
-                search: 'config.multistepform.buttons.search'
+                finalize:"ocb.payments.payu_vnpay.return.label",
+                search: 'config.multistepform.buttons.search',
+                export: 'ocb.payments.payu_vnpay.export.label'
             },
             visibility:{
                 search: true,

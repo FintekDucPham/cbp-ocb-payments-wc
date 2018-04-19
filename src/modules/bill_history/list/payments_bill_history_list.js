@@ -27,7 +27,7 @@ angular.module('ocb-payments')
                 $scope.table.tableControl.invalidate();
             }
         }
-        $scope.$watch('senderAccountNo', reloadTable);
+        $scope.$watch('billHistory.formData.remitterAccountId', reloadTable);
 
         $scope.accountSelectParams = new rbAccountSelectParams({
             showCustomNames: true
@@ -50,6 +50,31 @@ angular.module('ocb-payments')
 
             return {fromDate: dateFromValue, toDate: dateToValue};
         }
+
+        //reload table with period
+        $scope.$watch('filterData.range.fromDate', function (newValue) {
+            var filterDateValues = getDatesFromFilter();
+            var toDate =  filterDateValues.toDate;
+            var fromDate = dateFilter(moment(newValue).toDate(), 'yyyy-MM-dd');
+            if (toDate < fromDate) {
+                $scope.invalidDate = true;
+            } else {
+                $scope.invalidDate = false;
+            }
+            reloadTable();
+        });
+
+        $scope.$watch('filterData.range.toDate', function (newValue) {
+            var filterDateValues = getDatesFromFilter();
+            var fromDate =  filterDateValues.fromDate;
+            var toDate = dateFilter(moment(newValue).toDate(), 'yyyy-MM-dd');
+            if (toDate < fromDate) {
+                $scope.invalidDate = true;
+            } else {
+                $scope.invalidDate = false;
+            }
+            reloadTable();
+        });
 
         /*handle Search button*/
         $scope.invalidDate = false;
@@ -100,10 +125,11 @@ angular.module('ocb-payments')
             tableData: {
                 getData: function (defer, $params) {
                     /*Test calendar Start*/
-                    //var fromDay = rbModelFrom;
+                    $scope.billHistory.formData.fromDate = getDatesFromFilter().fromDate;
+                    $scope.billHistory.formData.toDate = getDatesFromFilter().toDate;
                     $scope.billHistoryData = transferBillService.getBillHistory({
-                        fromDate: $scope.fromDate,
-                        toDate: $scope.toDate
+                        fromDate: $scope.billHistory.formData.fromDate,
+                        toDate: $scope.billHistory.formData.toDate
                     }).then(function (data) {
                         // defer.resolve(data.content);
 

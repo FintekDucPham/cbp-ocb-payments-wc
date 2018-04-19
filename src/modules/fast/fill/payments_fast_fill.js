@@ -31,10 +31,10 @@ angular.module('ocb-payments')
             .state('payments.fast.basket.modify.fill', angular.copy(prototype));
     })
     .controller('PaymentsFastFillController', function ($scope, $state, $stateParams, payment,
-                                                            $filter, $q, transferService, accountsService,
+                                                            $filter, $q, transferService, accountsService, recipientsService,
                                                             utilityService, validationRegexp, translate,
                                                             rbAccountSelectParams, rbDatepickerOptions, bdFocus,
-                                                            bdFillStepInitializer, bdStepStateEvents) {
+                                                            bdFillStepInitializer, bdStepStateEvents, lodash, ocbConvert, language) {
 
         $scope.isRecipientSelected = false;
         var stateData = $state.$current.data;
@@ -180,6 +180,20 @@ angular.module('ocb-payments')
             bdFocus('recipientAccountNo');
         };
 
+        $scope.onRecipientAccountChanged = function() {
+            retrieveRecipientNameByAccount();
+        }
+
+        $scope.onSelectBank = function(bank) {
+            if (bank) {
+                retrieveRecipientNameByAccount();
+            }
+        }
+
+        $scope.onCardNumberChanged = function() {
+            retrieveRecipientNameByCard();
+        }
+
         $scope.$on('clearForm', function () {
             $scope.remote.model.resetToDefault();
             payment.items.recipient = null;
@@ -190,6 +204,37 @@ angular.module('ocb-payments')
             form.$setPristine();
             form.$setUntouched();
         });
+
+        $scope.recipientNotFound = false;
+        function retrieveRecipientNameByAccount() {
+            var accountNumber = payment.formData.recipientAccountNo;
+            var bankCode = payment.formData.bankCode;
+
+            if (accountNumber && bankCode) {
+                recipientsService.getRecipientNameByAccountNumber({
+                    debitAccount: payment.items.remitterAccount.accountNo,
+                    accountNumber: accountNumber,
+                    bankCode: bankCode
+                }).then(function (result) {
+                    payment.formData.recipientName = result;
+                    $scope.recipientNotFound = !result || result.length === 0;
+                });
+            }
+        }
+
+        function retrieveRecipientNameByCard() {
+            var cardNumber = payment.formData.cardNumber;
+
+            if (cardNumber) {
+                recipientsService.getRecipientNameByCardNumber({
+                    debitAccount: payment.items.remitterAccount.accountNo,
+                    cardNumber: cardNumber
+                }).then(function(result) {
+                    payment.formData.recipientName = result;
+                    $scope.recipientNotFound = !result || result.length === 0;
+                });
+            }
+        }
 
         function createTransfer () {
             var formData = payment.formData;
@@ -206,6 +251,8 @@ angular.module('ocb-payments')
                 currency: payment.items.remitterAccount.currency, // only to support holiday indicator
                 recipientAccountNo: toAccount ? formData.recipientAccountNo.replace(/ /g, '') : null,
                 bankCode: toAccount ? formData.bankCode : null,
+                branchName: payment.items.remitterAccount.openBranch,
+                amountInWords: ocbConvert.convertNumberToText(formData.amount, language.get() === 'en'),
                 cardNumber: toCard ? formData.cardNumber : null,
                 description: utilityService.splitTextEveryNSigns(formData.description),
                 realizationDate: utilityService.convertDateToCurrentTimezone(payment.meta.currentDate, payment.meta.timeZone),

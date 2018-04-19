@@ -9,7 +9,7 @@
         {{'ocb.payments.basket.transaction.status.'+$data.signedStatus | translate}}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'ocb.payments.basket.list.header.operation_type'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" style="word-break: break-word;">
-        {{ ::'ocb.payments.new.types.'+$data.payment.transferType| translate}}
+        {{ ::'ocb.payments.new.types.'+$data.payment.paymentType| translate}}
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'ocb.payments.basket.list.header.recipient_name'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}" style="word-break: break-word;">
         {{ $data.payment.recipientName.join(' ') }}
@@ -20,7 +20,7 @@
         </span>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'ocb.payments.basket.list.header.operation_amount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
-        {{ $data.payment.amount | number: 2}} {{ $data.payment.currency }}
+        <bd-amount class="product-details-primary bd-amount" amount="$data.payment.amount" currency="{{$data.payment.currency}}"></bd-amount>
     </bd-item-property>
     <bd-item-property class="bd-item-property--text" label="{{::'ocb.payments.basket.list.sourceAccount'|translate}}" ng-class="{'bd-item-property--disabled' : $data.operationType === 'DELETE'}">
         <div>{{$data.payment.accountNo| nrbIbanFilter }}</div>

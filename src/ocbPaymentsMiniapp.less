@@ -92,40 +92,6 @@
 
 }
 
-.control-has-indicator {
-  position: relative;
-  display: block;
-  background-image: -webkit-linear-gradient(#FAFAFA 0%, #fff 100%);
-  background-image: -o-linear-gradient(#FAFAFA 0%, #fff 100%);
-  background-image: linear-gradient(#FAFAFA 0%, #fff 100%);
-  border-radius: 5px;
-}
-
-.control-has-indicator input {
-  padding-right: 60px;
-  background: none;
-  position: relative;
-  z-index: 2;
-}
-
-.control-has-indicator .indicator {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 45px;
-  width: 48px;
-  border-left: solid 1px #D9D9D9;
-  text-align: center;
-  z-index: 1;
-}
-
-.control-has-indicator .indicator:before {
-  content: '';
-  height: 100%;
-  display: inline-block;
-  vertical-align: middle;
-}
-
 .authorization-blocked {
   text-align: center;
   font-size: 1.2em;
@@ -346,8 +312,7 @@
       }
       .basket-checkbox {
         position: absolute;
-        top:50%;
-        margin-top: -13px;
+        margin-top: 3px;
       }
       .basket-checkbox__empty{
         height:0%;
@@ -419,10 +384,9 @@ rb-payment-recipients-fill > form {
 }
 
 .groupTitle {
-    font-size:18px;
-  }
-
-
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 
 .payments-future-list {
   max-width: none !important;
@@ -471,7 +435,7 @@ rb-payment-recipients-fill > form {
   max-width: none;
 }
 
-.internal-payment.form, .external-payment.form {
+.internal-payment.form, .external-payment.form,.fast-payment.form,.accumulative-saving.form {
   .bd-form-content {
     background: none;
     padding: 0;
@@ -678,11 +642,29 @@ rb-payment-recipients-fill > form {
 }
 
 .rb-add-benefit {
-  margin-left: 9px;
-  padding-bottom: 15px;
+  float: left;
+  width: 87%;
+  margin-left: 10px;
+  margin-top: 2px;
 }
 
 .remitter-account-line {
   float:left;
   padding-right: 1em;
+}
+
+.form-pane {
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  &+.form-pane {
+    margin-top: 10px;
+  }
+  .pane-above {
+    padding: 30px;
+    &+.pane-bd {
+      padding: 30px;
+      padding-top: 0;
+    }
+  }
 }

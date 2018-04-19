@@ -48,7 +48,9 @@ angular.module('ocb-payments')
         bdFocus,
         bdFillStepInitializer,
         bdStepStateEvents,
-        userCacheHttpHandler
+        userCacheHttpHandler,
+        ocbConvert,
+        language
     ) {
         // ============================================
         // ========= start of cache user data =========
@@ -68,11 +70,16 @@ angular.module('ocb-payments')
                 $scope.showStoreDataOption = false;
                 if (useDataFromStore) {
                     $scope.storedScreenData.then(function(storedData) {
-                        $scope.payment.formData = storedData;
+                        $scope.userCacheForm = storedData;
+                        $scope.payment.formData = Object.assign({},
+                            $scope.payment.formData,
+                            storedData
+                        );
+                        console.log($scope.payment.formData);
+                        setRecipientData(storedData.recipientData);
                         if (storedData.realizationDate) {
                             storedData.realizationDate = new Date(storedData.realizationDate)
                         }
-                        $scope.userCacheForm = storedData;
                     })
                 } else {
                     userCacheHttpHandler.remove(screenName);
@@ -84,6 +91,11 @@ angular.module('ocb-payments')
             $scope.showStoreDataOption = false;
             $scope.userCacheForm[name] = newValue;
             userCacheHttpHandler.save(screenName, $scope.userCacheForm);
+        };
+
+        $scope.onRecipientSelected = function (recipient) {
+            setRecipientData(recipient);
+            changeUserCacheMiddleware('recipientData', recipient);
         };
 
         $scope.onChangeUserCache = changeUserCacheMiddleware;
@@ -235,17 +247,14 @@ angular.module('ocb-payments')
             var formData = payment.formData;
             formData.recipientId = recipient.recipientId;
             formData.recipientAccountNo = $filter('nrbIbanFilter')(recipient.accountNo);
-            formData.recipientName = recipient.name;
-            formData.province = recipient.province;
-            formData.bankCode = recipient.bankCode;
+            formData.recipientName = formData.recipientName || recipient.name;
+            formData.province = formData.province || recipient.province;
+            formData.bankCode = formData.bankCode || recipient.bankCode;
+            formData.description = formData.description || recipient.title.join('');
             formData.branchCode = recipient.branchCode;
-            formData.description = recipient.title.join('');
             $scope.isRecipientSelected = true;
         }
 
-        $scope.onRecipientSelected = function (recipient) {
-            setRecipientData(recipient);
-        };
 
         $scope.onRecipientCleared = function () {
             clearRecipientData();
@@ -280,6 +289,8 @@ angular.module('ocb-payments')
                 province: formData.province,
                 bankCode: formData.bankCode,
                 branchCode: formData.branchCode,
+                branchName: payment.items.remitterAccount.openBranch,
+                amountInWords: ocbConvert.convertNumberToText(formData.amount, language.get() === 'en'),
                 description: utilityService.splitTextEveryNSigns(formData.description),
                 realizationDate: utilityService.convertDateToCurrentTimezone(formData.realizationDate, payment.meta.timeZone),
                 addToBasket: formData.addToBasket

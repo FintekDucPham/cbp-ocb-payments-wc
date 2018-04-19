@@ -260,9 +260,9 @@ angular.module('ocb-payments')
                     $state.go("payments.batch_processing.fill", {"referenceId" : transaction.id});
                     break;
                 // TODO JAKO_DISABLE bill payment
-                // case "Bill Payment":
-                //     $state.go("payments.new_bill.fill", {"referenceId" : transaction.id});
-                //     break;
+                case "Bill Payment":
+                    $state.go("payments.new_bill.fill", {"referenceId" : transaction.id});
+                    break;
                 case "Mobile Top-Up":
                     $state.go("payments.prepaid.new.fill", {"referenceId" : transaction.id});
                     break;
@@ -294,7 +294,7 @@ angular.module('ocb-payments')
             resetErrState();
             $scope.checkBoxState = false;
 
-            if($scope.pendingTransaction.selectedTrans == undefined || $scope.pendingTransaction.selectedTrans.length == 0) {
+            if($scope.pendingTransaction.selectedTrans === undefined || $scope.pendingTransaction.selectedTrans.length === 0) {
                 $scope.checkBoxState = true;
                 return;
             }
@@ -304,7 +304,7 @@ angular.module('ocb-payments')
                 return;
             }
             var listLegalRole = _.pickBy(listStatus,function(value,key){
-                return value == true;
+                return value = true;
             });
             var keyOfRoles = _.keys(listLegalRole);
 
@@ -315,36 +315,20 @@ angular.module('ocb-payments')
                     return _.includes(keyOfRoles, st);
                 }
             })
-            if(invalidWA.length == 0){
+            if(invalidWA.length === 0){
                 $scope.invalidWA = true;
                 return;
             }
-            /*Add PKIs*/
-            authorizationService.createCommonOperation({
-                paymentId: $scope.pendingTransaction.transferId,
-                operationType: "TRANSFER"
-            }).then(function(response){
-                $scope.pendingTransaction.token = {
-                    params:{
-                        resourceId: response.content
-                    }
-                };
-                actions.proceed();
-            });
+
             $scope.pendingTransaction.selectedTrans = _.sortBy($scope.pendingTransaction.selectedTrans, 'id');
+            $scope.pendingTransaction.token = {
+                params:{
+                    resourceId: $scope.pendingTransaction.selectedTrans[0].id
+                }
+            };
             actions.proceed();
         });
 
-
-        function isSenderAccountCategoryRestricted(account) {
-            if($scope.payment.items.senderAccount){
-                if ($scope.payment.meta.customerContext === 'DETAL') {
-                    return $scope.payment.items.senderAccount.category === 1005 && lodash.contains([1101,3000,3008], account.category);
-                } else {
-                    return $scope.payment.items.senderAccount.category === 1016 && (('PLN' !== account.currency) || !lodash.contains([1101,3002,3001, 6003, 3007, 1102, 3008, 6004], account.category));
-                }
-            }
-        }
 
         function isAccountInvestmentFulfilsRules(account){
             return account;
@@ -368,8 +352,6 @@ angular.module('ocb-payments')
                     $scope.targetList.content = lodash.filter($scope.targetList.content, {'operationStatus': status});
                 } else if(account != "All" && status == "all" ) {
                     $scope.targetList.content = lodash.filter($scope.targetList.content, {'accountNo': account});
-                } else {
-                    $scope.targetList.content = $scope.targetList.content;
                 }
             }
             $scope.resetPage = true;
