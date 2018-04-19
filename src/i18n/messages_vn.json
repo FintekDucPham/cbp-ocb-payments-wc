@@ -868,6 +868,8 @@
   "ocb.payments.batch_processing.uploadfile.placeholder": "Chọn mẫu để tải lên",
   "ocb.payments.batch_processing.transactionType.in": "Chuyển lô trong hệ thống",
   "ocb.payments.batch_processing.transactionType.ex": "Chuyển lô ngoài hệ thống",
+  "ocb.payments.batch_processing.validate.fileUpload.fileType" : "Định dạng tệp cho phép: ",
+  "ocb.payments.batch_processing.validate.fileUpload.sizeLimit" : " và dung lượng tối đa là 10Mb",
   "ocb.payments.pending.label": "Quản lý giao dịch chờ duyệt",
   "ocb.payments.pending.list.button.filter.label": "LỌC",
   "ocb.payments.pending.list.button.return.label": "QUAY LẠI",
