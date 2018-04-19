@@ -546,7 +546,7 @@ angular.module('ocb-payments')
                             fileData: reader.result.split(',')[1]
                         };
                         $scope.paymentsBatchProcessingForm.formData.transactionFee = 0;
-                        transferBatchService.validateRecipients(param).then(function (responseContent) {
+                        $scope.uploadFileStatus = transferBatchService.validateRecipients(param).then(function (responseContent) {
                             //Valid table
                             if (responseContent === undefined || responseContent === null || responseContent === '') {
                                 $scope.messageValidateError = true;
