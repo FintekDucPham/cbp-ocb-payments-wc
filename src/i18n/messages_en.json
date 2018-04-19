@@ -992,6 +992,7 @@
   "ocb.payments.payu_vnpay.verify.label": "Data verification",
   "ocb.payments.payu_vnpay.label": "VNPAY",
   "ocb.payments.payu_vnpay.return.label": "Back",
+  "ocb.payments.payu_vnpay.back.label" : "Back",
   "ocb.payments.payu_vnpay.export.label": "Print Report",
   "ocb.payments.payu.label": "PayU",
   "ocb.payments.payu.err.label": "Oops! nothing found here, please contact administrator for information. ",

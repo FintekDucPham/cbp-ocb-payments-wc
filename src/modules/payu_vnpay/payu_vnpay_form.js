@@ -60,7 +60,7 @@ angular.module('ocb-payments')
             subjectSelected: $scope.subjectSelected,
             exportPdf: $scope.exportPdf,
             labels:{
-                prev:"ocb.payments.buttons.prev",
+                prev:"ocb.payments.payu_vnpay.back.label",
                 next:"ocb.payments.new.btn.next",
                 finalize:"ocb.payments.payu_vnpay.return.label",
                 search: 'config.multistepform.buttons.search',

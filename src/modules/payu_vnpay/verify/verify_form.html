@@ -18,7 +18,8 @@
                    currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
     </bd-item-property>
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.remitter_remain.label' | translate}}">
-        {{payuVnpay.data.limit}}
+        <bd-amount amount="payuVnpay.data.limit"
+                   currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
     </bd-item-property>
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.payment_code.label' | translate}}">
         {{payuVnpay.data.paymentInfo.customerCode}}
