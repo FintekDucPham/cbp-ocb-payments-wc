@@ -48,8 +48,9 @@
 
             <bd-item-property class="pd-top" label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
                 <div class="bd-item-property__value--primary">
-                    <input name="billCode" hidden ng-model="payment.formData.billCode" required/>
+                    <input name="billCode" ng-pattern="BILL_CODE" hidden ng-model="payment.formData.billCode" required/>
                     <ui-select ng-model="payment.formData.billCode"
+                               on-select="onBillCodeSelect($select.selected)"
                                reset-search-input="false"
                                tagging-label="flase"
                                tagging-tokens=""
@@ -68,6 +69,9 @@
                             <div class="clearfix"></div>
                         </ui-select-choices>
                     </ui-select>
+                </div>
+                <div ng-show="invalidBillCode" class="validate-message">
+                    {{::'ocb.payments.new.bill.fill.billCode.INCORRECT_BILLCODE'|translate}}
                 </div>
                 <eb-validation-messages eb-name="billCode">
                     <div eb-message-key="required" class="validation-message animate-on">

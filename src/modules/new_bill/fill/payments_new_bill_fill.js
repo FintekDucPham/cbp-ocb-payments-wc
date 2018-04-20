@@ -67,6 +67,13 @@ angular.module('ocb-payments')
                     $timeout(function () {
                         if ($select.search) {
                             // $select.select($select.tagging.fct($select.search), true);
+                            // $select.search = validationRegexp('NUMBER_AND_CHAR_ONLY');
+                            if ($select.search.match(validationRegexp('NUMBER_AND_CHAR_BOTH'))) {
+                                $scope.invalidBillCode = false;
+                            } else {
+                                $scope.invalidBillCode = true;
+                            }
+
                         } else {
                             payment.formData[fieldName] = null;
                         }
