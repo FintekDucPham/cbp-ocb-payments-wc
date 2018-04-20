@@ -9,7 +9,88 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewBillPaymentFillController', function ($scope, $q, rbAccountSelectParams , $stateParams, CURRENT_DATE, customerService, ocbConvert, bdTableConfig, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,  downloadService, transferBillService) {
+    .controller('NewBillPaymentFillController', function ($scope, $timeout, $q, rbAccountSelectParams , $stateParams, CURRENT_DATE, customerService, ocbConvert, bdTableConfig, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,  downloadService, transferBillService) {
+        var payment = $scope.payment;
+
+        if (payment.reload) {
+            $state.reload();
+            return;
+        }
+
+        bdFillStepInitializer($scope, {
+            formName: 'paymentForm',
+            dataObject: payment
+        });
+
+        transferBillService.getSuggestedBills().then(function (data) {
+            if (data) {
+                payment.meta.billCodes = data;
+            }
+        })
+
+        $scope.newBillCode = function (billCode) {
+            return !billCode ? null : {
+                billCode: billCode
+            };
+        };
+
+        $scope.onPhoneSelected = function ($item) {
+            if ($item.billCode !== null) {
+                $scope.paymentForm.billCode.$setViewValue($item.billCode);
+            }
+        };
+
+        $scope.hookPhoneSelect = function (fieldName) {
+            var scope = this;
+            function updateBillCodeFilter (value) {
+                scope.billCodeFilter = value;
+            }
+
+            updateBillCodeFilter('');
+            var $select = this.$select;
+            var control = $scope.paymentForm[fieldName];
+
+            $scope.$watch('paymentForm.' + fieldName + '.$viewValue', function (newValue) {
+                $select.search = newValue;
+            });
+
+            this.$watch('$select.search', function (newValue, oldValue) {
+                if (newValue !== oldValue && $select.open) {
+                    control.$setViewValue(newValue);
+                    updateBillCodeFilter(newValue);
+                }
+            });
+
+            this.$watch('$select.open', function (newValue, oldValue) {
+                if (oldValue && !newValue) {
+                    updateBillCodeFilter('');
+                    $timeout(function () {
+                        if ($select.search) {
+                            $select.select($select.tagging.fct($select.search), true);
+                        } else {
+                            payment.formData[fieldName] = null;
+                        }
+                    });
+                }
+            });
+
+            $select.searchInput.on('keydown', function (e) {
+                if (e.which === 9) {
+                    //TAB
+                    $timeout(function () {
+                        $select.close();
+                    });
+                }
+            });
+        };
+
+        $scope.removeBillCode = function ($event) {
+            payment.meta.billCodes.splice(this.$index, 1);
+            $event.preventDefault();
+            $event.stopPropagation();
+           // prepaidService.deletePrepaidPhone(this.prepaidPhone.id);
+        };
+
         /*Move code start*/
         $scope.CURRENT_DATE = CURRENT_DATE;
         $scope.table = {
@@ -85,7 +166,8 @@ angular.module('ocb-payments')
                 transferBillService.getBill({
                     providerCode: $scope.payment.formData.providerCode,
                     billCode: $scope.payment.formData.billCode,
-                    serviceCode: $scope.payment.formData.serviceCode
+                    serviceCode: $scope.payment.formData.serviceCode,
+                    addToBeneficiary: $scope.payment.formData.addToHistory
                 }).then(function (data) {
                     if (data !== undefined) {
                         $scope.billPaymentsStepParams.visibility.next = nextBool;

@@ -45,17 +45,30 @@
                     {{::'ocb.payments.new.bill.fill.providerCode.EMPTY_PROVIDERCODE'|translate}}
                 </div>
             </eb-validation-messages>
+
             <bd-item-property class="pd-top" label="{{::'ocb.payments.new.bill.fill.billCode'|translate}}">
                 <div class="bd-item-property__value--primary">
-                    <input ng-disabled="billInfoSearch"
-                           type="text"
-                           name="billCode"
-                           class="input-field"
-                           ng-pattern="BILL_CODE"
-                           ng-model="payment.formData.billCode"
-                           required
-                           placeholder=""
-                    />
+                    <input name="billCode" hidden ng-model="payment.formData.billCode" required/>
+                    <ui-select ng-model="payment.formData.billCode"
+                               reset-search-input="false"
+                               tagging="newBillCode"
+                               tagging-label="false"
+                               tagging-tokens=""
+                               ng-init="hookPhoneSelect('billCode')"
+                               on-select="onPhoneSelected($item)"
+                               theme="bootstrap">
+                        <ui-select-match placeholder="{{::'payments.widget.placeholder.billCode' | translate}}">
+                            <div>{{$select.selected}}</div>
+                        </ui-select-match>
+                        <ui-select-choices repeat="billCode in payment.meta.billCodes" class="prepaid-phone">
+                            <div class="pull-right"><a href ng-click="removeBillCode($event)">&times;</a></div>
+                            <div style="margin-right: 30px">
+                                <div class="pull-left" style="width: 45%; overflow: hidden; text-overflow: ellipsis;">{{billCode}}</div>
+                                <div class="pull-right" style="width: 45%; overflow: hidden; text-overflow: ellipsis;"><span ng-bind-html="payment.formData.billCode | highlight: $select.search"></span></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </ui-select-choices>
+                    </ui-select>
                 </div>
                 <eb-validation-messages eb-name="billCode">
                     <div eb-message-key="required" class="validation-message animate-on">
@@ -87,7 +100,9 @@
                     </div>
                 </eb-validation-messages>
             </bd-item-property>
-            <rb-add-to-beneficiary-select ng-if="!payment.meta.editFuturePayment" rb-model="payment.formData" rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary"></rb-add-to-beneficiary-select>
+            <bd-item-property label="{{::'payments.new.fill.fill.add_to_history' | translate}}" class="single-line-checkbox">
+                <bd-checkbox ng-model="payment.formData.addToHistory"></bd-checkbox>
+            </bd-item-property>
             <rb-widget-banner-container rb-slot-name="ACCOUNT_WIDGET" rb-target-type="CURRENT_USER">
                 <div class="widget-content-inner info-text margin-bottom-20">
                     <a class="color" href="{{::'ocb.payments.new.bill.fill.serviceList.link_url'|translate}}"
