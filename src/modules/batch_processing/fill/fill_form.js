@@ -490,7 +490,7 @@ angular.module('ocb-payments')
             $scope.messageAccountListError = false;
 
             $scope.paymentsBatchProcessingForm.formData.transferUpdated.batchId = null;
-            $scope.fileSizeLimit = 10;
+            $scope.fileSizeLimit = 1;
             $scope.validateUploadFileType = false;
             $scope.validateExcel = function(){
                 var file = $('#uploadFile')[0].files[0];

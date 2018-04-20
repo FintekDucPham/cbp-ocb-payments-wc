@@ -51,8 +51,7 @@
                     <input name="billCode" hidden ng-model="payment.formData.billCode" required/>
                     <ui-select ng-model="payment.formData.billCode"
                                reset-search-input="false"
-                               tagging="newBillCode"
-                               tagging-label="false"
+                               tagging-label="flase"
                                tagging-tokens=""
                                ng-init="hookPhoneSelect('billCode')"
                                on-select="onPhoneSelected($item)"

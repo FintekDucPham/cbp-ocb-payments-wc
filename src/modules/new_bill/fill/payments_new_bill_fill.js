@@ -66,7 +66,7 @@ angular.module('ocb-payments')
                     updateBillCodeFilter('');
                     $timeout(function () {
                         if ($select.search) {
-                            $select.select($select.tagging.fct($select.search), true);
+                            // $select.select($select.tagging.fct($select.search), true);
                         } else {
                             payment.formData[fieldName] = null;
                         }
