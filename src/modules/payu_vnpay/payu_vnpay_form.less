@@ -8,3 +8,39 @@
     width: 250px;
   }
 }
+
+
+
+@screenMax: 768px;
+@screenMin: 767px;
+
+
+@media screen and (max-width: @screenMax) {
+  .finish-btn{
+    justify-content: center;
+    text-align: center;
+    .col-md-6{
+      padding-top: 10px;
+    }
+    .bd-button{
+      width: 300px;
+    }
+  }
+}
+
+@media screen and (min-width: @screenMin) {
+  .finish-btn{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    .bd-button{
+      width: 300px;
+    }
+    .back-btn{
+      text-align: right;
+    }
+    .print-btn{
+      text-align: left;
+    }
+  }
+}

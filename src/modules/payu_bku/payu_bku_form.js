@@ -11,7 +11,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, rbPaymentOperationTypes) {
+    .controller('PayUBKUController', function ($scope, bdMainStepInitializer, bdTableConfig, rbPaymentOperationTypes,exportService,fileDownloadService) {
 
         bdMainStepInitializer($scope, 'payuBku', {
             formName: 'payuBkuForm',
@@ -45,18 +45,28 @@ angular.module('ocb-payments')
         // function sendAuthorizationToken() {
         //     //TODO get otp
         // };
+
+        $scope.exportPdf =  function () {
+            var downloadLink = exportService.prepareHref({
+                href: "/api/transaction/downloads/pdf.json"
+            });
+            fileDownloadService.startFileDownload(downloadLink + ".json?id=" + $scope.payuBku.transferId);
+        }
+
        $scope.payuBkuFormParams = {
             completeState:'dashboard',
             onClear: $scope.clearForm,
             cancelState:'payments.payu_bku.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
+            exportPdf: $scope.exportPdf,
             isChecked: 'true',
             labels:{
-                prev:"ocb.payments.buttons.prev",
+                prev:"ocb.payments.payu_vnpay.back.label",
                 next:"ocb.payments.new.btn.next",
-                finalize:"ocb.payments.new.btn.finalize",
-                search: 'config.multistepform.buttons.search'
+                finalize:"ocb.payments.payu_vnpay.return.label",
+                search: 'config.multistepform.buttons.search',
+                export: 'ocb.payments.payu_vnpay.export.label'
             },
             visibility:{
                 search: true,

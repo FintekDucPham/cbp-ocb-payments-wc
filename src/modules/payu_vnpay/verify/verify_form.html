@@ -3,7 +3,9 @@
     <bd-header class="">
         {{ ::'ocb.payments.payu_vnpay.verify.label' | translate }}
     </bd-header>
-
+    <bd-item-property label="{{::'ocb.payments.payu_vnpay.remitter_number.label' | translate}}">
+        {{payuVnpay.data.remitterInfo.accountNo}}
+    </bd-item-property>
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.remitter_name.label' | translate}}">
         {{payuVnpay.data.fullName}}
     </bd-item-property>
@@ -16,7 +18,8 @@
                    currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
     </bd-item-property>
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.remitter_remain.label' | translate}}">
-        {{payuVnpay.data.limit}}
+        <bd-amount amount="payuVnpay.data.limit"
+                   currency="{{ payuVnpay.data.remitterInfo.currency }}"></bd-amount>
     </bd-item-property>
     <bd-item-property label="{{::'ocb.payments.payu_vnpay.payment_code.label' | translate}}">
         {{payuVnpay.data.paymentInfo.customerCode}}

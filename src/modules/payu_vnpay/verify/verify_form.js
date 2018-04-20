@@ -68,10 +68,10 @@ angular.module('ocb-payments')
                     $scope.payuVnpay.result.token_error = true;
                     if ($scope.payuVnpay.token.model && $scope.payuVnpay.token.model.$tokenRequired) {
                         if (!$scope.payuVnpay.token.model.$isErrorRegardingToken(error)) {
-                           //actions.proceed();
+                           // actions.proceed();
                         }
                     } else {
-                       // actions.proceed();
+                       //actions.proceed();
                     }
 
                 }).finally(function () {

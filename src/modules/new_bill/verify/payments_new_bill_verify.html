@@ -1,14 +1,14 @@
-<div ng-show="showVerify" class="form-pane bd-form" id="pn-1">
+<div class="form-pane bd-form" id="pn-1">
     <div class="form-body">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</div>
-        <div class="row" ng-show="payment.endOfDayWarning && !payment.formData.addToBasket">
-            <div class="col-xs-12 col-sm-12">
-                <bd-msg-panel bd-msg-type="warning">{{::'ocb.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>
-            </div>
-        </div>
+        <!--<div class="row" ng-show="payment.endOfDayWarning && !payment.formData.addToBasket">-->
+            <!--<div class="col-xs-12 col-sm-12">-->
+                <!--<bd-msg-panel bd-msg-type="warning">{{::'ocb.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="pane-bd deposit-form">
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.transactionType'|translate}}">
-                {{::"ocb.payments.new_bill.label.header.customer"|translate}}
+                {{::"ocb.payments.new_bill.label.header"|translate}}
             </bd-item-property>
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.sender_account_name'|translate}}">
                 <div class="hidden-sm hidden-xs hidden-md">

@@ -128,7 +128,8 @@ angular.module('ocb-payments')
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
-
+                $scope.payment.result.code ="error";
+                $scope.payment.result.type ="error"
                 if ($scope.payment.token.model && $scope.payment.token.model.$tokenRequired) {
                     if (!$scope.payment.token.model.$isErrorRegardingToken(error)) {
                         actions.proceed();

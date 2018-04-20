@@ -19,7 +19,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentNewBillController', function ($scope,bdMainStepInitializer,customerService,rbPaymentOperationTypes) {
+    .controller('PaymentNewBillController', function ($scope,bdMainStepInitializer,customerService,rbPaymentOperationTypes,exportService,fileDownloadService) {
 
         // $scope.beforeTransfer = rbBeforeTransferConstants;
         // $scope.CURRENT_DATE = CURRENT_DATE;
@@ -63,8 +63,11 @@ angular.module('ocb-payments')
             return $scope.billPaymentsStepParams.showBillInfoSearch(searchBool, nextBool);
         }
 
-        $scope.printPdf = function (refId) {
-            return $scope.billPaymentsStepParams.printPdf(refId);
+        $scope.printPdf = function () {
+            var downloadLink =  exportService.prepareHref({
+                href: "/api/transaction/downloads/pdf.json"
+            });
+            fileDownloadService.startFileDownload(downloadLink + ".json?id=" +  $scope.payment.transferId);
         }
         $scope.billPaymentsStepParams = {
             completeState: 'payments.bill_history.list',

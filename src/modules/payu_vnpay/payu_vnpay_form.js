@@ -11,7 +11,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PayuVnpayController', function ($scope, bdMainStepInitializer, bdTableConfig, transferBatchService) {
+    .controller('PayuVnpayController', function ($scope, bdMainStepInitializer, exportService, fileDownloadService) {
 
         bdMainStepInitializer($scope, 'payuVnpay', {
             formName: 'payuVnpayForm',
@@ -34,6 +34,13 @@ angular.module('ocb-payments')
                 data: null
             }
         };
+
+        $scope.exportPdf =  function () {
+            var downloadLink = exportService.prepareHref({
+                href: "/api/transaction/downloads/pdf.json"
+            });
+            fileDownloadService.startFileDownload(downloadLink + ".json?id=" + $scope.payuVnpay.transferId);
+        }
         $scope.subjectSelected = function () {
             return $scope.payuVnpay.subjectSelected;
         };
@@ -51,11 +58,13 @@ angular.module('ocb-payments')
             cancelState:'payments.payu_vnpay.fill',
             footerType: 'payu',
             subjectSelected: $scope.subjectSelected,
+            exportPdf: $scope.exportPdf,
             labels:{
-                prev:"ocb.payments.buttons.prev",
+                prev:"ocb.payments.payu_vnpay.back.label",
                 next:"ocb.payments.new.btn.next",
-                finalize:"ocb.payments.new.btn.finalize",
-                search: 'config.multistepform.buttons.search'
+                finalize:"ocb.payments.payu_vnpay.return.label",
+                search: 'config.multistepform.buttons.search',
+                export: 'ocb.payments.payu_vnpay.export.label'
             },
             visibility:{
                 search: true,
