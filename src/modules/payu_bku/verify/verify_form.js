@@ -12,7 +12,7 @@ angular.module('ocb-payments')
         });
     })
     .controller("PayUBKUStep2Controller"
-        , function($scope, bdStepStateEvents,rbPaymentOperationTypes,bdVerifyStepInitializer,transferTuitionService) {
+        , function($scope, bdStepStateEvents,rbPaymentOperationTypes,bdVerifyStepInitializer,transferTuitionService,depositsService) {
             bdVerifyStepInitializer($scope, {
                 formName: 'payuBkuForm',
                 dataObject: $scope.payuBku
@@ -49,7 +49,7 @@ angular.module('ocb-payments')
                             //actions.proceed();
                         }
                     } else {
-                       // actions.proceed();
+                        // actions.proceed();
                     }
 
                 }).finally(function () {

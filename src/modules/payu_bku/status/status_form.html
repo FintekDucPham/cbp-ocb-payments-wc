@@ -1,8 +1,1 @@
-<rb-content-view class="form">
-    <bd-header >{{::"ocb.payments.payu_hufi.label"|translate}}</bd-header>
-    <bd-form-panel>
-        <rb-multistep-form bd-active-step="activeStep" bd-step-remote="stepRemote" rb-step-params="payuBkuFormParams">
-            <div ui-view></div>
-        </rb-multistep-form>
-    </bd-form-panel>
-</rb-content-view>
+<bd-msg-panel bd-msg-type="{{ payuBku.result.type || 'error'}}">{{ ::'ocb.payments.new.status.' + (payuBku.result.code || payuBku.result.type) | translate }}</bd-msg-panel>

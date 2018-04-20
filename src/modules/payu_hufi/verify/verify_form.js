@@ -12,7 +12,7 @@ angular.module('ocb-payments')
         });
     })
     .controller("PayuHufiStep2Controller"
-        , function($scope, bdStepStateEvents,rbPaymentOperationTypes,bdVerifyStepInitializer,transferTuitionService) {
+        , function($scope, bdStepStateEvents,rbPaymentOperationTypes,bdVerifyStepInitializer,transferTuitionService,depositsService) {
             bdVerifyStepInitializer($scope, {
                 formName: 'payuHufiForm',
                 dataObject: $scope.payuHufi

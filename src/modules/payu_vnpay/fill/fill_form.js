@@ -19,7 +19,7 @@ angular.module('ocb-payments')
                     , function ($scope, $filter, lodash, bdFocus, $timeout, bdStepStateEvents, rbAccountSelectParams, $stateParams,
                                                               validationRegexp, systemParameterService, translate, utilityService, accountsService,
                                                               rbBeforeTransferManager,
-                                bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE,bdFillStepInitializer) {
+                                bdTableConfig,ocbConvert,transferBillService,customerService,transferService,CURRENT_DATE,bdFillStepInitializer,$state) {
 
             console.log($scope.payuVnpay.data);
             bdFillStepInitializer($scope, {
@@ -35,6 +35,10 @@ angular.module('ocb-payments')
                 }).then(function (data) {
                     $scope.payuVnpay.data.paymentInfo = data;
                 })
+            } else {
+                if(!$scope.payuVnpay.data || !$scope.payuVnpay.data.paymentInfo) {
+                    $state.go('dashboard');
+                }
             }
 
             customerService.getCustomerDetails().then(function(data) {
@@ -58,10 +62,10 @@ angular.module('ocb-payments')
                 var dataToCreate = {
                     "remitterId" : $scope.payuVnpay.data.remitterId,
                     "remitterAccountId" : $scope.payuVnpay.data.remitterAccountId,
-                    "billCode" : $stateParams.transid,
-                    "providerCode" : $stateParams.p,
+                    "billCode" : $scope.payuVnpay.data.paymentInfo.billCode,
+                    "providerCode" : $scope.payuVnpay.data.paymentInfo.serviceProvider.providerCode,
                     "providerName" : $scope.payuVnpay.data.paymentInfo.serviceProvider.providerName,
-                    "serviceCode" : $stateParams.s,
+                    "serviceCode" : $scope.payuVnpay.data.paymentInfo.serviceProvider.service.serviceCode,
                     "serviceName" : $scope.payuVnpay.data.paymentInfo.serviceProvider.service.serviceName,
                     "realizationDate" : CURRENT_DATE.time,
                     "amount" : $scope.payuVnpay.data.paymentInfo.amount.value,
