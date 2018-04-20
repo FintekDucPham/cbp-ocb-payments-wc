@@ -167,7 +167,7 @@ angular.module('ocb-payments')
                     providerCode: $scope.payment.formData.providerCode,
                     billCode: $scope.payment.formData.billCode,
                     serviceCode: $scope.payment.formData.serviceCode,
-                    addToBeneficiary: $scope.payment.formData.addToHistory
+                    addToBeneficiary: $scope.payment.formData.addToBeneficiary
                 }).then(function (data) {
                     if (data !== undefined) {
                         $scope.billPaymentsStepParams.visibility.next = nextBool;
@@ -185,6 +185,9 @@ angular.module('ocb-payments')
                             }
                         }
                         $scope.payment.billTypeID = data.billType;
+                        $scope.payment.formData.billType = data.billType;
+                        $scope.payment.formData.address = data.address;
+                        $scope.payment.formData.fullName = data.fullName;
                         $scope.payment.formData.billInfo = data;
 
                     }
@@ -770,6 +773,7 @@ angular.module('ocb-payments')
             $scope.payment.meta.employee = data.customerDetails.isEmployee;
             $scope.payment.meta.authType = data.customerDetails.authType;
             $scope.payment.meta.fullName = data.customerDetails.fullName;
+            $scope.payment.formData.fullName = data.customerDetails.fullName;
             if ($scope.payment.meta.authType == 'HW_TOKEN') {
                 $scope.formShow = true;
             }
