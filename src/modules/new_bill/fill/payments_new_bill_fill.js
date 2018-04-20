@@ -68,7 +68,7 @@ angular.module('ocb-payments')
                         if ($select.search) {
                             // $select.select($select.tagging.fct($select.search), true);
                             // $select.search = validationRegexp('NUMBER_AND_CHAR_ONLY');
-                            if ($select.search.match(validationRegexp('NUMBER_AND_CHAR_BOTH'))) {
+                            if ($select.search.match(validationRegexp('NUMBER_AND_CHAR_ONLY'))) {
                                 $scope.invalidBillCode = false;
                             } else {
                                 $scope.invalidBillCode = true;
@@ -138,6 +138,7 @@ angular.module('ocb-payments')
 
         };
         $scope.billPaymentsStepParams.clearForm = function () {
+            $scope.invalidBillCode = false;
             $scope.hideTable = false;
             $scope.enableLoading = false;
             $scope.payment.formData = {};
@@ -162,6 +163,7 @@ angular.module('ocb-payments')
         // $scope.payment.formData.amount = undefined;
         $scope.billPaymentsStepParams.showBillInfoSearch = function(searchBool, nextBool ) {
             $scope.hideTable = false;
+            $scope.invalidBillCode = false;
             $scope.payment.formData.providerName = $scope.payment.items.senderProvider.providerName;
             $scope.payment.formData.serviceName = $scope.payment.items.senderService.serviceName;
             $scope.payment.formData.serviceCode = $scope.payment.items.senderService.serviceCode;
@@ -178,7 +180,10 @@ angular.module('ocb-payments')
                 }).then(function (data) {
                     if (data !== undefined) {
                         $scope.billPaymentsStepParams.visibility.next = nextBool;
-                        if (data == "" || data.billItem.length == 0) {
+                        if (data == "") {
+                            $scope.invalidBillCode = true;
+                            $scope.billPaymentsStepParams.visibility.next = false;
+                        } else if (data.billItem.length == 0) {
                             $scope.hideTable = true;
                             $scope.billPaymentsStepParams.visibility.next = false;
                         }
