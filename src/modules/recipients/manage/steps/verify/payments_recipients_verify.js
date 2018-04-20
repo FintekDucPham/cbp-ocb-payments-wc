@@ -147,7 +147,7 @@ angular.module('ocb-payments')
                 };
 
                 function getProperTransferList(code) {
-                    return "TRANSFER_FROM_LIST";
+                    return "TRANSFER_OTHER_FROM_LIST";
                 }
 
                 function fillSenderAccount() {
