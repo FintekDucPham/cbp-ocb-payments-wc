@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('NewBillPaymentFillController', function ($scope, $timeout, $q, rbAccountSelectParams , $stateParams, CURRENT_DATE, customerService, ocbConvert, bdTableConfig, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,  downloadService, transferBillService) {
+    .controller('NewBillPaymentFillController', function ($scope, $timeout, $q, rbAccountSelectParams , $stateParams, CURRENT_DATE, customerService, ocbConvert, bdTableConfig, rbDateUtils, exchangeRates, translate, $filter, paymentRules, transferService, rbDatepickerOptions, bdFillStepInitializer, bdStepStateEvents, lodash, formService, validationRegexp, rbPaymentOperationTypes, utilityService, rbBeforeTransferManager,  downloadService, transferBillService,fileDownloadService) {
         var payment = $scope.payment;
 
         if (payment.reload) {
@@ -490,13 +490,13 @@ angular.module('ocb-payments')
         };
 
 
-        $scope.billPaymentsStepParams.printPdf = function(refId){
-            var downloadLink =  exportService.prepareHref({
-                href: "/api/transaction/downloads/pdf.json"
-            });
-            fileDownloadService.startFileDownload(downloadLink + ".json?id=" +  $scope.payment.transferId);
-
-        }
+        // $scope.billPaymentsStepParams.printPdf = function(){
+        //     var downloadLink =  exportService.prepareHref({
+        //         href: "/api/transaction/downloads/pdf.json"
+        //     });
+        //     fileDownloadService.startFileDownload(downloadLink + ".json?id=" +  $scope.payment.transferId);
+        //
+        // }
         /*Move code end*/
 
         /*Call move back function when referenceId has value*/

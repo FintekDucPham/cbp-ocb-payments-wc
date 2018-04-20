@@ -294,6 +294,8 @@
   "ocb.payments.new.bill.fill.execution_date.LATER_EXECUTED_DATE": "Transfer execution date cannot be later than ##date##",
   "ocb.payments.new.bill.fill.execution_date.EARLIER_EXECUTED_DATE": "Transfer execution date cannot be earlier than current date",
   "ocb.payments.new.bill.fill.billCode.INVALID_NUMBER_BILLCODE": "Invalid bill code bill code",
+  "ocb.payments.new.bill.msg.success" : "Your transaction has been successfully",
+  "ocb.payments.new.bill.msg.error": "Transfer has been rejected",
   "payments.new.bill.fill.info.header.stt": "No.",
   "payments.new.bill.fill.info.header.order_id": "Order ID",
   "payments.new.bill.fill.info.header.description": "Description",

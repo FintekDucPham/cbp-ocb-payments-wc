@@ -70,3 +70,50 @@
   padding-top: 20px;
   width: 100%;
 }
+
+
+@screenMax: 768px;
+@screenMin: 767px;
+
+.new-bill-status {
+  background: #fff;
+  padding-bottom: 50px;
+  .bd-msg-content {
+    width: 600px;
+  }
+  .bd-msg-padding{
+    padding-bottom: 10px;
+  }
+}
+@media screen and (max-width: @screenMax) {
+  .final-btn{
+    justify-content: center;
+    text-align: center;
+    .col-md-6{
+      padding-top: 10px;
+    }
+    .bd-button{
+      width: 150px;
+    }
+    .bd-form-footer__button--negative{
+      float: none;
+    }
+  }
+}
+
+@media screen and (min-width: @screenMin) {
+  .final-btn{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    .bd-button{
+      width: 150px;
+    }
+    .back-btn{
+      text-align: right;
+    }
+    .print-btn{
+      text-align: left;
+    }
+  }
+}
