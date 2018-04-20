@@ -133,7 +133,7 @@
             </bd-item-property>
         </div>
     </div>
-    <div ng-if="hideTable === true" class="validate-message">
+    <div ng-if="!payment.formData.billInfo.billItem" class="validate-message">
         {{::'ocb.payments.domestic.bill.error.amount.empty'|translate}}
     </div>
     <div ng-show="enableLoading" class="eb-preloader-container">

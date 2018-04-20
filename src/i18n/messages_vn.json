@@ -294,6 +294,7 @@
   "ocb.payments.new.bill.fill.billCode.INVALID_NUMBER_BILLCODE": "Mã hoá đơn không hợp lệ",
   "ocb.payments.new.bill.msg.success" : "Giao dịch thành công",
   "ocb.payments.new.bill.msg.error": "Giao dịch đã bị từ chối",
+  "ocb.payments.new.bill.msg.": "Giao dịch đã bị từ chối",
   "payments.new.bill.fill.info.header.stt": "STT",
   "payments.new.bill.fill.info.header.order_id": "Mã giao dịch",
   "payments.new.bill.fill.info.header.description": "Chi tiết",
