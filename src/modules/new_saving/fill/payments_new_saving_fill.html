@@ -36,7 +36,10 @@
         </bd-item-property>
 
         <bd-item-property label="{{::'ocb.payments.new.saving.fill.daily_limit.label'|translate}}" class="accesibleAssetsInline accesibleAssetsBold">
-                <bd-amount ng-if="transactionLimit !== null" amount="transactionLimit.maximumAmount" currency="VND"></bd-amount>
+            <bd-amount ng-if="payment.meta.remainingDailyLimit !== null"
+                       amount="payment.meta.remainingDailyLimit"
+                       currency="{{payment.items.senderAccount.currency}}">
+            </bd-amount>
         </bd-item-property>
     </div>
     <div class="bd-form">
@@ -103,9 +106,10 @@
             </eb-validation-messages>
         </bd-item-property>
 
-         <bd-item-property label="{{::'ocb.payments.new.saving.fill.beneficiaries.label'|translate}}">
-            <bd-checkbox ng-model="addToBeneficiaries" bd-change="cbChange()"></bd-checkbox>
-        </bd-item-property>
+        <rb-add-to-beneficiary-select
+                rb-model="payment.formData"
+                rb-modify-from-beneficiary="payment.items.modifyFromBeneficiary">
+        </rb-add-to-beneficiary-select>
     </div>
     <div class="bd-form">
         <!--group remittance info-->
