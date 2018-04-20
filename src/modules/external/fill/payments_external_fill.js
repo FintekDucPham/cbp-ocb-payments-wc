@@ -250,6 +250,7 @@ angular.module('ocb-payments')
         }
 
         $scope.onRecipientSelected = function (recipient) {
+            changeUserCacheMiddleware('recipientData', recipient)
             setRecipientData(recipient);
         };
 
