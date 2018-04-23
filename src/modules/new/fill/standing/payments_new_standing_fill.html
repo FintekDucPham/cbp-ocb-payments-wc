@@ -26,20 +26,14 @@
 
     </bd-item-property>
 
-
     <bd-item-property label="{{ ::'ocb.payments.new.standing.fill.sender_account' | translate }}">
-
-        <rb-account-select rb-account-id="payment.formData.remitterAccountId"
-                           rb-account="payment.items.senderAccount"
-                           bd-attr-required="true"
-                           rb-account-list="payment.meta.accountList"
-                           rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
-                           rb-product-list-name="STANDING_ORDER_CREATE_FROM_LIST"
-                           rb-on-account-select="onSenderAccountSelect()"
-                           rb-account-select-params="remitterAccountSelectParams"
-                           rb-remote="remote.model"
-                           rb-readonly="modification"
-                           rb-init-select-value = "{{ payment.formData.debitAccountNo }}"></rb-account-select>
+        <rb-account-select-v2 rb-account-id="payment.formData.remitterAccountId"
+                              rb-account="payment.items.senderAccount"
+                              rb-account-list="payment.meta.accountList"
+                              rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
+                              rb-product-list-name="STANDING_ORDER_CREATE_FROM_LIST"
+                              rb-account-select-params="remitterAccountSelectParams"
+                              rb-remote="remote.model"</rb-account-select-v2>
     </bd-item-property>
 
     <bd-item-property ng-if="payment.formData.remitterAccountId"
@@ -190,8 +184,8 @@
                    required
                    placeholder="{{ ::'ocb.payments.new.standing.fill.amount.placeholder' | translate }}"
                    amount-input
-                   currency="{{payment.formData.currency}}" />
-            <div class="indicator">{{payment.formData.currency}}</div>
+                   currency="{{payment.items.senderAccount.currency}}" />
+            <div class="indicator">{{payment.items.senderAccount.currency}}</div>
         </div>
         <div style="color: #F4390B;font-size: 14px;font-weight: 300;"
              ng-if="validationErrors['amount'] !== undefined">
