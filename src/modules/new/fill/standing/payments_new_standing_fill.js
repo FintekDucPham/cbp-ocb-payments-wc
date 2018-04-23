@@ -17,7 +17,7 @@ angular.module('ocb-payments')
                                                               bdStepStateEvents, rbAccountSelectParams, validationRegexp,
                                                               STANDING_FREQUENCY_TYPES, rbDatepickerOptions, viewStateService,
                                                               systemParameterService, SYSTEM_PARAMETERS, rbPaymentOperationTypes,
-                                                              standingTransferService, utilityService, translate) {
+                                                              standingTransferService, utilityService, translate, accountsService) {
         var initialState = viewStateService.getInitialState('payments.new');
         $scope.modification = initialState && initialState.paymentOperationType === rbPaymentOperationTypes.EDIT;
         $scope.standingOrderId = null;
@@ -65,7 +65,7 @@ angular.module('ocb-payments')
                 "creditAccount": formData.recipientAccountNo.replace(/\s+/g, ""),
                 "remarks": utilityService.splitTextEveryNSigns(formData.description),
                 "debitAccountId": formData.remitterAccountId,
-                "currency": formData.currency,
+                "currency": $scope.payment.items.senderAccount.currency,
                 "endDate": $filter('date')(formData.finishDate, 'yyyy-MM-dd'),
                 "periodUnit": STANDING_FREQUENCY_TYPES[formData.frequencyType].symbol,
                 "periodCount": formData.frequency,
