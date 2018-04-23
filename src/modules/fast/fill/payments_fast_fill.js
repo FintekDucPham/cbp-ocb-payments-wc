@@ -207,7 +207,7 @@ angular.module('ocb-payments')
 
         $scope.recipientNotFound = false;
         function retrieveRecipientNameByAccount() {
-            var accountNumber = payment.formData.recipientAccountNo;
+            var accountNumber = payment.formData.recipientAccountNo == null ? null : payment.formData.recipientAccountNo.replace(/\s+/g, '');
             var bankCode = payment.formData.bankCode;
 
             if (accountNumber && bankCode) {
@@ -223,7 +223,7 @@ angular.module('ocb-payments')
         }
 
         function retrieveRecipientNameByCard() {
-            var cardNumber = payment.formData.cardNumber;
+            var cardNumber = payment.formData.cardNumber == null ? null : payment.formData.cardNumber.replace(/\s+/g, '');
 
             if (cardNumber) {
                 recipientsService.getRecipientNameByCardNumber({
