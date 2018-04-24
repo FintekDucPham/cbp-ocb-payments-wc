@@ -6,7 +6,7 @@
             <bd-item-property-form label="{{ ::'ocb.payments.new.domestic.fill.sender_account' | translate }}">
                 <!--<input name="remitterAccountId" hidden ng-model="payment.formData.remitterAccountId" required/>-->
                 <rb-account-select-v2 rb-batch-info-search="paymentsBatchProcessingForm.batchInfoSearch"
-                        rb-product-list-name="TRANSFER_FROM_LIST"
+                        rb-product-list-name="TRANSFER_OTHER_FROM_LIST"
                         rb-account-restrictions="ACCOUNT_RESTRICTION_DEBIT"
                         rb-account="paymentsBatchProcessingForm.formData.selectedAccount"
                         rb-account-id="paymentsBatchProcessingForm.formData.accountId"

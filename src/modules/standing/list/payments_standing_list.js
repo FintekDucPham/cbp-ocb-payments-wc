@@ -82,12 +82,15 @@ angular.module('ocb-payments')
         };
 
         customerService.getCustomerDetails().then(function(data){
-            $scope.isInputter = false;
-            _.each(data.customerDetails.cbRoles, function(userRole) {
-                if (userRole === 'Inputer'){
-                    $scope.isInputter = true;
-                }
-            });
+            var isCbUser = data.customerDetails.cbUser
+            $scope.showEdit = !isCbUser
+            if (isCbUser) {
+                _.each(data.customerDetails.cbRoles, function(userRole) {
+                    if (userRole === 'Inputer'){
+                        $scope.showEdit = true;
+                    }
+                });
+            }
         });
 
 

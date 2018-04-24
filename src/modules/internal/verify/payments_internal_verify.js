@@ -129,7 +129,7 @@ angular.module('ocb-payments')
 
             if (!payment.items.remitterAccount) {
                 promises.push(transferService.getTransferAccounts({
-                    productList: 'TRANSFER_FROM_LIST',
+                    productList: 'INTERNAL_TRANSFER_FROM_LIST',
                     restrictions: 'ACCOUNT_RESTRICTION_DEBIT'
                 }).then(function (data) {
                     data.content.some(function (account) {
