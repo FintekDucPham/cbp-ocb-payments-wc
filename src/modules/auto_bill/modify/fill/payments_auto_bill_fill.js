@@ -52,7 +52,7 @@ angular.module('ocb-payments')
         paymentData.actionType = initialState.paymentOperationType;
         if (initialData != null) {
             payment.formData = initialData;
-            paymentData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
+            payment.formData.frequencyType = paymentData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
@@ -170,6 +170,7 @@ angular.module('ocb-payments')
         });
 
         $scope.$watch('payment.items.remitterAccount', function(account) {
+            payment.formData.fromAccountNo = account ? account.accountNo : null;
             if (account) {
                 accountsService.getAvailableFunds(account).then(function (info) {
                     payment.meta.availableFunds = info.availableFunds;

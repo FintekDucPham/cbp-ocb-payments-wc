@@ -294,6 +294,7 @@
   "ocb.payments.new.bill.fill.billCode.INVALID_NUMBER_BILLCODE": "Mã hoá đơn không hợp lệ",
   "ocb.payments.new.bill.msg.success" : "Giao dịch thành công",
   "ocb.payments.new.bill.msg.error": "Giao dịch đã bị từ chối",
+  "ocb.payments.new.bill.msg.": "Giao dịch đã bị từ chối",
   "payments.new.bill.fill.info.header.stt": "STT",
   "payments.new.bill.fill.info.header.order_id": "Mã giao dịch",
   "payments.new.bill.fill.info.header.description": "Chi tiết",
@@ -925,6 +926,7 @@
   "ocb.payments.future.saving.label":"Tiết kiệm tích lũy",
   "ocb.payments.new.types.SAVING":"Tiết kiệm tích lũy tương lai và Ươm mầm tương lai",
   "ocb.payments.new.saving.fill.sender_account":"Số tài khoản",
+  "ocb.payments.new.saving.fill.sender_account_name": "Tên",
   "ocb.payments.new.saving.fill.recipient_account":"Số tài khoản",
   "ocb.payments.new.saving.fill.recipient_data": "Tên người thụ hưởng",
   "ocb.payments.new.saving.fill.recipient_data.placeholder": "Nhập tên người thụ hưởng",
@@ -1136,6 +1138,7 @@
   "ocb.payments.new.saving.fill.description.placeholder":"Nhập mô tả",
   "ocb.payments.new.saving.fill.acctype.EMPTY_TITLE":"Loại tài khoản không thể để trống",
   "ocb.payments.new.saving.verify.amount_in_word":"Số tiền bằng chữ",
+  "ocb.payments.new.saving.verify.title": "Xác nhận thông tin",
 
   "ocb.payments.auto_bill.label": "Thanh toán tự động",
   "ocb.payments.auto_bill.list.header": "Thanh toán tự động",
