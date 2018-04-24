@@ -21,10 +21,10 @@ angular.module('ocb-payments')
             formName: 'paymentForm',
             dataObject: payment
         });
-
+        //Get suggested bills
         transferBillService.getSuggestedBills().then(function (data) {
             if (data) {
-                payment.meta.billCodes = data;
+                payment.meta.billCodes = data.bills;
             }
         })
 
@@ -67,6 +67,13 @@ angular.module('ocb-payments')
                     $timeout(function () {
                         if ($select.search) {
                             // $select.select($select.tagging.fct($select.search), true);
+                            // $select.search = validationRegexp('NUMBER_AND_CHAR_ONLY');
+                            if ($select.search.match(validationRegexp('NUMBER_AND_CHAR_ONLY'))) {
+                                $scope.invalidBillCode = false;
+                            } else {
+                                $scope.invalidBillCode = true;
+                            }
+
                         } else {
                             payment.formData[fieldName] = null;
                         }
@@ -84,11 +91,9 @@ angular.module('ocb-payments')
             });
         };
 
-        $scope.removeBillCode = function ($event) {
+        $scope.removeBillCode = function (billCode) {
             payment.meta.billCodes.splice(this.$index, 1);
-            $event.preventDefault();
-            $event.stopPropagation();
-           // prepaidService.deletePrepaidPhone(this.prepaidPhone.id);
+            transferBillService.removeSuggestedBills({billCode: billCode});
         };
 
         /*Move code start*/
@@ -131,6 +136,8 @@ angular.module('ocb-payments')
 
         };
         $scope.billPaymentsStepParams.clearForm = function () {
+            $scope.payment.formData.billInfo = null;
+            $scope.invalidBillCode = false;
             $scope.hideTable = false;
             $scope.enableLoading = false;
             $scope.payment.formData = {};
@@ -142,7 +149,7 @@ angular.module('ocb-payments')
             }
             //$scope.payment.items = {};
             $scope.$broadcast('clearForm');
-            $scope.billInfoSearch = false;
+            $scope.payment.formData.billInfoSearch = false;
             $scope.billPaymentsStepParams.visibility.search = true;
             $scope.billPaymentsStepParams.visibility.next = false;
             //$scope.initBDTable();
@@ -155,12 +162,13 @@ angular.module('ocb-payments')
         // $scope.payment.formData.amount = undefined;
         $scope.billPaymentsStepParams.showBillInfoSearch = function(searchBool, nextBool ) {
             $scope.hideTable = false;
+            $scope.invalidBillCode = false;
             $scope.payment.formData.providerName = $scope.payment.items.senderProvider.providerName;
             $scope.payment.formData.serviceName = $scope.payment.items.senderService.serviceName;
             $scope.payment.formData.serviceCode = $scope.payment.items.senderService.serviceCode;
             /*Check providerCode and BillCode not null*/
             if ($scope.payment.formData.providerCode != undefined && $scope.payment.formData.billCode != undefined) {
-                $scope.billInfoSearch = !$scope.billInfoSearch;
+                $scope.payment.formData.billInfoSearch = true;
                 $scope.billPaymentsStepParams.visibility.search = searchBool;
                 $scope.enableLoading = true;
                 transferBillService.getBill({
@@ -171,7 +179,10 @@ angular.module('ocb-payments')
                 }).then(function (data) {
                     if (data !== undefined) {
                         $scope.billPaymentsStepParams.visibility.next = nextBool;
-                        if (data == "" || data.billItem.length == 0) {
+                        if (data == "") {
+                            $scope.invalidBillCode = true;
+                            $scope.billPaymentsStepParams.visibility.next = false;
+                        } else if (data.billItem.length == 0) {
                             $scope.hideTable = true;
                             $scope.billPaymentsStepParams.visibility.next = false;
                         }
@@ -187,7 +198,9 @@ angular.module('ocb-payments')
                         $scope.payment.billTypeID = data.billType;
                         $scope.payment.formData.billType = data.billType;
                         $scope.payment.formData.address = data.address;
-                        $scope.payment.formData.fullName = data.fullName;
+                        $scope.payment.formData.fullName = data.customerName;
+                        $scope.payment.formData.meterNum = data.meterNumber;
+                        $scope.payment.formData.phone = data.phoneNumber;
                         $scope.payment.formData.billInfo = data;
 
                     }
@@ -773,7 +786,7 @@ angular.module('ocb-payments')
             $scope.payment.meta.employee = data.customerDetails.isEmployee;
             $scope.payment.meta.authType = data.customerDetails.authType;
             $scope.payment.meta.fullName = data.customerDetails.fullName;
-            $scope.payment.formData.fullName = data.customerDetails.fullName;
+            // $scope.payment.formData.fullName = data.customerDetails.fullName;
             if ($scope.payment.meta.authType == 'HW_TOKEN') {
                 $scope.formShow = true;
             }

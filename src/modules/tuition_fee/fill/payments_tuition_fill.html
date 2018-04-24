@@ -106,40 +106,73 @@
         </div>
     </div>
 <!--Student Info-->
-    <div class="account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.formData.batchInfoSearch">
+    <div class="account-collapse-item form-horizontal tuitionFee-desktop-only bd-form" ng-show="tuitionFee.formData.batchInfoSearch">
         <bd-header>{{ ::'ocb.payments.tuition.studentInfo' | translate }}</bd-header>
         <div class="form-row">
             <div class="col-sm-8 col-md-8 code-txt">
                 <div class="form-row">
-                    <div class="std-name col-md-4">{{::'ocb.payments.tuition.name.label'|translate}}</div>
+                    <div class="std-name">{{::'ocb.payments.tuition.name.label'|translate}}</div>
                     <div class="std-content">{{tuitionFee.formData.studentInfo.studentName}}</div>
                 </div>
                 <div class="form-row">
-                    <div class="std-name col-md-4">{{::'ocb.payments.tuition.dateofbirth.label'|translate}}</div>
-                    <div class="std-content ">{{tuitionFee.formData.studentInfo.birthday | date : "dd/MM/yyyy"}}</div>
+                    <div class="std-name">{{::'ocb.payments.tuition.dateofbirth.label'|translate}}</div>
+                    <div class="std-content">{{tuitionFee.formData.studentInfo.birthday | date : "dd/MM/yyyy"}}</div>
                 </div>
                 <div class="form-row">
-                    <div class="std-name col-md-4">{{::'ocb.payments.tuition.nationalid.label'|translate}}</div>
+                    <div class="std-name">{{::'ocb.payments.tuition.nationalid.label'|translate}}</div>
                     <div class="std-content">{{tuitionFee.formData.studentInfo.nationalID}}</div>
                 </div>
               </div>
             <div class="col-sm-8 col-md-8 code-txt">
                 <div class="form-row">
-                    <div class="std-name col-md-3">{{::'ocb.payments.tuition.class.label'|translate}}</div>
+                    <div class="std-name">{{::'ocb.payments.tuition.class.label'|translate}}</div>
                     <div class="std-content">{{tuitionFee.formData.studentInfo.className}}</div>
                 </div>
                 <div class="form-row">
-                    <div class="std-name col-md-3">{{::'ocb.payments.tuition.period.label'|translate}}</div>
+                    <div class="std-name">{{::'ocb.payments.tuition.period.label'|translate}}</div>
                     <div class="std-content">{{tuitionFee.formData.studentInfo.period}}</div>
                 </div>
                 <div class="form-row">
-                    <div class="std-name col-md-3">{{::'ocb.payments.tuition.department.label'|translate}}</div>
+                    <div class="std-name">{{::'ocb.payments.tuition.department.label'|translate}}</div>
                     <div class="std-content">{{tuitionFee.formData.studentInfo.department}}</div>
                 </div>
             </div>
         </div>
     </div>
-<!--Detail Payment Info-->
+    <!--Mobile Version-->
+    <div class="account-collapse-item form-horizontal tuitionFee-mobile-only bd-form" ng-show="tuitionFee.formData.batchInfoSearch">
+        <bd-header>{{ ::'ocb.payments.tuition.studentInfo' | translate }}</bd-header>
+        <div class="form-row">
+            <div class="col-sm-8 col-md-8 code-txt">
+                <div class="form-row">
+                    <div class="std-name">{{::'ocb.payments.tuition.name.label'|translate}}</div>
+                    <div class="std-content col-md-3">{{tuitionFee.formData.studentInfo.studentName}}</div>
+                </div>
+                <div class="form-row">
+                    <div class="std-name">{{::'ocb.payments.tuition.dateofbirth.label'|translate}}</div>
+                    <div class="std-content col-md-3">{{tuitionFee.formData.studentInfo.birthday | date : "dd/MM/yyyy"}}</div>
+                </div>
+                <div class="form-row">
+                    <div class="std-name">{{::'ocb.payments.tuition.nationalid.label'|translate}}</div>
+                    <div class="std-content col-md-3">{{tuitionFee.formData.studentInfo.nationalID}}</div>
+                </div>
+                <div class="form-row">
+                    <div class="std-name">{{::'ocb.payments.tuition.class.label'|translate}}</div>
+                    <div class="std-content col-md-3">{{tuitionFee.formData.studentInfo.className}}</div>
+                </div>
+                <div class="form-row">
+                    <div class="std-name">{{::'ocb.payments.tuition.period.label'|translate}}</div>
+                    <div class="std-content col-md-3">{{tuitionFee.formData.studentInfo.period}}</div>
+                </div>
+                <div class="form-row">
+                    <div class="std-name">{{::'ocb.payments.tuition.department.label'|translate}}</div>
+                    <div class="std-content col-md-3">{{tuitionFee.formData.studentInfo.department}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Detail Payment Info-->
     <div class="account-collapse-item form-horizontal bd-form tuitionFee-desktop-only" ng-show="tuitionFee.formData.batchInfoSearch">
         <bd-header>{{ ::'ocb.payments.tuition.detailPayment' | translate }}</bd-header>
         <!--Desktop version-->
@@ -307,14 +340,14 @@
         <!--Balance and Remaining Daily Limit-->
         <div class="form-row">
             <div class="col-sm-8 col-md-8 vcenter">
-                <div class="std-name">{{::'ocb.payments.tuition.balance.label'|translate}}</div>
-                <div class="std-content">
+                <div style="padding-left: 0px" class="std-name">{{::'ocb.payments.tuition.balance.label'|translate}}</div>
+                <div>
                     {{tuitionFee.formData.balance | number:0}}  {{tuitionFee.formData.currency}}
                 </div>
             </div>
             <div class="col-sm-8 col-md-8 vcenter">
                 <div class="std-remain">{{::'ocb.payments.tuition.limit.label'|translate}}</div>
-                <div class="std-content">
+                <div>
                     {{tuitionFee.items.limit.remainingDailyLimit | number:0}}  VND
                 </div>
             </div>
