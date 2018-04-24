@@ -198,7 +198,9 @@ angular.module('ocb-payments')
                         $scope.payment.billTypeID = data.billType;
                         $scope.payment.formData.billType = data.billType;
                         $scope.payment.formData.address = data.address;
-                        $scope.payment.formData.fullName = data.fullName;
+                        $scope.payment.formData.fullName = data.customerName;
+                        $scope.payment.formData.meterNum = data.meterNumber;
+                        $scope.payment.formData.phone = data.phoneNumber;
                         $scope.payment.formData.billInfo = data;
 
                     }
@@ -784,7 +786,7 @@ angular.module('ocb-payments')
             $scope.payment.meta.employee = data.customerDetails.isEmployee;
             $scope.payment.meta.authType = data.customerDetails.authType;
             $scope.payment.meta.fullName = data.customerDetails.fullName;
-            $scope.payment.formData.fullName = data.customerDetails.fullName;
+            // $scope.payment.formData.fullName = data.customerDetails.fullName;
             if ($scope.payment.meta.authType == 'HW_TOKEN') {
                 $scope.formShow = true;
             }
