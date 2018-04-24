@@ -13,7 +13,7 @@
     <section>
 	    <bd-header>{{::"ocb.payments.fast.header" | translate}}</bd-header>
 	    <bd-form-panel class="bd-form-panel--responsive">
-	        <rb-multistep-form rb-step-params="rbPaymentsStepParams" rb-two-step="deleteOperation">
+	        <rb-multistep-form rb-step-params="rbPaymentsStepParams" rb-two-step="deleteOperation" hide-button="!payment.formData.addToBasket">
 	            <div ui-view></div>
 	        </rb-multistep-form>
 	    </bd-form-panel>
