@@ -1,11 +1,6 @@
 <div class="form-pane bd-form" id="pn-1">
     <div class="form-body">
         <div class="bd-form-header pd-bottom">{{::"ocb.payments.new_bill.label.header.dataVerification"|translate}}</div>
-        <!--<div class="row" ng-show="payment.endOfDayWarning && !payment.formData.addToBasket">-->
-            <!--<div class="col-xs-12 col-sm-12">-->
-                <!--<bd-msg-panel bd-msg-type="warning">{{::'ocb.payments.new.domestic.fill.execution_date.EOD_ERROR' | translate}}</bd-msg-panel>-->
-            <!--</div>-->
-        <!--</div>-->
         <div class="pane-bd deposit-form">
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.bill.verify.transactionType'|translate}}">
                 {{::"ocb.payments.new_bill.label.header"|translate}}
@@ -47,23 +42,6 @@
             <bd-item-property class="bd-item-property--text bd-item-property--disabled" label="{{::'ocb.payments.new.foreign.fill.transfer_cost.label'|translate}}" ng-if="transferCost.link">
                 {{::payment.formData.transferCost}} <a ng-href="{{transferCost.link}}" target="_blank">{{::'ocb.payments.new.verify.transfer_cost.info'|translate}}</a>
             </bd-item-property>
-            <span class="eb-validation-messages">
-            <span class="messages" ng-if="payment.formData.addToBeneficiary && !payment.items.modifyFromBeneficiary">
-                 <span class="validation-message">
-                     {{::'ocb.payments.basket.add.verify'|translate}}
-                 </span>
-             </span>
-              <span class="messages" ng-if="payment.items.modifyFromBeneficiary">
-                  <span class="validation-message">
-                     {{::'ocb.payments.basket.modify.verify.'+payment.meta.customerContext|translate}}
-                 </span>
-             </span>
-             <span class="messages" ng-if="payment.items.modifyFromBeneficiary && payment.meta.customerContext=='MICRO'">
-                 <span class="validation-message">
-                     {{::'ocb.payments.basket.modify.signRemove.verify'|translate}}
-                 </span>
-             </span>
-         </span>
         </div>
     </div>
 </div>
