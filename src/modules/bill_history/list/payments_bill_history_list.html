@@ -52,13 +52,13 @@
         </div>
 
         <div class="form-row bd-hidden-sm">
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-1">
                 <bd-header>{{ ::'ocb.payments.bill.history.label' | translate }}</bd-header>
             </div>
             <!--Header Bills History and select account-->
-            <div class="col-md-5 col-sm-5">
+            <div class="col-md-5 col-sm-7">
                 <!--Account-->
-                <div class="col-md-3 col-sm-4 row-label form-label">
+                <div class="col-md-3 col-sm-8 row-label form-label">
                     {{ ::'ocb.payments.bill.history.account.label' | translate }}
                 </div>
                 <div class="col-md-9 col-sm-1">
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <!--Search and advanced filter-->
-            <div class="padding-left-cell col-md-6 col-sm-11 search-input ">
+            <div class="padding-left-cell col-md-6 col-sm-12 search-input ">
                 <!--Search-->
                 <div class="col-md-6 col-sm-4">
                     <input ng-model="table.tableConfig.searchText" type="text" placeholder="{{::'ocb.payments.bill.history.search.label' | translate}}">
