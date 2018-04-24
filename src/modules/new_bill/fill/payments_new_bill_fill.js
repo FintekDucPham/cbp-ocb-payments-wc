@@ -21,10 +21,10 @@ angular.module('ocb-payments')
             formName: 'paymentForm',
             dataObject: payment
         });
-
+        //Get suggested bills
         transferBillService.getSuggestedBills().then(function (data) {
             if (data) {
-                payment.meta.billCodes = data;
+                payment.meta.billCodes = data.bills;
             }
         })
 
@@ -91,11 +91,9 @@ angular.module('ocb-payments')
             });
         };
 
-        $scope.removeBillCode = function ($event) {
+        $scope.removeBillCode = function (billCode) {
             payment.meta.billCodes.splice(this.$index, 1);
-            $event.preventDefault();
-            $event.stopPropagation();
-           // prepaidService.deletePrepaidPhone(this.prepaidPhone.id);
+            transferBillService.removeSuggestedBills({billCode: billCode});
         };
 
         /*Move code start*/
@@ -138,6 +136,7 @@ angular.module('ocb-payments')
 
         };
         $scope.billPaymentsStepParams.clearForm = function () {
+            $scope.payment.formData.billInfo = null;
             $scope.invalidBillCode = false;
             $scope.hideTable = false;
             $scope.enableLoading = false;
@@ -150,7 +149,7 @@ angular.module('ocb-payments')
             }
             //$scope.payment.items = {};
             $scope.$broadcast('clearForm');
-            $scope.billInfoSearch = false;
+            $scope.payment.formData.billInfoSearch = false;
             $scope.billPaymentsStepParams.visibility.search = true;
             $scope.billPaymentsStepParams.visibility.next = false;
             //$scope.initBDTable();
@@ -169,7 +168,7 @@ angular.module('ocb-payments')
             $scope.payment.formData.serviceCode = $scope.payment.items.senderService.serviceCode;
             /*Check providerCode and BillCode not null*/
             if ($scope.payment.formData.providerCode != undefined && $scope.payment.formData.billCode != undefined) {
-                $scope.billInfoSearch = !$scope.billInfoSearch;
+                $scope.payment.formData.billInfoSearch = true;
                 $scope.billPaymentsStepParams.visibility.search = searchBool;
                 $scope.enableLoading = true;
                 transferBillService.getBill({
