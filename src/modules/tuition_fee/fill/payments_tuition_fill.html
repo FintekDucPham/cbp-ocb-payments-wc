@@ -341,13 +341,13 @@
         <div class="form-row">
             <div class="col-sm-8 col-md-8 vcenter">
                 <div style="padding-left: 0px" class="std-name">{{::'ocb.payments.tuition.balance.label'|translate}}</div>
-                <div class="std-content">
+                <div>
                     {{tuitionFee.formData.balance | number:0}}  {{tuitionFee.formData.currency}}
                 </div>
             </div>
             <div class="col-sm-8 col-md-8 vcenter">
                 <div class="std-remain">{{::'ocb.payments.tuition.limit.label'|translate}}</div>
-                <div class="std-content">
+                <div>
                     {{tuitionFee.items.limit.remainingDailyLimit | number:0}}  VND
                 </div>
             </div>
