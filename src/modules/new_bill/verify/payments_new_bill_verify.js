@@ -129,10 +129,8 @@ angular.module('ocb-payments')
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
-<<<<<<< 5062ef14a188dacf52e4e93a7ea10f153664e529
                 $scope.payment.result.code ="error";
                 $scope.payment.result.type ="error"
-=======
 
                 if (error.text === "INCORRECT_TOKEN_PASSWORD") {
                     if ($scope.invalidPasswordCount >= 1) {
@@ -146,7 +144,6 @@ angular.module('ocb-payments')
                   return;
                 }
 
->>>>>>> OCBVNMCP-3022: wrong auth  code management
                 if ($scope.payment.token.model && $scope.payment.token.model.$tokenRequired) {
                     if (!$scope.payment.token.model.$isErrorRegardingToken(error)) {
                         actions.proceed();

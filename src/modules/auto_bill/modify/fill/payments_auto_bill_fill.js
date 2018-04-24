@@ -187,7 +187,6 @@ angular.module('ocb-payments')
         }).then(function (limits) {
             payment.meta.remainingDailyLimit = limits.remainingDailyLimit;
         });
-<<<<<<< 5062ef14a188dacf52e4e93a7ea10f153664e529
 
         function isNegativeAmount(value) {
           return /^((-[1-9][0-9]*([.][0-9]{1,2})?)|(-0[.][0-9]{1,2}))$/.test(value);
@@ -196,6 +195,4 @@ angular.module('ocb-payments')
         function isZeroAmount(value){
             return value < 0.01;
         }
-=======
->>>>>>> OCBVNMCP-3022: wrong auth  code management
     });

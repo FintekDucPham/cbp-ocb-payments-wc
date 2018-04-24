@@ -65,20 +65,12 @@
         <div ng-if="payuBku.token.params.resourceId" ng-show="payuBku.token.params.resourceId " label="{{ payuBku.token.model.currentToken.label }}">
             <rb-token-authorization rb-operation-type="TRANSFER"
                                     rb-model="payuBku.token.model"
-                                    rb-params="payuBku.token.params">
+                                    rb-params="payuBku.token.params"
+                                    show-wrong-code-label="showWrongCodeLabel">
             </rb-token-authorization>
         </div>
 <!--</section>-->
 </div>
-<<<<<<< 5062ef14a188dacf52e4e93a7ea10f153664e529
-=======
-<bd-item-property class="bd-item-property--multirow" ng-if="payuBku.token.params.resourceId"
-                  ng-show="payuBku.token.model.$tokenRequired"
-                  label="{{ payuBku.token.model.currentToken.label }}">
-    <rb-token-authorization show-wrong-code-label="showWrongCodeLabel" rb-operation-type="TRANSFER" rb-model="payuBku.token.model"
-                            rb-params="payuBku.token.params"></rb-token-authorization>
-</bd-item-property>
->>>>>>> OCBVNMCP-3022: wrong auth  code management
 
 <span class="eb-validation-messages">
      <span class="messages"  ng-if="errMsg">
