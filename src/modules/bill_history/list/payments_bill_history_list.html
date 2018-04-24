@@ -6,7 +6,7 @@
             </div>
             <div class="bd-form simple-search-form">
                 <!--Header Bills History and select account Test-->
-                <div class="col-md-4">
+                <div class="col-md-5">
                         <div class="bh-header">{{ ::'ocb.payments.bill.history.view.label' | translate }}</div>
                         <!--Account-->
                         <div class="col-md-3 row-label form-label">
@@ -32,7 +32,7 @@
                 <!--Search and advanced filter-->
                 <div class="padding-left-cell col-md-6 search-input ">
                     <!--Search-->
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <input ng-model="table.tableConfig.searchText" type="text" placeholder="{{::'ocb.payments.bill.history.search.label' | translate}}">
                         <i class="search-icon" ng-click="onSearch()"></i>
                     </div>
@@ -41,12 +41,12 @@
             </div>
             <!--Advanced filter-->
             <div ng-hide="$params.isAdvanced" ng-click="$params.isAdvanced = true"
-                 class="col-md-4 color form-label mobile-center">
+                 class="col-md-6 color form-label mobile-center">
                 <a>{{::'ocb.payments.bill.history.advanced.filter.label' | translate}}</a>
             </div>
             <!--Hide advanced filter-->
             <div ng-show="$params.isAdvanced" ng-click="$params.isAdvanced = false"
-                 class="col-md-4 color form-label mobile-center">
+                 class="col-md-6 color form-label mobile-center">
                 <a>{{::'ocb.payments.bill.history.hide.advanced.filter.label' | translate}}</a>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <bd-header>{{ ::'ocb.payments.bill.history.label' | translate }}</bd-header>
             </div>
             <!--Header Bills History and select account-->
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <!--Account-->
                 <div class="col-md-3 row-label form-label">
                     {{ ::'ocb.payments.bill.history.account.label' | translate }}
@@ -81,18 +81,18 @@
             <!--Search and advanced filter-->
             <div class="padding-left-cell col-md-6 search-input ">
                 <!--Search-->
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <input ng-model="table.tableConfig.searchText" type="text" placeholder="{{::'ocb.payments.bill.history.search.label' | translate}}">
                     <i class="search-icon" ng-click="onSearch()"></i>
                 </div>
                 <!--Advanced filter-->
                 <div ng-hide="$params.isAdvanced" ng-click="$params.isAdvanced = true"
-                     class="col-md-4 color form-label mobile-center">
+                     class="col-md-6 color form-label mobile-center">
                     <a>{{::'ocb.payments.bill.history.advanced.filter.label' | translate}}</a>
                 </div>
                 <!--Hide advanced filter-->
                 <div ng-show="$params.isAdvanced" ng-click="$params.isAdvanced = false"
-                     class="col-md-4 color form-label mobile-center">
+                     class="col-md-6 color form-label mobile-center">
                     <a>{{::'ocb.payments.bill.history.hide.advanced.filter.label' | translate}}</a>
                 </div>
             </div>

@@ -15,7 +15,7 @@
      <bd-multiline-text bd-text="$data.orderingCustomer"></bd-multiline-text>
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.recipientAccount_new'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.standing.list.details.recipientAccount'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     <rb-bank-name account-no="$data.creditAccount"
                   bank-name-promise="standingBankNamePromise">
     </rb-bank-name>
