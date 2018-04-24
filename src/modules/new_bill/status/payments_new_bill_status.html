@@ -1,10 +1,15 @@
 <div class="bd-form new-bill-status">
-    <bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.bill.msg.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>
+    <div ng-show="payment.result.type !== 'success'">
+        <bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>
+    </div>
+    <div ng-show="payment.result.type == 'success'">
+        <bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.bill.msg.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>
+    </div>
 
     <div class="row final-btn">
         <!--<bd-button-->
-                   <!--class="hl-txt2 prev pn-step bd-form-footer__button"-->
-                   <!--ng-click="$params.finalAction()">{{ $params.labels.finalAction | translate }}-->
+        <!--class="hl-txt2 prev pn-step bd-form-footer__button"-->
+        <!--ng-click="$params.finalAction()">{{ $params.labels.finalAction | translate }}-->
         <!--</bd-button>-->
         <div class="col-xs-12 col-md-6 back-btn">
             <bd-button class="bd-button bd-form-footer__button bd-button__primary"
@@ -20,10 +25,10 @@
     </div>
 </div>
 <!--<div class="pane-bd">-->
-    <!--<div class="success-center clear">-->
-        <!--<img src="images/icon-success.svg" alt="" width="74" height="74" class="success-img">-->
-        <!--<object data="images/icon-success.svg" type="image/svg+xml"></object>-->
-        <!--<p class="title">The transaction has been accepted for execution, awaiting execution</p>-->
-        <!--<p class="sumary">Orders submitted after <strong>23:00</strong> will be executedon the following business day</p>-->
-    <!--</div>-->
+<!--<div class="success-center clear">-->
+<!--<img src="images/icon-success.svg" alt="" width="74" height="74" class="success-img">-->
+<!--<object data="images/icon-success.svg" type="image/svg+xml"></object>-->
+<!--<p class="title">The transaction has been accepted for execution, awaiting execution</p>-->
+<!--<p class="sumary">Orders submitted after <strong>23:00</strong> will be executedon the following business day</p>-->
+<!--</div>-->
 <!--</div>-->
