@@ -202,7 +202,7 @@ angular.module('ocb-payments')
                         if (data.tuitionPayment == null || data.tuitionPayment.length == 0) {
                             $scope.tuitionFee.formData.paymentEmpty = true;
                         }
-                        if (data.tuitionFee == null || data.tuitionFee.length == 0) {
+                        if (data.tuitionFee == null || data.tuitionFee.length == 0 || data.tuitionFee.tuitionDebtAmount <= 0) {
                             $scope.tuitionFee.formData.amountNull = true;
                         }
                         if (data.tuitionFee != null) {
