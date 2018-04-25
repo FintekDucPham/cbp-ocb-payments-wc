@@ -475,6 +475,7 @@
   "ocb.payments.bill.history.header.address.label": "Address",
   "ocb.payments.bill.history.header.billID.label": "Bill Code",
   "ocb.payments.bill.history.header.qty.label": "Number of months",
+  "ocb.payments.bill.history.download.label": "Download",
   "ocb.payments.bill.history.period.label": "Period",
   "ocb.payments.bill.history.period.to.label": "-",
   "ocb.payments.bill.history.period.from.text.label": "From",
