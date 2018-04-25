@@ -93,6 +93,7 @@ angular.module('ocb-payments')
                     if (callParams.actionType.code == "NEW") {
                         transferBillService.createAutoBillTransfer(callParams).then(function (status) {
                             setMessage(status);
+                            actions.proceed();
                         }).catch(function (error) {
                           if (error.text === "INCORRECT_TOKEN_PASSWORD") {
                               if ($scope.invalidPasswordCount >= 1) {
@@ -113,6 +114,7 @@ angular.module('ocb-payments')
                         callParams.amountLimit = callParams.amountLimit.value;
                         transferBillService.modifyAutoBillTransfer(callParams).then(function (status) {
                             setMessage(status);
+                            actions.proceed();
                         }).catch(function (error) {
                           if (error.text === "INCORRECT_TOKEN_PASSWORD") {
                               if ($scope.invalidPasswordCount >= 1) {
