@@ -18,7 +18,6 @@ angular.module('ocb-payments')
        // console.log("+++sttE:" + $scope.payment.result.code + $scope.payment.result.type );
         $scope.payment.standingOrderData = $scope.payment.formData;
         //$scope.payment.standingOrderData.recipientAccountNo = $scope.payment.items.recipientAccount.accountNo;
-
         $scope.payment.formData = {};
 
     });
