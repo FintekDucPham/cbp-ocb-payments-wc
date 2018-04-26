@@ -75,7 +75,6 @@ angular.module('ocb-payments')
                             $scope.payment.formData,
                             storedData
                         );
-                        console.log($scope.payment.formData);
                         setRecipientData(storedData.recipientData);
                         if (storedData.realizationDate) {
                             storedData.realizationDate = new Date(storedData.realizationDate)
@@ -91,11 +90,6 @@ angular.module('ocb-payments')
             $scope.showStoreDataOption = false;
             $scope.userCacheForm[name] = newValue;
             userCacheHttpHandler.save(screenName, $scope.userCacheForm);
-        };
-
-        $scope.onRecipientSelected = function (recipient) {
-            setRecipientData(recipient);
-            changeUserCacheMiddleware('recipientData', recipient);
         };
 
         $scope.onChangeUserCache = changeUserCacheMiddleware;
@@ -255,6 +249,10 @@ angular.module('ocb-payments')
             $scope.isRecipientSelected = true;
         }
 
+        $scope.onRecipientSelected = function (recipient) {
+            changeUserCacheMiddleware('recipientData', recipient)
+            setRecipientData(recipient);
+        };
 
         $scope.onRecipientCleared = function () {
             clearRecipientData();
