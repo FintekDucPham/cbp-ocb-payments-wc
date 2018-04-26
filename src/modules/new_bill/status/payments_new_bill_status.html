@@ -1,5 +1,5 @@
 <div class="bd-form new-bill-status">
-    <bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.bill.msg.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>
+    <bd-msg-panel bd-msg-type="{{ payment.result.type || 'error'}}">{{ ::'ocb.payments.new.status.' + (payment.result.code || payment.result.type) | translate }}</bd-msg-panel>
 
     <div class="row final-btn">
         <!--<bd-button-->
