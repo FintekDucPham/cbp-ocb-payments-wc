@@ -56,6 +56,7 @@ angular.module('ocb-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.$emit('hideWrongCodeLabelEvent');
             var form = $scope.autoBillForm;
             if (form.$invalid || ($scope.payment.formData.amountLimit  && (isNegativeAmount($scope.payment.formData.amountLimit.value) || isZeroAmount($scope.payment.formData.amountLimit.value)))) {
                formService.dirtyFields(form);

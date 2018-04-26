@@ -58,7 +58,8 @@
   <bd-item-property class="bd-item-property--multirow" ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" no-label-box="true">
     <rb-token-authorization rb-operation-type="TRANSFER"
                             rb-model="tuitionFee.token.model"
-                            rb-params="tuitionFee.token.params">
+                            rb-params="tuitionFee.token.params"
+                            show-wrong-code-label="showWrongCodeLabel">
     </rb-token-authorization>
   </bd-item-property>
 </div>

@@ -51,7 +51,7 @@
 
     <section ng-if="payment.operation.code!=='EDIT'">
         <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" label="{{ payment.token.model.currentToken.label }}" no-label-box="true">
-            <rb-token-authorization rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params">
+            <rb-token-authorization show-wrong-code-label="showWrongCodeLabel" rb-operation-type="{{payment.token.params.rbOperationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params">
             </rb-token-authorization>
         </bd-item-property>
     </section>

@@ -28,6 +28,12 @@ angular.module('ocb-payments')
             dataObject: $scope.payment
         });
 
+    $scope.$on('wrongAuthCodeEvent', function () {
+        $scope.showWrongCodeLabel = true;
+    });
+    $scope.$on('hideWrongCodeLabelEvent', function () {
+        $scope.showWrongCodeLabel = false;
+    });
 
     $scope.returnTrans = function(){
         $scope.pendingTransaction.returnTrans();

@@ -97,6 +97,18 @@ angular.module('ocb-payments')
             }).catch(function (error) {
                 $scope.tuitionFee.result.token_error = true;
 
+                if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                    if ($scope.invalidPasswordCount >= 1) {
+                      $scope.$emit('wrongAuthCodeEvent');
+                    }
+                    else {
+                      $scope.showWrongCodeLabel = true;
+                    }
+
+                  $scope.invalidPasswordCount++;
+                  return;
+                }
+
                 if ($scope.tuitionFee.token.model && $scope.tuitionFee.token.model.$tokenRequired) {
                     if (!$scope.tuitionFee.token.model.$isErrorRegardingToken(error)) {
                         actions.proceed();

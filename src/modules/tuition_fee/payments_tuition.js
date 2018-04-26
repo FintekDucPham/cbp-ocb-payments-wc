@@ -72,6 +72,13 @@ angular.module('ocb-payments')
             return $scope.rbPaymentTuitionFeeParams.showTuitionInfoSearch(searchBool, nextBool);
         }
 
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
+        
         $scope.rbPaymentTuitionFeeParams = {
             completeState: 'dashboard',
             onClear: $scope.clearForm,

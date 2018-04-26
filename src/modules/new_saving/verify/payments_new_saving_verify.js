@@ -44,6 +44,8 @@ angular.module('ocb-payments')
             $scope.showVerify = true;
         }
 
+        $scope.invalidPasswordCount = 0;
+
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -58,7 +60,7 @@ angular.module('ocb-payments')
                 }
             }
         }
-        
+
    /*     transferService.getTransferCost({
             remitterId: $scope.payment.formData.remitterAccountId
         }).then(function(transferCostData){
@@ -94,6 +96,17 @@ angular.module('ocb-payments')
                 doneFn();
             }).catch(function (error) {
                 $scope.payment.result.token_error = true;
+                if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                    if ($scope.invalidPasswordCount >= 1) {
+                      $scope.$emit('wrongAuthCodeEvent');
+                    }
+                    else {
+                      $scope.showWrongCodeLabel = true;
+                    }
+
+                  $scope.invalidPasswordCount++;
+                  return;
+                }
 
                 if($scope.payment.token.model && $scope.payment.token.model.$tokenRequired){
                     if(!$scope.payment.token.model.$isErrorRegardingToken(error)){
@@ -134,6 +147,7 @@ angular.module('ocb-payments')
                                 sendAuthorizationToken();
                             } else {
                                 $scope.payment.result.token_error = false;
+                                authorize(actions.proceed, actions);
                             }
                         } else {
                             if ($scope.payment.formData.addToBeneficiary === true) {

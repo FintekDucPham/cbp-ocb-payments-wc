@@ -77,6 +77,8 @@ angular.module('ocb-payments')
         $scope.newPayment = stateData.newPayment;
         $scope.modifyInBasket = stateData.basketPayment && stateData.operation === 'modify';
 
+        $scope.invalidPasswordCount = 0;
+
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: payment
@@ -183,6 +185,21 @@ angular.module('ocb-payments')
             }
 
             return realize.catch(function (errorReason) {
+                if (errorReason.text === "INCORRECT_TOKEN_PASSWORD") {
+                    if ($scope.invalidPasswordCount >= 1) {
+                      $scope.$emit('wrongAuthCodeEvent');
+                    }
+                    else {
+                      $scope.showWrongCodeLabel = true;
+                    }
+
+                  $scope.invalidPasswordCount++;
+                  payment.result = {
+                      type: 'authError',
+                      message: errorReason
+                  };
+                  return;
+                }
                 if (token.model.$tokenRequired && token.model.$isErrorRegardingToken(errorReason)) {
                     return;
                 }
@@ -225,7 +242,7 @@ angular.module('ocb-payments')
                         recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.FAST.state , createRecipient());
                     }
                     authorize().then(function () {
-                        if (payment.result.type) {
+                        if (payment.result.type && payment.result.type !== 'authError') {
                             actions.proceed();
                         }
                     });

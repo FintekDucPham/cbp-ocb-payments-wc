@@ -27,6 +27,20 @@ angular.module('ocb-payments')
             }).catch(function(error){
                 $scope.payment.item.result.messages = 'error';
                 $scope.payment.item.result.type = 'error';
+
+                if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                    if ($scope.invalidPasswordCount >= 1) {
+                      $scope.$emit('wrongAuthCodeEvent');
+                      $state.go('payments.basket.manage.delete.verify');
+                    }
+                    else {
+                      $scope.showWrongCodeLabel = true;
+                    }
+
+                  $scope.invalidPasswordCount++;
+                  return;
+                }
+
                 if (!$scope.payment.token.model || !$scope.payment.token.model.$tokenRequired || !$scope.payment.token.model.$isErrorRegardingToken(error)) {
                     doneFn();
                 }

@@ -687,6 +687,7 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.$emit('hideWrongCodeLabelEvent');
             $scope.invalidAmount = false;
             $scope.noCheck = false;
             if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code){

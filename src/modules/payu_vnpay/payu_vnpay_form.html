@@ -1,3 +1,10 @@
+<div class="form rb-content-view">
+<section class="payments-warning-section">
+    <div class="payments-warning-item" ng-if="showWrongCodeLabel">
+        {{ ::'ocb.authorization.SMS.wrong.label.second'|translate}}
+    </div>
+</section>
+</div>
 <rb-content-view class="form">
     <bd-header >{{::"ocb.payments.payu_vnpay.label"|translate}}</bd-header>
     <bd-form-panel>

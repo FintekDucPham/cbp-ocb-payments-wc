@@ -276,6 +276,7 @@ angular.module('ocb-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.$emit('hideWrongCodeLabelEvent');
             var basketItemId = {};
             basketItemId.transfersId = getCheckedPaymentsIdListAndSetViewGroupFlag($scope.basket.payments);
             paymentsBasketService.create(basketItemId).then(function(data){

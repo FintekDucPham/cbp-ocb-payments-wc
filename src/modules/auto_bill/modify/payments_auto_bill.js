@@ -28,4 +28,10 @@ angular.module('ocb-payments')
             // todo
             $scope.$broadcast('clearForm');
         };
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
     });

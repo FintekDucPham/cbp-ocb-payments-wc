@@ -171,10 +171,12 @@ angular.module('ocb-payments')
                 return copiedForm;
             };
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+                $scope.$emit('hideWrongCodeLabelEvent');
                 // if($scope.payuBku.data.subjectSelected === undefined || $scope.payuBku.data.subjectSelected.length === 0){
                 //     $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_select0.label');
                 //     return;
                 // }
+
                 $scope.payuBku.data.senderAccount = $scope.remitterInfo;
                 // if($scope.payuBku.data.senderAccount === null ){
                 //     $scope.errMsg = translate.property('ocb.payments.payu_bku.err_msg_account.label');
@@ -209,4 +211,3 @@ angular.module('ocb-payments')
             });
 
         });
-

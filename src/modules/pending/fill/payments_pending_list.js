@@ -291,6 +291,7 @@ angular.module('ocb-payments')
 
         //approve transactions
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+            $scope.$emit('hideWrongCodeLabelEvent');
             resetErrState();
             $scope.checkBoxState = false;
 

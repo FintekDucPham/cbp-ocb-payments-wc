@@ -177,7 +177,7 @@ angular.module('ocb-payments')
 
         $scope.newPayment = stateData.newPayment;
         $scope.modifyInBasket = stateData.basketPayment && stateData.operation === 'modify';
-        
+
         $scope.loading = $q.all(Object.keys(payment.promises).map(function (key) {
             return payment.promises[key];
         }));
@@ -237,4 +237,11 @@ angular.module('ocb-payments')
                 finalize: true,
             }
         };
+
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
     });

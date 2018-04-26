@@ -20,6 +20,7 @@ angular.module('ocb-payments')
 
         $scope.payment.token.params.authType = $scope.payment.meta.authType;
 
+        $scope.invalidPasswordCount = 0;
         bdVerifyStepInitializer($scope, {
             formName: 'paymentForm',
             dataObject: $scope.payment
@@ -130,6 +131,19 @@ angular.module('ocb-payments')
                 $scope.payment.result.token_error = true;
                 $scope.payment.result.code ="error";
                 $scope.payment.result.type ="error"
+
+                if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                    if ($scope.invalidPasswordCount >= 1) {
+                      $scope.$emit('wrongAuthCodeEvent');
+                    }
+                    else {
+                      $scope.showWrongCodeLabel = true;
+                    }
+
+                  $scope.invalidPasswordCount++;
+                  return;
+                }
+
                 if ($scope.payment.token.model && $scope.payment.token.model.$tokenRequired) {
                     if (!$scope.payment.token.model.$isErrorRegardingToken(error)) {
                         actions.proceed();
@@ -196,4 +210,3 @@ angular.module('ocb-payments')
 
 
     });
-

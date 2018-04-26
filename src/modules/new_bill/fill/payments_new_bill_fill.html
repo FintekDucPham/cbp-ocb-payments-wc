@@ -66,7 +66,7 @@
                             <div style="margin-right: 30px">
                                 <div class="pull-left" style="width: 45%; overflow: hidden; text-overflow: ellipsis;"><span ng-bind-html="billCode | highlight: $select.search"></span></div>
                                 <!--<div class="pull-right" style="width: 45%; overflow: hidden; text-overflow: ellipsis;">{{billCode}}</div>-->
-                            </div>
+                </div>
                             <div class="clearfix"></div>
                         </ui-select-choices>
                     </ui-select>
@@ -104,17 +104,17 @@
             <bd-item-property label="{{::'payments.new.fill.fill.add_to_history' | translate}}" class="single-line-checkbox">
                 <bd-checkbox bd-disabled="payment.formData.billInfoSearch" ng-model="payment.formData.addToBeneficiary"></bd-checkbox>
             </bd-item-property>
-            <rb-widget-banner-container rb-slot-name="ACCOUNT_WIDGET" rb-target-type="CURRENT_USER">
+            <cb-widget-banner-container cb-slot-name="ACCOUNT_WIDGET" cb-target-type="ALL_USERS">
                 <div class="widget-content-inner info-text margin-bottom-20">
                     <a class="color" href="{{::'ocb.payments.new.bill.fill.serviceList.link_url'|translate}}"
                        target="_blank"
                        bd-widget-click>{{::'ocb.payments.new.bill.fill.serviceList.link_name'|translate}}</a>
                 </div>
-            </rb-widget-banner-container>
+            </cb-widget-banner-container>
             <div ng-show="invalidBillCode" class="validate-message">
                 {{::'ocb.payments.new.bill.fill.billCode.INCORRECT_BILLCODE'|translate}}
-            </div>
         </div>
+    </div>
     </div>
 
     <!--Bill information-->

@@ -19,6 +19,8 @@ angular.module('ocb-payments')
                 // dataObject: $scope.payuBku
             });
 
+            $scope.invalidPasswordCount = 0;
+
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 if ($scope.payuVnpay.meta.customerContext == 'DETAL') {
                     // authorize(actions.proceed, actions);
@@ -66,6 +68,17 @@ angular.module('ocb-payments')
                     actions.proceed();
                 }).catch(function (error) {
                     $scope.payuVnpay.result.token_error = true;
+                    if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                        if ($scope.invalidPasswordCount >= 1) {
+                          $scope.$emit('wrongAuthCodeEvent');
+                        }
+                        else {
+                          $scope.showWrongCodeLabel = true;
+                        }
+
+                      $scope.invalidPasswordCount++;
+                      return;
+                    }
                     if ($scope.payuVnpay.token.model && $scope.payuVnpay.token.model.$tokenRequired) {
                         if (!$scope.payuVnpay.token.model.$isErrorRegardingToken(error)) {
                            // actions.proceed();
@@ -86,5 +99,3 @@ angular.module('ocb-payments')
 
 
     });
-
-

@@ -44,6 +44,18 @@ angular.module('ocb-payments')
                 }).catch(function (error) {
                     $scope.payuBku.result.token_error = true;
 
+                    if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                        if ($scope.invalidPasswordCount >= 1) {
+                          $scope.$emit('wrongAuthCodeEvent');
+                        }
+                        else {
+                          $scope.showWrongCodeLabel = true;
+                        }
+
+                      $scope.invalidPasswordCount++;
+                      return;
+                    }
+
                     if ($scope.payuBku.token.model && $scope.payuBku.token.model.$tokenRequired) {
                         if (!$scope.payuBku.token.model.$isErrorRegardingToken(error)) {
                             //actions.proceed();
@@ -57,6 +69,8 @@ angular.module('ocb-payments')
                     // formService.clearForm($scope.tuitionFeeAuthForm);
                 });
             }
+            $scope.invalidPasswordCount = 0;
+
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
                 if ($scope.payuBku.operation.code !== rbPaymentOperationTypes.EDIT.code && $scope.payuBku.token.model.input.$isValid()) {
                     authorize(actions.proceed, actions);
@@ -76,5 +90,3 @@ angular.module('ocb-payments')
             });
 
     });
-
-

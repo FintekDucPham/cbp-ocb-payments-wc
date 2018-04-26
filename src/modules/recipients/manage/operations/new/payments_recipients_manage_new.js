@@ -63,5 +63,12 @@ angular.module('ocb-payments')
 
         $scope.prepareOperation = $scope.create;
 
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
+
     }
 );

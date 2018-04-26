@@ -16,6 +16,8 @@ angular.module('ocb-payments')
 
         $scope.summaryItemMap = {};
 
+        $scope.invalidPasswordCount = 0;
+
         _.each( $scope.basket.payments, function(account) {
             _.each( account.basketTransfers, function( basketTransfer){
             var payment = basketTransfer.payment;
@@ -35,6 +37,18 @@ angular.module('ocb-payments')
             }).catch(function (error) {
                 $scope.basket.result.token_error = true;
                 paymentsBasketService.updateCounter('PROCESS_FROM_BASKET');
+                
+                if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                    if ($scope.invalidPasswordCount >= 1) {
+                      $scope.$emit('wrongAuthCodeEvent');
+                    }
+                    else {
+                      $scope.showWrongCodeLabel = true;
+                    }
+
+                  $scope.invalidPasswordCount++;
+                  return;
+                }
 
                 if($scope.basket.token.model && $scope.basket.token.model.$tokenRequired){
                     if($scope.basket.token.model.$isErrorRegardingToken != null && !$scope.basket.token.model.$isErrorRegardingToken(error)){

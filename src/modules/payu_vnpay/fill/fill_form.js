@@ -59,6 +59,8 @@ angular.module('ocb-payments')
             });
 
             $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+                $scope.$emit('hideWrongCodeLabelEvent');
+
                 var dataToCreate = {
                     "remitterId" : $scope.payuVnpay.data.remitterId,
                     "remitterAccountId" : $scope.payuVnpay.data.remitterAccountId,
@@ -72,7 +74,6 @@ angular.module('ocb-payments')
                     "amountDesc" : ocbConvert.convertNumberToText($scope.payuVnpay.data.paymentInfo.amount.value,false),
                     "currency" : $scope.payuVnpay.data.remitterInfo.currency,
                     "paymentType" : "VNPAY"
-
                 }
                 transferBillService.create('bill',dataToCreate).then(function (data) {
                     $scope.payuVnpay.token.params.resourceId = data.referenceId;
@@ -83,4 +84,3 @@ angular.module('ocb-payments')
             });
 
         });
-

@@ -103,5 +103,12 @@ angular.module('ocb-payments')
             }
         };
 
+        $scope.$on('wrongAuthCodeEvent', function () {
+            $scope.showWrongCodeLabel = true;
+        });
+        $scope.$on('hideWrongCodeLabelEvent', function () {
+            $scope.showWrongCodeLabel = false;
+        });
+
         // rbPaymentInitFactory($scope);
     });

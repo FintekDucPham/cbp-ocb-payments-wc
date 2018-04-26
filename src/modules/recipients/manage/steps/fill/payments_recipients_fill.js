@@ -17,6 +17,7 @@ angular.module('ocb-payments')
                 angular.extend($scope.recipient.meta, paymentRulesResolved);
 
                 $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+                    $scope.$emit('hideWrongCodeLabelEvent');
                     if($scope.blockadesForward.isBlock){return;}
                     var form = $scope.recipientForm;
                     if($scope.recipient.operation.code === rbRecipientOperationType.NEW.code && $scope.recipient.type.code === 'DOMESTIC'){
@@ -48,4 +49,3 @@ angular.module('ocb-payments')
             }
         };
     });
-

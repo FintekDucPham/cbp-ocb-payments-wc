@@ -18,6 +18,7 @@ angular.module('ocb-payments')
                 dataObject: $scope.payuHufi
             });
 
+            $scope.invalidPasswordCount = 0;
 
             // if ($scope.payuHufi.token.model == null) {
             //     $scope.payuHufi.token.model.$tokenRequired = true;
@@ -43,6 +44,17 @@ angular.module('ocb-payments')
 
                 }).catch(function (error) {
                     $scope.payuHufi.result.token_error = true;
+                    if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+                        if ($scope.invalidPasswordCount >= 1) {
+                          $scope.$emit('wrongAuthCodeEvent');
+                        }
+                        else {
+                          $scope.showWrongCodeLabel = true;
+                        }
+
+                      $scope.invalidPasswordCount++;
+                      return;
+                    }
 
                     if ($scope.payuHufi.token.model && $scope.payuHufi.token.model.$tokenRequired) {
                         if (!$scope.payuHufi.token.model.$isErrorRegardingToken(error)) {
@@ -76,5 +88,3 @@ angular.module('ocb-payments')
             });
 
         });
-
-
