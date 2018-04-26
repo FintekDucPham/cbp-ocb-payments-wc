@@ -222,12 +222,12 @@
             </div>
         </div>
         <div class="row">
-            <bd-item-property label="{{::'ocb.payments.tuition.table.figures'|translate}}:">
+            <bd-item-property label="{{::'ocb.payments.tuition.table.figures'|translate}}">
                 {{tuitionFee.formData.totalAmount | number:0}}  VND
             </bd-item-property>
         </div>
         <div class="row">
-            <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}:">
+            <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}">
                 {{tuitionFee.formData.amountInWords}}
             </bd-item-property>
         </div>
@@ -302,12 +302,12 @@
             </div>
         </div>
         <div class="row total-amount">
-            <bd-item-property label="{{::'ocb.payments.tuition.table.figures'|translate}}:">
+            <bd-item-property label="{{::'ocb.payments.tuition.table.figures'|translate}}">
                 {{tuitionFee.formData.totalAmount | number:0}}  VND
             </bd-item-property>
         </div>
         <div class="row total-amount">
-            <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}:">
+            <bd-item-property class="italic-control" label="{{::'ocb.payments.tuition.table.words'|translate}}">
                 {{tuitionFee.formData.amountInWords}}
             </bd-item-property>
         </div>
@@ -338,19 +338,15 @@
             </rb-account-select-v2>
         </bd-item-property>
         <!--Balance and Remaining Daily Limit-->
-        <div class="form-row">
-            <div class="col-sm-8 col-md-8 vcenter">
-                <div style="padding-left: 0px" class="std-name">{{::'ocb.payments.tuition.balance.label'|translate}}</div>
-                <div>
-                    {{tuitionFee.formData.balance | number:0}}  {{tuitionFee.formData.currency}}
-                </div>
-            </div>
-            <div class="col-sm-8 col-md-8 vcenter">
-                <div class="std-remain">{{::'ocb.payments.tuition.limit.label'|translate}}</div>
-                <div>
-                    {{tuitionFee.items.limit.remainingDailyLimit | number:0}}  VND
-                </div>
-            </div>
+        <div class="row total-amount">
+            <bd-item-property label="{{::'ocb.payments.tuition.balance.label'|translate}}">
+                {{tuitionFee.formData.balance | number:0}}  {{tuitionFee.formData.currency}}
+            </bd-item-property>
+        </div>
+        <div class="row total-amount">
+            <bd-item-property label="{{::'ocb.payments.tuition.limit.label'|translate}}">
+                {{tuitionFee.items.limit.remainingDailyLimit | number:0}}  VND
+            </bd-item-property>
         </div>
     </div>
 </form>
