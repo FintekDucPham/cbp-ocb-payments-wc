@@ -231,9 +231,9 @@
                 {{tuitionFee.formData.amountInWords}}
             </bd-item-property>
         </div>
-        <div ng-if="tuitionFee.formData.batchInfoSearch === false" class="content-check">
-            {{::'ocb.payments.tuition.student.info.empty'|translate}}
-        </div>
+        <!--<div ng-if="tuitionFee.formData.batchInfoSearch === false" class="content-check">-->
+            <!--{{::'ocb.payments.tuition.student.info.empty'|translate}}-->
+        <!--</div>-->
         <div ng-show="tuitionFee.formData.amountNull" class="content-check">
             {{::'ocb.payments.tuition.student.amount.empty'|translate}}
         </div>
@@ -321,7 +321,7 @@
     <!---------------------------------->
 
     <!--Payment Account-->
-    <div class="account-collapse-item form-horizontal bd-form" ng-show="tuitionFee.formData.batchInfoSearch">
+    <div class="account-collapse-item form-horizontal bd-form" ng-if="tuitionFee.formData.batchInfoSearch && !tuitionFee.formData.amountNull">
         <bd-header>{{ ::'ocb.payments.tuition.paymentAccount' | translate }}</bd-header>
         <!--Load account-->
         <bd-item-property label="{{ ::'ocb.payments.new.bill.fill.sender_account' | translate }}">

@@ -220,9 +220,17 @@ angular.module('ocb-payments')
                         $("#radioID").addClass("rbt-disable");
                         $scope.tuitionFee.formData.batchInfoSearch = true;
                         $scope.tuitionFee.formData.paymentInfo = data.tuitionPayment;
-                        $scope.rbPaymentTuitionFeeParams.visibility.search = searchBool;
-                        $scope.rbPaymentTuitionFeeParams.visibility.clear = searchBool;
-                        $scope.rbPaymentTuitionFeeParams.visibility.next = nextBool;
+                        if ($scope.tuitionFee.formData.amountNull == true) {
+                            $scope.rbPaymentTuitionFeeParams.visibility.search = false;
+                            $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
+                            $scope.rbPaymentTuitionFeeParams.visibility.back = true;
+                            $scope.rbPaymentTuitionFeeParams.visibility.next = false;
+                        } else {
+                            $scope.rbPaymentTuitionFeeParams.visibility.search = false;
+                            $scope.rbPaymentTuitionFeeParams.visibility.clear = false;
+                            $scope.rbPaymentTuitionFeeParams.visibility.back = true;
+                            $scope.rbPaymentTuitionFeeParams.visibility.next = true;
+                        }
                     }
                 });
             }
@@ -285,6 +293,7 @@ angular.module('ocb-payments')
             $scope.rbPaymentTuitionFeeParams.visibility.clear = true;
             $scope.rbPaymentTuitionFeeParams.visibility.search = true;
             $scope.rbPaymentTuitionFeeParams.visibility.next = false;
+            $scope.rbPaymentTuitionFeeParams.visibility.back = false;
         };
 
         var requestConverter = function (formData) {

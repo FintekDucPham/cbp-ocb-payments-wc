@@ -95,6 +95,7 @@ angular.module('ocb-payments')
             },
             visibility:{
                 search: false,
+                back: false,
                 change: false,
                 clear: false,
                 next: false,
