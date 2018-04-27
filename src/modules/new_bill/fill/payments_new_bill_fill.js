@@ -727,7 +727,7 @@ angular.module('ocb-payments')
                             if(errorReason.subType == 'validation'){
                                 for(var i=0; i<=errorReason.errors.length; i++){
                                     var currentError = errorReason.errors[i];
-                                    if(currentError.field == 'ocb.transfer.limit.exceeed'){
+                                    if(currentError.field == 'ocb.transfer.exceeds.limit'){
                                         $scope.limitExeeded = {
                                             show: true,
                                             messages: translate.property("ocb.payments.new.domestic.fill.amount.DAILY_LIMIT_EXCEEDED")
