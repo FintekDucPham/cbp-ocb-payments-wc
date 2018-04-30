@@ -22,12 +22,12 @@
     {{$data.customerId }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.service'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.header.serviceProvider'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
     {{$data.serviceProviderCode }}
 </bd-item-property>
 
-<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.supplier'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{$data.serviceCode }}
+<bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.header.service'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
+    {{$data.serviceProviderCodeName }}
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.paymentSetting'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">

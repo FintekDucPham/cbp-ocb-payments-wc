@@ -43,15 +43,15 @@
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"
-                          label="{{::'ocb.payments.auto_bill.list.details.service'|translate}}"
+                          label="{{::'ocb.payments.auto_bill.list.header.serviceProvider'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
             {{payment.formData.serviceProviderCode }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"
-                          label="{{::'ocb.payments.auto_bill.list.details.supplier'|translate}}"
+                          label="{{::'ocb.payments.auto_bill.list.header.service'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-            {{payment.formData.serviceCode }}
+            {{payment.formData.serviceProviderCodeName }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"
