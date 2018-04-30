@@ -173,14 +173,14 @@
             </bd-radio-select>
         </bd-item-property>
 
-        <bd-item-property label="{{ ::'ocb.payments.new.standing.fill.finish_date'|translate }}" ng-show="payment.formData.recurringPeriod == 'PERIOD'">
+        <bd-item-property label="{{ ::'ocb.payments.new.standing.fill.finish_date'|translate }}" ng-show="payment.formData.recurringPeriod == 'LIMITED'">
 
             <rb-datepicker
                     ng-model="payment.formData.finishDate"
                     rb-form="autoBillForm"
                     rb-name="finishDate"
                     rb-datepicker-options="rbDatepickerOptions"
-                    rb-required="payment.formData.recurringPeriod == 'PERIOD'">
+                    rb-required="payment.formData.recurringPeriod == 'LIMITED'">
             </rb-datepicker>
 
             <eb-validation-messages eb-name="finishDate">

@@ -23,7 +23,7 @@ angular.module('ocb-payments')
     })
     .constant('RECURRING_PERIOD', {
         NOLIMIT: 'NOLIMIT',
-        LIMITED: 'PERIOD'
+        LIMITED: 'LIMITED'
     })
     .config(function (pathServiceProvider, stateServiceProvider) {
         stateServiceProvider.state('payments.auto_bill_modify.fill', {
@@ -48,12 +48,11 @@ angular.module('ocb-payments')
 
         var initialData = initialState.data;
         var payment = $scope.payment;
-        var paymentData = payment.formData;
-        paymentData.actionType = initialState.paymentOperationType;
         if (initialData != null) {
             payment.formData = initialData;
-            payment.formData.frequencyType = paymentData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
+            payment.formData.frequencyType = convertFrequencySymbolToCode(initialData.frequencyPeriodUnit);
         }
+        payment.formData.actionType = initialState.paymentOperationType;
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
             $scope.$emit('hideWrongCodeLabelEvent');
@@ -84,8 +83,8 @@ angular.module('ocb-payments')
         $scope.FREQUENCY_TYPES_LIST = _.map(FREQUENCY_TYPES, 'code');
         $scope.FREQUENCY_TYPES = FREQUENCY_TYPES;
 
-        if (!paymentData.frequencyType) {
-            paymentData.frequencyType = FREQUENCY_TYPES.MONTHLY.code;
+        if (!payment.formData.frequencyType) {
+            payment.formData.frequencyType = FREQUENCY_TYPES.MONTHLY.code;
         }
 
         $scope.onFrequencyTypeSelect = function () {
@@ -134,8 +133,8 @@ angular.module('ocb-payments')
 
         // PAYMENT SETTING
         $scope.PAYMENT_SETTING = PAYMENT_SETTING;
-        if (paymentData.paymentSetting === undefined || paymentData.paymentSetting == null || paymentData.paymentSetting === 'null' || paymentData.paymentSetting === '') {
-            paymentData.paymentSetting = PAYMENT_SETTING.LIMITED;
+        if (payment.formData.paymentSetting === undefined || payment.formData.paymentSetting == null || payment.formData.paymentSetting === 'null' || payment.formData.paymentSetting === '') {
+            payment.formData.paymentSetting = PAYMENT_SETTING.LIMITED;
         }
         $scope.$watch('payment.formData.paymentSetting', function(newValue){
             if (newValue == PAYMENT_SETTING.FULL) {
@@ -145,8 +144,8 @@ angular.module('ocb-payments')
 
         // RECURRING PERIOD
         $scope.RECURRING_PERIOD = RECURRING_PERIOD;
-        if (paymentData.recurringPeriod === undefined || paymentData.recurringPeriod === null || paymentData.recurringPeriod === 'null'  || paymentData.recurringPeriod === '') {
-            paymentData.recurringPeriod = RECURRING_PERIOD.LIMITED;
+        if (payment.formData.recurringPeriod === undefined || payment.formData.recurringPeriod === null || payment.formData.recurringPeriod === 'null'  || payment.formData.recurringPeriod.recurringPeriod === '') {
+            payment.formData.recurringPeriod = RECURRING_PERIOD.LIMITED;
         }
         $scope.$watch('payment.formData.recurringPeriod', function(newValue){
             if (newValue == RECURRING_PERIOD.NOLIMIT) {
