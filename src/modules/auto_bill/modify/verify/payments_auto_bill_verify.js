@@ -111,7 +111,6 @@ angular.module('ocb-payments')
                         });
                     }
                     if (callParams.actionType.code == "EDIT") {
-                        callParams.amountLimit = callParams.amountLimit.value;
                         transferBillService.modifyAutoBillTransfer(callParams).then(function (status) {
                             setMessage(status);
                             actions.proceed();
