@@ -31,7 +31,7 @@
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.paymentSetting'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-    {{::'ocb.payments.auto_bill.list.details.paymentSetting.' + $data.paymentSetting |translate}}
+    {{::'ocb.payments.auto_bill.list.details.paymentSetting.' + $data.paymentSetting |translate}} <span ng-show="$data.paymentSetting == 'LIMITED'"><bd-amount style="display: inline-flex" amount="$data.amountLimit.value" currency="VND"></bd-amount></span>
 </bd-item-property>
 
 <bd-item-property class="bd-item-property--text"  label="{{::'ocb.payments.auto_bill.list.details.firstExecutionDate'|translate}}" ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
