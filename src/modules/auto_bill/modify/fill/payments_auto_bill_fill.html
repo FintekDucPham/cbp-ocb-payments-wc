@@ -88,10 +88,12 @@
                          ng-model="payment.formData.amountLimit.value"
                          ng-pattern="AMOUNT_PATTERN"
                          amount-input
-                         currency="{{payment.items.remitterAccount.currency}}">
+                         currency="{{payment.items.remitterAccount.currency}}"
+                         ng-disabled="payment.formData.paymentSetting == PAYMENT_SETTING.FULL"
+                         ng-required="payment.formData.paymentSetting != PAYMENT_SETTING.FULL">
                   <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
               </div>
-           <div class="eb-validation-messages" ng-show="isNegativeAmount(payment.formData.amountLimit.value) || isZeroAmount(payment.formData.amountLimit.value)">
+           <div class="eb-validation-messages" ng-show="payment.formData.paymentSetting != PAYMENT_SETTING.FULL && (isNegativeAmount(payment.formData.amountLimit.value) || isZeroAmount(payment.formData.amountLimit.value))">
              <div class="messages">
                <div  class="validation-message animate-on">
                  {{::'ocb.payments.new.domestic.fill.amount.NEGATIVE_NUMBER'|translate}}
