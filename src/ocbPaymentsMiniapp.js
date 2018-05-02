@@ -34,6 +34,22 @@ angular.module('ocb-payments', [
         'payments.payu.fill',
     ]
 
+    var restrictedStatesForSilverPackage = [
+        'payments.external.new.fill',
+        'payments.internal.new.fill',
+        'payments.fast.new.fill',
+        'payments.new_saving.fill',
+        'payments.recipients.list',
+        'payments.standing.list',
+        'payments.auto_bill_list',
+        'payments.basket.new.fill',
+        'payments.batch_processing.fill',
+        'payments.new_bill.fill',
+        'payments.bill_history.list',
+        'payments.tuition_fee.fill',
+        'payments.payu.fill'
+    ]
+
     function registerRestrictedState() {
         privilegesServiceProvider
             .registerRestrictedState('payments')
@@ -47,6 +63,14 @@ angular.module('ocb-payments', [
                 .restrictionRules
                 .add(privilegesServiceProvider.createRestriction.isNotCbUser())
         })
+
+        angular.forEach(restrictedStatesForSilverPackage, function (state) {
+            privilegesServiceProvider
+                .registerRestrictedState(state)
+                .restrictionRules
+                .add(privilegesServiceProvider.createRestriction.hasNotPackageType(CUSTOMER.PACKAGE_TYPE.SILVER));
+        })
+
     }
 
     registerModule()
@@ -95,6 +119,12 @@ angular.module('ocb-payments', [
                 },
                 priority: 1,
             }, {
+                id: 'payments.new_saving.fill',
+                label: 'ocb.payments.submenu.options.new_saving.header',
+                icon: 'ocb-icons ocb_przelew',
+                action: 'payments.new_saving.fill',
+                priority: 1,
+            }, {
                 id: 'payments.recipients.list',
                 label: 'ocb.payments.recipients.label',
                 icon: 'ocb-icons ocb_odbiorcy',
@@ -125,6 +155,12 @@ angular.module('ocb-payments', [
                 action: 'payments.auto_bill_list',
                 priority: 8,
             }, {
+                id: 'payments.basket.fill',
+                label: 'ocb.payments.basket.label',
+                icon: 'ocb-icons basket',
+                action: 'payments.basket.new.fill',
+                priority: 9,
+            }, {
                 id: 'payments.batch_processing',
                 label: 'ocb.payments.batch_processing.label',
                 icon: 'ocb-icons basket',
@@ -143,39 +179,28 @@ angular.module('ocb-payments', [
                 action: 'payments.bill_history.list',
                 priority: 12,
             }, {
+                id: 'payments.tuition_fee.fill',
+                label: 'ocb.payments.tuition.label.header',
+                icon: 'ocb-icons basket',
+                action: 'payments.tuition_fee.fill',
+                priority: 13,
+            }, {
                 id: 'payments.pending.fill',
                 label: 'ocb.payments.pending.label',
                 icon: 'ocb-icons basket',
                 action: 'payments.pending.fill',
                 priority: 14,
+            }, {
+                id: 'payments.payu',
+                label: 'ocb.payments.payu.label',
+                icon: 'ocb-icons basket',
+                action: 'payments.payu.fill',
+                priority: 15,
             }]
 
-            if (user.isCbUser !== true) {
-                menuItems = menuItems.concat([{
-                    id: 'payments.new_saving.fill',
-                    label: 'ocb.payments.submenu.options.new_saving.header',
-                    icon: 'ocb-icons ocb_przelew',
-                    action: 'payments.new_saving.fill',
-                    priority: 1,
-                }, {
-                    id: 'payments.basket.fill',
-                    label: 'ocb.payments.basket.label',
-                    icon: 'ocb-icons basket',
-                    action: 'payments.basket.new.fill',
-                    priority: 9,
-                }, {
-                    id: 'payments.tuition_fee.fill',
-                    label: 'ocb.payments.tuition.label.header',
-                    icon: 'ocb-icons basket',
-                    action: 'payments.tuition_fee.fill',
-                    priority: 13,
-                }, {
-                    id: 'payments.payu',
-                    label: 'ocb.payments.payu.label',
-                    icon: 'ocb-icons basket',
-                    action: 'payments.payu.fill',
-                    priority: 15,
-                }])
+            var baseItem ='payments.external.new.fill'
+            if (user.hasPackageType === true) {
+                baseItem = 'payments.future.list'
             }
 
             menuService.registerMenu({
@@ -183,10 +208,33 @@ angular.module('ocb-payments', [
                 iconClass: 'payments-icon',
                 priority: 200,
                 showMain: true,
-                baseItem: 'payments.external.new.fill',
+                baseItem: baseItem,
                 title: 'ocb.menu.transfer',
                 items: menuItems,
             })
+
+            if (user.isCbUser === true) {
+                menuService.removeMenuItem('ocb-payments', 'payments.new_saving.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.basket.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.tuition_fee.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.payu')
+            }
+
+            if (user.hasPackageType === true) {
+                menuService.removeMenuItem('ocb-payments', 'payments.external.new.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.internal.new.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.fast.new.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.new_saving.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.recipients.list')
+                menuService.removeMenuItem('ocb-payments', 'payments.standing.list')
+                menuService.removeMenuItem('ocb-payments', 'payments.auto_bill_list')
+                menuService.removeMenuItem('ocb-payments', 'payments.basket.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.batch_processing')
+                menuService.removeMenuItem('ocb-payments', 'payments.new_bill.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.bill_history.list')
+                menuService.removeMenuItem('ocb-payments', 'payments.tuition_fee.fill')
+                menuService.removeMenuItem('ocb-payments', 'payments.payu')
+            }
 
         })
     }])
