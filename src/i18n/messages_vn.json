@@ -151,7 +151,7 @@
   "ocb.payments.tuition.table.placeHolderTable": "Không tìm thấy khoản thanh toán nào",
   "ocb.payments.tuition.placeholder.code": "Nhập mã tại đây",
   "ocb.payments.tuition.student.info.empty" : "Chưa có khoản nào cần thanh toán",
-  "ocb.payments.tuition.student.amount.empty": "Số tiền thanh toán không hợp lệ",
+  "ocb.payments.tuition.student.amount.empty": "Hiện chưa có khoản tiền nào cần thực hiện thanh toán",
   "ocb.payments.tuition.student.info.notFound" :"Mã số SV/CMND chưa đúng",
   "ocb.payments.new.error.ELIXIRCharactersOnly": "Trường bao gồm các kí tự Elixir không được phép",
   "ocb.payments.new.domestic.fill.sender_account": "Tài khoản số",
