@@ -2,7 +2,7 @@ angular.module('ocb-payments')
     .constant('STANDING_FREQUENCY_TYPES', {
         "DAILY": {
             code: "DAILY",
-            symbol: "B"
+            symbol: "D"
         },
         "WEEKLY": {
             code: "WEEKLY",
