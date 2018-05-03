@@ -61,7 +61,7 @@ angular.module('ocb-payments', [
             privilegesServiceProvider
                 .registerRestrictedState(state)
                 .restrictionRules
-                .add(privilegesServiceProvider.createRestriction.isNotCbUser())
+                .add(privilegesServiceProvider.createRestriction.isCbUser(false))
         })
 
         angular.forEach(restrictedStatesForSilverPackage, function (state) {
