@@ -77,9 +77,6 @@ angular.module('ocb-payments')
 
 
             var callParams = $scope.payment.formData;
-            if(callParams.amountLimit) {
-                callParams.amountLimit = callParams.amountLimit.value;
-            }
             callParams.resourceId = $scope.payment.meta.token.params.resourceId;
             callParams.credentials = $scope.payment.meta.token.model.input.model;
 

@@ -85,7 +85,7 @@
                          rb-number-type-input
                          ng-min="0.01"
                          class="input-field"
-                         ng-model="payment.formData.amountLimit.value"
+                         ng-model="payment.formData.amountLimit"
                          ng-pattern="AMOUNT_PATTERN"
                          amount-input
                          currency="{{payment.items.remitterAccount.currency}}"
@@ -93,7 +93,7 @@
                          ng-required="payment.formData.paymentSetting != PAYMENT_SETTING.FULL">
                   <div class="indicator">{{payment.items.remitterAccount.currency}}</div>
               </div>
-           <div class="eb-validation-messages" ng-show="payment.formData.paymentSetting != PAYMENT_SETTING.FULL && (isNegativeAmount(payment.formData.amountLimit.value) || isZeroAmount(payment.formData.amountLimit.value))">
+           <div class="eb-validation-messages" ng-show="payment.formData.paymentSetting != PAYMENT_SETTING.FULL && (isNegativeAmount(payment.formData.amountLimit) || isZeroAmount(payment.formData.amountLimit))">
              <div class="messages">
                <div  class="validation-message animate-on">
                  {{::'ocb.payments.new.domestic.fill.amount.NEGATIVE_NUMBER'|translate}}
