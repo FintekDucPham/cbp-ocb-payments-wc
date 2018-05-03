@@ -1,3 +1,5 @@
+@import '../../../cbp-ocb-ui-components/src/styles/variables/dimensions.less';
+
 .payments-standing-list {
   .bd-table__row-details {
     .bd-details-section {
@@ -472,4 +474,13 @@ rb-basket-search-panel{
   color: #ccc;
   font-weight: normal;
   margin: 0;
+}
+
+@media only screen and (max-width: @screen-mob-max) {
+
+    .payments-future-list .lb,
+    .payments-future-list .control {
+        width: 50%;
+    }
+
 }
