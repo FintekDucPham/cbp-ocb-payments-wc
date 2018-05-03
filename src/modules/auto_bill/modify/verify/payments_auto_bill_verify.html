@@ -51,7 +51,7 @@
         <bd-item-property class="bd-item-property--text"
                           label="{{::'ocb.payments.auto_bill.list.header.service'|translate}}"
                           ng-class="{'bd-item-property--disabled': params.operationType === 'DELETE'}">
-            {{payment.formData.serviceProviderCodeName }}
+            {{payment.items.senderService.serviceName }}
         </bd-item-property>
 
         <bd-item-property class="bd-item-property--text"

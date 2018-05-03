@@ -11,8 +11,10 @@ angular.module('ocb-payments')
     })
     .controller('PaymentsAutoBillPaymentsListController', function ($scope, $state, bdTableConfig, $timeout, translate,
                                                                     paymentsService, $filter, pathService, viewStateService,
-                                                                    initialState, $location, transferBillService, rbPaymentOperationTypes) {
+                                                                    initialState, $location, transferBillService, rbPaymentOperationTypes,
+                                                                    customerService) {
             $scope.paymentDetailsTemplate = pathService.generateTemplatePath("ocb-payments") + "/modules/auto_bill/list/details/payments_auto_bill_list_detail.html";
+            $scope.showEdit = false;
 
             $scope.onButtonPressed = function (action, data) {
                 if (action == 'edit') {
@@ -67,5 +69,17 @@ angular.module('ocb-payments')
                 },
                 tableControl: undefined
             };
+
+            customerService.getCustomerDetails().then(function(data){
+                var isCbUser = data.customerDetails.cbUser;
+                $scope.showEdit = !isCbUser;
+                if (isCbUser) {
+                    _.each(data.customerDetails.cbRoles, function(userRole) {
+                        if (userRole === 'Inputer'){
+                            $scope.showEdit = true;
+                        }
+                    });
+                }
+            });
         }
     );

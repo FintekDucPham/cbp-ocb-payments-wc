@@ -74,67 +74,39 @@
             ></rb-recipient-select>
         </bd-item-property>
 
-        <rb-paste-warning ng-init="pasteWarning=this">
-            <!--rb-paste-warning provides: showHide, rbPasteTrigger, unlockField, isOk, isErrorPaste-->
-            <bd-item-property label="{{::'ocb.payments.domestic.recipient_account.label' | translate}}">
-                <input
-                    type="text"
-                    name="recipientAccountNo"
-                    ng-model="payment.formData.recipientAccountNo"
-                    ng-disabled="payment.items.recipient"
-                    required
-                    bd-account-digit="external"
-                    bd-matches-none-of="recipientAccountValidators"
-                    placeholder="{{::'ocb.payments.domestic.recipient_account.placeholder' | translate}}"
-                    class="input-field"
-                    ng-hide="showHide"
-                    ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
-                    ng-paste="rbPasteTrigger(this,$event,paymentForm.recipientAccountNo)"
-                    ng-change="unlockField()"
-                    ng-blur="onBlurUserCacheEvent('recipientAccountNo', $event)"
-                >
-                <input type="text" disabled="true" value="XXXXXXXXXXXXXXXX" ng-if="showHide" class="input-field">
-                <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
-                    <div class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.paste' | translate}}
-                    </div>
-                </eb-validation-messages>
-                <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && !isErrorPaste">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
-                    </div>
-                    <div eb-message-key="bdAccountDigit" class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.digits.external' | translate}}
-                    </div>
-                    <div eb-message-key="sameSourceAccount" class="validation-message animate-on">
-                        {{::'ocb.payments.domestic.recipient_account.error.same' | translate}}
-                    </div>
-                </eb-validation-messages>
-            </bd-item-property>
-
-            <!--rb-paste-warning provides: showHide, digit, properties1, properties2, rbCheckNrb-->
-            <div ng-if="showHide">
-                {{::'ocb.payments.new.domestic.fill.account.warning1' | translate}}
-                <span style="color: deepskyblue"><span ng-show="digit != 1">{{digit}}</span>{{properties1}}</span>
-                {{properties2}}{{::'ocb.payments.new.domestic.fill.account.warning3' | translate}}
-
-                <input
-                    id="maskNumer"
-                    name="nrbCheck"
-                    type="text"
-                    ng-model="pasteWarning.nrbCheck"
-                    size="{{digit}}"
-                    ng-change="rbCheckNrb(this)"
-                    required maxlength="{{digit}}"
-                    ng-paste="$event.stopPropagation();$event.preventDefault();"
-                >
-                <eb-validation-messages eb-name="nrbCheck">
-                    <div eb-message-key="required" class="validation-message animate-on">
-                        {{::'ocb.payments.new.domestic.fill.error.paste.required' | translate}}
-                    </div>
-                </eb-validation-messages>
-            </div>
-        </rb-paste-warning>
+        <bd-item-property label="{{::'ocb.payments.domestic.recipient_account.label' | translate}}">
+            <input
+                type="text"
+                name="recipientAccountNo"
+                ng-model="payment.formData.recipientAccountNo"
+                ng-disabled="payment.items.recipient"
+                required
+                bd-account-digit="external"
+                bd-matches-none-of="recipientAccountValidators"
+                placeholder="{{::'ocb.payments.domestic.recipient_account.placeholder' | translate}}"
+                class="input-field"
+                ng-hide="showHide"
+                ng-model-options="{ allowInvalid: true, updateOn: 'default blur focus', debounce: { 'default': 200, 'blur': 0} }"
+                ng-change="unlockField()"
+                ng-blur="onBlurUserCacheEvent('recipientAccountNo', $event)"
+            >
+            <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && isErrorPaste">
+                <div class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.recipient_account.error.paste' | translate}}
+                </div>
+            </eb-validation-messages>
+            <eb-validation-messages eb-name="recipientAccountNo" ng-show="!showHide && !isErrorPaste">
+                <div eb-message-key="required" class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.recipient_account.error.empty' | translate}}
+                </div>
+                <div eb-message-key="bdAccountDigit" class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.recipient_account.error.digits.external' | translate}}
+                </div>
+                <div eb-message-key="sameSourceAccount" class="validation-message animate-on">
+                    {{::'ocb.payments.domestic.recipient_account.error.same' | translate}}
+                </div>
+            </eb-validation-messages>
+        </bd-item-property>
 
         <bd-item-property
             class="bd-item-property--multirow"
