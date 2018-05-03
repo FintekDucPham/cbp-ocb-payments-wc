@@ -9,7 +9,10 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentBillVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferBillService,$interpolate) {
+    .controller('PaymentBillVerifyController', function ($scope, $state, bdVerifyStepInitializer, bdStepStateEvents, transferService, payment, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, lodash, transferBillService,$interpolate) {
+
+        var stateData = $state.$current.data;
+        var removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
 
         $scope.showVerify = false;
         if (angular.isUndefined($scope.payment.formData) || lodash.isEmpty($scope.payment.formData)) {
@@ -113,92 +116,129 @@ angular.module('ocb-payments')
             delete $scope.payment.items.credentials;
         });
 
-        function authorize(doneFn, actions) {
-            transferService.realize($scope.payment.transferId, $scope.payment.token.model.input.model).then(function (resultCode) {
-                var parts = resultCode.split('|');
-                $scope.payment.result = {
-                    code: parts[1],
-                    type: parts[0] === 'OK' ? "success" : "error"
-                };
-                if (parts[0] !== 'OK' && !parts[1]) {
-                    $scope.payment.result.code = 'error';
-                }
-                // depositsService.clearDepositCache();
-                $scope.payment.result.token_error = false;
-                // paymentsBasketService.updateCounter($scope.payment.result.code);
-                doneFn();
-            }).catch(function (error) {
-                $scope.payment.result.token_error = true;
-                $scope.payment.result.code ="error";
-                $scope.payment.result.type ="error"
+        //Authorize
+        function authorize() {
+            var token = payment.token, realize;
+            $scope.exceedsFunds = false;
+            payment.result = {
+                type: 'error'
+            };
 
-                if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+            if (removeFromBasket) {
+                realize = paymentsBasketService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
+                    payment.result = {
+                        type: 'success',
+                        message: result.messages[0]
+                    };
+                    paymentsBasketService.updateCounter('REMOVE_FROM_BASKET');
+                });
+            } else {
+                realize = transferService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
+                    var parts = result.split('|');
+                    payment.result = {
+                        type: parts[0] === 'OK' ? 'success' : (parts[1] ? parts[0] : 'error'),
+                        code: parts[1]
+                    };
+                    paymentsBasketService.updateCounter(payment.result.code);
+                });
+            }
+
+            return realize.catch(function (errorReason) {
+                if (errorReason.text === "INCORRECT_TOKEN_PASSWORD") {
                     if ($scope.invalidPasswordCount >= 1) {
-                      $scope.$emit('wrongAuthCodeEvent');
+                        $scope.$emit('wrongAuthCodeEvent');
                     }
+
                     else {
-                      $scope.showWrongCodeLabel = true;
+                        $scope.showWrongCodeLabel = true;
                     }
 
-                  $scope.invalidPasswordCount++;
-                  return;
+                    $scope.invalidPasswordCount++;
+                    payment.result = {
+                        type: 'authError',
+                        message: errorReason
+                    };
+                    return;
                 }
-
-                if ($scope.payment.token.model && $scope.payment.token.model.$tokenRequired) {
-                    if (!$scope.payment.token.model.$isErrorRegardingToken(error)) {
-                        actions.proceed();
-                    }
-                } else {
-                    actions.proceed();
+                if (token.model.$tokenRequired && token.model.$isErrorRegardingToken(errorReason)) {
+                    return;
                 }
-
-            }).finally(function () {
-                //delete $scope.payment.items.credentials;
-                formService.clearForm($scope.paymentAuthForm);
+                if (errorReason.subType === 'validation') {
+                    angular.forEach(errorReason.errors, function (error) {
+                        if (error.field === 'ocb.transfer.exceeds.funds') {
+                            $scope.exceedsFunds = true;
+                        }
+                    });
+                    return;
+                }
+                payment.result = {
+                    type: 'error',
+                    message: removeFromBasket ? 'error' : errorReason
+                };
             });
         }
 
-        $scope.countInvalid = 0;
-        $scope.isNullOTP = false;
-        $scope.isInvalidOTP = false;
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            //Check input null OTP
-            if ($scope.payment.token.model.input.model == null) {
-                $scope.countInvalid++;
-                $scope.isNullOTP = true;
-                if ($scope.countInvalid == 2) {
-                    console.log("Go back Step1 screen");
-                }
-            }
-            if ($scope.payment.meta.customerContext == 'DETAL') {
-                if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
-                    if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
-                        if($scope.payment.token.model.input.$isValid()) {
-                            if ($scope.payment.result.token_error) {
-                                if ($scope.payment.result.nextTokenType === 'next') {
-                                    if ($scope.isOTP === true) {
-                                        sendAuthorizationToken();
-                                    }
-                                } else {
-                                    $scope.payment.result.token_error = false;
-                                }
-                            } else {
-                                authorize(actions.proceed, actions);
-                            }
+            var token = payment.token;
+            if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                if (token.model.input.$isValid()) {
+                    if (payment.formData.addToBeneficiary === true) {
+                        recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.FAST.state , createRecipient());
+                    }
+                    authorize().then(function () {
+                        if (payment.result.type && payment.result.type !== 'authError') {
+                            actions.proceed();
                         }
-                    }
-                    else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
-                        $scope.payment.token.model.$proceed();
-                    }
+                    });
                 }
-                // authorize(actions.proceed, actions);
-            } else if ($scope.payment.meta.customerContext == 'MICRO') {
-                $scope.payment.result.type = "success";
-                $scope.payment.result.code = "27";
-            } else {
-                console.error("Undefined customer context");
+            } else if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                token.model.$proceed();
             }
         });
+
+        //
+        //
+        // $scope.countInvalid = 0;
+        // $scope.isNullOTP = false;
+        // $scope.isInvalidOTP = false;
+        // $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
+        //     //Check input null OTP
+        //     if ($scope.payment.token.model.input.model == null) {
+        //         $scope.countInvalid++;
+        //         $scope.isNullOTP = true;
+        //         if ($scope.countInvalid == 2) {
+        //             console.log("Go back Step1 screen");
+        //         }
+        //     }
+        //     if ($scope.payment.meta.customerContext == 'DETAL') {
+        //         if($scope.payment.operation.code!==rbPaymentOperationTypes.EDIT.code) {
+        //             if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+        //                 if($scope.payment.token.model.input.$isValid()) {
+        //                     if ($scope.payment.result.token_error) {
+        //                         if ($scope.payment.result.nextTokenType === 'next') {
+        //                             if ($scope.isOTP === true) {
+        //                                 sendAuthorizationToken();
+        //                             }
+        //                         } else {
+        //                             $scope.payment.result.token_error = false;
+        //                         }
+        //                     } else {
+        //                         authorize(actions.proceed, actions);
+        //                     }
+        //                 }
+        //             }
+        //             else if($scope.payment.token.model.view.name===RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+        //                 $scope.payment.token.model.$proceed();
+        //             }
+        //         }
+        //         // authorize(actions.proceed, actions);
+        //     } else if ($scope.payment.meta.customerContext == 'MICRO') {
+        //         $scope.payment.result.type = "success";
+        //         $scope.payment.result.code = "27";
+        //     } else {
+        //         console.error("Undefined customer context");
+        //     }
+        // });
 
         $scope.setForm = function (form) {
             $scope.paymentAuthForm = form;

@@ -14,6 +14,9 @@ angular.module('ocb-payments')
     })
     .controller('PaymentTuitionFeeVerifyController', function ($scope, bdVerifyStepInitializer, bdStepStateEvents, customerService, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, $state, lodash, transferTuitionService) {
 
+        var stateData = $state.$current.data;
+        var removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
+
         $scope.showVerify = false;
         $scope.tuitionFee.token.params.authType = $scope.tuitionFee.meta.authType;
         // $scope.tuitionFee.token.model.$tokenType = $scope.tuitionFee.meta.authType;
@@ -80,46 +83,64 @@ angular.module('ocb-payments')
             delete $scope.tuitionFee.items.credentials;
         });
 
-        function authorize(doneFn, actions) {
-            transferTuitionService.realize($scope.tuitionFee.transferId, $scope.tuitionFee.token.model.input.model).then(function (resultCode) {
-                var parts = resultCode.split('|');
-                $scope.tuitionFee.result = {
-                    code: parts[1],
-                    type: parts[0] === 'OK' ? "success" : "error"
-                };
-                if (parts[0] !== 'OK' && !parts[1]) {
-                    $scope.tuitionFee.result.code = 'error';
-                }
-                depositsService.clearDepositCache();
-                $scope.tuitionFee.result.token_error = false;
-                paymentsBasketService.updateCounter($scope.tuitionFee.result.code);
-                doneFn();
-            }).catch(function (error) {
-                $scope.tuitionFee.result.token_error = true;
+        // Authentication
+        function authorize() {
+            var token = payment.token, realize;
+            $scope.exceedsFunds = false;
+            payment.result = {
+                type: 'error'
+            };
 
-                if (error.text === "INCORRECT_TOKEN_PASSWORD") {
+            if (removeFromBasket) {
+                realize = paymentsBasketService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
+                    payment.result = {
+                        type: 'success',
+                        message: result.messages[0]
+                    };
+                    paymentsBasketService.updateCounter('REMOVE_FROM_BASKET');
+                });
+            } else {
+                realize = transferService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
+                    var parts = result.split('|');
+                    payment.result = {
+                        type: parts[0] === 'OK' ? 'success' : (parts[1] ? parts[0] : 'error'),
+                        code: parts[1]
+                    };
+                    paymentsBasketService.updateCounter(payment.result.code);
+                });
+            }
+
+            return realize.catch(function (errorReason) {
+                if (errorReason.text === "INCORRECT_TOKEN_PASSWORD") {
                     if ($scope.invalidPasswordCount >= 1) {
-                      $scope.$emit('wrongAuthCodeEvent');
+                        $scope.$emit('wrongAuthCodeEvent');
                     }
                     else {
-                      $scope.showWrongCodeLabel = true;
+                        $scope.showWrongCodeLabel = true;
                     }
 
-                  $scope.invalidPasswordCount++;
-                  return;
+                    $scope.invalidPasswordCount++;
+                    payment.result = {
+                        type: 'authError',
+                        message: errorReason
+                    };
+                    return;
                 }
-
-                if ($scope.tuitionFee.token.model && $scope.tuitionFee.token.model.$tokenRequired) {
-                    if (!$scope.tuitionFee.token.model.$isErrorRegardingToken(error)) {
-                        actions.proceed();
-                    }
-                } else {
-                    actions.proceed();
+                if (token.model.$tokenRequired && token.model.$isErrorRegardingToken(errorReason)) {
+                    return;
                 }
-
-            }).finally(function () {
-                //delete $scope.tuitionFee.items.credentials;
-                formService.clearForm($scope.tuitionFeeAuthForm);
+                if (errorReason.subType === 'validation') {
+                    angular.forEach(errorReason.errors, function (error) {
+                        if (error.field === 'ocb.transfer.exceeds.funds') {
+                            $scope.exceedsFunds = true;
+                        }
+                    });
+                    return;
+                }
+                payment.result = {
+                    type: 'error',
+                    message: removeFromBasket ? 'error' : errorReason
+                };
             });
         }
 
@@ -150,35 +171,20 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            if ($scope.tuitionFee.meta.customerContext == 'DETAL') {
-                if ($scope.tuitionFee.operation.code !== rbPaymentOperationTypes.EDIT.code) {
-                    $scope.showVerify = false;
-                    // authorize(actions.proceed, actions);
-                    // actions.proceed();
-                    if ($scope.tuitionFee.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
-                        if ($scope.tuitionFee.token.model.input.$isValid()) {
-                            if ($scope.tuitionFee.result.token_error) {
-                                if ($scope.tuitionFee.result.nextTokenType === 'next') {
-                                    if ($scope.isOTP === true) {
-                                        sendAuthorizationToken();
-                                    }
-                                } else {
-                                    $scope.tuitionFee.result.token_error = false;
-                                }
-                            } else {
-                                authorize(actions.proceed, actions);
-                            }
+            var token = payment.token;
+            if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
+                if (token.model.input.$isValid()) {
+                    if (payment.formData.addToBeneficiary === true) {
+                        recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.FAST.state , createRecipient());
+                    }
+                    authorize().then(function () {
+                        if (payment.result.type && payment.result.type !== 'authError') {
+                            actions.proceed();
                         }
-                    }
-                    else if ($scope.tuitionFee.token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
-                        $scope.tuitionFee.token.model.$proceed();
-                    }
+                    });
                 }
-            } else if ($scope.tuitionFee.meta.customerContext == 'MICRO') {
-                $scope.tuitionFee.result.type = "success";
-                $scope.tuitionFee.result.code = "27";
-            } else {
-                console.error("Undefined customer context");
+            } else if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.ACTION_SELECTION) {
+                token.model.$proceed();
             }
         });
 

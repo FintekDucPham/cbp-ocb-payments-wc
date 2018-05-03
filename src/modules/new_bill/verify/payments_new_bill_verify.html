@@ -46,15 +46,9 @@
     </div>
 </div>
 
-<!--add authorization token-->
-<section ng-show="payment.operation.code !== 'EDIT' && payment.meta.customerContext == 'DETAL' && payment.token.model.$tokenRequired">
-    <div class="bd-form-white">
-        <bd-item-property class="bd-item-property--multirow" ng-if="payment.token.params.resourceId" label="{{ payment.token.model.currentToken.label }}" no-label-box="true">
-            <rb-token-authorization rb-operation-type="TRANSFER"
-                                    rb-model="payment.token.model"
-                                    rb-params="payment.token.params"
-                                    show-wrong-code-label="showWrongCodeLabel" >
-            </rb-token-authorization>
-        </bd-item-property>
+<div ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" class="form-pane">
+    <div class="pane-above">
+        <rb-token-authorization show-wrong-code-label="showWrongCodeLabel" rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
     </div>
-</section>
+</div>
+
