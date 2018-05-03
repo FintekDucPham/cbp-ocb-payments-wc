@@ -124,8 +124,8 @@ angular.module('ocb-payments')
                 data: {
                     futurePayment: true,
                     // TODO JAKO_DISABLE planned payments
-                    //finalState: 'payments.external.new.fill'
-                    finalState: 'payments.future.list'
+                    finalState: 'payments.external.new.fill'
+                    //finalState: 'payments.future.list'
                 },
                 resolve: {
                     loadPayment: ['payment', 'paymentsService', '$stateParams', 'loadCurrentDate', '$state', '$timeout', function (payment, paymentsService, $stateParams, loadCurrentDate, $state, $timeout) {

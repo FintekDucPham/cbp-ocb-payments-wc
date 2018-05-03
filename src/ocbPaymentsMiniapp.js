@@ -131,76 +131,89 @@ angular.module('ocb-payments', [
                 action: 'payments.recipients.list',
                 priority: 3,
             }, {
-                id: 'payments.future.list',
-                label: 'ocb.payments.future.label',
-                icon: 'ocb-icons payments_waiting',
-                action: 'payments.future.list',
-                priority: 5,
-            }, {
-                id: 'payments.rejected.list',
-                label: 'ocb.payments.rejected.label',
-                icon: 'ocb-icons operation_rejected',
-                action: 'payments.rejected.list',
-                priority: 6,
-            }, {
-                id: 'payments.standing.list',
-                label: 'ocb.payments.standing.label',
-                icon: 'ocb-icons ocb_zlecenie_stale',
-                action: 'payments.standing.list',
-                priority: 7,
-            }, {
-                id: 'payments.auto_bill_list',
-                label: 'ocb.payments.auto_bill.label',
-                icon: 'ocb-icons ocb_zlecenie_stale',
-                action: 'payments.auto_bill_list',
-                priority: 8,
-            }, {
+            // TODO JAKO_DISABLE planned payments
+            //     id: 'payments.future.list',
+            //     label: 'ocb.payments.future.label',
+            //     icon: 'ocb-icons payments_waiting',
+            //     action: 'payments.future.list',
+            //     priority: 5,
+            // }, {
+            // TODO JAKO_DISABLE rejected payments
+            //     id: 'payments.rejected.list',
+            //     label: 'ocb.payments.rejected.label',
+            //     icon: 'ocb-icons operation_rejected',
+            //     action: 'payments.rejected.list',
+            //     priority: 6,
+            // }, {
+            // TODO JAKO_DISABLE standing orders
+            //     id: 'payments.standing.list',
+            //     label: 'ocb.payments.standing.label',
+            //     icon: 'ocb-icons ocb_zlecenie_stale',
+            //     action: 'payments.standing.list',
+            //     priority: 7,
+            // }, {
+            // TODO JAKO_DISABLE auto bill
+            //     id: 'payments.auto_bill_list',
+            //     label: 'ocb.payments.auto_bill.label',
+            //     icon: 'ocb-icons ocb_zlecenie_stale',
+            //     action: 'payments.auto_bill_list',
+            //     priority: 8,
+            // }, {
                 id: 'payments.basket.fill',
                 label: 'ocb.payments.basket.label',
                 icon: 'ocb-icons basket',
                 action: 'payments.basket.new.fill',
                 priority: 9,
-            }, {
-                id: 'payments.batch_processing',
-                label: 'ocb.payments.batch_processing.label',
-                icon: 'ocb-icons basket',
-                action: 'payments.batch_processing.fill',
-                priority: 10,
-            }, {
-                id: 'payments.new_bill.fill',
-                label: 'payments.submenu.options.new_bill.header',
-                icon: 'ocb-icons ocb_przelew',
-                action: 'payments.new_bill.fill',
-                priority: 11,
-            }, {
-                id: 'payments.bill_history.list',
-                label: 'ocb.payments.basket.list.details.historyAction',
-                icon: 'ocb-icons basket',
-                action: 'payments.bill_history.list',
-                priority: 12,
-            }, {
-                id: 'payments.tuition_fee.fill',
-                label: 'ocb.payments.tuition.label.header',
-                icon: 'ocb-icons basket',
-                action: 'payments.tuition_fee.fill',
-                priority: 13,
-            }, {
-                id: 'payments.pending.fill',
-                label: 'ocb.payments.pending.label',
-                icon: 'ocb-icons basket',
-                action: 'payments.pending.fill',
-                priority: 14,
-            }, {
-                id: 'payments.payu',
-                label: 'ocb.payments.payu.label',
-                icon: 'ocb-icons basket',
-                action: 'payments.payu.fill',
-                priority: 15,
-            }]
+            }
+            //, {
+            // TODO JAKO_DISABLE batch processing
+            //     id: 'payments.batch_processing',
+            //     label: 'ocb.payments.batch_processing.label',
+            //     icon: 'ocb-icons basket',
+            //     action: 'payments.batch_processing.fill',
+            //     priority: 10,
+            // }, {
+            // TODO JAKO_DISABLE bill payment
+            //     id: 'payments.new_bill.fill',
+            //     label: 'payments.submenu.options.new_bill.header',
+            //     icon: 'ocb-icons ocb_przelew',
+            //     action: 'payments.new_bill.fill',
+            //     priority: 11,
+            // }, {
+            // TODO JAKO_DISABLE bill history
+            //     id: 'payments.bill_history.list',
+            //     label: 'ocb.payments.basket.list.details.historyAction',
+            //     icon: 'ocb-icons basket',
+            //     action: 'payments.bill_history.list',
+            //     priority: 12,
+            // }, {
+            // TODO JAKO_DISABLE tuition fee
+            //     id: 'payments.tuition_fee.fill',
+            //     label: 'ocb.payments.tuition.label.header',
+            //     icon: 'ocb-icons basket',
+            //     action: 'payments.tuition_fee.fill',
+            //     priority: 13,
+            // }, {
+            // TODO JAKO_DISABLE CB pending transactions
+            //     id: 'payments.pending.fill',
+            //     label: 'ocb.payments.pending.label',
+            //     icon: 'ocb-icons basket',
+            //     action: 'payments.pending.fill',
+            //     priority: 14,
+            // }, {
+            // TODO JAKO_DISABLE payU
+            //     id: 'payments.payu',
+            //     label: 'ocb.payments.payu.label',
+            //     icon: 'ocb-icons basket',
+            //     action: 'payments.payu.fill',
+            //     priority: 15,
+            // }
+            ]
 
             var baseItem ='payments.external.new.fill'
             if (user.hasPackageType === true) {
-                baseItem = 'payments.future.list'
+                // TODO JAKO_DISABLE planned payments
+                //baseItem = 'payments.future.list'
             }
 
             menuService.registerMenu({

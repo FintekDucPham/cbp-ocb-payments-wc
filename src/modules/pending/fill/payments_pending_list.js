@@ -255,32 +255,37 @@ angular.module('ocb-payments')
                     $state.go("payments.fast.new.fill", {"referenceId" : transaction.id});
                     break;
                 //batch processing
-                case "Internal Batch Transfer":
-                case "External Batch Transfer":
-                    $state.go("payments.batch_processing.fill", {"referenceId" : transaction.id});
-                    break;
+                // TODO JAKO_DISABLE batch processing
+                // case "Internal Batch Transfer":
+                // case "External Batch Transfer":
+                //     $state.go("payments.batch_processing.fill", {"referenceId" : transaction.id});
+                //     break;
                 // TODO JAKO_DISABLE bill payment
-                case "Bill Payment":
-                    $state.go("payments.new_bill.fill", {"referenceId" : transaction.id});
-                    break;
-                case "Mobile Top-Up":
-                    $state.go("payments.prepaid.new.fill", {"referenceId" : transaction.id});
-                    break;
+                // case "Bill Payment":
+                //     $state.go("payments.new_bill.fill", {"referenceId" : transaction.id});
+                //     break;
+                // TODO JAKO_DISABLE mobile top-up
+                // case "Mobile Top-Up":
+                //     $state.go("payments.prepaid.new.fill", {"referenceId" : transaction.id});
+                //     break;
                 case "Internal Funds Transfer":
                     $state.go("payments.internal.new.fill", {"referenceId" : transaction.id});
                     break;
                 case "External Funds Transfer":
                     $state.go("payments.external.new.fill", {"referenceId" : transaction.id});
                     break;
-                case "Standing orders":
-                    $state.go("payments.new.standing.fill", {"referenceId" : transaction.id});
-                    break;
-                case "Auto bill payment":
-                    $state.go("payments.auto_bill_modify.fill", {"referenceId" : transaction.id});
-                    break;
-                case "Planned Payment":
-                    $state.go("payments.future.manage.edit", {"referenceId" : transaction.id});
-                    break;
+                // TODO JAKO_DISABLE standing orders
+                // case "Standing orders":
+                //     $state.go("payments.new.standing.fill", {"referenceId" : transaction.id});
+                //     break;
+                // TODO JAKO_DISABLE auto bill
+                // case "Auto bill payment":
+                //     $state.go("payments.auto_bill_modify.fill", {"referenceId" : transaction.id});
+                //     break;
+                // TODO JAKO_DISABLE planned payments
+                // case "Planned Payment":
+                //     $state.go("payments.future.manage.edit", {"referenceId" : transaction.id});
+                //     break;
                 default:
                     //todo for another transaction type
                     break;

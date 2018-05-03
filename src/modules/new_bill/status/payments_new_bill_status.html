@@ -5,11 +5,12 @@
         <!--class="hl-txt2 prev pn-step bd-form-footer__button"-->
         <!--ng-click="$params.finalAction()">{{ $params.labels.finalAction | translate }}-->
         <!--</bd-button>-->
-        <div class="col-xs-12 col-md-6 back-btn">
-            <bd-button class="bd-button bd-form-footer__button bd-button__primary"
-                       ui-sref="payments.bill_history.list">{{::'ocb.payments.new.btn.finalize' | translate }}
-            </bd-button>
-        </div>
+        <!-- TODO JAKO_DISABLE bill history -->
+        <!--<div class="col-xs-12 col-md-6 back-btn">-->
+            <!--<bd-button class="bd-button bd-form-footer__button bd-button__primary"-->
+                       <!--ui-sref="payments.bill_history.list">{{::'ocb.payments.new.btn.finalize' | translate }}-->
+            <!--</bd-button>-->
+        <!--</div>-->
         <div class="col-xs-12 col-md-6 print-btn">
             <bd-button class="bd-button bd-form-footer__button bd-form-footer__button--negative "
                        ng-click="billPaymentsStepParams.printPdf()">

@@ -99,8 +99,8 @@ angular.module('ocb-payments')
 
         $scope.onCancelButtonClick = function() {
             // TODO JAKO_DISABLE planned payments
-            //$state.go('payments.external.new.fill');
-            $state.go('payments.future.list');
+            $state.go('payments.external.new.fill');
+            //$state.go('payments.future.list');
         };
 
     });
