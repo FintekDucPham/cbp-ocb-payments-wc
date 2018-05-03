@@ -70,7 +70,6 @@ angular.module('ocb-payments')
         var isInternal = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType.typeCode === 'IN';
         $scope.hideBankCodeColumnTable(isInternal);
 
-        $scope.paymentsBatchProcessingForm.formData.transferUpdated;
         $scope.paymentsBatchProcessingForm.selectedTransactionType = $scope.paymentsBatchProcessingForm.formData.selectedTransactionType;
         $scope.paymentsBatchProcessingForm.selectedSubAccount = $scope.paymentsBatchProcessingForm.formData.selectedSubAccount;
 

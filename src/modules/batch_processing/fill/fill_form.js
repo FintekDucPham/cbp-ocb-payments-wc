@@ -784,7 +784,7 @@ angular.module('ocb-payments')
                 var head = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/frontend-web";
                 return head + url;
             }
-            $scope.paymentsBatchProcessingForm.formData.createDate = $scope.getDate(new Date());
+            $scope.paymentsBatchProcessingForm.formData.createDate = $filter('date')(new Date(), "dd/MM/yyyy");
 
             $scope.paymentsBatchProcessingFormParams.visibility.accept = false;//true;
             function listenToUpdatedFlag() {
@@ -796,7 +796,7 @@ angular.module('ocb-payments')
                     $scope.paymentsBatchProcessingFormParams.visibility.search = false;//false;
                     $scope.paymentsBatchProcessingFormParams.visibility.prev_fill = true;//true;
 
-                    $scope.paymentsBatchProcessingForm.formData.createDate = $scope.getDate($scope.paymentsBatchProcessingForm.formData.transferUpdated.createDate);
+                    $scope.paymentsBatchProcessingForm.formData.createDate = $filter('date')($scope.paymentsBatchProcessingForm.formData.transferUpdated.createDate, "dd/MM/yyyy");
 
                     function readAccountList() {
                         if($scope.accountList && $scope.accountList.length > 0){
