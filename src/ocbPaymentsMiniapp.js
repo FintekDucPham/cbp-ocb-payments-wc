@@ -43,7 +43,6 @@ angular.module('ocb-payments', [
         'payments.standing.list',
         'payments.auto_bill_list',
         'payments.basket.new.fill',
-        'payments.batch_processing.fill',
         'payments.new_bill.fill',
         'payments.bill_history.list',
         'payments.tuition_fee.fill',
@@ -70,6 +69,11 @@ angular.module('ocb-payments', [
                 .restrictionRules
                 .add(privilegesServiceProvider.createRestriction.hasNotPackageType(CUSTOMER.PACKAGE_TYPE.SILVER));
         })
+
+        privilegesServiceProvider
+            .registerRestrictedState('payments.batch_processing.fill')
+            .restrictionRules
+            .add(privilegesServiceProvider.createRestriction.isCbUser(true))
 
     }
 
@@ -218,6 +222,8 @@ angular.module('ocb-payments', [
                 menuService.removeMenuItem('ocb-payments', 'payments.basket.fill')
                 menuService.removeMenuItem('ocb-payments', 'payments.tuition_fee.fill')
                 menuService.removeMenuItem('ocb-payments', 'payments.payu')
+            } else {
+                menuService.removeMenuItem('ocb-payments', 'payments.batch_processing')
             }
 
             if (user.hasPackageType === true) {
@@ -229,7 +235,6 @@ angular.module('ocb-payments', [
                 menuService.removeMenuItem('ocb-payments', 'payments.standing.list')
                 menuService.removeMenuItem('ocb-payments', 'payments.auto_bill_list')
                 menuService.removeMenuItem('ocb-payments', 'payments.basket.fill')
-                menuService.removeMenuItem('ocb-payments', 'payments.batch_processing')
                 menuService.removeMenuItem('ocb-payments', 'payments.new_bill.fill')
                 menuService.removeMenuItem('ocb-payments', 'payments.bill_history.list')
                 menuService.removeMenuItem('ocb-payments', 'payments.tuition_fee.fill')
