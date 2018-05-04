@@ -13,7 +13,7 @@ angular.module('ocb-payments')
                                                                     paymentsService, $filter, pathService, viewStateService,
                                                                     standingTransferService, rbPaymentOperationTypes,
                                                                     STANDING_FREQUENCY_TYPES, initialState, $anchorScroll,
-                                                                    $location, customerService) {
+                                                                    $location) {
         $scope.dateRange = {};
 
         $scope.options = {
@@ -80,19 +80,6 @@ angular.module('ocb-payments')
                 }
             }
         };
-
-        customerService.getCustomerDetails().then(function(data){
-            var isCbUser = data.customerDetails.cbUser
-            $scope.showEdit = !isCbUser
-            if (isCbUser) {
-                _.each(data.customerDetails.cbRoles, function(userRole) {
-                    if (userRole === 'Inputer'){
-                        $scope.showEdit = true;
-                    }
-                });
-            }
-        });
-
 
         $scope.onDelete = function(standingPayment) {
             viewStateService.setInitialState('futurePayments.standing.manage.delete', {
