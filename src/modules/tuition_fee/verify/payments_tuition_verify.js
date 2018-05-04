@@ -19,6 +19,21 @@ angular.module('ocb-payments')
 
         $scope.showVerify = false;
         $scope.tuitionFee.token.params.authType = $scope.tuitionFee.meta.authType;
+
+        bdVerifyStepInitializer($scope, {
+            formName: 'tuitionForm',
+            dataObject: $scope.tuitionFee
+        });
+
+        $scope.tuitionFee.token = {
+            operationType: 'TRANSFER',
+            params: {
+                resourceId: $scope.tuitionFee.meta.referenceId
+            },
+            model: {}
+        };
+
+
         // $scope.tuitionFee.token.model.$tokenType = $scope.tuitionFee.meta.authType;
         //Set semester value
         switch ($scope.tuitionFee.formData.selectedForm.optionSelected){
@@ -44,6 +59,7 @@ angular.module('ocb-payments')
             $scope.showVerify = true;
         }
 
+        $scope.tuitionFee.token.params.resourceId = $scope.tuitionFee.transferId;
 
         function sendAuthorizationToken() {
             $scope.tuitionFee.token.params.resourceId = $scope.tuitionFee.transferId;
@@ -85,15 +101,15 @@ angular.module('ocb-payments')
 
         // Authentication
         function authorize() {
-            var token = payment.token, realize;
+            var token = $scope.tuitionFee.token, realize;
             $scope.exceedsFunds = false;
-            payment.result = {
+            $scope.tuitionFee.result = {
                 type: 'error'
             };
 
             if (removeFromBasket) {
                 realize = paymentsBasketService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
-                    payment.result = {
+                    $scope.tuitionFee.result = {
                         type: 'success',
                         message: result.messages[0]
                     };
@@ -102,11 +118,11 @@ angular.module('ocb-payments')
             } else {
                 realize = transferService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
                     var parts = result.split('|');
-                    payment.result = {
+                    $scope.tuitionFee.result = {
                         type: parts[0] === 'OK' ? 'success' : (parts[1] ? parts[0] : 'error'),
                         code: parts[1]
                     };
-                    paymentsBasketService.updateCounter(payment.result.code);
+                    paymentsBasketService.updateCounter($scope.tuitionFee.result.code);
                 });
             }
 
@@ -120,7 +136,7 @@ angular.module('ocb-payments')
                     }
 
                     $scope.invalidPasswordCount++;
-                    payment.result = {
+                    $scope.tuitionFee.result = {
                         type: 'authError',
                         message: errorReason
                     };
@@ -137,7 +153,7 @@ angular.module('ocb-payments')
                     });
                     return;
                 }
-                payment.result = {
+                $scope.tuitionFee.result = {
                     type: 'error',
                     message: removeFromBasket ? 'error' : errorReason
                 };
@@ -171,14 +187,14 @@ angular.module('ocb-payments')
         };
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var token = payment.token;
+            var token = $scope.tuitionFee.token;
             if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if (token.model.input.$isValid()) {
-                    if (payment.formData.addToBeneficiary === true) {
+                    if ($scope.tuitionFee.formData.addToBeneficiary === true) {
                         recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.FAST.state , createRecipient());
                     }
                     authorize().then(function () {
-                        if (payment.result.type && payment.result.type !== 'authError') {
+                        if ($scope.tuitionFee.result.type && $scope.tuitionFee.result.type !== 'authError') {
                             actions.proceed();
                         }
                     });

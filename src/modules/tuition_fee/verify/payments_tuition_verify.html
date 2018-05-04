@@ -54,8 +54,8 @@
 
 </form>
 <!--add authorization token-->
-<div ng-if="payment.token.params.resourceId" ng-show="payment.token.model.$tokenRequired" class="form-pane">
+<div ng-if="tuitionFee.token.params.resourceId" ng-show="tuitionFee.token.model.$tokenRequired" class="form-pane">
   <div class="pane-above">
-    <rb-token-authorization show-wrong-code-label="showWrongCodeLabel" rb-operation-type="{{payment.token.operationType}}" rb-model="payment.token.model" rb-model-data="payment.token.modelData()" rb-params="payment.token.params"></rb-token-authorization>
+    <rb-token-authorization show-wrong-code-label="showWrongCodeLabel" rb-operation-type="{{tuitionFee.token.operationType}}" rb-model="tuitionFee.token.model" rb-model-data="tuitionFee.token.modelData()" rb-params="tuitionFee.token.params"></rb-token-authorization>
   </div>
 </div>

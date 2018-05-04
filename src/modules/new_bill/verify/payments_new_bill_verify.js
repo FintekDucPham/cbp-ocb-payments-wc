@@ -9,7 +9,7 @@ angular.module('ocb-payments')
             }
         });
     })
-    .controller('PaymentBillVerifyController', function ($scope, $state, bdVerifyStepInitializer, bdStepStateEvents, transferService, payment, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, lodash, transferBillService,$interpolate) {
+    .controller('PaymentBillVerifyController', function ($scope, $state, bdVerifyStepInitializer, bdStepStateEvents, transferService, depositsService, authorizationService, formService, translate, dateFilter, rbPaymentOperationTypes, RB_TOKEN_AUTHORIZATION_CONSTANTS, paymentsBasketService, lodash, transferBillService,$interpolate) {
 
         var stateData = $state.$current.data;
         var removeFromBasket = stateData.basketPayment && stateData.operation === 'delete';
@@ -29,7 +29,14 @@ angular.module('ocb-payments')
             dataObject: $scope.payment
         });
 
-        //$scope.payment.token.params.resourceId = $scope.payment.transferId;
+        $scope.payment.token = {
+            operationType: 'TRANSFER',
+            params: {
+                resourceId: $scope.payment.meta.referenceId
+            }
+        };
+
+        $scope.payment.token.params.resourceId = $scope.payment.transferId;
 
         function sendAuthorizationToken() {
             $scope.payment.token.params.resourceId = $scope.payment.transferId;
@@ -118,15 +125,15 @@ angular.module('ocb-payments')
 
         //Authorize
         function authorize() {
-            var token = payment.token, realize;
+            var token = $scope.payment.token, realize;
             $scope.exceedsFunds = false;
-            payment.result = {
+            $scope.payment.result = {
                 type: 'error'
             };
 
             if (removeFromBasket) {
                 realize = paymentsBasketService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
-                    payment.result = {
+                    $scope.payment.result = {
                         type: 'success',
                         message: result.messages[0]
                     };
@@ -135,11 +142,11 @@ angular.module('ocb-payments')
             } else {
                 realize = transferService.realize(token.params.resourceId, token.model.input.model).then(function (result) {
                     var parts = result.split('|');
-                    payment.result = {
+                    $scope.payment.result = {
                         type: parts[0] === 'OK' ? 'success' : (parts[1] ? parts[0] : 'error'),
                         code: parts[1]
                     };
-                    paymentsBasketService.updateCounter(payment.result.code);
+                    paymentsBasketService.updateCounter($scope.payment.result.code);
                 });
             }
 
@@ -154,7 +161,7 @@ angular.module('ocb-payments')
                     }
 
                     $scope.invalidPasswordCount++;
-                    payment.result = {
+                    $scope.payment.result = {
                         type: 'authError',
                         message: errorReason
                     };
@@ -171,7 +178,7 @@ angular.module('ocb-payments')
                     });
                     return;
                 }
-                payment.result = {
+                $scope.payment.result = {
                     type: 'error',
                     message: removeFromBasket ? 'error' : errorReason
                 };
@@ -179,14 +186,14 @@ angular.module('ocb-payments')
         }
 
         $scope.$on(bdStepStateEvents.FORWARD_MOVE, function (event, actions) {
-            var token = payment.token;
+            var token = $scope.payment.token;
             if (token.model.view.name === RB_TOKEN_AUTHORIZATION_CONSTANTS.VIEW_NAME.FORM) {
                 if (token.model.input.$isValid()) {
-                    if (payment.formData.addToBeneficiary === true) {
+                    if ($scope.payment.formData.addToBeneficiary === true) {
                         recipientGeneralService.create(rbRecipientOperationType.SAVE.code, rbRecipientTypes.FAST.state , createRecipient());
                     }
                     authorize().then(function () {
-                        if (payment.result.type && payment.result.type !== 'authError') {
+                        if ($scope.payment.result.type && $scope.payment.result.type !== 'authError') {
                             actions.proceed();
                         }
                     });
